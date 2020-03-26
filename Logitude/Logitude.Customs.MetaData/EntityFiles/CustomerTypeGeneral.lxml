@@ -16,9 +16,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CUSTOMERTYPEGENERAL&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CustomerTypeGeneral.Features.CustomerTypeGenerals&quot;" FeatureDefaultText="&quot;Customer Type Generals&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CustomerTypeGeneral&quot;" ObjectTableName="&quot;Customs.CustomerTypeGeneral&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomerTypeGeneral&quot;" IndexOrder="0" QueryGroupCode="&quot;CUTG&quot;" QueryGroupName="&quot;Customs.CustomerTypeGeneral&quot;" LocalTextCode="&quot;CustomerTypeGeneral&quot;" TextCode="&quot;CustomerTypeGeneral&quot;" IsPackagable="false">
+  <Query Code="&quot;CustomerTypeGeneral&quot;" ObjectTableName="&quot;Customs.CustomerTypeGeneral&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomerTypeGeneral&quot;" IndexOrder="0" QueryGroupCode="&quot;CUTG&quot;" QueryGroupName="&quot;Customs.CustomerTypeGeneral&quot;" LocalTextCode="&quot;סוג לקוח&quot;" TextCode="&quot;Customer Type Generals&quot;" TextCodeCode="&quot;Customs.CustomerTypeGeneral.Q.CustomerTypeGeneralQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CUSTOMERTYPEGENERAL&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CustomerTypeGeneral.Features.CustomerTypeGenerals&quot;" FeatureDefaultText="&quot;Customer Type Generals&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CustomerTypeGeneral&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CustomerTypeGeneral&quot;" />

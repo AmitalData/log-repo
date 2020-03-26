@@ -8,7 +8,7 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;CommercialSale&quot;" ObjectTableName="&quot;Customs.CommercialSale&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CommercialSale&quot;" IndexOrder="0" QueryGroupCode="&quot;2177&quot;" QueryGroupName="&quot;Customs.CommercialSale Query Group&quot;" LocalTextCode="&quot;CommercialSale&quot;" TextCode="&quot;CommercialSale&quot;" FeatureCode="&quot;CommercialSale.Q.CommercialSale&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;CommercialSale.Features.CommercialSale&quot;" FeatureDefaultText="&quot;CommercialSale&quot;">
+  <Query Code="&quot;CommercialSale&quot;" ObjectTableName="&quot;Customs.CommercialSale&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CommercialSale&quot;" IndexOrder="0" QueryGroupCode="&quot;2177&quot;" QueryGroupName="&quot;Customs.CommercialSale Query Group&quot;" TextCode="&quot;CommercialSaleQuery&quot;" TextCodeCode="&quot;CommercialSale.Q.CommercialSale&quot;" IsSpellChecked="false" FeatureCode="&quot;CommercialSale.Q.CommercialSale&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;CommercialSale.Features.CommercialSale&quot;" FeatureDefaultText="&quot;CommercialSale&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="50" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CommercialSale&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CommercialSale&quot;" />

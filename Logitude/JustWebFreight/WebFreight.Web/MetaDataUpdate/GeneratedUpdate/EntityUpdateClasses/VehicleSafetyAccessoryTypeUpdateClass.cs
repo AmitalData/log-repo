@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable VehicleSafetyAccessoryTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.VehicleSafetyAccessoryType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VehicleSafetyAccessoryTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VehicleSafetyAccessoryType").ToList();   
 
-			   TextCode VehicleSafetyAccessoryTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VehicleSafetyAccessoryType.Q.VehicleSafetyAccessoryType", DefaultText = @"VehicleSafetyAccessoryType",LocalDefaultText = "VehicleSafetyAccessoryType", ObjectTableId = VehicleSafetyAccessoryTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VehicleSafetyAccessoryTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VehicleSafetyAccessoryType.Q.VehicleSafetyAccessoryType", ObjectTableId = VehicleSafetyAccessoryTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleSafetyAccessoryTypeFeatures.VehicleSafetyAccessoryType", NameTextCodeDefaultText = "VehicleSafetyAccessoryType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VehicleSafetyAccessoryTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VehicleSafetyAccessoryType.Q.VehicleSafetyAccessoryTypeQuery", DefaultText = @"VehicleSafetyAccessoryType",LocalDefaultText = "", ObjectTableId = VehicleSafetyAccessoryTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature VehicleSafetyAccessoryTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLESAFETYACCESSORYTYPE", ObjectTableId = VehicleSafetyAccessoryTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehicleSafetyAccessoryType.Features.VehicleSafetyAccessoryType", NameTextCodeDefaultText = "VehicleSafetyAccessoryType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable VehicleSafetyAccessoryTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VehicleSafetyAccessoryType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature VehicleSafetyAccessoryTypeFeature_VEHICLESAFETYACCESSORYTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLESAFETYACCESSORYTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleSafetyAccessoryTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehicleSafetyAccessoryType.Features.VehicleSafetyAccessoryType", NameTextCodeDefaultText = @"VehicleSafetyAccessoryType" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

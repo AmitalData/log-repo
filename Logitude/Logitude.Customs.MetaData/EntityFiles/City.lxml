@@ -1959,9 +1959,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CITY&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.City.Features.Cities&quot;" FeatureDefaultText="&quot;Cities&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;City&quot;" ObjectTableName="&quot;Customs.City&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.City&quot;" IndexOrder="0" QueryGroupCode="&quot;CITY&quot;" QueryGroupName="&quot;Customs.Cities&quot;" LocalTextCode="&quot;City&quot;" TextCode="&quot;City&quot;" IsPackagable="false">
+  <Query Code="&quot;City&quot;" ObjectTableName="&quot;Customs.City&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.City&quot;" IndexOrder="0" QueryGroupCode="&quot;CITY&quot;" QueryGroupName="&quot;Customs.Cities&quot;" LocalTextCode="&quot;עיר&quot;" TextCode="&quot;Cities&quot;" TextCodeCode="&quot;Customs.City.Q.CityQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CITY&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.City.Features.Cities&quot;" FeatureDefaultText="&quot;Cities&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;City&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;City&quot;" />

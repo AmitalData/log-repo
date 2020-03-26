@@ -386,8 +386,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AddressPurposeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AddressPurpose" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AddressPurposeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AddressPurpose").ToList();   
 
-			   TextCode AddressPurposeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AddressPurpose.Q.AddressPurpose", DefaultText = @"AddressPurpose",LocalDefaultText = "AddressPurpose", ObjectTableId = AddressPurposeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AddressPurposeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddressPurpose.Q.AddressPurpose", ObjectTableId = AddressPurposeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AddressPurposeFeatures.AddressPurpose", NameTextCodeDefaultText = "AddressPurpose", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AddressPurposeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AddressPurpose.Q.AddressPurposeQuery", DefaultText = @"Address Purposes",LocalDefaultText = "מטרת כתובת", ObjectTableId = AddressPurposeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AddressPurposeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSPURPOSE", ObjectTableId = AddressPurposeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AddressPurpose.Features.AddressPurposes", NameTextCodeDefaultText = "Address Purposes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -415,15 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable AddressPurposeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AddressPurpose" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AddressPurposeFeature_ADDRESSPURPOSE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSPURPOSE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AddressPurposeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AddressPurpose.Features.AddressPurposes", NameTextCodeDefaultText = @"Address Purposes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

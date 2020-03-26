@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ImporterPeriodicDeclarStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ImporterPeriodicDeclarStatus" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ImporterPeriodicDeclarStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ImporterPeriodicDeclarStatus").ToList();   
 
-			   TextCode ImporterPeriodicDeclarStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ImporterPeriodicDeclarStatus.Q.ImporterDeclarationStatus", DefaultText = @"ImporterDeclarationStatus",LocalDefaultText = "ImporterDeclarationStatus", ObjectTableId = ImporterPeriodicDeclarStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ImporterPeriodicDeclarStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImporterPeriodicDeclarStatus.Q.ImporterDeclarationStatus", ObjectTableId = ImporterPeriodicDeclarStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "ImporterPeriodicDeclarStatusFeatures.ImporterDeclarationStatus", NameTextCodeDefaultText = "ImporterDeclarationStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ImporterPeriodicDeclarStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ImporterDeclarationStatus.Q.ImporterDeclarationStatusQuery", DefaultText = @"Importer Periodic Declaration Status",LocalDefaultText = "סטטוס תצהיר יבואן תקופתי", ObjectTableId = ImporterPeriodicDeclarStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ImporterPeriodicDeclarStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IMPORTERPERIODICSTATUS", ObjectTableId = ImporterPeriodicDeclarStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ImporterPeriodicDeclarationStatus.Features.ImporterPeriodicDeclarationStatus", NameTextCodeDefaultText = "Importer Periodic Declaration Status", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ImporterPeriodicDeclarStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ImporterPeriodicDeclarStatus" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ImporterPeriodicDeclarStatusFeature_IMPORTERPERIODICSTATUS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IMPORTERPERIODICSTATUS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ImporterPeriodicDeclarStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ImporterPeriodicDeclarationStatus.Features.ImporterPeriodicDeclarationStatus", NameTextCodeDefaultText = @"Importer Periodic Declaration Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CHECKTYPELOOKUP&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CheckTypeLookup.Features.CheckTypeLookup&quot;" FeatureDefaultText="&quot;CheckTypeLookup&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CheckTypeLookup&quot;" ObjectTableName="&quot;Customs.CheckTypeLookup&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CheckTypeLookup&quot;" IndexOrder="0" QueryGroupCode="&quot;CLQG&quot;" QueryGroupName="&quot;Customs.CheckTypeLookup&quot;" LocalTextCode="&quot;CheckTypeLookup&quot;" TextCode="&quot;CheckTypeLookup&quot;" IsPackagable="false">
+  <Query Code="&quot;CheckTypeLookup&quot;" ObjectTableName="&quot;Customs.CheckTypeLookup&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CheckTypeLookup&quot;" IndexOrder="0" QueryGroupCode="&quot;CLQG&quot;" QueryGroupName="&quot;Customs.CheckTypeLookup&quot;" LocalTextCode="&quot;סוג בדיקה&quot;" TextCode="&quot;CheckTypeLookup&quot;" TextCodeCode="&quot;Customs.CheckTypeLookup.Q.CheckTypeLookupQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CHECKTYPELOOKUP&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CheckTypeLookup.Features.CheckTypeLookup&quot;" FeatureDefaultText="&quot;CheckTypeLookup&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CheckTypeLookup&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CheckTypeLookup&quot;" />

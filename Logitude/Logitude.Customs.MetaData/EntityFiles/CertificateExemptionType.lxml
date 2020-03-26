@@ -16,9 +16,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CERTIFICATEEXEMPTIONTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CertificateExemptionType.Features.CertificateExemptionTypes&quot;" FeatureDefaultText="&quot;Certificate Exemption Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CertificateExemptionType&quot;" ObjectTableName="&quot;Customs.CertificateExemptionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CertificateExemptionType&quot;" IndexOrder="0" QueryGroupCode="&quot;CEET&quot;" QueryGroupName="&quot;Customs.CertificateExemptionType&quot;" LocalTextCode="&quot;CertificateExemptionType&quot;" TextCode="&quot;CertificateExemptionType&quot;" IsPackagable="false">
+  <Query Code="&quot;CertificateExemptionType&quot;" ObjectTableName="&quot;Customs.CertificateExemptionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CertificateExemptionType&quot;" IndexOrder="0" QueryGroupCode="&quot;CEET&quot;" QueryGroupName="&quot;Customs.CertificateExemptionType&quot;" LocalTextCode="&quot;קוד פטור מאישור&quot;" TextCode="&quot;Certificate Exemption Codes&quot;" TextCodeCode="&quot;Customs.CertificateExemptionType.Q.CertificateExemptionTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CERTIFICATEEXEMPTIONTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CertificateExemptionType.Features.CertificateExemptionTypes&quot;" FeatureDefaultText="&quot;Certificate Exemption Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CertificateExemptionType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CertificateExemptionType&quot;" />

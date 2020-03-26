@@ -8,7 +8,7 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;ProceduralFaultInSourceType&quot;" ObjectTableName="&quot;Customs.ProceduralFaultInSourceType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProceduralFaultInSourceType&quot;" IndexOrder="0" QueryGroupCode="&quot;PIQG&quot;" QueryGroupName="&quot;Customs.ProceduralFaultInSourceType&quot;" LocalTextCode="&quot;ProceduralFaultInSourceType&quot;" TextCode="&quot;ProceduralFaultInSourceType&quot;" IsPackagable="false">
+  <Query Code="&quot;ProceduralFaultInSourceType&quot;" ObjectTableName="&quot;Customs.ProceduralFaultInSourceType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProceduralFaultInSourceType&quot;" IndexOrder="0" QueryGroupCode="&quot;PIQG&quot;" QueryGroupName="&quot;Customs.ProceduralFaultInSourceType&quot;" LocalTextCode="&quot;אופן רישום הליקוי&quot;" TextCode="&quot;Procedural Fault Input Source Type&quot;" TextCodeCode="&quot;Customs.ProceduralFaultInSourceType.Q.InputSourceTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PROCEDURALFAULTINPUTSOURCE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ProceduralFaultInputSource.Features.ProceduralFaultInputSource&quot;" FeatureDefaultText="&quot;Procedural Fault Input Source&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ProceduralFaultInSourceType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ProceduralFaultInSourceType&quot;" />

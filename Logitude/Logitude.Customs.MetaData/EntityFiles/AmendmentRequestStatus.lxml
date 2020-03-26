@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;AMEDMENTREQUESTSTATUS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.AmendmentRequestStatus.Features.AmendmentRequestStatus&quot;" FeatureDefaultText="&quot;AmendmentRequestStatus&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;AmendmentRequestStatus&quot;" ObjectTableName="&quot;Customs.AmendmentRequestStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AmendmentRequestStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;ARQG&quot;" QueryGroupName="&quot;Customs.AmendmentRequestStatus&quot;" LocalTextCode="&quot;AmendmentRequestStatus&quot;" TextCode="&quot;AmendmentRequestStatus&quot;" IsPackagable="false">
+  <Query Code="&quot;AmendmentRequestStatus&quot;" ObjectTableName="&quot;Customs.AmendmentRequestStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AmendmentRequestStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;ARQG&quot;" QueryGroupName="&quot;Customs.AmendmentRequestStatus&quot;" LocalTextCode="&quot;סטאטוס בקשה לתיקון מסמך&quot;" TextCode="&quot;Amendment Request Status&quot;" TextCodeCode="&quot;Customs.AmendmentRequestStatus.Q.AmendmentRequestStatusQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;AMEDMENTREQUESTSTATUS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.AmendmentRequestStatus.Features.AmendmentRequestStatus&quot;" FeatureDefaultText="&quot;AmendmentRequestStatus&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;AmendmentRequestStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;AmendmentRequestStatus&quot;" />

@@ -15,9 +15,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PAYMENTORDERTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.PaymentOrderType.Features.PaymentOrderTypes&quot;" FeatureDefaultText="&quot;Payment Order Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;PaymentOrderType&quot;" ObjectTableName="&quot;Customs.PaymentOrderType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentOrderType&quot;" IndexOrder="0" QueryGroupCode="&quot;PAOT&quot;" QueryGroupName="&quot;Customs.PaymentOrderType&quot;" LocalTextCode="&quot;PaymentOrderType&quot;" TextCode="&quot;PaymentOrderType&quot;" IsPackagable="false">
+  <Query Code="&quot;PaymentOrderType&quot;" ObjectTableName="&quot;Customs.PaymentOrderType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentOrderType&quot;" IndexOrder="0" QueryGroupCode="&quot;PAOT&quot;" QueryGroupName="&quot;Customs.PaymentOrderType&quot;" LocalTextCode="&quot;סוג הוראת תשלום&quot;" TextCode="&quot;Payment Order Types&quot;" TextCodeCode="&quot;Customs.PaymentOrderType.Q.PaymentOrderTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PAYMENTORDERTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PaymentOrderType.Features.PaymentOrderTypes&quot;" FeatureDefaultText="&quot;Payment Order Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;PaymentOrderType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;PaymentOrderType&quot;" />

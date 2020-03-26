@@ -388,8 +388,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable BankObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.Bank" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> BankObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.Bank").ToList();   
 
-			   TextCode BankTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Bank.Q.Bank", DefaultText = @"Bank",LocalDefaultText = "Bank", ObjectTableId = BankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature BankFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Bank.Q.Bank", ObjectTableId = BankObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankFeatures.Bank", NameTextCodeDefaultText = "Bank", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode BankTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Bank.Q.BankQuery", DefaultText = @"Banks",LocalDefaultText = "בנק", ObjectTableId = BankObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature BankFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKS", ObjectTableId = BankObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Bank.Features.Banks", NameTextCodeDefaultText = "Banks", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -417,15 +417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable BankObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Bank" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature BankFeature_BANKS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Bank.Features.Banks", NameTextCodeDefaultText = @"Banks" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

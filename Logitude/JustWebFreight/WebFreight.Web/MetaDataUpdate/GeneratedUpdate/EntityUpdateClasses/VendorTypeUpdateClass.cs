@@ -393,8 +393,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable VendorTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.VendorType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VendorTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VendorType").ToList();   
 
-			   TextCode VendorTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VendorType.Q.VendorType", DefaultText = @"VendorType",LocalDefaultText = "VendorType", ObjectTableId = VendorTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VendorTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VendorType.Q.VendorType", ObjectTableId = VendorTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VendorTypeFeatures.VendorType", NameTextCodeDefaultText = "VendorType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VendorTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorType.Q.VendorTypeQuery", DefaultText = @"Vendor Types",LocalDefaultText = "סוג ספק", ObjectTableId = VendorTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature VendorTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORTYPE", ObjectTableId = VendorTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VendorType.Features.VendorTypes", NameTextCodeDefaultText = "Vendor Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -422,15 +422,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable VendorTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VendorType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature VendorTypeFeature_VENDORTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VendorTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VendorType.Features.VendorTypes", NameTextCodeDefaultText = @"Vendor Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

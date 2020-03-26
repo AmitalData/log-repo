@@ -380,8 +380,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CollateralAnswerTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralAnswerType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CollateralAnswerTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CollateralAnswerType").ToList();   
 
-			   TextCode CollateralAnswerTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CollateralAnswerType.Q.CollateralAnswerType", DefaultText = @"CollateralAnswerType",LocalDefaultText = "CollateralAnswerType", ObjectTableId = CollateralAnswerTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CollateralAnswerTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CollateralAnswerType.Q.CollateralAnswerType", ObjectTableId = CollateralAnswerTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CollateralAnswerTypeFeatures.CollateralAnswerType", NameTextCodeDefaultText = "CollateralAnswerType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CollateralAnswerTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CollateralAnswerType.Q.CollateralAnswerTypeQuery", DefaultText = @"Collateral Answer Types",LocalDefaultText = "סוג מענה לבטוחה", ObjectTableId = CollateralAnswerTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CollateralAnswerTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALANSWERTYPE", ObjectTableId = CollateralAnswerTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralAnswerType.Features.CollateralAnswerTypes", NameTextCodeDefaultText = "Collateral Answer Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -409,15 +409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CollateralAnswerTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralAnswerType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CollateralAnswerTypeFeature_COLLATERALANSWERTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALANSWERTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CollateralAnswerTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralAnswerType.Features.CollateralAnswerTypes", NameTextCodeDefaultText = @"Collateral Answer Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

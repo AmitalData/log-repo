@@ -8,7 +8,7 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;ProcessingReason&quot;" ObjectTableName="&quot;Customs.ProcessingReason&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProcessingReason&quot;" IndexOrder="0" QueryGroupCode="&quot;5969&quot;" QueryGroupName="&quot;Customs.ProcessingReason Query Group&quot;" LocalTextCode="&quot;ProcessingReason&quot;" TextCode="&quot;ProcessingReason&quot;" FeatureCode="&quot;ProcessingReason.Q.ProcessingReason&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;ProcessingReason.Features.ProcessingReason&quot;" FeatureDefaultText="&quot;ProcessingReason&quot;">
+  <Query Code="&quot;ProcessingReason&quot;" ObjectTableName="&quot;Customs.ProcessingReason&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProcessingReason&quot;" IndexOrder="0" QueryGroupCode="&quot;5969&quot;" QueryGroupName="&quot;Customs.ProcessingReason Query Group&quot;" TextCode="&quot;ProcessingReasonQuery&quot;" TextCodeCode="&quot;ProcessingReason.Q.ProcessingReason&quot;" IsSpellChecked="false" FeatureCode="&quot;ProcessingReason.Q.ProcessingReason&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;ProcessingReason.Features.ProcessingReason&quot;" FeatureDefaultText="&quot;ProcessingReason&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="50" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ProcessingReason&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;ProcessingReason&quot;" />

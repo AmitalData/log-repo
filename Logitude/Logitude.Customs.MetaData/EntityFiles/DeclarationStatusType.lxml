@@ -34,9 +34,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;DECLARATIONSTATUSTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.DeclarationStatusType.Features.DeclarationStatusTypes&quot;" FeatureDefaultText="&quot;Declaration Status Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;DeclarationStatusType&quot;" ObjectTableName="&quot;Customs.DeclarationStatusType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DeclarationStatusType&quot;" IndexOrder="0" QueryGroupCode="&quot;DEST&quot;" QueryGroupName="&quot;Customs.DeclarationStatusType&quot;" LocalTextCode="&quot;DeclarationStatusType&quot;" TextCode="&quot;DeclarationStatusType&quot;" IsPackagable="false">
+  <Query Code="&quot;DeclarationStatusType&quot;" ObjectTableName="&quot;Customs.DeclarationStatusType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DeclarationStatusType&quot;" IndexOrder="0" QueryGroupCode="&quot;DEST&quot;" QueryGroupName="&quot;Customs.DeclarationStatusType&quot;" LocalTextCode="&quot;Declaration Status Name For Community&quot;" TextCode="&quot;Declaration Status Name For Community&quot;" TextCodeCode="&quot;Customs.DeclarationStatusType.Q.DeclarationStatusTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;DECLARATIONSTATUSTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.DeclarationStatusType.Features.DeclarationStatusTypes&quot;" FeatureDefaultText="&quot;Declaration Status Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;DeclarationStatusType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;DeclarationStatusType&quot;" />

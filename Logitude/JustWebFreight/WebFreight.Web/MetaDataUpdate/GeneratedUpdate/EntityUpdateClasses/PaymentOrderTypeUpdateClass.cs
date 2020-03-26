@@ -390,8 +390,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable PaymentOrderTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrderType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> PaymentOrderTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PaymentOrderType").ToList();   
 
-			   TextCode PaymentOrderTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentOrderType.Q.PaymentOrderType", DefaultText = @"PaymentOrderType",LocalDefaultText = "PaymentOrderType", ObjectTableId = PaymentOrderTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PaymentOrderTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentOrderType.Q.PaymentOrderType", ObjectTableId = PaymentOrderTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentOrderTypeFeatures.PaymentOrderType", NameTextCodeDefaultText = "PaymentOrderType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PaymentOrderTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrderType.Q.PaymentOrderTypeQuery", DefaultText = @"Payment Order Types",LocalDefaultText = "סוג הוראת תשלום", ObjectTableId = PaymentOrderTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PaymentOrderTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTORDERTYPE", ObjectTableId = PaymentOrderTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrderType.Features.PaymentOrderTypes", NameTextCodeDefaultText = "Payment Order Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -419,15 +419,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable PaymentOrderTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrderType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature PaymentOrderTypeFeature_PAYMENTORDERTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTORDERTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentOrderTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrderType.Features.PaymentOrderTypes", NameTextCodeDefaultText = @"Payment Order Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

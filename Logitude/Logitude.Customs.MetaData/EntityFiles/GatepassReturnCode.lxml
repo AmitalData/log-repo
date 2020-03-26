@@ -9,9 +9,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;GatepassReturnCode.Q.GatepassReturnCode&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;GatepassReturnCode.Features.GatepassReturnCode&quot;" FeatureDefaultText="&quot;GatepassReturnCode&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;GatepassReturnCode&quot;" ObjectTableName="&quot;Customs.GatepassReturnCode&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.GatepassReturnCode&quot;" IndexOrder="0" QueryGroupCode="&quot;293f&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;GatepassReturnCode&quot;" TextCode="&quot;GatepassReturnCode&quot;" IsPackagable="false">
+  <Query Code="&quot;GatepassReturnCode&quot;" ObjectTableName="&quot;Customs.GatepassReturnCode&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.GatepassReturnCode&quot;" IndexOrder="0" QueryGroupCode="&quot;293f&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;תשובה בבקשת העברה&quot;" TextCode="&quot;GatepassReturnCodeQuery&quot;" TextCodeCode="&quot;GatepassReturnCode.Q.GatepassReturnCode&quot;" IsSpellChecked="false" FeatureCode="&quot;GatepassReturnCode.Q.GatepassReturnCode&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;GatepassReturnCode.Features.GatepassReturnCode&quot;" FeatureDefaultText="&quot;GatepassReturnCode&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="50" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;GatepassReturnCode&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;GatepassReturnCode&quot;" />

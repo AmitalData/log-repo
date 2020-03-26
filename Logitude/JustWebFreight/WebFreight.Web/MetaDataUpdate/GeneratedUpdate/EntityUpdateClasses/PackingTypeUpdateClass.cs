@@ -393,8 +393,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable PackingTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PackingType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> PackingTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PackingType").ToList();   
 
-			   TextCode PackingTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackingType.Q.PackingType", DefaultText = @"PackingType",LocalDefaultText = "PackingType", ObjectTableId = PackingTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PackingTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PackingType.Q.PackingType", ObjectTableId = PackingTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackingTypeFeatures.PackingType", NameTextCodeDefaultText = "PackingType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PackingTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PackingType.Q.PackingTypeQuery", DefaultText = @"Packing Types",LocalDefaultText = "קוד סוג אריזה", ObjectTableId = PackingTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PackingTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKINGTYPE", ObjectTableId = PackingTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PackingType.Features.PackingTypes", NameTextCodeDefaultText = "Packing Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -422,15 +422,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable PackingTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PackingType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature PackingTypeFeature_PACKINGTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKINGTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PackingTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PackingType.Features.PackingTypes", NameTextCodeDefaultText = @"Packing Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

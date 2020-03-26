@@ -13,9 +13,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;VENDORSTATUS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.VendorStatus.Features.VendorStatus&quot;" FeatureDefaultText="&quot;Vendor Status&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;VendorStatus&quot;" ObjectTableName="&quot;Customs.VendorStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VendorStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;VSQG&quot;" QueryGroupName="&quot;Customs.VendorStatus&quot;" LocalTextCode="&quot;VendorStatus&quot;" TextCode="&quot;VendorStatus&quot;" IsPackagable="false">
+  <Query Code="&quot;VendorStatus&quot;" ObjectTableName="&quot;Customs.VendorStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VendorStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;VSQG&quot;" QueryGroupName="&quot;Customs.VendorStatus&quot;" LocalTextCode="&quot;סטטוס ספק&quot;" TextCode="&quot;Vendor Status&quot;" TextCodeCode="&quot;Customs.VendorStatus.Q.VendorStatusQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;VENDORSTATUS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.VendorStatus.Features.VendorStatus&quot;" FeatureDefaultText="&quot;Vendor Status&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;VendorStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;VendorStatus&quot;" />

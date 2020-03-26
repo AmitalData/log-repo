@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CHECKQUEUETYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CheckQueueType.Features.CheckQueueTypes&quot;" FeatureDefaultText="&quot;Check Queue Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CheckQueueType&quot;" ObjectTableName="&quot;Customs.CheckQueueType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CheckQueueType&quot;" IndexOrder="0" QueryGroupCode="&quot;CHQT&quot;" QueryGroupName="&quot;Customs.CheckQueueType&quot;" LocalTextCode="&quot;CheckQueueType&quot;" TextCode="&quot;CheckQueueType&quot;" IsPackagable="false">
+  <Query Code="&quot;CheckQueueType&quot;" ObjectTableName="&quot;Customs.CheckQueueType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CheckQueueType&quot;" IndexOrder="0" QueryGroupCode="&quot;CHQT&quot;" QueryGroupName="&quot;Customs.CheckQueueType&quot;" LocalTextCode="&quot;סוג תור&quot;" TextCode="&quot;Check Queue Types&quot;" TextCodeCode="&quot;Customs.CheckQueueType.Q.CheckQueueTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CHECKQUEUETYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CheckQueueType.Features.CheckQueueTypes&quot;" FeatureDefaultText="&quot;Check Queue Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CheckQueueType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CheckQueueType&quot;" />

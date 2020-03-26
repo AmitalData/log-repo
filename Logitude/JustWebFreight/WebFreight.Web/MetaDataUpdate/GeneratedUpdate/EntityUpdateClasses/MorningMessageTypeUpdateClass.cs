@@ -384,8 +384,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable MorningMessageTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.MorningMessageType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> MorningMessageTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.MorningMessageType").ToList();   
 
-			   TextCode MorningMessageTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MorningMessageType.Q.MorningMessageType", DefaultText = @"MorningMessageType",LocalDefaultText = "MorningMessageType", ObjectTableId = MorningMessageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature MorningMessageTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MorningMessageType.Q.MorningMessageType", ObjectTableId = MorningMessageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MorningMessageTypeFeatures.MorningMessageType", NameTextCodeDefaultText = "MorningMessageType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode MorningMessageTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.MorningMessageType.Q.MorningMessageTypeQuery", DefaultText = @"Morning Message Type",LocalDefaultText = "בוקר סוג ההודעה", ObjectTableId = MorningMessageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature MorningMessageTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MORNINGMESSAGETYPEQUERY", ObjectTableId = MorningMessageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.MorningMessageType.Features.MorningMessageType", NameTextCodeDefaultText = "Morning Message Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -413,15 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable MorningMessageTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.MorningMessageType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature MorningMessageTypeFeature_MORNINGMESSAGETYPEQUERY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MORNINGMESSAGETYPEQUERY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MorningMessageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.MorningMessageType.Features.MorningMessageType", NameTextCodeDefaultText = @"Morning Message Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

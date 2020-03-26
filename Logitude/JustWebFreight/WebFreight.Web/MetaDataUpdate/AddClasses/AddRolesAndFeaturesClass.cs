@@ -14,7 +14,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddRolesAndFeaturesClass
     {
-
+        private static Dictionary<string, Feature> AddedFeatures = new Dictionary<string, Feature>();
+        private static Dictionary<string, TextCode> AddedTextCodes = new Dictionary<string, TextCode>();
         public static Role AddRole(RoleDetails roleDetails, RoleRepository roleRepository, Dictionary<string, Role> tenantRoles)
         {
             if (tenantRoles.Keys.Contains(roleDetails.Code))
@@ -90,20 +91,27 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                 if (updatedTextCode == null)
                 {
-                    updatedTextCode = new TextCode()
+                    if (!AddedTextCodes.Keys.Contains(featureDetails.NameTextCodeCode))
                     {
-                        Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
-                        Tenant = featureDetails.Tenant,
-                        ObjectTableId = featureDetails.ObjectTableId,
-                        DefaultText = featureDetails.NameTextCodeDefaultText,
-                        Code = featureDetails.NameTextCodeCode,
-                        TextCodeTypeCode = "O",
-                    };
-
-                        updatedFeature.NameTextCodeId = updatedTextCode.Id;
-                        updatedFeature.NameTextCodeCode = updatedTextCode.Code;
+                        updatedTextCode = new TextCode()
+                        {
+                            Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
+                            Tenant = featureDetails.Tenant,
+                            ObjectTableId = featureDetails.ObjectTableId,
+                            DefaultText = featureDetails.NameTextCodeDefaultText,
+                            Code = featureDetails.NameTextCodeCode,
+                            TextCodeTypeCode = "O",
+                        };
                         textCodeReposit.Add(updatedTextCode);
+                        AddedTextCodes.Add(featureDetails.NameTextCodeCode, updatedTextCode);
                     }
+                    else
+                    {
+                        updatedTextCode = AddedTextCodes[featureDetails.NameTextCodeCode];
+                    }
+                    updatedFeature.NameTextCodeId = updatedTextCode.Id;
+                    updatedFeature.NameTextCodeCode = updatedTextCode.Code;
+                }
 
                 else
                 {
@@ -114,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     updatedTextCode.InActive = false;
 
                     textCodeReposit.Update(updatedTextCode);//ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_919762609) הופר - מפתח אב לא נמצא
-                    
+
 
                 }
                 featuresRepository.Update(updatedFeature);
@@ -126,27 +134,37 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             else
             {
-                TextCode newTextCode = null;
-                if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
+                if (!AddedFeatures.ContainsKey(featureDetails.Code))
                 {
-                    newTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
-                }
-
-                if (newTextCode == null)
-                {
-                    newTextCode = new TextCode()
+                    TextCode newTextCode = null;
+                    if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
                     {
-                        Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
-                        Tenant = featureDetails.Tenant,
-                        ObjectTableId = featureDetails.ObjectTableId,
-                        DefaultText = featureDetails.NameTextCodeDefaultText,
-                        Code = featureDetails.NameTextCodeCode.Trim(),
-                        TextCodeTypeCode = "O",
-                    };
+                        newTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
+                    }
 
-                    textCodeReposit.Add(newTextCode);
-                    textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
-                }
+                    if (newTextCode == null)
+                    {
+                        if (!AddedTextCodes.Keys.Contains(featureDetails.NameTextCodeCode))
+                        {
+                            newTextCode = new TextCode()
+                            {
+                                Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
+                                Tenant = featureDetails.Tenant,
+                                ObjectTableId = featureDetails.ObjectTableId,
+                                DefaultText = featureDetails.NameTextCodeDefaultText,
+                                Code = featureDetails.NameTextCodeCode.Trim(),
+                                TextCodeTypeCode = "O",
+                            };
+
+                            textCodeReposit.Add(newTextCode);
+                            textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
+                            AddedTextCodes.Add(featureDetails.NameTextCodeCode, newTextCode);
+                        }
+                        else
+                        {
+                            newTextCode = AddedTextCodes[featureDetails.NameTextCodeCode];
+                        }
+                    }
 
                     Feature newFeature = new Feature()
                     {
@@ -164,12 +182,18 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         FeatureUniqeCode = featureDetails.FeatureUniqeCode
                     };
 
-                featuresRepository.Add(newFeature);
-                tenantFearures.Add(newFeature.Code+ newFeature.ObjectTableId, newFeature);
-                //table.UpdateKey = NewKey;
-                //Repo.Update(table);
-                //Repo.SubmitChanges();
-                return newFeature;
+                    featuresRepository.Add(newFeature);
+                    tenantFearures.Add(newFeature.Code + newFeature.ObjectTableId, newFeature);
+                    //table.UpdateKey = NewKey;
+                    //Repo.Update(table);
+                    //Repo.SubmitChanges();
+                    AddedFeatures.Add(featureDetails.Code, newFeature);
+                    return newFeature;
+                }
+                else
+                {
+                    return AddedFeatures[featureDetails.Code];
+                }
             }
             //}
             //else

@@ -377,8 +377,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable VehicleManufacturerObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.VehicleManufacturer" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VehicleManufacturerObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VehicleManufacturer").ToList();   
 
-			   TextCode VehicleManufacturerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VehicleManufacturer.Q.VehicleManufacturer", DefaultText = @"VehicleManufacturer",LocalDefaultText = "VehicleManufacturer", ObjectTableId = VehicleManufacturerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VehicleManufacturerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VehicleManufacturer.Q.VehicleManufacturer", ObjectTableId = VehicleManufacturerObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleManufacturerFeatures.VehicleManufacturer", NameTextCodeDefaultText = "VehicleManufacturer", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VehicleManufacturerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VehicleManufacturer.Q.VehicleManufacturerQuery", DefaultText = @"Vehicle Manufacturer",LocalDefaultText = "תוצר רכב", ObjectTableId = VehicleManufacturerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature VehicleManufacturerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLEMANUFACTURER", ObjectTableId = VehicleManufacturerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehicleManufacturer.Features.VehicleManufacturer", NameTextCodeDefaultText = "Vehicle Manufacturer", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -406,15 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable VehicleManufacturerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VehicleManufacturer" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature VehicleManufacturerFeature_VEHICLEMANUFACTURER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLEMANUFACTURER", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleManufacturerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehicleManufacturer.Features.VehicleManufacturer", NameTextCodeDefaultText = @"Vehicle Manufacturer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

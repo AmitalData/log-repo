@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;VEHICLESAFETYACCESSORYTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.VehicleSafetyAccessoryType.Features.VehicleSafetyAccessoryType&quot;" FeatureDefaultText="&quot;VehicleSafetyAccessoryType&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;VehicleSafetyAccessoryType&quot;" ObjectTableName="&quot;Customs.VehicleSafetyAccessoryType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VehicleSafetyAccessoryType&quot;" IndexOrder="0" QueryGroupCode="&quot;VAQG&quot;" QueryGroupName="&quot;Customs.VehicleSafetyAccessoryType&quot;" LocalTextCode="&quot;VehicleSafetyAccessoryType&quot;" TextCode="&quot;VehicleSafetyAccessoryType&quot;" IsPackagable="false">
+  <Query Code="&quot;VehicleSafetyAccessoryType&quot;" ObjectTableName="&quot;Customs.VehicleSafetyAccessoryType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VehicleSafetyAccessoryType&quot;" IndexOrder="0" QueryGroupCode="&quot;VAQG&quot;" QueryGroupName="&quot;Customs.VehicleSafetyAccessoryType&quot;" LocalTextCode="&quot;&quot;" TextCode="&quot;VehicleSafetyAccessoryType&quot;" TextCodeCode="&quot;Customs.VehicleSafetyAccessoryType.Q.VehicleSafetyAccessoryTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;VEHICLESAFETYACCESSORYTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.VehicleSafetyAccessoryType.Features.VehicleSafetyAccessoryType&quot;" FeatureDefaultText="&quot;VehicleSafetyAccessoryType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;VehicleSafetyAccessoryType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;VehicleSafetyAccessoryType&quot;" />

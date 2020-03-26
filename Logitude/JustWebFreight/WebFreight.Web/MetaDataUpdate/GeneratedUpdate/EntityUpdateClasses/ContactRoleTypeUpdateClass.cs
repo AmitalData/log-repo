@@ -386,8 +386,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ContactRoleTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ContactRoleType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ContactRoleTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ContactRoleType").ToList();   
 
-			   TextCode ContactRoleTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContactRoleType.Q.ContactRoleType", DefaultText = @"ContactRoleType",LocalDefaultText = "ContactRoleType", ObjectTableId = ContactRoleTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ContactRoleTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContactRoleType.Q.ContactRoleType", ObjectTableId = ContactRoleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContactRoleTypeFeatures.ContactRoleType", NameTextCodeDefaultText = "ContactRoleType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ContactRoleTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ContactRoleType.Q.ContactRoleTypeQuery", DefaultText = @"Contact Role Types",LocalDefaultText = "איש קשר - תפקיד", ObjectTableId = ContactRoleTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ContactRoleTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTROLETYPE", ObjectTableId = ContactRoleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ContactRoleType.Features.ContactRoleTypes", NameTextCodeDefaultText = "Contact Role Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -415,15 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ContactRoleTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ContactRoleType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ContactRoleTypeFeature_CONTACTROLETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTROLETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactRoleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ContactRoleType.Features.ContactRoleTypes", NameTextCodeDefaultText = @"Contact Role Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

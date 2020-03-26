@@ -15,9 +15,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;COMMUNICATIONTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CommunicationType.Features.CommunicationTypes&quot;" FeatureDefaultText="&quot;Communication Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CommunicationType&quot;" ObjectTableName="&quot;Customs.CommunicationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CommunicationType&quot;" IndexOrder="0" QueryGroupCode="&quot;COMT&quot;" QueryGroupName="&quot;Customs.CommunicationType&quot;" LocalTextCode="&quot;CommunicationType&quot;" TextCode="&quot;CommunicationType&quot;" IsPackagable="false">
+  <Query Code="&quot;CommunicationType&quot;" ObjectTableName="&quot;Customs.CommunicationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CommunicationType&quot;" IndexOrder="0" QueryGroupCode="&quot;COMT&quot;" QueryGroupName="&quot;Customs.CommunicationType&quot;" LocalTextCode="&quot;סוג תקשורת&quot;" TextCode="&quot;Communication Types&quot;" TextCodeCode="&quot;Customs.CommunicationType.Q.CommunicationTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;COMMUNICATIONTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CommunicationType.Features.CommunicationTypes&quot;" FeatureDefaultText="&quot;Communication Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CommunicationType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CommunicationType&quot;" />

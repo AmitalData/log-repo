@@ -387,8 +387,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AddressContactStateObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AddressContactState" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AddressContactStateObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AddressContactState").ToList();   
 
-			   TextCode AddressContactStateTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AddressContactState.Q.AddressContactState", DefaultText = @"AddressContactState",LocalDefaultText = "AddressContactState", ObjectTableId = AddressContactStateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AddressContactStateFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddressContactState.Q.AddressContactState", ObjectTableId = AddressContactStateObjectTable.Id, Tenant = 0, NameTextCodeCode = "AddressContactStateFeatures.AddressContactState", NameTextCodeDefaultText = "AddressContactState", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AddressContactStateTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AddressContactState.Q.AddressContactStateQuery", DefaultText = @"Address Contact States",LocalDefaultText = "מצב כתובת או איש קשר", ObjectTableId = AddressContactStateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AddressContactStateFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSCONTACTSTATE", ObjectTableId = AddressContactStateObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AddressContactState.Features.AddressContactStates", NameTextCodeDefaultText = "Address Contact States", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -416,15 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable AddressContactStateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AddressContactState" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AddressContactStateFeature_ADDRESSCONTACTSTATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSCONTACTSTATE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AddressContactStateObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AddressContactState.Features.AddressContactStates", NameTextCodeDefaultText = @"Address Contact States" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

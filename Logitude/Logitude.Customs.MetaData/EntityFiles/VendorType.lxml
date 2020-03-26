@@ -11,9 +11,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;VENDORTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.VendorType.Features.VendorTypes&quot;" FeatureDefaultText="&quot;Vendor Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;VendorType&quot;" ObjectTableName="&quot;Customs.VendorType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VendorType&quot;" IndexOrder="0" QueryGroupCode="&quot;VENT&quot;" QueryGroupName="&quot;Customs.VendorType&quot;" LocalTextCode="&quot;VendorType&quot;" TextCode="&quot;VendorType&quot;" IsPackagable="false">
+  <Query Code="&quot;VendorType&quot;" ObjectTableName="&quot;Customs.VendorType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VendorType&quot;" IndexOrder="0" QueryGroupCode="&quot;VENT&quot;" QueryGroupName="&quot;Customs.VendorType&quot;" LocalTextCode="&quot;סוג ספק&quot;" TextCode="&quot;Vendor Types&quot;" TextCodeCode="&quot;Customs.VendorType.Q.VendorTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;VENDORTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.VendorType.Features.VendorTypes&quot;" FeatureDefaultText="&quot;Vendor Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;VendorType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;VendorType&quot;" />

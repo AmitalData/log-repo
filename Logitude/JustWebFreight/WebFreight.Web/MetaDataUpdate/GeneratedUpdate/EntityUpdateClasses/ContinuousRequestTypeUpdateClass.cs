@@ -459,8 +459,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ContinuousRequestTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ContinuousRequestType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ContinuousRequestTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ContinuousRequestType").ToList();   
 
-			   TextCode ContinuousRequestTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContinuousRequestType.Q.ContinuousRequestType", DefaultText = @"ContinuousRequestType",LocalDefaultText = "ContinuousRequestType", ObjectTableId = ContinuousRequestTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ContinuousRequestTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContinuousRequestType.Q.ContinuousRequestType", ObjectTableId = ContinuousRequestTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContinuousRequestTypeFeatures.ContinuousRequestType", NameTextCodeDefaultText = "ContinuousRequestType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ContinuousRequestTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContinuousRequestType.Q.ContinuousRequestType", DefaultText = @"ContinuousRequestTypeQuery",LocalDefaultText = null, ObjectTableId = ContinuousRequestTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ContinuousRequestTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContinuousRequestType.Q.ContinuousRequestType", ObjectTableId = ContinuousRequestTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContinuousRequestType.Features.ContinuousRequestType", NameTextCodeDefaultText = "ContinuousRequestType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -488,15 +488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ContinuousRequestTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ContinuousRequestType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ContinuousRequestTypeFeature_ContinuousRequestType_Q_ContinuousRequestType = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContinuousRequestType.Q.ContinuousRequestType", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContinuousRequestTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContinuousRequestType.Features.ContinuousRequestType", NameTextCodeDefaultText = @"ContinuousRequestType" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

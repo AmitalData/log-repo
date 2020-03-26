@@ -397,7 +397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable TPGFileTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TPGFileType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> TPGFileTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.TPGFileType").ToList();   
 
-			   TextCode TPGFileTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TPGFileType.Q.TPGFileType", DefaultText = @"TPGFileType",LocalDefaultText = "TPGFileType", ObjectTableId = TPGFileTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode TPGFileTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TPGFileType.Q.TPGFileType", DefaultText = @"TPGFileTypeQuery",LocalDefaultText = null, ObjectTableId = TPGFileTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TPGFileTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TPGFileType.Q.TPGFileType", ObjectTableId = TPGFileTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TPGFileType.Features.TPGFileType", NameTextCodeDefaultText = "TPGFileType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

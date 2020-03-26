@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;COLLATERALTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CollateralType.Features.CollateralTypes&quot;" FeatureDefaultText="&quot;Collateral Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CollateralType&quot;" ObjectTableName="&quot;Customs.CollateralType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CollateralType&quot;" IndexOrder="0" QueryGroupCode="&quot;COLT&quot;" QueryGroupName="&quot;Customs.CollateralType&quot;" LocalTextCode="&quot;CollateralType&quot;" TextCode="&quot;CollateralType&quot;" IsPackagable="false">
+  <Query Code="&quot;CollateralType&quot;" ObjectTableName="&quot;Customs.CollateralType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CollateralType&quot;" IndexOrder="0" QueryGroupCode="&quot;COLT&quot;" QueryGroupName="&quot;Customs.CollateralType&quot;" LocalTextCode="&quot;סוג בטוחה&quot;" TextCode="&quot;Collateral Types&quot;" TextCodeCode="&quot;Customs.CollateralType.Q.CollateralTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;COLLATERALTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CollateralType.Features.CollateralTypes&quot;" FeatureDefaultText="&quot;Collateral Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CollateralType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CollateralType&quot;" />

@@ -443,7 +443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable RefundCustomerActivityTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.RefundCustomerActivityType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> RefundCustomerActivityTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.RefundCustomerActivityType").ToList();   
 
-			   TextCode RefundCustomerActivityTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RefundCustomerActivityType.Q.RefundCustomerActivityType", DefaultText = @"RefundCustomerActivityType",LocalDefaultText = "RefundCustomerActivityType", ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode RefundCustomerActivityTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RefundCustomerActivityType.Q.RefundCustomerActivityType", DefaultText = @"RefundCustomerActivityTypeQuery",LocalDefaultText = "", ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature RefundCustomerActivityTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RefundCustomerActivityType.Q.RefundCustomerActivityType", ObjectTableId = RefundCustomerActivityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "RefundCustomerActivityType.Features.RefundCustomerActivityType", NameTextCodeDefaultText = "RefundCustomerActivityType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

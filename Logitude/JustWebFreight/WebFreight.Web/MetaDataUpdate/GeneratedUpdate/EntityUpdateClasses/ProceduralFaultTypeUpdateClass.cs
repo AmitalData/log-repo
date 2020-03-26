@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ProceduralFaultTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ProceduralFaultType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ProceduralFaultTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ProceduralFaultType").ToList();   
 
-			   TextCode ProceduralFaultTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProceduralFaultType.Q.ProceduralFaultType", DefaultText = @"ProceduralFaultType",LocalDefaultText = "ProceduralFaultType", ObjectTableId = ProceduralFaultTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ProceduralFaultTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProceduralFaultType.Q.ProceduralFaultType", ObjectTableId = ProceduralFaultTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProceduralFaultTypeFeatures.ProceduralFaultType", NameTextCodeDefaultText = "ProceduralFaultType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ProceduralFaultTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ProceduralFaultType.Q.ProceduralFaultTypeQuery", DefaultText = @"Procedural Fault Type",LocalDefaultText = "סוג ליקוי", ObjectTableId = ProceduralFaultTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ProceduralFaultTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTTYPE", ObjectTableId = ProceduralFaultTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFaultType.Features.ProceduralFaultType", NameTextCodeDefaultText = "Procedural Fault Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ProceduralFaultTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ProceduralFaultType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ProceduralFaultTypeFeature_PROCEDURALFAULTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ProceduralFaultTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFaultType.Features.ProceduralFaultType", NameTextCodeDefaultText = @"Procedural Fault Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

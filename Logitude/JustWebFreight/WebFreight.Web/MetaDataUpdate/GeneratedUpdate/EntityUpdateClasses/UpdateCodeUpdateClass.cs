@@ -445,8 +445,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable UpdateCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.UpdateCode" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> UpdateCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.UpdateCode").ToList();   
 
-			   TextCode UpdateCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UpdateCode.Q.UpdateCode", DefaultText = @"UpdateCode",LocalDefaultText = "UpdateCode", ObjectTableId = UpdateCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature UpdateCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateCode.Q.UpdateCode", ObjectTableId = UpdateCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "UpdateCodeFeatures.UpdateCode", NameTextCodeDefaultText = "UpdateCode", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode UpdateCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UpdateCode.Q.UpdateCode", DefaultText = @"UpdateCodeQuery",LocalDefaultText = "עדכון בקשת העברה", ObjectTableId = UpdateCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature UpdateCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateCode.Q.UpdateCode", ObjectTableId = UpdateCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "UpdateCode.Features.UpdateCode", NameTextCodeDefaultText = "UpdateCode", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -474,15 +474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable UpdateCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.UpdateCode" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature UpdateCodeFeature_UpdateCode_Q_UpdateCode = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UpdateCode.Q.UpdateCode", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UpdateCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "UpdateCode.Features.UpdateCode", NameTextCodeDefaultText = @"UpdateCode" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

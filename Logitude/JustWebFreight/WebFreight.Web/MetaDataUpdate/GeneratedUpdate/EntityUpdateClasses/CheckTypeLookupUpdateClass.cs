@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CheckTypeLookupObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CheckTypeLookup" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CheckTypeLookupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CheckTypeLookup").ToList();   
 
-			   TextCode CheckTypeLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CheckTypeLookup.Q.CheckTypeLookup", DefaultText = @"CheckTypeLookup",LocalDefaultText = "CheckTypeLookup", ObjectTableId = CheckTypeLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CheckTypeLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CheckTypeLookup.Q.CheckTypeLookup", ObjectTableId = CheckTypeLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "CheckTypeLookupFeatures.CheckTypeLookup", NameTextCodeDefaultText = "CheckTypeLookup", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CheckTypeLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CheckTypeLookup.Q.CheckTypeLookupQuery", DefaultText = @"CheckTypeLookup",LocalDefaultText = "סוג בדיקה", ObjectTableId = CheckTypeLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CheckTypeLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKTYPELOOKUP", ObjectTableId = CheckTypeLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckTypeLookup.Features.CheckTypeLookup", NameTextCodeDefaultText = "CheckTypeLookup", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CheckTypeLookupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CheckTypeLookup" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CheckTypeLookupFeature_CHECKTYPELOOKUP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKTYPELOOKUP", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CheckTypeLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckTypeLookup.Features.CheckTypeLookup", NameTextCodeDefaultText = @"CheckTypeLookup" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

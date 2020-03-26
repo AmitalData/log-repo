@@ -391,8 +391,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomsBookTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBookType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsBookTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsBookType").ToList();   
 
-			   TextCode CustomsBookTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsBookType.Q.CustomsBookType", DefaultText = @"CustomsBookType",LocalDefaultText = "CustomsBookType", ObjectTableId = CustomsBookTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsBookTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsBookType.Q.CustomsBookType", ObjectTableId = CustomsBookTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBookTypeFeatures.CustomsBookType", NameTextCodeDefaultText = "CustomsBookType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsBookTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsBookType.Q.CustomsBookTypeQuery", DefaultText = @"Customs Book Types",LocalDefaultText = "Customs Book Type", ObjectTableId = CustomsBookTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsBookTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSBOOKTYPE", ObjectTableId = CustomsBookTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsBookType.Features.CustomsBookTypes", NameTextCodeDefaultText = "Customs Book Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -420,15 +420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CustomsBookTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBookType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomsBookTypeFeature_CUSTOMSBOOKTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSBOOKTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsBookTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsBookType.Features.CustomsBookTypes", NameTextCodeDefaultText = @"Customs Book Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

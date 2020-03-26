@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;AUTHORITY&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.Authority.Features.Authority&quot;" FeatureDefaultText="&quot;Authority&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;Authority&quot;" ObjectTableName="&quot;Customs.Authority&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.Authority&quot;" IndexOrder="0" QueryGroupCode="&quot;ATQG&quot;" QueryGroupName="&quot;Customs.Authority&quot;" LocalTextCode="&quot;Authority&quot;" TextCode="&quot;Authority&quot;" IsPackagable="false">
+  <Query Code="&quot;Authority&quot;" ObjectTableName="&quot;Customs.Authority&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.Authority&quot;" IndexOrder="0" QueryGroupCode="&quot;ATQG&quot;" QueryGroupName="&quot;Customs.Authority&quot;" LocalTextCode="&quot;גורם מאשר&quot;" TextCode="&quot;Authority&quot;" TextCodeCode="&quot;Customs.Authority.Q.AuthorityQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;AUTHORITY&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.Authority.Features.Authority&quot;" FeatureDefaultText="&quot;Authority&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;Authority&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;Authority&quot;" />

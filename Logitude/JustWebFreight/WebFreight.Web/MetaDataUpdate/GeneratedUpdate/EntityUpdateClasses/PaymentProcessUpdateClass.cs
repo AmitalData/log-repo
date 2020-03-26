@@ -389,8 +389,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable PaymentProcessObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentProcess" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> PaymentProcessObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PaymentProcess").ToList();   
 
-			   TextCode PaymentProcessTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentProcess.Q.PaymentProcess", DefaultText = @"PaymentProcess",LocalDefaultText = "PaymentProcess", ObjectTableId = PaymentProcessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PaymentProcessFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentProcess.Q.PaymentProcess", ObjectTableId = PaymentProcessObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentProcessFeatures.PaymentProcess", NameTextCodeDefaultText = "PaymentProcess", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PaymentProcessTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentProcess.Q.PaymentProcessQuery", DefaultText = @"Payment Processes",LocalDefaultText = "תהליך תשלום", ObjectTableId = PaymentProcessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PaymentProcessFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTPROCESS", ObjectTableId = PaymentProcessObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentProcess.Features.PaymentProcesses", NameTextCodeDefaultText = "Payment Processes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -418,15 +418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable PaymentProcessObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentProcess" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature PaymentProcessFeature_PAYMENTPROCESS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTPROCESS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentProcessObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentProcess.Features.PaymentProcesses", NameTextCodeDefaultText = @"Payment Processes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

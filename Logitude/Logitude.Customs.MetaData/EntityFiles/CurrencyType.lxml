@@ -53,9 +53,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CURRENCYTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CurrencyType.Features.CurrencyTypes&quot;" FeatureDefaultText="&quot;Currency Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CurrencyType&quot;" ObjectTableName="&quot;Customs.CurrencyType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CurrencyType&quot;" IndexOrder="0" QueryGroupCode="&quot;CURT&quot;" QueryGroupName="&quot;Customs.CurrencyType&quot;" LocalTextCode="&quot;CurrencyType&quot;" TextCode="&quot;CurrencyType&quot;" IsPackagable="false">
+  <Query Code="&quot;CurrencyType&quot;" ObjectTableName="&quot;Customs.CurrencyType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CurrencyType&quot;" IndexOrder="0" QueryGroupCode="&quot;CURT&quot;" QueryGroupName="&quot;Customs.CurrencyType&quot;" LocalTextCode="&quot;סוג מטבע&quot;" TextCode="&quot;Currency Types&quot;" TextCodeCode="&quot;Customs.CurrencyType.Q.CurrencyTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CURRENCYTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CurrencyType.Features.CurrencyTypes&quot;" FeatureDefaultText="&quot;Currency Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CurrencyType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CurrencyType&quot;" />
@@ -64,6 +63,13 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <Screen Code="&quot;CurrencyType.GeneralTabScreen&quot;" Name="&quot;GeneralTabScreen&quot;" ObjectTableName="&quot;Customs.CurrencyType&quot;" IsHeaderScreen="false" IsReadOnly="false" NumberOfRows="3" NumberOfColumns="1">
+    <ScreenFields>
+      <ScreenField ObjectFieldName="&quot;Code&quot;" ScreenName="CurrencyType.GeneralTabScreen" Row="0" Column="0" />
+      <ScreenField ObjectFieldName="&quot;MehesInactive&quot;" ScreenName="CurrencyType.GeneralTabScreen" Row="1" Column="0" />
+      <ScreenField ObjectFieldName="&quot;TenantInactive&quot;" ScreenName="CurrencyType.GeneralTabScreen" Row="2" Column="0" />
+    </ScreenFields>
+  </Screen>
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.CurrencyType&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.CurrencyType&quot;" ShortView="false" IsManualEntry="false" LocalName="&quot;Updated&quot;" EnglishName="&quot;Updated&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />

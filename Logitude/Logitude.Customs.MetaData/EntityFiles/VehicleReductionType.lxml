@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;VEHICLEREDUCTION&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.VehicleReductionType.Features.VehicleReductionType&quot;" FeatureDefaultText="&quot;VehicleReductionType&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;VehicleReductionType&quot;" ObjectTableName="&quot;Customs.VehicleReductionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VehicleReductionType&quot;" IndexOrder="0" QueryGroupCode="&quot;VRQG&quot;" QueryGroupName="&quot;Customs.VehicleReductionType&quot;" LocalTextCode="&quot;VehicleReductionType&quot;" TextCode="&quot;VehicleReductionType&quot;" IsPackagable="false">
+  <Query Code="&quot;VehicleReductionType&quot;" ObjectTableName="&quot;Customs.VehicleReductionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VehicleReductionType&quot;" IndexOrder="0" QueryGroupCode="&quot;VRQG&quot;" QueryGroupName="&quot;Customs.VehicleReductionType&quot;" LocalTextCode="&quot;סוג פחת לרכב&quot;" TextCode="&quot;VehicleReductionType&quot;" TextCodeCode="&quot;Customs.VehicleReductionType.Q.VehicleReductionTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;VEHICLEREDUCTION&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.VehicleReductionType.Features.VehicleReductionType&quot;" FeatureDefaultText="&quot;VehicleReductionType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;VehicleReductionType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;VehicleReductionType&quot;" />

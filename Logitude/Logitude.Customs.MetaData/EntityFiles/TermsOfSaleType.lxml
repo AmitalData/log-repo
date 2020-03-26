@@ -24,9 +24,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;TERMSOFSALETYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.TermsOfSaleType.Features.TermsOfSaleTypes&quot;" FeatureDefaultText="&quot;Terms Of Sale Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;TermsOfSaleType&quot;" ObjectTableName="&quot;Customs.TermsOfSaleType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TermsOfSaleType&quot;" IndexOrder="0" QueryGroupCode="&quot;TOST&quot;" QueryGroupName="&quot;Customs.TermsOfSaleType&quot;" LocalTextCode="&quot;TermsOfSaleType&quot;" TextCode="&quot;TermsOfSaleType&quot;" IsPackagable="false">
+  <Query Code="&quot;TermsOfSaleType&quot;" ObjectTableName="&quot;Customs.TermsOfSaleType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TermsOfSaleType&quot;" IndexOrder="0" QueryGroupCode="&quot;TOST&quot;" QueryGroupName="&quot;Customs.TermsOfSaleType&quot;" LocalTextCode="&quot;תנאי מכר&quot;" TextCode="&quot;Terms Of Sale Types&quot;" TextCodeCode="&quot;Customs.TermsOfSaleType.Q.TermsOfSaleTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;TERMSOFSALETYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.TermsOfSaleType.Features.TermsOfSaleTypes&quot;" FeatureDefaultText="&quot;Terms Of Sale Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;TermsOfSaleType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;TermsOfSaleType&quot;" />

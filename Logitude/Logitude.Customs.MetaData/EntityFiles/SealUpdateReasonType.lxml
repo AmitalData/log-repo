@@ -9,9 +9,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;SealUpdateReasonType.Q.SealUpdateReasonQ&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;SealUpdateReasonType.Features.SealUpdateReasonQ&quot;" FeatureDefaultText="&quot;SealUpdateReasonQ&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;SealUpdateReasonQ&quot;" ObjectTableName="&quot;Customs.SealUpdateReasonType&quot;" DefaultSortDirection="&quot;Ascending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SealUpdateReasonType&quot;" IndexOrder="0" QueryGroupCode="&quot;ba29&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;SealUpdateReasonQ&quot;" TextCode="&quot;SealUpdateReasonQ&quot;" IsPackagable="false">
+  <Query Code="&quot;SealUpdateReasonQ&quot;" ObjectTableName="&quot;Customs.SealUpdateReasonType&quot;" DefaultSortDirection="&quot;Ascending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SealUpdateReasonType&quot;" IndexOrder="0" QueryGroupCode="&quot;ba29&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;Seal Update Reason Query&quot;" TextCode="&quot;Seal Update Reason Query&quot;" TextCodeCode="&quot;SealUpdateReasonType.Q.SealUpdateReasonQ&quot;" IsSpellChecked="false" FeatureCode="&quot;SealUpdateReasonType.Q.SealUpdateReasonQ&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;SealUpdateReasonType.Features.SealUpdateReasonQ&quot;" FeatureDefaultText="&quot;SealUpdateReasonQ&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="100" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;SealUpdateReasonQ&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="200" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;SealUpdateReasonQ&quot;" />

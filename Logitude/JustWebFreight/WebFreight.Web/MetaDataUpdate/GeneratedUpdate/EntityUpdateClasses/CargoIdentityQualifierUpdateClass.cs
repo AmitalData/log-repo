@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CargoIdentityQualifierObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CargoIdentityQualifier" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CargoIdentityQualifierObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CargoIdentityQualifier").ToList();   
 
-			   TextCode CargoIdentityQualifierTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CargoIdentityQualifier.Q.CargoIdentityQualifier", DefaultText = @"CargoIdentityQualifier",LocalDefaultText = "CargoIdentityQualifier", ObjectTableId = CargoIdentityQualifierObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CargoIdentityQualifierFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CargoIdentityQualifier.Q.CargoIdentityQualifier", ObjectTableId = CargoIdentityQualifierObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoIdentityQualifierFeatures.CargoIdentityQualifier", NameTextCodeDefaultText = "CargoIdentityQualifier", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CargoIdentityQualifierTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoIdentityQualifier.Q.CargoIdentityQualifierQuery", DefaultText = @"CargoIdentity Qualifier",LocalDefaultText = "סוג מזהה רכב", ObjectTableId = CargoIdentityQualifierObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CargoIdentityQualifierFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CARGOQUALIFIRE", ObjectTableId = CargoIdentityQualifierObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CargoIdentityQualifier.Features.CargoIdentityQualifier", NameTextCodeDefaultText = "CargoIdentity Qualifier", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CargoIdentityQualifierObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CargoIdentityQualifier" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CargoIdentityQualifierFeature_CARGOQUALIFIRE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CARGOQUALIFIRE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CargoIdentityQualifierObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CargoIdentityQualifier.Features.CargoIdentityQualifier", NameTextCodeDefaultText = @"CargoIdentity Qualifier" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

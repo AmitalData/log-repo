@@ -89,9 +89,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;BANKS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.Bank.Features.Banks&quot;" FeatureDefaultText="&quot;Banks&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;Bank&quot;" ObjectTableName="&quot;Customs.Bank&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Banks&quot;" IndexOrder="0" QueryGroupCode="&quot;BANK&quot;" QueryGroupName="&quot;Customs.Bank&quot;" LocalTextCode="&quot;Bank&quot;" TextCode="&quot;Bank&quot;" IsPackagable="false">
+  <Query Code="&quot;Bank&quot;" ObjectTableName="&quot;Customs.Bank&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Banks&quot;" IndexOrder="0" QueryGroupCode="&quot;BANK&quot;" QueryGroupName="&quot;Customs.Bank&quot;" LocalTextCode="&quot;בנק&quot;" TextCode="&quot;Banks&quot;" TextCodeCode="&quot;Customs.Bank.Q.BankQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;BANKS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.Bank.Features.Banks&quot;" FeatureDefaultText="&quot;Banks&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="70" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;Bank&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="250" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;Bank&quot;" />

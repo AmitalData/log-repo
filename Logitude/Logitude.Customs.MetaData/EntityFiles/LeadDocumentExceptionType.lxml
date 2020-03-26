@@ -14,9 +14,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;LEADDOCUMENTEXCEPTIONTYPEQUERY&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.City.Features.LeadDocumentExceptionTypes&quot;" FeatureDefaultText="&quot;Lead Document Exception Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;LeadDocumentExceptionType&quot;" ObjectTableName="&quot;Customs.LeadDocumentExceptionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.LeadDocumentExceptionType&quot;" IndexOrder="0" QueryGroupCode="&quot;LDET&quot;" QueryGroupName="&quot;Customs.LeadDocumentExceptionTypes&quot;" LocalTextCode="&quot;LeadDocumentExceptionType&quot;" TextCode="&quot;LeadDocumentExceptionType&quot;" IsPackagable="false">
+  <Query Code="&quot;LeadDocumentExceptionType&quot;" ObjectTableName="&quot;Customs.LeadDocumentExceptionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.LeadDocumentExceptionType&quot;" IndexOrder="0" QueryGroupCode="&quot;LDET&quot;" QueryGroupName="&quot;Customs.LeadDocumentExceptionTypes&quot;" LocalTextCode="&quot;סוג שגיאה במסמך מוביל&quot;" TextCode="&quot;Lead Document Exception Types&quot;" TextCodeCode="&quot;Customs.LeadDocumentExceptionType.Q.LeadDocumentExceptionTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;LEADDOCUMENTEXCEPTIONTYPEQUERY&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.City.Features.LeadDocumentExceptionTypes&quot;" FeatureDefaultText="&quot;Lead Document Exception Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;LeadDocumentExceptionType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;LeadDocumentExceptionType&quot;" />

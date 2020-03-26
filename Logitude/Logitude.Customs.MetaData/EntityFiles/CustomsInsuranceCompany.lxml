@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;INSURANCECOMPANY&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CustomsInsuranceCompany.Features.CustomsInsuranceCompany&quot;" FeatureDefaultText="&quot;CustomsInsuranceCompany&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CustomsInsuranceCompany&quot;" ObjectTableName="&quot;Customs.CustomsInsuranceCompany&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomsInsuranceCompany&quot;" IndexOrder="0" QueryGroupCode="&quot;CNQG&quot;" QueryGroupName="&quot;Customs.CustomsInsuranceCompany&quot;" LocalTextCode="&quot;CustomsInsuranceCompany&quot;" TextCode="&quot;CustomsInsuranceCompany&quot;" IsPackagable="false">
+  <Query Code="&quot;CustomsInsuranceCompany&quot;" ObjectTableName="&quot;Customs.CustomsInsuranceCompany&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomsInsuranceCompany&quot;" IndexOrder="0" QueryGroupCode="&quot;CNQG&quot;" QueryGroupName="&quot;Customs.CustomsInsuranceCompany&quot;" LocalTextCode="&quot;מכס חברה לביטוח&quot;" TextCode="&quot;Customs Insurance Company&quot;" TextCodeCode="&quot;Customs.CustomsInsuranceCompany.Q.CustomsInsuranceCompanyQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;INSURANCECOMPANY&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CustomsInsuranceCompany.Features.CustomsInsuranceCompany&quot;" FeatureDefaultText="&quot;CustomsInsuranceCompany&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CustomsInsuranceCompany&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CustomsInsuranceCompany&quot;" />

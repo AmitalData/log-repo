@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomMetaDataTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomMetaDataType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomMetaDataTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomMetaDataType").ToList();   
 
-			   TextCode CustomMetaDataTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomMetaDataType.Q.CustomMetaDataType", DefaultText = @"CustomMetaDataType",LocalDefaultText = "CustomMetaDataType", ObjectTableId = CustomMetaDataTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomMetaDataTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomMetaDataType.Q.CustomMetaDataType", ObjectTableId = CustomMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomMetaDataTypeFeatures.CustomMetaDataType", NameTextCodeDefaultText = "CustomMetaDataType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomMetaDataTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomMetaDataType.Q.CustomMetaDataTypeQuery", DefaultText = @"Document Meta Data",LocalDefaultText = "Document Meta Datas", ObjectTableId = CustomMetaDataTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomMetaDataTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMMETADATATYPE", ObjectTableId = CustomMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomMetaDataType.Features.CustomMetaDataTypes", NameTextCodeDefaultText = "Custom Meta Data Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CustomMetaDataTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomMetaDataType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomMetaDataTypeFeature_CUSTOMMETADATATYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMMETADATATYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomMetaDataType.Features.CustomMetaDataTypes", NameTextCodeDefaultText = @"Custom Meta Data Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

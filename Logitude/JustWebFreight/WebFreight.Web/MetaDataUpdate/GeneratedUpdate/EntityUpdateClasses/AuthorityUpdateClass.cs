@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AuthorityObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.Authority" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AuthorityObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.Authority").ToList();   
 
-			   TextCode AuthorityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Authority.Q.Authority", DefaultText = @"Authority",LocalDefaultText = "Authority", ObjectTableId = AuthorityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AuthorityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Authority.Q.Authority", ObjectTableId = AuthorityObjectTable.Id, Tenant = 0, NameTextCodeCode = "AuthorityFeatures.Authority", NameTextCodeDefaultText = "Authority", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AuthorityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Authority.Q.AuthorityQuery", DefaultText = @"Authority",LocalDefaultText = "גורם מאשר", ObjectTableId = AuthorityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AuthorityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTHORITY", ObjectTableId = AuthorityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Authority.Features.Authority", NameTextCodeDefaultText = "Authority", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable AuthorityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Authority" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AuthorityFeature_AUTHORITY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTHORITY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AuthorityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Authority.Features.Authority", NameTextCodeDefaultText = @"Authority" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

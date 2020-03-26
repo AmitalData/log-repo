@@ -11,9 +11,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CARGOQUALIFIRE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CargoIdentityQualifier.Features.CargoIdentityQualifier&quot;" FeatureDefaultText="&quot;CargoIdentity Qualifier&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CargoIdentityQualifier&quot;" ObjectTableName="&quot;Customs.CargoIdentityQualifier&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CargoIdentityQualifier&quot;" IndexOrder="0" QueryGroupCode="&quot;CQQG&quot;" QueryGroupName="&quot;Customs.CargoIdentityQualifier&quot;" LocalTextCode="&quot;CargoIdentityQualifier&quot;" TextCode="&quot;CargoIdentityQualifier&quot;" IsPackagable="false">
+  <Query Code="&quot;CargoIdentityQualifier&quot;" ObjectTableName="&quot;Customs.CargoIdentityQualifier&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CargoIdentityQualifier&quot;" IndexOrder="0" QueryGroupCode="&quot;CQQG&quot;" QueryGroupName="&quot;Customs.CargoIdentityQualifier&quot;" LocalTextCode="&quot;סוג מזהה רכב&quot;" TextCode="&quot;CargoIdentity Qualifier&quot;" TextCodeCode="&quot;Customs.CargoIdentityQualifier.Q.CargoIdentityQualifierQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CARGOQUALIFIRE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CargoIdentityQualifier.Features.CargoIdentityQualifier&quot;" FeatureDefaultText="&quot;CargoIdentity Qualifier&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CargoIdentityQualifier&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CargoIdentityQualifier&quot;" />

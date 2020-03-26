@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CheckEssenceLookupObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CheckEssenceLookup" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CheckEssenceLookupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CheckEssenceLookup").ToList();   
 
-			   TextCode CheckEssenceLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CheckEssenceLookup.Q.CheckEssenceLookup", DefaultText = @"CheckEssenceLookup",LocalDefaultText = "CheckEssenceLookup", ObjectTableId = CheckEssenceLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CheckEssenceLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CheckEssenceLookup.Q.CheckEssenceLookup", ObjectTableId = CheckEssenceLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "CheckEssenceLookupFeatures.CheckEssenceLookup", NameTextCodeDefaultText = "CheckEssenceLookup", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CheckEssenceLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CheckEssenceLookup.Q.CheckEssenceLookupQuery", DefaultText = @"Check Essence Lookup",LocalDefaultText = "מהות בדיקה", ObjectTableId = CheckEssenceLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CheckEssenceLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKESSENCELOOKUP", ObjectTableId = CheckEssenceLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckEssenceLookup.Features.CheckEssenceLookup", NameTextCodeDefaultText = "Check Essence Lookup", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CheckEssenceLookupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CheckEssenceLookup" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CheckEssenceLookupFeature_CHECKESSENCELOOKUP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKESSENCELOOKUP", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CheckEssenceLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckEssenceLookup.Features.CheckEssenceLookup", NameTextCodeDefaultText = @"Check Essence Lookup" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

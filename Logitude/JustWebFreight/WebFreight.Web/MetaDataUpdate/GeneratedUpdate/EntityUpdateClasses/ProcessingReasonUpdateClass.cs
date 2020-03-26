@@ -374,7 +374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ProcessingReasonObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ProcessingReason" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ProcessingReasonObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ProcessingReason").ToList();   
 
-			   TextCode ProcessingReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProcessingReason.Q.ProcessingReason", DefaultText = @"ProcessingReason",LocalDefaultText = "ProcessingReason", ObjectTableId = ProcessingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode ProcessingReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProcessingReason.Q.ProcessingReason", DefaultText = @"ProcessingReasonQuery",LocalDefaultText = null, ObjectTableId = ProcessingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ProcessingReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProcessingReason.Q.ProcessingReason", ObjectTableId = ProcessingReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProcessingReason.Features.ProcessingReason", NameTextCodeDefaultText = "ProcessingReason", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

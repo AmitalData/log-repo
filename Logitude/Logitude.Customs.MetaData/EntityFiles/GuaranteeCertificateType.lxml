@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;GUARANTEECERTIFICATE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.GuaranteeCertificateType.Features.GuaranteeCertificateType&quot;" FeatureDefaultText="&quot;Guarantee Certificate Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;GuaranteeCertificateType&quot;" ObjectTableName="&quot;Customs.GuaranteeCertificateType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.GuaranteeCertificateType&quot;" IndexOrder="0" QueryGroupCode="&quot;GCQG&quot;" QueryGroupName="&quot;Customs.GuaranteeCertificateType&quot;" LocalTextCode="&quot;GuaranteeCertificateType&quot;" TextCode="&quot;GuaranteeCertificateType&quot;" IsPackagable="false">
+  <Query Code="&quot;GuaranteeCertificateType&quot;" ObjectTableName="&quot;Customs.GuaranteeCertificateType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.GuaranteeCertificateType&quot;" IndexOrder="0" QueryGroupCode="&quot;GCQG&quot;" QueryGroupName="&quot;Customs.GuaranteeCertificateType&quot;" LocalTextCode="&quot;סוג ערבות&quot;" TextCode="&quot;Guarantee Certificate Type&quot;" TextCodeCode="&quot;Customs.GuaranteeCertificateType.Q.GuaranteeCertificateTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;GUARANTEECERTIFICATE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.GuaranteeCertificateType.Features.GuaranteeCertificateType&quot;" FeatureDefaultText="&quot;Guarantee Certificate Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;GuaranteeCertificateType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;GuaranteeCertificateType&quot;" />

@@ -9,7 +9,7 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;TPGFileType&quot;" ObjectTableName="&quot;Customs.TPGFileType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TPGFileType&quot;" IndexOrder="0" QueryGroupCode="&quot;f69d&quot;" QueryGroupName="&quot;Customs.TPGFileType Query Group&quot;" LocalTextCode="&quot;TPGFileType&quot;" TextCode="&quot;TPGFileType&quot;" FeatureCode="&quot;TPGFileType.Q.TPGFileType&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;TPGFileType.Features.TPGFileType&quot;" FeatureDefaultText="&quot;TPGFileType&quot;">
+  <Query Code="&quot;TPGFileType&quot;" ObjectTableName="&quot;Customs.TPGFileType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TPGFileType&quot;" IndexOrder="0" QueryGroupCode="&quot;f69d&quot;" QueryGroupName="&quot;Customs.TPGFileType Query Group&quot;" TextCode="&quot;TPGFileTypeQuery&quot;" TextCodeCode="&quot;TPGFileType.Q.TPGFileType&quot;" IsSpellChecked="false" FeatureCode="&quot;TPGFileType.Q.TPGFileType&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;TPGFileType.Features.TPGFileType&quot;" FeatureDefaultText="&quot;TPGFileType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="100" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;TPGFileType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;TPGFileType&quot;" />

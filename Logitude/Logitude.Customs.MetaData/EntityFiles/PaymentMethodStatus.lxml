@@ -17,9 +17,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PAYMENTMETHODSTATUS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.PaymentMethodStatus.Features.PaymentMethodStatus&quot;" FeatureDefaultText="&quot;Payment Method Status&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;PaymentMethodStatus&quot;" ObjectTableName="&quot;Customs.PaymentMethodStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentMethodStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;PAMS&quot;" QueryGroupName="&quot;Customs.PaymentMethodStatus&quot;" LocalTextCode="&quot;PaymentMethodStatus&quot;" TextCode="&quot;PaymentMethodStatus&quot;" IsPackagable="false">
+  <Query Code="&quot;PaymentMethodStatus&quot;" ObjectTableName="&quot;Customs.PaymentMethodStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentMethodStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;PAMS&quot;" QueryGroupName="&quot;Customs.PaymentMethodStatus&quot;" LocalTextCode="&quot;סטטוס אמצעי תשלום&quot;" TextCode="&quot;Payment Method Status&quot;" TextCodeCode="&quot;Customs.PaymentMethodStatus.Q.PaymentMethodStatusQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PAYMENTMETHODSTATUS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PaymentMethodStatus.Features.PaymentMethodStatus&quot;" FeatureDefaultText="&quot;Payment Method Status&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;PaymentMethodStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;PaymentMethodStatus&quot;" />

@@ -397,7 +397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AgentTalkBackTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AgentTalkBackType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AgentTalkBackTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AgentTalkBackType").ToList();   
 
-			   TextCode AgentTalkBackTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentTalkBackType.Q.AgentTalkBackType", DefaultText = @"AgentTalkBackType",LocalDefaultText = "AgentTalkBackType", ObjectTableId = AgentTalkBackTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode AgentTalkBackTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgentTalkBackType.Q.AgentTalkBackType", DefaultText = @"AgentTalkBackTypeQuery",LocalDefaultText = null, ObjectTableId = AgentTalkBackTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature AgentTalkBackTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AgentTalkBackType.Q.AgentTalkBackType", ObjectTableId = AgentTalkBackTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AgentTalkBackType.Features.AgentTalkBackType", NameTextCodeDefaultText = "AgentTalkBackType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

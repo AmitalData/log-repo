@@ -391,8 +391,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SalesTaxExemptionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SalesTaxExemptionType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SalesTaxExemptionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SalesTaxExemptionType").ToList();   
 
-			   TextCode SalesTaxExemptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SalesTaxExemptionType.Q.SalesTaxExemptionType", DefaultText = @"SalesTaxExemptionType",LocalDefaultText = "SalesTaxExemptionType", ObjectTableId = SalesTaxExemptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SalesTaxExemptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SalesTaxExemptionType.Q.SalesTaxExemptionType", ObjectTableId = SalesTaxExemptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SalesTaxExemptionTypeFeatures.SalesTaxExemptionType", NameTextCodeDefaultText = "SalesTaxExemptionType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SalesTaxExemptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SalesTaxExemptionType.Q.SalesTaxExemptionTypeQuery", DefaultText = @"Sales Tax Exemption Types",LocalDefaultText = "סוג פטור ממס קנייה", ObjectTableId = SalesTaxExemptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature SalesTaxExemptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SALESTAXEXEMPTIONTYPE", ObjectTableId = SalesTaxExemptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SalesTaxExemptionType.Features.SalesTaxExemptionTypes", NameTextCodeDefaultText = "Sales Tax Exemption Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -420,15 +420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SalesTaxExemptionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SalesTaxExemptionType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature SalesTaxExemptionTypeFeature_SALESTAXEXEMPTIONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SALESTAXEXEMPTIONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SalesTaxExemptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SalesTaxExemptionType.Features.SalesTaxExemptionTypes", NameTextCodeDefaultText = @"Sales Tax Exemption Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

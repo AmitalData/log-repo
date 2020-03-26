@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;AUTONOMYTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.AutonomyType.Features.AutonomyTypes&quot;" FeatureDefaultText="&quot;Autonomy Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;AutonomyType&quot;" ObjectTableName="&quot;Customs.AutonomyType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AutonomyType&quot;" IndexOrder="0" QueryGroupCode="&quot;AUTT&quot;" QueryGroupName="&quot;Customs.AutonomyType&quot;" LocalTextCode="&quot;AutonomyType&quot;" TextCode="&quot;AutonomyType&quot;" IsPackagable="false">
+  <Query Code="&quot;AutonomyType&quot;" ObjectTableName="&quot;Customs.AutonomyType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AutonomyType&quot;" IndexOrder="0" QueryGroupCode="&quot;AUTT&quot;" QueryGroupName="&quot;Customs.AutonomyType&quot;" LocalTextCode="&quot;סוג אוטונומיה&quot;" TextCode="&quot;Autonomy Types&quot;" TextCodeCode="&quot;Customs.AutonomyType.Q.AutonomyTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;AUTONOMYTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.AutonomyType.Features.AutonomyTypes&quot;" FeatureDefaultText="&quot;Autonomy Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;AutonomyType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;AutonomyType&quot;" />

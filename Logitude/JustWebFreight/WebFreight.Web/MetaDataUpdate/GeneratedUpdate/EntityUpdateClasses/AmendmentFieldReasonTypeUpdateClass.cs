@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AmendmentFieldReasonTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AmendmentFieldReasonType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AmendmentFieldReasonTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AmendmentFieldReasonType").ToList();   
 
-			   TextCode AmendmentFieldReasonTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AmendmentFieldReasonType.Q.AmendmentFieldReasonType", DefaultText = @"AmendmentFieldReasonType",LocalDefaultText = "AmendmentFieldReasonType", ObjectTableId = AmendmentFieldReasonTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AmendmentFieldReasonTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AmendmentFieldReasonType.Q.AmendmentFieldReasonType", ObjectTableId = AmendmentFieldReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AmendmentFieldReasonTypeFeatures.AmendmentFieldReasonType", NameTextCodeDefaultText = "AmendmentFieldReasonType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AmendmentFieldReasonTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AmendmentFieldReasonType.Q.AmendmentFieldReasonTypeQuery", DefaultText = @"Amendment Field Reason Type",LocalDefaultText = "סיבת מופע לתיקון", ObjectTableId = AmendmentFieldReasonTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AmendmentFieldReasonTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AMEDMENTFIELDREASONTYPE", ObjectTableId = AmendmentFieldReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AmendmentFieldReasonType.Features.AmendmentFieldReasonType", NameTextCodeDefaultText = "AmendmentFieldReasonType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,17 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable AmendmentFieldReasonTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AmendmentFieldReasonType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AmendmentFieldReasonTypeFeature_AMEDMENTFIELDREASONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AMEDMENTFIELDREASONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AmendmentFieldReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AmendmentFieldReasonType.Features.AmendmentFieldReasonType", NameTextCodeDefaultText = @"AmendmentFieldReasonType" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature AmendmentFieldReasonTypeFeature_CUSTOMERIDENTIFYTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERIDENTIFYTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AmendmentFieldReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomerIdentifyType.Features.CustomerIdentifyType", NameTextCodeDefaultText = @"CustomerIdentifyType" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

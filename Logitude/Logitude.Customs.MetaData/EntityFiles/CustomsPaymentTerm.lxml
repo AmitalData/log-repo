@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CUSTOMSPAYMENTTERM&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CustomsPaymentTerm.Features.CustomsPaymentTerms&quot;" FeatureDefaultText="&quot;Customs Payment Terms&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CustomsPaymentTerm&quot;" ObjectTableName="&quot;Customs.CustomsPaymentTerm&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomsPaymentTerm&quot;" IndexOrder="0" QueryGroupCode="&quot;CUPT&quot;" QueryGroupName="&quot;Customs.CustomsPaymentTerm&quot;" LocalTextCode="&quot;CustomsPaymentTerm&quot;" TextCode="&quot;CustomsPaymentTerm&quot;" IsPackagable="false">
+  <Query Code="&quot;CustomsPaymentTerm&quot;" ObjectTableName="&quot;Customs.CustomsPaymentTerm&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomsPaymentTerm&quot;" IndexOrder="0" QueryGroupCode="&quot;CUPT&quot;" QueryGroupName="&quot;Customs.CustomsPaymentTerm&quot;" LocalTextCode="&quot;תנאי תשלום&quot;" TextCode="&quot;Payment Terms&quot;" TextCodeCode="&quot;Customs.CustomsPaymentTerm.Q.CustomsPaymentTermQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CUSTOMSPAYMENTTERM&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CustomsPaymentTerm.Features.CustomsPaymentTerms&quot;" FeatureDefaultText="&quot;Customs Payment Terms&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CustomsPaymentTerm&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CustomsPaymentTerm&quot;" />

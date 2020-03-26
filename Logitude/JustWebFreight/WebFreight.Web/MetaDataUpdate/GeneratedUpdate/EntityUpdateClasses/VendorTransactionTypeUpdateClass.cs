@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable VendorTransactionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.VendorTransactionType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VendorTransactionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VendorTransactionType").ToList();   
 
-			   TextCode VendorTransactionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VendorTransactionType.Q.VendorTransactionType", DefaultText = @"VendorTransactionType",LocalDefaultText = "VendorTransactionType", ObjectTableId = VendorTransactionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VendorTransactionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VendorTransactionType.Q.VendorTransactionType", ObjectTableId = VendorTransactionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VendorTransactionTypeFeatures.VendorTransactionType", NameTextCodeDefaultText = "VendorTransactionType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VendorTransactionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorTransactionType.Q.VendorTransactionTypeQuery", DefaultText = @"Vendor Transaction Type",LocalDefaultText = "סוג פעילות על ספק", ObjectTableId = VendorTransactionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature VendorTransactionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORTRANSACTIONTYPE", ObjectTableId = VendorTransactionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VendorTransactionType.Features.VendorTransactionType", NameTextCodeDefaultText = "Vendor Transaction Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable VendorTransactionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VendorTransactionType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature VendorTransactionTypeFeature_VENDORTRANSACTIONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORTRANSACTIONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VendorTransactionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VendorTransactionType.Features.VendorTransactionType", NameTextCodeDefaultText = @"Vendor Transaction Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

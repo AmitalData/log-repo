@@ -386,8 +386,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomsAddressTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAddressType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsAddressTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsAddressType").ToList();   
 
-			   TextCode CustomsAddressTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAddressType.Q.CustomsAddressType", DefaultText = @"CustomsAddressType",LocalDefaultText = "CustomsAddressType", ObjectTableId = CustomsAddressTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsAddressTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAddressType.Q.CustomsAddressType", ObjectTableId = CustomsAddressTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAddressTypeFeatures.CustomsAddressType", NameTextCodeDefaultText = "CustomsAddressType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsAddressTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsAddressType.Q.CustomsAddressTypeQuery", DefaultText = @"Address Types",LocalDefaultText = "סוג כתובת", ObjectTableId = CustomsAddressTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsAddressTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSADDRESSTYPE", ObjectTableId = CustomsAddressTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsAddressType.Features.CustomsAddressTypes", NameTextCodeDefaultText = "Customs Address Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -415,15 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CustomsAddressTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAddressType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomsAddressTypeFeature_CUSTOMSADDRESSTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSADDRESSTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsAddressTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsAddressType.Features.CustomsAddressTypes", NameTextCodeDefaultText = @"Customs Address Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

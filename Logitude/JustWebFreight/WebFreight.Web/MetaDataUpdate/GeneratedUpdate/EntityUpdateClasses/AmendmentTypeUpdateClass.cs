@@ -462,8 +462,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AmendmentTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AmendmentType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AmendmentTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AmendmentType").ToList();   
 
-			   TextCode AmendmentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AmendmentType.Q.AmendmentTypeQ", DefaultText = @"AmendmentTypeQ",LocalDefaultText = "AmendmentTypeQ", ObjectTableId = AmendmentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AmendmentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AmendmentType.Q.AmendmentTypeQ", ObjectTableId = AmendmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AmendmentTypeFeatures.AmendmentTypeQ", NameTextCodeDefaultText = "AmendmentTypeQ", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AmendmentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AmendmentType.Q.AmendmentTypeQ", DefaultText = @"Amendment Type Query",LocalDefaultText = "Amendment Type Query", ObjectTableId = AmendmentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AmendmentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AmendmentType.Q.AmendmentTypeQ", ObjectTableId = AmendmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AmendmentType.Features.AmendmentTypeQ", NameTextCodeDefaultText = "AmendmentTypeQ", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -491,15 +491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable AmendmentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AmendmentType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AmendmentTypeFeature_AmendmentType_Q_AmendmentTypeQ = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AmendmentType.Q.AmendmentTypeQ", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AmendmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AmendmentType.Features.AmendmentTypeQ", NameTextCodeDefaultText = @"AmendmentTypeQ" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

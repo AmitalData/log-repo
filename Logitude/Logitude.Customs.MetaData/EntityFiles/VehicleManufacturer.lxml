@@ -10,9 +10,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;VEHICLEMANUFACTURER&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.VehicleManufacturer.Features.VehicleManufacturer&quot;" FeatureDefaultText="&quot;Vehicle Manufacturer&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;VehicleManufacturer&quot;" ObjectTableName="&quot;Customs.VehicleManufacturer&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VehicleManufacturer&quot;" IndexOrder="0" QueryGroupCode="&quot;VMQG&quot;" QueryGroupName="&quot;Customs.VehicleManufacturer&quot;" LocalTextCode="&quot;VehicleManufacturer&quot;" TextCode="&quot;VehicleManufacturer&quot;" IsPackagable="false">
+  <Query Code="&quot;VehicleManufacturer&quot;" ObjectTableName="&quot;Customs.VehicleManufacturer&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VehicleManufacturer&quot;" IndexOrder="0" QueryGroupCode="&quot;VMQG&quot;" QueryGroupName="&quot;Customs.VehicleManufacturer&quot;" LocalTextCode="&quot;תוצר רכב&quot;" TextCode="&quot;Vehicle Manufacturer&quot;" TextCodeCode="&quot;Customs.VehicleManufacturer.Q.VehicleManufacturerQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;VEHICLEMANUFACTURER&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.VehicleManufacturer.Features.VehicleManufacturer&quot;" FeatureDefaultText="&quot;Vehicle Manufacturer&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;VehicleManufacturer&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;VehicleManufacturer&quot;" />

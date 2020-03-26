@@ -22855,9 +22855,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;VALIDCUSTOMSITEM&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ValidCustomsItem.Features.ValidCustomsItem&quot;" FeatureDefaultText="&quot;Valid Customs Item&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ValidCustomsItem&quot;" ObjectTableName="&quot;Customs.ValidCustomsItem&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ValidCustomsItem&quot;" IndexOrder="0" QueryGroupCode="&quot;VCQG&quot;" QueryGroupName="&quot;Customs.ValidCustomsItem&quot;" LocalTextCode="&quot;ValidCustomsItem&quot;" TextCode="&quot;ValidCustomsItem&quot;" IsPackagable="false">
+  <Query Code="&quot;ValidCustomsItem&quot;" ObjectTableName="&quot;Customs.ValidCustomsItem&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ValidCustomsItem&quot;" IndexOrder="0" QueryGroupCode="&quot;VCQG&quot;" QueryGroupName="&quot;Customs.ValidCustomsItem&quot;" LocalTextCode="&quot;פרטי מכס תקפים&quot;" TextCode="&quot;Valid Customs Item&quot;" TextCodeCode="&quot;Customs.ValidCustomsItem.Q.ValidCustomsItemQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;VALIDCUSTOMSITEM&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ValidCustomsItem.Features.ValidCustomsItem&quot;" FeatureDefaultText="&quot;Valid Customs Item&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ValidCustomsItem&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ValidCustomsItem&quot;" />

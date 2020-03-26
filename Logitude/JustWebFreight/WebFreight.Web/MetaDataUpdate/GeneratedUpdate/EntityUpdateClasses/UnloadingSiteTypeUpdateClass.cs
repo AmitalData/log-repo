@@ -382,8 +382,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable UnloadingSiteTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.UnloadingSiteType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> UnloadingSiteTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.UnloadingSiteType").ToList();   
 
-			   TextCode UnloadingSiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UnloadingSiteType.Q.UnloadingSiteType", DefaultText = @"UnloadingSiteType",LocalDefaultText = "UnloadingSiteType", ObjectTableId = UnloadingSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature UnloadingSiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UnloadingSiteType.Q.UnloadingSiteType", ObjectTableId = UnloadingSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "UnloadingSiteTypeFeatures.UnloadingSiteType", NameTextCodeDefaultText = "UnloadingSiteType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode UnloadingSiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.UnloadingSiteType.Q.UnloadingSiteTypeQuery", DefaultText = @"Unloading Site Type",LocalDefaultText = "סוג האתר פריקה", ObjectTableId = UnloadingSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature UnloadingSiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UNLOADINGSITETYPEQUERY", ObjectTableId = UnloadingSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.UnloadingSiteType.Features.UnloadingSiteTypes", NameTextCodeDefaultText = "Unloading Site Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -411,15 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable UnloadingSiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.UnloadingSiteType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature UnloadingSiteTypeFeature_UNLOADINGSITETYPEQUERY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UNLOADINGSITETYPEQUERY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UnloadingSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.UnloadingSiteType.Features.UnloadingSiteTypes", NameTextCodeDefaultText = @"Unloading Site Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

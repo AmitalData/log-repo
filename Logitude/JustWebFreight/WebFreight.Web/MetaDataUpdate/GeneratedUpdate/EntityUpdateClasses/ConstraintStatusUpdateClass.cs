@@ -384,8 +384,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ConstraintStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ConstraintStatus" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ConstraintStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ConstraintStatus").ToList();   
 
-			   TextCode ConstraintStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConstraintStatus.Q.ConstraintStatus", DefaultText = @"ConstraintStatus",LocalDefaultText = "ConstraintStatus", ObjectTableId = ConstraintStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ConstraintStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConstraintStatus.Q.ConstraintStatus", ObjectTableId = ConstraintStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConstraintStatusFeatures.ConstraintStatus", NameTextCodeDefaultText = "ConstraintStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ConstraintStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConstraintStatus.Q.ConstraintStatusQuery", DefaultText = @"Constraint Status",LocalDefaultText = "ס. אילוץ", ObjectTableId = ConstraintStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ConstraintStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTSTATUS", ObjectTableId = ConstraintStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintStatus.Features.ConstraintStatus", NameTextCodeDefaultText = "Constraint Status", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -413,15 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ConstraintStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ConstraintStatus" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ConstraintStatusFeature_CONSTRAINTSTATUS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTSTATUS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ConstraintStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintStatus.Features.ConstraintStatus", NameTextCodeDefaultText = @"Constraint Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

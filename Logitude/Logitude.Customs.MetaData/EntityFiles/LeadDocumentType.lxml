@@ -15,9 +15,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;LEADDOCUMENTTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.LeadDocumentType.Features.LeadDocumentTypes&quot;" FeatureDefaultText="&quot;Lead Document Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;LeadDocumentType&quot;" ObjectTableName="&quot;Customs.LeadDocumentType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.LeadDocumentType&quot;" IndexOrder="0" QueryGroupCode="&quot;LEDT&quot;" QueryGroupName="&quot;Customs.LeadDocumentType&quot;" LocalTextCode="&quot;LeadDocumentType&quot;" TextCode="&quot;LeadDocumentType&quot;" IsPackagable="false">
+  <Query Code="&quot;LeadDocumentType&quot;" ObjectTableName="&quot;Customs.LeadDocumentType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.LeadDocumentType&quot;" IndexOrder="0" QueryGroupCode="&quot;LEDT&quot;" QueryGroupName="&quot;Customs.LeadDocumentType&quot;" LocalTextCode="&quot;סוג מסמך על&quot;" TextCode="&quot;Lead Document Types&quot;" TextCodeCode="&quot;Customs.LeadDocumentType.Q.LeadDocumentTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;LEADDOCUMENTTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.LeadDocumentType.Features.LeadDocumentTypes&quot;" FeatureDefaultText="&quot;Lead Document Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;LeadDocumentType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;LeadDocumentType&quot;" />

@@ -607,7 +607,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomsAirlineObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAirline" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsAirlineObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsAirline").ToList();   
 
-			   TextCode CustomsAirlineTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAirline.Q.AllCustomsAirlines", DefaultText = @"AllCustomsAirlines",LocalDefaultText = "AllCustomsAirlines", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CustomsAirlineTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAirline.Q.AllCustomsAirlines", DefaultText = @"All Customs Airlines",LocalDefaultText = "חברות תעופה", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CustomsAirlineFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Q.AllCustomsAirlines", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.AllCustomsAirlines", NameTextCodeDefaultText = "AllCustomsAirlines", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
@@ -671,11 +671,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CustomsAirlineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAirline" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomsAirlineGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsAirline.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsAirlineGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.General", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirlineFeatures.CVGT", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsAirlineGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.General", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode CustomsAirlineEventTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsAirline.TH.Event", DefaultText = "Event",LocalDefaultText = "אירועים", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsAirlineEventFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.Event", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirlineFeatures.CVVT", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsAirlineEventFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.Event", ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Event", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -694,15 +694,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CustomsAirlineFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomsAirlineFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomsAirlineFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsAirlineFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.PackageFeature", NameTextCodeDefaultText = "CustomsAirline Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomsAirlineFeature_CustomsAirline_Tab_General = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.General", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature CustomsAirlineFeature_CustomsAirline_Tab_Event = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAirline.Tab.Event", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.Event", NameTextCodeDefaultText = @"Event" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature CustomsAirlineFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsAirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAirline.Features.PackageFeature", NameTextCodeDefaultText = "CustomsAirline Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 

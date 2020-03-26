@@ -388,8 +388,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable RegisteredWarehouseSiteTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.RegisteredWarehouseSiteType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> RegisteredWarehouseSiteTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.RegisteredWarehouseSiteType").ToList();   
 
-			   TextCode RegisteredWarehouseSiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RegisteredWarehouseSiteType.Q.RegisteredWarehouseSiteType", DefaultText = @"RegisteredWarehouseSiteType",LocalDefaultText = "RegisteredWarehouseSiteType", ObjectTableId = RegisteredWarehouseSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature RegisteredWarehouseSiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RegisteredWarehouseSiteType.Q.RegisteredWarehouseSiteType", ObjectTableId = RegisteredWarehouseSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "RegisteredWarehouseSiteTypeFeatures.RegisteredWarehouseSiteType", NameTextCodeDefaultText = "RegisteredWarehouseSiteType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode RegisteredWarehouseSiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RegisteredWarehouseSiteType.Q.RegisteredWarehouseSiteTypeQuery", DefaultText = @"Registered Warehouse Site Types",LocalDefaultText = "Registered Warehouse Site Type", ObjectTableId = RegisteredWarehouseSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature RegisteredWarehouseSiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REGISTEREDWAREHOUSESITETYPE", ObjectTableId = RegisteredWarehouseSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.RegisteredWarehouseSiteType.Features.RegisteredWarehouseSiteTypes", NameTextCodeDefaultText = "Registered Warehouse Site Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -417,15 +417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable RegisteredWarehouseSiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.RegisteredWarehouseSiteType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature RegisteredWarehouseSiteTypeFeature_REGISTEREDWAREHOUSESITETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REGISTEREDWAREHOUSESITETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RegisteredWarehouseSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.RegisteredWarehouseSiteType.Features.RegisteredWarehouseSiteTypes", NameTextCodeDefaultText = @"Registered Warehouse Site Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

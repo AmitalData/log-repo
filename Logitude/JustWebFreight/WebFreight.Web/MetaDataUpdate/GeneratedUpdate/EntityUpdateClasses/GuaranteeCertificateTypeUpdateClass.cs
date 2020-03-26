@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable GuaranteeCertificateTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.GuaranteeCertificateType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> GuaranteeCertificateTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.GuaranteeCertificateType").ToList();   
 
-			   TextCode GuaranteeCertificateTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GuaranteeCertificateType.Q.GuaranteeCertificateType", DefaultText = @"GuaranteeCertificateType",LocalDefaultText = "GuaranteeCertificateType", ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature GuaranteeCertificateTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GuaranteeCertificateType.Q.GuaranteeCertificateType", ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GuaranteeCertificateTypeFeatures.GuaranteeCertificateType", NameTextCodeDefaultText = "GuaranteeCertificateType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode GuaranteeCertificateTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.GuaranteeCertificateType.Q.GuaranteeCertificateTypeQuery", DefaultText = @"Guarantee Certificate Type",LocalDefaultText = "סוג ערבות", ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature GuaranteeCertificateTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GUARANTEECERTIFICATE", ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.GuaranteeCertificateType.Features.GuaranteeCertificateType", NameTextCodeDefaultText = "Guarantee Certificate Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable GuaranteeCertificateTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.GuaranteeCertificateType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature GuaranteeCertificateTypeFeature_GUARANTEECERTIFICATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GUARANTEECERTIFICATE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GuaranteeCertificateTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.GuaranteeCertificateType.Features.GuaranteeCertificateType", NameTextCodeDefaultText = @"Guarantee Certificate Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -401,7 +401,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable FreightPaymentMethodObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.FreightPaymentMethod" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> FreightPaymentMethodObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.FreightPaymentMethod").ToList();   
 
-			   TextCode FreightPaymentMethodTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FreightPaymentMethod.Q.FreightPaymentMethod", DefaultText = @"FreightPaymentMethod",LocalDefaultText = "FreightPaymentMethod", ObjectTableId = FreightPaymentMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode FreightPaymentMethodTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FreightPaymentMethod.Q.FreightPaymentMethod", DefaultText = @"FreightPaymentMethodQuery",LocalDefaultText = null, ObjectTableId = FreightPaymentMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature FreightPaymentMethodFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FreightPaymentMethod.Q.FreightPaymentMethod", ObjectTableId = FreightPaymentMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "FreightPaymentMethod.Features.FreightPaymentMethod", NameTextCodeDefaultText = "FreightPaymentMethod", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

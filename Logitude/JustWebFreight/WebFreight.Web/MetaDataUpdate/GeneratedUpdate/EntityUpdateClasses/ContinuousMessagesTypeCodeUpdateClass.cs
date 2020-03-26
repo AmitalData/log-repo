@@ -378,7 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ContinuousMessagesTypeCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ContinuousMessagesTypeCode" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ContinuousMessagesTypeCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ContinuousMessagesTypeCode").ToList();   
 
-			   TextCode ContinuousMessagesTypeCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", DefaultText = @"ContinuousMessagesType",LocalDefaultText = "ContinuousMessagesType", ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode ContinuousMessagesTypeCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", DefaultText = @"ContinuousMessagesTypeQuery",LocalDefaultText = null, ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ContinuousMessagesTypeCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContinuousMessagesTypeCode.Q.ContinuousMessagesType", ObjectTableId = ContinuousMessagesTypeCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContinuousMessagesTypeCode.Features.ContinuousMessagesType", NameTextCodeDefaultText = "ContinuousMessagesType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

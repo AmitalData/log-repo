@@ -389,8 +389,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable InvoiceTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.InvoiceType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> InvoiceTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.InvoiceType").ToList();   
 
-			   TextCode InvoiceTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceType.Q.InvoiceType", DefaultText = @"InvoiceType",LocalDefaultText = "InvoiceType", ObjectTableId = InvoiceTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature InvoiceTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceType.Q.InvoiceType", ObjectTableId = InvoiceTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceTypeFeatures.InvoiceType", NameTextCodeDefaultText = "InvoiceType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode InvoiceTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InvoiceType.Q.InvoiceTypeQuery", DefaultText = @"Invoice Types",LocalDefaultText = "סוג חשבון", ObjectTableId = InvoiceTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature InvoiceTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INVOICETYPE", ObjectTableId = InvoiceTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.InvoiceType.Features.InvoiceTypes", NameTextCodeDefaultText = "Invoice Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -418,15 +418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable InvoiceTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InvoiceType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature InvoiceTypeFeature_INVOICETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INVOICETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = InvoiceTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.InvoiceType.Features.InvoiceTypes", NameTextCodeDefaultText = @"Invoice Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

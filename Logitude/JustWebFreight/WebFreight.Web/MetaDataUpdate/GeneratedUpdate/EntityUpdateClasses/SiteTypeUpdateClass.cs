@@ -392,8 +392,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SiteTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SiteType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SiteTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SiteType").ToList();   
 
-			   TextCode SiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SiteType.Q.SiteType", DefaultText = @"SiteType",LocalDefaultText = "SiteType", ObjectTableId = SiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SiteType.Q.SiteType", ObjectTableId = SiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SiteTypeFeatures.SiteType", NameTextCodeDefaultText = "SiteType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SiteType.Q.SiteTypeQuery", DefaultText = @"Site Types",LocalDefaultText = "סוג אתר", ObjectTableId = SiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature SiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SITETYPE", ObjectTableId = SiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SiteType.Features.SiteTypes", NameTextCodeDefaultText = "Site Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -421,15 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SiteType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature SiteTypeFeature_SITETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SITETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SiteType.Features.SiteTypes", NameTextCodeDefaultText = @"Site Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

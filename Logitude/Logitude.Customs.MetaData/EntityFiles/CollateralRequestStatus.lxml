@@ -16,9 +16,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;COLLATERALREQUESTSTATUS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CollateralRequestStatus.Features.CollateralRequestStatus&quot;" FeatureDefaultText="&quot;Collateral Request Status&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CollateralRequestStatus&quot;" ObjectTableName="&quot;Customs.CollateralRequestStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CollateralRequestStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;CORS&quot;" QueryGroupName="&quot;Customs.CollateralRequestStatus&quot;" LocalTextCode="&quot;CollateralRequestStatus&quot;" TextCode="&quot;CollateralRequestStatus&quot;" IsPackagable="false">
+  <Query Code="&quot;CollateralRequestStatus&quot;" ObjectTableName="&quot;Customs.CollateralRequestStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CollateralRequestStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;CORS&quot;" QueryGroupName="&quot;Customs.CollateralRequestStatus&quot;" LocalTextCode="&quot;סטאטוס הדרישה לבטוחה&quot;" TextCode="&quot;Collateral Request Status&quot;" TextCodeCode="&quot;Customs.CollateralRequestStatus.Q.CollateralRequestStatusQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;COLLATERALREQUESTSTATUS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CollateralRequestStatus.Features.CollateralRequestStatus&quot;" FeatureDefaultText="&quot;Collateral Request Status&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CollateralRequestStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CollateralRequestStatus&quot;" />

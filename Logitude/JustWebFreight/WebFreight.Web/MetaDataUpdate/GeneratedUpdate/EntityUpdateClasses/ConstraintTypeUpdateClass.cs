@@ -386,8 +386,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ConstraintTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ConstraintType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ConstraintTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ConstraintType").ToList();   
 
-			   TextCode ConstraintTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConstraintType.Q.ConstraintType", DefaultText = @"ConstraintType",LocalDefaultText = "ConstraintType", ObjectTableId = ConstraintTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ConstraintTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConstraintType.Q.ConstraintType", ObjectTableId = ConstraintTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConstraintTypeFeatures.ConstraintType", NameTextCodeDefaultText = "ConstraintType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ConstraintTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConstraintType.Q.ConstraintTypeQuery", DefaultText = @"Constraint Types",LocalDefaultText = "סוג אילוץ", ObjectTableId = ConstraintTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ConstraintTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTTYPE", ObjectTableId = ConstraintTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintType.Features.ConstraintTypes", NameTextCodeDefaultText = "Constraint Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -415,15 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ConstraintTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ConstraintType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ConstraintTypeFeature_CONSTRAINTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ConstraintTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintType.Features.ConstraintTypes", NameTextCodeDefaultText = @"Constraint Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

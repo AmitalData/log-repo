@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;GUARANTEECUSTOMERACTIVITY&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.GuaranteeCustomerActivity.Features.GuaranteeCustomerActivity&quot;" FeatureDefaultText="&quot;GuaranteeCustomerActivity&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;GuaranteeCustomerActivity&quot;" ObjectTableName="&quot;Customs.GuaranteeCustomerActivity&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.GuaranteeCustomerActivity&quot;" IndexOrder="0" QueryGroupCode="&quot;GAQG&quot;" QueryGroupName="&quot;Customs.GuaranteeCustomerActivity&quot;" LocalTextCode="&quot;GuaranteeCustomerActivity&quot;" TextCode="&quot;GuaranteeCustomerActivity&quot;" IsPackagable="false">
+  <Query Code="&quot;GuaranteeCustomerActivity&quot;" ObjectTableName="&quot;Customs.GuaranteeCustomerActivity&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.GuaranteeCustomerActivity&quot;" IndexOrder="0" QueryGroupCode="&quot;GAQG&quot;" QueryGroupName="&quot;Customs.GuaranteeCustomerActivity&quot;" LocalTextCode="&quot;סוג פעילות לקוח ערבות&quot;" TextCode="&quot;GuaranteeCustomerActivity&quot;" TextCodeCode="&quot;Customs.GuaranteeCustomerActivity.Q.GuaranteeCustomerActivityQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;GUARANTEECUSTOMERACTIVITY&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.GuaranteeCustomerActivity.Features.GuaranteeCustomerActivity&quot;" FeatureDefaultText="&quot;GuaranteeCustomerActivity&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;GuaranteeCustomerActivity&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;GuaranteeCustomerActivity&quot;" />

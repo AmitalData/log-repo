@@ -910,9 +910,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;SITELOOKUP&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.SiteLookup.Features.SiteLookups&quot;" FeatureDefaultText="&quot;Site Lookups&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;SiteLookup&quot;" ObjectTableName="&quot;Customs.SiteLookup&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SiteLookup&quot;" IndexOrder="0" QueryGroupCode="&quot;SITL&quot;" QueryGroupName="&quot;Customs.SiteLookup&quot;" LocalTextCode="&quot;SiteLookup&quot;" TextCode="&quot;SiteLookup&quot;" IsPackagable="false">
+  <Query Code="&quot;SiteLookup&quot;" ObjectTableName="&quot;Customs.SiteLookup&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SiteLookup&quot;" IndexOrder="0" QueryGroupCode="&quot;SITL&quot;" QueryGroupName="&quot;Customs.SiteLookup&quot;" LocalTextCode="&quot;אתר לתצוגה&quot;" TextCode="&quot;Site Lookups&quot;" TextCodeCode="&quot;Customs.SiteLookup.Q.SiteLookupQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;SITELOOKUP&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.SiteLookup.Features.SiteLookups&quot;" FeatureDefaultText="&quot;Site Lookups&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;SiteLookup&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;SiteLookup&quot;" />

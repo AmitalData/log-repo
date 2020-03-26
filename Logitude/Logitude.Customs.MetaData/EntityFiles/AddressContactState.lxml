@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;ADDRESSCONTACTSTATE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.AddressContactState.Features.AddressContactStates&quot;" FeatureDefaultText="&quot;Address Contact States&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;AddressContactState&quot;" ObjectTableName="&quot;Customs.AddressContactState&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AddressContactState&quot;" IndexOrder="0" QueryGroupCode="&quot;ADCS&quot;" QueryGroupName="&quot;Customs.AddressContactState&quot;" LocalTextCode="&quot;AddressContactState&quot;" TextCode="&quot;AddressContactState&quot;" IsPackagable="false">
+  <Query Code="&quot;AddressContactState&quot;" ObjectTableName="&quot;Customs.AddressContactState&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AddressContactState&quot;" IndexOrder="0" QueryGroupCode="&quot;ADCS&quot;" QueryGroupName="&quot;Customs.AddressContactState&quot;" LocalTextCode="&quot;מצב כתובת או איש קשר&quot;" TextCode="&quot;Address Contact States&quot;" TextCodeCode="&quot;Customs.AddressContactState.Q.AddressContactStateQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;ADDRESSCONTACTSTATE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.AddressContactState.Features.AddressContactStates&quot;" FeatureDefaultText="&quot;Address Contact States&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;AddressContactState&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;AddressContactState&quot;" />

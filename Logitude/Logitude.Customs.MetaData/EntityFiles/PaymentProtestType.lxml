@@ -16,9 +16,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PAYMENTPROTESTTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.PaymentProtestType.Features.PaymentProtestTypes&quot;" FeatureDefaultText="&quot;Payment Protest Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;PaymentProtestType&quot;" ObjectTableName="&quot;Customs.PaymentProtestType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentProtestType&quot;" IndexOrder="0" QueryGroupCode="&quot;PAPT&quot;" QueryGroupName="&quot;Customs.PaymentProtestType&quot;" LocalTextCode="&quot;PaymentProtestType&quot;" TextCode="&quot;PaymentProtestType&quot;" IsPackagable="false">
+  <Query Code="&quot;PaymentProtestType&quot;" ObjectTableName="&quot;Customs.PaymentProtestType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentProtestType&quot;" IndexOrder="0" QueryGroupCode="&quot;PAPT&quot;" QueryGroupName="&quot;Customs.PaymentProtestType&quot;" LocalTextCode="&quot;סוג מחאה&quot;" TextCode="&quot;Payment Protest Types&quot;" TextCodeCode="&quot;Customs.PaymentProtestType.Q.PaymentProtestTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PAYMENTPROTESTTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PaymentProtestType.Features.PaymentProtestTypes&quot;" FeatureDefaultText="&quot;Payment Protest Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;PaymentProtestType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;PaymentProtestType&quot;" />

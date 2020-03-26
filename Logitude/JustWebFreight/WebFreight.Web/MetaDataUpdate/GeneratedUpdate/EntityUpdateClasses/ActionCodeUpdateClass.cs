@@ -413,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ActionCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ActionCode" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ActionCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ActionCode").ToList();   
 
-			   TextCode ActionCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ActionCode.Q.ActionCode", DefaultText = @"ActionCode",LocalDefaultText = "ActionCode", ObjectTableId = ActionCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode ActionCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ActionCode.Q.ActionCode", DefaultText = @"ActionCodeQuery",LocalDefaultText = null, ObjectTableId = ActionCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ActionCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ActionCode.Q.ActionCode", ObjectTableId = ActionCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ActionCode.Features.ActionCode", NameTextCodeDefaultText = "ActionCode", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

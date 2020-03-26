@@ -439,8 +439,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable MeasurmentUnitObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.MeasurmentUnit" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> MeasurmentUnitObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.MeasurmentUnit").ToList();   
 
-			   TextCode MeasurmentUnitTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MeasurmentUnit.Q.MeasurmentUnit", DefaultText = @"MeasurmentUnit",LocalDefaultText = "MeasurmentUnit", ObjectTableId = MeasurmentUnitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature MeasurmentUnitFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MeasurmentUnit.Q.MeasurmentUnit", ObjectTableId = MeasurmentUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "MeasurmentUnitFeatures.MeasurmentUnit", NameTextCodeDefaultText = "MeasurmentUnit", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode MeasurmentUnitTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.MeasurmentUnit.Q.MeasurmentUnitQuery", DefaultText = @"Measurement Units",LocalDefaultText = "יחידת מידה", ObjectTableId = MeasurmentUnitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature MeasurmentUnitFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MEASURMENTUNIT", ObjectTableId = MeasurmentUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.MeasurmentUnit.Features.MeasurmentUnits", NameTextCodeDefaultText = "Measurment Units", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -470,15 +470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable MeasurmentUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.MeasurmentUnit" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature MeasurmentUnitFeature_MEASURMENTUNIT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MEASURMENTUNIT", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MeasurmentUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.MeasurmentUnit.Features.MeasurmentUnits", NameTextCodeDefaultText = @"Measurment Units" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

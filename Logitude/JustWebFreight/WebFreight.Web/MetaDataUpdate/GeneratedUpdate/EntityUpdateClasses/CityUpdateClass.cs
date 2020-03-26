@@ -387,8 +387,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CityObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.City" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CityObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.City").ToList();   
 
-			   TextCode CityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "City.Q.City", DefaultText = @"City",LocalDefaultText = "City", ObjectTableId = CityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "City.Q.City", ObjectTableId = CityObjectTable.Id, Tenant = 0, NameTextCodeCode = "CityFeatures.City", NameTextCodeDefaultText = "City", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.City.Q.CityQuery", DefaultText = @"Cities",LocalDefaultText = "עיר", ObjectTableId = CityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CITY", ObjectTableId = CityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.City.Features.Cities", NameTextCodeDefaultText = "Cities", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -416,15 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.City" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CityFeature_CITY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CITY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.City.Features.Cities", NameTextCodeDefaultText = @"Cities" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

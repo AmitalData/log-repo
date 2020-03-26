@@ -9,9 +9,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;TransferCargoMethodType.Q.TransferCargoMethodType&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;TransferCargoMethodType.Features.TransferCargoMethodType&quot;" FeatureDefaultText="&quot;TransferCargoMethodType&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;TransferCargoMethodType&quot;" ObjectTableName="&quot;Customs.TransferCargoMethodType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TransferCargoMethodType&quot;" IndexOrder="0" QueryGroupCode="&quot;cf95&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;TransferCargoMethodType&quot;" TextCode="&quot;TransferCargoMethodType&quot;" IsPackagable="false">
+  <Query Code="&quot;TransferCargoMethodType&quot;" ObjectTableName="&quot;Customs.TransferCargoMethodType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TransferCargoMethodType&quot;" IndexOrder="0" QueryGroupCode="&quot;cf95&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;סוג שיטת הובלה&quot;" TextCode="&quot;TransferCargoMethodTypeQuery&quot;" TextCodeCode="&quot;TransferCargoMethodType.Q.TransferCargoMethodType&quot;" IsSpellChecked="false" FeatureCode="&quot;TransferCargoMethodType.Q.TransferCargoMethodType&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;TransferCargoMethodType.Features.TransferCargoMethodType&quot;" FeatureDefaultText="&quot;TransferCargoMethodType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="50" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;TransferCargoMethodType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;TransferCargoMethodType&quot;" />

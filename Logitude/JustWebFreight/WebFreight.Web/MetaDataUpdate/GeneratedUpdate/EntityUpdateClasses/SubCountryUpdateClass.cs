@@ -441,8 +441,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SubCountryObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SubCountry" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SubCountryObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SubCountry").ToList();   
 
-			   TextCode SubCountryTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SubCountry.Q.SubCountry", DefaultText = @"SubCountry",LocalDefaultText = "SubCountry", ObjectTableId = SubCountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SubCountryFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SubCountry.Q.SubCountry", ObjectTableId = SubCountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "SubCountryFeatures.SubCountry", NameTextCodeDefaultText = "SubCountry", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SubCountryTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SubCountry.Q.SubCountryQuery", DefaultText = @"Sub Countries",LocalDefaultText = "תת מדינה", ObjectTableId = SubCountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature SubCountryFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SUBCOUNTRY", ObjectTableId = SubCountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SubCountry.Features.SubCountries", NameTextCodeDefaultText = "Sub Countries", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -470,15 +470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SubCountryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SubCountry" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature SubCountryFeature_SUBCOUNTRY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SUBCOUNTRY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SubCountryObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SubCountry.Features.SubCountries", NameTextCodeDefaultText = @"Sub Countries" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

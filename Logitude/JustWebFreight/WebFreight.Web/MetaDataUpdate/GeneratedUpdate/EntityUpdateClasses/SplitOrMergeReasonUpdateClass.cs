@@ -413,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SplitOrMergeReasonObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SplitOrMergeReason" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SplitOrMergeReasonObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SplitOrMergeReason").ToList();   
 
-			   TextCode SplitOrMergeReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SplitOrMergeReason.Q.SplitOrMergeReason", DefaultText = @"SplitOrMergeReason",LocalDefaultText = "SplitOrMergeReason", ObjectTableId = SplitOrMergeReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode SplitOrMergeReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SplitOrMergeReason.Q.SplitOrMergeReason", DefaultText = @"SplitOrMergeReasonQuery",LocalDefaultText = null, ObjectTableId = SplitOrMergeReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature SplitOrMergeReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SplitOrMergeReason.Q.SplitOrMergeReason", ObjectTableId = SplitOrMergeReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "SplitOrMergeReason.Features.SplitOrMergeReason", NameTextCodeDefaultText = "SplitOrMergeReason", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

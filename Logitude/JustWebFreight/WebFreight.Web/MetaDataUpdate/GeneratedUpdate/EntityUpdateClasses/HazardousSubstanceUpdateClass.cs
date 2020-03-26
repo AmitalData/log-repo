@@ -465,8 +465,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable HazardousSubstanceObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.HazardousSubstance" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> HazardousSubstanceObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.HazardousSubstance").ToList();   
 
-			   TextCode HazardousSubstanceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", DefaultText = @"HazardousSubstanceQ",LocalDefaultText = "HazardousSubstanceQ", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature HazardousSubstanceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HazardousSubstanceFeatures.HazardousSubstanceQ", NameTextCodeDefaultText = "HazardousSubstanceQ", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode HazardousSubstanceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", DefaultText = @"Hazardous Substance Query",LocalDefaultText = "Hazardous Substance Query", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature HazardousSubstanceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HazardousSubstance.Features.HazardousSubstanceQ", NameTextCodeDefaultText = "HazardousSubstanceQ", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -494,15 +494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable HazardousSubstanceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.HazardousSubstance" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature HazardousSubstanceFeature_HazardousSubstance_Q_HazardousSubstanceQ = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HazardousSubstance.Features.HazardousSubstanceQ", NameTextCodeDefaultText = @"HazardousSubstanceQ" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

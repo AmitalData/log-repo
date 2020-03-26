@@ -378,8 +378,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable VehiclePriceListTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.VehiclePriceListType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VehiclePriceListTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VehiclePriceListType").ToList();   
 
-			   TextCode VehiclePriceListTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VehiclePriceListType.Q.VehiclePriceListType", DefaultText = @"VehiclePriceListType",LocalDefaultText = "VehiclePriceListType", ObjectTableId = VehiclePriceListTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VehiclePriceListTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VehiclePriceListType.Q.VehiclePriceListType", ObjectTableId = VehiclePriceListTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehiclePriceListTypeFeatures.VehiclePriceListType", NameTextCodeDefaultText = "VehiclePriceListType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VehiclePriceListTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VehiclePriceListType.Q.VehiclePriceListTypeQuery", DefaultText = @"Vehicle Price List Type",LocalDefaultText = "סוג מחירון רכב", ObjectTableId = VehiclePriceListTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature VehiclePriceListTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLEPRICELIST", ObjectTableId = VehiclePriceListTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehiclePriceListType.Features.VehiclePriceListType", NameTextCodeDefaultText = "Vehicle Price List Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -407,15 +407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable VehiclePriceListTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VehiclePriceListType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature VehiclePriceListTypeFeature_VEHICLEPRICELIST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLEPRICELIST", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehiclePriceListTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehiclePriceListType.Features.VehiclePriceListType", NameTextCodeDefaultText = @"Vehicle Price List Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

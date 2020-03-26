@@ -9,7 +9,7 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;TreatmentWay&quot;" ObjectTableName="&quot;Customs.TreatmentWay&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ActionCode&quot;" IndexOrder="0" QueryGroupCode="&quot;2ea0&quot;" QueryGroupName="&quot;Customs.TreatmentWay Query Group&quot;" LocalTextCode="&quot;TreatmentWay&quot;" TextCode="&quot;TreatmentWay&quot;" FeatureCode="&quot;TreatmentWay.Q.TreatmentWay&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;TreatmentWay.Features.TreatmentWay&quot;" FeatureDefaultText="&quot;TreatmentWay&quot;">
+  <Query Code="&quot;TreatmentWay&quot;" ObjectTableName="&quot;Customs.TreatmentWay&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ActionCode&quot;" IndexOrder="0" QueryGroupCode="&quot;2ea0&quot;" QueryGroupName="&quot;Customs.TreatmentWay Query Group&quot;" TextCode="&quot;TreatmentWayQuery&quot;" TextCodeCode="&quot;TreatmentWay.Q.TreatmentWay&quot;" IsSpellChecked="false" FeatureCode="&quot;TreatmentWay.Q.TreatmentWay&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;TreatmentWay.Features.TreatmentWay&quot;" FeatureDefaultText="&quot;TreatmentWay&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="100" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;TreatmentWay&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;TreatmentWay&quot;" />

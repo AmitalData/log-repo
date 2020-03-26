@@ -391,8 +391,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable PaymentTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> PaymentTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PaymentType").ToList();   
 
-			   TextCode PaymentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentType.Q.PaymentType", DefaultText = @"PaymentType",LocalDefaultText = "PaymentType", ObjectTableId = PaymentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PaymentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentType.Q.PaymentType", ObjectTableId = PaymentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTypeFeatures.PaymentType", NameTextCodeDefaultText = "PaymentType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PaymentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentType.Q.PaymentTypeQuery", DefaultText = @"Invoice Payment Method Types",LocalDefaultText = "סוג אמצעי תשלום", ObjectTableId = PaymentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PaymentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTTYPE", ObjectTableId = PaymentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentType.Features.PaymentTypes", NameTextCodeDefaultText = "Payment Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -420,15 +420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable PaymentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature PaymentTypeFeature_PAYMENTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PaymentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentType.Features.PaymentTypes", NameTextCodeDefaultText = @"Payment Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

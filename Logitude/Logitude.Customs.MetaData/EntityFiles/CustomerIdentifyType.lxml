@@ -12,7 +12,7 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;CustomerIdentifyType&quot;" ObjectTableName="&quot;Customs.CustomerIdentifyType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomerIdentifyType&quot;" IndexOrder="0" QueryGroupCode="&quot;CIQG&quot;" QueryGroupName="&quot;Customs.CustomerIdentifyType&quot;" LocalTextCode="&quot;CustomerIdentifyType&quot;" TextCode="&quot;CustomerIdentifyType&quot;" IsPackagable="false">
+  <Query Code="&quot;CustomerIdentifyType&quot;" ObjectTableName="&quot;Customs.CustomerIdentifyType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomerIdentifyType&quot;" IndexOrder="0" QueryGroupCode="&quot;CIQG&quot;" QueryGroupName="&quot;Customs.CustomerIdentifyType&quot;" LocalTextCode="&quot;מזהה לקוח&quot;" TextCode="&quot;Customer Identify Type&quot;" TextCodeCode="&quot;Customs.CustomerIdentifyType.Q.CustomerIdentifyTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CUSTOMERIDENTIFYTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CustomerIdentifyType.Features.CustomerIdentifyType&quot;" FeatureDefaultText="&quot;CustomerIdentifyType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CustomerIdentifyType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CustomerIdentifyType&quot;" />

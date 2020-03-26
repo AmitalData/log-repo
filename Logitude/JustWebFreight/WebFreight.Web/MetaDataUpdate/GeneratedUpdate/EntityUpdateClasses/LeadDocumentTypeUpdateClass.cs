@@ -393,8 +393,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable LeadDocumentTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.LeadDocumentType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> LeadDocumentTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.LeadDocumentType").ToList();   
 
-			   TextCode LeadDocumentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadDocumentType.Q.LeadDocumentType", DefaultText = @"LeadDocumentType",LocalDefaultText = "LeadDocumentType", ObjectTableId = LeadDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature LeadDocumentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadDocumentType.Q.LeadDocumentType", ObjectTableId = LeadDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadDocumentTypeFeatures.LeadDocumentType", NameTextCodeDefaultText = "LeadDocumentType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode LeadDocumentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LeadDocumentType.Q.LeadDocumentTypeQuery", DefaultText = @"Lead Document Types",LocalDefaultText = "סוג מסמך על", ObjectTableId = LeadDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature LeadDocumentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LEADDOCUMENTTYPE", ObjectTableId = LeadDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.LeadDocumentType.Features.LeadDocumentTypes", NameTextCodeDefaultText = "Lead Document Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -422,15 +422,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable LeadDocumentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.LeadDocumentType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature LeadDocumentTypeFeature_LEADDOCUMENTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LEADDOCUMENTTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LeadDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.LeadDocumentType.Features.LeadDocumentTypes", NameTextCodeDefaultText = @"Lead Document Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

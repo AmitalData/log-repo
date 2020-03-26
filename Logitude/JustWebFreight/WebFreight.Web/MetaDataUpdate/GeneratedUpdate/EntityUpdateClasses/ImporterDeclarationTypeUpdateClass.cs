@@ -382,7 +382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ImporterDeclarationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ImporterDeclarationType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ImporterDeclarationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ImporterDeclarationType").ToList();   
 
-			   TextCode ImporterDeclarationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ImporterDeclarationType.Q.ImporterDeclarationType", DefaultText = @"ImporterDeclarationType",LocalDefaultText = "ImporterDeclarationType", ObjectTableId = ImporterDeclarationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode ImporterDeclarationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ImporterDeclarationType.Q.ImporterDeclarationType", DefaultText = @"ImporterDeclarationTypeQuery",LocalDefaultText = null, ObjectTableId = ImporterDeclarationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ImporterDeclarationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImporterDeclarationType.Q.ImporterDeclarationType", ObjectTableId = ImporterDeclarationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ImporterDeclarationType.Features.ImporterDeclarationType", NameTextCodeDefaultText = "ImporterDeclarationType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

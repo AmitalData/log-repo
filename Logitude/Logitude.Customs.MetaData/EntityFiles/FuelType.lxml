@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;FUELTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.FuelType.Features.FuelType&quot;" FeatureDefaultText="&quot;Fuel Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;FuelType&quot;" ObjectTableName="&quot;Customs.FuelType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.FuelType&quot;" IndexOrder="0" QueryGroupCode="&quot;FTQG&quot;" QueryGroupName="&quot;Customs.FuelType&quot;" LocalTextCode="&quot;FuelType&quot;" TextCode="&quot;FuelType&quot;" IsPackagable="false">
+  <Query Code="&quot;FuelType&quot;" ObjectTableName="&quot;Customs.FuelType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.FuelType&quot;" IndexOrder="0" QueryGroupCode="&quot;FTQG&quot;" QueryGroupName="&quot;Customs.FuelType&quot;" LocalTextCode="&quot;סוג דלק&quot;" TextCode="&quot;Fuel Type&quot;" TextCodeCode="&quot;Customs.FuelType.Q.FuelTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;FUELTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.FuelType.Features.FuelType&quot;" FeatureDefaultText="&quot;Fuel Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;FuelType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;FuelType&quot;" />

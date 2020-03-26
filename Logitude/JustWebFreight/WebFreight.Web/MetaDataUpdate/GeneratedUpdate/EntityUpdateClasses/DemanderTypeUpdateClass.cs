@@ -384,8 +384,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable DemanderTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DemanderType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> DemanderTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DemanderType").ToList();   
 
-			   TextCode DemanderTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DemanderType.Q.DemanderType", DefaultText = @"DemanderType",LocalDefaultText = "DemanderType", ObjectTableId = DemanderTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DemanderTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DemanderType.Q.DemanderType", ObjectTableId = DemanderTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DemanderTypeFeatures.DemanderType", NameTextCodeDefaultText = "DemanderType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DemanderTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DemanderType.Q.DemanderTypeQuery", DefaultText = @"Demander Type",LocalDefaultText = "סוגי דורשים", ObjectTableId = DemanderTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DemanderTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEMANDERTYPE", ObjectTableId = DemanderTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DemanderType.Features.DemanderType", NameTextCodeDefaultText = "Demander Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -413,15 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable DemanderTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DemanderType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature DemanderTypeFeature_DEMANDERTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEMANDERTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DemanderTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DemanderType.Features.DemanderType", NameTextCodeDefaultText = @"Demander Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

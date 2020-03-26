@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;DEBTNOTIFICATION&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.DebtNotificationType.Features.DebtNotificationType&quot;" FeatureDefaultText="&quot;Debt Notification Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;DebtNotificationType&quot;" ObjectTableName="&quot;Customs.DebtNotificationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DebtNotificationType&quot;" IndexOrder="0" QueryGroupCode="&quot;DNQG&quot;" QueryGroupName="&quot;Customs.DebtNotificationType&quot;" LocalTextCode="&quot;DebtNotificationType&quot;" TextCode="&quot;DebtNotificationType&quot;" IsPackagable="false">
+  <Query Code="&quot;DebtNotificationType&quot;" ObjectTableName="&quot;Customs.DebtNotificationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DebtNotificationType&quot;" IndexOrder="0" QueryGroupCode="&quot;DNQG&quot;" QueryGroupName="&quot;Customs.DebtNotificationType&quot;" LocalTextCode="&quot;סוג הודעת חיוב&quot;" TextCode="&quot;Debt Notification Type&quot;" TextCodeCode="&quot;Customs.DebtNotificationType.Q.DebtNotificationTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;DEBTNOTIFICATION&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.DebtNotificationType.Features.DebtNotificationType&quot;" FeatureDefaultText="&quot;Debt Notification Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;DebtNotificationType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;DebtNotificationType&quot;" />

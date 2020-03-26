@@ -392,8 +392,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CheckRepresentativeTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CheckRepresentativeType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CheckRepresentativeTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CheckRepresentativeType").ToList();   
 
-			   TextCode CheckRepresentativeTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CheckRepresentativeType.Q.CheckRepresentativeType", DefaultText = @"CheckRepresentativeType",LocalDefaultText = "CheckRepresentativeType", ObjectTableId = CheckRepresentativeTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CheckRepresentativeTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CheckRepresentativeType.Q.CheckRepresentativeType", ObjectTableId = CheckRepresentativeTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CheckRepresentativeTypeFeatures.CheckRepresentativeType", NameTextCodeDefaultText = "CheckRepresentativeType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CheckRepresentativeTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CheckRepresentativeType.Q.CheckRepresentativeTypeQuery", DefaultText = @"Check Representative Types",LocalDefaultText = "בדקו סוג הנציג", ObjectTableId = CheckRepresentativeTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CheckRepresentativeTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKREPRESENTATIVETYPE", ObjectTableId = CheckRepresentativeTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.checkRepresentativeType.Features.Read", NameTextCodeDefaultText = "Check Representative Type", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -421,15 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CheckRepresentativeTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CheckRepresentativeType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CheckRepresentativeTypeFeature_CHECKREPRESENTATIVETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKREPRESENTATIVETYPE", FeatureTypeCode = "QUER", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CheckRepresentativeTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.checkRepresentativeType.Features.Read", NameTextCodeDefaultText = @"Check Representative Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

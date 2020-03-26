@@ -14,9 +14,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PAYMENTORDERSTATUS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.PaymentOrderStatus.Features.PaymentOrderStatus&quot;" FeatureDefaultText="&quot;Payment Order Status&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;PaymentOrderStatus&quot;" ObjectTableName="&quot;Customs.PaymentOrderStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentOrderStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;PAOS&quot;" QueryGroupName="&quot;Customs.PaymentOrderStatus&quot;" LocalTextCode="&quot;PaymentOrderStatus&quot;" TextCode="&quot;PaymentOrderStatus&quot;" IsPackagable="false">
+  <Query Code="&quot;PaymentOrderStatus&quot;" ObjectTableName="&quot;Customs.PaymentOrderStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentOrderStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;PAOS&quot;" QueryGroupName="&quot;Customs.PaymentOrderStatus&quot;" LocalTextCode="&quot;סטטוס הוראת תשלום&quot;" TextCode="&quot;Payment Order Status&quot;" TextCodeCode="&quot;Customs.PaymentOrderStatus.Q.PaymentOrderStatusQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PAYMENTORDERSTATUS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PaymentOrderStatus.Features.PaymentOrderStatus&quot;" FeatureDefaultText="&quot;Payment Order Status&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;PaymentOrderStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;PaymentOrderStatus&quot;" />

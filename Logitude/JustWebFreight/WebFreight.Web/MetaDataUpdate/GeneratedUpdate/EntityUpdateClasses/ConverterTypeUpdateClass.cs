@@ -377,8 +377,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ConverterTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ConverterType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ConverterTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ConverterType").ToList();   
 
-			   TextCode ConverterTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConverterType.Q.ConverterType", DefaultText = @"ConverterType",LocalDefaultText = "ConverterType", ObjectTableId = ConverterTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ConverterTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConverterType.Q.ConverterType", ObjectTableId = ConverterTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConverterTypeFeatures.ConverterType", NameTextCodeDefaultText = "ConverterType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ConverterTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConverterType.Q.ConverterTypeQuery", DefaultText = @"Converter Type",LocalDefaultText = "סוג ממיר", ObjectTableId = ConverterTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ConverterTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTERTYPE", ObjectTableId = ConverterTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConverterType.Features.ConverterType", NameTextCodeDefaultText = "Converter Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -406,15 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ConverterTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ConverterType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ConverterTypeFeature_CONVERTERTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONVERTERTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ConverterTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConverterType.Features.ConverterType", NameTextCodeDefaultText = @"Converter Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

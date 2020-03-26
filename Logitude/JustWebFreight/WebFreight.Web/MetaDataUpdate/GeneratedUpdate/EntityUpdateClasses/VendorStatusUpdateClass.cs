@@ -384,8 +384,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable VendorStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.VendorStatus" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VendorStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VendorStatus").ToList();   
 
-			   TextCode VendorStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VendorStatus.Q.VendorStatus", DefaultText = @"VendorStatus",LocalDefaultText = "VendorStatus", ObjectTableId = VendorStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VendorStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VendorStatus.Q.VendorStatus", ObjectTableId = VendorStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "VendorStatusFeatures.VendorStatus", NameTextCodeDefaultText = "VendorStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VendorStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VendorStatus.Q.VendorStatusQuery", DefaultText = @"Vendor Status",LocalDefaultText = "סטטוס ספק", ObjectTableId = VendorStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature VendorStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORSTATUS", ObjectTableId = VendorStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VendorStatus.Features.VendorStatus", NameTextCodeDefaultText = "Vendor Status", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -413,15 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable VendorStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VendorStatus" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature VendorStatusFeature_VENDORSTATUS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORSTATUS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VendorStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VendorStatus.Features.VendorStatus", NameTextCodeDefaultText = @"Vendor Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

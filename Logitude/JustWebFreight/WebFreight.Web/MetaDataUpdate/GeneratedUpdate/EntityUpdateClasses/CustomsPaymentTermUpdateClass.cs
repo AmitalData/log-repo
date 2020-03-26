@@ -388,8 +388,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomsPaymentTermObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsPaymentTerm" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsPaymentTermObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsPaymentTerm").ToList();   
 
-			   TextCode CustomsPaymentTermTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsPaymentTerm.Q.CustomsPaymentTerm", DefaultText = @"CustomsPaymentTerm",LocalDefaultText = "CustomsPaymentTerm", ObjectTableId = CustomsPaymentTermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsPaymentTermFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsPaymentTerm.Q.CustomsPaymentTerm", ObjectTableId = CustomsPaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPaymentTermFeatures.CustomsPaymentTerm", NameTextCodeDefaultText = "CustomsPaymentTerm", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsPaymentTermTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsPaymentTerm.Q.CustomsPaymentTermQuery", DefaultText = @"Payment Terms",LocalDefaultText = "תנאי תשלום", ObjectTableId = CustomsPaymentTermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsPaymentTermFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSPAYMENTTERM", ObjectTableId = CustomsPaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsPaymentTerm.Features.CustomsPaymentTerms", NameTextCodeDefaultText = "Customs Payment Terms", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -417,15 +417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CustomsPaymentTermObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsPaymentTerm" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomsPaymentTermFeature_CUSTOMSPAYMENTTERM = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSPAYMENTTERM", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsPaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsPaymentTerm.Features.CustomsPaymentTerms", NameTextCodeDefaultText = @"Customs Payment Terms" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

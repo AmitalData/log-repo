@@ -8,7 +8,7 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;FaultInspectionType&quot;" ObjectTableName="&quot;Customs.FaultInspectionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.FaultInspectionType&quot;" IndexOrder="0" QueryGroupCode="&quot;FIQG&quot;" QueryGroupName="&quot;Customs.FaultInspectionType&quot;" LocalTextCode="&quot;FaultInspectionType&quot;" TextCode="&quot;FaultInspectionType&quot;" IsPackagable="false">
+  <Query Code="&quot;FaultInspectionType&quot;" ObjectTableName="&quot;Customs.FaultInspectionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.FaultInspectionType&quot;" IndexOrder="0" QueryGroupCode="&quot;FIQG&quot;" QueryGroupName="&quot;Customs.FaultInspectionType&quot;" LocalTextCode="&quot;סוג בקורת בליקוי&quot;" TextCode="&quot;Fault Inspection Type&quot;" TextCodeCode="&quot;Customs.FaultInspectionType.Q.FaultInspectionTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;FAULTINSPECTIONTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.FaultInspectionType.Features.FaultInspectionType&quot;" FeatureDefaultText="&quot;Fault Inspection Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;FaultInspectionType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;FaultInspectionType&quot;" />

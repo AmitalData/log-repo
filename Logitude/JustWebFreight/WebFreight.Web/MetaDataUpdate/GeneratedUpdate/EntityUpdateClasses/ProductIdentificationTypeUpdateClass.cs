@@ -395,8 +395,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ProductIdentificationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ProductIdentificationType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ProductIdentificationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ProductIdentificationType").ToList();   
 
-			   TextCode ProductIdentificationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductIdentificationType.Q.ProductIdentificationType", DefaultText = @"ProductIdentificationType",LocalDefaultText = "ProductIdentificationType", ObjectTableId = ProductIdentificationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ProductIdentificationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProductIdentificationType.Q.ProductIdentificationType", ObjectTableId = ProductIdentificationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProductIdentificationTypeFeatures.ProductIdentificationType", NameTextCodeDefaultText = "ProductIdentificationType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ProductIdentificationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ProductIdentificationType.Q.ProductIdentificationTypeQuery", DefaultText = @"Product Identification Types",LocalDefaultText = "סוג מספר זיהוי", ObjectTableId = ProductIdentificationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ProductIdentificationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRODUCTIDENTIFICATIONTYPE", ObjectTableId = ProductIdentificationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProductIdentificationType.Features.ProductIdentificationTypes", NameTextCodeDefaultText = "Product Identification Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -424,15 +424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ProductIdentificationTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ProductIdentificationType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ProductIdentificationTypeFeature_PRODUCTIDENTIFICATIONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRODUCTIDENTIFICATIONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ProductIdentificationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProductIdentificationType.Features.ProductIdentificationTypes", NameTextCodeDefaultText = @"Product Identification Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

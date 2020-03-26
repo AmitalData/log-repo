@@ -458,8 +458,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable RequestTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.RequestType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> RequestTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.RequestType").ToList();   
 
-			   TextCode RequestTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RequestType.Q.RequestType", DefaultText = @"RequestType",LocalDefaultText = "RequestType", ObjectTableId = RequestTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature RequestTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RequestType.Q.RequestType", ObjectTableId = RequestTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "RequestTypeFeatures.RequestType", NameTextCodeDefaultText = "RequestType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode RequestTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RequestType.Q.RequestType", DefaultText = @"RequestTypeQuery",LocalDefaultText = null, ObjectTableId = RequestTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature RequestTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RequestType.Q.RequestType", ObjectTableId = RequestTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "RequestType.Features.RequestType", NameTextCodeDefaultText = "RequestType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -487,15 +487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable RequestTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.RequestType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature RequestTypeFeature_RequestType_Q_RequestType = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RequestType.Q.RequestType", FeatureTypeCode = "QUER", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RequestTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "RequestType.Features.RequestType", NameTextCodeDefaultText = @"RequestType" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -413,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable TreatmentWayObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TreatmentWay" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> TreatmentWayObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.TreatmentWay").ToList();   
 
-			   TextCode TreatmentWayTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TreatmentWay.Q.TreatmentWay", DefaultText = @"TreatmentWay",LocalDefaultText = "TreatmentWay", ObjectTableId = TreatmentWayObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode TreatmentWayTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TreatmentWay.Q.TreatmentWay", DefaultText = @"TreatmentWayQuery",LocalDefaultText = null, ObjectTableId = TreatmentWayObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TreatmentWayFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TreatmentWay.Q.TreatmentWay", ObjectTableId = TreatmentWayObjectTable.Id, Tenant = 0, NameTextCodeCode = "TreatmentWay.Features.TreatmentWay", NameTextCodeDefaultText = "TreatmentWay", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

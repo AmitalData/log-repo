@@ -405,8 +405,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomerActivityTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerActivityType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomerActivityTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomerActivityType").ToList();   
 
-			   TextCode CustomerActivityTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerActivityType.Q.CustomerActivityType", DefaultText = @"CustomerActivityType",LocalDefaultText = "CustomerActivityType", ObjectTableId = CustomerActivityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerActivityTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerActivityType.Q.CustomerActivityType", ObjectTableId = CustomerActivityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerActivityTypeFeatures.CustomerActivityType", NameTextCodeDefaultText = "CustomerActivityType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerActivityTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomerActivityType.Q.CustomerActivityTypeQuery", DefaultText = @"Customer Activity Types",LocalDefaultText = "סוג פעילות לקוח", ObjectTableId = CustomerActivityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomerActivityTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERACTIVITYTYPE", ObjectTableId = CustomerActivityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomerActivityType.Features.CustomerActivityTypes", NameTextCodeDefaultText = "Customer Activity Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -434,15 +434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CustomerActivityTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerActivityType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomerActivityTypeFeature_CUSTOMERACTIVITYTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERACTIVITYTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerActivityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomerActivityType.Features.CustomerActivityTypes", NameTextCodeDefaultText = @"Customer Activity Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

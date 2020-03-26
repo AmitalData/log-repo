@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SpecialActionDescriptionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SpecialActionDescriptionType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SpecialActionDescriptionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SpecialActionDescriptionType").ToList();   
 
-			   TextCode SpecialActionDescriptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialActionDescriptionType.Q.SpecialActionDescriptionType", DefaultText = @"SpecialActionDescriptionType",LocalDefaultText = "SpecialActionDescriptionType", ObjectTableId = SpecialActionDescriptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SpecialActionDescriptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SpecialActionDescriptionType.Q.SpecialActionDescriptionType", ObjectTableId = SpecialActionDescriptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SpecialActionDescriptionTypeFeatures.SpecialActionDescriptionType", NameTextCodeDefaultText = "SpecialActionDescriptionType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SpecialActionDescriptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SpecialActionDescriptionType.Q.SSpecialActionDescriptionTypeQuery", DefaultText = @"Special Action Description Type",LocalDefaultText = "סוגי תיאור פעולה מיוחדת", ObjectTableId = SpecialActionDescriptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature SpecialActionDescriptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SPECIALACTION", ObjectTableId = SpecialActionDescriptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SpecialActionDescriptionType.Features.SpecialActionDescriptionType", NameTextCodeDefaultText = "Special Action Description Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SpecialActionDescriptionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SpecialActionDescriptionType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature SpecialActionDescriptionTypeFeature_SPECIALACTION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SPECIALACTION", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SpecialActionDescriptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SpecialActionDescriptionType.Features.SpecialActionDescriptionType", NameTextCodeDefaultText = @"Special Action Description Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

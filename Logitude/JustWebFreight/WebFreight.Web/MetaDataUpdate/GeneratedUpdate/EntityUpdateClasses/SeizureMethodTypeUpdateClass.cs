@@ -444,7 +444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SeizureMethodTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SeizureMethodType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SeizureMethodTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SeizureMethodType").ToList();   
 
-			   TextCode SeizureMethodTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SeizureMethodType.Q.SeizureMethodType", DefaultText = @"SeizureMethodType",LocalDefaultText = "SeizureMethodType", ObjectTableId = SeizureMethodTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode SeizureMethodTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SeizureMethodType.Q.SeizureMethodType", DefaultText = @"SeizureMethodTypeQuery",LocalDefaultText = null, ObjectTableId = SeizureMethodTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature SeizureMethodTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SeizureMethodType.Q.SeizureMethodType", ObjectTableId = SeizureMethodTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SeizureMethodType.Features.SeizureMethodType", NameTextCodeDefaultText = "SeizureMethodType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

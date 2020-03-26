@@ -392,8 +392,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable EntitlementTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.EntitlementType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> EntitlementTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.EntitlementType").ToList();   
 
-			   TextCode EntitlementTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EntitlementType.Q.EntitlementType", DefaultText = @"EntitlementType",LocalDefaultText = "EntitlementType", ObjectTableId = EntitlementTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature EntitlementTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EntitlementType.Q.EntitlementType", ObjectTableId = EntitlementTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "EntitlementTypeFeatures.EntitlementType", NameTextCodeDefaultText = "EntitlementType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode EntitlementTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.EntitlementType.Q.EntitlementTypeQuery", DefaultText = @"Entitlement Type",LocalDefaultText = "", ObjectTableId = EntitlementTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature EntitlementTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ENTITLEMENTTYPE", ObjectTableId = EntitlementTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.EntitlementType.Features.EntitlementTypes", NameTextCodeDefaultText = "Entitlement Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -421,15 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable EntitlementTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.EntitlementType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature EntitlementTypeFeature_ENTITLEMENTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ENTITLEMENTTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = EntitlementTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.EntitlementType.Features.EntitlementTypes", NameTextCodeDefaultText = @"Entitlement Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

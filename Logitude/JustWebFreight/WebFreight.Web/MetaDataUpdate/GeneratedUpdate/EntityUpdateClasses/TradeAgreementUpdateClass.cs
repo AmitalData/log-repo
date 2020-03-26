@@ -385,8 +385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable TradeAgreementObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TradeAgreement" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> TradeAgreementObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.TradeAgreement").ToList();   
 
-			   TextCode TradeAgreementTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TradeAgreement.Q.TradeAgreement", DefaultText = @"TradeAgreement",LocalDefaultText = "TradeAgreement", ObjectTableId = TradeAgreementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TradeAgreementFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TradeAgreement.Q.TradeAgreement", ObjectTableId = TradeAgreementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TradeAgreementFeatures.TradeAgreement", NameTextCodeDefaultText = "TradeAgreement", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TradeAgreementTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.TradeAgreement.Q.TradeAgreementQuery", DefaultText = @"Trade Agreement Type Views",LocalDefaultText = "סוג הסכם סחר", ObjectTableId = TradeAgreementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature TradeAgreementFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRADEAGREEMENT", ObjectTableId = TradeAgreementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.TradeAgreement.Features.TradeAgreements", NameTextCodeDefaultText = "Trade Agreements", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -414,15 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable TradeAgreementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.TradeAgreement" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature TradeAgreementFeature_TRADEAGREEMENT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRADEAGREEMENT", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TradeAgreementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.TradeAgreement.Features.TradeAgreements", NameTextCodeDefaultText = @"Trade Agreements" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

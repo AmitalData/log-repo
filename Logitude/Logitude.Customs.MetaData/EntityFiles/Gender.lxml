@@ -14,9 +14,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;GENDER&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.Gender.Features.Genders&quot;" FeatureDefaultText="&quot;Gender&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;Gender&quot;" ObjectTableName="&quot;Customs.Gender&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.Gender&quot;" IndexOrder="0" QueryGroupCode="&quot;GNDR&quot;" QueryGroupName="&quot;Customs.Gender&quot;" LocalTextCode="&quot;Gender&quot;" TextCode="&quot;Gender&quot;" IsPackagable="false">
+  <Query Code="&quot;Gender&quot;" ObjectTableName="&quot;Customs.Gender&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.Gender&quot;" IndexOrder="0" QueryGroupCode="&quot;GNDR&quot;" QueryGroupName="&quot;Customs.Gender&quot;" LocalTextCode="&quot;מין&quot;" TextCode="&quot;Gender&quot;" TextCodeCode="&quot;Customs.Gender.Q.GenderQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;GENDER&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.Gender.Features.Genders&quot;" FeatureDefaultText="&quot;Gender&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;Gender&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;Gender&quot;" />

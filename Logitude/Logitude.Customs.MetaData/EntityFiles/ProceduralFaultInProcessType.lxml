@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PROCEDURALFAULTINPUTPROCESS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ProceduralFaultInProcessType.Features.ProceduralFaultInProcessType&quot;" FeatureDefaultText="&quot;Procedural Fault Input Process Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ProceduralFaultInProcessType&quot;" ObjectTableName="&quot;Customs.ProceduralFaultInProcessType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProceduralFaultInProcessType&quot;" IndexOrder="0" QueryGroupCode="&quot;FPQG&quot;" QueryGroupName="&quot;Customs.ProceduralFaultInProcessType&quot;" LocalTextCode="&quot;ProceduralFaultInProcessType&quot;" TextCode="&quot;ProceduralFaultInProcessType&quot;" IsPackagable="false">
+  <Query Code="&quot;ProceduralFaultInProcessType&quot;" ObjectTableName="&quot;Customs.ProceduralFaultInProcessType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProceduralFaultInProcessType&quot;" IndexOrder="0" QueryGroupCode="&quot;FPQG&quot;" QueryGroupName="&quot;Customs.ProceduralFaultInProcessType&quot;" LocalTextCode="&quot;מקור רישום הליקוי&quot;" TextCode="&quot;Procedural Fault Input Process Type&quot;" TextCodeCode="&quot;Customs.ProceduralFaultInProcessType.Q.InputProcessTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PROCEDURALFAULTINPUTPROCESS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ProceduralFaultInProcessType.Features.ProceduralFaultInProcessType&quot;" FeatureDefaultText="&quot;Procedural Fault Input Process Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ProceduralFaultInProcessType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ProceduralFaultInProcessType&quot;" />

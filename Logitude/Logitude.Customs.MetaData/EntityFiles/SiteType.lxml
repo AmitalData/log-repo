@@ -67,9 +67,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;SITETYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.SiteType.Features.SiteTypes&quot;" FeatureDefaultText="&quot;Site Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;SiteType&quot;" ObjectTableName="&quot;Customs.SiteType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SiteType&quot;" IndexOrder="0" QueryGroupCode="&quot;SITT&quot;" QueryGroupName="&quot;Customs.SiteType&quot;" LocalTextCode="&quot;SiteType&quot;" TextCode="&quot;SiteType&quot;" IsPackagable="false">
+  <Query Code="&quot;SiteType&quot;" ObjectTableName="&quot;Customs.SiteType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SiteType&quot;" IndexOrder="0" QueryGroupCode="&quot;SITT&quot;" QueryGroupName="&quot;Customs.SiteType&quot;" LocalTextCode="&quot;סוג אתר&quot;" TextCode="&quot;Site Types&quot;" TextCodeCode="&quot;Customs.SiteType.Q.SiteTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;SITETYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.SiteType.Features.SiteTypes&quot;" FeatureDefaultText="&quot;Site Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;SiteType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;SiteType&quot;" />

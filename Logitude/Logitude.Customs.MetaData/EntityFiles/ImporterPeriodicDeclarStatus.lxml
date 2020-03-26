@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;IMPORTERPERIODICSTATUS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ImporterPeriodicDeclarationStatus.Features.ImporterPeriodicDeclarationStatus&quot;" FeatureDefaultText="&quot;Importer Periodic Declaration Status&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ImporterDeclarationStatus&quot;" ObjectTableName="&quot;Customs.ImporterPeriodicDeclarStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ImporterStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;IPQG&quot;" QueryGroupName="&quot;Customs.ImporterDeclarationStatus&quot;" LocalTextCode="&quot;ImporterDeclarationStatus&quot;" TextCode="&quot;ImporterDeclarationStatus&quot;" IsPackagable="false">
+  <Query Code="&quot;ImporterDeclarationStatus&quot;" ObjectTableName="&quot;Customs.ImporterPeriodicDeclarStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ImporterStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;IPQG&quot;" QueryGroupName="&quot;Customs.ImporterDeclarationStatus&quot;" LocalTextCode="&quot;סטטוס תצהיר יבואן תקופתי&quot;" TextCode="&quot;Importer Periodic Declaration Status&quot;" TextCodeCode="&quot;Customs.ImporterDeclarationStatus.Q.ImporterDeclarationStatusQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;IMPORTERPERIODICSTATUS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ImporterPeriodicDeclarationStatus.Features.ImporterPeriodicDeclarationStatus&quot;" FeatureDefaultText="&quot;Importer Periodic Declaration Status&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ImporterDeclarationStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ImporterDeclarationStatus&quot;" />

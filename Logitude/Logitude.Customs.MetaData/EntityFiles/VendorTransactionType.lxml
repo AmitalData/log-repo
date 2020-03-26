@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;VENDORTRANSACTIONTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.VendorTransactionType.Features.VendorTransactionType&quot;" FeatureDefaultText="&quot;Vendor Transaction Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;VendorTransactionType&quot;" ObjectTableName="&quot;Customs.VendorTransactionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VendorTransactionType&quot;" IndexOrder="0" QueryGroupCode="&quot;VTQG&quot;" QueryGroupName="&quot;Customs.VendorTransactionType&quot;" LocalTextCode="&quot;VendorTransactionType&quot;" TextCode="&quot;VendorTransactionType&quot;" IsPackagable="false">
+  <Query Code="&quot;VendorTransactionType&quot;" ObjectTableName="&quot;Customs.VendorTransactionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.VendorTransactionType&quot;" IndexOrder="0" QueryGroupCode="&quot;VTQG&quot;" QueryGroupName="&quot;Customs.VendorTransactionType&quot;" LocalTextCode="&quot;סוג פעילות על ספק&quot;" TextCode="&quot;Vendor Transaction Type&quot;" TextCodeCode="&quot;Customs.VendorTransactionType.Q.VendorTransactionTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;VENDORTRANSACTIONTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.VendorTransactionType.Features.VendorTransactionType&quot;" FeatureDefaultText="&quot;Vendor Transaction Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;VendorTransactionType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;VendorTransactionType&quot;" />

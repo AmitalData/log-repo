@@ -398,7 +398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CargoStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CargoStatus" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CargoStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CargoStatus").ToList();   
 
-			   TextCode CargoStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CargoStatus.Q.CargoStatus", DefaultText = @"CargoStatus",LocalDefaultText = "CargoStatus", ObjectTableId = CargoStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CargoStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CargoStatus.Q.CargoStatus", DefaultText = @"Cargo Statuses",LocalDefaultText = "סטאטוס מטען", ObjectTableId = CargoStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CargoStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CargoStatus.Q.CargoStatus", ObjectTableId = CargoStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoStatus.Features.CargoStatus", NameTextCodeDefaultText = "CargoStatus", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

@@ -385,8 +385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable DeclarationStatusTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationStatusType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> DeclarationStatusTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeclarationStatusType").ToList();   
 
-			   TextCode DeclarationStatusTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeclarationStatusType.Q.DeclarationStatusType", DefaultText = @"DeclarationStatusType",LocalDefaultText = "DeclarationStatusType", ObjectTableId = DeclarationStatusTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DeclarationStatusTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationStatusType.Q.DeclarationStatusType", ObjectTableId = DeclarationStatusTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationStatusTypeFeatures.DeclarationStatusType", NameTextCodeDefaultText = "DeclarationStatusType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DeclarationStatusTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationStatusType.Q.DeclarationStatusTypeQuery", DefaultText = @"Declaration Status Name For Community",LocalDefaultText = "Declaration Status Name For Community", ObjectTableId = DeclarationStatusTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeclarationStatusTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONSTATUSTYPE", ObjectTableId = DeclarationStatusTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeclarationStatusType.Features.DeclarationStatusTypes", NameTextCodeDefaultText = "Declaration Status Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -414,15 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable DeclarationStatusTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationStatusType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature DeclarationStatusTypeFeature_DECLARATIONSTATUSTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DECLARATIONSTATUSTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationStatusTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeclarationStatusType.Features.DeclarationStatusTypes", NameTextCodeDefaultText = @"Declaration Status Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

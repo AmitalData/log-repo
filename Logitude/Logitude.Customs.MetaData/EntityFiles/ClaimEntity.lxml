@@ -14,7 +14,7 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;ClaimEntity&quot;" ObjectTableName="&quot;Customs.ClaimEntity&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ClaimEntity&quot;" IndexOrder="0" QueryGroupCode="&quot;adca&quot;" QueryGroupName="&quot;Customs.ClaimEntity Query Group&quot;" LocalTextCode="&quot;ClaimEntity&quot;" TextCode="&quot;ClaimEntity&quot;" FeatureCode="&quot;ClaimEntity.Q.ClaimEntity&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;ClaimEntity.Features.ClaimEntity&quot;" FeatureDefaultText="&quot;ClaimEntity&quot;">
+  <Query Code="&quot;ClaimEntity&quot;" ObjectTableName="&quot;Customs.ClaimEntity&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ClaimEntity&quot;" IndexOrder="0" QueryGroupCode="&quot;adca&quot;" QueryGroupName="&quot;Customs.ClaimEntity Query Group&quot;" TextCode="&quot;ClaimEntityQuery&quot;" TextCodeCode="&quot;ClaimEntity.Q.ClaimEntity&quot;" IsSpellChecked="false" FeatureCode="&quot;ClaimEntity.Q.ClaimEntity&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;ClaimEntity.Features.ClaimEntity&quot;" FeatureDefaultText="&quot;ClaimEntity&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="50" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ClaimEntity&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;ClaimEntity&quot;" />

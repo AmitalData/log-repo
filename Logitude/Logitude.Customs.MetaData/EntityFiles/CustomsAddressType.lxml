@@ -22,9 +22,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CUSTOMSADDRESSTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CustomsAddressType.Features.CustomsAddressTypes&quot;" FeatureDefaultText="&quot;Customs Address Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CustomsAddressType&quot;" ObjectTableName="&quot;Customs.CustomsAddressType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomsAddressType&quot;" IndexOrder="0" QueryGroupCode="&quot;CUAT&quot;" QueryGroupName="&quot;Customs.CustomerActivityType&quot;" LocalTextCode="&quot;CustomsAddressType&quot;" TextCode="&quot;CustomsAddressType&quot;" IsPackagable="false">
+  <Query Code="&quot;CustomsAddressType&quot;" ObjectTableName="&quot;Customs.CustomsAddressType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomsAddressType&quot;" IndexOrder="0" QueryGroupCode="&quot;CUAT&quot;" QueryGroupName="&quot;Customs.CustomerActivityType&quot;" LocalTextCode="&quot;סוג כתובת&quot;" TextCode="&quot;Address Types&quot;" TextCodeCode="&quot;Customs.CustomsAddressType.Q.CustomsAddressTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CUSTOMSADDRESSTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CustomsAddressType.Features.CustomsAddressTypes&quot;" FeatureDefaultText="&quot;Customs Address Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CustomsAddressType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CustomsAddressType&quot;" />

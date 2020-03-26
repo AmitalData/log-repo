@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PACKAGEMEASUREQUALIFIER&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.PackageMeasureQualifier.Features.PackageMeasureQualifiers&quot;" FeatureDefaultText="&quot;Package Measure Qualifiers&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;PackageMeasureQualifier&quot;" ObjectTableName="&quot;Customs.PackageMeasureQualifier&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PackageMeasureQualifier&quot;" IndexOrder="0" QueryGroupCode="&quot;PMQU&quot;" QueryGroupName="&quot;Customs.PackageMeasureQualifier&quot;" LocalTextCode="&quot;PackageMeasureQualifier&quot;" TextCode="&quot;PackageMeasureQualifier&quot;" IsPackagable="false">
+  <Query Code="&quot;PackageMeasureQualifier&quot;" ObjectTableName="&quot;Customs.PackageMeasureQualifier&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PackageMeasureQualifier&quot;" IndexOrder="0" QueryGroupCode="&quot;PMQU&quot;" QueryGroupName="&quot;Customs.PackageMeasureQualifier&quot;" LocalTextCode="&quot;כמות אריזות&quot;" TextCode="&quot;Package Measure Qualifiers&quot;" TextCodeCode="&quot;Customs.PackageMeasureQualifier.Q.PackageMeasureQualifierQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PACKAGEMEASUREQUALIFIER&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PackageMeasureQualifier.Features.PackageMeasureQualifiers&quot;" FeatureDefaultText="&quot;Package Measure Qualifiers&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;PackageMeasureQualifier&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;PackageMeasureQualifier&quot;" />

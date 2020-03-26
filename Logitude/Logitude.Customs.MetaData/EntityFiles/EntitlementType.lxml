@@ -30,9 +30,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;ENTITLEMENTTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.EntitlementType.Features.EntitlementTypes&quot;" FeatureDefaultText="&quot;Entitlement Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;EntitlementType&quot;" ObjectTableName="&quot;Customs.EntitlementType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.EntitlementType&quot;" IndexOrder="0" QueryGroupCode="&quot;ENTT&quot;" QueryGroupName="&quot;Customs.EntitlementType&quot;" LocalTextCode="&quot;EntitlementType&quot;" TextCode="&quot;EntitlementType&quot;" IsPackagable="false">
+  <Query Code="&quot;EntitlementType&quot;" ObjectTableName="&quot;Customs.EntitlementType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.EntitlementType&quot;" IndexOrder="0" QueryGroupCode="&quot;ENTT&quot;" QueryGroupName="&quot;Customs.EntitlementType&quot;" LocalTextCode="&quot;&quot;" TextCode="&quot;Entitlement Type&quot;" TextCodeCode="&quot;Customs.EntitlementType.Q.EntitlementTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;ENTITLEMENTTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.EntitlementType.Features.EntitlementTypes&quot;" FeatureDefaultText="&quot;Entitlement Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;EntitlementType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;EntitlementType&quot;" />

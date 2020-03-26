@@ -563,7 +563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CouriersVatObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CouriersVat" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CouriersVatObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CouriersVat").ToList();   
 
-			   TextCode CouriersVatTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CouriersVat.Q.AllCouriersVats", DefaultText = @"AllCouriersVats",LocalDefaultText = "AllCouriersVats", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CouriersVatTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CouriersVat.Q.AllCouriersVats", DefaultText = @"All Couriers Vat",LocalDefaultText = "רשימת בלדרים", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CouriersVatFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Q.AllCouriersVats", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.AllCouriersVats", NameTextCodeDefaultText = "AllCouriersVats", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
@@ -621,11 +621,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CouriersVatObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CouriersVat" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CouriersVatGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CouriersVat.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CouriersVatGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.General", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVatFeatures.VCGT", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CouriersVatGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.General", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode CouriersVatEventTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CouriersVat.TH.Event", DefaultText = "Event",LocalDefaultText = "אירועים", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CouriersVatEventFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.Event", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVatFeatures.VCVT", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CouriersVatEventFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.Event", ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Event", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -644,15 +644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CouriersVatFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CouriersVatFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CouriersVatFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CouriersVatFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.PackageFeature", NameTextCodeDefaultText = "CouriersVat Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CouriersVatFeature_CouriersVat_Tab_General = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.General", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature CouriersVatFeature_CouriersVat_Tab_Event = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CouriersVat.Tab.Event", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.Event", NameTextCodeDefaultText = @"Event" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature CouriersVatFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CouriersVatObjectTable.Id, Tenant = 0, NameTextCodeCode = "CouriersVat.Features.PackageFeature", NameTextCodeDefaultText = "CouriersVat Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 

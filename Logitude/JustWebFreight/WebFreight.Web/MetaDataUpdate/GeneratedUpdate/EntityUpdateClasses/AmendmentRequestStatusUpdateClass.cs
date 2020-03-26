@@ -396,8 +396,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AmendmentRequestStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AmendmentRequestStatus" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AmendmentRequestStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AmendmentRequestStatus").ToList();   
 
-			   TextCode AmendmentRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AmendmentRequestStatus.Q.AmendmentRequestStatus", DefaultText = @"AmendmentRequestStatus",LocalDefaultText = "AmendmentRequestStatus", ObjectTableId = AmendmentRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AmendmentRequestStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AmendmentRequestStatus.Q.AmendmentRequestStatus", ObjectTableId = AmendmentRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "AmendmentRequestStatusFeatures.AmendmentRequestStatus", NameTextCodeDefaultText = "AmendmentRequestStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AmendmentRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AmendmentRequestStatus.Q.AmendmentRequestStatusQuery", DefaultText = @"Amendment Request Status",LocalDefaultText = "סטאטוס בקשה לתיקון מסמך", ObjectTableId = AmendmentRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AmendmentRequestStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AMEDMENTREQUESTSTATUS", ObjectTableId = AmendmentRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AmendmentRequestStatus.Features.AmendmentRequestStatus", NameTextCodeDefaultText = "AmendmentRequestStatus", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -425,15 +425,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable AmendmentRequestStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AmendmentRequestStatus" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AmendmentRequestStatusFeature_AMEDMENTREQUESTSTATUS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AMEDMENTREQUESTSTATUS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AmendmentRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AmendmentRequestStatus.Features.AmendmentRequestStatus", NameTextCodeDefaultText = @"AmendmentRequestStatus" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

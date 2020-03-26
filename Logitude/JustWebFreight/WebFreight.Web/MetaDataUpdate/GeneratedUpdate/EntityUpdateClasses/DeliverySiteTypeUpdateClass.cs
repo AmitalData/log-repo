@@ -387,8 +387,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable DeliverySiteTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DeliverySiteType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> DeliverySiteTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DeliverySiteType").ToList();   
 
-			   TextCode DeliverySiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeliverySiteType.Q.DeliverySiteType", DefaultText = @"DeliverySiteType",LocalDefaultText = "DeliverySiteType", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DeliverySiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeliverySiteType.Q.DeliverySiteType", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeliverySiteTypeFeatures.DeliverySiteType", NameTextCodeDefaultText = "DeliverySiteType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DeliverySiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeliverySiteType.Q.DeliverySiteTypeQuery", DefaultText = @"Delivery Site Type",LocalDefaultText = "Delivery Site Types", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DeliverySiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DELIVERYSITETYPE", ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeliverySiteType.Features.DeliverySiteTypes", NameTextCodeDefaultText = "Delivery Site Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -416,15 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable DeliverySiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeliverySiteType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature DeliverySiteTypeFeature_DELIVERYSITETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DELIVERYSITETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeliverySiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeliverySiteType.Features.DeliverySiteTypes", NameTextCodeDefaultText = @"Delivery Site Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

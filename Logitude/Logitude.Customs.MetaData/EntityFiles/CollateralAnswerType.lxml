@@ -13,9 +13,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;COLLATERALANSWERTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CollateralAnswerType.Features.CollateralAnswerTypes&quot;" FeatureDefaultText="&quot;Collateral Answer Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CollateralAnswerType&quot;" ObjectTableName="&quot;Customs.CollateralAnswerType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CollateralAnswerType&quot;" IndexOrder="0" QueryGroupCode="&quot;COAT&quot;" QueryGroupName="&quot;Customs.CollateralAnswerType&quot;" LocalTextCode="&quot;CollateralAnswerType&quot;" TextCode="&quot;CollateralAnswerType&quot;" IsPackagable="false">
+  <Query Code="&quot;CollateralAnswerType&quot;" ObjectTableName="&quot;Customs.CollateralAnswerType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CollateralAnswerType&quot;" IndexOrder="0" QueryGroupCode="&quot;COAT&quot;" QueryGroupName="&quot;Customs.CollateralAnswerType&quot;" LocalTextCode="&quot;סוג מענה לבטוחה&quot;" TextCode="&quot;Collateral Answer Types&quot;" TextCodeCode="&quot;Customs.CollateralAnswerType.Q.CollateralAnswerTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;COLLATERALANSWERTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CollateralAnswerType.Features.CollateralAnswerTypes&quot;" FeatureDefaultText="&quot;Collateral Answer Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CollateralAnswerType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CollateralAnswerType&quot;" />

@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;AUTHORIZEDSIGNERPERMIT&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.AuthorizedSignerPermit.Features.AuthorizedSignerPermits&quot;" FeatureDefaultText="&quot;Authorized Signer Permits&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;AuthorizedSignerPermit&quot;" ObjectTableName="&quot;Customs.AuthorizedSignerPermit&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AuthorizedSignerPermit&quot;" IndexOrder="0" QueryGroupCode="&quot;AUSP&quot;" QueryGroupName="&quot;Customs.AuthorizedSignerPermit&quot;" LocalTextCode="&quot;AuthorizedSignerPermit&quot;" TextCode="&quot;AuthorizedSignerPermit&quot;" IsPackagable="false">
+  <Query Code="&quot;AuthorizedSignerPermit&quot;" ObjectTableName="&quot;Customs.AuthorizedSignerPermit&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AuthorizedSignerPermit&quot;" IndexOrder="0" QueryGroupCode="&quot;AUSP&quot;" QueryGroupName="&quot;Customs.AuthorizedSignerPermit&quot;" LocalTextCode="&quot;סוגי הרשאה למורשה חתימה&quot;" TextCode="&quot;Authorized Signer Permits&quot;" TextCodeCode="&quot;Customs.AuthorizedSignerPermit.Q.AuthorizedSignerPermitQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;AUTHORIZEDSIGNERPERMIT&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.AuthorizedSignerPermit.Features.AuthorizedSignerPermits&quot;" FeatureDefaultText="&quot;Authorized Signer Permits&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;AuthorizedSignerPermit&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;AuthorizedSignerPermit&quot;" />

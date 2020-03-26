@@ -20,9 +20,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;MODIFICATIONANDDISCOUNTTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ModificationAndDiscountType.Features.ModificationAndDiscountTypes&quot;" FeatureDefaultText="&quot;Modification And Discount Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ModificationAndDiscountType&quot;" ObjectTableName="&quot;Customs.ModificationAndDiscountType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ModificationAndDiscountType&quot;" IndexOrder="0" QueryGroupCode="&quot;MADT&quot;" QueryGroupName="&quot;Customs.ModificationAndDiscountType&quot;" LocalTextCode="&quot;ModificationAndDiscountType&quot;" TextCode="&quot;ModificationAndDiscountType&quot;" IsPackagable="false">
+  <Query Code="&quot;ModificationAndDiscountType&quot;" ObjectTableName="&quot;Customs.ModificationAndDiscountType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ModificationAndDiscountType&quot;" IndexOrder="0" QueryGroupCode="&quot;MADT&quot;" QueryGroupName="&quot;Customs.ModificationAndDiscountType&quot;" LocalTextCode="&quot;סוג ההתאמה&quot;" TextCode="&quot;Modification And Discount Types&quot;" TextCodeCode="&quot;Customs.ModificationAndDiscountType.Q.ModificationAndDiscountTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;MODIFICATIONANDDISCOUNTTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ModificationAndDiscountType.Features.ModificationAndDiscountTypes&quot;" FeatureDefaultText="&quot;Modification And Discount Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ModificationAndDiscountType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ModificationAndDiscountType&quot;" />

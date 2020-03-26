@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;DANGEROUSGOODSPACKINGREQ&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.DangerousGoodsPackingReq.Features.DangerousGoodsPackingReqs&quot;" FeatureDefaultText="&quot;Dangerous Goods Packing Reqs&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;DangerousGoodsPackingReq&quot;" ObjectTableName="&quot;Customs.DangerousGoodsPackingReq&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DangerousGoodsPackingReq&quot;" IndexOrder="0" QueryGroupCode="&quot;DGPR&quot;" QueryGroupName="&quot;Customs.DangerousGoodsPackingReq&quot;" LocalTextCode="&quot;DangerousGoodsPackingReq&quot;" TextCode="&quot;DangerousGoodsPackingReq&quot;" IsPackagable="false">
+  <Query Code="&quot;DangerousGoodsPackingReq&quot;" ObjectTableName="&quot;Customs.DangerousGoodsPackingReq&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DangerousGoodsPackingReq&quot;" IndexOrder="0" QueryGroupCode="&quot;DGPR&quot;" QueryGroupName="&quot;Customs.DangerousGoodsPackingReq&quot;" LocalTextCode="&quot;רמת סיכון חומר מסוכן במטען&quot;" TextCode="&quot;Dangerous Goods Packing Reqs&quot;" TextCodeCode="&quot;Customs.DangerousGoodsPackingReq.Q.DangerousGoodsPackingReqQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;DANGEROUSGOODSPACKINGREQ&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.DangerousGoodsPackingReq.Features.DangerousGoodsPackingReqs&quot;" FeatureDefaultText="&quot;Dangerous Goods Packing Reqs&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;DangerousGoodsPackingReq&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;DangerousGoodsPackingReq&quot;" />

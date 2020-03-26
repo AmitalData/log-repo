@@ -377,8 +377,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable VehicleTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.VehicleType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VehicleTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VehicleType").ToList();   
 
-			   TextCode VehicleTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VehicleType.Q.VehicleType", DefaultText = @"VehicleType",LocalDefaultText = "VehicleType", ObjectTableId = VehicleTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VehicleTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VehicleType.Q.VehicleType", ObjectTableId = VehicleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleTypeFeatures.VehicleType", NameTextCodeDefaultText = "VehicleType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VehicleTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VehicleType.Q.VehicleTypeQuery", DefaultText = @"Vehicle Type",LocalDefaultText = "סוג רכב", ObjectTableId = VehicleTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature VehicleTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLETYPE", ObjectTableId = VehicleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehicleType.Features.VehicleType", NameTextCodeDefaultText = "Vehicle Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -406,15 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable VehicleTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VehicleType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature VehicleTypeFeature_VEHICLETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehicleType.Features.VehicleType", NameTextCodeDefaultText = @"Vehicle Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

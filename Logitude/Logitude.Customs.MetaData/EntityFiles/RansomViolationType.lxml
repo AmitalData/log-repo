@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;RANSOMVIOLATIONTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.RansomViolationType.Features.RansomViolationType&quot;" FeatureDefaultText="&quot;Ransom Violation Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;RansomViolationType&quot;" ObjectTableName="&quot;Customs.RansomViolationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.RansomViolationType&quot;" IndexOrder="0" QueryGroupCode="&quot;RVQG&quot;" QueryGroupName="&quot;Customs.RansomViolationType&quot;" LocalTextCode="&quot;RansomViolationType&quot;" TextCode="&quot;RansomViolationType&quot;" IsPackagable="false">
+  <Query Code="&quot;RansomViolationType&quot;" ObjectTableName="&quot;Customs.RansomViolationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.RansomViolationType&quot;" IndexOrder="0" QueryGroupCode="&quot;RVQG&quot;" QueryGroupName="&quot;Customs.RansomViolationType&quot;" LocalTextCode="&quot;סוג הפרה&quot;" TextCode="&quot;Ransom Violation Type&quot;" TextCodeCode="&quot;Customs.RansomViolationType.Q.RansomViolationTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;RANSOMVIOLATIONTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.RansomViolationType.Features.RansomViolationType&quot;" FeatureDefaultText="&quot;Ransom Violation Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;RansomViolationType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;RansomViolationType&quot;" />

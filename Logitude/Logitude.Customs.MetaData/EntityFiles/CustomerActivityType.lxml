@@ -31,9 +31,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CUSTOMERACTIVITYTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CustomerActivityType.Features.CustomerActivityTypes&quot;" FeatureDefaultText="&quot;Customer Activity Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CustomerActivityType&quot;" ObjectTableName="&quot;Customs.CustomerActivityType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomerActivityType&quot;" IndexOrder="0" QueryGroupCode="&quot;CUAT&quot;" QueryGroupName="&quot;Customs.CustomerActivityType&quot;" LocalTextCode="&quot;CustomerActivityType&quot;" TextCode="&quot;CustomerActivityType&quot;" IsPackagable="false">
+  <Query Code="&quot;CustomerActivityType&quot;" ObjectTableName="&quot;Customs.CustomerActivityType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomerActivityType&quot;" IndexOrder="0" QueryGroupCode="&quot;CUAT&quot;" QueryGroupName="&quot;Customs.CustomerActivityType&quot;" LocalTextCode="&quot;סוג פעילות לקוח&quot;" TextCode="&quot;Customer Activity Types&quot;" TextCodeCode="&quot;Customs.CustomerActivityType.Q.CustomerActivityTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CUSTOMERACTIVITYTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CustomerActivityType.Features.CustomerActivityTypes&quot;" FeatureDefaultText="&quot;Customer Activity Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CustomerActivityType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CustomerActivityType&quot;" />

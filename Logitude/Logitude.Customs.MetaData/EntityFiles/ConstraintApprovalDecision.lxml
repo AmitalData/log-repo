@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CONSTRAINTAPPROVALQUERY&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ConstraintApprovalDecision.Features.ConstraintApprovalDecisions&quot;" FeatureDefaultText="&quot;Constraint Approval Decisions&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ConstraintApprovalDecision&quot;" ObjectTableName="&quot;Customs.ConstraintApprovalDecision&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ConstraintApprovalDecision&quot;" IndexOrder="0" QueryGroupCode="&quot;CADG&quot;" QueryGroupName="&quot;Customs.ConstraintApprovalDecisions&quot;" LocalTextCode="&quot;ConstraintApprovalDecision&quot;" TextCode="&quot;ConstraintApprovalDecision&quot;" IsPackagable="false">
+  <Query Code="&quot;ConstraintApprovalDecision&quot;" ObjectTableName="&quot;Customs.ConstraintApprovalDecision&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ConstraintApprovalDecision&quot;" IndexOrder="0" QueryGroupCode="&quot;CADG&quot;" QueryGroupName="&quot;Customs.ConstraintApprovalDecisions&quot;" LocalTextCode="&quot;סוג החלטה באילוץ&quot;" TextCode="&quot;Constraint Approval Decisions&quot;" TextCodeCode="&quot;Customs.ConstraintApproval.Q.ConstraintApprovalDecisionQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CONSTRAINTAPPROVALQUERY&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ConstraintApprovalDecision.Features.ConstraintApprovalDecisions&quot;" FeatureDefaultText="&quot;Constraint Approval Decisions&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ConstraintApprovalDecision&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ConstraintApprovalDecision&quot;" />

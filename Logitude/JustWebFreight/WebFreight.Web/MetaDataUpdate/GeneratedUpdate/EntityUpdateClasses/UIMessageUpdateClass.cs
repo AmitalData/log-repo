@@ -453,7 +453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable UIMessageObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.UIMessage" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> UIMessageObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.UIMessage").ToList();   
 
-			   TextCode UIMessageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UIMessage.Q.UIMessage", DefaultText = @"UIMessage",LocalDefaultText = "UIMessage", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode UIMessageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UIMessage.Q.UIMessage", DefaultText = @"UIMessageQuery",LocalDefaultText = null, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature UIMessageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Q.UIMessage", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.UIMessage", NameTextCodeDefaultText = "UIMessage", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
@@ -497,11 +497,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable UIMessageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.UIMessage" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode UIMessageGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.UIMessage.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UIMessageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.General", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessageFeatures.UMGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UIMessageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.General", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode UIMessageEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.UIMessage.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature UIMessageEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.Events", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessageFeatures.UMEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature UIMessageEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.Events", ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -520,15 +520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature UIMessageFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature UIMessageFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature UIMessageFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature UIMessageFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.PackageFeature", NameTextCodeDefaultText = "UIMessage Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature UIMessageFeature_UIMessage_Tab_General = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.General", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature UIMessageFeature_UIMessage_Tab_Events = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UIMessage.Tab.Events", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature UIMessageFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = UIMessageObjectTable.Id, Tenant = 0, NameTextCodeCode = "UIMessage.Features.PackageFeature", NameTextCodeDefaultText = "UIMessage Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 

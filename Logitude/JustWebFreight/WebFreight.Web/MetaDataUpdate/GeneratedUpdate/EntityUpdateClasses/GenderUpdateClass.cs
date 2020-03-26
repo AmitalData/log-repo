@@ -386,8 +386,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable GenderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.Gender" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> GenderObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.Gender").ToList();   
 
-			   TextCode GenderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Gender.Q.Gender", DefaultText = @"Gender",LocalDefaultText = "Gender", ObjectTableId = GenderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature GenderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Gender.Q.Gender", ObjectTableId = GenderObjectTable.Id, Tenant = 0, NameTextCodeCode = "GenderFeatures.Gender", NameTextCodeDefaultText = "Gender", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode GenderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Gender.Q.GenderQuery", DefaultText = @"Gender",LocalDefaultText = "מין", ObjectTableId = GenderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature GenderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENDER", ObjectTableId = GenderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Gender.Features.Genders", NameTextCodeDefaultText = "Gender", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -415,15 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable GenderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Gender" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature GenderFeature_GENDER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENDER", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GenderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Gender.Features.Genders", NameTextCodeDefaultText = @"Gender" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

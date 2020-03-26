@@ -9,7 +9,7 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;DecisionType&quot;" ObjectTableName="&quot;Customs.DecisionType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DecisionType&quot;" IndexOrder="0" QueryGroupCode="&quot;29af&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;DecisionType&quot;" TextCode="&quot;DecisionType&quot;" FeatureCode="&quot;DecisionType.Q.DecisionType&quot;" IsPackagable="false" FeatureTextCodeCode="&quot;DecisionType.Features.DecisionType&quot;" FeatureDefaultText="&quot;DecisionType&quot;">
+  <Query Code="&quot;DecisionType&quot;" ObjectTableName="&quot;Customs.DecisionType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DecisionType&quot;" IndexOrder="0" QueryGroupCode="&quot;29af&quot;" QueryGroupName="&quot; Query Group&quot;" TextCode="&quot;DecisionTypeQuery&quot;" TextCodeCode="&quot;DecisionType.Q.DecisionType&quot;" IsSpellChecked="false" FeatureCode="&quot;DecisionType.Q.DecisionType&quot;" IsPackagable="false" FeatureTextCodeCode="&quot;DecisionType.Features.DecisionType&quot;" FeatureDefaultText="&quot;DecisionType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="100" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;DecisionType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;DecisionType&quot;" />

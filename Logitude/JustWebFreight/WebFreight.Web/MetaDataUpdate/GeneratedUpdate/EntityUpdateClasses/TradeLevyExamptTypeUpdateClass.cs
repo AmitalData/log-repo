@@ -385,8 +385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable TradeLevyExamptTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TradeLevyExamptType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> TradeLevyExamptTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.TradeLevyExamptType").ToList();   
 
-			   TextCode TradeLevyExamptTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TradeLevyExamptType.Q.TradeLevyExamptType", DefaultText = @"TradeLevyExamptType",LocalDefaultText = "TradeLevyExamptType", ObjectTableId = TradeLevyExamptTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TradeLevyExamptTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TradeLevyExamptType.Q.TradeLevyExamptType", ObjectTableId = TradeLevyExamptTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TradeLevyExamptTypeFeatures.TradeLevyExamptType", NameTextCodeDefaultText = "TradeLevyExamptType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TradeLevyExamptTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.TradeLevyExamptType.Q.TradeLevyExamptTypeQuery", DefaultText = @"Trade Levy Exampt Type",LocalDefaultText = "סוג פטור מהיטל", ObjectTableId = TradeLevyExamptTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature TradeLevyExamptTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRADELEVYEXAMPT", ObjectTableId = TradeLevyExamptTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.TradeLevyExamptType.Features.TradeLevyExamptType", NameTextCodeDefaultText = "Trade Levy Exampt Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -414,15 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable TradeLevyExamptTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.TradeLevyExamptType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature TradeLevyExamptTypeFeature_TRADELEVYEXAMPT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRADELEVYEXAMPT", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TradeLevyExamptTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.TradeLevyExamptType.Features.TradeLevyExamptType", NameTextCodeDefaultText = @"Trade Levy Exampt Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

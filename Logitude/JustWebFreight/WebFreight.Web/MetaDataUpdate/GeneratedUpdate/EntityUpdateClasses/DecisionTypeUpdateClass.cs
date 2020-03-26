@@ -443,7 +443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable DecisionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DecisionType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> DecisionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DecisionType").ToList();   
 
-			   TextCode DecisionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DecisionType.Q.DecisionType", DefaultText = @"DecisionType",LocalDefaultText = "DecisionType", ObjectTableId = DecisionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode DecisionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DecisionType.Q.DecisionType", DefaultText = @"DecisionTypeQuery",LocalDefaultText = null, ObjectTableId = DecisionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature DecisionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DecisionType.Q.DecisionType", ObjectTableId = DecisionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DecisionType.Features.DecisionType", NameTextCodeDefaultText = "DecisionType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

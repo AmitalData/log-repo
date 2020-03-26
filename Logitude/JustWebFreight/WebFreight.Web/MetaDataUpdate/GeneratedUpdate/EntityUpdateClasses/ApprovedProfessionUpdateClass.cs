@@ -458,8 +458,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ApprovedProfessionObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ApprovedProfession" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ApprovedProfessionObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ApprovedProfession").ToList();   
 
-			   TextCode ApprovedProfessionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ApprovedProfession.Q.ApprovedProfession", DefaultText = @"ApprovedProfession",LocalDefaultText = "ApprovedProfession", ObjectTableId = ApprovedProfessionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ApprovedProfessionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ApprovedProfession.Q.ApprovedProfession", ObjectTableId = ApprovedProfessionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApprovedProfessionFeatures.ApprovedProfession", NameTextCodeDefaultText = "ApprovedProfession", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ApprovedProfessionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ApprovedProfession.Q.ApprovedProfession", DefaultText = @"ApprovedProfessionQuery",LocalDefaultText = null, ObjectTableId = ApprovedProfessionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ApprovedProfessionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ApprovedProfession.Q.ApprovedProfession", ObjectTableId = ApprovedProfessionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApprovedProfession.Features.ApprovedProfession", NameTextCodeDefaultText = "ApprovedProfession", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -487,15 +487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ApprovedProfessionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ApprovedProfession" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ApprovedProfessionFeature_ApprovedProfession_Q_ApprovedProfession = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ApprovedProfession.Q.ApprovedProfession", FeatureTypeCode = "QUER", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ApprovedProfessionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ApprovedProfession.Features.ApprovedProfession", NameTextCodeDefaultText = @"ApprovedProfession" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

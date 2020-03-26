@@ -55,9 +55,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;RETURNCONDITION&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ReturnCondition.Features.ReturnConditions&quot;" FeatureDefaultText="&quot;Return Conditions&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ReturnCondition&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ReturnCondition&quot;" IndexOrder="0" QueryGroupCode="&quot;RETC&quot;" QueryGroupName="&quot;Customs.ReturnCondition&quot;" LocalTextCode="&quot;ReturnCondition&quot;" TextCode="&quot;ReturnCondition&quot;" IsPackagable="false">
+  <Query Code="&quot;ReturnCondition&quot;" ObjectTableName="&quot;Customs.ReturnCondition&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ReturnCondition&quot;" IndexOrder="0" QueryGroupCode="&quot;RETC&quot;" QueryGroupName="&quot;Customs.ReturnCondition&quot;" LocalTextCode="&quot;תנאי להחזר&quot;" TextCode="&quot;Return Conditions&quot;" TextCodeCode="&quot;Customs.ReturnCondition.Q.ReturnConditionQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;RETURNCONDITION&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ReturnCondition.Features.ReturnConditions&quot;" FeatureDefaultText="&quot;Return Conditions&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ReturnCondition&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ReturnCondition&quot;" />

@@ -385,8 +385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ValidCustomsItemObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ValidCustomsItem" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ValidCustomsItemObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ValidCustomsItem").ToList();   
 
-			   TextCode ValidCustomsItemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ValidCustomsItem.Q.ValidCustomsItem", DefaultText = @"ValidCustomsItem",LocalDefaultText = "ValidCustomsItem", ObjectTableId = ValidCustomsItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ValidCustomsItemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ValidCustomsItem.Q.ValidCustomsItem", ObjectTableId = ValidCustomsItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "ValidCustomsItemFeatures.ValidCustomsItem", NameTextCodeDefaultText = "ValidCustomsItem", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ValidCustomsItemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ValidCustomsItem.Q.ValidCustomsItemQuery", DefaultText = @"Valid Customs Item",LocalDefaultText = "פרטי מכס תקפים", ObjectTableId = ValidCustomsItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ValidCustomsItemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VALIDCUSTOMSITEM", ObjectTableId = ValidCustomsItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ValidCustomsItem.Features.ValidCustomsItem", NameTextCodeDefaultText = "Valid Customs Item", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -414,15 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ValidCustomsItemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ValidCustomsItem" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ValidCustomsItemFeature_VALIDCUSTOMSITEM = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VALIDCUSTOMSITEM", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ValidCustomsItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ValidCustomsItem.Features.ValidCustomsItem", NameTextCodeDefaultText = @"Valid Customs Item" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

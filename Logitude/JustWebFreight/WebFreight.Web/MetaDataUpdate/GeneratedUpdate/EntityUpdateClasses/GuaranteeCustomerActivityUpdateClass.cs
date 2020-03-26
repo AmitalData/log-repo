@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable GuaranteeCustomerActivityObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.GuaranteeCustomerActivity" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> GuaranteeCustomerActivityObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.GuaranteeCustomerActivity").ToList();   
 
-			   TextCode GuaranteeCustomerActivityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GuaranteeCustomerActivity.Q.GuaranteeCustomerActivity", DefaultText = @"GuaranteeCustomerActivity",LocalDefaultText = "GuaranteeCustomerActivity", ObjectTableId = GuaranteeCustomerActivityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature GuaranteeCustomerActivityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GuaranteeCustomerActivity.Q.GuaranteeCustomerActivity", ObjectTableId = GuaranteeCustomerActivityObjectTable.Id, Tenant = 0, NameTextCodeCode = "GuaranteeCustomerActivityFeatures.GuaranteeCustomerActivity", NameTextCodeDefaultText = "GuaranteeCustomerActivity", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode GuaranteeCustomerActivityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.GuaranteeCustomerActivity.Q.GuaranteeCustomerActivityQuery", DefaultText = @"GuaranteeCustomerActivity",LocalDefaultText = "סוג פעילות לקוח ערבות", ObjectTableId = GuaranteeCustomerActivityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature GuaranteeCustomerActivityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GUARANTEECUSTOMERACTIVITY", ObjectTableId = GuaranteeCustomerActivityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.GuaranteeCustomerActivity.Features.GuaranteeCustomerActivity", NameTextCodeDefaultText = "GuaranteeCustomerActivity", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable GuaranteeCustomerActivityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.GuaranteeCustomerActivity" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature GuaranteeCustomerActivityFeature_GUARANTEECUSTOMERACTIVITY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GUARANTEECUSTOMERACTIVITY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GuaranteeCustomerActivityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.GuaranteeCustomerActivity.Features.GuaranteeCustomerActivity", NameTextCodeDefaultText = @"GuaranteeCustomerActivity" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

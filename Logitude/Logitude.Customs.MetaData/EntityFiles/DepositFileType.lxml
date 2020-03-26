@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;DEPOSITFILE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.DepositFileType.Features.DepositFileType&quot;" FeatureDefaultText="&quot;Deposit File Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;DepositFileType&quot;" ObjectTableName="&quot;Customs.DepositFileType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DepositFileType&quot;" IndexOrder="0" QueryGroupCode="&quot;DFQG&quot;" QueryGroupName="&quot;Customs.DepositFileType&quot;" LocalTextCode="&quot;DepositFileType&quot;" TextCode="&quot;DepositFileType&quot;" IsPackagable="false">
+  <Query Code="&quot;DepositFileType&quot;" ObjectTableName="&quot;Customs.DepositFileType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DepositFileType&quot;" IndexOrder="0" QueryGroupCode="&quot;DFQG&quot;" QueryGroupName="&quot;Customs.DepositFileType&quot;" LocalTextCode="&quot;סוג תיק פקדון&quot;" TextCode="&quot;Deposit File Type&quot;" TextCodeCode="&quot;Customs.DepositFileType.Q.DepositFileTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;DEPOSITFILE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.DepositFileType.Features.DepositFileType&quot;" FeatureDefaultText="&quot;Deposit File Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;DepositFileType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;DepositFileType&quot;" />

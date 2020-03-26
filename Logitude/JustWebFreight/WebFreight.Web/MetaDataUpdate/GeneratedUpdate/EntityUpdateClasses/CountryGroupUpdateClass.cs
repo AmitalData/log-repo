@@ -392,8 +392,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CountryGroupObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CountryGroup" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CountryGroupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CountryGroup").ToList();   
 
-			   TextCode CountryGroupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CountryGroup.Q.CountryGroup", DefaultText = @"CountryGroup",LocalDefaultText = "CountryGroup", ObjectTableId = CountryGroupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CountryGroupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CountryGroup.Q.CountryGroup", ObjectTableId = CountryGroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "CountryGroupFeatures.CountryGroup", NameTextCodeDefaultText = "CountryGroup", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CountryGroupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CountryGroup.Q.CountryGroupQuery", DefaultText = @"Country Groups",LocalDefaultText = "קבוצות מדינה", ObjectTableId = CountryGroupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CountryGroupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COUNTRYGROUP", ObjectTableId = CountryGroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CountryGroup.Features.CountryGroups", NameTextCodeDefaultText = "Country Groups", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -421,15 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CountryGroupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CountryGroup" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CountryGroupFeature_COUNTRYGROUP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COUNTRYGROUP", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CountryGroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CountryGroup.Features.CountryGroups", NameTextCodeDefaultText = @"Country Groups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

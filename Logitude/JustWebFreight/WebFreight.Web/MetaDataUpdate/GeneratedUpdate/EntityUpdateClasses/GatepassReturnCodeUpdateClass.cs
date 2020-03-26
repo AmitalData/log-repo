@@ -445,8 +445,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable GatepassReturnCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.GatepassReturnCode" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> GatepassReturnCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.GatepassReturnCode").ToList();   
 
-			   TextCode GatepassReturnCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", DefaultText = @"GatepassReturnCode",LocalDefaultText = "GatepassReturnCode", ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature GatepassReturnCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GatepassReturnCodeFeatures.GatepassReturnCode", NameTextCodeDefaultText = "GatepassReturnCode", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode GatepassReturnCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", DefaultText = @"GatepassReturnCodeQuery",LocalDefaultText = "תשובה בבקשת העברה", ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature GatepassReturnCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GatepassReturnCode.Features.GatepassReturnCode", NameTextCodeDefaultText = "GatepassReturnCode", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -474,15 +474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable GatepassReturnCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.GatepassReturnCode" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature GatepassReturnCodeFeature_GatepassReturnCode_Q_GatepassReturnCode = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GatepassReturnCode.Q.GatepassReturnCode", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GatepassReturnCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "GatepassReturnCode.Features.GatepassReturnCode", NameTextCodeDefaultText = @"GatepassReturnCode" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

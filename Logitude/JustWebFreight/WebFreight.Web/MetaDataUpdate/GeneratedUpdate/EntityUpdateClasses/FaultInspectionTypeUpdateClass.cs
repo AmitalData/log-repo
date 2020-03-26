@@ -382,8 +382,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable FaultInspectionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.FaultInspectionType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> FaultInspectionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.FaultInspectionType").ToList();   
 
-			   TextCode FaultInspectionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FaultInspectionType.Q.FaultInspectionType", DefaultText = @"FaultInspectionType",LocalDefaultText = "FaultInspectionType", ObjectTableId = FaultInspectionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature FaultInspectionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FaultInspectionType.Q.FaultInspectionType", ObjectTableId = FaultInspectionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "FaultInspectionTypeFeatures.FaultInspectionType", NameTextCodeDefaultText = "FaultInspectionType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode FaultInspectionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.FaultInspectionType.Q.FaultInspectionTypeQuery", DefaultText = @"Fault Inspection Type",LocalDefaultText = "סוג בקורת בליקוי", ObjectTableId = FaultInspectionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature FaultInspectionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FAULTINSPECTIONTYPE", ObjectTableId = FaultInspectionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.FaultInspectionType.Features.FaultInspectionType", NameTextCodeDefaultText = "Fault Inspection Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    

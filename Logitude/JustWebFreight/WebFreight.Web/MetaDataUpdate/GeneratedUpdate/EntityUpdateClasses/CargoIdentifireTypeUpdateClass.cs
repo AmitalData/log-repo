@@ -392,8 +392,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CargoIdentifireTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CargoIdentifireType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CargoIdentifireTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CargoIdentifireType").ToList();   
 
-			   TextCode CargoIdentifireTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CargoIdentifireType.Q.CargoIdentifireType", DefaultText = @"CargoIdentifireType",LocalDefaultText = "CargoIdentifireType", ObjectTableId = CargoIdentifireTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CargoIdentifireTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CargoIdentifireType.Q.CargoIdentifireType", ObjectTableId = CargoIdentifireTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoIdentifireTypeFeatures.CargoIdentifireType", NameTextCodeDefaultText = "CargoIdentifireType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CargoIdentifireTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CargoIdentifireType.Q.CargoIdentifireTypeQuery", DefaultText = @"Cargo Identifier Types",LocalDefaultText = "סוג מזהה מטען", ObjectTableId = CargoIdentifireTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CargoIdentifireTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CARGOIDENTIFIRETYPE", ObjectTableId = CargoIdentifireTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CargoIdentifireType.Features.CargoIdentifireTypes", NameTextCodeDefaultText = "Cargo Identifire Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -421,15 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CargoIdentifireTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CargoIdentifireType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CargoIdentifireTypeFeature_CARGOIDENTIFIRETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CARGOIDENTIFIRETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CargoIdentifireTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CargoIdentifireType.Features.CargoIdentifireTypes", NameTextCodeDefaultText = @"Cargo Identifire Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

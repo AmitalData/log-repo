@@ -379,8 +379,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable LeadDocumentExceptionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.LeadDocumentExceptionType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> LeadDocumentExceptionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.LeadDocumentExceptionType").ToList();   
 
-			   TextCode LeadDocumentExceptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LeadDocumentExceptionType.Q.LeadDocumentExceptionType", DefaultText = @"LeadDocumentExceptionType",LocalDefaultText = "LeadDocumentExceptionType", ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature LeadDocumentExceptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LeadDocumentExceptionType.Q.LeadDocumentExceptionType", ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "LeadDocumentExceptionTypeFeatures.LeadDocumentExceptionType", NameTextCodeDefaultText = "LeadDocumentExceptionType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode LeadDocumentExceptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.LeadDocumentExceptionType.Q.LeadDocumentExceptionTypeQuery", DefaultText = @"Lead Document Exception Types",LocalDefaultText = "סוג שגיאה במסמך מוביל", ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature LeadDocumentExceptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LEADDOCUMENTEXCEPTIONTYPEQUERY", ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.City.Features.LeadDocumentExceptionTypes", NameTextCodeDefaultText = "Lead Document Exception Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -408,15 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable LeadDocumentExceptionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.LeadDocumentExceptionType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature LeadDocumentExceptionTypeFeature_LEADDOCUMENTEXCEPTIONTYPEQUERY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LEADDOCUMENTEXCEPTIONTYPEQUERY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LeadDocumentExceptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.City.Features.LeadDocumentExceptionTypes", NameTextCodeDefaultText = @"Lead Document Exception Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

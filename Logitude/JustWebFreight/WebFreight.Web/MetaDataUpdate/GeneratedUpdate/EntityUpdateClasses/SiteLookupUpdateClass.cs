@@ -443,8 +443,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SiteLookupObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SiteLookup" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SiteLookupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SiteLookup").ToList();   
 
-			   TextCode SiteLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SiteLookup.Q.SiteLookup", DefaultText = @"SiteLookup",LocalDefaultText = "SiteLookup", ObjectTableId = SiteLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SiteLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SiteLookup.Q.SiteLookup", ObjectTableId = SiteLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "SiteLookupFeatures.SiteLookup", NameTextCodeDefaultText = "SiteLookup", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SiteLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SiteLookup.Q.SiteLookupQuery", DefaultText = @"Site Lookups",LocalDefaultText = "אתר לתצוגה", ObjectTableId = SiteLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature SiteLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SITELOOKUP", ObjectTableId = SiteLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SiteLookup.Features.SiteLookups", NameTextCodeDefaultText = "Site Lookups", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -472,15 +472,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SiteLookupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SiteLookup" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature SiteLookupFeature_SITELOOKUP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SITELOOKUP", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SiteLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.SiteLookup.Features.SiteLookups", NameTextCodeDefaultText = @"Site Lookups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -4536,9 +4536,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;SUBCOUNTRY&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.SubCountry.Features.SubCountries&quot;" FeatureDefaultText="&quot;Sub Countries&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;SubCountry&quot;" ObjectTableName="&quot;Customs.SubCountry&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SubCountry&quot;" IndexOrder="0" QueryGroupCode="&quot;SUCO&quot;" QueryGroupName="&quot;Customs.SubCountry&quot;" LocalTextCode="&quot;SubCountry&quot;" TextCode="&quot;SubCountry&quot;" IsPackagable="false">
+  <Query Code="&quot;SubCountry&quot;" ObjectTableName="&quot;Customs.SubCountry&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SubCountry&quot;" IndexOrder="0" QueryGroupCode="&quot;SUCO&quot;" QueryGroupName="&quot;Customs.SubCountry&quot;" LocalTextCode="&quot;תת מדינה&quot;" TextCode="&quot;Sub Countries&quot;" TextCodeCode="&quot;Customs.SubCountry.Q.SubCountryQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;SUBCOUNTRY&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.SubCountry.Features.SubCountries&quot;" FeatureDefaultText="&quot;Sub Countries&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;SubCountry&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;SubCountry&quot;" />

@@ -2304,8 +2304,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ProceduralFaultObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ProceduralFault" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ProceduralFaultObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ProceduralFault").ToList();   
 
-			   TextCode ProceduralFaultTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProceduralFault.Q.ProceduralFaults", DefaultText = @"Procedural Faults",LocalDefaultText = "Procedural Faults", ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ProceduralFaultFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProceduralFault.Q.ProceduralFaults", ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProceduralFaultFeatures.ProceduralFaults", NameTextCodeDefaultText = "Procedural Faults", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ProceduralFaultTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ProceduralFault.Q.ProceduralFaults", DefaultText = @"Procedural Faults",LocalDefaultText = "ליקויים", ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ProceduralFaultFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULT", ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFault.Features.ProceduralFaults", NameTextCodeDefaultText = "Procedural Faults", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -2354,13 +2354,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature ProceduralFaultFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProceduralFault.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ProceduralFaultFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProceduralFault.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ProceduralFaultFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProceduralFault.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ProceduralFaultFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProceduralFault.Features.PackageFeature", NameTextCodeDefaultText = "ProceduralFault Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ProceduralFaultFeature_PROCEDURALFAULT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULT", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFault.Features.ProceduralFaults", NameTextCodeDefaultText = @"Procedural Faults" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature ProceduralFaultFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ProceduralFaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProceduralFault.Features.PackageFeature", NameTextCodeDefaultText = "ProceduralFault Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 

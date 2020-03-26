@@ -9,9 +9,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;SealCompletenes.Q.SealCompletenes&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;SealCompletenes.Features.SealCompletenes&quot;" FeatureDefaultText="&quot;SealCompletenes&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;SealCompletenes&quot;" ObjectTableName="&quot;Customs.SealCompletenes&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SealCompletenes&quot;" IndexOrder="0" QueryGroupCode="&quot;bc45&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;SealCompletenes&quot;" TextCode="&quot;SealCompletenes&quot;" IsPackagable="false">
+  <Query Code="&quot;SealCompletenes&quot;" ObjectTableName="&quot;Customs.SealCompletenes&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SealCompletenes&quot;" IndexOrder="0" QueryGroupCode="&quot;bc45&quot;" QueryGroupName="&quot; Query Group&quot;" TextCode="&quot;SealCompletenesQuery&quot;" TextCodeCode="&quot;SealCompletenes.Q.SealCompletenes&quot;" IsSpellChecked="false" FeatureCode="&quot;SealCompletenes.Q.SealCompletenes&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;SealCompletenes.Features.SealCompletenes&quot;" FeatureDefaultText="&quot;SealCompletenes&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="50" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;SealCompletenes&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;SealCompletenes&quot;" />

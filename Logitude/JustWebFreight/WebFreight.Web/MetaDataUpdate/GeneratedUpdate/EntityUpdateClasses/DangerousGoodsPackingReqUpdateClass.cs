@@ -389,8 +389,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable DangerousGoodsPackingReqObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DangerousGoodsPackingReq" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> DangerousGoodsPackingReqObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DangerousGoodsPackingReq").ToList();   
 
-			   TextCode DangerousGoodsPackingReqTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DangerousGoodsPackingReq.Q.DangerousGoodsPackingReq", DefaultText = @"DangerousGoodsPackingReq",LocalDefaultText = "DangerousGoodsPackingReq", ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DangerousGoodsPackingReqFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DangerousGoodsPackingReq.Q.DangerousGoodsPackingReq", ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, Tenant = 0, NameTextCodeCode = "DangerousGoodsPackingReqFeatures.DangerousGoodsPackingReq", NameTextCodeDefaultText = "DangerousGoodsPackingReq", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DangerousGoodsPackingReqTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DangerousGoodsPackingReq.Q.DangerousGoodsPackingReqQuery", DefaultText = @"Dangerous Goods Packing Reqs",LocalDefaultText = "רמת סיכון חומר מסוכן במטען", ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DangerousGoodsPackingReqFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DANGEROUSGOODSPACKINGREQ", ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DangerousGoodsPackingReq.Features.DangerousGoodsPackingReqs", NameTextCodeDefaultText = "Dangerous Goods Packing Reqs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -418,15 +418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable DangerousGoodsPackingReqObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DangerousGoodsPackingReq" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature DangerousGoodsPackingReqFeature_DANGEROUSGOODSPACKINGREQ = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DANGEROUSGOODSPACKINGREQ", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DangerousGoodsPackingReqObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DangerousGoodsPackingReq.Features.DangerousGoodsPackingReqs", NameTextCodeDefaultText = @"Dangerous Goods Packing Reqs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

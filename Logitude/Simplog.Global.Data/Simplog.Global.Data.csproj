@@ -413,6 +413,10 @@
     <Compile Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.Designer.cs">
       <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003260849424_missinnnnnnnng.cs" />
+    <Compile Include="Migrations\202003260849424_missinnnnnnnng.Designer.cs">
+      <DependentUpon>202003260849424_missinnnnnnnng.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -575,6 +579,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.resx">
       <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003260849424_missinnnnnnnng.resx">
+      <DependentUpon>202003260849424_missinnnnnnnng.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

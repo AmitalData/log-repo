@@ -445,8 +445,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable TransferCargoMethodTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TransferCargoMethodType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> TransferCargoMethodTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.TransferCargoMethodType").ToList();   
 
-			   TextCode TransferCargoMethodTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TransferCargoMethodType.Q.TransferCargoMethodType", DefaultText = @"TransferCargoMethodType",LocalDefaultText = "TransferCargoMethodType", ObjectTableId = TransferCargoMethodTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TransferCargoMethodTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TransferCargoMethodType.Q.TransferCargoMethodType", ObjectTableId = TransferCargoMethodTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TransferCargoMethodTypeFeatures.TransferCargoMethodType", NameTextCodeDefaultText = "TransferCargoMethodType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TransferCargoMethodTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TransferCargoMethodType.Q.TransferCargoMethodType", DefaultText = @"TransferCargoMethodTypeQuery",LocalDefaultText = "סוג שיטת הובלה", ObjectTableId = TransferCargoMethodTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature TransferCargoMethodTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TransferCargoMethodType.Q.TransferCargoMethodType", ObjectTableId = TransferCargoMethodTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TransferCargoMethodType.Features.TransferCargoMethodType", NameTextCodeDefaultText = "TransferCargoMethodType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -474,15 +474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable TransferCargoMethodTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.TransferCargoMethodType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature TransferCargoMethodTypeFeature_TransferCargoMethodType_Q_TransferCargoMethodType = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TransferCargoMethodType.Q.TransferCargoMethodType", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TransferCargoMethodTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TransferCargoMethodType.Features.TransferCargoMethodType", NameTextCodeDefaultText = @"TransferCargoMethodType" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -27,9 +27,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;INTERNALBORDERSITETYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.InternalBorderSiteType.Features.InternalBorderSiteType&quot;" FeatureDefaultText="&quot;Internal Border Site Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;InternalBorderSiteType&quot;" ObjectTableName="&quot;Customs.InternalBorderSiteType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.InternalBorderSiteType&quot;" IndexOrder="0" QueryGroupCode="&quot;IBST&quot;" QueryGroupName="&quot;Customs.InternalBorderSiteType&quot;" LocalTextCode="&quot;InternalBorderSiteType&quot;" TextCode="&quot;InternalBorderSiteType&quot;" IsPackagable="false">
+  <Query Code="&quot;InternalBorderSiteType&quot;" ObjectTableName="&quot;Customs.InternalBorderSiteType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.InternalBorderSiteType&quot;" IndexOrder="0" QueryGroupCode="&quot;IBST&quot;" QueryGroupName="&quot;Customs.InternalBorderSiteType&quot;" LocalTextCode="&quot;Internal Border Site Type&quot;" TextCode="&quot;Internal Border Site Type&quot;" TextCodeCode="&quot;Customs.InternalBorderSiteType.Q.InternalBorderSiteTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;INTERNALBORDERSITETYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.InternalBorderSiteType.Features.InternalBorderSiteType&quot;" FeatureDefaultText="&quot;Internal Border Site Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;InternalBorderSiteType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;InternalBorderSiteType&quot;" />

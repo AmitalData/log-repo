@@ -391,8 +391,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable TermsOfSaleTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.TermsOfSaleType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> TermsOfSaleTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.TermsOfSaleType").ToList();   
 
-			   TextCode TermsOfSaleTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TermsOfSaleType.Q.TermsOfSaleType", DefaultText = @"TermsOfSaleType",LocalDefaultText = "TermsOfSaleType", ObjectTableId = TermsOfSaleTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature TermsOfSaleTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TermsOfSaleType.Q.TermsOfSaleType", ObjectTableId = TermsOfSaleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TermsOfSaleTypeFeatures.TermsOfSaleType", NameTextCodeDefaultText = "TermsOfSaleType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode TermsOfSaleTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.TermsOfSaleType.Q.TermsOfSaleTypeQuery", DefaultText = @"Terms Of Sale Types",LocalDefaultText = "תנאי מכר", ObjectTableId = TermsOfSaleTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature TermsOfSaleTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TERMSOFSALETYPE", ObjectTableId = TermsOfSaleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.TermsOfSaleType.Features.TermsOfSaleTypes", NameTextCodeDefaultText = "Terms Of Sale Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -420,15 +420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable TermsOfSaleTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.TermsOfSaleType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature TermsOfSaleTypeFeature_TERMSOFSALETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TERMSOFSALETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TermsOfSaleTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.TermsOfSaleType.Features.TermsOfSaleTypes", NameTextCodeDefaultText = @"Terms Of Sale Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -11,9 +11,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PRODUCTIDENTIFICATIONTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ProductIdentificationType.Features.ProductIdentificationTypes&quot;" FeatureDefaultText="&quot;Product Identification Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ProductIdentificationType&quot;" ObjectTableName="&quot;Customs.ProductIdentificationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProductIdentificationType&quot;" IndexOrder="0" QueryGroupCode="&quot;PRIT&quot;" QueryGroupName="&quot;Customs.ProductIdentificationType&quot;" LocalTextCode="&quot;ProductIdentificationType&quot;" TextCode="&quot;ProductIdentificationType&quot;" IsPackagable="false">
+  <Query Code="&quot;ProductIdentificationType&quot;" ObjectTableName="&quot;Customs.ProductIdentificationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProductIdentificationType&quot;" IndexOrder="0" QueryGroupCode="&quot;PRIT&quot;" QueryGroupName="&quot;Customs.ProductIdentificationType&quot;" LocalTextCode="&quot;סוג מספר זיהוי&quot;" TextCode="&quot;Product Identification Types&quot;" TextCodeCode="&quot;Customs.ProductIdentificationType.Q.ProductIdentificationTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PRODUCTIDENTIFICATIONTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ProductIdentificationType.Features.ProductIdentificationTypes&quot;" FeatureDefaultText="&quot;Product Identification Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ProductIdentificationType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ProductIdentificationType&quot;" />

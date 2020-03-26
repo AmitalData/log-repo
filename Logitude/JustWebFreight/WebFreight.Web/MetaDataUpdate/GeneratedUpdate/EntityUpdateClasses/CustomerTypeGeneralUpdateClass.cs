@@ -385,8 +385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomerTypeGeneralObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerTypeGeneral" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomerTypeGeneralObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomerTypeGeneral").ToList();   
 
-			   TextCode CustomerTypeGeneralTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTypeGeneral.Q.CustomerTypeGeneral", DefaultText = @"CustomerTypeGeneral",LocalDefaultText = "CustomerTypeGeneral", ObjectTableId = CustomerTypeGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerTypeGeneralFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerTypeGeneral.Q.CustomerTypeGeneral", ObjectTableId = CustomerTypeGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTypeGeneralFeatures.CustomerTypeGeneral", NameTextCodeDefaultText = "CustomerTypeGeneral", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerTypeGeneralTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomerTypeGeneral.Q.CustomerTypeGeneralQuery", DefaultText = @"Customer Type Generals",LocalDefaultText = "סוג לקוח", ObjectTableId = CustomerTypeGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomerTypeGeneralFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERTYPEGENERAL", ObjectTableId = CustomerTypeGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomerTypeGeneral.Features.CustomerTypeGenerals", NameTextCodeDefaultText = "Customer Type Generals", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -414,15 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CustomerTypeGeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerTypeGeneral" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomerTypeGeneralFeature_CUSTOMERTYPEGENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERTYPEGENERAL", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerTypeGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomerTypeGeneral.Features.CustomerTypeGenerals", NameTextCodeDefaultText = @"Customer Type Generals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

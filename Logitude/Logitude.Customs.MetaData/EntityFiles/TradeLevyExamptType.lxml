@@ -10,9 +10,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;TRADELEVYEXAMPT&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.TradeLevyExamptType.Features.TradeLevyExamptType&quot;" FeatureDefaultText="&quot;Trade Levy Exampt Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;TradeLevyExamptType&quot;" ObjectTableName="&quot;Customs.TradeLevyExamptType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TradeLevyExamptType&quot;" IndexOrder="0" QueryGroupCode="&quot;TLQG&quot;" QueryGroupName="&quot;Customs.TradeLevyExamptType&quot;" LocalTextCode="&quot;TradeLevyExamptType&quot;" TextCode="&quot;TradeLevyExamptType&quot;" IsPackagable="false">
+  <Query Code="&quot;TradeLevyExamptType&quot;" ObjectTableName="&quot;Customs.TradeLevyExamptType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TradeLevyExamptType&quot;" IndexOrder="0" QueryGroupCode="&quot;TLQG&quot;" QueryGroupName="&quot;Customs.TradeLevyExamptType&quot;" LocalTextCode="&quot;סוג פטור מהיטל&quot;" TextCode="&quot;Trade Levy Exampt Type&quot;" TextCodeCode="&quot;Customs.TradeLevyExamptType.Q.TradeLevyExamptTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;TRADELEVYEXAMPT&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.TradeLevyExamptType.Features.TradeLevyExamptType&quot;" FeatureDefaultText="&quot;Trade Levy Exampt Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;TradeLevyExamptType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;TradeLevyExamptType&quot;" />

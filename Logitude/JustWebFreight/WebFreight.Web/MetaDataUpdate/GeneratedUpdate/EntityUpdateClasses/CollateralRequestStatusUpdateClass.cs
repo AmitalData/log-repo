@@ -379,8 +379,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CollateralRequestStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralRequestStatus" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CollateralRequestStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CollateralRequestStatus").ToList();   
 
-			   TextCode CollateralRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CollateralRequestStatus.Q.CollateralRequestStatus", DefaultText = @"CollateralRequestStatus",LocalDefaultText = "CollateralRequestStatus", ObjectTableId = CollateralRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CollateralRequestStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CollateralRequestStatus.Q.CollateralRequestStatus", ObjectTableId = CollateralRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "CollateralRequestStatusFeatures.CollateralRequestStatus", NameTextCodeDefaultText = "CollateralRequestStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CollateralRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CollateralRequestStatus.Q.CollateralRequestStatusQuery", DefaultText = @"Collateral Request Status",LocalDefaultText = "סטאטוס הדרישה לבטוחה", ObjectTableId = CollateralRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CollateralRequestStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALREQUESTSTATUS", ObjectTableId = CollateralRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralRequestStatus.Features.CollateralRequestStatus", NameTextCodeDefaultText = "Collateral Request Status", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -408,15 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CollateralRequestStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralRequestStatus" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CollateralRequestStatusFeature_COLLATERALREQUESTSTATUS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALREQUESTSTATUS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CollateralRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralRequestStatus.Features.CollateralRequestStatus", NameTextCodeDefaultText = @"Collateral Request Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

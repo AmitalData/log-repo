@@ -392,8 +392,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable PackageMeasureQualifierObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PackageMeasureQualifier" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> PackageMeasureQualifierObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PackageMeasureQualifier").ToList();   
 
-			   TextCode PackageMeasureQualifierTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageMeasureQualifier.Q.PackageMeasureQualifier", DefaultText = @"PackageMeasureQualifier",LocalDefaultText = "PackageMeasureQualifier", ObjectTableId = PackageMeasureQualifierObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PackageMeasureQualifierFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PackageMeasureQualifier.Q.PackageMeasureQualifier", ObjectTableId = PackageMeasureQualifierObjectTable.Id, Tenant = 0, NameTextCodeCode = "PackageMeasureQualifierFeatures.PackageMeasureQualifier", NameTextCodeDefaultText = "PackageMeasureQualifier", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PackageMeasureQualifierTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PackageMeasureQualifier.Q.PackageMeasureQualifierQuery", DefaultText = @"Package Measure Qualifiers",LocalDefaultText = "כמות אריזות", ObjectTableId = PackageMeasureQualifierObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PackageMeasureQualifierFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGEMEASUREQUALIFIER", ObjectTableId = PackageMeasureQualifierObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PackageMeasureQualifier.Features.PackageMeasureQualifiers", NameTextCodeDefaultText = "Package Measure Qualifiers", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -421,15 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable PackageMeasureQualifierObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PackageMeasureQualifier" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature PackageMeasureQualifierFeature_PACKAGEMEASUREQUALIFIER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PACKAGEMEASUREQUALIFIER", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PackageMeasureQualifierObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PackageMeasureQualifier.Features.PackageMeasureQualifiers", NameTextCodeDefaultText = @"Package Measure Qualifiers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

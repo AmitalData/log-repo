@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;DEMANDERTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.DemanderType.Features.DemanderType&quot;" FeatureDefaultText="&quot;Demander Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;DemanderType&quot;" ObjectTableName="&quot;Customs.DemanderType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DemanderType&quot;" IndexOrder="0" QueryGroupCode="&quot;DTQG&quot;" QueryGroupName="&quot;Customs.DemanderType&quot;" LocalTextCode="&quot;DemanderType&quot;" TextCode="&quot;DemanderType&quot;" IsPackagable="false">
+  <Query Code="&quot;DemanderType&quot;" ObjectTableName="&quot;Customs.DemanderType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DemanderType&quot;" IndexOrder="0" QueryGroupCode="&quot;DTQG&quot;" QueryGroupName="&quot;Customs.DemanderType&quot;" LocalTextCode="&quot;סוגי דורשים&quot;" TextCode="&quot;Demander Type&quot;" TextCodeCode="&quot;Customs.DemanderType.Q.DemanderTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;DEMANDERTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.DemanderType.Features.DemanderType&quot;" FeatureDefaultText="&quot;Demander Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;DemanderType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;DemanderType&quot;" />

@@ -19,9 +19,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;COLLATERALANSWERSTATUS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CollateralAnswerStatus.Features.CollateralAnswerStatus&quot;" FeatureDefaultText="&quot;Collateral Answer Status&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CollateralAnswerStatus&quot;" ObjectTableName="&quot;Customs.CollateralAnswerStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CollateralAnswerStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;COAS&quot;" QueryGroupName="&quot;Customs.CollateralAnswerStatus&quot;" LocalTextCode="&quot;CollateralAnswerStatus&quot;" TextCode="&quot;CollateralAnswerStatus&quot;" IsPackagable="false">
+  <Query Code="&quot;CollateralAnswerStatus&quot;" ObjectTableName="&quot;Customs.CollateralAnswerStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CollateralAnswerStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;COAS&quot;" QueryGroupName="&quot;Customs.CollateralAnswerStatus&quot;" LocalTextCode="&quot;סטטוס מענה לדרישה לבטוחה&quot;" TextCode="&quot;Collateral Answer Status&quot;" TextCodeCode="&quot;Customs.CollateralAnswerStatus.Q.CollateralAnswerStatusQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;COLLATERALANSWERSTATUS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CollateralAnswerStatus.Features.CollateralAnswerStatus&quot;" FeatureDefaultText="&quot;Collateral Answer Status&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CollateralAnswerStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CollateralAnswerStatus&quot;" />

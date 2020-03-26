@@ -11,9 +11,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;SALESTAXEXEMPTIONTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.SalesTaxExemptionType.Features.SalesTaxExemptionTypes&quot;" FeatureDefaultText="&quot;Sales Tax Exemption Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;SalesTaxExemptionType&quot;" ObjectTableName="&quot;Customs.SalesTaxExemptionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SalesTaxExemptionType&quot;" IndexOrder="0" QueryGroupCode="&quot;STET&quot;" QueryGroupName="&quot;Customs.SalesTaxExemptionType&quot;" LocalTextCode="&quot;SalesTaxExemptionType&quot;" TextCode="&quot;SalesTaxExemptionType&quot;" IsPackagable="false">
+  <Query Code="&quot;SalesTaxExemptionType&quot;" ObjectTableName="&quot;Customs.SalesTaxExemptionType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SalesTaxExemptionType&quot;" IndexOrder="0" QueryGroupCode="&quot;STET&quot;" QueryGroupName="&quot;Customs.SalesTaxExemptionType&quot;" LocalTextCode="&quot;סוג פטור ממס קנייה&quot;" TextCode="&quot;Sales Tax Exemption Types&quot;" TextCodeCode="&quot;Customs.SalesTaxExemptionType.Q.SalesTaxExemptionTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;SALESTAXEXEMPTIONTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.SalesTaxExemptionType.Features.SalesTaxExemptionTypes&quot;" FeatureDefaultText="&quot;Sales Tax Exemption Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;SalesTaxExemptionType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;SalesTaxExemptionType&quot;" />

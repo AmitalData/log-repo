@@ -387,8 +387,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable InternalBorderSiteTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.InternalBorderSiteType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> InternalBorderSiteTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.InternalBorderSiteType").ToList();   
 
-			   TextCode InternalBorderSiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InternalBorderSiteType.Q.InternalBorderSiteType", DefaultText = @"InternalBorderSiteType",LocalDefaultText = "InternalBorderSiteType", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature InternalBorderSiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InternalBorderSiteType.Q.InternalBorderSiteType", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InternalBorderSiteTypeFeatures.InternalBorderSiteType", NameTextCodeDefaultText = "InternalBorderSiteType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode InternalBorderSiteTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InternalBorderSiteType.Q.InternalBorderSiteTypeQuery", DefaultText = @"Internal Border Site Type",LocalDefaultText = "Internal Border Site Type", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature InternalBorderSiteTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERNALBORDERSITETYPE", ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.InternalBorderSiteType.Features.InternalBorderSiteType", NameTextCodeDefaultText = "Internal Border Site Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -416,15 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable InternalBorderSiteTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.InternalBorderSiteType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature InternalBorderSiteTypeFeature_INTERNALBORDERSITETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERNALBORDERSITETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = InternalBorderSiteTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.InternalBorderSiteType.Features.InternalBorderSiteType", NameTextCodeDefaultText = @"Internal Border Site Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

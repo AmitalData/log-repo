@@ -280,9 +280,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;ENTITYTYPELOOKUP&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.EntityTypeLookup.Features.EntityTypeLookups&quot;" FeatureDefaultText="&quot;Entity Type Lookups&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;EntityTypeLookup&quot;" ObjectTableName="&quot;Customs.EntityTypeLookup&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.EntityTypeLookup&quot;" IndexOrder="0" QueryGroupCode="&quot;ENTL&quot;" QueryGroupName="&quot;Customs.EntityTypeLookup&quot;" LocalTextCode="&quot;EntityTypeLookup&quot;" TextCode="&quot;EntityTypeLookup&quot;" IsPackagable="false">
+  <Query Code="&quot;EntityTypeLookup&quot;" ObjectTableName="&quot;Customs.EntityTypeLookup&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.EntityTypeLookup&quot;" IndexOrder="0" QueryGroupCode="&quot;ENTL&quot;" QueryGroupName="&quot;Customs.EntityTypeLookup&quot;" LocalTextCode="&quot;סוג ישות&quot;" TextCode="&quot;Entity Type Lookups&quot;" TextCodeCode="&quot;Customs.EntityTypeLookup.Q.EntityTypeLookupQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;ENTITYTYPELOOKUP&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.EntityTypeLookup.Features.EntityTypeLookups&quot;" FeatureDefaultText="&quot;Entity Type Lookups&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;EntityTypeLookup&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;EntityTypeLookup&quot;" />

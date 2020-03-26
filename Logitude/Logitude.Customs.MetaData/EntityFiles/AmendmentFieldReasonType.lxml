@@ -8,10 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;AMEDMENTFIELDREASONTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.AmendmentFieldReasonType.Features.AmendmentFieldReasonType&quot;" FeatureDefaultText="&quot;AmendmentFieldReasonType&quot;" />
-    <Feature Code="&quot;CUSTOMERIDENTIFYTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CustomerIdentifyType.Features.CustomerIdentifyType&quot;" FeatureDefaultText="&quot;CustomerIdentifyType&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;AmendmentFieldReasonType&quot;" ObjectTableName="&quot;Customs.AmendmentFieldReasonType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AmendmentFieldReasonType&quot;" IndexOrder="0" QueryGroupCode="&quot;AFQG&quot;" QueryGroupName="&quot;Customs.AmendmentFieldReasonType&quot;" LocalTextCode="&quot;AmendmentFieldReasonType&quot;" TextCode="&quot;AmendmentFieldReasonType&quot;" IsPackagable="false">
+  <Query Code="&quot;AmendmentFieldReasonType&quot;" ObjectTableName="&quot;Customs.AmendmentFieldReasonType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AmendmentFieldReasonType&quot;" IndexOrder="0" QueryGroupCode="&quot;AFQG&quot;" QueryGroupName="&quot;Customs.AmendmentFieldReasonType&quot;" LocalTextCode="&quot;סיבת מופע לתיקון&quot;" TextCode="&quot;Amendment Field Reason Type&quot;" TextCodeCode="&quot;Customs.AmendmentFieldReasonType.Q.AmendmentFieldReasonTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;AMEDMENTFIELDREASONTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.AmendmentFieldReasonType.Features.AmendmentFieldReasonType&quot;" FeatureDefaultText="&quot;AmendmentFieldReasonType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;AmendmentFieldReasonType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;AmendmentFieldReasonType&quot;" />

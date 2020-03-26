@@ -385,8 +385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ConfirmationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ConfirmationType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ConfirmationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ConfirmationType").ToList();   
 
-			   TextCode ConfirmationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConfirmationType.Q.ConfirmationType", DefaultText = @"ConfirmationType",LocalDefaultText = "ConfirmationType", ObjectTableId = ConfirmationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ConfirmationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConfirmationType.Q.ConfirmationType", ObjectTableId = ConfirmationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConfirmationTypeFeatures.ConfirmationType", NameTextCodeDefaultText = "ConfirmationType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ConfirmationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConfirmationType.Q.ConfirmationTypeQuery", DefaultText = @"Confirmation Types",LocalDefaultText = "סוג אישור", ObjectTableId = ConfirmationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ConfirmationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONFIRMATIONTYPE", ObjectTableId = ConfirmationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConfirmationType.Features.ConfirmationTypes", NameTextCodeDefaultText = "Confirmation Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -414,15 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ConfirmationTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ConfirmationType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ConfirmationTypeFeature_CONFIRMATIONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONFIRMATIONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ConfirmationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConfirmationType.Features.ConfirmationTypes", NameTextCodeDefaultText = @"Confirmation Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

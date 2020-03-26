@@ -374,8 +374,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomerIdentifyTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomerIdentifyType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomerIdentifyTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomerIdentifyType").ToList();   
 
-			   TextCode CustomerIdentifyTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerIdentifyType.Q.CustomerIdentifyType", DefaultText = @"CustomerIdentifyType",LocalDefaultText = "CustomerIdentifyType", ObjectTableId = CustomerIdentifyTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomerIdentifyTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerIdentifyType.Q.CustomerIdentifyType", ObjectTableId = CustomerIdentifyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerIdentifyTypeFeatures.CustomerIdentifyType", NameTextCodeDefaultText = "CustomerIdentifyType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerIdentifyTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomerIdentifyType.Q.CustomerIdentifyTypeQuery", DefaultText = @"Customer Identify Type",LocalDefaultText = "מזהה לקוח", ObjectTableId = CustomerIdentifyTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomerIdentifyTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERIDENTIFYTYPE", ObjectTableId = CustomerIdentifyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomerIdentifyType.Features.CustomerIdentifyType", NameTextCodeDefaultText = "CustomerIdentifyType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    

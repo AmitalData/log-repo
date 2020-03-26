@@ -381,8 +381,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CollateralTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CollateralTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CollateralType").ToList();   
 
-			   TextCode CollateralTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CollateralType.Q.CollateralType", DefaultText = @"CollateralType",LocalDefaultText = "CollateralType", ObjectTableId = CollateralTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CollateralTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CollateralType.Q.CollateralType", ObjectTableId = CollateralTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CollateralTypeFeatures.CollateralType", NameTextCodeDefaultText = "CollateralType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CollateralTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CollateralType.Q.CollateralTypeQuery", DefaultText = @"Collateral Types",LocalDefaultText = "סוג בטוחה", ObjectTableId = CollateralTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CollateralTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALTYPE", ObjectTableId = CollateralTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralType.Features.CollateralTypes", NameTextCodeDefaultText = "Collateral Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -410,15 +410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CollateralTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CollateralType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CollateralTypeFeature_COLLATERALTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERALTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CollateralTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CollateralType.Features.CollateralTypes", NameTextCodeDefaultText = @"Collateral Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

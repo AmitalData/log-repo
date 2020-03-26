@@ -379,8 +379,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ReturnConditionObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ReturnCondition" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ReturnConditionObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ReturnCondition").ToList();   
 
-			   TextCode ReturnConditionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReturnCondition.Q.ReturnCondition", DefaultText = @"ReturnCondition",LocalDefaultText = "ReturnCondition", ObjectTableId = ReturnConditionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ReturnConditionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReturnCondition.Q.ReturnCondition", ObjectTableId = ReturnConditionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReturnConditionFeatures.ReturnCondition", NameTextCodeDefaultText = "ReturnCondition", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ReturnConditionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ReturnCondition.Q.ReturnConditionQuery", DefaultText = @"Return Conditions",LocalDefaultText = "תנאי להחזר", ObjectTableId = ReturnConditionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ReturnConditionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RETURNCONDITION", ObjectTableId = ReturnConditionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ReturnCondition.Features.ReturnConditions", NameTextCodeDefaultText = "Return Conditions", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -408,15 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ReturnConditionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ReturnCondition" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ReturnConditionFeature_RETURNCONDITION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RETURNCONDITION", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReturnConditionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ReturnCondition.Features.ReturnConditions", NameTextCodeDefaultText = @"Return Conditions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

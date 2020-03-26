@@ -8,7 +8,7 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;CourtInstance&quot;" ObjectTableName="&quot;Customs.CourtInstance&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CourtInstance&quot;" IndexOrder="0" QueryGroupCode="&quot;269e&quot;" QueryGroupName="&quot;Customs.CourtInstance Query Group&quot;" LocalTextCode="&quot;CourtInstance&quot;" TextCode="&quot;CourtInstance&quot;" FeatureCode="&quot;CourtInstance.Q.CourtInstance&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;CourtInstance.Features.CourtInstance&quot;" FeatureDefaultText="&quot;CourtInstance&quot;">
+  <Query Code="&quot;CourtInstance&quot;" ObjectTableName="&quot;Customs.CourtInstance&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CourtInstance&quot;" IndexOrder="0" QueryGroupCode="&quot;269e&quot;" QueryGroupName="&quot;Customs.CourtInstance Query Group&quot;" TextCode="&quot;CourtInstanceQuery&quot;" TextCodeCode="&quot;CourtInstance.Q.CourtInstance&quot;" IsSpellChecked="false" FeatureCode="&quot;CourtInstance.Q.CourtInstance&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;CourtInstance.Features.CourtInstance&quot;" FeatureDefaultText="&quot;CourtInstance&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="50" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CourtInstance&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;CourtInstance&quot;" />

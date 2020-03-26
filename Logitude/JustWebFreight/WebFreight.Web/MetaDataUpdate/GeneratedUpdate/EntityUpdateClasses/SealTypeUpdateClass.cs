@@ -455,8 +455,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SealTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SealType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SealTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SealType").ToList();   
 
-			   TextCode SealTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SealType.Q.SealType", DefaultText = @"SealType",LocalDefaultText = "SealType", ObjectTableId = SealTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SealTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealType.Q.SealType", ObjectTableId = SealTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealTypeFeatures.SealType", NameTextCodeDefaultText = "SealType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SealTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SealType.Q.SealType", DefaultText = @"SealTypeQuery",LocalDefaultText = "סוג סגר", ObjectTableId = SealTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature SealTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealType.Q.SealType", ObjectTableId = SealTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealType.Features.SealType", NameTextCodeDefaultText = "SealType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -484,15 +484,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SealTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SealType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature SealTypeFeature_SealType_Q_SealType = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealType.Q.SealType", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SealTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealType.Features.SealType", NameTextCodeDefaultText = @"SealType" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

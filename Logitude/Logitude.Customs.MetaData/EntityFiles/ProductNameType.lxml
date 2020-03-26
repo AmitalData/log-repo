@@ -13,9 +13,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PRODUCTNAMETYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ProductNameType.Features.ProductNameTypes&quot;" FeatureDefaultText="&quot;Product Name Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ProductNameType&quot;" ObjectTableName="&quot;Customs.ProductNameType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProductNameType&quot;" IndexOrder="0" QueryGroupCode="&quot;PRNT&quot;" QueryGroupName="&quot;Customs.ProductNameType&quot;" LocalTextCode="&quot;ProductNameType&quot;" TextCode="&quot;ProductNameType&quot;" IsPackagable="false">
+  <Query Code="&quot;ProductNameType&quot;" ObjectTableName="&quot;Customs.ProductNameType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProductNameType&quot;" IndexOrder="0" QueryGroupCode="&quot;PRNT&quot;" QueryGroupName="&quot;Customs.ProductNameType&quot;" LocalTextCode="&quot;מזהה שם ותיאור של הסחורה&quot;" TextCode="&quot;Product Name Types&quot;" TextCodeCode="&quot;Customs.ProductNameType.Q.ProductNameTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PRODUCTNAMETYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ProductNameType.Features.ProductNameTypes&quot;" FeatureDefaultText="&quot;Product Name Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ProductNameType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ProductNameType&quot;" />

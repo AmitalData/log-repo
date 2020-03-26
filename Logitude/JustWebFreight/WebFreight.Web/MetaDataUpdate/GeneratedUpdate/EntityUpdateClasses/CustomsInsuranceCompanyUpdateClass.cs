@@ -370,8 +370,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomsInsuranceCompanyObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsInsuranceCompany" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsInsuranceCompanyObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsInsuranceCompany").ToList();   
 
-			   TextCode CustomsInsuranceCompanyTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsInsuranceCompany.Q.CustomsInsuranceCompany", DefaultText = @"CustomsInsuranceCompany",LocalDefaultText = "CustomsInsuranceCompany", ObjectTableId = CustomsInsuranceCompanyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsInsuranceCompanyFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsInsuranceCompany.Q.CustomsInsuranceCompany", ObjectTableId = CustomsInsuranceCompanyObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsInsuranceCompanyFeatures.CustomsInsuranceCompany", NameTextCodeDefaultText = "CustomsInsuranceCompany", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsInsuranceCompanyTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsInsuranceCompany.Q.CustomsInsuranceCompanyQuery", DefaultText = @"Customs Insurance Company",LocalDefaultText = "מכס חברה לביטוח", ObjectTableId = CustomsInsuranceCompanyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsInsuranceCompanyFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INSURANCECOMPANY", ObjectTableId = CustomsInsuranceCompanyObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsInsuranceCompany.Features.CustomsInsuranceCompany", NameTextCodeDefaultText = "CustomsInsuranceCompany", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -399,15 +399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CustomsInsuranceCompanyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsInsuranceCompany" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomsInsuranceCompanyFeature_INSURANCECOMPANY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INSURANCECOMPANY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsInsuranceCompanyObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsInsuranceCompany.Features.CustomsInsuranceCompany", NameTextCodeDefaultText = @"CustomsInsuranceCompany" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

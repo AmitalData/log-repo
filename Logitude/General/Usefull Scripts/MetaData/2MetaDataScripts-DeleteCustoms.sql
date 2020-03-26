@@ -2,7 +2,11 @@
 --alter table RuleConditionFields drop constraint [FK_RuleConditionFieldsObjectTableRule]
 --alter table Customs.CustomsRequiredFields drop constraint [FK_Customs.CustomsRequiredFields_dbo.ObjectFields_ObjectfieldId]
 ----MetaData All Scripts: Never Apply these scripts
-
+--alter table querycolumns drop constraint [FK_QueryColumnObjectField]
+--alter table RuleConditionFields drop constraint FK_RuleConditionFieldsObjectTableRule
+--alter table ObjectFields drop constraint FK_TextCodeObjectField1
+--alter table Queries drop constraint FK_QueryTextCode
+--alter table AdvancedQueryFilters drop constraint FK_ObjectFieldAdvancedQueryFilter
 ----*--Delete--*--
 ----ObjectFields
 delete from objectfields where tenant = 0 and (FieldCode  like 'customs.%' or FieldCode is null)

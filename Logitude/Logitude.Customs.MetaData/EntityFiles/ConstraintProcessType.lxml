@@ -11,9 +11,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CONSTRAINTPROCESSTYPEQUERY&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ConstraintProcessType.Features.ConstraintProcesses&quot;" FeatureDefaultText="&quot;Constraint Process Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ConstraintProcessType&quot;" ObjectTableName="&quot;Customs.ConstraintProcessType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ConstriantProcessType&quot;" IndexOrder="0" QueryGroupCode="&quot;CTPT&quot;" QueryGroupName="&quot;Customs.ConstraintProcessTypes&quot;" LocalTextCode="&quot;ConstraintProcessType&quot;" TextCode="&quot;ConstraintProcessType&quot;" IsPackagable="false">
+  <Query Code="&quot;ConstraintProcessType&quot;" ObjectTableName="&quot;Customs.ConstraintProcessType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ConstriantProcessType&quot;" IndexOrder="0" QueryGroupCode="&quot;CTPT&quot;" QueryGroupName="&quot;Customs.ConstraintProcessTypes&quot;" LocalTextCode="&quot;סוג תהליך אילוץ&quot;" TextCode="&quot;Constraint Process Types&quot;" TextCodeCode="&quot;Customs.ConstraintProcessType.Q.ConstraintProcessTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CONSTRAINTPROCESSTYPEQUERY&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ConstraintProcessType.Features.ConstraintProcesses&quot;" FeatureDefaultText="&quot;Constraint Process Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ConstraintProcessType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ConstraintProcessType&quot;" />

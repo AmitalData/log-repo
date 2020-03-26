@@ -66,9 +66,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;TRADEAGREEMENT&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.TradeAgreement.Features.TradeAgreements&quot;" FeatureDefaultText="&quot;Trade Agreements&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;TradeAgreement&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TradeAgreement&quot;" IndexOrder="0" QueryGroupCode="&quot;TRAG&quot;" QueryGroupName="&quot;Customs.TradeAgreement&quot;" LocalTextCode="&quot;TradeAgreement&quot;" TextCode="&quot;TradeAgreement&quot;" IsPackagable="false">
+  <Query Code="&quot;TradeAgreement&quot;" ObjectTableName="&quot;Customs.TradeAgreement&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.TradeAgreement&quot;" IndexOrder="0" QueryGroupCode="&quot;TRAG&quot;" QueryGroupName="&quot;Customs.TradeAgreement&quot;" LocalTextCode="&quot;סוג הסכם סחר&quot;" TextCode="&quot;Trade Agreement Type Views&quot;" TextCodeCode="&quot;Customs.TradeAgreement.Q.TradeAgreementQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;TRADEAGREEMENT&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.TradeAgreement.Features.TradeAgreements&quot;" FeatureDefaultText="&quot;Trade Agreements&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;TradeAgreement&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;TradeAgreement&quot;" />

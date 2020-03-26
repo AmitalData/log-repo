@@ -384,8 +384,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ProceduralFaultStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ProceduralFaultStatus" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ProceduralFaultStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ProceduralFaultStatus").ToList();   
 
-			   TextCode ProceduralFaultStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProceduralFaultStatus.Q.ProceduralFaultStatus", DefaultText = @"ProceduralFaultStatus",LocalDefaultText = "ProceduralFaultStatus", ObjectTableId = ProceduralFaultStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ProceduralFaultStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ProceduralFaultStatus.Q.ProceduralFaultStatus", ObjectTableId = ProceduralFaultStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "ProceduralFaultStatusFeatures.ProceduralFaultStatus", NameTextCodeDefaultText = "ProceduralFaultStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ProceduralFaultStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ProceduralFaultStatus.Q.ProceduralFaultStatusQuery", DefaultText = @"Procedural Fault Status",LocalDefaultText = "סטאטוס ליקוי", ObjectTableId = ProceduralFaultStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ProceduralFaultStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTSTATUS", ObjectTableId = ProceduralFaultStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFaultStatus.Features.ProceduralFaultStatus", NameTextCodeDefaultText = "Procedural Fault Status", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -413,19 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ProceduralFaultStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ProceduralFaultStatus" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ProceduralFaultStatusFeature_PROCEDURALFAULTSTATUS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTSTATUS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ProceduralFaultStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFaultStatus.Features.ProceduralFaultStatus", NameTextCodeDefaultText = @"Procedural Fault Status" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature ProceduralFaultStatusFeature_PROCEDURALFAULTINPUTSOURCE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTINPUTSOURCE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ProceduralFaultStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ProceduralFaultInputSource.Features.ProceduralFaultInputSource", NameTextCodeDefaultText = @"Procedural Fault Input Source" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature ProceduralFaultStatusFeature_FAULTINSPECTIONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FAULTINSPECTIONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ProceduralFaultStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.FaultInspectionType.Features.FaultInspectionType", NameTextCodeDefaultText = @"Fault Inspection Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

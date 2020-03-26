@@ -9,7 +9,7 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;SeizureFactorType&quot;" ObjectTableName="&quot;Customs.SeizureFactorType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SeizureFactorType&quot;" IndexOrder="0" QueryGroupCode="&quot;a5be&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;SeizureFactorType&quot;" TextCode="&quot;SeizureFactorType&quot;" FeatureCode="&quot;SeizureFactorType.Q.SeizureFactorType&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;SeizureFactorType.Features.SeizureFactorType&quot;" FeatureDefaultText="&quot;SeizureFactorType&quot;">
+  <Query Code="&quot;SeizureFactorType&quot;" ObjectTableName="&quot;Customs.SeizureFactorType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SeizureFactorType&quot;" IndexOrder="0" QueryGroupCode="&quot;a5be&quot;" QueryGroupName="&quot; Query Group&quot;" TextCode="&quot;SeizureFactorTypeQuery&quot;" TextCodeCode="&quot;SeizureFactorType.Q.SeizureFactorType&quot;" IsSpellChecked="false" FeatureCode="&quot;SeizureFactorType.Q.SeizureFactorType&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;SeizureFactorType.Features.SeizureFactorType&quot;" FeatureDefaultText="&quot;SeizureFactorType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="100" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;SeizureFactorType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;SeizureFactorType&quot;" />

@@ -943,9 +943,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;DELIVERYSITETYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.DeliverySiteType.Features.DeliverySiteTypes&quot;" FeatureDefaultText="&quot;Delivery Site Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;DeliverySiteType&quot;" ObjectTableName="&quot;Customs.DeliverySiteType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DeliverySiteType&quot;" IndexOrder="0" QueryGroupCode="&quot;DLST&quot;" QueryGroupName="&quot;Customs.DeliverySiteType&quot;" LocalTextCode="&quot;DeliverySiteType&quot;" TextCode="&quot;DeliverySiteType&quot;" IsPackagable="false">
+  <Query Code="&quot;DeliverySiteType&quot;" ObjectTableName="&quot;Customs.DeliverySiteType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DeliverySiteType&quot;" IndexOrder="0" QueryGroupCode="&quot;DLST&quot;" QueryGroupName="&quot;Customs.DeliverySiteType&quot;" LocalTextCode="&quot;Delivery Site Types&quot;" TextCode="&quot;Delivery Site Type&quot;" TextCodeCode="&quot;Customs.DeliverySiteType.Q.DeliverySiteTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;DELIVERYSITETYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.DeliverySiteType.Features.DeliverySiteTypes&quot;" FeatureDefaultText="&quot;Delivery Site Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;DeliverySiteType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;DeliverySiteType&quot;" />

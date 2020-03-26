@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CHECKREPRESENTATIVETYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="false" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.checkRepresentativeType.Features.Read&quot;" FeatureDefaultText="&quot;Check Representative Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CheckRepresentativeType&quot;" ObjectTableName="&quot;Customs.CheckRepresentativeType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CheckRepresentativeType&quot;" IndexOrder="0" QueryGroupCode="&quot;CHRT&quot;" QueryGroupName="&quot;Customs.CheckRepresentativeType&quot;" LocalTextCode="&quot;CheckRepresentativeType&quot;" TextCode="&quot;CheckRepresentativeType&quot;" IsPackagable="false">
+  <Query Code="&quot;CheckRepresentativeType&quot;" ObjectTableName="&quot;Customs.CheckRepresentativeType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CheckRepresentativeType&quot;" IndexOrder="0" QueryGroupCode="&quot;CHRT&quot;" QueryGroupName="&quot;Customs.CheckRepresentativeType&quot;" LocalTextCode="&quot;בדקו סוג הנציג&quot;" TextCode="&quot;Check Representative Types&quot;" TextCodeCode="&quot;Customs.CheckRepresentativeType.Q.CheckRepresentativeTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CHECKREPRESENTATIVETYPE&quot;" IsPackagable="false" FeatureTextCodeCode="&quot;Customs.checkRepresentativeType.Features.Read&quot;" FeatureDefaultText="&quot;Check Representative Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CheckRepresentativeType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CheckRepresentativeType&quot;" />

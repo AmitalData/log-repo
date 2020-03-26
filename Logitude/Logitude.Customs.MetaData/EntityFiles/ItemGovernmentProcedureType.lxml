@@ -26,9 +26,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;ITEMGOVERNMENTPROCEDURETYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ItemGovernmentProcedureType.Features.ItemGovernmentProcedureTypes&quot;" FeatureDefaultText="&quot;Item Government Procedure Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ItemGovernmentProcedureType&quot;" ObjectTableName="&quot;Customs.ItemGovernmentProcedureType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ItemGovernmentProcedureType&quot;" IndexOrder="0" QueryGroupCode="&quot;IGPT&quot;" QueryGroupName="&quot;Customs.ItemGovernmentProcedureType&quot;" LocalTextCode="&quot;ItemGovernmentProcedureType&quot;" TextCode="&quot;ItemGovernmentProcedureType&quot;" IsPackagable="false">
+  <Query Code="&quot;ItemGovernmentProcedureType&quot;" ObjectTableName="&quot;Customs.ItemGovernmentProcedureType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ItemGovernmentProcedureType&quot;" IndexOrder="0" QueryGroupCode="&quot;IGPT&quot;" QueryGroupName="&quot;Customs.ItemGovernmentProcedureType&quot;" LocalTextCode="&quot;תהליכים לסחורה&quot;" TextCode="&quot;Item Government Procedure Types&quot;" TextCodeCode="&quot;Customs.ItemGovernmentProcedureType.Q.ItemGovernmentProcedureTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;ITEMGOVERNMENTPROCEDURETYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ItemGovernmentProcedureType.Features.ItemGovernmentProcedureTypes&quot;" FeatureDefaultText="&quot;Item Government Procedure Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ItemGovernmentProcedureType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ItemGovernmentProcedureType&quot;" />

@@ -301,9 +301,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CUSTOMMETADATATYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CustomMetaDataType.Features.CustomMetaDataTypes&quot;" FeatureDefaultText="&quot;Custom Meta Data Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CustomMetaDataType&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomMetaDataType&quot;" IndexOrder="0" QueryGroupCode="&quot;CMDT&quot;" QueryGroupName="&quot;Customs.CustomMetaDataType&quot;" LocalTextCode="&quot;CustomMetaDataType&quot;" TextCode="&quot;CustomMetaDataType&quot;" IsPackagable="false">
+  <Query Code="&quot;CustomMetaDataType&quot;" ObjectTableName="&quot;Customs.CustomMetaDataType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CustomMetaDataType&quot;" IndexOrder="0" QueryGroupCode="&quot;CMDT&quot;" QueryGroupName="&quot;Customs.CustomMetaDataType&quot;" LocalTextCode="&quot;Document Meta Datas&quot;" TextCode="&quot;Document Meta Data&quot;" TextCodeCode="&quot;Customs.CustomMetaDataType.Q.CustomMetaDataTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CUSTOMMETADATATYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CustomMetaDataType.Features.CustomMetaDataTypes&quot;" FeatureDefaultText="&quot;Custom Meta Data Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CustomMetaDataType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CustomMetaDataType&quot;" />

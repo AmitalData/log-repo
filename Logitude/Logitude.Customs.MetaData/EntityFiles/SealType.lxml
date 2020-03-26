@@ -9,9 +9,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;SealType.Q.SealType&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;SealType.Features.SealType&quot;" FeatureDefaultText="&quot;SealType&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;SealType&quot;" ObjectTableName="&quot;Customs.SealType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SealType&quot;" IndexOrder="0" QueryGroupCode="&quot;a866&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;SealType&quot;" TextCode="&quot;SealType&quot;" IsPackagable="false">
+  <Query Code="&quot;SealType&quot;" ObjectTableName="&quot;Customs.SealType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SealType&quot;" IndexOrder="0" QueryGroupCode="&quot;a866&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;סוג סגר&quot;" TextCode="&quot;SealTypeQuery&quot;" TextCodeCode="&quot;SealType.Q.SealType&quot;" IsSpellChecked="false" FeatureCode="&quot;SealType.Q.SealType&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;SealType.Features.SealType&quot;" FeatureDefaultText="&quot;SealType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="50" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;SealType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;SealType&quot;" />

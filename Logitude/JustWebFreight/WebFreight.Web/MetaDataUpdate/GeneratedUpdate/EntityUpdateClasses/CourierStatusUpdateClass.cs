@@ -402,7 +402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CourierStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CourierStatus" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CourierStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CourierStatus").ToList();   
 
-			   TextCode CourierStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierStatus.Q.CourierStatus", DefaultText = @"CourierStatus",LocalDefaultText = "CourierStatus", ObjectTableId = CourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CourierStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourierStatus.Q.CourierStatus", DefaultText = @"CourierStatusQuery",LocalDefaultText = null, ObjectTableId = CourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CourierStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierStatus.Q.CourierStatus", ObjectTableId = CourierStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourierStatus.Features.CourierStatus", NameTextCodeDefaultText = "CourierStatus", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

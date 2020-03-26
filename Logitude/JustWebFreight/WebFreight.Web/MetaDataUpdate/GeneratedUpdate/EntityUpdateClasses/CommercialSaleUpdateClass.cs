@@ -379,7 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CommercialSaleObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CommercialSale" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CommercialSaleObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CommercialSale").ToList();   
 
-			   TextCode CommercialSaleTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommercialSale.Q.CommercialSale", DefaultText = @"CommercialSale",LocalDefaultText = "CommercialSale", ObjectTableId = CommercialSaleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CommercialSaleTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommercialSale.Q.CommercialSale", DefaultText = @"CommercialSaleQuery",LocalDefaultText = null, ObjectTableId = CommercialSaleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CommercialSaleFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CommercialSale.Q.CommercialSale", ObjectTableId = CommercialSaleObjectTable.Id, Tenant = 0, NameTextCodeCode = "CommercialSale.Features.CommercialSale", NameTextCodeDefaultText = "CommercialSale", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

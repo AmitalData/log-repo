@@ -33,9 +33,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CHECKENTITYTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="false" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.CheckEntityType.Features.Read&quot;" FeatureDefaultText="&quot;Check Entity Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;CheckEntityType&quot;" ObjectTableName="&quot;Customs.CheckEntityType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CheckEntityType&quot;" IndexOrder="0" QueryGroupCode="&quot;CHET&quot;" QueryGroupName="&quot;Customs.CheckEntityType&quot;" LocalTextCode="&quot;CheckEntityType&quot;" TextCode="&quot;CheckEntityType&quot;" IsPackagable="false">
+  <Query Code="&quot;CheckEntityType&quot;" ObjectTableName="&quot;Customs.CheckEntityType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CheckEntityType&quot;" IndexOrder="0" QueryGroupCode="&quot;CHET&quot;" QueryGroupName="&quot;Customs.CheckEntityType&quot;" LocalTextCode="&quot;בדקו סוגי ישות&quot;" TextCode="&quot;Check Entity Types&quot;" TextCodeCode="&quot;Customs.CheckEntityTypes.Q.CheckEntityTypesQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CHECKENTITYTYPE&quot;" IsPackagable="false" FeatureTextCodeCode="&quot;Customs.CheckEntityType.Features.Read&quot;" FeatureDefaultText="&quot;Check Entity Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CheckEntityType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;CheckEntityType&quot;" />

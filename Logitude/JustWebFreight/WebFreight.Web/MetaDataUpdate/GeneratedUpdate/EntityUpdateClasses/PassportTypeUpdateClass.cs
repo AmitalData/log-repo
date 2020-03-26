@@ -387,8 +387,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable PassportTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PassportType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> PassportTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PassportType").ToList();   
 
-			   TextCode PassportTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PassportType.Q.PassportType", DefaultText = @"PassportType",LocalDefaultText = "PassportType", ObjectTableId = PassportTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature PassportTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PassportType.Q.PassportType", ObjectTableId = PassportTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PassportTypeFeatures.PassportType", NameTextCodeDefaultText = "PassportType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode PassportTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PassportType.Q.PassportTypeQuery", DefaultText = @"Passport Types",LocalDefaultText = "דרכון", ObjectTableId = PassportTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PassportTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PASSPORTTYPE", ObjectTableId = PassportTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PassportType.Features.PassportTypes", NameTextCodeDefaultText = "Passport Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -416,15 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable PassportTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PassportType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature PassportTypeFeature_PASSPORTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PASSPORTTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PassportTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PassportType.Features.PassportTypes", NameTextCodeDefaultText = @"Passport Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

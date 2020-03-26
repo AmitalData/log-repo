@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;DEPOSITCUSTOMER&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.DepositCustomerActivity.Features.DepositCustomerActivity&quot;" FeatureDefaultText="&quot;Deposit Customer Activity&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;DepositCustomerActivity&quot;" ObjectTableName="&quot;Customs.DepositCustomerActivity&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DepositCustomerActivity&quot;" IndexOrder="0" QueryGroupCode="&quot;DCQG&quot;" QueryGroupName="&quot;Customs.DepositCustomerActivity&quot;" LocalTextCode="&quot;DepositCustomerActivity&quot;" TextCode="&quot;DepositCustomerActivity&quot;" IsPackagable="false">
+  <Query Code="&quot;DepositCustomerActivity&quot;" ObjectTableName="&quot;Customs.DepositCustomerActivity&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DepositCustomerActivity&quot;" IndexOrder="0" QueryGroupCode="&quot;DCQG&quot;" QueryGroupName="&quot;Customs.DepositCustomerActivity&quot;" LocalTextCode="&quot;פקדון פעילות הלקוח&quot;" TextCode="&quot;Deposit Customer Activity&quot;" TextCodeCode="&quot;Customs.DepositCustomerActivity.Q.DepositCustomerActivityQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;DEPOSITCUSTOMER&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.DepositCustomerActivity.Features.DepositCustomerActivity&quot;" FeatureDefaultText="&quot;Deposit Customer Activity&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;DepositCustomerActivity&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;DepositCustomerActivity&quot;" />

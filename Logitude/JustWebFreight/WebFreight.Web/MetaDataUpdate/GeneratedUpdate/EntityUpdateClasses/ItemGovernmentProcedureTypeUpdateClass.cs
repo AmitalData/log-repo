@@ -388,8 +388,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ItemGovernmentProcedureTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ItemGovernmentProcedureType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ItemGovernmentProcedureTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ItemGovernmentProcedureType").ToList();   
 
-			   TextCode ItemGovernmentProcedureTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ItemGovernmentProcedureType.Q.ItemGovernmentProcedureType", DefaultText = @"ItemGovernmentProcedureType",LocalDefaultText = "ItemGovernmentProcedureType", ObjectTableId = ItemGovernmentProcedureTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ItemGovernmentProcedureTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ItemGovernmentProcedureType.Q.ItemGovernmentProcedureType", ObjectTableId = ItemGovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ItemGovernmentProcedureTypeFeatures.ItemGovernmentProcedureType", NameTextCodeDefaultText = "ItemGovernmentProcedureType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ItemGovernmentProcedureTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ItemGovernmentProcedureType.Q.ItemGovernmentProcedureTypeQuery", DefaultText = @"Item Government Procedure Types",LocalDefaultText = "תהליכים לסחורה", ObjectTableId = ItemGovernmentProcedureTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ItemGovernmentProcedureTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ITEMGOVERNMENTPROCEDURETYPE", ObjectTableId = ItemGovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ItemGovernmentProcedureType.Features.ItemGovernmentProcedureTypes", NameTextCodeDefaultText = "Item Government Procedure Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -417,15 +417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ItemGovernmentProcedureTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ItemGovernmentProcedureType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ItemGovernmentProcedureTypeFeature_ITEMGOVERNMENTPROCEDURETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ITEMGOVERNMENTPROCEDURETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ItemGovernmentProcedureTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ItemGovernmentProcedureType.Features.ItemGovernmentProcedureTypes", NameTextCodeDefaultText = @"Item Government Procedure Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;DECLARATIONSTATEMENTTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.DeclarationStatementType.Features.DeclarationStatementType&quot;" FeatureDefaultText="&quot;DeclarationStatementType&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;DeclarationStatementType&quot;" ObjectTableName="&quot;Customs.DeclarationStatementType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DeclarationStatementType&quot;" IndexOrder="0" QueryGroupCode="&quot;DSQG&quot;" QueryGroupName="&quot;Customs.DeclarationStatementType&quot;" LocalTextCode="&quot;DeclarationStatementType&quot;" TextCode="&quot;DeclarationStatementType&quot;" IsPackagable="false">
+  <Query Code="&quot;DeclarationStatementType&quot;" ObjectTableName="&quot;Customs.DeclarationStatementType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.DeclarationStatementType&quot;" IndexOrder="0" QueryGroupCode="&quot;DSQG&quot;" QueryGroupName="&quot;Customs.DeclarationStatementType&quot;" LocalTextCode="&quot;סוגי ערכים&quot;" TextCode="&quot;Declaration Statement Type&quot;" TextCodeCode="&quot;Customs.DeclarationStatementType.Q.DeclarationStatementTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;DECLARATIONSTATEMENTTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.DeclarationStatementType.Features.DeclarationStatementType&quot;" FeatureDefaultText="&quot;DeclarationStatementType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;DeclarationStatementType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;DeclarationStatementType&quot;" />

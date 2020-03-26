@@ -385,8 +385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable EntityTypeLookupObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.EntityTypeLookup" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> EntityTypeLookupObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.EntityTypeLookup").ToList();   
 
-			   TextCode EntityTypeLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EntityTypeLookup.Q.EntityTypeLookup", DefaultText = @"EntityTypeLookup",LocalDefaultText = "EntityTypeLookup", ObjectTableId = EntityTypeLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature EntityTypeLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EntityTypeLookup.Q.EntityTypeLookup", ObjectTableId = EntityTypeLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "EntityTypeLookupFeatures.EntityTypeLookup", NameTextCodeDefaultText = "EntityTypeLookup", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode EntityTypeLookupTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.EntityTypeLookup.Q.EntityTypeLookupQuery", DefaultText = @"Entity Type Lookups",LocalDefaultText = "סוג ישות", ObjectTableId = EntityTypeLookupObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature EntityTypeLookupFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ENTITYTYPELOOKUP", ObjectTableId = EntityTypeLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.EntityTypeLookup.Features.EntityTypeLookups", NameTextCodeDefaultText = "Entity Type Lookups", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -414,15 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable EntityTypeLookupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.EntityTypeLookup" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature EntityTypeLookupFeature_ENTITYTYPELOOKUP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ENTITYTYPELOOKUP", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = EntityTypeLookupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.EntityTypeLookup.Features.EntityTypeLookups", NameTextCodeDefaultText = @"Entity Type Lookups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

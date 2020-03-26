@@ -9,7 +9,7 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;CourierStatus&quot;" ObjectTableName="&quot;Customs.CourierStatus&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CourierStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;5d5d&quot;" QueryGroupName="&quot;Customs.CourierStatus Query Group&quot;" LocalTextCode="&quot;CourierStatus&quot;" TextCode="&quot;CourierStatus&quot;" FeatureCode="&quot;CourierStatus.Q.CourierStatus&quot;" IsPackagable="false" FeatureTextCodeCode="&quot;CourierStatus.Features.CourierStatus&quot;" FeatureDefaultText="&quot;CourierStatus&quot;">
+  <Query Code="&quot;CourierStatus&quot;" ObjectTableName="&quot;Customs.CourierStatus&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CourierStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;5d5d&quot;" QueryGroupName="&quot;Customs.CourierStatus Query Group&quot;" TextCode="&quot;CourierStatusQuery&quot;" TextCodeCode="&quot;CourierStatus.Q.CourierStatus&quot;" IsSpellChecked="false" FeatureCode="&quot;CourierStatus.Q.CourierStatus&quot;" IsPackagable="false" FeatureTextCodeCode="&quot;CourierStatus.Features.CourierStatus&quot;" FeatureDefaultText="&quot;CourierStatus&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="50" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CourierStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;CourierStatus&quot;" />

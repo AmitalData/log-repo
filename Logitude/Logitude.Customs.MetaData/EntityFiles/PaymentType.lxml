@@ -12,9 +12,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PAYMENTTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.PaymentType.Features.PaymentTypes&quot;" FeatureDefaultText="&quot;Payment Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;PaymentType&quot;" ObjectTableName="&quot;Customs.PaymentType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentType&quot;" IndexOrder="0" QueryGroupCode="&quot;PAYT&quot;" QueryGroupName="&quot;Customs.PaymentType&quot;" LocalTextCode="&quot;PaymentType&quot;" TextCode="&quot;PaymentType&quot;" IsPackagable="false">
+  <Query Code="&quot;PaymentType&quot;" ObjectTableName="&quot;Customs.PaymentType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PaymentType&quot;" IndexOrder="0" QueryGroupCode="&quot;PAYT&quot;" QueryGroupName="&quot;Customs.PaymentType&quot;" LocalTextCode="&quot;סוג אמצעי תשלום&quot;" TextCode="&quot;Invoice Payment Method Types&quot;" TextCodeCode="&quot;Customs.PaymentType.Q.PaymentTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PAYMENTTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PaymentType.Features.PaymentTypes&quot;" FeatureDefaultText="&quot;Payment Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;PaymentType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;PaymentType&quot;" />

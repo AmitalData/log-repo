@@ -131,9 +131,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CONFIRMATIONTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ConfirmationType.Features.ConfirmationTypes&quot;" FeatureDefaultText="&quot;Confirmation Types&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ConfirmationType&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ConfirmationType&quot;" IndexOrder="0" QueryGroupCode="&quot;CONT&quot;" QueryGroupName="&quot;Customs.ConfirmationType&quot;" LocalTextCode="&quot;ConfirmationType&quot;" TextCode="&quot;ConfirmationType&quot;" IsPackagable="false">
+  <Query Code="&quot;ConfirmationType&quot;" ObjectTableName="&quot;Customs.ConfirmationType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ConfirmationType&quot;" IndexOrder="0" QueryGroupCode="&quot;CONT&quot;" QueryGroupName="&quot;Customs.ConfirmationType&quot;" LocalTextCode="&quot;סוג אישור&quot;" TextCode="&quot;Confirmation Types&quot;" TextCodeCode="&quot;Customs.ConfirmationType.Q.ConfirmationTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CONFIRMATIONTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ConfirmationType.Features.ConfirmationTypes&quot;" FeatureDefaultText="&quot;Confirmation Types&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ConfirmationType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ConfirmationType&quot;" />

@@ -841,9 +841,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;REGISTEREDWAREHOUSESITETYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.RegisteredWarehouseSiteType.Features.RegisteredWarehouseSiteTypes&quot;" FeatureDefaultText="&quot;Registered Warehouse Site Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;RegisteredWarehouseSiteType&quot;" ObjectTableName="&quot;Customs.RegisteredWarehouseSiteType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.RegisteredWarehouseSiteType&quot;" IndexOrder="0" QueryGroupCode="&quot;CRWT&quot;" QueryGroupName="&quot;Customs.RegisteredWarehouseSiteType&quot;" LocalTextCode="&quot;RegisteredWarehouseSiteType&quot;" TextCode="&quot;RegisteredWarehouseSiteType&quot;" IsPackagable="false">
+  <Query Code="&quot;RegisteredWarehouseSiteType&quot;" ObjectTableName="&quot;Customs.RegisteredWarehouseSiteType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.RegisteredWarehouseSiteType&quot;" IndexOrder="0" QueryGroupCode="&quot;CRWT&quot;" QueryGroupName="&quot;Customs.RegisteredWarehouseSiteType&quot;" LocalTextCode="&quot;Registered Warehouse Site Type&quot;" TextCode="&quot;Registered Warehouse Site Types&quot;" TextCodeCode="&quot;Customs.RegisteredWarehouseSiteType.Q.RegisteredWarehouseSiteTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;REGISTEREDWAREHOUSESITETYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.RegisteredWarehouseSiteType.Features.RegisteredWarehouseSiteTypes&quot;" FeatureDefaultText="&quot;Registered Warehouse Site Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;RegisteredWarehouseSiteType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;RegisteredWarehouseSiteType&quot;" />

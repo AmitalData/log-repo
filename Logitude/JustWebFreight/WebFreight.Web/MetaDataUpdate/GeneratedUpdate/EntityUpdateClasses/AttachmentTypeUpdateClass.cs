@@ -411,8 +411,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AttachmentTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AttachmentType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AttachmentTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AttachmentType").ToList();   
 
-			   TextCode AttachmentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AttachmentType.Q.AttachmentType", DefaultText = @"AttachmentType",LocalDefaultText = "AttachmentType", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AttachmentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AttachmentType.Q.AttachmentType", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AttachmentTypeFeatures.AttachmentType", NameTextCodeDefaultText = "AttachmentType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AttachmentTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AttachmentType.Q.AttachmentTypeQuery", DefaultText = @"Attachment Types",LocalDefaultText = "סוג צרופה", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AttachmentTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATTACHMENTTYPE", ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AttachmentType.Features.AttachmentTypes", NameTextCodeDefaultText = "Attachment Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -440,15 +440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable AttachmentTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AttachmentType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AttachmentTypeFeature_ATTACHMENTTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATTACHMENTTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AttachmentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AttachmentType.Features.AttachmentTypes", NameTextCodeDefaultText = @"Attachment Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

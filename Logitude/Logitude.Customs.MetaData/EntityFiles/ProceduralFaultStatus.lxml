@@ -8,11 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PROCEDURALFAULTSTATUS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ProceduralFaultStatus.Features.ProceduralFaultStatus&quot;" FeatureDefaultText="&quot;Procedural Fault Status&quot;" />
-    <Feature Code="&quot;PROCEDURALFAULTINPUTSOURCE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ProceduralFaultInputSource.Features.ProceduralFaultInputSource&quot;" FeatureDefaultText="&quot;Procedural Fault Input Source&quot;" />
-    <Feature Code="&quot;FAULTINSPECTIONTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.FaultInspectionType.Features.FaultInspectionType&quot;" FeatureDefaultText="&quot;Fault Inspection Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ProceduralFaultStatus&quot;" ObjectTableName="&quot;Customs.ProceduralFaultStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProceduralFaultStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;PSQG&quot;" QueryGroupName="&quot;Customs.ProceduralFaultStatus&quot;" LocalTextCode="&quot;ProceduralFaultStatus&quot;" TextCode="&quot;ProceduralFaultStatus&quot;" IsPackagable="false">
+  <Query Code="&quot;ProceduralFaultStatus&quot;" ObjectTableName="&quot;Customs.ProceduralFaultStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProceduralFaultStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;PSQG&quot;" QueryGroupName="&quot;Customs.ProceduralFaultStatus&quot;" LocalTextCode="&quot;סטאטוס ליקוי&quot;" TextCode="&quot;Procedural Fault Status&quot;" TextCodeCode="&quot;Customs.ProceduralFaultStatus.Q.ProceduralFaultStatusQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;PROCEDURALFAULTSTATUS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ProceduralFaultStatus.Features.ProceduralFaultStatus&quot;" FeatureDefaultText="&quot;Procedural Fault Status&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ProceduralFaultStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ProceduralFaultStatus&quot;" />

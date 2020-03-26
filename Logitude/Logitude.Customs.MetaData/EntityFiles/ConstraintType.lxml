@@ -101,9 +101,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;CONSTRAINTTYPE&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ConstraintType.Features.ConstraintTypes&quot;" FeatureDefaultText="&quot;Constraint Type&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;ConstraintType&quot;" ObjectTableName="&quot;Customs.ConstraintType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ConstraintType&quot;" IndexOrder="0" QueryGroupCode="&quot;CONT&quot;" QueryGroupName="&quot;Customs.ConfirmationType&quot;" LocalTextCode="&quot;ConstraintType&quot;" TextCode="&quot;ConstraintType&quot;" IsPackagable="false">
+  <Query Code="&quot;ConstraintType&quot;" ObjectTableName="&quot;Customs.ConstraintType&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ConstraintType&quot;" IndexOrder="0" QueryGroupCode="&quot;CONT&quot;" QueryGroupName="&quot;Customs.ConfirmationType&quot;" LocalTextCode="&quot;סוג אילוץ&quot;" TextCode="&quot;Constraint Types&quot;" TextCodeCode="&quot;Customs.ConstraintType.Q.ConstraintTypeQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;CONSTRAINTTYPE&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ConstraintType.Features.ConstraintTypes&quot;" FeatureDefaultText="&quot;Constraint Type&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ConstraintType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;ConstraintType&quot;" />

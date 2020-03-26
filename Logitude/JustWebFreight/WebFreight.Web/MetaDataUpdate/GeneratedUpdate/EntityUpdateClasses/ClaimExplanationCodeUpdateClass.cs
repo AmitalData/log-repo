@@ -381,7 +381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ClaimExplanationCodeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ClaimExplanationCode" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ClaimExplanationCodeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ClaimExplanationCode").ToList();   
 
-			   TextCode ClaimExplanationCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ClaimExplanationCode.Q.ClaimExplanation", DefaultText = @"ClaimExplanation",LocalDefaultText = "ClaimExplanation", ObjectTableId = ClaimExplanationCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode ClaimExplanationCodeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ClaimExplanationCode.Q.ClaimExplanation", DefaultText = @"ClaimExplanationQuery",LocalDefaultText = null, ObjectTableId = ClaimExplanationCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ClaimExplanationCodeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ClaimExplanationCode.Q.ClaimExplanation", ObjectTableId = ClaimExplanationCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClaimExplanationCode.Features.ClaimExplanation", NameTextCodeDefaultText = "ClaimExplanation", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

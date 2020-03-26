@@ -378,7 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ImporterTypeForClaimObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ImporterTypeForClaim" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ImporterTypeForClaimObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ImporterTypeForClaim").ToList();   
 
-			   TextCode ImporterTypeForClaimTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ImporterTypeForClaim.Q.ImporterTypeForClaim", DefaultText = @"ImporterTypeForClaim",LocalDefaultText = "ImporterTypeForClaim", ObjectTableId = ImporterTypeForClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode ImporterTypeForClaimTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ImporterTypeForClaim.Q.ImporterTypeForClaim", DefaultText = @"ImporterTypeForClaimQuery",LocalDefaultText = null, ObjectTableId = ImporterTypeForClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ImporterTypeForClaimFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImporterTypeForClaim.Q.ImporterTypeForClaim", ObjectTableId = ImporterTypeForClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "ImporterTypeForClaim.Features.ImporterTypeForClaim", NameTextCodeDefaultText = "ImporterTypeForClaim", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

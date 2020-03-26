@@ -382,8 +382,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable RansomViolationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.RansomViolationType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> RansomViolationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.RansomViolationType").ToList();   
 
-			   TextCode RansomViolationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RansomViolationType.Q.RansomViolationType", DefaultText = @"RansomViolationType",LocalDefaultText = "RansomViolationType", ObjectTableId = RansomViolationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature RansomViolationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RansomViolationType.Q.RansomViolationType", ObjectTableId = RansomViolationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "RansomViolationTypeFeatures.RansomViolationType", NameTextCodeDefaultText = "RansomViolationType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode RansomViolationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RansomViolationType.Q.RansomViolationTypeQuery", DefaultText = @"Ransom Violation Type",LocalDefaultText = "סוג הפרה", ObjectTableId = RansomViolationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature RansomViolationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RANSOMVIOLATIONTYPE", ObjectTableId = RansomViolationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.RansomViolationType.Features.RansomViolationType", NameTextCodeDefaultText = "Ransom Violation Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -411,15 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable RansomViolationTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.RansomViolationType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature RansomViolationTypeFeature_RANSOMVIOLATIONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RANSOMVIOLATIONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = RansomViolationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.RansomViolationType.Features.RansomViolationType", NameTextCodeDefaultText = @"Ransom Violation Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

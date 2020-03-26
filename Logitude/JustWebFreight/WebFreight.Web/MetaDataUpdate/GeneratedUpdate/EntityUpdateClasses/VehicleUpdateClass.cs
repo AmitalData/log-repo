@@ -3830,8 +3830,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable VehicleObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.Vehicle" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VehicleObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.Vehicle").ToList();   
 
-			   TextCode VehicleTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vehicle.Q.Vehicle", DefaultText = @"Vehicle",LocalDefaultText = "Vehicle", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VehicleFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicle.Q.Vehicle", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleFeatures.Vehicle", NameTextCodeDefaultText = "Vehicle", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VehicleTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.Q.Vehicles", DefaultText = @"All Vehicles",LocalDefaultText = "כלי רכב", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature VehicleFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLES", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Vehicles", NameTextCodeDefaultText = "Vehicles", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -3888,31 +3888,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable VehicleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Vehicle" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode VehicleGeneralDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.General", DefaultText = "General Details",LocalDefaultText = "פרטים כללים", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleGeneralDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicle.Tab.GeneralDetails", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleFeatures.VHGN", NameTextCodeDefaultText = "General Details", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VehicleGeneralDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode VehicleMoreDetailsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.MoreDetails", DefaultText = "More Details",LocalDefaultText = "נוספים", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleMoreDetailsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicle.Tab.MoreDetails", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleFeatures.VHMD", NameTextCodeDefaultText = "More Details", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VehicleMoreDetailsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREDETAILS", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.MoreDetails", NameTextCodeDefaultText = "More Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode VehicleOwnersandSafetyTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.OwnersAndSafety", DefaultText = "Owners and Safety",LocalDefaultText = "אביזרי בטיחות ובעלים", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleOwnersandSafetyFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicle.Tab.OwnersandSafety", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleFeatures.VHOS", NameTextCodeDefaultText = "Owners and Safety", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VehicleOwnersandSafetyFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OWNERSAFETY", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.OwnersAndSafety", NameTextCodeDefaultText = "Owners And Safety", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode VehicleCustomsDocumentsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.CustomDocuments", DefaultText = "Customs Documents",LocalDefaultText = "צרופות מכס", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleCustomsDocumentsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicle.Tab.CustomsDocuments", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleFeatures.VCCD", NameTextCodeDefaultText = "Customs Documents", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VehicleCustomsDocumentsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDOCUMENTS", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.DocumentsVehicle", NameTextCodeDefaultText = "Custom Document", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode VehicleEventsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleEventsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicle.Tab.Events", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleFeatures.VHEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VehicleEventsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode VehicleCommunicationsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.Communications", DefaultText = "Communications",LocalDefaultText = "תקשורות", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleCommunicationsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicle.Tab.Communications", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleFeatures.VHCM", NameTextCodeDefaultText = "Communications", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VehicleCommunicationsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Communications", NameTextCodeDefaultText = "Communications", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode VehicleRequestSheetTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Vehicle.TH.RequestSheet", DefaultText = "Request Sheet",LocalDefaultText = "גיליון בקשה", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature VehicleRequestSheetFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicle.Tab.RequestSheet", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehicleFeatures.VHRS", NameTextCodeDefaultText = "Request Sheet", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VehicleRequestSheetFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.RequetSheet", NameTextCodeDefaultText = "Request Sheet", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -3941,31 +3941,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature VehicleFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vehicle.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature VehicleFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vehicle.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature VehicleFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vehicle.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature VehicleFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vehicle.Features.PackageFeature", NameTextCodeDefaultText = "Vehicle Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature VehicleFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature VehicleFeature_EVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature VehicleFeature_VEHICLES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLES", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Vehicles", NameTextCodeDefaultText = @"Vehicles" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature VehicleFeature_MOREDETAILS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREDETAILS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.MoreDetails", NameTextCodeDefaultText = @"More Details" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature VehicleFeature_OWNERSAFETY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OWNERSAFETY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.OwnersAndSafety", NameTextCodeDefaultText = @"Owners And Safety" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature VehicleFeature_COMMUNICATIONS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.Communications", NameTextCodeDefaultText = @"Communications" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature VehicleFeature_REQUESTSHEET = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.RequetSheet", NameTextCodeDefaultText = @"Request Sheet" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature VehicleFeature_SENDVEHICLE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDVEHICLE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.SendVehicle", NameTextCodeDefaultText = @"SendVehicle" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature VehicleFeature_DELETEVEHICLE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DELETEVEHICLE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.DeleteVehicle", NameTextCodeDefaultText = @"DeleteVehicle" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature VehicleFeature_CUSTOMDOCUMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDOCUMENTS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.DocumentsVehicle", NameTextCodeDefaultText = @"Custom Document" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature VehicleFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vehicle.Features.PackageFeature", NameTextCodeDefaultText = "Vehicle Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
@@ -4018,11 +3994,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable VehicleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Vehicle" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature VehicleFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendVehicle", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vehicle.Features.SendVehicle", NameTextCodeDefaultText = "Send Vehicle", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VehicleFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDVEHICLE", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.SendVehicle", NameTextCodeDefaultText = "SendVehicle", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
       
     
-			   Feature VehicleFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeleteVehicle", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vehicle.Features.Delete", NameTextCodeDefaultText = "Delete", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature VehicleFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DELETEVEHICLE", ObjectTableId = VehicleObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Vehicle.Features.DeleteVehicle", NameTextCodeDefaultText = "DeleteVehicle", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
  
 

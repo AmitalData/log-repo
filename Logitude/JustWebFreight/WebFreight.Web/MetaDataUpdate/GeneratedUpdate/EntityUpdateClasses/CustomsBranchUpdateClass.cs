@@ -478,8 +478,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomsBranchObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBranch" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsBranchObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsBranch").ToList();   
 
-			   TextCode CustomsBranchTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsBranch.Q.CustomsBranch", DefaultText = @"CustomsBranch",LocalDefaultText = "CustomsBranch", ObjectTableId = CustomsBranchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsBranchFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsBranch.Q.CustomsBranch", ObjectTableId = CustomsBranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBranchFeatures.CustomsBranch", NameTextCodeDefaultText = "CustomsBranch", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsBranchTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsBranch.Q.CustomsBranchQuery", DefaultText = @"Customs Branches",LocalDefaultText = "פרטי בנק וסניף", ObjectTableId = CustomsBranchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsBranchFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSBRANCH", ObjectTableId = CustomsBranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsBranch.Features.CustomsBranches", NameTextCodeDefaultText = "Customs Branches", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -507,15 +507,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CustomsBranchObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBranch" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomsBranchFeature_CUSTOMSBRANCH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSBRANCH", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsBranchObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsBranch.Features.CustomsBranches", NameTextCodeDefaultText = @"Customs Branches" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

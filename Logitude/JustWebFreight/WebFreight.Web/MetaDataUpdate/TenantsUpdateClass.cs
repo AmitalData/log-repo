@@ -230,8 +230,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     case "customs":
                         {
-                            //CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
-                            //customUpdate.LoadObjectsTenantZero(context);//generated
+                            CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
+                            customUpdate.LoadObjectsTenantZero(context);//generated
 
 
                             ForCourier();
@@ -241,13 +241,13 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             updateClass.UpgradeClosedTablesForTenantZero();
                             updateClass.LoadUpdateTenantZero(context);
-                            updateClass.LoadOtherFields(context);
-                            updateClass.loadQueries();
-                            updateClass.loadScreens();
-                            updateClass.LoadObjectTableTabs();
+                            //updateClass.LoadOtherFields(context);
+                            //updateClass.loadQueries();
+                            //updateClass.loadScreens();
+                            //updateClass.LoadObjectTableTabs();
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadMenustables();
-                            updateClass.LoadEventTypes();
+                           // updateClass.LoadEventTypes();
                             updateClass.FillTransportModeTable();
                             updateClass.FillTapagTypeTable();
 

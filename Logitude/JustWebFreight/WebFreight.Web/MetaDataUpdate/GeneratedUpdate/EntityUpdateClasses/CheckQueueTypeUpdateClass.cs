@@ -392,8 +392,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CheckQueueTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CheckQueueType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CheckQueueTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CheckQueueType").ToList();   
 
-			   TextCode CheckQueueTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CheckQueueType.Q.CheckQueueType", DefaultText = @"CheckQueueType",LocalDefaultText = "CheckQueueType", ObjectTableId = CheckQueueTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CheckQueueTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CheckQueueType.Q.CheckQueueType", ObjectTableId = CheckQueueTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CheckQueueTypeFeatures.CheckQueueType", NameTextCodeDefaultText = "CheckQueueType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CheckQueueTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CheckQueueType.Q.CheckQueueTypeQuery", DefaultText = @"Check Queue Types",LocalDefaultText = "סוג תור", ObjectTableId = CheckQueueTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CheckQueueTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKQUEUETYPE", ObjectTableId = CheckQueueTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckQueueType.Features.CheckQueueTypes", NameTextCodeDefaultText = "Check Queue Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -421,15 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CheckQueueTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CheckQueueType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CheckQueueTypeFeature_CHECKQUEUETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKQUEUETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CheckQueueTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckQueueType.Features.CheckQueueTypes", NameTextCodeDefaultText = @"Check Queue Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -392,8 +392,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CheckEntityTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CheckEntityType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CheckEntityTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CheckEntityType").ToList();   
 
-			   TextCode CheckEntityTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CheckEntityType.Q.CheckEntityType", DefaultText = @"CheckEntityType",LocalDefaultText = "CheckEntityType", ObjectTableId = CheckEntityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CheckEntityTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CheckEntityType.Q.CheckEntityType", ObjectTableId = CheckEntityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CheckEntityTypeFeatures.CheckEntityType", NameTextCodeDefaultText = "CheckEntityType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CheckEntityTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CheckEntityTypes.Q.CheckEntityTypesQuery", DefaultText = @"Check Entity Types",LocalDefaultText = "בדקו סוגי ישות", ObjectTableId = CheckEntityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CheckEntityTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKENTITYTYPE", ObjectTableId = CheckEntityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckEntityType.Features.Read", NameTextCodeDefaultText = "Check Entity Type", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -421,15 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CheckEntityTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CheckEntityType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CheckEntityTypeFeature_CHECKENTITYTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKENTITYTYPE", FeatureTypeCode = "QUER", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CheckEntityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CheckEntityType.Features.Read", NameTextCodeDefaultText = @"Check Entity Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

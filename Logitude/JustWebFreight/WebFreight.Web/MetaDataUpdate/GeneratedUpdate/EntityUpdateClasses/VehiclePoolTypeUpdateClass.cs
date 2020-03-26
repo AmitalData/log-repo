@@ -377,8 +377,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable VehiclePoolTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.VehiclePoolType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VehiclePoolTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.VehiclePoolType").ToList();   
 
-			   TextCode VehiclePoolTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VehiclePoolType.Q.VehiclePoolType", DefaultText = @"VehiclePoolType",LocalDefaultText = "VehiclePoolType", ObjectTableId = VehiclePoolTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature VehiclePoolTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VehiclePoolType.Q.VehiclePoolType", ObjectTableId = VehiclePoolTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VehiclePoolTypeFeatures.VehiclePoolType", NameTextCodeDefaultText = "VehiclePoolType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode VehiclePoolTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.VehiclePoolType.Q.VehiclePoolTypeQuery", DefaultText = @"Vehicle Pool Type",LocalDefaultText = "סוג מאגר רכב", ObjectTableId = VehiclePoolTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature VehiclePoolTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLEPOOLTYPE", ObjectTableId = VehiclePoolTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehiclePoolType.Features.VehiclePoolType", NameTextCodeDefaultText = "Vehicle Pool Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -406,15 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable VehiclePoolTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.VehiclePoolType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature VehiclePoolTypeFeature_VEHICLEPOOLTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLEPOOLTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = VehiclePoolTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.VehiclePoolType.Features.VehiclePoolType", NameTextCodeDefaultText = @"Vehicle Pool Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

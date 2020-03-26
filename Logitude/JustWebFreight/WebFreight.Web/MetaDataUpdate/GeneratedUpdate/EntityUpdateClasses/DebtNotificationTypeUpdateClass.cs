@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable DebtNotificationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DebtNotificationType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> DebtNotificationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DebtNotificationType").ToList();   
 
-			   TextCode DebtNotificationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DebtNotificationType.Q.DebtNotificationType", DefaultText = @"DebtNotificationType",LocalDefaultText = "DebtNotificationType", ObjectTableId = DebtNotificationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DebtNotificationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DebtNotificationType.Q.DebtNotificationType", ObjectTableId = DebtNotificationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DebtNotificationTypeFeatures.DebtNotificationType", NameTextCodeDefaultText = "DebtNotificationType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DebtNotificationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DebtNotificationType.Q.DebtNotificationTypeQuery", DefaultText = @"Debt Notification Type",LocalDefaultText = "סוג הודעת חיוב", ObjectTableId = DebtNotificationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DebtNotificationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEBTNOTIFICATION", ObjectTableId = DebtNotificationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DebtNotificationType.Features.DebtNotificationType", NameTextCodeDefaultText = "Debt Notification Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable DebtNotificationTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DebtNotificationType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature DebtNotificationTypeFeature_DEBTNOTIFICATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEBTNOTIFICATION", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DebtNotificationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DebtNotificationType.Features.DebtNotificationType", NameTextCodeDefaultText = @"Debt Notification Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

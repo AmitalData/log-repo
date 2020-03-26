@@ -454,8 +454,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SealCompletenesObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SealCompletenes" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SealCompletenesObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SealCompletenes").ToList();   
 
-			   TextCode SealCompletenesTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SealCompletenes.Q.SealCompletenes", DefaultText = @"SealCompletenes",LocalDefaultText = "SealCompletenes", ObjectTableId = SealCompletenesObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SealCompletenesFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealCompletenes.Q.SealCompletenes", ObjectTableId = SealCompletenesObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealCompletenesFeatures.SealCompletenes", NameTextCodeDefaultText = "SealCompletenes", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SealCompletenesTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SealCompletenes.Q.SealCompletenes", DefaultText = @"SealCompletenesQuery",LocalDefaultText = null, ObjectTableId = SealCompletenesObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature SealCompletenesFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealCompletenes.Q.SealCompletenes", ObjectTableId = SealCompletenesObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealCompletenes.Features.SealCompletenes", NameTextCodeDefaultText = "SealCompletenes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -483,15 +483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SealCompletenesObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SealCompletenes" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature SealCompletenesFeature_SealCompletenes_Q_SealCompletenes = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealCompletenes.Q.SealCompletenes", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SealCompletenesObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealCompletenes.Features.SealCompletenes", NameTextCodeDefaultText = @"SealCompletenes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

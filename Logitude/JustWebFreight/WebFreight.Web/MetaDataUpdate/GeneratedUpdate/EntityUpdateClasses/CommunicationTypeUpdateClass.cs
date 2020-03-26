@@ -391,8 +391,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CommunicationTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CommunicationType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CommunicationTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CommunicationType").ToList();   
 
-			   TextCode CommunicationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationType.Q.CommunicationType", DefaultText = @"CommunicationType",LocalDefaultText = "CommunicationType", ObjectTableId = CommunicationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CommunicationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CommunicationType.Q.CommunicationType", ObjectTableId = CommunicationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CommunicationTypeFeatures.CommunicationType", NameTextCodeDefaultText = "CommunicationType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CommunicationTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CommunicationType.Q.CommunicationTypeQuery", DefaultText = @"Communication Types",LocalDefaultText = "סוג תקשורת", ObjectTableId = CommunicationTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CommunicationTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONTYPE", ObjectTableId = CommunicationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CommunicationType.Features.CommunicationTypes", NameTextCodeDefaultText = "Communication Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -420,15 +420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CommunicationTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CommunicationType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CommunicationTypeFeature_COMMUNICATIONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CommunicationTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CommunicationType.Features.CommunicationTypes", NameTextCodeDefaultText = @"Communication Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -376,8 +376,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable FuelTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.FuelType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> FuelTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.FuelType").ToList();   
 
-			   TextCode FuelTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FuelType.Q.FuelType", DefaultText = @"FuelType",LocalDefaultText = "FuelType", ObjectTableId = FuelTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature FuelTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FuelType.Q.FuelType", ObjectTableId = FuelTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "FuelTypeFeatures.FuelType", NameTextCodeDefaultText = "FuelType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode FuelTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.FuelType.Q.FuelTypeQuery", DefaultText = @"Fuel Type",LocalDefaultText = "סוג דלק", ObjectTableId = FuelTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature FuelTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FUELTYPE", ObjectTableId = FuelTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.FuelType.Features.FuelType", NameTextCodeDefaultText = "Fuel Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -405,15 +405,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable FuelTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.FuelType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature FuelTypeFeature_FUELTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FUELTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = FuelTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.FuelType.Features.FuelType", NameTextCodeDefaultText = @"Fuel Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

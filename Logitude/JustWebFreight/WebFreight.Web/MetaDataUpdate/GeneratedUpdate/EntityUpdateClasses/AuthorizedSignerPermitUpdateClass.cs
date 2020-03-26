@@ -386,8 +386,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AuthorizedSignerPermitObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AuthorizedSignerPermit" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AuthorizedSignerPermitObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AuthorizedSignerPermit").ToList();   
 
-			   TextCode AuthorizedSignerPermitTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AuthorizedSignerPermit.Q.AuthorizedSignerPermit", DefaultText = @"AuthorizedSignerPermit",LocalDefaultText = "AuthorizedSignerPermit", ObjectTableId = AuthorizedSignerPermitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AuthorizedSignerPermitFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AuthorizedSignerPermit.Q.AuthorizedSignerPermit", ObjectTableId = AuthorizedSignerPermitObjectTable.Id, Tenant = 0, NameTextCodeCode = "AuthorizedSignerPermitFeatures.AuthorizedSignerPermit", NameTextCodeDefaultText = "AuthorizedSignerPermit", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AuthorizedSignerPermitTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AuthorizedSignerPermit.Q.AuthorizedSignerPermitQuery", DefaultText = @"Authorized Signer Permits",LocalDefaultText = "סוגי הרשאה למורשה חתימה", ObjectTableId = AuthorizedSignerPermitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AuthorizedSignerPermitFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTHORIZEDSIGNERPERMIT", ObjectTableId = AuthorizedSignerPermitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AuthorizedSignerPermit.Features.AuthorizedSignerPermits", NameTextCodeDefaultText = "Authorized Signer Permits", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -415,15 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable AuthorizedSignerPermitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AuthorizedSignerPermit" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AuthorizedSignerPermitFeature_AUTHORIZEDSIGNERPERMIT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTHORIZEDSIGNERPERMIT", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AuthorizedSignerPermitObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AuthorizedSignerPermit.Features.AuthorizedSignerPermits", NameTextCodeDefaultText = @"Authorized Signer Permits" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -383,8 +383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable StorageMessageTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.StorageMessageType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> StorageMessageTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.StorageMessageType").ToList();   
 
-			   TextCode StorageMessageTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "StorageMessageType.Q.StorageMessageType", DefaultText = @"StorageMessageType",LocalDefaultText = "StorageMessageType", ObjectTableId = StorageMessageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature StorageMessageTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "StorageMessageType.Q.StorageMessageType", ObjectTableId = StorageMessageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "StorageMessageTypeFeatures.StorageMessageType", NameTextCodeDefaultText = "StorageMessageType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode StorageMessageTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.StorageMessageType.Q.StorageMessageTypeQuery", DefaultText = @"Storage Message Type",LocalDefaultText = "סוג מסר", ObjectTableId = StorageMessageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature StorageMessageTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STORAGEMESSAGETYPE", ObjectTableId = StorageMessageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.StorageMessageType.Features.StorageMessageType", NameTextCodeDefaultText = "Storage Message Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -412,15 +412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable StorageMessageTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.StorageMessageType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature StorageMessageTypeFeature_STORAGEMESSAGETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STORAGEMESSAGETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = StorageMessageTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.StorageMessageType.Features.StorageMessageType", NameTextCodeDefaultText = @"Storage Message Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

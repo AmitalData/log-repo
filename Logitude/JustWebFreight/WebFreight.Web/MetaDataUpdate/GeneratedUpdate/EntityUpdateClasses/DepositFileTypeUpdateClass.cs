@@ -384,8 +384,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable DepositFileTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DepositFileType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> DepositFileTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DepositFileType").ToList();   
 
-			   TextCode DepositFileTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DepositFileType.Q.DepositFileType", DefaultText = @"DepositFileType",LocalDefaultText = "DepositFileType", ObjectTableId = DepositFileTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DepositFileTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DepositFileType.Q.DepositFileType", ObjectTableId = DepositFileTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DepositFileTypeFeatures.DepositFileType", NameTextCodeDefaultText = "DepositFileType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DepositFileTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DepositFileType.Q.DepositFileTypeQuery", DefaultText = @"Deposit File Type",LocalDefaultText = "סוג תיק פקדון", ObjectTableId = DepositFileTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DepositFileTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITFILE", ObjectTableId = DepositFileTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DepositFileType.Features.DepositFileType", NameTextCodeDefaultText = "Deposit File Type", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -413,15 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable DepositFileTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DepositFileType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature DepositFileTypeFeature_DEPOSITFILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITFILE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DepositFileTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DepositFileType.Features.DepositFileType", NameTextCodeDefaultText = @"Deposit File Type" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

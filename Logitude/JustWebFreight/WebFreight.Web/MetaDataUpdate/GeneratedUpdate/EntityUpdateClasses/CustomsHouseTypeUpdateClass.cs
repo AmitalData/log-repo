@@ -601,8 +601,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomsHouseTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsHouseType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsHouseTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsHouseType").ToList();   
 
-			   TextCode CustomsHouseTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsHouseType.Q.CustomsHouseType", DefaultText = @"CustomsHouseType",LocalDefaultText = "CustomsHouseType", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsHouseTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsHouseType.Q.CustomsHouseType", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeFeatures.CustomsHouseType", NameTextCodeDefaultText = "CustomsHouseType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomsHouseTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsHouseType.Q.CustomsHouseTypeQuery", DefaultText = @"Customs House Type",LocalDefaultText = "Customs House Types", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsHouseTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSHOUSETYPE", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsHouseType.Features.CustomsHouseTypes", NameTextCodeDefaultText = "Customs House Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -677,11 +677,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CustomsHouseTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsHouseType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CustomsHouseTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsHouseType.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsHouseTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsHouseType.Tab.General", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeFeatures.HTGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsHouseTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.HouseType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode CustomsHouseTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsHouseType.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsHouseTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsHouseType.Tab.Events", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseTypeFeatures.HTEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsHouseTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.HouseType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -700,17 +700,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CustomsHouseTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomsHouseTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomsHouseTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomsHouseTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseType.Features.PackageFeature", NameTextCodeDefaultText = "CustomsHouseType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomsHouseTypeFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.HouseType.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature CustomsHouseTypeFeature_EVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.HouseType.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature CustomsHouseTypeFeature_CUSTOMSHOUSETYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSHOUSETYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsHouseType.Features.CustomsHouseTypes", NameTextCodeDefaultText = @"Customs House Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+		   Feature CustomsHouseTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CustomsHouseTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsHouseType.Features.PackageFeature", NameTextCodeDefaultText = "CustomsHouseType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 

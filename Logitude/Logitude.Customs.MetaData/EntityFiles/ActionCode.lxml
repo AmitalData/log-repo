@@ -9,7 +9,7 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;ActionCode&quot;" ObjectTableName="&quot;Customs.ActionCode&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ActionCode&quot;" IndexOrder="0" QueryGroupCode="&quot;2ea0&quot;" QueryGroupName="&quot;Customs.TreatmentWay Query Group&quot;" LocalTextCode="&quot;ActionCode&quot;" TextCode="&quot;ActionCode&quot;" FeatureCode="&quot;ActionCode.Q.ActionCode&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;ActionCode.Features.ActionCode&quot;" FeatureDefaultText="&quot;ActionCode&quot;">
+  <Query Code="&quot;ActionCode&quot;" ObjectTableName="&quot;Customs.ActionCode&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ActionCode&quot;" IndexOrder="0" QueryGroupCode="&quot;2ea0&quot;" QueryGroupName="&quot;Customs.TreatmentWay Query Group&quot;" TextCode="&quot;ActionCodeQuery&quot;" TextCodeCode="&quot;ActionCode.Q.ActionCode&quot;" IsSpellChecked="false" FeatureCode="&quot;ActionCode.Q.ActionCode&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;ActionCode.Features.ActionCode&quot;" FeatureDefaultText="&quot;ActionCode&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="100" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;ActionCode&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;ActionCode&quot;" />

@@ -386,8 +386,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ConstraintApprovalDecisionObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ConstraintApprovalDecision" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ConstraintApprovalDecisionObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ConstraintApprovalDecision").ToList();   
 
-			   TextCode ConstraintApprovalDecisionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConstraintApprovalDecision.Q.ConstraintApprovalDecision", DefaultText = @"ConstraintApprovalDecision",LocalDefaultText = "ConstraintApprovalDecision", ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ConstraintApprovalDecisionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConstraintApprovalDecision.Q.ConstraintApprovalDecision", ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConstraintApprovalDecisionFeatures.ConstraintApprovalDecision", NameTextCodeDefaultText = "ConstraintApprovalDecision", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ConstraintApprovalDecisionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConstraintApproval.Q.ConstraintApprovalDecisionQuery", DefaultText = @"Constraint Approval Decisions",LocalDefaultText = "סוג החלטה באילוץ", ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ConstraintApprovalDecisionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTAPPROVALQUERY", ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintApprovalDecision.Features.ConstraintApprovalDecisions", NameTextCodeDefaultText = "Constraint Approval Decisions", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -415,15 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ConstraintApprovalDecisionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ConstraintApprovalDecision" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ConstraintApprovalDecisionFeature_CONSTRAINTAPPROVALQUERY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTAPPROVALQUERY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ConstraintApprovalDecisionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintApprovalDecision.Features.ConstraintApprovalDecisions", NameTextCodeDefaultText = @"Constraint Approval Decisions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

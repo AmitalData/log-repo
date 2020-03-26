@@ -393,8 +393,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable AutonomyTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AutonomyType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> AutonomyTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AutonomyType").ToList();   
 
-			   TextCode AutonomyTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AutonomyType.Q.AutonomyType", DefaultText = @"AutonomyType",LocalDefaultText = "AutonomyType", ObjectTableId = AutonomyTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AutonomyTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AutonomyType.Q.AutonomyType", ObjectTableId = AutonomyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "AutonomyTypeFeatures.AutonomyType", NameTextCodeDefaultText = "AutonomyType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AutonomyTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AutonomyType.Q.AutonomyTypeQuery", DefaultText = @"Autonomy Types",LocalDefaultText = "סוג אוטונומיה", ObjectTableId = AutonomyTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature AutonomyTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTONOMYTYPE", ObjectTableId = AutonomyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AutonomyType.Features.AutonomyTypes", NameTextCodeDefaultText = "Autonomy Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -422,15 +422,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable AutonomyTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.AutonomyType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature AutonomyTypeFeature_AUTONOMYTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTONOMYTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AutonomyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.AutonomyType.Features.AutonomyTypes", NameTextCodeDefaultText = @"Autonomy Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

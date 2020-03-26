@@ -9,9 +9,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;AmendmentType.Q.AmendmentTypeQ&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;AmendmentType.Features.AmendmentTypeQ&quot;" FeatureDefaultText="&quot;AmendmentTypeQ&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;AmendmentTypeQ&quot;" ObjectTableName="&quot;Customs.AmendmentType&quot;" DefaultSortDirection="&quot;Ascending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AmendmentType&quot;" IndexOrder="0" QueryGroupCode="&quot;b2b7&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;AmendmentTypeQ&quot;" TextCode="&quot;AmendmentTypeQ&quot;" IsPackagable="false">
+  <Query Code="&quot;AmendmentTypeQ&quot;" ObjectTableName="&quot;Customs.AmendmentType&quot;" DefaultSortDirection="&quot;Ascending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.AmendmentType&quot;" IndexOrder="0" QueryGroupCode="&quot;b2b7&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;Amendment Type Query&quot;" TextCode="&quot;Amendment Type Query&quot;" TextCodeCode="&quot;AmendmentType.Q.AmendmentTypeQ&quot;" IsSpellChecked="false" FeatureCode="&quot;AmendmentType.Q.AmendmentTypeQ&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;AmendmentType.Features.AmendmentTypeQ&quot;" FeatureDefaultText="&quot;AmendmentTypeQ&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="100" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;AmendmentTypeQ&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="200" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;AmendmentTypeQ&quot;" />

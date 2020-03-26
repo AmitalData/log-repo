@@ -387,8 +387,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ConstraintProcessTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ConstraintProcessType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ConstraintProcessTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ConstraintProcessType").ToList();   
 
-			   TextCode ConstraintProcessTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConstraintProcessType.Q.ConstraintProcessType", DefaultText = @"ConstraintProcessType",LocalDefaultText = "ConstraintProcessType", ObjectTableId = ConstraintProcessTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ConstraintProcessTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConstraintProcessType.Q.ConstraintProcessType", ObjectTableId = ConstraintProcessTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConstraintProcessTypeFeatures.ConstraintProcessType", NameTextCodeDefaultText = "ConstraintProcessType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ConstraintProcessTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConstraintProcessType.Q.ConstraintProcessTypeQuery", DefaultText = @"Constraint Process Types",LocalDefaultText = "סוג תהליך אילוץ", ObjectTableId = ConstraintProcessTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ConstraintProcessTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTPROCESSTYPEQUERY", ObjectTableId = ConstraintProcessTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintProcessType.Features.ConstraintProcesses", NameTextCodeDefaultText = "Constraint Process Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -416,15 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ConstraintProcessTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ConstraintProcessType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ConstraintProcessTypeFeature_CONSTRAINTPROCESSTYPEQUERY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONSTRAINTPROCESSTYPEQUERY", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ConstraintProcessTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ConstraintProcessType.Features.ConstraintProcesses", NameTextCodeDefaultText = @"Constraint Process Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

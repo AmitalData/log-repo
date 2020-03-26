@@ -8,9 +8,8 @@
   <Records />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;REQUESTSTATUS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.RequestStatus.Features.RequestStatus&quot;" FeatureDefaultText="&quot;Request Status&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;RequestStatus&quot;" ObjectTableName="&quot;Customs.RequestStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.RequestStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;RSQG&quot;" QueryGroupName="&quot;Customs.RequestStatus&quot;" LocalTextCode="&quot;RequestStatus&quot;" TextCode="&quot;RequestStatus&quot;" IsPackagable="false">
+  <Query Code="&quot;RequestStatus&quot;" ObjectTableName="&quot;Customs.RequestStatus&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.RequestStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;RSQG&quot;" QueryGroupName="&quot;Customs.RequestStatus&quot;" LocalTextCode="&quot;סטאטוס בקשה לערבות&quot;" TextCode="&quot;Request Status&quot;" TextCodeCode="&quot;Customs.RequestStatus.Q.RequestStatusQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;REQUESTSTATUS&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.RequestStatus.Features.RequestStatus&quot;" FeatureDefaultText="&quot;Request Status&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;RequestStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;RequestStatus&quot;" />

@@ -63,9 +63,8 @@
   </Records>
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;MEASURMENTUNIT&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.MeasurmentUnit.Features.MeasurmentUnits&quot;" FeatureDefaultText="&quot;Measurment Units&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;MeasurmentUnit&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.MeasurmentUnit&quot;" IndexOrder="0" QueryGroupCode="&quot;MESU&quot;" QueryGroupName="&quot;Customs.MeasurmentUnit&quot;" LocalTextCode="&quot;MeasurmentUnit&quot;" TextCode="&quot;MeasurmentUnit&quot;" IsPackagable="false">
+  <Query Code="&quot;MeasurmentUnit&quot;" ObjectTableName="&quot;Customs.MeasurmentUnit&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.MeasurmentUnit&quot;" IndexOrder="0" QueryGroupCode="&quot;MESU&quot;" QueryGroupName="&quot;Customs.MeasurmentUnit&quot;" LocalTextCode="&quot;יחידת מידה&quot;" TextCode="&quot;Measurement Units&quot;" TextCodeCode="&quot;Customs.MeasurmentUnit.Q.MeasurmentUnitQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;MEASURMENTUNIT&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.MeasurmentUnit.Features.MeasurmentUnits&quot;" FeatureDefaultText="&quot;Measurment Units&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;MeasurmentUnit&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;EnglishName&quot;" QueryCode="&quot;MeasurmentUnit&quot;" />

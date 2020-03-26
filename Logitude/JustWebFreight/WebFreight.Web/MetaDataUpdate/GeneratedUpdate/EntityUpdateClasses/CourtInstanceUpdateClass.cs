@@ -382,7 +382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CourtInstanceObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CourtInstance" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CourtInstanceObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CourtInstance").ToList();   
 
-			   TextCode CourtInstanceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourtInstance.Q.CourtInstance", DefaultText = @"CourtInstance",LocalDefaultText = "CourtInstance", ObjectTableId = CourtInstanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CourtInstanceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CourtInstance.Q.CourtInstance", DefaultText = @"CourtInstanceQuery",LocalDefaultText = null, ObjectTableId = CourtInstanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CourtInstanceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourtInstance.Q.CourtInstance", ObjectTableId = CourtInstanceObjectTable.Id, Tenant = 0, NameTextCodeCode = "CourtInstance.Features.CourtInstance", NameTextCodeDefaultText = "CourtInstance", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

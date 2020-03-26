@@ -39,9 +39,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;PROCEDURALFAULT&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customs.ProceduralFault.Features.ProceduralFaults&quot;" FeatureDefaultText="&quot;Procedural Faults&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;Procedural Faults&quot;" ObjectTableName="&quot;Customs.ProceduralFault&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProceduralFault&quot;" IndexOrder="0" QueryGroupCode="&quot;PCQG&quot;" QueryGroupName="&quot;Customs.ProceduralFault&quot;" LocalTextCode="&quot;Procedural Faults&quot;" TextCode="&quot;Procedural Faults&quot;" IsPackagable="false" EditWizardName="&quot;Logitude.Customs.Views.ProceduralFaultsControl&quot;">
+  <Query Code="&quot;Procedural Faults&quot;" ObjectTableName="&quot;Customs.ProceduralFault&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.ProceduralFault&quot;" IndexOrder="0" QueryGroupCode="&quot;PCQG&quot;" QueryGroupName="&quot;Customs.ProceduralFault&quot;" LocalTextCode="&quot;ליקויים&quot;" TextCode="&quot;Procedural Faults&quot;" TextCodeCode="&quot;Customs.ProceduralFault.Q.ProceduralFaults&quot;" IsSpellChecked="false" FeatureCode="&quot;PROCEDURALFAULT&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.ProceduralFault.Features.ProceduralFaults&quot;" FeatureDefaultText="&quot;Procedural Faults&quot;" EditWizardName="&quot;Logitude.Customs.Views.ProceduralFaultsControl&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;ProceduralFaultNumber&quot;" QueryCode="&quot;Procedural Faults&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;CreateDate&quot;" QueryCode="&quot;Procedural Faults&quot;" />

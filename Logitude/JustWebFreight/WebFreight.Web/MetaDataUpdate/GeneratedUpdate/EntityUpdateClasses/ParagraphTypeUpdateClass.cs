@@ -385,8 +385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable ParagraphTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ParagraphType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ParagraphTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ParagraphType").ToList();   
 
-			   TextCode ParagraphTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ParagraphType.Q.ParagraphType", DefaultText = @"ParagraphType",LocalDefaultText = "ParagraphType", ObjectTableId = ParagraphTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ParagraphTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ParagraphType.Q.ParagraphType", ObjectTableId = ParagraphTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ParagraphTypeFeatures.ParagraphType", NameTextCodeDefaultText = "ParagraphType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ParagraphTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ParagraphType.Q.ParagraphTypeQuery", DefaultText = @"Paragraph Types",LocalDefaultText = "סעיף תשלום", ObjectTableId = ParagraphTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ParagraphTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARAGRAPHTYPE", ObjectTableId = ParagraphTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ParagraphType.Features.ParagraphTypes", NameTextCodeDefaultText = "Paragraph Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -414,15 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable ParagraphTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ParagraphType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature ParagraphTypeFeature_PARAGRAPHTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARAGRAPHTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ParagraphTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ParagraphType.Features.ParagraphTypes", NameTextCodeDefaultText = @"Paragraph Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

@@ -454,8 +454,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable SealUpdateReasonTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SealUpdateReasonType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SealUpdateReasonTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SealUpdateReasonType").ToList();   
 
-			   TextCode SealUpdateReasonTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", DefaultText = @"SealUpdateReasonQ",LocalDefaultText = "SealUpdateReasonQ", ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SealUpdateReasonTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealUpdateReasonTypeFeatures.SealUpdateReasonQ", NameTextCodeDefaultText = "SealUpdateReasonQ", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode SealUpdateReasonTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", DefaultText = @"Seal Update Reason Query",LocalDefaultText = "Seal Update Reason Query", ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature SealUpdateReasonTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealUpdateReasonType.Features.SealUpdateReasonQ", NameTextCodeDefaultText = "SealUpdateReasonQ", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -483,15 +483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SealUpdateReasonTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SealUpdateReasonType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature SealUpdateReasonTypeFeature_SealUpdateReasonType_Q_SealUpdateReasonQ = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SealUpdateReasonType.Features.SealUpdateReasonQ", NameTextCodeDefaultText = @"SealUpdateReasonQ" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

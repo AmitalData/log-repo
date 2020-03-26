@@ -9,7 +9,7 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;CargoStatus&quot;" ObjectTableName="&quot;Customs.CargoStatus&quot;" DefaultSortDirection="&quot;Ascending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CargoStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;1362&quot;" QueryGroupName="&quot;Customs.CargoStatus Query Group&quot;" LocalTextCode="&quot;CargoStatus&quot;" TextCode="&quot;CargoStatus&quot;" FeatureCode="&quot;CargoStatus.Q.CargoStatus&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;CargoStatus.Features.CargoStatus&quot;" FeatureDefaultText="&quot;CargoStatus&quot;">
+  <Query Code="&quot;CargoStatus&quot;" ObjectTableName="&quot;Customs.CargoStatus&quot;" DefaultSortDirection="&quot;Ascending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.CargoStatus&quot;" IndexOrder="0" QueryGroupCode="&quot;1362&quot;" QueryGroupName="&quot;Customs.CargoStatus Query Group&quot;" LocalTextCode="&quot;סטאטוס מטען&quot;" TextCode="&quot;Cargo Statuses&quot;" TextCodeCode="&quot;CargoStatus.Q.CargoStatus&quot;" IsSpellChecked="false" FeatureCode="&quot;CargoStatus.Q.CargoStatus&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;CargoStatus.Features.CargoStatus&quot;" FeatureDefaultText="&quot;CargoStatus&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="120" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;CargoStatus&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="120" ObjectFieldName="&quot;Name&quot;" QueryCode="&quot;CargoStatus&quot;" />

@@ -9,9 +9,8 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;RequestType.Q.RequestType&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="false" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;RequestType.Features.RequestType&quot;" FeatureDefaultText="&quot;RequestType&quot;" />
   </AdditionalFeatures>
-  <Query Code="&quot;RequestType&quot;" ObjectTableName="&quot;Customs.RequestType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.RequestType&quot;" IndexOrder="0" QueryGroupCode="&quot;29af&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;RequestType&quot;" TextCode="&quot;RequestType&quot;" IsPackagable="false">
+  <Query Code="&quot;RequestType&quot;" ObjectTableName="&quot;Customs.RequestType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.RequestType&quot;" IndexOrder="0" QueryGroupCode="&quot;29af&quot;" QueryGroupName="&quot; Query Group&quot;" TextCode="&quot;RequestTypeQuery&quot;" TextCodeCode="&quot;RequestType.Q.RequestType&quot;" IsSpellChecked="false" FeatureCode="&quot;RequestType.Q.RequestType&quot;" IsPackagable="false" FeatureTextCodeCode="&quot;RequestType.Features.RequestType&quot;" FeatureDefaultText="&quot;RequestType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="100" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;RequestType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;RequestType&quot;" />

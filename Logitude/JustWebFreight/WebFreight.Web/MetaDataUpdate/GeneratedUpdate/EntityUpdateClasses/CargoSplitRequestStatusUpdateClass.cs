@@ -446,7 +446,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CargoSplitRequestStatusObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CargoSplitRequestStatus" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CargoSplitRequestStatusObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CargoSplitRequestStatus").ToList();   
 
-			   TextCode CargoSplitRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CargoSplitRequestStatus.Q.CargoSplitRequestStatus", DefaultText = @"CargoSplitRequestStatus",LocalDefaultText = "CargoSplitRequestStatus", ObjectTableId = CargoSplitRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CargoSplitRequestStatusTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CargoSplitRequestStatus.Q.CargoSplitRequestStatus", DefaultText = @"CargoSplitRequestStatusQuery",LocalDefaultText = null, ObjectTableId = CargoSplitRequestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CargoSplitRequestStatusFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CargoSplitRequestStatus.Q.CargoSplitRequestStatus", ObjectTableId = CargoSplitRequestStatusObjectTable.Id, Tenant = 0, NameTextCodeCode = "CargoSplitRequestStatus.Features.CargoSplitRequestStatus", NameTextCodeDefaultText = "CargoSplitRequestStatus", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

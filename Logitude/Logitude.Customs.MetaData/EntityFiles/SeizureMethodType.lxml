@@ -9,7 +9,7 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
-  <Query Code="&quot;SeizureMethodType&quot;" ObjectTableName="&quot;Customs.SeizureMethodType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SeizureMethodType&quot;" IndexOrder="0" QueryGroupCode="&quot;3174&quot;" QueryGroupName="&quot; Query Group&quot;" LocalTextCode="&quot;SeizureMethodType&quot;" TextCode="&quot;SeizureMethodType&quot;" FeatureCode="&quot;SeizureMethodType.Q.SeizureMethodType&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;SeizureMethodType.Features.SeizureMethodType&quot;" FeatureDefaultText="&quot;SeizureMethodType&quot;">
+  <Query Code="&quot;SeizureMethodType&quot;" ObjectTableName="&quot;Customs.SeizureMethodType&quot;" DefaultSortDirection="&quot;Desending&quot;" DefaultSortName="&quot;Code&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.SeizureMethodType&quot;" IndexOrder="0" QueryGroupCode="&quot;3174&quot;" QueryGroupName="&quot; Query Group&quot;" TextCode="&quot;SeizureMethodTypeQuery&quot;" TextCodeCode="&quot;SeizureMethodType.Q.SeizureMethodType&quot;" IsSpellChecked="false" FeatureCode="&quot;SeizureMethodType.Q.SeizureMethodType&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;SeizureMethodType.Features.SeizureMethodType&quot;" FeatureDefaultText="&quot;SeizureMethodType&quot;">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="100" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;SeizureMethodType&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="100" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;SeizureMethodType&quot;" />

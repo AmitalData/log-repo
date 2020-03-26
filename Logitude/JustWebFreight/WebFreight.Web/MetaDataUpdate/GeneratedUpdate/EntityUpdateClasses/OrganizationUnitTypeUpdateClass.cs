@@ -389,8 +389,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable OrganizationUnitTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.OrganizationUnitType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> OrganizationUnitTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.OrganizationUnitType").ToList();   
 
-			   TextCode OrganizationUnitTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OrganizationUnitType.Q.OrganizationUnitType", DefaultText = @"OrganizationUnitType",LocalDefaultText = "OrganizationUnitType", ObjectTableId = OrganizationUnitTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature OrganizationUnitTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OrganizationUnitType.Q.OrganizationUnitType", ObjectTableId = OrganizationUnitTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OrganizationUnitTypeFeatures.OrganizationUnitType", NameTextCodeDefaultText = "OrganizationUnitType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode OrganizationUnitTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OrganizationUnitType.Q.OrganizationUnitTypeQuery", DefaultText = @"Organization Unit Types",LocalDefaultText = "סוגי יחידות", ObjectTableId = OrganizationUnitTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature OrganizationUnitTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ORGANIZATIONUNITTYPE", ObjectTableId = OrganizationUnitTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.OrganizationUnitType.Features.OrganizationUnitTypes", NameTextCodeDefaultText = "Organization Unit Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -418,15 +418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable OrganizationUnitTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.OrganizationUnitType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature OrganizationUnitTypeFeature_ORGANIZATIONUNITTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ORGANIZATIONUNITTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = OrganizationUnitTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.OrganizationUnitType.Features.OrganizationUnitTypes", NameTextCodeDefaultText = @"Organization Unit Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

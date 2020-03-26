@@ -380,8 +380,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable DepositCustomerActivityObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.DepositCustomerActivity" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> DepositCustomerActivityObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.DepositCustomerActivity").ToList();   
 
-			   TextCode DepositCustomerActivityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DepositCustomerActivity.Q.DepositCustomerActivity", DefaultText = @"DepositCustomerActivity",LocalDefaultText = "DepositCustomerActivity", ObjectTableId = DepositCustomerActivityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature DepositCustomerActivityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DepositCustomerActivity.Q.DepositCustomerActivity", ObjectTableId = DepositCustomerActivityObjectTable.Id, Tenant = 0, NameTextCodeCode = "DepositCustomerActivityFeatures.DepositCustomerActivity", NameTextCodeDefaultText = "DepositCustomerActivity", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode DepositCustomerActivityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DepositCustomerActivity.Q.DepositCustomerActivityQuery", DefaultText = @"Deposit Customer Activity",LocalDefaultText = "פקדון פעילות הלקוח", ObjectTableId = DepositCustomerActivityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature DepositCustomerActivityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITCUSTOMER", ObjectTableId = DepositCustomerActivityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DepositCustomerActivity.Features.DepositCustomerActivity", NameTextCodeDefaultText = "Deposit Customer Activity", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -409,15 +409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable DepositCustomerActivityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DepositCustomerActivity" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature DepositCustomerActivityFeature_DEPOSITCUSTOMER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DEPOSITCUSTOMER", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DepositCustomerActivityObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DepositCustomerActivity.Features.DepositCustomerActivity", NameTextCodeDefaultText = @"Deposit Customer Activity" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 

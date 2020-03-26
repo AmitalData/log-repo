@@ -385,8 +385,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CertificateExemptionTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateExemptionType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CertificateExemptionTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CertificateExemptionType").ToList();   
 
-			   TextCode CertificateExemptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CertificateExemptionType.Q.CertificateExemptionType", DefaultText = @"CertificateExemptionType",LocalDefaultText = "CertificateExemptionType", ObjectTableId = CertificateExemptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CertificateExemptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CertificateExemptionType.Q.CertificateExemptionType", ObjectTableId = CertificateExemptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateExemptionTypeFeatures.CertificateExemptionType", NameTextCodeDefaultText = "CertificateExemptionType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CertificateExemptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateExemptionType.Q.CertificateExemptionTypeQuery", DefaultText = @"Certificate Exemption Codes",LocalDefaultText = "קוד פטור מאישור", ObjectTableId = CertificateExemptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CertificateExemptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CERTIFICATEEXEMPTIONTYPE", ObjectTableId = CertificateExemptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CertificateExemptionType.Features.CertificateExemptionTypes", NameTextCodeDefaultText = "Certificate Exemption Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -414,15 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CertificateExemptionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateExemptionType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CertificateExemptionTypeFeature_CERTIFICATEEXEMPTIONTYPE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CERTIFICATEEXEMPTIONTYPE", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CertificateExemptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CertificateExemptionType.Features.CertificateExemptionTypes", NameTextCodeDefaultText = @"Certificate Exemption Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-   
+	    {     
 	    
 		}
 
