@@ -469,7 +469,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         this._ReconcileExternalPagePMService.get(externalPage.Id).subscribe((myResult) =>
         {
             externalPagePM = myResult.Result;
-            this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(externalPage.Id, this.ObjectTableName).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(externalPage.Id, this.ObjectTableName).subscribe((myResult:ServiceResponse) =>
             {
                 if (!myResult.HasError) {
                     if (myResult.Result == null) {
@@ -500,7 +500,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.EnableReconcileEditButton = false;
-        this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult) =>
+        this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult:ServiceResponse) =>
         {
             this.CurrentSession.StopBusyIndicator();
             var draftPage = myResult.Result;
@@ -525,7 +525,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
 
     CheckRestorePossibility(id: string, entityPM: any) {
 
-        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response) => {
+        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response:ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
 
             if (!response.HasError) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+//import { Http, Headers } from '@angular/http';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -15,7 +15,7 @@ import { Guid } from '../../../Infrastructure/Utilities/Guid';
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
+        'Token':SessionInfo.Token
     })
 };
 
@@ -26,6 +26,7 @@ export class InterestTransactionExtendedListService {
 
     constructor() {
         this.httpClient = ServiceHelper.HttpClient;
+        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InterestTransactionViews';
     }
 

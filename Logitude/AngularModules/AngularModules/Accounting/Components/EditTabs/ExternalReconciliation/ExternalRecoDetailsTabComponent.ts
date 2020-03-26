@@ -144,7 +144,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
     }
     GetBankLines(bankPageLinesIds, transactionsLinesIds) {
-        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult) => {
+        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult:ServiceResponse) => {
             var result = myResult.Result;
             var list = result.Result;
 

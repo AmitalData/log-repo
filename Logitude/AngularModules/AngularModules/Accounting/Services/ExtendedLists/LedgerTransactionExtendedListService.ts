@@ -1,6 +1,6 @@
 import { HttpHeaders ,HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+//import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,20 +12,21 @@ import { catchError, map } from 'rxjs/operators';
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
+        'Token': SessionInfo.Token
     })
 };
 
 @Injectable()
 export class LedgerTransactionExtendedListService {
-    private _http: Http;
+   // private _http: Http;
     private httpClient: HttpClient;
     private _apiUrl: string;
     private _reconciliationUrl: string;
 
     constructor() {
-        this._http = ServiceHelper.Http;
-        this.httpClient=ServiceHelper.HttpClient
+    //    this._http = ServiceHelper.Http;
+        this.httpClient=ServiceHelper.HttpClient;
+        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/LedgerTransactions';
         this._reconciliationUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconciliationOp';
     }

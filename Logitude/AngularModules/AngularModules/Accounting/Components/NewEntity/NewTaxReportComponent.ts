@@ -148,7 +148,7 @@ export class NewTaxReportComponent extends BaseComponent {
                     //this.CurrentSession.StartBusyIndicator("");
                 //    this.CurrentSession.CloseCurrentWindowEmit("ok");
 
-                    this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe(myResult => {
+                    this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe((myResult:ServiceResponse) => {
                         var mm: ServiceResponse = myResult;
                         var entity = mm.Result;
                         this.btePM = entity;

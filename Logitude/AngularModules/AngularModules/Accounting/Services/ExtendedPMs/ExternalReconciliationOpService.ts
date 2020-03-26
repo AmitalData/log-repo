@@ -1,5 +1,5 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+//import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -9,28 +9,38 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
 import {ExternalReconciliationPM} from '../../EntityPMs/ExternalReconciliationPM';
-
 import {ExternalReconciliationLinePM} from '../../EntityPMs/ExternalReconciliationLinePM';
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Token': ServiceHelper.GetLoggedUserToken()
+    })
+};
+
 @Injectable()
 
 export class ExternalReconciliationOpService {
-    private _http: Http;
+    //private _http: Http;
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+      //  this._http = ServiceHelper.Http;
+        this.httpClient = ServiceHelper.HttpClient;
+        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliationOp';
     }
 
     insert(entityPM: ExternalReconciliationPM) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+      //  return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+          //  var authHeader = new Headers();
+           // authHeader.append('Token', SessionInfo.Token);
+           // authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
 
@@ -44,11 +54,9 @@ export class ExternalReconciliationOpService {
             if (errorsArray.length == 0) {
                 var mappedEntity: ExternalReconciliationPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
-
-                        var pm = response.json();
+                return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity),httpOptions).pipe(
+                    map(response => {
+                        var pm = response;
                         if (pm) {
                             var mappedResult: ExternalReconciliationPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -56,8 +64,21 @@ export class ExternalReconciliationOpService {
                         }
 
                         return serviceResponse;
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+                // return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                //     { headers: authHeader }).map((response) => {
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                //         var pm = response.json();
+                //         if (pm) {
+                //             var mappedResult: ExternalReconciliationPM;
+                //             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                //             serviceResponse.Result = mappedResult;
+                //         }
+
+                //         return serviceResponse;
+
+                //     }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
@@ -67,9 +88,9 @@ export class ExternalReconciliationOpService {
                 return Observable.of(serviceResponse);
 
             }
-        }
+        // }
 
-        );
+        // );
     }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ExternalReconciliationPM = null) {

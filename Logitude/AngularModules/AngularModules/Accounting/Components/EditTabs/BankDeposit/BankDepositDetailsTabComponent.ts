@@ -811,7 +811,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
     ReturnCheque(chequeId:string ,returnType:string, notes: string) {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.bankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe(myResult => {
+        this.bankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe((myResult:ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

@@ -336,7 +336,7 @@ export class ReceivablePageComponent {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveCustomersCount = myResult.ActiveCustomersCount > 1000 ? "1000+" : myResult.ActiveCustomersCount.toString();
                 this.glAccountSummary.InactiveCustomersCount = myResult.InactiveCustomersCount > 1000 ? "1000+" : myResult.InactiveCustomersCount.toString();

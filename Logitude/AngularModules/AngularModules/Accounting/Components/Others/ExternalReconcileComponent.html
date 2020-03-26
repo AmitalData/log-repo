@@ -645,35 +645,42 @@
                                     [ItemSource]="TransactionSelectedLines" [UseVirtuallization]="true">
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
-                                        <log-cell-template template="let item" [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   [IgnoreMods]="true">
                                             <img (click)="CheckBoxValueChanged(item)" class="trashIcon" title="Remove"
                                                 style="cursor: pointer;" src="./Images/Trash-can.png" />
                                         </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <log-column *ngIf="IsAutoReconcile" [Alignment]="isRTL ? 'right' : 'left'"
                                         [header]="'#'" [width]="'50'" [binding]="'GroupHash'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.GroupHash}}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'DocumentDate'"
                                         [header]="'LedgerTransaction.F.DocumentDate' | TextCodeTranslationPipe"
                                         [width]="'100'" [binding]="'DocumentDate'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.DocumentDate | DateTimeToDatePipe }}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'SourceNumber'"
                                         [header]="'LedgerTransaction.F.Source' | TextCodeTranslationPipe"
                                         [width]="'100'" [binding]="'Source'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'left' : 'left'">
                                                 <span title="{{item.SourceType}}" *ngIf="item.IconCode"
                                                     (click)="OpenSource(item.SourceId, item.SourceTypeCode)"
@@ -682,57 +689,68 @@
                                                     (click)="OpenSource(item.SourceId, item.SourceTypeCode)">{{item.SourceNumber}}</a>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'ForeignAmount'"
                                         [header]="'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe"
                                         [width]="'120'" [binding]="'ForeignAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
                                                 [class.red]='item.IsCredit'>
                                                 <span>{{ item.ForeignAmount | NumbersPipe:'N2'  }}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference1'"
                                         [header]="'LedgerTransaction.F.Reference1' | TextCodeTranslationPipe"
                                         [width]="'80'" [binding]="'Reference1'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.Reference1}}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference2'"
                                         [header]="'LedgerTransaction.F.Reference2' | TextCodeTranslationPipe"
                                         [width]="'80'" [binding]="'Reference3'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.Reference2}}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference3'"
                                         [header]="'LedgerTransaction.F.Reference3' | TextCodeTranslationPipe"
                                         [width]="'80'" [binding]="'Reference4'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.Reference3}}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Notes'"
                                         [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'120'"
                                         [binding]="'Notes'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.Notes}}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -803,62 +821,74 @@
                                     [UseVirtuallization]="true">
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
-                                        <log-cell-template template="let item" [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   [IgnoreMods]="true">
                                             <img (click)="ExtPageCheckBoxValueChanged(item)" class="trashIcon"
                                                 title="Remove" style="cursor: pointer;" src="./Images/Trash-can.png" />
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
 
                                     <log-column *ngIf="IsAutoReconcile" [Alignment]="isRTL ? 'right' : 'left'"
                                         [header]="'#'" [width]="'50'" [binding]="'GroupHash'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.GroupHash}}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'ReferenceDate'"
                                         [header]="'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe"
                                         [width]="'100'" [binding]="'ReferenceDate'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.ReferenceDate | DateTimeToDatePipe }}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'Amount'"
                                         [header]="'ReconcileExternalPageLine.F.Amount' | TextCodeTranslationPipe"
                                         [width]="'120'" [binding]="'Amount'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
                                                 [class.red]='item.IsCredit'>
                                                 <span>{{ item.Amount | NumbersPipe:'N2'  }}
                                                     {{item.OpenAmountCurrencySign}}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'Reference'"
                                         [header]="'ReconcileExternalPageLine.F.Reference' | TextCodeTranslationPipe"
                                         [width]="'150'" [binding]="'Reference'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.Reference}}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"  [SortFieldName]="'Notes'"
                                         [header]="'ReconcileExternalPageLine.F.Notes' | TextCodeTranslationPipe"
                                         [width]="IsAutoReconcile ? '100' : '150'" [binding]="'Notes'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                        <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                                 <span>{{item.Notes}}</span>
                                             </div>
                                         </log-cell-template>
+                                    </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

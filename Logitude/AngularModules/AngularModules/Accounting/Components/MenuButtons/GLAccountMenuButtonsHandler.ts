@@ -291,7 +291,7 @@ export class GLAccountMenuButtonsHandler {
 
 
     GetNonReconciledTransactionsCount() {
-        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe(myResult => {
+        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe((myResult:number) => {
 
 
             if (!AppTool.IsNullOrEmpty(myResult)) {

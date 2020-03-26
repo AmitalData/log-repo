@@ -1,6 +1,6 @@
 ﻿import { CustomFieldClass } from './../../../Infrastructure/DataContracts/CustomFieldClass';
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+//import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -13,192 +13,254 @@ import {JournalPM} from '../../EntityPMs/JournalPM';
 import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Token': ServiceHelper.GetLoggedUserToken()
+    })
+};
 
 @Injectable()
 
 export class ReconciliationExtendedPMService {
-    private _http: Http;
+    //private _http: Http;
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+      //  this._http = ServiceHelper.Http;
+        this.httpClient = ServiceHelper.HttpClient;
+        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconciliationOp';
     }
 
     insert(entityPM: ReconciliationPM) {
+        var mappedEntity: ReconciliationPM;
+        mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+        return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity),  httpOptions).pipe(
+            map((res:RecoCallback) => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var _callBack: RecoCallback = res;
+                if(_callBack)
+                {
+                    serviceResponse.Result = _callBack;
+                    // if(_callBack.isSplitted)
+                    // {
+                    //     serviceResponse.Result = _callBack;
+                    // }
+                    // else
+                    // {
+                    //     // var pm = _callBack.reconciliationPM;
+                    //     // if (pm) {
+                    //     //     var mappedResult: ReconciliationPM;
+                    //     //     //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                    //     //     serviceResponse.Result = pm;
+                    //     // }
+                    // }
+                }
+                else
+                {
+                    console.log("[WARNING!!] no callback for reconciliation!");
+                }
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        // return Observable.defer(() => {
 
-        return Observable.defer(() => {
+        //     var authHeader = new Headers();
+        //     authHeader.append('Token', SessionInfo.Token);
+        //     authHeader.append('Content-Type', 'application/json');
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+        //     //var validator: ClassLevelValidator;
 
-            //var validator: ClassLevelValidator;
+        //     //validator = new ClassLevelValidator();
 
-            //validator = new ClassLevelValidator();
-
-            //var errorsArray = validator.Validate("ReconciliationPM", entityPM);
+        //     //var errorsArray = validator.Validate("ReconciliationPM", entityPM);
 
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            //if (errorsArray.length == 0) {
-                var mappedEntity: ReconciliationPM;
-                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+        //     var serviceResponse: ServiceResponse;
+        //     serviceResponse = new ServiceResponse();
+        //     //if (errorsArray.length == 0) {
+        //         var mappedEntity: ReconciliationPM;
+        //         mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) =>
-                    {
-                        var _callBack: RecoCallback = res.json();
-                        if(_callBack)
-                        {
-                            serviceResponse.Result = _callBack;
-                            // if(_callBack.isSplitted)
-                            // {
-                            //     serviceResponse.Result = _callBack;
-                            // }
-                            // else
-                            // {
-                            //     // var pm = _callBack.reconciliationPM;
-                            //     // if (pm) {
-                            //     //     var mappedResult: ReconciliationPM;
-                            //     //     //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            //     //     serviceResponse.Result = pm;
-                            //     // }
-                            // }
-                        }
-                        else
-                        {
-                            console.log("[WARNING!!] no callback for reconciliation!");
-                        }
-                        return serviceResponse;
+        //         return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+        //             { headers: authHeader }).map((res) =>
+        //             {
+        //                 var _callBack: RecoCallback = res.json();
+        //                 if(_callBack)
+        //                 {
+        //                     serviceResponse.Result = _callBack;
+        //                     // if(_callBack.isSplitted)
+        //                     // {
+        //                     //     serviceResponse.Result = _callBack;
+        //                     // }
+        //                     // else
+        //                     // {
+        //                     //     // var pm = _callBack.reconciliationPM;
+        //                     //     // if (pm) {
+        //                     //     //     var mappedResult: ReconciliationPM;
+        //                     //     //     //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+        //                     //     //     serviceResponse.Result = pm;
+        //                     //     // }
+        //                     // }
+        //                 }
+        //                 else
+        //                 {
+        //                     console.log("[WARNING!!] no callback for reconciliation!");
+        //                 }
+        //                 return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
-            //}
-            //else {
+        //             }).catch(ServiceHelper.HandleServiceError);
+        //     //}
+        //     //else {
 
-            //    serviceResponse.HasError = true;
-            //    serviceResponse.ErrorsArray = errorsArray;
+        //     //    serviceResponse.HasError = true;
+        //     //    serviceResponse.ErrorsArray = errorsArray;
 
-            //    return Observable.of(serviceResponse);
+        //     //    return Observable.of(serviceResponse);
 
-            //}
-        }
+        //     //}
+        // }
 
-        );
+        // );
     }
 
     delsertDraftLedgerTransaction(transactions: LedgerTransactionPM[]) {
+        return this.httpClient .put(this._apiUrl + '/PutDelsertDraftLedgerTransaction/', JSON.stringify(transactions), httpOptions).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        // return Observable.defer(() => {
 
-        return Observable.defer(() => {
+        //     var authHeader = new Headers();
+        //     authHeader.append('Token', SessionInfo.Token);
+        //     authHeader.append('Content-Type', 'application/json');
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+        //     var serviceResponse: ServiceResponse;
+        //     serviceResponse = new ServiceResponse();
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.put(this._apiUrl + '/PutDelsertDraftLedgerTransaction/', JSON.stringify(transactions), { headers: authHeader })
-                .map((res) => {
-                    serviceResponse.Result = res.json();
-                    return serviceResponse;
-                })
-                .catch(ServiceHelper.HandleServiceError);
-        }
-        );
+        //     return this._http.put(this._apiUrl + '/PutDelsertDraftLedgerTransaction/', JSON.stringify(transactions), { headers: authHeader })
+        //         .map((res) => {
+        //             serviceResponse.Result = res.json();
+        //             return serviceResponse;
+        //         })
+        //         .catch(ServiceHelper.HandleServiceError);
+        // }
+        // );
     }
 
     deleteResetDraftOpenReconciliation(gLAccountId: string) {
+        
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
 
-        return Observable.defer(() => {
+        return this.httpClient.delete(this._apiUrl + '/DeleteResetDraftOpenReconciliation?gLAccountId=' + gLAccountId + '&tenant=' + SessionInfo.LoggedUserTenant, httpOptions).pipe(
+            map(res => {
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        // return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+        //     var authHeader = new Headers();
+        //     authHeader.append('Token', SessionInfo.Token);
+        //     authHeader.append('Content-Type', 'application/json');
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
+        //     var serviceResponse: ServiceResponse;
+        //     serviceResponse = new ServiceResponse();
 
-            return this._http.delete(this._apiUrl + '/DeleteResetDraftOpenReconciliation?gLAccountId=' + gLAccountId + '&tenant=' + SessionInfo.LoggedUserTenant, { headers: authHeader })
-                .map((res) => {
-                    serviceResponse.Result = res.json();
-                    return serviceResponse;
-                })
-                    .catch(ServiceHelper.HandleServiceError);
-            });
+        //     return this._http.delete(this._apiUrl + '/DeleteResetDraftOpenReconciliation?gLAccountId=' + gLAccountId + '&tenant=' + SessionInfo.LoggedUserTenant, { headers: authHeader })
+        //         .map((res) => {
+        //             serviceResponse.Result = res.json();
+        //             return serviceResponse;
+        //         })
+        //             .catch(ServiceHelper.HandleServiceError);
+        //     });
     }
 
     getDraftReconciliations(gLAccountId: string) {
+  
 
-        return Observable.defer(() => {
+        return this.httpClient.get(this._apiUrl + '/GetDraftReconciliations?gLAccountId=' + gLAccountId, httpOptions).pipe(
+            map(res => {
+                var transactions = res;
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-
-            return Observable.defer(() => {
-                return this._http.get(this._apiUrl + '/GetDraftReconciliations?gLAccountId=' + gLAccountId, { headers: authHeader })
-                    .map(response => {
-                        var transactions = response.json();
-
-                        var _mappedListsArray: Array<LedgerTransactionPM> = [];
-                        if (transactions) {
-                            for (var key in transactions) {
-                                var entity: LedgerTransactionPM;
-                                entity = this.MapJsonToLedgerTransactionPM(transactions[key]);
-                                _mappedListsArray.push(entity);
-                            }
-                        }
+                var _mappedListsArray: Array<LedgerTransactionPM> = [];
+                if (transactions) {
+                    for (var key in transactions) {
+                        var entity: LedgerTransactionPM;
+                        entity = this.MapJsonToLedgerTransactionPM(transactions[key]);
+                        _mappedListsArray.push(entity);
+                    }
+                }
 
 
 
-                        var serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = _mappedListsArray;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = _mappedListsArray;
 
-                        return serviceResponse;
-                    }).catch(ServiceHelper.HandleServiceError);
-            });
-        });
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        // return Observable.defer(() => {
+
+        //     var authHeader = new Headers();
+        //     authHeader.append('Token', SessionInfo.Token);
+        //     authHeader.append('Content-Type', 'application/json');
+
+
+        //     return Observable.defer(() => {
+        //         return this._http.get(this._apiUrl + '/GetDraftReconciliations?gLAccountId=' + gLAccountId, { headers: authHeader })
+        //             .map(response => {
+        //                 var transactions = response.json();
+
+        //                 var _mappedListsArray: Array<LedgerTransactionPM> = [];
+        //                 if (transactions) {
+        //                     for (var key in transactions) {
+        //                         var entity: LedgerTransactionPM;
+        //                         entity = this.MapJsonToLedgerTransactionPM(transactions[key]);
+        //                         _mappedListsArray.push(entity);
+        //                     }
+        //                 }
+
+
+
+        //                 var serviceResponse = new ServiceResponse();
+        //                 serviceResponse.Result = _mappedListsArray;
+
+        //                 return serviceResponse;
+        //             }).catch(ServiceHelper.HandleServiceError);
+        //     });
+        // });
 
 
     }
 
     CreateJournalReconcile(
         myReconciliationLines: ReconciliationLinePM[],
+        
         TheAccountId: string, AdjustAccountId: string, AccountDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
-
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            //var validator: ClassLevelValidator;
-
-            //validator = new ClassLevelValidator();
-
-            //var errorsArray = validator.Validate("ReconciliationPM", entityPM);
-
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            //if (errorsArray.length == 0) {
-            //var mappedEntity: ReconciliationPM[];
-
-
-            return this._http.post(this._apiUrl + "/PostCreateJournalReconcile?"
-                + "&TheAccountId=" + TheAccountId
-                + "&AdjustAccountId=" + AdjustAccountId
-                +"&AccountDate=" + AccountDate
-                +"&Ref1=" + Ref1
-                +"&Ref2=" + Ref2
-                +"&Ref3=" + Ref3
-                +"&Remarks=" + Remarks
-                , JSON.stringify(myReconciliationLines),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
+            return this.httpClient.post(this._apiUrl + "/PostCreateJournalReconcile?"
+            + "&TheAccountId=" + TheAccountId
+            + "&AdjustAccountId=" + AdjustAccountId
+            +"&AccountDate=" + AccountDate
+            +"&Ref1=" + Ref1
+            +"&Ref2=" + Ref2
+            +"&Ref3=" + Ref3
+            +"&Remarks=" + Remarks
+            , JSON.stringify(myReconciliationLines),  httpOptions).pipe(
+                map(res => {
+                    var pm = res;
                     if (pm) {
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
                         var mappedResult: JournalPM;
                         //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
                         serviceResponse.Result = pm;
@@ -207,35 +269,69 @@ export class ReconciliationExtendedPMService {
 
 
                     return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
+        // return Observable.defer(() => {
 
-                }).catch(ServiceHelper.HandleServiceError);
-            //}
-            //else {
+        //     var authHeader = new Headers();
+        //     authHeader.append('Token', SessionInfo.Token);
+        //     authHeader.append('Content-Type', 'application/json');
 
-            //    serviceResponse.HasError = true;
-            //    serviceResponse.ErrorsArray = errorsArray;
+        //     //var validator: ClassLevelValidator;
 
-            //    return Observable.of(serviceResponse);
+        //     //validator = new ClassLevelValidator();
 
-            //}
-        }
+        //     //var errorsArray = validator.Validate("ReconciliationPM", entityPM);
 
-        );
+
+        //     var serviceResponse: ServiceResponse;
+        //     serviceResponse = new ServiceResponse();
+        //     //if (errorsArray.length == 0) {
+        //     //var mappedEntity: ReconciliationPM[];
+
+
+        //     return this._http.post(this._apiUrl + "/PostCreateJournalReconcile?"
+        //         + "&TheAccountId=" + TheAccountId
+        //         + "&AdjustAccountId=" + AdjustAccountId
+        //         +"&AccountDate=" + AccountDate
+        //         +"&Ref1=" + Ref1
+        //         +"&Ref2=" + Ref2
+        //         +"&Ref3=" + Ref3
+        //         +"&Remarks=" + Remarks
+        //         , JSON.stringify(myReconciliationLines),
+        //         { headers: authHeader }).map((res) => {
+        //             var pm = res.json();
+        //             if (pm) {
+        //                 var mappedResult: JournalPM;
+        //                 //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+        //                 serviceResponse.Result = pm;
+        //             }
+
+
+
+        //             return serviceResponse;
+
+        //         }).catch(ServiceHelper.HandleServiceError);
+        //     //}
+        //     //else {
+
+        //     //    serviceResponse.HasError = true;
+        //     //    serviceResponse.ErrorsArray = errorsArray;
+
+        //     //    return Observable.of(serviceResponse);
+
+        //     //}
+        // }
+
+        // );
 
     }
 
     getByNumber(number: string){
-        return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-
-            return Observable.defer(() => {
-                return this._http.get(this._apiUrl + '/GetByNumber?number=' + number, { headers: authHeader })
-                    .map(response => {
-                        var entity = response.json();
+        return this.httpClient.get(this._apiUrl + '/GetByNumber?number=' + number, httpOptions).pipe(
+            map(res => {
+                var entity = res;
 
 
 
@@ -243,36 +339,71 @@ export class ReconciliationExtendedPMService {
                         serviceResponse.Result = entity;
 
                         return serviceResponse;
-                    }).catch(ServiceHelper.HandleServiceError);
-            });
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+        // return Observable.defer(() => {
+
+        //     var authHeader = new Headers();
+        //     authHeader.append('Token', SessionInfo.Token);
+        //     authHeader.append('Content-Type', 'application/json');
+
+
+        //     return Observable.defer(() => {
+        //         return this._http.get(this._apiUrl + '/GetByNumber?number=' + number, { headers: authHeader })
+        //             .map(response => {
+        //                 var entity = response.json();
+
+
+
+        //                 var serviceResponse = new ServiceResponse();
+        //                 serviceResponse.Result = entity;
+
+        //                 return serviceResponse;
+        //             }).catch(ServiceHelper.HandleServiceError);
+        //     });
+        // });
     }
 
     GetSingleWithoutLines(id: string) {
+        return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id ,  httpOptions).pipe(
+            map(res => {
+                var pm = res;
 
-        return Observable.defer(() => {
+                var entity: ReconciliationPM;
+                if (pm) {
+                    entity = this.MapJsonToEntityPM(pm);
+                }
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
 
-            return this._http.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id , { headers: authHeader })
-                .map((res) => {
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        // return Observable.defer(() => {
 
-                    var pm = res.json();
+        //     var authHeader = new Headers();
+        //     authHeader.append('Token', SessionInfo.Token);
+        //     authHeader.append('Content-Type', 'application/json');
 
-                    var entity: ReconciliationPM;
-                    if (pm) {
-                        entity = this.MapJsonToEntityPM(pm);
-                    }
+        //     return this._http.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id , { headers: authHeader })
+        //         .map((res) => {
 
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = entity;
+        //             var pm = res.json();
 
-                    return serviceResponse;
-                })
-                    .catch(ServiceHelper.HandleServiceError);
-            });
+        //             var entity: ReconciliationPM;
+        //             if (pm) {
+        //                 entity = this.MapJsonToEntityPM(pm);
+        //             }
+
+        //             var serviceResponse: ServiceResponse = new ServiceResponse();
+        //             serviceResponse.Result = entity;
+
+        //             return serviceResponse;
+        //         })
+        //             .catch(ServiceHelper.HandleServiceError);
+        //     });
     }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconciliationPM = null) {

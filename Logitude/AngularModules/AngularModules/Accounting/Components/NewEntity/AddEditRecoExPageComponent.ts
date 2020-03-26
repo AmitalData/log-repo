@@ -586,7 +586,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
         if (previousPageNo) {
             //get last page
-            this._ReconcileExternalPageExtendedPMService.GetPageByNumber(previousPageNo, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.GetPageByNumber(previousPageNo, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult:ServiceResponse) =>
             {
                 var bankPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(bankPage)) {
@@ -607,7 +607,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
         if (extPageNumber) {
             //get last page
-            this._ReconcileExternalPageExtendedPMService.GetPreviousPageByNumber(extPageNumber, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.GetPreviousPageByNumber(extPageNumber, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult:ServiceResponse) =>
             {
                 var bankPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(bankPage)) {

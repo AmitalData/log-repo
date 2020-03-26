@@ -1,5 +1,5 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+//import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -7,22 +7,32 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
 //import {ReconcileExternalPageLineList} from '../../EntityLists/ReconcileExternalPageLineList';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Token': SessionInfo.Token
+    })
+};
 
 @Injectable()
 
 export class ExternalReconciliationExtendedListService {
-    private _http: Http
+  //  private _http: Http
     private _apiUrl: string;
-
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+    //    this._http = ServiceHelper.Http;
+        this.httpClient = ServiceHelper.HttpClient;
+        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliation';
     }
 
     getExternalAutomaticReconcilationsByFilter(args: ExternalAutoReconcileServiceArgs)
     {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+     //   var authHeader = new Headers();
+     //   authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + "/GetExternalAutomaticReconcilationsByFilter";
 
@@ -65,15 +75,12 @@ export class ExternalReconciliationExtendedListService {
 
 
         var callUrl = url.concat(urlparameters);
-
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
+        
+        return this.httpClient.get(callUrl,  httpOptions).pipe(
+            map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
 
                 var result = new AutoSelectedExternalReconciliationLines();
                 result = serviceResponse.Result.Result;
@@ -107,14 +114,35 @@ export class ExternalReconciliationExtendedListService {
 
                 serviceResponse.Result = result;
                 return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
 
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+        // return Observable.defer(() => {
+        //     return this._http.get(callUrl, {
+        //         headers: authHeader
+        //     }).map(response => {
+
+        //         var serviceResponse: ServiceResponse;
+        //         serviceResponse = new ServiceResponse();
+        //         serviceResponse.Result = response.json();
+
+        //         var result = new AutoSelectedExternalReconciliationLines();
+        //         result = serviceResponse.Result.Result;
+ 
+        //         result.Count = serviceResponse.Result.Count;
+
+        //         console.log("[Result]", result);
+
+        //         serviceResponse.Result = result;
+        //         return serviceResponse;
+
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     getGenerateTestRecordsForExternalReco(bankAccountId: string, glAccountId: string, type: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        // var authHeader = new Headers();
+        // authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + "/GetGenerateTestRecordsForExternalReco";
 
@@ -122,20 +150,31 @@ export class ExternalReconciliationExtendedListService {
 
         var callUrl = url.concat(urlparameters);
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
-
+        return this.httpClient.get(callUrl,  httpOptions).pipe(
+            map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
 
                 return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
 
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+        // return Observable.defer(() => {
+        //     return this._http.get(callUrl, {
+        //         headers: authHeader
+        //     }).map(response => {
+
+        //         var serviceResponse: ServiceResponse;
+        //         serviceResponse = new ServiceResponse();
+
+        //         serviceResponse.Result = response.json();
+
+        //         return serviceResponse;
+
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
 

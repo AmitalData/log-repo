@@ -1,5 +1,7 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+//import {Http, Headers} from '@angular/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -9,36 +11,59 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {AccountingPeriodList} from '../../EntityLists/AccountingPeriodList';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Token': SessionInfo.Token
+    })
+};
+
 @Injectable()
 
 export class AccountingPeriodExtendedListService {
-    private _http: Http
+  //  private _http: Http
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        //this._http = ServiceHelper.Http;
+        this.httpClient = ServiceHelper.HttpClient;
+        httpOptions.headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Token': SessionInfo.Token })
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingperiodviews';
     }
 
     getByYear(year: number, typeCode: string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        // var authHeader = new Headers();
+        // authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getbyyear/?' + 'year=' + year + '&typeCode=' + typeCode, { headers: authHeader }).map(response => {
-                var list = response.json();
+        return this.httpClient.get(this._apiUrl + '/getbyyear/?' + 'year=' + year + '&typeCode=' + typeCode,  httpOptions).pipe(
+            map(response => {
+               var list = response;
+               var entity: AccountingPeriodList;
+               if (list) {
+                     entity = this.MapJsonToEntityList(list);
+               }
+               var serviceResponse: ServiceResponse;
+               serviceResponse = new ServiceResponse();
+               serviceResponse.Result = entity;
+               return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/getbyyear/?' + 'year=' + year + '&typeCode=' + typeCode, { headers: authHeader }).map(response => {
+        //         var list = response.json();
 
-                var entity: AccountingPeriodList;
-                if (list) {
-                    entity = this.MapJsonToEntityList(list);
-                }
+        //         var entity: AccountingPeriodList;
+        //         if (list) {
+        //             entity = this.MapJsonToEntityList(list);
+        //         }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+        //         var serviceResponse: ServiceResponse;
+        //         serviceResponse = new ServiceResponse();
+        //         serviceResponse.Result = entity;
+        //         return serviceResponse;
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     MapJsonToEntityList(jsonList: any) {

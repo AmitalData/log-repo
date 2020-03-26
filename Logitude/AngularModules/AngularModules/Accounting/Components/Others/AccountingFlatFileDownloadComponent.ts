@@ -105,7 +105,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
             case "TaxReport":
                 {
                     if (byButton || this.reportPM.NeedsRebulid) {
-                        this._TaxReportExtendedPMService.DownloadPNC874FileInBatch(this.reportPM).subscribe(myResult => {
+                        this._TaxReportExtendedPMService.DownloadPNC874FileInBatch(this.reportPM).subscribe((myResult:ServiceResponse) => {
                             var mm: ServiceResponse = myResult;
                             if (!myResult.HasError) {
                                 var entity = mm.Result;
