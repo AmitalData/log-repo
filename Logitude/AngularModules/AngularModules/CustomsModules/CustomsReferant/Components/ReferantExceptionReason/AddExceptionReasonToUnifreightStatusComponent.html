@@ -53,10 +53,10 @@
                                                         [ItemSource]="ExceptionReasonList">
 
                                         <log-column [header]="'קוד'"
-                                                    [width]="'200'" [Alignment]="'right'" [binding]="'Code'">
+                                                    [width]="'200'" [Alignment]="'right'">
                                             <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span>{{item.Code}}</span>
+                                                    <span>{{item.ReasonLocalName}}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogLov [ObjectFieldName]="'Code'"
