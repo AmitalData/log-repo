@@ -1084,7 +1084,19 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
 
     WarehouseReleaseNumber: string;
-    DisconnectWarehouseReleasePackage(item?: any) {
+
+    DisconnectWarehouseReleasePackageButtonClick(item: any) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("All packages connected to the release you are disconnecting will be deleted ?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.DisconnectWarehouseReleasePackage(item);
+            }
+        });
+    }
+
+
+    DisconnectWarehouseReleasePackage(item: any) {
         this.WarehouseReleaseNumber = item.WarehouseReleaseNumber;
         this.IsDisconnectWarehouseReleasePackage = true;
 
