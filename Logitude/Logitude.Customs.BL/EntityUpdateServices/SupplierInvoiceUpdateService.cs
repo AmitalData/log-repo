@@ -1171,7 +1171,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 dotask = true;
                 myDeclarationPM.TotalInvoiceAmountInUSD = 0;
                 myDeclarationPM.TotalInvoiceAmountInUSD = myDeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD);
-                
+                this.openTaskForUnifreight = false;
             }
             UnifrightDeclarationUpdateService UnifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(myDeclarationPM, null, unifreightUser);
             UnifrightDeclarationUpdateService._UpdateCCUFILEMFromSupplerInvoice = true;
