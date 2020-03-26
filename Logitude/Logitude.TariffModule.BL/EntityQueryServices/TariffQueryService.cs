@@ -697,27 +697,26 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     this.Sum = 0;
                     this.tariffsSummary = new TariffSearchSummary() { TariffId = trariff.Id };
                     tariffsSummary.SurchargesWithoutAllIn = new List<SurchargeSummary>();
-                    var price = (tariffLine.Surcharge1Price * quantity1) + (tariffLine.Surcharge2Price * quantity2) +
-                                (tariffLine.Surcharge3Price * quantity3) + (tariffLine.Surcharge4Price * quantity4) +
-                                (tariffLine.Surcharge5Price * quantity5);
+                    
+                    var price  = this.CalculateContainerPrice(args, trariff, tariffLine);
 
-                    tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(price != null ? price.Value : 0, currencyId, trariff.CurrencyId, tenant), 2).ToString("0.00");
+                    tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(price, currencyId, trariff.CurrencyId, tenant), 2).ToString("0.00");
                     tariffsSummary.ActualPrice = price;
                     tariffsSummary.LineId = tariffLine.Id;
-
-                    this.FillAllInList(tariffLine);
-                    this.FillSurchargeData(trariff, tariffLine);
-
-                    string documentId = null;
-                    string chargeCode = "OFT";
 
                     ShippingLinePM shippingLine = shippingLineQuery.GetSinglePM(trariff.SellerId, tenant);
                     this.sellerName = shippingLine != null && shippingLine.Card != null ? shippingLine.Card.EnglishName : "";
 
+                    this.FillAllInList(tariffLine);
+                    this.FillSurchargeData(args,trariff, tariffLine);
+
+                    string documentId = null;
+                    string chargeCode = "OFT";
+
                     tariffsSummary.SellerName = sellerName;
                     tariffsSummary.EffictiveDate = trariff.ExpirationDate;
                     tariffsSummary.Remarks = trariff.Notes;
-                    var calculatedLocalAmount = price != null ? CalculateLocalAmount((price).Value, currencyId, trariff.CurrencyId, tenant) : 0;
+                    var calculatedLocalAmount = CalculateLocalAmount(price, currencyId, trariff.CurrencyId, tenant);
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = tariffLine.Version + "";
                     tariffsSummary.TariffId = tariffLine.TariffId;
@@ -751,6 +750,92 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             tariffSearchSummaries = tariffSearchSummaries.OrderBy(p => p.decimalprice).ToList();
             return tariffSearchSummaries;
         }
+
+        private decimal CalculateContainerPrice(TariffSearchArgs args, Tariff trariff, TariffLine tariffLine)
+        {
+            decimal? price1 = null; decimal? price2 = null; decimal? price3 = null; decimal? price4 = null; decimal? price5 = null;
+            int containerQuantity = 0;
+            if (trariff.ContainerType1Id != null)
+            {
+                containerQuantity = trariff.ContainerType1Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType1Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType1Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType1Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType1Id == args.ContainerType5Id ? quantity5 : 0))));
+                price1 = ((tariffLine.Surcharge1Price != null ? tariffLine.Surcharge1Price : 0) * containerQuantity);
+            }
+            if (trariff.ContainerType2Id != null)
+            {
+                containerQuantity = trariff.ContainerType2Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType2Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType2Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType2Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType2Id == args.ContainerType5Id ? quantity5 : 0))));
+                price2 = ((tariffLine.Surcharge2Price != null ? tariffLine.Surcharge2Price : 0) * containerQuantity);
+            }
+            if (trariff.ContainerType3Id != null)
+            {
+                containerQuantity = trariff.ContainerType3Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType3Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType3Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType3Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType3Id == args.ContainerType5Id ? quantity5 : 0))));
+
+                price3 = ((tariffLine.Surcharge3Price != null ? tariffLine.Surcharge3Price : 0) * containerQuantity);
+            }
+            if (trariff.ContainerType4Id != null)
+            {
+                containerQuantity = trariff.ContainerType4Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType4Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType4Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType4Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType4Id == args.ContainerType5Id ? quantity5 : 0))));
+
+                price4 = ((tariffLine.Surcharge4Price != null ? tariffLine.Surcharge4Price : 0) * containerQuantity);
+            }
+            if (trariff.ContainerType5Id != null)
+            {
+                containerQuantity = trariff.ContainerType5Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType5Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType5Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType5Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType5Id == args.ContainerType5Id ? quantity5 : 0))));
+
+                price5 = ((tariffLine.Surcharge5Price != null ? tariffLine.Surcharge5Price : 0) * containerQuantity);
+            }
+
+            var price = ((price1 != null) ? price1.Value : 0) +
+                       ((price2 != null) ? price2.Value : 0) +
+                       ((price3 != null) ? price3.Value : 0) +
+                       ((price4 != null) ? price4.Value : 0) +
+                       ((price5 != null) ? price5.Value : 0);
+
+            return price;
+        }
+
+
+        private decimal CalculateContainerPriceFromTariffLinesContainers(TariffSearchArgs args, Tariff trariff, TariffLinesContainersPrice tariffLinesContainersPrice)
+        {
+            decimal? price1 = null; decimal? price2 = null; decimal? price3 = null; decimal? price4 = null; decimal? price5 = null;
+            int containerQuantity = 0;
+            if (trariff.ContainerType1Id != null)
+            {
+                containerQuantity = trariff.ContainerType1Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType1Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType1Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType1Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType1Id == args.ContainerType5Id ? quantity5 : 0))));
+                price1 = ((tariffLinesContainersPrice.Price1 != null ? tariffLinesContainersPrice.Price1 : 0) * containerQuantity);
+            }
+            if (trariff.ContainerType2Id != null)
+            {
+                containerQuantity = trariff.ContainerType2Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType2Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType2Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType2Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType2Id == args.ContainerType5Id ? quantity5 : 0))));
+                price2 = ((tariffLinesContainersPrice.Price2!= null ? tariffLinesContainersPrice.Price2 : 0) * containerQuantity);
+            }
+            if (trariff.ContainerType3Id != null)
+            {
+                containerQuantity = trariff.ContainerType3Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType3Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType3Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType3Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType3Id == args.ContainerType5Id ? quantity5 : 0))));
+
+                price3 = ((tariffLinesContainersPrice.Price3 != null ? tariffLinesContainersPrice.Price3: 0) * containerQuantity);
+            }
+            if (trariff.ContainerType4Id != null)
+            {
+                containerQuantity = trariff.ContainerType4Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType4Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType4Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType4Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType4Id == args.ContainerType5Id ? quantity5 : 0))));
+
+                price4 = ((tariffLinesContainersPrice.Price4 != null ? tariffLinesContainersPrice.Price4 : 0) * containerQuantity);
+            }
+            if (trariff.ContainerType5Id != null)
+            {
+                containerQuantity = trariff.ContainerType5Id == args.ContainerType1Id ? quantity1 : (trariff.ContainerType5Id == args.ContainerType2Id ? quantity2 : (trariff.ContainerType5Id == args.ContainerType3Id ? quantity3 : (trariff.ContainerType5Id == args.ContainerType4Id ? quantity4 : (trariff.ContainerType5Id == args.ContainerType5Id ? quantity5 : 0))));
+
+                price5 = ((tariffLinesContainersPrice.Price5 != null ? tariffLinesContainersPrice.Price5 : 0) * containerQuantity);
+            }
+
+            var price = ((price1 != null) ? price1.Value : 0) +
+                       ((price2 != null) ? price2.Value : 0) +
+                       ((price3 != null) ? price3.Value : 0) +
+                       ((price4 != null) ? price4.Value : 0) +
+                       ((price5 != null) ? price5.Value : 0);
+
+            return price;
+        }
+
         private void Initialization(TariffSearchArgs args, int tenant)
         {
             this.fromport = args.OriginPortId;
@@ -799,7 +884,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             this.surchargeTariffLines = this.repository.GetAllTariffLinesByTariffIds(surchargeTariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionsSurchargeIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
             this.surchargeTariffLinesFiltered = new Dictionary<string, List<TariffLine>>();
         }
-        private void FillSurchargeData(Tariff trariff, TariffLine tariffLine)
+        private void FillSurchargeData(TariffSearchArgs args, Tariff trariff, TariffLine tariffLine)
         {
             Tariff CurrentSurcharge = surchargeTariffList.Where(p => p.SellerId == trariff.SellerId).FirstOrDefault();
             if (CurrentSurcharge != null)
@@ -837,11 +922,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                                         if (currentTariffLinesContainersPrice != null)
                                         {
-                                            decimal? currentSurchargePriceCalculation = ((currentTariffLinesContainersPrice.Price1 != null ? currentTariffLinesContainersPrice.Price1 : 0) * quantity1) +
-                                                                                        ((currentTariffLinesContainersPrice.Price2 != null ? currentTariffLinesContainersPrice.Price2 : 0) * quantity2) +
-                                                                                        ((currentTariffLinesContainersPrice.Price3 != null ? currentTariffLinesContainersPrice.Price3 : 0) * quantity3) +
-                                                                                        ((currentTariffLinesContainersPrice.Price4 != null ? currentTariffLinesContainersPrice.Price4 : 0) * quantity4) +
-                                                                                        ((currentTariffLinesContainersPrice.Price5 != null ? currentTariffLinesContainersPrice.Price5 : 0) * quantity5);
+
+                                            decimal currentSurchargePriceCalculation = this.CalculateContainerPriceFromTariffLinesContainers(args, CurrentSurcharge, currentTariffLinesContainersPrice);
 
                                             SurchargeSummary SurchargeItem = new SurchargeSummary();
                                             SurchargeItem.Code = surchargeCode;
@@ -851,13 +933,13 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                             SurchargeItem.UnitOfMesurmentId = UsedMesurment.Id;
 
                                             string CurrencyId = ChargesfilteredLines.CurrencyId != null ? ChargesfilteredLines.CurrencyId : CurrentSurcharge.CurrencyId;
-                                            var LinePrice = CalculateLocalAmount(currentSurchargePriceCalculation.Value, currencyId, CurrencyId, tenant);
+                                            var LinePrice = CalculateLocalAmount(currentSurchargePriceCalculation, currencyId, CurrencyId, tenant);
 
                                             SurchargeItem.Price = LinePrice;
-                                            SurchargeItem.ActualPrice = currentSurchargePriceCalculation.Value;
+                                            SurchargeItem.ActualPrice = currentSurchargePriceCalculation;
                                             Sum += SurchargeItem.Price;
                                             SurchargeItem.TariffId = CurrentSurcharge.Id;
-                                            SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
+                                            SurchargeItem.CurrencyId = CurrencyId;
                                             SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
                                             SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
                                             SurchargeItem.SellerId = CurrentSurcharge.SellerId;
@@ -914,27 +996,32 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
         {
             if (!string.IsNullOrEmpty(args.ContainerType1Id))
             {
-                tariffList = tariffList.Where(a => a.ContainerType1Id == args.ContainerType1Id).ToList();
+                tariffList = tariffList.Where(a => a.ContainerType1Id == args.ContainerType1Id || a.ContainerType2Id == args.ContainerType1Id
+               || a.ContainerType3Id == args.ContainerType1Id || a.ContainerType4Id == args.ContainerType1Id || a.ContainerType5Id == args.ContainerType1Id).ToList();
             }
 
             if (!string.IsNullOrEmpty(args.ContainerType2Id))
             {
-                tariffList = tariffList.Where(a => a.ContainerType2Id == args.ContainerType2Id).ToList();
+                tariffList = tariffList.Where(a => a.ContainerType1Id == args.ContainerType2Id || a.ContainerType2Id == args.ContainerType2Id
+             || a.ContainerType3Id == args.ContainerType2Id || a.ContainerType4Id == args.ContainerType2Id || a.ContainerType5Id == args.ContainerType2Id).ToList();
             }
 
             if (!string.IsNullOrEmpty(args.ContainerType3Id))
             {
-                tariffList = tariffList.Where(a => a.ContainerType3Id == args.ContainerType3Id).ToList();
+                tariffList = tariffList.Where(a => a.ContainerType1Id == args.ContainerType3Id || a.ContainerType2Id == args.ContainerType3Id
+              || a.ContainerType3Id == args.ContainerType3Id || a.ContainerType4Id == args.ContainerType3Id || a.ContainerType5Id == args.ContainerType3Id).ToList();
             }
 
             if (!string.IsNullOrEmpty(args.ContainerType4Id))
             {
-                tariffList = tariffList.Where(a => a.ContainerType4Id == args.ContainerType4Id).ToList();
+                tariffList = tariffList.Where(a => a.ContainerType1Id == args.ContainerType4Id || a.ContainerType2Id == args.ContainerType4Id
+             || a.ContainerType3Id == args.ContainerType4Id || a.ContainerType4Id == args.ContainerType4Id || a.ContainerType5Id == args.ContainerType4Id).ToList();
             }
 
             if (!string.IsNullOrEmpty(args.ContainerType5Id))
             {
-                tariffList = tariffList.Where(a => a.ContainerType5Id == args.ContainerType5Id).ToList();
+                tariffList = tariffList.Where(a => a.ContainerType1Id == args.ContainerType5Id || a.ContainerType2Id == args.ContainerType5Id
+              || a.ContainerType3Id == args.ContainerType5Id || a.ContainerType4Id == args.ContainerType5Id || a.ContainerType5Id == args.ContainerType5Id).ToList();
             }
 
             return tariffList;

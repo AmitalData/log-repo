@@ -47,6 +47,9 @@ namespace WebFreight.Web.DataProviders
         public string VolumeUnit { get; set; }
         public string ReleaseDateIndicator { get; set; }
 
+        public string Trucker { get; set; }
+        public string TruckerReference { get; set; }
+
         public List<ReleasePackage> ReleasePackages { get; set; }
         public List<ReleasePackageGroup> ReleasePackagesGroupList { get; set; }
 

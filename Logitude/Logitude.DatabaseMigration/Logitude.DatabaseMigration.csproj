@@ -2167,7 +2167,6 @@
     <Compile Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.Designer.cs">
       <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003041406443_AddARInvoiceRegionalTax.cs" />
     <Compile Include="Migrations\202003041406443_AddARInvoiceRegionalTax.Designer.cs">
       <DependentUpon>202003041406443_AddARInvoiceRegionalTax.cs</DependentUpon>
@@ -2180,7 +2179,6 @@
     <Compile Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.Designer.cs">
       <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.cs" />
     <Compile Include="Migrations\202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.Designer.cs">
       <DependentUpon>202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.cs</DependentUpon>
@@ -2189,23 +2187,31 @@
     <Compile Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.Designer.cs">
       <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202003181116035_AddTariffProductsTable.cs" />
+    <Compile Include="Migrations\202003181116035_AddTariffProductsTable.Designer.cs">
+      <DependentUpon>202003181116035_AddTariffProductsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191030414_ChangeTariffProductsColumnName.cs" />
+    <Compile Include="Migrations\202003191030414_ChangeTariffProductsColumnName.Designer.cs">
+      <DependentUpon>202003191030414_ChangeTariffProductsColumnName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003191407073_AddProductColumnToTariffTable.cs" />
+    <Compile Include="Migrations\202003191407073_AddProductColumnToTariffTable.Designer.cs">
+      <DependentUpon>202003191407073_AddProductColumnToTariffTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs" />
     <Compile Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.Designer.cs">
       <DependentUpon>202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.cs" />
     <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.Designer.cs">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </Compile>
 
-
     <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.cs" />
     <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.Designer.cs">
       <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003171008363_WesamAddLastRunDetailTable.cs" />
     <Compile Include="Migrations\202003171008363_WesamAddLastRunDetailTable.Designer.cs">
       <DependentUpon>202003171008363_WesamAddLastRunDetailTable.cs</DependentUpon>
@@ -2218,7 +2224,23 @@
     <Compile Include="Migrations\202003071003036_AddTariffFieldsToQuoteCharge_Maheera.Designer.cs">
       <DependentUpon>202003071003036_AddTariffFieldsToQuoteCharge_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003250656030_SharedLogisticsContactLastLogin_drop_contact_relation.cs" />
+    <Compile Include="Migrations\202003250656030_SharedLogisticsContactLastLogin_drop_contact_relation.Designer.cs">
+      <DependentUpon>202003250656030_SharedLogisticsContactLastLogin_drop_contact_relation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003250852233_FixSharedLogisticsContactLastLoginAndContact.cs" />
+    <Compile Include="Migrations\202003250852233_FixSharedLogisticsContactLastLoginAndContact.Designer.cs">
+      <DependentUpon>202003250852233_FixSharedLogisticsContactLastLoginAndContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251225103_Abed_AddLastRunDetailToContext.cs" />
+    <Compile Include="Migrations\202003251225103_Abed_AddLastRunDetailToContext.Designer.cs">
+      <DependentUpon>202003251225103_Abed_AddLastRunDetailToContext.cs</DependentUpon>
+    </Compile>
 
+    <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs" />
+    <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
+      <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
+    </Compile>
 
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
@@ -3969,7 +3991,6 @@
     <EmbeddedResource Include="Migrations\202002271245498_Mutaz_Add_CancelationFields_To_Database.resx">
       <DependentUpon>202002271245498_Mutaz_Add_CancelationFields_To_Database.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003041406443_AddARInvoiceRegionalTax.resx">
       <DependentUpon>202003041406443_AddARInvoiceRegionalTax.cs</DependentUpon>
     </EmbeddedResource>
@@ -3979,35 +4000,52 @@
     <EmbeddedResource Include="Migrations\202003051111086_AddARInvoiceTotalVatIsRegional.resx">
       <DependentUpon>202003051111086_AddARInvoiceTotalVatIsRegional.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.resx">
       <DependentUpon>202003131942054_DropAPPaymentMethodIdFromAPPayment_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003121123558_AddCountryAndStatePropertiesToPort_Samar.resx">
       <DependentUpon>202003121123558_AddCountryAndStatePropertiesToPort_Samar.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.resx">
       <DependentUpon>202003151252549_WesamAddDWObjectTableCodeToDWObjectFieldCategoriesTable.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.resx">
       <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
     </EmbeddedResource>
-
-
     <EmbeddedResource Include="Migrations\202003171008363_WesamAddLastRunDetailTable.resx">
       <DependentUpon>202003171008363_WesamAddLastRunDetailTable.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.resx">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.resx">
       <DependentUpon>202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003071003036_AddTariffFieldsToQuoteCharge_Maheera.resx">
       <DependentUpon>202003071003036_AddTariffFieldsToQuoteCharge_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003181116035_AddTariffProductsTable.resx">
+      <DependentUpon>202003181116035_AddTariffProductsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191030414_ChangeTariffProductsColumnName.resx">
+      <DependentUpon>202003191030414_ChangeTariffProductsColumnName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003191407073_AddProductColumnToTariffTable.resx">
+      <DependentUpon>202003191407073_AddProductColumnToTariffTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003250656030_SharedLogisticsContactLastLogin_drop_contact_relation.resx">
+      <DependentUpon>202003250656030_SharedLogisticsContactLastLogin_drop_contact_relation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003250852233_FixSharedLogisticsContactLastLoginAndContact.resx">
+      <DependentUpon>202003250852233_FixSharedLogisticsContactLastLoginAndContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251225103_Abed_AddLastRunDetailToContext.resx">
+      <DependentUpon>202003251225103_Abed_AddLastRunDetailToContext.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.resx">
+      <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </EmbeddedResource>
 
   </ItemGroup>

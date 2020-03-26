@@ -535,9 +535,10 @@
                     <tr *ngIf="!this.EntityPM.IsCashDeposit">
                         <td [attr.colspan]="IsLinesSelection?3:1" style="height: 100%; padding-bottom: 75px;">
 
+                            <div class="GeneratedGridContainer">
 
-                            <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                [ItemSource]="IsLinesSelection ? CashbookLines : BankDepositLines" [UseVirtuallization]="true">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                    [ItemSource]="IsLinesSelection ? CashbookLines : BankDepositLines" [UseVirtuallization]="true">
 
                                 <log-column *ngIf="IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="''" [width]="'40'"
                                     [binding]="''">
@@ -679,9 +680,9 @@
                                 </ng-template>
                                 </log-column>
 
-                            </logitude-edit-grid>
+                                </logitude-edit-grid>
 
-
+                            </div>
                         </td>
                     </tr>
 

@@ -280,22 +280,33 @@ export class WarehouseReleaseRoutingsTabComponent extends BaseComponent {
                 //this.UIProperties.SetRequired("ToPartnerCardId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPartnerCardId) ? true : false);
 
                 var isAddressIdEnabled = false;
-                    if (!AppTool.IsNullOrEmpty(this.ToPartnerCardId)) {
-                        isAddressIdEnabled = true;
-                    }
-                
-
-               // this.UIProperties.SetEnabled("ToAddressId", this.ObjectTableName, isAddressIdEnabled);
+                if (AppTool.IsNullOrEmpty(this.ToPartnerCardId)) this.ToPartnerCardId = this.EntityPM.CustomerId;
+                if (!AppTool.IsNullOrEmpty(this.ToPartnerCardId)) isAddressIdEnabled = true;
+             
             }
 
             case "PORT": {
-              //  this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPortId) ? true : false);
             }
 
             case "CASL": {
-               // this.UIProperties.SetRequired("ToAddressCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCity) && AppTool.IsNullOrEmpty(this.ToAddressZipCode) ? true : false);
-               // this.UIProperties.SetRequired("ToAddressCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCountryId) ? true : false);
+             
             }
+        }
+    }
+
+
+    get TruckerReference() { return this.EntityPM.TruckerReference; }
+    set TruckerReference(newValue: string) {
+        if (this.EntityPM.TruckerReference != newValue) {
+            this.EntityPM.TruckerReference = newValue;
+
+        }
+    }
+    get TruckerId() { return this.EntityPM.TruckerId; }
+    set TruckerId(newValue: string) {
+        if (this.EntityPM.TruckerId != newValue) {
+            this.EntityPM.TruckerId = newValue;
+
         }
     }
 

@@ -367,8 +367,18 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     //row[28] = ;
                     row[29] = this.GetAddress(consigneeAddress);
                     row[30] = "1";
-                    row[31] = "";
-                    row[32] = "";
+
+                    if (dangerousShipmentPackages.Count > 0 || item.IsDangerous)
+                    {
+                        row[31] = "12";
+                    }
+
+                    else
+                    {
+                        row[31] = "0";
+                    }
+
+                    row[32] = item.ShipmentTypeId == "FCLD" && myShipmentPackages.Count > 0 ? "1" : "";
                     row[33] = marksAndNumbers;
                     row[34] = totalInsidePackages;
                     row[35] = grossWeight;

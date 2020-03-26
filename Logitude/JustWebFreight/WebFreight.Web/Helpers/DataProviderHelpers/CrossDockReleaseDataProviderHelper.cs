@@ -71,13 +71,15 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 dataProvider.ReleaseBy = warehouseReleasePM.ReleaseBy;
                 dataProvider.ReleaseNumber = warehouseReleasePM.ReleaseNumber;
                 dataProvider.NumberofDaysInTheWarehouse = GetNumberofDaysInTheWarehouse(warehouseReleasePM.ActualReleaseDate, warehouseReleasePM.Tenant);
-
-
+                dataProvider.Trucker = GetTruckerNameById(warehouseReleasePM.TruckerId, warehouseReleasePM.Tenant);
+                dataProvider.TruckerReference = warehouseReleasePM.TruckerReference;
                 if (!string.IsNullOrEmpty(warehouseReleasePM.UpdatedByUserId))
                 {
                     ContactQuery contactQuery = new ContactQuery(warehouseReleasePM.Tenant);
                     dataProvider.UpdatedBy = contactQuery.GetContactNameId(warehouseReleasePM.UpdatedByUserId, warehouseReleasePM.Tenant);
                 }
+
+              
 
                 if (!string.IsNullOrEmpty(warehouseReleasePM.WarehouseId))
                 {
@@ -135,6 +137,22 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             }
 
             return dataProvider;
+        }
+
+        private  string GetTruckerNameById(string id , int tenant)
+        {
+            string result = string.Empty;
+            if (!string.IsNullOrEmpty(id))
+            {
+                CardQuery cardQuery = new CardQuery(tenant);
+                CardList card = cardQuery.GetCardListForWareHouseById(id, tenant);
+                if (card != null)
+                {
+                    result = card.EnglishName;
+
+                }
+            }
+            return result;
         }
 
         private int GetNumberofDaysInTheWarehouse(DateTime? actualReleaseDate , int tenant )

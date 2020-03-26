@@ -27,14 +27,14 @@ BEGIN
 				begin
 					EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'CounterDefinition'
 					insert into CounterDefinitions (Id, Tenant, Parameter1, StartNumber, CounterId, Prefix, UniquePerPrefix)
-					values (@NewEntityId, @Tenant, 'IT', 1000, @ARInvoiceCounterId, 'IT', 0)
+					values (@NewEntityId, @Tenant, 'IT', 1000, @ARInvoiceCounterId, NULL, 0)
 				end
 
 				if not exists (select * from CounterDefinitions where Tenant = @Tenant AND CounterId = @ARInvoiceCounterId AND Parameter1 = 'IC')
 				begin
 					EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'CounterDefinition'
 					insert into CounterDefinitions (Id, Tenant, Parameter1, StartNumber, CounterId, Prefix, UniquePerPrefix)
-					values (@NewEntityId, @Tenant, 'IC', 1000, @ARInvoiceCounterId, 'IC', 0)
+					values (@NewEntityId, @Tenant, 'IC', 1000, @ARInvoiceCounterId, NULL, 0)
 				end
 
 			FETCH NEXT FROM TenantsCursor INTO @Tenant

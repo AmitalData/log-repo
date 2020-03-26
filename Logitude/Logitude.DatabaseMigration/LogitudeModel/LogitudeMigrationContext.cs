@@ -3682,6 +3682,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
 
         }
+        public IDbSet<TariffProduct> TariffProducts
+        {
+            get;
+            set;
+
+        }
         #endregion
 
 
@@ -3714,6 +3720,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<LastRunDetail> LastRunDetails
+        {
+            get;
+            set;
+
+        }
+        
         public IDbSet<BIReportsExecutionLog> BIReportsExecutionLogs
         {
             get;
@@ -4515,12 +4528,14 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TariffSurchargesUpdateMap());
             modelBuilder.Configurations.Add(new TariffSurchargesUpdateMethodMap());
             modelBuilder.Configurations.Add(new TariffLinesContainersPriceMap());
+            modelBuilder.Configurations.Add(new TariffProductMap());
             #endregion
 
             #region Infrastructure Generated
             modelBuilder.Configurations.Add(new ToggleMap());
             modelBuilder.Configurations.Add(new FeatureToggleMap());
             modelBuilder.Configurations.Add(new BIReportMap());
+            modelBuilder.Configurations.Add(new LastRunDetailMap());
             modelBuilder.Configurations.Add(new BIReportsExecutionLogMap());
             modelBuilder.Configurations.Add(new BIReportsTypeMap());
             modelBuilder.Configurations.Add(new BusinessRoleMap());
