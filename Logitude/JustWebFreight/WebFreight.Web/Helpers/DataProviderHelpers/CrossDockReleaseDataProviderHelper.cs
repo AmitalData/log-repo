@@ -72,7 +72,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 dataProvider.ReleaseNumber = warehouseReleasePM.ReleaseNumber;
                 dataProvider.NumberofDaysInTheWarehouse = GetNumberofDaysInTheWarehouse(warehouseReleasePM.ActualReleaseDate, warehouseReleasePM.Tenant);
                 dataProvider.Trucker = GetTruckerNameById(warehouseReleasePM.TruckerId, warehouseReleasePM.Tenant);
-                dataProvider.TruckerReference = warehouseReleasePM.TruckerReference;
+                dataProvider.TruckNumber = warehouseReleasePM.TruckerReference;
                 if (!string.IsNullOrEmpty(warehouseReleasePM.UpdatedByUserId))
                 {
                     ContactQuery contactQuery = new ContactQuery(warehouseReleasePM.Tenant);
