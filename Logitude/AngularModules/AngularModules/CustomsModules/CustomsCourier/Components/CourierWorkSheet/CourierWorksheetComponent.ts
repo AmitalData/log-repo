@@ -141,7 +141,7 @@ implements OnDestroy
         //        });
         //);
         this.GetMamanPUR();
-        this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "Allow Accounting")
+         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {

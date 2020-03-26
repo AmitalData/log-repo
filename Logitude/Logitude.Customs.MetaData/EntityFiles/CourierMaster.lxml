@@ -112,6 +112,6 @@
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>
-    <Feature Code="&quot;Allow Accounting&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.Allow Accounting&quot;" FeatureDefaultText="&quot;Allow Accounting&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;AllowAccounting&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.Allow Accounting&quot;" FeatureDefaultText="&quot;Allow Accounting&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
