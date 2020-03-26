@@ -27,7 +27,7 @@ namespace WebFreight.Web.WebServices
             this.addressRepository = new AddressRepository(myCommonContext);
         }
 
-        public string GetPickUpDeliveryFromCityOrPortName(ShipmentPickUpDelivery entity)
+        public string GetPickUpDeliveryFromCityOrPortName(ShipmentPickUpDelivery entity, bool isCityZipCountry = false)
         {
             string myResult = "";
 
@@ -42,7 +42,14 @@ namespace WebFreight.Web.WebServices
                                 Address myPartnerAddress = addressRepository.GetMainAddressByCardId(entity.FromPartnerCardId, tenant);
                                 if (myPartnerAddress != null)
                                 {
-                                    myResult = myPartnerAddress.City;
+                                    if(isCityZipCountry== true)
+                                    {
+                                        myResult = myPartnerAddress.City + "," +myPartnerAddress.ZipCode + "," + (myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName);
+                                    }
+                                    else
+                                    {
+                                        myResult = myPartnerAddress.City;
+                                    }
                                 }
                             }
 
@@ -65,7 +72,24 @@ namespace WebFreight.Web.WebServices
 
                     case "CASL":
                         {
-                            myResult = entity.FromAddressCity;
+                            if (isCityZipCountry == true)
+                            {
+                                var countryName = "";
+                                if (!string.IsNullOrEmpty(entity.FromAddressCountryId))
+                                {
+                                    Country fromAddressCountry = CountryRepository.GetSingleCountry(entity.FromAddressCountryId, tenant, false);
+                                    if (fromAddressCountry != null)
+                                    {
+                                        countryName = fromAddressCountry.EnglishName;
+                                    }
+                                }
+                                myResult = entity.FromAddressCity + "," + entity.FromAddressZipCode + "," + countryName;
+                            }
+                            else
+                            {
+                                myResult = entity.FromAddressCity;
+                            }
+                          
                             break;
                         }
                 }
@@ -608,7 +632,7 @@ namespace WebFreight.Web.WebServices
 
             return myResult;
         }
-        public string GetToDeliveryName(ShipmentPM shipment, ShipmentPickUpDelivery myDelivery)
+        public string GetToDeliveryName(ShipmentPM shipment, ShipmentPickUpDelivery myDelivery, bool isCityZipCountry)
         {
             string myResult = "";
 
@@ -623,7 +647,13 @@ namespace WebFreight.Web.WebServices
                                 Card myPartner = CardRepository.GetSingleCard(myDelivery.ToPartnerCardId, tenant, true);
                                 if (myPartner != null)
                                 {
-                                    myResult = myPartner.EnglishName;
+                                    if (isCityZipCountry == true)
+                                    {
+                                        myResult = myPartner.CityName + "," + myPartner.ZipCode + "," + myPartner.CountryName ;
+                                    } 
+                                    else {
+                                        myResult = myPartner.EnglishName;
+                                    }
                                 }
                             }
 
@@ -646,12 +676,29 @@ namespace WebFreight.Web.WebServices
 
                     case "CASL":
                         {
-                            string myCity = myDelivery.ToAddressCity;
-                            if (!string.IsNullOrEmpty(myCity))
-                            {
-                                myResult = myCity;
-                            }
 
+                            if (isCityZipCountry == true)
+                            {
+                                var countryName = ""; 
+                                if (!string.IsNullOrEmpty(myDelivery.ToAddressCountryId))
+                                {
+                                    Country toAddressCountry = CountryRepository.GetSingleCountry(myDelivery.ToAddressCountryId, tenant, false);
+                                    if (toAddressCountry != null)
+                                    {
+                                        countryName = toAddressCountry.EnglishName;
+                                    }
+                                }
+
+                                myResult = myDelivery.ToAddressCity + "," + myDelivery.ToAddressZipCode + "," + countryName;
+                            }
+                            else
+                            {
+                                string myCity = myDelivery.ToAddressCity;
+                                if (!string.IsNullOrEmpty(myCity))
+                                {
+                                    myResult = myCity;
+                                }
+                            }
                             break;
                         }
                 }
