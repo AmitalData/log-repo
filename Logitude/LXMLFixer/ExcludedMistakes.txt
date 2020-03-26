@@ -1,4 +1,5 @@
-﻿Address.dxml,Address.lxml,Relation,AddressTypeId,NULL,Foreign Key Column,AddressTypeId,NULL
+﻿BIReport.dxml,BIReport.lxml,Relation,DWQueryId,NULL,Foreign Key Column,DWQueryId,NULL
+Address.dxml,Address.lxml,Relation,AddressTypeId,NULL,Foreign Key Column,AddressTypeId,NULL
 AgentSharedDocument.dxml,AgentSharedDocument.lxml,Relation,StatusCode,NULL,Foreign Key Column,StatusCode,NULL
 AgentSharedManifest.dxml,AgentSharedManifest.lxml,Relation,ShipmentLevelCode,NULL,Foreign Key Column,ShipmentLevelCode,NULL
 AgentSharedManifest.dxml,AgentSharedManifest.lxml,Relation,StatusCode,NULL,Foreign Key Column,StatusCode,NULL

@@ -135,6 +135,21 @@ namespace MeatadataGeneratorTool
             DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
         }
 
+        public static string GetForeignEntityFileName(string foreignEntity)
+        {
+            if (foreignEntity == "AutomaticExternalRconcilMthod")
+            {
+                return "AutomaticExternalReconcileMethod";
+            }
+
+            if (foreignEntity == "DWQuery")
+            {
+                return "DWQuery ";
+            }
+
+            return foreignEntity;
+        }
+
         private void MainControl_Closed(object sender, EventArgs e)
         {
             MainControl.Close();

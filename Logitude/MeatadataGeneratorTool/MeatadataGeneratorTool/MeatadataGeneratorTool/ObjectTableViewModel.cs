@@ -2896,7 +2896,9 @@ namespace MeatadataGeneratorTool
 
             if (item.IsForeignKey && !string.IsNullOrEmpty(item.ForeignEntity))
             {
-                if (!App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == item.ForeignEntity.ToLower() + ".lxml").Any() && !App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == item.ForeignEntity.ToLower() + ".dxml").Any())
+                string foreignEntityFileName = App.GetForeignEntityFileName(item.ForeignEntity);
+
+                if (!App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == foreignEntityFileName.ToLower() + ".lxml").Any() && !App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == foreignEntityFileName.ToLower() + ".dxml").Any())
                 {
                     str.AppendLine("Cannot Find Foreign Entity " + item.ForeignEntity);
                 }

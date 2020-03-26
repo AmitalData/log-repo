@@ -2477,12 +2477,14 @@ namespace MeatadataGeneratorTool
         
         private static string GetForeignEntityLXMLFilePath(string foreignEntity)
         {
-            return App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == (foreignEntity.ToLower() + ".lxml")).FirstOrDefault();
+            string foreignEntityFileName = App.GetForeignEntityFileName(foreignEntity);
+            return App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == (foreignEntityFileName.ToLower() + ".lxml")).FirstOrDefault();
         }
 
         private static string GetForeignEntityDXMLFilePath(string foreignEntity)
         {
-            return App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == (foreignEntity.ToLower() + ".dxml")).FirstOrDefault();
+            string foreignEntityFileName = App.GetForeignEntityFileName(foreignEntity);
+            return App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == (foreignEntityFileName.ToLower() + ".dxml")).FirstOrDefault();
         }
 
         private class ForeignEntityData

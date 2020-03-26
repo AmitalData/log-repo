@@ -1088,7 +1088,7 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
-        private static ForeignEntityData GetForeignEntityData(string foreignEntity)
+        private ForeignEntityData GetForeignEntityData(string foreignEntity)
         {
             string foreignEntityLXMLFilePath = GetForeignEntityLXMLFilePath(foreignEntity);
 
@@ -1113,8 +1113,9 @@ namespace Logitude.LXMLFixer.Models
             return null;
         }
 
-        private static string GetForeignEntityLXMLFilePath(string foreignEntity)
+        private string GetForeignEntityLXMLFilePath(string foreignEntity)
         {
+            string foreignEntityFileName = GetForeignEntityFileName(foreignEntity);
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string logitudePath = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0];
 
@@ -1140,25 +1141,26 @@ namespace Logitude.LXMLFixer.Models
 
             foreach (var modulePath in modulesPaths)
             {
-                string path = logitudePath + modulePath + foreignEntity + ".lxml";
+                string path = logitudePath + modulePath + foreignEntityFileName + ".lxml";
                 if (File.Exists(path))
                 {
                     return path;
                 }
             }
 
-            string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", foreignEntity + ".lxml", SearchOption.AllDirectories);
+            string[] lxmlFiles = Directory.GetFiles(logitudePath + @"\Logitude\", foreignEntityFileName + ".lxml", SearchOption.AllDirectories);
 
-            if (lxmlFilesUnderRoot.Length > 0)
+            if (lxmlFiles.Length > 0)
             {
-                return lxmlFilesUnderRoot[0];
+                return lxmlFiles[0];
             }
 
             return null;
         }
 
-        private static string GetEntityPOCOFilePath(string entityName)
+        private string GetEntityPOCOFilePath(string entityName)
         {
+            string entityFileName = GetForeignEntityFileName(entityName);
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string logitudePath = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0];
 
@@ -1184,25 +1186,26 @@ namespace Logitude.LXMLFixer.Models
 
             foreach (var modulePath in modulesPaths)
             {
-                string path = logitudePath + modulePath + entityName + ".cs";
+                string path = logitudePath + modulePath + entityFileName + ".cs";
                 if (File.Exists(path))
                 {
                     return path;
                 }
             }
 
-            string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", entityName + ".cs", SearchOption.AllDirectories);
+            string[] pocoFiles = Directory.GetFiles(logitudePath + @"\Logitude\", entityFileName + ".cs", SearchOption.AllDirectories);
 
-            if (lxmlFilesUnderRoot.Length > 0)
+            if (pocoFiles.Length > 0)
             {
-                return lxmlFilesUnderRoot[0];
+                return pocoFiles[0];
             }
 
             return null;
         }
 
-        private static string GetEntityMappingFilePath(string entityName)
+        private string GetEntityMappingFilePath(string entityName)
         {
+            string entityFileName = GetForeignEntityFileName(entityName).Trim();
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string logitudePath = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0];
 
@@ -1228,18 +1231,18 @@ namespace Logitude.LXMLFixer.Models
 
             foreach (var modulePath in modulesPaths)
             {
-                string path = logitudePath + modulePath + entityName + "Map.cs";
+                string path = logitudePath + modulePath + entityFileName + "Map.cs";
                 if (File.Exists(path))
                 {
                     return path;
                 }
             }
 
-            string[] lxmlFilesUnderRoot = Directory.GetFiles(logitudePath + @"\Logitude\", entityName + "Map.cs", SearchOption.AllDirectories);
+            string[] mapFiles = Directory.GetFiles(logitudePath + @"\Logitude\", entityFileName + "Map.cs", SearchOption.AllDirectories);
 
-            if (lxmlFilesUnderRoot.Length > 0)
+            if (mapFiles.Length > 0)
             {
-                return lxmlFilesUnderRoot[0];
+                return mapFiles[0];
             }
 
             return null;
@@ -1459,6 +1462,21 @@ namespace Logitude.LXMLFixer.Models
                 string error = e.ToString();
                 return null;
             }
+        }
+
+        private string GetForeignEntityFileName(string foreignEntity)
+        {
+            if (foreignEntity == "AutomaticExternalRconcilMthod")
+            {
+                return "AutomaticExternalReconcileMethod";
+            }
+
+            if (foreignEntity == "DWQuery")
+            {
+                return "DWQuery ";
+            }
+
+            return foreignEntity;
         }
     }
 }
