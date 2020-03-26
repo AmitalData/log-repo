@@ -91,7 +91,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         DataContext.fatherComponent = this;
         logWindow.DataContext = DataContext;
         logWindow.WindowArgs = windowArgs;
-        logWindow.Title = "Report Scheduler Details";
+        logWindow.Title = this.ReportList.Name + " Scheduler Details";
         logWindow.Height = 820;
         logWindow.Width = 1060;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
