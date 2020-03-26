@@ -44,6 +44,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private AmitalContext _AmitalContext;
         private ICustomContext _Context;
         private DeclarationPM _DeclarationPM;
+        private bool openTaskForUnifreight;
 
         public bool Multi_LastSIWillUpdateCCU { get; set; }//שינוי בלוגיקה לבניית CCU בעקבות משוב להצהרה/הגשה - פניה 303319  אבל במצב הראשון - אין צורך לשמור ולבנות CCU אחרי כל שמירה של כל חשבון ספק. מספיק לבנות את CCU פעם אחת בסיום כל השמירות.
         public bool UpdateFromDeclaration { get; set; }
@@ -174,7 +175,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
                     mySend2MasofIfNeededService.Send2Masof(_DeclarationPM, pHaveChange);
-
+                    this.openTaskForUnifreight = true;
                 }
             }
 
@@ -1164,9 +1165,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 LogMessagingUtil.Instance.AppendLine($"Last!!!! SupplierInvoice{entityPM.SequenceNumeric} Call UnifrightDeclarationUpdateService");
             }
+            bool dotask = false;
+            if (!this.Multi_LastSIWillUpdateCCU && this.openTaskForUnifreight)
+            {
+                dotask = true;
+                myDeclarationPM.TotalInvoiceAmountInUSD = 0;
+                myDeclarationPM.TotalInvoiceAmountInUSD = myDeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD);
+                
+            }
             UnifrightDeclarationUpdateService UnifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(myDeclarationPM, null, unifreightUser);
             UnifrightDeclarationUpdateService._UpdateCCUFILEMFromSupplerInvoice = true;
-            UnifrightDeclarationUpdateService.Update(false);
+            
+            UnifrightDeclarationUpdateService.Update(dotask);
         }
 
         //<--- Yuval Chalup 04.12.2016 TASK-24655
