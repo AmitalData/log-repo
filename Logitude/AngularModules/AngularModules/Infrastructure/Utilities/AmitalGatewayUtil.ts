@@ -168,6 +168,23 @@ export class AmitalGatewayUtil {
             " העברה לתור");
     }
 
+    public ShowCFIFILEMMoveSIToOCRScreen(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMMoveSIToOCRScreen",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMMoveSIToOCRScreen",
+            unifreightMessageM,
+            " העברת חשבונות ספק ל-OCR");
+    }
 
     SendTotangoUserActivity(module: string, activity: string) {
         var req = new UnifreightMessageM();
