@@ -15,12 +15,12 @@
                                         </td>
 
                                         <!--<td *ngIf="IsFullAccounting" style="width:170px;">
-                                            <div class="OrangeInfo">
-                                                <span style="font-size: 12px; color: #282E30;">Journal </span>
-                                                 <span class="hyperlink" (click)="EditJournal()">{{JournalNumber}}</span>
-                                                <span style="font-size: 12px; color: #282E30;"> was created successfully </span>
-                                            </div>
-                                        </td>-->
+                            <div class="OrangeInfo">
+                                <span style="font-size: 12px; color: #282E30;">Journal </span>
+                                 <span class="hyperlink" (click)="EditJournal()">{{JournalNumber}}</span>
+                                <span style="font-size: 12px; color: #282E30;"> was created successfully </span>
+                            </div>
+                        </td>-->
 
 
 
@@ -259,6 +259,42 @@
                                                 </td>
                                             </tr>
                                         </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- RegionalTaxId -->
+                    <tr class="FormFieldRow" *ngIf="IsRegionalTaxVisible">
+                        <td>
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 135px;">
+                                        <LogLabel [ObjectFieldName]="'RegionalTaxId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 204px;">
+                                        <LogLov [ObjectFieldName]="'RegionalTaxId'"
+                                                [SelectedValue]="RegionalTaxId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'VatType'"
+                                                [HideColumns]="true"
+                                                [DependencyFilter2Value]="true">
+                                        </LogLov>
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 5px;" *ngIf="RegionalTaxId">
+                                        {{RegionalTaxPercentage | NumbersPipe:'N2'}}
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 3px;" *ngIf="RegionalTaxId">
+                                        %
+                                    </td>
+
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
                             </table>
