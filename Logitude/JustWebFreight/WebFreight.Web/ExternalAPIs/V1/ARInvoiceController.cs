@@ -240,7 +240,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 invoicePM.SetApproved = true;
             }
-            else if(invoice.Status.Code == "AC")
+            else if(invoice.Status!=null && invoice.Status.Code == "AC")
             {
                 invoicePM.IsAutoCredit = true;
             }
