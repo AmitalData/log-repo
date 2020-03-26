@@ -74,7 +74,16 @@ namespace WebFreight.Web.WebServices
                         {
                             if (isCityZipCountry == true)
                             {
-                                myResult = entity.FromAddressCity + "," + entity.FromAddressZipCode + "," + entity.FromAddressCountry;
+                                var countryName = "";
+                                if (!string.IsNullOrEmpty(entity.FromAddressCountryId))
+                                {
+                                    Country fromAddressCountry = CountryRepository.GetSingleCountry(entity.FromAddressCountryId, tenant, false);
+                                    if (fromAddressCountry != null)
+                                    {
+                                        countryName = fromAddressCountry.EnglishName;
+                                    }
+                                }
+                                myResult = entity.FromAddressCity + "," + entity.FromAddressZipCode + "," + countryName;
                             }
                             else
                             {
