@@ -184,7 +184,9 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             FieldName: 'ItemCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.ItemCode"), 
-            Styles: { width: '100px' },
+            Styles: { width: '100px', direction: 'ltr' },
+            HtmlListComponentName: 'DeclarationSupplierInvoiceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/DeclarationSupplierInvoiceListTemplate',
             IsCustomTemplate: true
         });
         this.columns.push({

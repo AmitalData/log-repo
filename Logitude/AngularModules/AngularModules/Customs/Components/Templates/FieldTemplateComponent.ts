@@ -158,15 +158,24 @@ export class FieldTemplateComponent {
                 this.Entity.CustomFileNo,
                 this.Entity.Id,
                 "ShowCFIFILEMMoveToQueueScreen");
-
         } else {
             var myMessageWindow = new MessageWindow();
             let mess = "ShowCFIFILEMMoveToQueueScreen -" + this.Entity.CustomFileNo;
             myMessageWindow.Show(mess);
-
         }
+    }
 
-
+    ShowCFIFILEMMoveSIToOCRScreen() {
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            AmitalGatewayUtil.Instance.ShowCFIFILEMMoveSIToOCRScreen(
+                this.Entity.CustomFileNo,
+                this.Entity.Id,
+                "ShowCFIFILEMMoveSIToOCRScreen");
+        } else {
+            var myMessageWindow = new MessageWindow();
+            let mess = "ShowCFIFILEMMoveSIToOCRScreen -" + this.Entity.CustomFileNo;
+            myMessageWindow.Show(mess);
+        }
     }
 
     public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
