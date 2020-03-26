@@ -123,5 +123,5 @@
   <Index
     Columns="InterestEntityTypeCode,EntityId" />
   <UniqueConstraint
-    Columns="Tenant,InterestEntityTypeCode,EntityId,OriginalEntityLineNumber" />
+    Columns="Tenant,InterestEntityTypeCode,EntityId,OriginalEntityLineNumber,GLAccountId" />
 </Table>

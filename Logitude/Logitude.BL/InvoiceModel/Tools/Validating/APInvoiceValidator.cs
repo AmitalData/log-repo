@@ -79,7 +79,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
                 }
             }
-            CheckInvoiceNumberFormat(entityPM.InvoiceNumber, entityPM.Tenant);
+           // CheckInvoiceNumberFormat(entityPM.InvoiceNumber, entityPM.Tenant);
 
             List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
 

@@ -427,6 +427,13 @@ namespace WebFreight.Web.MetaDataUpdate
                             break;
                         }
 
+                    case "nonegeneratedcode":
+                        {
+                            RunNoneGeneratedUpdateCode(context);
+
+                            break;
+                        }
+
 
                     case "all":
                         {
@@ -869,8 +876,42 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
             }
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
         }
+        private static void RunNoneGeneratedUpdateCode(IWebFreightContext context)
+        {
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadObjectTablesToTenantZero(context);
+            updateClass.UpgradeClosedTablesForTenantZero();
+            updateClass.LoadUpdateTenantZero(context, false);
 
+            //updateClass.LoadOtherFields(context);
+            updateClass.LoadTranslationHeaders();
+            updateClass.LoadMeasurements();
+            updateClass.LoadCreditCardTypes();
+            updateClass.LoadMoveTypes();
+            //updateClass.loadQueries();
+            //updateClass.loadScreens();
+            //updateClass.LoadObjectTableTabs();
+            context.SaveChanges();
+
+            updateClass.LoadRolesAndFeatures(0);
+            updateClass.LoadObjectTableHelperControls();
+            updateClass.LoadEntityStatus();
+            updateClass.LoadEventTypes();
+            updateClass.LoadRanks();
+            updateClass.LoadMenustables();
+            updateClass.LoadDefaultReports();
+            updateClass.LoadHelpResources();
+            updateClass.CreateMasterCounter(0);
+            updateClass.LoadEmailAlertSettings();
+            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+            {
+                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+            }
+
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
+        }
         private static void ForCourier()
         {
             GlobalDBRepository globalDbRep = new GlobalDBRepository();

@@ -71,11 +71,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void FilterCustomerPeriodsOnBalance(AccountingAgingDataProvider totalData)
         {
             List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
+
+            var balanceFilterAmount = GetFilterValue<decimal>("BalanceFilterValue");
+
             foreach (var totalBalance in totalBalances)
             {
                 if (GetFilterValue<string>("BalanceFilter") == "Debtors" && !(totalBalance.Total >= 0))
                     RemoveCustomerPeriods(totalData, totalBalance);
-                else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= GetFilterValue<decimal>("BalanceFilterValue")))
+                else if (GetFilterValue<string>("BalanceFilter") == "DebtAbove" && !(totalBalance.Total >= Convert.ToDecimal(balanceFilterAmount)))
                     RemoveCustomerPeriods(totalData, totalBalance);
             }
         }

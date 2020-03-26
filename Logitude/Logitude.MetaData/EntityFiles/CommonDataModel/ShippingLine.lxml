@@ -5375,7 +5375,7 @@
     Code="&quot;SLAR&quot;"
     ControlPath="&quot;Simplog.FreightLib.Views.Areas&quot;"
     TextCode="&quot;ShippingLine.TH.Areas&quot;"
-    IsPackagable="false"
+    IsPackagable="true"
     IndexOrder="6"
     IsSpellChecked="false"
     HasGeneralFeature="false" />

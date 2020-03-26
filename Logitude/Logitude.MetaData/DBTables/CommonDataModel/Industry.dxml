@@ -21,7 +21,7 @@
   <Column
     Name="Code"
     Type="nvarchar"
-    Size="3">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>

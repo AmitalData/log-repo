@@ -153,6 +153,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 ARInvoiceElement invoiceElement = new ARInvoiceElement();
 
+                List<ARInvoiceTotalVAT> myTotalVATs = allInvoicesTotalVATs.Where(d => d.ARInvoiceId == item.Id).ToList();
+
                 ShipmentPM shipment = null;
                 if (!string.IsNullOrEmpty(item.MainEntityId))
                 {
@@ -180,7 +182,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.SATPaymentMethodName = allPaymentMethods.Where(a => a.Code == item.SATPaymentMethodCode).Select(a => a.Name).FirstOrDefault();
                 invoiceElement.Tenant = tenant;
                 invoiceElement.Intercompany = item.Intercompany ? "True" : "False";
-
+                invoiceElement.TotalTaxAmountInInvoiceCurrency = (decimal)myTotalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
 
                 if (item.IsConsolidationInvoice)
                 {
@@ -251,9 +253,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 #region Lines
                 invoiceElement.InvoiceLines = new List<ARInvoiceLineElement>();
                 List<ARInvoiceLine> dueVatLines = new List<ARInvoiceLine>();
-                List<ARInvoiceLine> lines = allInvoicesLines.Where(d => d.ARInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();
+                List<ARInvoiceLine> lines = allInvoicesLines.Where(d => d.ARInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();              
                 List<string> allInvoiceLinesVATTypesIds = lines.Select(s => s.VatTypeId).Distinct().ToList();
-
+                
                 List<VATTypesGroup> allVATTypesGroups = (from d in commonContext.VATTypesGroups
                                                         where d.Tenant == tenant
                                                         && allInvoiceLinesVATTypesIds.Contains(d.GroupVATTypeId)
@@ -368,6 +370,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                             List<VATTypesGroup> myVATTypesGroups = allVATTypesGroups.Where(d => d.GroupVATTypeId == LineVat.Id).ToList();
                             foreach (VATTypesGroup vATGroupItem in myVATTypesGroups)
                             {
+                                ARInvoiceTotalVAT myTotalVAT = myTotalVATs.Where(d => d.VatTypeId == vATGroupItem.SingleVATTypeId).FirstOrDefault();
                                 VatTypePercentage percentageItem = vatTypePercentageRepository.GetVatTypePercentageByDate(vATGroupItem.SingleVATTypeId, tenant, item.InvoiceDate);
 
                                 if (percentageItem != null)
@@ -381,7 +384,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                                     {
                                         TaxCode = percentageItem.VatType == null ? null : percentageItem.VatType.Code,
                                         TaxPercentage = percentageItem.Percentage == null ? 0 : (decimal)percentageItem.Percentage,
-                                        VATExternalId = percentageItem.VatType == null ? null : percentageItem.VatType.ReceivablesExternalId,
+                                        VATExternalId = percentageItem.VatType != null ? percentageItem.VatType.ReceivablesExternalId : (myTotalVAT == null ? null : myTotalVAT.ExternalVATCard),
                                     });
                                 }
                             }
@@ -391,13 +394,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                         else
                         {
+                            ARInvoiceTotalVAT myTotalVAT = myTotalVATs.Where(d => d.VatTypeId == LineVat.Id).FirstOrDefault();
                             lineElement.TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage;
 
                             lineElement.TaxDetails.Add(new LineTaxDetailsElement()
                             {
                                 TaxCode = LineVat.Code,
                                 TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage,
-                                VATExternalId = LineVat.ReceivablesExternalId,
+                                VATExternalId = !string.IsNullOrEmpty(LineVat.ReceivablesExternalId) ? LineVat.ReceivablesExternalId : (myTotalVAT == null ? null : myTotalVAT.ExternalVATCard),
                             });
                         }
                     }
@@ -410,21 +414,21 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         dueVatLines.Add(myline);
                     }
 
-                    #endregion
+                    #endregion                    
                 }
+                
+                //if (dueVatLines.Count != 0)
+                //{
+                //    foreach (ARInvoiceLine myline in dueVatLines)
+                //    {
+                //        invoiceElement.TotalTaxAmountInInvoiceCurrency += (decimal)((myline.InvoiceCurrencyAmount != null ? myline.InvoiceCurrencyAmount : 0) * (myline.VatPercentage != null ? (myline.VatPercentage / 100) : 0)).Value;
+                //    }
+                //}
 
-                if (dueVatLines.Count != 0)
-                {
-                    foreach (ARInvoiceLine myline in dueVatLines)
-                    {
-                        invoiceElement.TotalTaxAmountInInvoiceCurrency += (decimal)((myline.InvoiceCurrencyAmount != null ? myline.InvoiceCurrencyAmount : 0) * (myline.VatPercentage != null ? (myline.VatPercentage / 100) : 0)).Value;
-                    }
-                }
-
-                else
-                {
-                    invoiceElement.TotalTaxAmountInInvoiceCurrency = 0;
-                }
+                //else
+                //{
+                //    invoiceElement.TotalTaxAmountInInvoiceCurrency = 0;
+                //}
                 #endregion
 
                 #region Shipment
@@ -1026,8 +1030,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                 #region TAX
                 invoiceElement.TaxTotalsInInvoiceCurrency = new List<InvoiceTaxElement>();
-
-                List<ARInvoiceTotalVAT> myTotalVATs = allInvoicesTotalVATs.Where(d => d.ARInvoiceId == item.Id).ToList();
+                
                 foreach (ARInvoiceTotalVAT myline in myTotalVATs)
                 {
                     InvoiceTaxElement invoiceTaxElement = new InvoiceTaxElement()

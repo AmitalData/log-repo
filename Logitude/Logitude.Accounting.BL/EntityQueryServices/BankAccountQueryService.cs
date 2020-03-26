@@ -52,11 +52,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return null;
         }
 
-        public BankAccountPM GetBankAccountByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
+        public List<BankAccountPM> GetBankAccountListByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
         {
-            BankAccount poco = this.repository.GetBankAccountByBankIdAccNumber(BankId, AccountNumber, tenant);
+            var pocos = this.repository.GetBankAccountListByBankIdAccNumber(BankId, AccountNumber, tenant);
 
-            return this.GetEntityPM(poco);
+            return pocos.Select(poco => this.GetEntityPM(poco)).ToList();
 
         }
 

@@ -130,7 +130,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             var Parents = TempList.Where(a => a.DimensionTableCode != null).ToList();
             List<string> dimensionTable = Parents.GroupBy(d => d.DimensionTableCode).Select(d => d.First().DimensionTableCode).ToList();
             dimensionTable.Add("DIM_CustomPickLists");
-            Parents.Add(new DWObjectFieldPM() { DimensionTableCode = "DIM_CustomPickLists", Id = "123" });
+            //Parents.Add(new DWObjectFieldPM() { DimensionTableCode = "DIM_CustomPickLists", Id = "123" });
             IEnumerable<IGrouping<string, DWObjectFieldPM>> DWObjectFieldPMDimensionGroups = GetDWObjectFieldPMDimensionListsGroups(tenant, dimensionTable);
 
             foreach (var parent in Parents)

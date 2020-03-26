@@ -180,9 +180,9 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="Tenant" />
+    Columns="Tenant,ObjectTableId" />
   <Index
-    Columns="Tenant,Code,ObjectTableId" />
+    Columns="Tenant" />
   <UniqueConstraint
     Columns="Tenant,Code,ObjectTableId" />
 </Table>

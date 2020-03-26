@@ -135,10 +135,33 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             payment =  SetJournalFields(payment);
             ARPaymentPM securedPM = new ARPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "ARPayment", tenant);
-
+            if (payment != null)
+                MapCustomFieldValues(securedPM);
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
+
+        private void MapCustomFieldValues(ARPaymentPM payment)
+        {
+            if (payment != null)
+            {
+                ARPayment entityPOC = (from s in repository.context.ARPayments
+                                       where s.Id == payment.Id
+                                       select s).FirstOrDefault();
+
+                payment.Field1 = new CustomFieldClass("Field1", "ARPayment", entityPOC.Field1);
+                payment.Field2 = new CustomFieldClass("Field2", "ARPayment", entityPOC.Field2);
+                payment.Field3 = new CustomFieldClass("Field3", "ARPayment", entityPOC.Field3);
+                payment.Field4 = new CustomFieldClass("Field4", "ARPayment", entityPOC.Field4);
+                payment.Field5 = new CustomFieldClass("Field5", "ARPayment", entityPOC.Field5);
+                payment.Field6 = new CustomFieldClass("Field6", "ARPayment", entityPOC.Field6);
+                payment.Field7 = new CustomFieldClass("Field7", "ARPayment", entityPOC.Field7);
+                payment.Field8 = new CustomFieldClass("Field8", "ARPayment", entityPOC.Field8);
+                payment.Field9 = new CustomFieldClass("Field9", "ARPayment", entityPOC.Field9);
+                payment.Field10 = new CustomFieldClass("Field10", "ARPayment", entityPOC.Field10);
+            }
+        }
+
 
         private List<ARPaymentChequeReplicaPM> GetARPaymentChequeReplicasByPaymentId(string paymentid, int tenant)
         {
@@ -320,7 +343,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 {
                     payment.BankAccountNumber = GetBankAccountNumberById(payment.BankAccountId, payment.Tenant);
                 }
+
+                MapCustomFieldValues(payment);
             }
+
+          
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;
         }
@@ -423,6 +450,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    FechaPago = entity.FechaPago,
                                                    CreatedByPartner = entity.CreatedByPartner,
                                                    IsPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet,
+                                                   Field1 = entity.Field1,
+                                                   Field2 = entity.Field2,
+                                                   Field3 = entity.Field3,
+                                                   Field4 = entity.Field4,
+                                                   Field5 = entity.Field5,
+                                                   Field6 = entity.Field6,
+                                                   Field7 = entity.Field7,
+                                                   Field8 = entity.Field8,
+                                                   Field9 = entity.Field9,
+                                                   Field10 = entity.Field10,
                                                };
             return query2;
         }
@@ -509,6 +546,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                             CreatedByPartner = entity.CreatedByPartner,
                             IsPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet,
+                            Field1 = entity.Field1,
+                            Field2 = entity.Field2,
+                            Field3 = entity.Field3,
+                            Field4 = entity.Field4,
+                            Field5 = entity.Field5,
+                            Field6 = entity.Field6,
+                            Field7 = entity.Field7,
+                            Field8 = entity.Field8,
+                            Field9 = entity.Field9,
+                            Field10 = entity.Field10,
                         };
 
             return query;
@@ -596,6 +643,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                             CreatedByPartner = entity.CreatedByPartner,
                             IsPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet,
+                            Field1 = entity.Field1,
+                            Field2 = entity.Field2,
+                            Field3 = entity.Field3,
+                            Field4 = entity.Field4,
+                            Field5 = entity.Field5,
+                            Field6 = entity.Field6,
+                            Field7 = entity.Field7,
+                            Field8 = entity.Field8,
+                            Field9 = entity.Field9,
+                            Field10 = entity.Field10,
                         };
 
             return query;
@@ -669,6 +726,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                          CreatedByPartner = a.CreatedByPartner,
                                          IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
+                                         Field1 = a.Field1,
+                                         Field2 = a.Field2,
+                                         Field3 = a.Field3,
+                                         Field4 = a.Field4,
+                                         Field5 = a.Field5,
+                                         Field6 = a.Field6,
+                                         Field7 = a.Field7,
+                                         Field8 = a.Field8,
+                                         Field9 = a.Field9,
+                                         Field10 = a.Field10,
                                      }).FirstOrDefault();
 
             return payment;

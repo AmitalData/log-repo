@@ -18,10 +18,7 @@ using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityPMs;
-
+using System.Data.Entity.SqlServer;
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
     public class AgingReportService
@@ -417,23 +414,60 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 List<string> accountsIds = qTotalByMonthAcc.Select(d => d.AccountId).ToList();
 
                 GLAccountListQueryService accountQS = new GLAccountListQueryService(_AccountingContext);
+                
                 IQueryable<GLAccountList> accountsList = accountQS.GetByIds(accountsIds,_Param.Tenant);
+                IQueryable<PeriodMExtended> periodMExtendeds =
+                    (from a in accountsList
+                     join moredata in _AccountingContext.GLAccountMoreDatas.Where(r => r.Tenant == _Param.Tenant)
+                     on a.Id equals moredata.AccountId
 
-                CurrencyQuery currencyQuery = new CurrencyQuery(_Param.Tenant);
-                IQueryable <CurrencyPM> currencies = currencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
+                     join card in _AccountingContext.Cards.Where(r => r.Tenant == _Param.Tenant)
+                      on a.Id equals card.GLAccountId into cardJoinT
+                     from card in cardJoinT.DefaultIfEmpty()
 
-                PaymentTermQuery paymentTermQuery = new PaymentTermQuery(_Param.Tenant);
-                IQueryable<PaymentTermPM> paymentTerms = paymentTermQuery.GetPaymenTermPMsByTenant(_Param.Tenant);
+                     join cust in _AccountingContext.Customers.Where(r => r.Tenant == _Param.Tenant)
+                     on card.Id equals cust.Id into custJoinT
+                     from cust in custJoinT.DefaultIfEmpty()
 
-                CardQuery cardQuery = new CardQuery(_Param.Tenant);
-                IQueryable<CardList> cards = cardQuery.GetCardsByTenant(_Param.Tenant);
+                     join custOFiles in _AccountingContext.CustomerOpenFilesAmounts.Where(r => r.Tenant == _Param.Tenant)
+                     on card.Id equals custOFiles.CustomerId into custOFilesJoinT
+                     from custOFiles in custOFilesJoinT.DefaultIfEmpty()
+
+                     select new PeriodMExtended()
+                     {
+                         AccountId = a.Id,
+                         AccountDisplayNumber = a.DisplayNumber,
+                         AccountTermName = card.PaymentTerm.EnglishName,
+
+                         CreditLimitAmount =
+                         //cust!=null?(double)cust.CreditLimitAmount:0,
+                         cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
+
+                         CreditStatusAmount_AsIs = cust != null ? (cust.CreditLimitAmount!=null ?(double)cust.CreditLimitAmount:0):0,
+                         BalanceInLocalCurrency= moredata!=null ?(decimal)moredata.BalanceInLocalCurrency:0,
+                         //CreditStatusAmount= 
+                         //((decimal)(cust.CreditLimitAmount.GetValueOrDefault())
+                         //- (
+                         //moredata.BalanceInLocalCurrency.GetValueOrDefault()
+                         //+ moredata.TotalOpenChequesInLocalCur.GetValueOrDefault()
+                         //+ moredata.TotFutureOpenChequesInLocalCur.GetValueOrDefault()
+                         //+ custOFiles.TotalOpenFilesAmount//entityList.OpenShipments= SetCustomerOpenShipments(entityList);
+                         //)
+                         //),
+
+                         TotalOpenShipments= custOFiles != null ?  custOFiles.TotalOpenFilesAmount:0,
+                         TotalFutureOpenCheques = moredata !=null ?(decimal)moredata.TotalOpenChequesInLocalCur:0,
+                         TotalOpenCheques = moredata!=null? (decimal)moredata.TotFutureOpenChequesInLocalCur:0
+                     }
+
+                 );
+
+                ///var list1=periodMExtendeds.ToList();
+
 
                 List<PeriodMExtended> namedPeriods = (from line in reportList
-                                                      join account in accountsList on line.AccountId equals account.Id
-                                                      join currency in currencies.DefaultIfEmpty() on line.CurrencyId equals currency.Id
-                                                      //join card in cards.DefaultIfEmpty() on account.CardId equals card.Id
-                                                      //join paymentTerm in paymentTerms.DefaultIfEmpty() on account.PaymentTermId equals paymentTerm.Id
-
+                                                          //join account in accountsList on line.AccountId equals account.Id
+                                                      join account in periodMExtendeds on line.AccountId equals account.AccountId
                                                       select new PeriodMExtended()
                                                       {
                                                           OrderDate = line.OrderDate,
@@ -441,28 +475,51 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                           AccountId = line.AccountId,
                                                           CurrencyId = line.CurrencyId,
                                                           Total = line.Total,
-
-                                                          // Account Data
-                                                          AccountEnglishName = account.EnglishName,
-                                                          AccountLocalName = account.LocalName,
-                                                          AccountDisplayNumber = account.DisplayNumber,
-                                                          //AccountPaymentTermName = paymentTerm.EnglishName,
-                                                          //AccountPhone = card.BusinessPhone,
-
-                                                          OpenCredit = line.OpenCredit,
-                                                          OpenDebit = line.OpenDebit,
-                                                          CurrencyCode = currency.Code,
-
-                                                          //// credit data
-                                                          //CreditLimit = (decimal)card.CreditLimitAmount,
-                                                          ////CreditStatus = account.cred,
-                                                          //TotalOpenShipments = card.OpenShipments,
-                                                          //TotalFutureOpenCheques = (decimal)account.TotFutureOpenChequesInLocalCur,
-                                                          //TotalOpenCheques = (decimal)account.TotalOpenChequesInLocalCur,
-
+                                                          AccountEnglishName = account.AccountEnglishName,
+                                                          AccountLocalName = account.AccountLocalName,
+                                                          AccountDisplayNumber = account.AccountDisplayNumber,
+                                                          AccountTermName = account.AccountTermName,
+                                                          CreditLimitAmount = account.CreditLimitAmount,
+                                                          CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
+                                                          BalanceInLocalCurrency= account.BalanceInLocalCurrency,
+                                                          TotalOpenShipments = account.TotalOpenShipments,
+                                                          TotalFutureOpenCheques = account.TotalFutureOpenCheques,
+                                                          TotalOpenCheques = account.TotalOpenCheques
                                                       }).ToList();
+                //
+
+                namedPeriods =
+                    namedPeriods.Select(r =>
+                    new PeriodMExtended()
+                    {
+                        OrderDate = r.OrderDate,
+                        OrderDateB4 = r.OrderDateB4,
+                        AccountId = r.AccountId,
+                        CurrencyId = r.CurrencyId,
+                        Total = r.Total,
+                        AccountEnglishName = r.AccountEnglishName,
+                        AccountLocalName = r.AccountLocalName,
+                        AccountDisplayNumber = r.AccountDisplayNumber,
+                        AccountTermName = r.AccountTermName,
+                        CreditLimitAmount = r.CreditLimitAmount,
+                        CreditStatusAmount_AsIs = r.CreditStatusAmount_AsIs,
+                        CreditStatusAmount= 
+                        ((decimal)(r.CreditLimitAmount)
+                        - (
+                        r.BalanceInLocalCurrency
+                        + r.TotalFutureOpenCheques
+                        + r.TotalOpenCheques
+                        + r.TotalOpenShipments
+                        )
+                        ),
 
 
+                        BalanceInLocalCurrency = r.BalanceInLocalCurrency,
+                        TotalOpenShipments = r.TotalOpenShipments,
+                        TotalFutureOpenCheques = r.TotalFutureOpenCheques,
+                        TotalOpenCheques = r.TotalOpenCheques
+                    }
+                    ).ToList();
 
                 MyPeriodList = reportList;
                 MyPeriodExtendedList = namedPeriods;
@@ -1112,16 +1169,51 @@ Period	Acc	Currency	Total
     {
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
-        public string CurrencyCode { get; set; }
-        public string AccountDisplayNumber { get; set; }
-        public string AccountPaymentTermName { get; set; }
-        public string AccountPhone { get; set; }
-        public decimal CreditLimit { get; set; }
-        public decimal CreditStatus { get; set; }
-        public decimal TotalOpenShipments { get; set; }
-        public decimal TotalFutureOpenCheques { get; set; }
-        public decimal TotalOpenCheques { get; set; }
 
+
+        public string AccountDisplayNumber { get; set; }
+        //accountCardlist.Payment Term: //PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
+        public string AccountTermName { get; set; }
+
+        /*
+        var percentage = 0;
+        if (this.GLAccountMoreData && this.accountCardlist)
+        {
+            percentage =
+                (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
+            +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
+            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
+            + (this.accountCardlist.OpenShipments?this.accountCardlist.OpenShipments:0 );
+
+            this.accountTotal = percentage;
+
+            if(this.accountCardlist.CreditLimitAmount && this.accountCardlist.CreditLimitAmount != 0)
+                percentage = percentage / (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0);
+            else
+                percentage = 0;
+
+            this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
+
+        }
+ 
+         */
+
+
+
+
+        //ccountCardlist?accountCardlist.CreditLimitAmount:0>>entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
+        public double CreditLimitAmount  { get; set; }
+
+        //this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
+        public decimal CreditStatusAmount { get; set; }
+        //this.accountCardlist.OpenShipments? this.accountCardlist.OpenShipments:0 
+        public decimal TotalOpenShipments { get; set; }
+        //+   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
+        public decimal TotalFutureOpenCheques { get; set; }
+        //+   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
+        public decimal TotalOpenCheques { get; set; }
+        public double CreditStatusAmount_AsIs { get;  set; }
+        public decimal BalanceInLocalCurrency { get;  set; }
     }
 
     public class AgingReportParam

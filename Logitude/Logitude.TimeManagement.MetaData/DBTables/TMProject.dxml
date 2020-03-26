@@ -62,8 +62,7 @@
   </Column>
   <Column
     Name="CreateDate"
-    Type="datetime"
-    DefaultValue="'1900-01-01T00:00:00.000'">
+    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
@@ -105,14 +104,16 @@
   <Column
     Name="BudgetId"
     Type="varchar"
-    Size="15">
+    Size="15"
+    DefaultValue="''">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="CategoryId"
     Type="varchar"
-    Size="15">
+    Size="15"
+    DefaultValue="''">
     <Constraints
       Nullable="false" />
   </Column>

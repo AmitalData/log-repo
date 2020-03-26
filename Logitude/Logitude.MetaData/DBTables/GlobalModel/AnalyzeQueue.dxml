@@ -166,5 +166,6 @@
   <Index
     Columns="CreateDate,Tenant" />
   <Index
-    Columns="CreateDate,Tenant,Status" />
+    Columns="Subject"
+    Include="CreateDate" />
 </Table>

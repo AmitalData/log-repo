@@ -61,6 +61,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public CountText: string;
     public IsFilterValueChanged: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    @Output() ComputeFiltersCommand = new EventEmitter();
     constructor() {
         super();
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
@@ -457,17 +458,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.agGrid.api.exportDataAsExcel(params);
     }
     ExportToExcelClicked() {
-        var windowArgs: any = {};
-        windowArgs.queryId = this.DWQueryId;
-        windowArgs.reportId = this.EntityPM.Id;
-        windowArgs.reportName = this.EntityPM.Name;
-        windowArgs.BIReportXMLData = this.BIReportXMLData;
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 500;
-        logitudeWindow.Height = 200;
-        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");
-        logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./Infrastructure/Components/ExportBI2ExcelControl/ExportBI2ExcelControl');
+        this.ComputeFiltersCommand.emit(this.DWQueryId); 
     }
     //#endregion
 
@@ -698,6 +689,20 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     }
     OnComputeFiltersComplete(MyData) {
         this.BIReportXMLData.DWQueryData = MyData;
+        this.ExportToExcelAction();
+    }
+    ExportToExcelAction() {
+        var windowArgs: any = {};
+        windowArgs.queryId = this.DWQueryId;
+        windowArgs.reportId = this.EntityPM.Id;
+        windowArgs.reportName = this.EntityPM.Name;
+        windowArgs.BIReportXMLData = this.BIReportXMLData;
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 500;
+        logitudeWindow.Height = 200;
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Infrastructure/Components/ExportBI2ExcelControl/ExportBI2ExcelControl');
     }
     CountClicked() {
         alert("Count : " + this.agGrid.api.getDisplayedRowCount());
@@ -728,7 +733,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Copy BI Report";
         var windowArgs: any = {};
-        windowArgs.Name = this.EntityPM.Name;
+        windowArgs.Name = this.BIReportName;
         windowArgs.Description = this.EntityPM.Description;
         windowArgs.DWQueryId = this.EntityPM.DWQueryId;
         windowArgs.IsCopy = true;

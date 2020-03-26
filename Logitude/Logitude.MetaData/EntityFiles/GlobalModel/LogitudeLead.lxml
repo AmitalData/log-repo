@@ -39,6 +39,7 @@
   Code="&quot;LLQG&quot;"
   Name="&quot;Logitude Leads&quot;"
   GenerateDomainService="false"
+  ClientModuleName="&quot;Infrastructure&quot;"
   NoViewController="true"
   NoPMController="true"
   NoTS="false"

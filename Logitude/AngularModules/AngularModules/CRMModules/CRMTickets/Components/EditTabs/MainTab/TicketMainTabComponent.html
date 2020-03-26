@@ -227,9 +227,19 @@
                                                                                                                 <HelpIcon [IconSize]='12' [Header]="'Email Delivery Status'" [Text]="item.CorrespondenceCommunicationToolTip" [IconPath]="item.SourceText"></HelpIcon>
                                                                                                             </div>
                                                                                                         </td>
-                                                                                                        <td style="width: 50px;min-width:50px;max-width:50px; vertical-align:top;float:left;">
-                                                                                                            <img style="width:50px;min-width:50px;min-height:50px; height:50px;" src="./Images/graycustomer.png" />
+
+                                                                                                        <td style="width:50px;vertical-align:top">
+                                                                                                            <div *ngIf="item.UserImageDetailId" style="height:45px;width:45px;margin: auto;vertical-align:top">
+                                                                                                                <ImageComponent style="vertical-align:top" [DisplayOnly]="true" [HideBorder]="true" [ImageId]="item.UserImageDetailId" (UploadCompleted)="item.ImageUploadedCompleted($event)"> </ImageComponent>
+                                                                                                            </div>
+                                                                                                            <div [style.background-color]="item.UserImagebackground" *ngIf="!item.UserImageDetailId" style="height:45px;width:45px;border-color:#6B8499;border-radius:2px;vertical-align:central;text-align:center">
+                                                                                                                <div style="height:8px"></div>
+                                                                                                                <div style="font-size:22px;text-align:center;color:white">{{item.UserNameImage}}</div>
+                                                                                                                <div style="height:8px"></div>
+                                                                                                            </div>
+
                                                                                                         </td>
+
                                                                                                         <td>
                                                                                                             <div></div>
                                                                                                         </td>

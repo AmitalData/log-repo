@@ -60,6 +60,7 @@ namespace Logitude.Accounting.BL.DataContract
         public TaxDeductionReportData GetTaxDeductionReportData()
         {            
             TaxDeductionReportData taxDeductionReport = new TaxDeductionReportData();
+            taxDeductionReport.TaxYear = ReportYear;
             taxDeductionReport.deductionLines = GetTaxReportDeductionLines();
            
             taxDeductionReport.ByVendorList = FillGroupByVendorList(taxDeductionReport.deductionLines);
@@ -429,10 +430,31 @@ namespace Logitude.Accounting.BL.DataContract
             {
                 taxDeduction.TotalEndBalance = Math.Round(taxDeduction.ByVendorList.Sum(d => d.EndYearBalance).Value, 0);//  DBVendorsList.Sum(d => d.EndYearBalance).Value,0);
             }
+            taxDeduction.TotalForCompany = FillCompanyTotalForPDFReport(taxDeduction);
             return taxDeduction;
 
         }
+        private List<TotalForCompany> FillCompanyTotalForPDFReport(TaxDeductionReportData taxDeduction)
+        {
+            FullAccountingSettingPM setting = GetFullAccountingPMForTenant();
+            TenantPM tenantPM = GetTenantPM();
+            List<TotalForCompany> totals = new List<TotalForCompany>();
+            TotalForCompany totalForCompany = new TotalForCompany()
+            {
+                DeductionFileNumber = setting.DeductionFileNumber,
+                CompanyName = tenantPM.Company,
+                TotalPayments = taxDeduction.TotalAmountInLocalCurrency,
+                TotalDeductions= taxDeduction.TotalDeductionInLocalCurrency,
 
-
+            };
+            totals.Add(totalForCompany);
+            return totals;
+        }
+        private TenantPM GetTenantPM()
+        {
+            TenantQuery tenantQuery = new TenantQuery(Tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(Tenant);
+            return tenantPM;
+        }
     }
 }

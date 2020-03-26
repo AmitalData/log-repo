@@ -249,7 +249,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit {
             myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
 
             myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_","")));
-            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0));
+            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance||0,"decimal"));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;

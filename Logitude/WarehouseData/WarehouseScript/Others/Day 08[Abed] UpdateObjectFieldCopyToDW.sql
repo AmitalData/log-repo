@@ -5,7 +5,7 @@
 
 
 update  ObjectFields set CopyToDW = 0 
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'DWHSetting') and (FieldName = 'Tenant' or FieldName = 'ParentTenant')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'DWHSetting') and ( FieldName = 'ParentTenant')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Direction') and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'TransportMode')and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentLevel')and (FieldName = 'Code' or FieldName = 'Name'  )
@@ -30,7 +30,7 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 
 
 
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Customer') and (FieldName = 'CreditLimitAmount' or FieldName = 'CreditLimitOpenBalance' or FieldName = 'AccountManagerUserId' or FieldName = 'RankId'  or FieldName = 'RegionId' or FieldName = 'CustomerSizeId'  or FieldName = 'IndustryId' )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Customer') and (FieldName = 'LeadSourceId' or FieldName = 'CreditLimitAmount' or FieldName = 'CreditLimitOpenBalance' or FieldName = 'AccountManagerUserId' or FieldName = 'RankId'  or FieldName = 'RegionId' or FieldName = 'CustomerSizeId'  or FieldName = 'IndustryId' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Tenant') and (FieldName = 'AddressId' or FieldName = 'CountryId' or FieldName = 'Company' or  FieldName = 'CurrencyId' )
 
 
@@ -38,6 +38,7 @@ update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from Obje
 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'EntityStatus') and (FieldName = 'Name' or FieldName = 'Code' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Rank') and (FieldName = 'Name'  )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'LeadSource') and (FieldName = 'Name'  )
 
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Region') and (FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'CustomerSize') and (FieldName = 'Name'  )
@@ -77,4 +78,16 @@ update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from Obj
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'SpecialServicesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' )
 update  ObjectFields  set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation' or FieldName ='NumberOfDeliveries' or FieldName ='OperationallyClosedByUserId' or FieldName ='LastPickupATA' or FieldName ='LastPickupATD' or FieldName ='LastPickupETA' or FieldName ='LastPickupETD' or  FieldName ='DeliveryToPortId' or FieldName ='DeliveryFrom' or FieldName ='DeliveryTo' or FieldName ='PickupFrom' or FieldName ='PickupTo')
 
+
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentPayable') and (FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId'  or FieldName = 'OpenAmount' or FieldName = 'OpenAmountInLocalCurrency' or FieldName = 'OpenAmountInProfitCurrency' or FieldName = 'AccountedAmount' or FieldName = 'AccountedAmountInLocalCurrency' or FieldName = 'AccountedAmountInProfitCurrency' )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'APInvoiceLineId') and (FieldName = 'EntityPayableId' or FieldName = 'LineNumber')
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'APInvoice') and (FieldName = 'InvoiceNumber' or FieldName = 'AmountInInvoiceCurrency'  or FieldName = 'InvoiceCurrencyId' or FieldName = 'InvoiceCurrencyExchangeRate' )
+
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentReceivable') and (FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId' or FieldName = 'TotalAmount' or FieldName = 'TotalAmountLocal' or FieldName =  'ARInvoiceLineId' )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoiceLineId') and (FieldName = 'ReceivableId' or FieldName = 'ARInvoiceId')
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoice') and (FieldName = 'InvoiceNumber' or FieldName = 'AmountInInvoiceCurrency'  or FieldName = 'InvoiceCurrencyId' or FieldName = 'InvoiceCurrencyExchangeRate' )
+
+
+
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ChargesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName'  or FieldName = 'ChargesGroupCode' or FieldName='ChargesGroupId')
 

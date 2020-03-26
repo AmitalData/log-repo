@@ -45,7 +45,7 @@ export class OpenQuotesByStageComponent implements OnInit {
     }
 
     // Load Funnel Data
-    public FunnelData: any;
+    public FunnelData: any; 
     public FunnelDataFilterd = [];
     LoadFunnelData() {
         this.dashboardService.GetDashboardChartValues(this.funnelArgs).subscribe((myResult: any) => {

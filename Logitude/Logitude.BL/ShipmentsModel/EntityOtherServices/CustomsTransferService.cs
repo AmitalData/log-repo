@@ -78,6 +78,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         sheet1.Range["A1:AX1"].CellStyle.Font.Color = ExcelKnownColors.Black;
                         sheet1.Range["A1:AX1"].CellStyle.Color = System.Drawing.Color.FromArgb(255, 242, 220, 219);
                         sheet1.Range["A1:AX1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+                        sheet1.Range["K1"].EntireColumn.IsStringsPreserved = true;
+                        sheet1.Range["O1"].EntireColumn.IsStringsPreserved = true;
                         break;
                     }
 
@@ -90,6 +92,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         sheet1.Range["A1:AB1"].CellStyle.Font.Color = ExcelKnownColors.White;
                         sheet1.Range["A1:AB1"].CellStyle.Color = System.Drawing.Color.Orange;
                         sheet1.Range["A1:AB1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+                        sheet1.Range["B1"].EntireColumn.IsStringsPreserved = true;
+                        sheet1.Range["G1"].EntireColumn.IsStringsPreserved = true;
                         break;
                     }
             }
@@ -112,11 +116,11 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         dataTable.Columns.Add("Name_of_Vessel");
                         dataTable.Columns.Add("Number_of_Trip");
                         dataTable.Columns.Add("Type_of_Operation");
-                        dataTable.Columns.Add("Number_Of_BL");
+                        dataTable.Columns.Add("Number_Of_BL", typeof(string));
                         dataTable.Columns.Add("Port_of_Loading_Unloading");
                         dataTable.Columns.Add("Country_of_Port_of_Loading_Unloading");
                         dataTable.Columns.Add("Type_of_BL");
-                        dataTable.Columns.Add("Number_of_BL_Reference");
+                        dataTable.Columns.Add("Number_of_BL_Reference", typeof(string));
                         dataTable.Columns.Add("Type_of_Port");
                         dataTable.Columns.Add("Key_of_port");
                         dataTable.Columns.Add("Country_of_Port");
@@ -158,12 +162,12 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 case "AMAS":
                     {
                         dataTable.Columns.Add("Type Oper");
-                        dataTable.Columns.Add("Master B/L");
+                        dataTable.Columns.Add("Master B/L", typeof(string));
                         dataTable.Columns.Add("ORIGIN_AIRPORT_CODE");
                         dataTable.Columns.Add("ORIGIN_AIRPORT");
                         dataTable.Columns.Add("DESTINATION_AIRPORT_CODE");
                         dataTable.Columns.Add("DESTINATION_AIRPORT");
-                        dataTable.Columns.Add("House B/L");
+                        dataTable.Columns.Add("House B/L", typeof(string));
                         dataTable.Columns.Add("CURRENCY");
                         dataTable.Columns.Add("Code IATA Carrier");
                         dataTable.Columns.Add("CARRIER (AEROLINEA)");
@@ -326,20 +330,30 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     //row[1] = ;
                     row[2] = myTenant == null ? "" : myTenant.CAAT;
                     row[3] = "8";
-                    //row[4] = ;
+
+                    if(item.ShipmentLevelCode == "H")
+                    {
+                        row[4] = item.DirectionId == "E" ? item.FromPortCode : item.ToPortCode;
+                    }
+
+                    else
+                    {
+                        row[4] = item.DirectionId == "E" ? item.MainCarriageFromPortCode : item.MainCarriageFinalDestinationPortCode;
+                    }
+                   
                     //row[5] = ;
                     row[6] = carrier == null ? "" : carrier.SCACCode;
                     row[7] = item.MainCarriageVesselName;
                     row[8] = item.MainCarriageCarrierNumber;
                     row[9] = item.DirectionId == "E" ? "2" : "1";
                     row[10] = item.House;
-                    //row[11] = ;
-                    //row[12] = ;
+                    row[11] = item.ShipmentLevelCode == "H" ? item.FromPortCode : item.MainCarriageFromPortCode;
+                    row[12] = item.ShipmentLevelCode == "H"? item.FromPortCountryCode : item.MainCarriageFromPortCountryCode;
                     row[13] = "H";
                     row[14] = item.House;
                     row[15] = "2";
-                    //row[16] = ;
-                    //row[17] = ;
+                    row[16] = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode;
+                    row[17] = item.ShipmentLevelCode == "H"? item.ToPortCountryCode : item.MainCarriageFinalDestinationCountryCode;
                     row[18] = "1";
                     row[19] = item.ShipperName;
                     //row[20] = ;
@@ -361,7 +375,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[36] = "";
                     row[37] = generalDescription;
                     row[38] = "";
-                    row[39] = "";
+                    //row[39] = "";
                     row[40] = dangerousClassNumber;
                     row[41] = dangerousUNNumber;
                     row[42] = "";
@@ -478,9 +492,17 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 }
             }
 
-            sheet1.ImportDataTable(dataTable, true, 1, 1);
-            workbook.SaveAs(memory);
-            return memory.ToArray();
+            try
+            {
+                sheet1.ImportDataTable(dataTable, true, 1, 1);
+                workbook.SaveAs(memory);
+                return memory.ToArray();
+            }
+
+            catch (Exception ex)
+            {
+                throw new ApplicationException(ex.Message);
+            }
         }
 
         private string ComputeAddressStreet(Address address)

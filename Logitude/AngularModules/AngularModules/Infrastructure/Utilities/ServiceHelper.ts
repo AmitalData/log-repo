@@ -1,6 +1,8 @@
 
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import {Http, Headers, Response} from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+
 import {Observable} from 'rxjs/Rx';
 import {AppTool, DateTool} from '../Tools';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
@@ -14,6 +16,8 @@ declare var window: any;
 
 export class ServiceHelper {
     public static Http: Http;
+    public static HttpClient: HttpClient;
+
     private static _CurrentSession = SessionLocator.SelectedSession;
     private static get CurrentSession() {
         if (this._CurrentSession == null) {

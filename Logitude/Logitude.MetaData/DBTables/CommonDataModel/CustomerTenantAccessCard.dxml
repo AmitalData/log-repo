@@ -21,8 +21,7 @@
   </Column>
   <Column
     Name="Tenant"
-    Type="int"
-    DefaultValue="0">
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>

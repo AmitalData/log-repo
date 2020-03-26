@@ -37,6 +37,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel;
+using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -81,6 +82,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 			    }
 				if (entityList != null)
 				{
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                	customFieldResolver.SetCustomFieldsValues("ARPayment",  authToken.Tenant, new List<ARPaymentList> { entityList }.Cast<object>().ToList());
  	
 					entityList = ARPaymentAPiHelper.ApplyFilters(entityList, authToken.Tenant);
 				}
@@ -116,6 +119,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.PaymentNo);
 				List<ARPaymentList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                customFieldResolver.SetCustomFieldsValues("ARPayment", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -330,6 +335,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 				}
 			   List<ARPaymentList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+               customFieldResolver.SetCustomFieldsValues("ARPayment", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
