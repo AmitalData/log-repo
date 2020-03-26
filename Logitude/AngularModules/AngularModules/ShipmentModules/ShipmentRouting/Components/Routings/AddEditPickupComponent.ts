@@ -193,7 +193,7 @@ export class AddEditPickupComponent implements OnDestroy {
 
                     case "PACG": {
                         if (this.PageChild_PACG == null) {
-                            this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage").subscribe(response => {
+                            this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage").subscribe((response:any) => {
                                 SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentRouting/Components/Routings/PickupTabs/PickupPackagesTabComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.PageChild_PACG = cmpRef.instance;

@@ -342,7 +342,7 @@ export class ShipmentHelperComponent implements OnDestroy {
         }
     }
     SendToCustom() {
-        this._entityResourceService.getEntityResourceByTableName("ShipmentCustomsTransmission", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("ShipmentCustomsTransmission", 0).subscribe((response:any) => {
             var check = this.CheckSettingsWindowVisibility();
 
             if (check) {

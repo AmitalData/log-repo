@@ -42,11 +42,11 @@ export class MasterActionConfirmationComponent extends BaseComponent {
     SetWindowArgs(args: ShipmentMenuButtonsHandler) {
         this.CurrentSession.StartBusyIndicator("Loading...");
         this.shipmentService = new ShipmentDomainService();
-        this.shipmentService.GetConnectedShipmentsByMasterIdAndTenant(args.EntityPM.Id, args.EntityPM.Tenant).subscribe(response => {
+        this.shipmentService.GetConnectedShipmentsByMasterIdAndTenant(args.EntityPM.Id, args.EntityPM.Tenant).subscribe((response:any) => {
             if (!response.HasError && response.Result) {                                
                 this.FatherComponent = args;
     
-                this.shipmentService.GetShipmentConsolidationPackages(this.FatherComponent.EntityPM.Id).subscribe(result => {
+                this.shipmentService.GetShipmentConsolidationPackages(this.FatherComponent.EntityPM.Id).subscribe((result:any) => {
                     this.FatherComponent.EntityPM.IsOperationalClosed = true;                  
                     this.MasterViewModel = new MasterActionConfirmationViewModel(this.FatherComponent.EntityPM, result.Result);
                     this.MasterViewModel.IsMaster = true;

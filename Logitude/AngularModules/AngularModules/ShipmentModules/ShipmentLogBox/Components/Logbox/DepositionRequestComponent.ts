@@ -80,7 +80,7 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
         if (!AppTool.IsNullOrEmpty(this.ShipmentId)) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-            this.shipmentComputedFieldExtendedService.GetMarkCompleteDepositionRequest(this.ShipmentId, this.DirectionId , this.ForwardershipmentNumber , this.ForwarderPartnerId).subscribe(myResult => {
+            this.shipmentComputedFieldExtendedService.GetMarkCompleteDepositionRequest(this.ShipmentId, this.DirectionId , this.ForwardershipmentNumber , this.ForwarderPartnerId).subscribe((myResult:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var pmResponse: ServiceResponse = myResult;
                 if (!pmResponse.HasError) {
