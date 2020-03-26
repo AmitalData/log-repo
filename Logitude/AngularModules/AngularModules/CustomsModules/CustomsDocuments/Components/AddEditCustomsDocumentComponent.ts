@@ -182,10 +182,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     SetWindowArgs(windowArgs) {
           this.WindowArgs = windowArgs;
         this.CustomsDocumentsTicket = windowArgs.CustomsDocumentsTicket;
-        //if (windowArgs.DocumentTypeCode) {
-        //    this.CustomsDocument.DocumentTypeCode = windowArgs.DocumentTypeCode;
-        //    this.DocumentTypeCode = windowArgs.DocumentTypeCode;
-        //}
+
         if (this.CustomsDocumentsTicket) {
             this.CustomsDocumentsTicket.CloneMe();
         }

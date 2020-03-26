@@ -99,9 +99,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 if (customDocument != null)
                 {
-                    if (customDocument.DocumentTypeCode == null)
-                        customDocument.DocumentTypeCode = entityPM.DocumentTypeCode;
-
                     CustomsDocumentUpdateService customsdocumentUpdateService = new CustomsDocumentUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                     customDocument.ChangeSetOp = ChangeSetOperation.Update;
                     this.UpdateIsPartOfDeclaration(customDocument, entityPM);
