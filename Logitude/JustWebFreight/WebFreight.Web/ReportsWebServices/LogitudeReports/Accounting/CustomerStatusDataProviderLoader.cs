@@ -59,7 +59,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 decimal customerBalance = customer.Sum(d => d.Total);
 
 
-                if (balanceFilter == "debtors" && customerBalance >= 0
+                if (balanceFilter == "debtors" && customerBalance > 0
                     || balanceFilter == "debt" && customerBalance >= balanceFilterValue
                     || balanceFilter == "all" || balanceFilter == null)
                 {
@@ -107,15 +107,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 // account details
                 CustomerName = customer.First().AccountEnglishName,
                 CustomerDisplayNumber = customer.First().AccountDisplayNumber,
-                CustomerPaymentTerm = customer.First().AccountPaymentTermName,
+                CustomerPaymentTerm = customer.First().AccountTermName,
                 CustomerPhone = customer.First().AccountPhone,
 
-                // credit details
-                CreditLimit = customer.First().CreditLimit,
-                CreditStatus = customer.First().CreditStatus,
-                TotalFutureOpenCheques = customer.First().TotalFutureOpenCheques,
-                TotalOpenCheques = customer.First().TotalOpenCheques,
-                TotalOpenShipments = customer.First().TotalOpenShipments,
+                //credit details
+                CreditLimit = (decimal)customer.First().CreditLimitAmount,
+                CreditStatus = customer.First().CreditStatusAmount ?? 0,
+                TotalFutureOpenCheques = customer.First().TotalFutureOpenCheques??0,
+                TotalOpenCheques = customer.First().TotalOpenCheques ?? 0,
+                TotalOpenShipments = customer.First().TotalOpenShipments ?? 0,
 
                 AccountingBalance = customer.Sum(d => d.Total),
                 Periods = GetStatusPeriods(periodsByDate)

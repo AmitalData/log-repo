@@ -438,6 +438,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountId = a.Id,
                          AccountDisplayNumber = a.DisplayNumber,
                          AccountTermName = card.PaymentTerm.EnglishName,
+                         AccountPhone = card.Phone,
+                         AccountEnglishName = a.EnglishName,
+                         AccountLocalName = a.LocalName,
+                         CurrencyCode = a.CurrencyCode,
+                         
 
                          CreditLimitAmount =
                          //cust!=null?(double)cust.CreditLimitAmount:0,
@@ -474,11 +479,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                           OrderDateB4 = line.OrderDateB4,
                                                           AccountId = line.AccountId,
                                                           CurrencyId = line.CurrencyId,
+                                                          CurrencyCode = account.CurrencyCode,
                                                           Total = line.Total,
                                                           AccountEnglishName = account.AccountEnglishName,
                                                           AccountLocalName = account.AccountLocalName,
                                                           AccountDisplayNumber = account.AccountDisplayNumber,
                                                           AccountTermName = account.AccountTermName,
+                                                          OpenCredit = line.OpenCredit,
+                                                          OpenDebit = line.OpenDebit,
+                                                          AccountPhone = account.AccountPhone,
+
+
+
                                                           CreditLimitAmount = account.CreditLimitAmount,
                                                           CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
                                                           BalanceInLocalCurrency= account.BalanceInLocalCurrency,
@@ -496,11 +508,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         OrderDateB4 = r.OrderDateB4,
                         AccountId = r.AccountId,
                         CurrencyId = r.CurrencyId,
+                        CurrencyCode = r.CurrencyCode,
                         Total = r.Total,
                         AccountEnglishName = r.AccountEnglishName,
                         AccountLocalName = r.AccountLocalName,
                         AccountDisplayNumber = r.AccountDisplayNumber,
                         AccountTermName = r.AccountTermName,
+                        AccountPhone = r.AccountPhone,
                         CreditLimitAmount = r.CreditLimitAmount,
                         CreditStatusAmount_AsIs = r.CreditStatusAmount_AsIs,
                         CreditStatusAmount= 
@@ -512,6 +526,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         + r.TotalOpenShipments
                         )
                         ),
+                        OpenCredit = r.OpenCredit,
+                        OpenDebit = r.OpenDebit,
 
 
                         BalanceInLocalCurrency = r.BalanceInLocalCurrency,
@@ -1174,6 +1190,8 @@ Period	Acc	Currency	Total
         public string AccountDisplayNumber { get; set; }
         //accountCardlist.Payment Term: //PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
         public string AccountTermName { get; set; }
+        public string AccountPhone { get; set; }
+        public string CurrencyCode { get; set; }
 
         /*
         var percentage = 0;
@@ -1202,18 +1220,18 @@ Period	Acc	Currency	Total
 
 
         //ccountCardlist?accountCardlist.CreditLimitAmount:0>>entityList.CreditLimitAmount = entityPOCO.Customer.CreditLimitAmount;
-        public double CreditLimitAmount  { get; set; }
+        public double CreditLimitAmount { get; set; } = 0;
 
         //this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
-        public decimal CreditStatusAmount { get; set; }
+        public decimal? CreditStatusAmount { get; set; } = 0;
         //this.accountCardlist.OpenShipments? this.accountCardlist.OpenShipments:0 
-        public decimal TotalOpenShipments { get; set; }
+        public decimal? TotalOpenShipments { get; set; } = 0;
         //+   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
-        public decimal TotalFutureOpenCheques { get; set; }
+        public decimal? TotalFutureOpenCheques { get; set; } = 0;
         //+   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
-        public decimal TotalOpenCheques { get; set; }
-        public double CreditStatusAmount_AsIs { get;  set; }
-        public decimal BalanceInLocalCurrency { get;  set; }
+        public decimal? TotalOpenCheques { get; set; } = 0;
+        public double CreditStatusAmount_AsIs { get;  set; } = 0;
+        public decimal? BalanceInLocalCurrency { get;  set; } = 0;
     }
 
     public class AgingReportParam

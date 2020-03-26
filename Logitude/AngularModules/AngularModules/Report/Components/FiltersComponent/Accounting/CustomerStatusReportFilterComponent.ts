@@ -266,6 +266,13 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
         //#endregion
 
+
+        if(this.SelectedBalanceTypeCode == "debt" && !this.Balance)
+            errors.push(this.showLocals ? "נא לבחור סכום לשדה ''מעל חוב" : "Please enter an amount for the 'Debt Above' field");
+            // errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
+
+
+
         if (errors.length == 0) {
 
 
@@ -315,6 +322,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     BalanceTypeChanged(type){
         this.SelectedBalanceTypeItem = type;
         this.SelectedBalanceTypeCode = type.Code;
+        this.Balance = null;
     }
     SelectedBalanceTypeCode: string;
     BalanceTypes = [
