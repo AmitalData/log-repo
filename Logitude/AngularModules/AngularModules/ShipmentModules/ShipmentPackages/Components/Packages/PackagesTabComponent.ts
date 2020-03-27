@@ -2727,12 +2727,7 @@ export class ShipmentPackageItem extends BaseComponent {
         var importer: string = "";
         var importerRef1: string = "";
 
-        if (this.ShipmentPM.DirectionId == "E") {
-            importer = this.ShipmentPM.ConsigneeName;
-            importerRef1 = this.ShipmentPM.ConsigneeReference1;
-        }
-
-        else if (this.ShipmentPM.DirectionId == "I") {
+        if (this.ShipmentPM.DirectionId == "E" || this.ShipmentPM.DirectionId == "I") {
             importer = this.ShipmentPM.ConsigneeName;
             importerRef1 = this.ShipmentPM.ConsigneeReference1;
         }
