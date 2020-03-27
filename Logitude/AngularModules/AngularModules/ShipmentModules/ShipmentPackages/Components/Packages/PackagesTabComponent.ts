@@ -2733,8 +2733,8 @@ export class ShipmentPackageItem extends BaseComponent {
         }
 
         else if (this.ShipmentPM.DirectionId == "I") {
-            importer = this.ShipmentPM.ShipperName;
-            importerRef1 = this.ShipmentPM.ShipperReference1;
+            importer = this.ShipmentPM.ConsigneeName;
+            importerRef1 = this.ShipmentPM.ConsigneeReference1;
         }
 
         if (this.EntityPM.IsContainer) {
