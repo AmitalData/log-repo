@@ -79,6 +79,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                QBOOAuth=a.QBOOAuth,
                                                AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                               EnableAPPaymentExternalPayment=a.EnableAPPaymentExternalPayment,
                                            }).FirstOrDefault();
 
             return account;
@@ -135,6 +136,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                QBOOAuth = a.QBOOAuth,
                                                AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                               EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
+
                                            }).FirstOrDefault();
 
             if (account != null)
@@ -205,6 +208,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        QBOOAuth = a.QBOOAuth,
                                        AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                        AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                       EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
+
                                    });
 
                     foreach (var c in systems)
@@ -276,6 +281,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               QBOOAuth = a.QBOOAuth,
                               AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                               AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                              EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
+
                           }).FirstOrDefault();
             }
 
@@ -333,6 +340,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             QBOOAuth = a.QBOOAuth,
                                                             AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                             AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                                            EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
+
                                                         });
 
             return accounts;
@@ -388,6 +397,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            QBOOAuth = a.QBOOAuth,
                                                            AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                            AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                                           EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
+
                                                        };
             return result;
         }

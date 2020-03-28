@@ -2207,7 +2207,6 @@
     <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.Designer.cs">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.cs" />
     <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.Designer.cs">
       <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
@@ -2236,12 +2235,14 @@
     <Compile Include="Migrations\202003251225103_Abed_AddLastRunDetailToContext.Designer.cs">
       <DependentUpon>202003251225103_Abed_AddLastRunDetailToContext.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs" />
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202003271035053_AddAPPaymentExternalAmount.cs" />
+    <Compile Include="Migrations\202003271035053_AddAPPaymentExternalAmount.Designer.cs">
+      <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -4018,7 +4019,6 @@
     <EmbeddedResource Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.resx">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.resx">
       <DependentUpon>202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
@@ -4043,11 +4043,12 @@
     <EmbeddedResource Include="Migrations\202003251225103_Abed_AddLastRunDetailToContext.resx">
       <DependentUpon>202003251225103_Abed_AddLastRunDetailToContext.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.resx">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\202003271035053_AddAPPaymentExternalAmount.resx">
+      <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
