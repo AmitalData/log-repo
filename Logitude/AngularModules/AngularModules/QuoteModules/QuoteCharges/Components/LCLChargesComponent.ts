@@ -344,12 +344,13 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.RunAddEditCharge(itemComponent, title);
     }
     DeleteChargeClicked(itemComponent: QuoteChargeItem) {
-        if (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+        if ((itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) ||
+            (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsCostAllIn).length > 0)) {
             var window = new MessageWindow();
             window.Show("Can't delete this charge because it's connected to other All In charges");            
         }
 
-        else if (itemComponent.EntityPM.IsAllIN) {
+        else if (itemComponent.EntityPM.IsAllIN || (itemComponent.EntityPM.IsCostAllIn)) {
             var window = new MessageWindow();
             window.Show("Can't delete this charge because it's All In");            
         }
@@ -1287,15 +1288,17 @@ export class QuoteChargeItem extends BaseComponent {
     }
 
     SetUIProperties_AllInCost() {
-        var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
-        var isEnabled_CostCurrencyId = true;
-        if (this.IsCostAllIn) {
-            isEnabled_CostCurrencyId = false;
+        if (this.IsEditingEnabled) {
+            var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
+            var isEnabled_CostCurrencyId = true;
+            if (this.IsCostAllIn) {
+                isEnabled_CostCurrencyId = false;
+            }
+            this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+            this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+            this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
+            this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
         }
-        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
-        this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
-        this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
-        this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
     }
 
     public IsEnabled_CostQuantity: boolean = false;
