@@ -168,12 +168,14 @@ export class FieldTemplateComponent {
     
 
     PreShowCFIFILEMMoveSIToOCRScreen(value: string) {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
         if (value == 'X' || value == 'E') {
             this.ShowCFIFILEMMoveSIToOCRScreen();
         }
     }
 
     ShowCFIFILEMMoveSIToOCRScreen() {
+        
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMMoveSIToOCRScreen(
                 this.Entity.CustomFileNo,
