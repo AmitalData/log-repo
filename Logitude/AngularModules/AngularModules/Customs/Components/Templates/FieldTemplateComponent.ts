@@ -153,6 +153,7 @@ export class FieldTemplateComponent {
     }
 
     ShowCFIFILEMMoveToQueueScreen() {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMMoveToQueueScreen(
                 this.Entity.CustomFileNo,
@@ -162,6 +163,13 @@ export class FieldTemplateComponent {
             var myMessageWindow = new MessageWindow();
             let mess = "ShowCFIFILEMMoveToQueueScreen -" + this.Entity.CustomFileNo;
             myMessageWindow.Show(mess);
+        }
+    }
+    
+
+    PreShowCFIFILEMMoveSIToOCRScreen(value: string) {
+        if (value == 'X' || value == 'E') {
+            this.ShowCFIFILEMMoveSIToOCRScreen();
         }
     }
 
@@ -274,7 +282,7 @@ export class FieldTemplateComponent {
 
 
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                "ScriptableGatewayUtil.ShowCFIUFILEFromDeclarationReferantDataList",
+                "ScriptableGatewayUtil.ShowCFIFILEMFUStatusScreenList",
                 "CFIHMAIN.LogitudeTask",
                 "ShowCFIFILEMFUStatusScreen",
                 unifreightMessageM,
