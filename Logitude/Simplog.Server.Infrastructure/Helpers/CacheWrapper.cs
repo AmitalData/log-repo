@@ -55,7 +55,7 @@ namespace Simplog.Server.Infrastructure.Helpers
 
         public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies)
         {
-            cache.Insert(key, value, dependencies);
+            cache.Insert(key, value, dependencies,System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
         }
 
         public void Insert(string key, object value, System.Web.Caching.CacheDependency dependencies, DateTime absoluteExpiration, TimeSpan slidingExpiration)
