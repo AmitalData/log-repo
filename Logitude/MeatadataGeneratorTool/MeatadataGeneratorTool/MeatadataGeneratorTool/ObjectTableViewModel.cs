@@ -2707,19 +2707,13 @@ namespace MeatadataGeneratorTool
                     //UpdateObsList(this);
                     succeeded = true;
 
-                    Stopwatch stopWatch1 = new Stopwatch();
-                    stopWatch1.Start();
                     XmlGeneratorClass.GenerateXmlFileFromTool(this);
-                    stopWatch1.Stop();
-                    string generateLXMLTime = stopWatch1.ElapsedMilliseconds.ToString();
 
-                    Stopwatch stopWatch2 = new Stopwatch();
-                    stopWatch2.Start();
-                    XmlGeneratorClass.GenerateDXMLFileFromTool(this);
-                    stopWatch2.Stop();
-                    string generateDXMLTime = stopWatch2.ElapsedMilliseconds.ToString();
-
-                    //MessageBox.Show("Generate LXML Time(ms): " + generateLXMLTime + "\nGenerate DXML Time(ms): " + generateDXMLTime);
+                    string lxmlFileName = Path.GetFileName(App.DirectOpenPath);
+                    if(lxmlFileName != "General.lxml")
+                    {
+                        XmlGeneratorClass.GenerateDXMLFileFromTool(this);
+                    }
 
                     // App.CurrentControl.Close();
                     Environment.Exit(0);
