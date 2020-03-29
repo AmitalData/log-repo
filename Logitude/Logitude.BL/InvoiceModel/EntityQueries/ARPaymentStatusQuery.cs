@@ -43,7 +43,28 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                     }).FirstOrDefault();
         }
+        public ARPaymentStatusPM GetSinglePM(string code)
+        {
+            return (from a in repository.context.ARPaymentStatus
+                    where a.Code == code
+                    select new ARPaymentStatusPM()
+                    {
+                        Code = a.Code,
+                        Name = a.Name,
 
+                    }).FirstOrDefault();
+        }
+        public ARPaymentStatusPM GetSinglePM(string code, int tenant)
+        {
+            return (from a in repository.context.ARPaymentStatus
+                    where a.Code == code
+                    select new ARPaymentStatusPM()
+                    {
+                        Code = a.Code,
+                        Name = a.Name,
+
+                    }).FirstOrDefault();
+        }
         public IQueryable<ARPaymentStatusPM> GetARPaymentStatusPMs()
         {
             return (from a in repository.context.ARPaymentStatus
