@@ -2087,9 +2087,9 @@
     <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.Designer.cs">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003251453160_UserLayoutMigration.cs" />
-    <Compile Include="Migrations\202003251453160_UserLayoutMigration.Designer.cs">
-      <DependentUpon>202003251453160_UserLayoutMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.cs" />
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.Designer.cs">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
@@ -3773,8 +3773,8 @@
     <EmbeddedResource Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.resx">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003251453160_UserLayoutMigration.resx">
-      <DependentUpon>202003251453160_UserLayoutMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003290823147_UsersLayoutDirectionMigration.resx">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
