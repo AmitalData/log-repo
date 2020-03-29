@@ -60,7 +60,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;339e11aa-5220-43b0-9dd7-e615d491d361&quot;"
     FieldName="&quot;Code&quot;"
@@ -142,8 +144,8 @@
     ObjectTableName="&quot;INTTRABookingTransStatus&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="100"
-    IsRequired="false"
+    MaxLength="40"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
@@ -257,7 +259,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="true"
+    IsMaxLength="false"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"

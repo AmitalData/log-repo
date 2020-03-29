@@ -55,7 +55,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;AccountingSystemsSyncStatus,AccountingSystemsSyncStatuses,,Id,&quot;">
+  SearchFields="&quot;AccountingSystemsSyncStatus,AccountingSystemsSyncStatuses,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;fc19f3ca-c852-4b70-aa5a-e3caa7bb566e&quot;"
     FieldName="&quot;LastErrorDate&quot;"
@@ -430,7 +432,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;AccountingSystemsSyncStatus&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="7000"
     IsRequired="false"
@@ -478,7 +480,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"

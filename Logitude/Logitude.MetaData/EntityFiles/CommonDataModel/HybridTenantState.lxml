@@ -3,7 +3,7 @@
   Id="&quot;3394f82d-6607-489a-83b7-179fc689c45c&quot;"
   ObjectTableName="&quot;HybridTenantState&quot;"
   IsNew="false"
-  DBTableName="&quot;HybridTenantState&quot;"
+  DBTableName="&quot;HybridTenantStates&quot;"
   OldDBTableName="&quot;HybridTenantState&quot;"
   ObjectTableSingular="&quot;Hybrid Tenant State&quot;"
   ObjectTablePlural="&quot;Hybrid Tenant State&quot;"
@@ -54,7 +54,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;HybridTenantState,HybridTenantState,,,&quot;">
+  SearchFields="&quot;HybridTenantState,HybridTenantState,,,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7e539d2d-f4e7-492b-b67d-495dc796773f&quot;"
     FieldName="&quot;Tenant&quot;"

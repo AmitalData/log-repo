@@ -26,7 +26,9 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;Opportunity Stage&quot;">
+  DefaultText="&quot;Opportunity Stage&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;3c62ff4e-a5e7-43c1-9860-200f2e860513&quot;"
     FieldName="&quot;Id&quot;"

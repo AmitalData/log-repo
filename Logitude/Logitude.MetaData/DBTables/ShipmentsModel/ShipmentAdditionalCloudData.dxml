@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentAdditionalCloudDatas"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -33,7 +34,7 @@
   <Column
     Name="ApprovedByUserName"
     Type="nvarchar"
-    Size="-1">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
@@ -46,21 +47,21 @@
   <Column
     Name="VersionApproved"
     Type="nvarchar"
-    Size="-1">
+    Size="10">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="DenyReason"
     Type="nvarchar"
-    Size="-1">
+    Size="1024">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ShipmentAddtionalDataXML"
     Type="nvarchar"
-    Size="-1">
+    Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -124,7 +125,7 @@
   <Column
     Name="UserIdNumber"
     Type="nvarchar"
-    Size="-1">
+    Size="35">
     <Constraints
       Nullable="true" />
   </Column>

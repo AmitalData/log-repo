@@ -42,7 +42,9 @@
   HasFiltersMenu="false"
   ClientModuleName="&quot;Shipment&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;9fec0b19-c170-48d7-90e4-2a5bb327ad68&quot;"
     FieldName="&quot;Name&quot;"
@@ -172,7 +174,7 @@
     Id="&quot;b69de7a3-924a-4fab-a8db-5233e6190db2&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;ShipmentReceivableStatus&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

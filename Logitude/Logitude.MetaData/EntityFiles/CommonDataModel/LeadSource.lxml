@@ -59,7 +59,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;LeadSource,LeadSources,,Id,Name&quot;">
+  SearchFields="&quot;LeadSource,LeadSources,,Id,Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a4d52827-d156-453c-a4a6-e1ebf79991a8&quot;"
     FieldName="&quot;Id&quot;"
@@ -70,7 +72,7 @@
     ObjectTableName="&quot;LeadSource&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -445,7 +447,7 @@
     ObjectTableName="&quot;LeadSource&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

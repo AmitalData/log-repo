@@ -31,7 +31,9 @@
   Code="&quot;TEQG&quot;"
   Name="&quot;TicketEscalation&quot;"
   GenerateDomainService="true"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;4e401915-4968-4c8a-a544-6f8257440186&quot;"
     FieldName="&quot;Id&quot;"

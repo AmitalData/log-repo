@@ -2,7 +2,24 @@
 <Table
   Name="CustomerCompetitorProducts"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CompetitorId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
   <Column
     Name="ProductTypeCode"
     Type="varchar"
@@ -12,30 +29,11 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CustomerId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CompetitorId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
-    ForeignKeyColumn="ProductTypeCode"
-    ReferencedTable="ProductTypes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Customers"
@@ -45,5 +43,10 @@
     ForeignKeyColumn="CompetitorId"
     ReferencedTable="Competitors"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ProductTypeCode"
+    ReferencedTable="ProductTypes"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

@@ -2,7 +2,8 @@
 <Table
   Name="Tenants"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="int">
@@ -254,7 +255,7 @@
     Type="varchar"
     Size="4">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="PaymentTermId"
@@ -665,6 +666,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CurrencyId"
     ReferencedTable="Currencies"
@@ -692,6 +699,11 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="GrossWeightUnitCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChargeableWeightUnitCode"
     ReferencedTable="WeightUnits"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
@@ -826,5 +838,5 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="ChargeableWeightUnitCode" />
+    Columns="AutomaticLastUpdateDate" />
 </Table>

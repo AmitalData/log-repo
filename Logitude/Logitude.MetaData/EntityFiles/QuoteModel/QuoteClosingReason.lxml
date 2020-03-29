@@ -42,7 +42,9 @@
   HasFiltersMenu="false"
   ClientModuleName="&quot;Quote&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7c772964-a7d6-4314-9b1e-d5f5bbb4bc74&quot;"
     FieldName="&quot;Code&quot;"
@@ -168,7 +170,7 @@
     Id="&quot;0d1a38d0-c4dd-4db8-9fe1-dabf6b1ce5e3&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;QuoteClosingReason&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

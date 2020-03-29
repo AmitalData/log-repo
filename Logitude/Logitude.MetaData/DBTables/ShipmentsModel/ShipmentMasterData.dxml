@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentMasterDatas"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -657,6 +658,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="CutoffDate"
     Type="datetime">
     <Constraints
@@ -814,4 +821,6 @@
     Include="MainCarriageATD,MainCarriageETD,MainCarriageCarrierNumber,MainCarriageCarrierId,DepartureArrivalFromDate,DepartureArrivalToDate" />
   <Index
     Columns="Master,AirlinePrefix" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

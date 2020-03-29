@@ -2,7 +2,8 @@
 <Table
   Name="QuotePriceSteps"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"
@@ -33,7 +34,7 @@
     Name="Step"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="MarkupValue"

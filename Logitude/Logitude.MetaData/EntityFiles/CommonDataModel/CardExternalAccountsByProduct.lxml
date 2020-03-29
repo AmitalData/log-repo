@@ -55,7 +55,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;CardExternalAccountsByProduct,CardExternalAccountsByProducts,,Id,&quot;">
+  SearchFields="&quot;CardExternalAccountsByProduct,CardExternalAccountsByProducts,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;acb43b99-6b19-423a-a079-02df29e089d0&quot;"
     FieldName="&quot;Id&quot;"
@@ -66,7 +68,7 @@
     ObjectTableName="&quot;CardExternalAccountsByProduct&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -356,7 +358,7 @@
     ObjectTableName="&quot;CardExternalAccountsByProduct&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -431,7 +433,7 @@
     LookUpTableName="&quot;Card&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -471,7 +473,7 @@
     FullFieldLable="&quot;CardId&quot;"
     DefaultText="&quot;Card&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -492,7 +494,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Card" />
   <field
     Id="&quot;79b13881-ead1-469d-a5ca-51e0bdb82ff1&quot;"
     FieldName="&quot;ProductTypeCode&quot;"
@@ -505,7 +509,7 @@
     LookUpTableName="&quot;ProductType&quot;"
     MinLength="0"
     MaxLength="2"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -545,7 +549,7 @@
     FullFieldLable="&quot;ProductTypeCode&quot;"
     DefaultText="&quot;Product&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -566,7 +570,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ProductType"
+    NavigationPropertyName="ProductType" />
   <field
     Id="&quot;12b04306-973a-4212-987c-2244765cacbf&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -579,7 +585,7 @@
     LookUpTableName="&quot;User&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -619,7 +625,7 @@
     FullFieldLable="&quot;UpdatedByUserId&quot;"
     DefaultText="&quot;Updated By&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -640,7 +646,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;bbb324d0-949c-4dd5-a660-edc5c0d6477c&quot;"
     FieldName="&quot;ProductTypeName&quot;"

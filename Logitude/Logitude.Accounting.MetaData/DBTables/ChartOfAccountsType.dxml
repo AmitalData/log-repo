@@ -2,7 +2,8 @@
 <Table
   Name="ChartOfAccountsTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Accounting">
   <Column
     Name="Code"
     Type="varchar"
