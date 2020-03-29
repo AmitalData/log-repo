@@ -106,6 +106,10 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public decimal TotalVolumetricWeight  { get; set; }
        [DataMember]
        public double? Ratio  { get; set; }
+       [DataMember]
+       public string TruckerId  { get; set; }
+       [DataMember]
+       public string TruckerReference  { get; set; }
    }
 
 }

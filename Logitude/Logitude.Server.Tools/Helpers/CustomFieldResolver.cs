@@ -296,6 +296,12 @@ namespace Logitude.BL.Helpers
                     case "Integer":
                     case "UnsInteger":
                         {
+                            if (!string.IsNullOrEmpty(customField))
+                            {
+                                customField = customField.Trim().Replace(" ", "");
+                                customField = customField.Split('.')[0];
+                            }
+
                             int i = 0;
                             int.TryParse(customField, out i);
 
@@ -305,6 +311,12 @@ namespace Logitude.BL.Helpers
                     case "Double":
                     case "SigDouble":
                         {
+                            if (!string.IsNullOrEmpty(customField))
+                            {
+                                customField = customField.Trim().Replace(" ", "");
+                            }
+
+
                             double d = 0;
 
                             if (customField.Length >= 15)

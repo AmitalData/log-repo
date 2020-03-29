@@ -515,6 +515,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         linesQueryFilters.GetAll = true;
         linesQueryFilters.addAdditionalFilter("CashBookId", this.EntityPM.CashBookId, null, null, "Equals", false, false, false, "string");
         linesQueryFilters.addAdditionalFilter("IsDeposited", false, null, null, "Equals", true, false, false, "boolean");
+        linesQueryFilters.addAdditionalFilter("ARPChequeStatusCode", "5", null, null, "NotEqual",false , false, false, "string");
 
 
         linesQueryFilters.AdditionalFilters.push(this.GetDueDateFilter());

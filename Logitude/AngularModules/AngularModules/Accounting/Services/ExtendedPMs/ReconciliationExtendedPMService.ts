@@ -87,7 +87,7 @@ export class ReconciliationExtendedPMService {
         );
     }
 
-    delsertDraftLedgerTransaction(transactions: LedgerTransactionPM[]) {
+    delsertDraftLedgerTransaction(transactions: string[]) {
 
         return Observable.defer(() => {
 
