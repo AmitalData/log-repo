@@ -4,7 +4,7 @@
   ObjectTableName="&quot;General&quot;"
   IsNew="false"
   DBTableName="&quot;Generals&quot;"
-  OldDBTableName="&quot;Generals&quot;"
+  DBTableOldNames="Generals"
   ObjectTableSingular="&quot;General&quot;"
   ObjectTablePlural="&quot;Generals&quot;"
   HasCustomFilter="false"
@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;51cb&quot;"
+  Code="&quot;0763&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -57,7 +57,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;General,Generals,,Id,&quot;">
+  SearchFields="&quot;General,Generals,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <Screen
     Name="&quot;GeneralHeaderScreen&quot;"
     ObjectTableName="&quot;General&quot;"

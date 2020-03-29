@@ -667,8 +667,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             double? Amount = MethodHelper.Roundd(entityPM.AmountInPaymentCurrency, 2);
             double? ExternalAmount = MethodHelper.Roundd(entityPM.ExternalPaymentAmount, 2);
             double? PaidAmount = MethodHelper.Roundd(connectedAmount, 2);
+            double? AllPaidAmount = MethodHelper.Roundd(PaidAmount + ExternalAmount, 2);
 
-            if (PaidAmount > Amount)
+            if (AllPaidAmount > Amount)
             {
                 throw new Exception("The amount paid is not suitable to the total payment amount!!");
             }
