@@ -23,46 +23,62 @@ namespace Logitude.IntegrationTest.Shipment
             //ShipmentPM entityPM= UpdateShipmentAirExport(shipmentPM);
             //await TestReceivables(shipmentPM, quantity, unitPrice);
         }
-        [TestMethod]
-       /* public async Task TestReceivables()
+        [TestMethod] 
+        public async Task CalculateShipmentTotalProfit()
         {
-            int quantity = 5;
-            int unitPrice = 5;
-            //await PostShipment("D", "E", "A");
+            int quantity = 1;
+            int PayableUnitPrice = 50;
+            int RecUnitPrice = 20;
             shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
-            ShipmentPM entityPM = UpdateReceivables(shipmentPM, quantity, unitPrice);
+            ShipmentPM entityPM = UpdateReceivables(shipmentPM, quantity, RecUnitPrice);
+            entityPM = UpdatePayables(shipmentPM, quantity, PayableUnitPrice);
             await PutShipment(entityPM);
-            shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
-            try
-            {
-                Assert.AreEqual(60, shipmentPM.OpenReceivablesInLocalCurrency);
 
-            }
-            catch (Exception Ex)
-            {
-                throw new Exception(Ex.Message);
-            }
+          
+           // shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
+
         }
-        [TestMethod]
-        public async Task TestPayables()
-        {
-            int quantity = 5;
-            int unitPrice = 5;
-            await PostShipment("D", "E", "A");
-            shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
-            ShipmentPM entityPM = UpdatePayables(shipmentPM, quantity, unitPrice);
-            await PutShipment(entityPM);
-            shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
-            try
-            {
-                Assert.AreEqual("50", shipmentPM.OpenPayablesInLocalCurrency);
 
-            }
-            catch (Exception Ex)
-            {
-                throw new Exception(Ex.Message);
-            }
-        }*/
+        /* [TestMethod]
+         public async Task TestReceivables()
+         {
+             int quantity = 5;
+             int unitPrice = 5;
+             //await PostShipment("D", "E", "A");
+             shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
+             ShipmentPM entityPM = UpdateReceivables(shipmentPM, quantity, unitPrice);
+             await PutShipment(entityPM);
+             shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
+             try
+             {
+                 Assert.AreEqual(60, shipmentPM.OpenReceivablesInLocalCurrency);
+
+             }
+             catch (Exception Ex)
+             {
+                 throw new Exception(Ex.Message);
+             }
+         }
+         [TestMethod]
+         public async Task TestPayables()
+         {
+             int quantity = 5;
+             int unitPrice = 5;
+             await PostShipment("D", "E", "A");
+             shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
+             ShipmentPM entityPM = UpdatePayables(shipmentPM, quantity, unitPrice);
+             await PutShipment(entityPM);
+             shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
+             try
+             {
+                 Assert.AreEqual("50", shipmentPM.OpenPayablesInLocalCurrency);
+
+             }
+             catch (Exception Ex)
+             {
+                 throw new Exception(Ex.Message);
+             }
+         }*/
         public async Task<ShipmentPM> GetShipment(string shipmentId)
         {
             HttpResponseMessage response = await RestClientService.GetAsync("Shipment/GetSingle?id=" + shipmentId);

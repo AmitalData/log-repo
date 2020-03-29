@@ -39,7 +39,7 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM = CreateShipmentPM(shipmentLevelCode, directionId, transportModeId);
             HttpResponseMessage response = await RestClientService.PostAsync(shipmentPM, "shipment");
             shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
-            ShipmentVariables.ShipmentId = shipmentPM.Id;
+            ShipmentVariables.ShipmentIdFromPrepare = shipmentPM.Id;
         }
 
         private static ShipmentPM  CreateShipmentPM(string shipmentLevelCode, string directionId, string transportModeId)

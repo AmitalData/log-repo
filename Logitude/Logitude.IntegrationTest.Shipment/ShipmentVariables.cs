@@ -52,6 +52,7 @@ namespace Logitude.IntegrationTest.Shipment
         public static string ShipperExport1 { get; set; }
         public static string ShipmentId { get; internal set; }
         public static string ConcurrencyGUID { get; set; }
+        public static string ShipmentIdFromPrepare { get; internal set; }
         //public static string WarehouseId { get; set; }
         //public static string WarehouseId { get; set; }
         //public static string WarehouseId { get; set; }
