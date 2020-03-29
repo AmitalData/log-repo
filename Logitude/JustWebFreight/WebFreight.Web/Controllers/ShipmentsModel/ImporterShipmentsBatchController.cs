@@ -35,6 +35,7 @@ using WebFreight.Web.Helpers;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
 using System.Transactions;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
@@ -685,11 +686,46 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.ApproveDateTime = entityAM.ApproveDateTime;
             }
+            if (entityAM.IsOperationalClosed == false && entityAM.CustomsClearanceDate != null && entityAM.StatusCode.ToLower() == "ccd")
+            {
+                entityPM.IsShipmentComputedFieldChange = true;
+                entityPM.IsRequestedDocuments = false;
+                entityPM.RequestedDocumentsCount = 0;
+                entityPM.MissingDocumentsCount = 0;
+                entityPM.IsMissingDocument = false;
+
+
+            }
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
             if (currentTenant.AutoArchiveOnInvoice == true && entityAM.StatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityAM.IsOperationalClosed == false)
             {
                 entityPM.IsOperationalClosed = true;
             }
+
+            if (entityPM.CustomsClearanceDate == null)
+            {
+                entityPM.ExceptionDate = entityAM.ExceptionDate;
+                entityPM.ExceptionDescription = entityAM.ExceptionDescription;
+                entityPM.HasException = entityAM.HasException;
+            }
+
+            if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true)
+            {
+
+                entityPM.HasException = false;
+                entityPM.ExceptionDate = null;
+                entityPM.ExceptionDescription = null;
+                entityPM.ExceptionResolvedDescription = "Customs Clearance";
+
+            }
+            if (entityAM.CustomsClearanceDate != null && entityAM.IsImporterApprovalRequired && entityPM.ApproveDateTime == null && string.IsNullOrEmpty(entityPM.ApprovedBy))
+            {
+                entityPM.ApprovedBy = "System";
+                entityPM.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPM.VersionApproved = entityAM.VersionApproved;
+            }
+
+            entityPM.CustomsClearanceDate = entityAM.CustomsClearanceDate;
 
             if (Partner != null)
             {
