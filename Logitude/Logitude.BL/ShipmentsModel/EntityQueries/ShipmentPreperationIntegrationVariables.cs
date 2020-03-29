@@ -81,11 +81,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             vars.VATTypeZeroId = GetVATType("ZERO");
             vars.QuoteStageQTDRId = GetQuoteStage("QTDR");
             vars.VendorId = GetVendor("TestVendor");
-            vars.AgentId = GetAgent("NewaAgentTest 55");
-            vars.CustomAgentId = GetCustomsAgent("TestCustomAgentExport177");
-            vars.ShippingAgentId = GetShippingAgent("TestShippingAgentExport1");
-            vars.WarehouseId =  GetWarehouse("TestWarehous4444444eExport1", "WR9");
-            vars.CustomerId = GetCustomer("TestShipperExpo77777rt1");
+            vars.AgentId = GetAgent("IntegrationAgent");
+            vars.ShipperExport1= GetCustomer("ShipperExport1");
+            vars.CustomAgentId = GetCustomsAgent("InegrationCustomsAgent");
+            vars.ShippingAgentId = GetShippingAgent("IntegrationShippingAgent");
+            vars.WarehouseId =  GetWarehouse("IntegrationWarehouse", "WR9");
+            vars.CustomerId = GetCustomer("IntegrationCustomer");
             //vars.AWBShipmentId = CreateAWBShipment();
             //vars.ShipmentNumber = shipment.ShipmentNumber;
             return vars;
@@ -265,6 +266,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             customerService.Create();
         }
 
+       
         public CustomerPM CreateCustomertPM(string agentName)
         {
             CustomerPM customerPM = new CustomerPM();

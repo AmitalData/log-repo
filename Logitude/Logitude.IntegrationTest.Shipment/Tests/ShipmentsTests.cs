@@ -24,7 +24,7 @@ namespace Logitude.IntegrationTest.Shipment
             //await TestReceivables(shipmentPM, quantity, unitPrice);
         }
         [TestMethod]
-        public async Task TestReceivables()
+       /* public async Task TestReceivables()
         {
             int quantity = 5;
             int unitPrice = 5;
@@ -62,7 +62,7 @@ namespace Logitude.IntegrationTest.Shipment
             {
                 throw new Exception(Ex.Message);
             }
-        }
+        }*/
         public async Task<ShipmentPM> GetShipment(string shipmentId)
         {
             HttpResponseMessage response = await RestClientService.GetAsync("Shipment/GetSingle?id=" + shipmentId);
