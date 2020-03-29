@@ -150,10 +150,6 @@
                         <td>
                             <div></div>
                         </td>
-
-                        <td style="width: 480px;">
-                            <div LocationDirective Code="MNH"></div>
-                        </td>
                     </tr>
                 </table>
             </td>
@@ -180,140 +176,140 @@
         <tr [ngStyle]="{height: IsBackButtonAndTitleVisibile ? '21px' : '27px'}" [class.ToolBarBackground]="!IsBackButtonAndTitleVisibile">
             <td style="height: 21px; vertical-align:middle;">
                 <table>
-                  <tr>
-                    <td style="width: 21px;">
-                      <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
-                    </td>
+                    <tr>
+                        <td style="width: 21px;">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
+                        </td>
 
-                    <td style="width: 5px;" *ngIf="IsNewEntityButtonVisible">
-                      <div></div>
-                    </td>
+                        <td style="width: 5px;" *ngIf="IsNewEntityButtonVisible">
+                            <div></div>
+                        </td>
 
-                    <!-- <td style="width: 96px;"> -->
-                    <td style="width: 1px;" *ngIf="IsNewEntityButtonVisible">
-                      <button [attr.id]="NewButtonId  | IdGeneratorPipe " [disabled]="IsNewEntityButtonDisabled" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">{{NewEntityButtonLabel}}</button>
-                    </td>
+                        <!-- <td style="width: 96px;"> -->
+                        <td style="width: 1px;" *ngIf="IsNewEntityButtonVisible">
+                            <button [attr.id]="NewButtonId  | IdGeneratorPipe " [disabled]="IsNewEntityButtonDisabled" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">{{NewEntityButtonLabel}}</button>
+                        </td>
 
-                    <td style="width: 5px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 1px;" *ngIf="IsAddButtonVisible" title="{{AddButtonTitle}}">
-                      <button style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="ImportEntitiesCommand()"> Add </button>
-                    </td>
+                        <td style="width: 1px;" *ngIf="IsAddButtonVisible" title="{{AddButtonTitle}}">
+                            <button style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="ImportEntitiesCommand()"> Add </button>
+                        </td>
 
-                    <td style="width: 5px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 22px; vertical-align: middle;" *ngIf="HasExcelExportButton">
-                      <button class="Button" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
-                    </td>
+                        <td style="width: 22px; vertical-align: middle;" *ngIf="HasExcelExportButton">
+                            <button class="Button" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                        </td>
 
-                    <td style="width: 10px;" *ngIf="HasExcelExportButton">
-                      <div></div>
-                    </td>
+                        <td style="width: 10px;" *ngIf="HasExcelExportButton">
+                            <div></div>
+                        </td>
+                        <td *ngIf="IsShowAddFromLibraryLink" style="width: 175px; vertical-align: middle;">
+                            <p (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">Add Document From Library</p>
+                        </td>
+                        <td *ngIf="IsShowAddQuoteTemplateFromLibraryLink" style="width: 175px; vertical-align: middle;">
+                            <p (click)="LinkAddQuoteTemplateFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">
+                                {{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}
+                            </p>
+                        </td>
+                        <td *ngIf="!IsShowTipArea && IsShowTipIcon" style="width: 30px; vertical-align: central;">
+                            <img style="height:30px;width:30px;margin-top:1px" (click)="TipVisibilityChanged('true')" src="./Images/Lamp2.png" />
+                        </td>
 
-                    <td *ngIf="IsShowAddFromLibraryLink" style="width: 175px; vertical-align: middle;">
-                      <p (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">Add Document From Library</p>
-                    </td>
+                        <td style="width: 35px;">
+                            <div></div>
+                        </td>
 
-                    <td *ngIf="IsShowAddQuoteTemplateFromLibraryLink" style="width: 175px; vertical-align: middle;">
-                      <p (click)="LinkAddQuoteTemplateFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">{{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}
-                        </p>
-                    </td>
+                        <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
+                            <span *ngIf="ShowViews">{{'General.O.View' | TextCodeTranslationPipe}}:</span>
+                        </td>
 
-                    <td *ngIf="!IsShowTipArea && IsShowTipIcon" style="width: 30px; vertical-align: central;">
-                      <img style="height:30px;width:30px;margin-top:1px" (click)="TipVisibilityChanged('true')" src="./Images/Lamp2.png" />
-                    </td>
-
-                    <td style="width: 35px;">
-                      <div></div>
-                    </td>
-
-                    <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
-                      <span *ngIf="ShowViews">{{'General.O.View' | TextCodeTranslationPipe}}:</span>
-                    </td>
-
-                    <td style="vertical-align: middle;">
-                      <QueryList *ngIf="ShowViews" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
+                        <td style="vertical-align: middle;">
+                            <QueryList *ngIf="ShowViews" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
                             <!--<select style="width: 150px;" [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)">
-                                <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
-                            </select>-->
+            <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
+        </select>-->
                             <!--<div class="dropdown">
-                                <div style="float:left;">
-                                    <button (click)="ShowFieldsList()" class="dropbtn " id="AddFilterButton" style="width:80px;">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</button>
-                                    <div id="FieldsDropdown" class="dropdown-content" style="border:solid 1px #AAAAAA;">-->
+        <div style="float:left;">
+            <button (click)="ShowFieldsList()" class="dropbtn " id="AddFilterButton" style="width:80px;">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</button>
+            <div id="FieldsDropdown" class="dropdown-content" style="border:solid 1px #AAAAAA;">-->
                             <!--<select [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)" style="height:244px;" multiple>
-                                <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
-                            </select>-->
+            <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
+        </select>-->
                             <!--       <div *ngFor="let q of Queries">
-                                                <label>{{q.NameTextCodeCode | TextCodeTranslationPipe}}</label>
-                                            </div>
-                                            <div style="height:27px;background-color:#dfecf7;">
-                                                <a href="#">New View</a>
-                                            </div>
+                            <label>{{q.NameTextCodeCode | TextCodeTranslationPipe}}</label>
+                        </div>
+                        <div style="height:27px;background-color:#dfecf7;">
+                            <a href="#">New View</a>
+                        </div>
 
 
-                                    </div>
-                                </div>
-                            </div>-->
-                    </td>
+                </div>
+            </div>
+        </div>-->
+                        </td>
 
-                    <td>
-                      <div></div>
-                    </td>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td style="width: 650px; left:50PX;">
+                            <div LocationDirective Code="MNH"></div>
+                        </td>
+
+                        <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
+                            <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 250px; vertical-align: middle;">
+                            <SearchTextBox [IsDisabled]="SeachBoxIsDisabled" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                        </td>
 
 
-                    <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
-                      <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
-                    </td>
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 5px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 17px; vertical-align: middle; position:relative;">
+                            <img *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
+                            <img *ngIf="HasFilters == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
+                        </td>
 
-                    <td style="width: 250px; vertical-align: middle;">
-                      <SearchTextBox [IsDisabled]="SeachBoxIsDisabled" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
-                    </td>
+                        <td style="width: 3px;">
+                            <div></div>
+                        </td>
 
+                        <td style="width: 12px; vertical-align: middle; position:relative;">
+                            <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
+                            <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
+                        </td>
 
-                    <td style="width: 10px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 17px; vertical-align: middle; position:relative;">
-                      <img *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
-                      <img *ngIf="HasFilters == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
-                    </td>
+                        <td style="width: 1px; vertical-align: middle;">
+                            <div style="height: 100%; background: #DADADA;"></div>
+                        </td>
 
-                    <td style="width: 3px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 12px; vertical-align: middle; position:relative;">
-                      <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
-                      <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
-                    </td>
-
-                    <td style="width: 10px;">
-                      <div></div>
-                    </td>
-
-                    <td style="width: 1px; vertical-align: middle;">
-                      <div style="height: 100%; background: #DADADA;"></div>
-                    </td>
-
-                    <td style="width: 10px;">
-                      <div></div>
-                    </td>
-
-                    <td style="width: 15px; vertical-align: middle; position:relative;">
-                      <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;pointer-events:none;opacity:0.5" class="CenterCenter" />
-                      <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;" class="CenterCenter" />
-                    </td>
-                  </tr>
+                        <td style="width: 15px; vertical-align: middle; position:relative;">
+                            <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;pointer-events:none;opacity:0.5" class="CenterCenter" />
+                            <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;" class="CenterCenter" />
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>

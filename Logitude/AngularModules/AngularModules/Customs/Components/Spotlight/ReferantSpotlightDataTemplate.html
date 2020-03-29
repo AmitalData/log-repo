@@ -8,20 +8,8 @@
                     </td>
                 </tr>
                 <tr style="visibility:visible;">
-                    <td style="width:10%;">
-                        <LogLabel [NoObjectField]="true"
-                                  [ObjectFieldName]="'FollowUpDate'"
-                                  [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"
-                                  [TextCode]="'Customs.DeclarationReferantData.O.FollowUpDate'">
-                        </LogLabel>
-                    </td>
-                    <td style="width:10%;">
-                        <LogDatePicker [ObjectFieldName]="'FollowUpDate'" [ObjectTableName]="ObjectTableName"
-                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                    </td>
-                    <td style="width:435px; ">
-                        <div class="CellContent" style="width:435px; max-height:125px; bottom :15px;">
+                    <td>
+                        <div class="CellContent" style="width:435px; max-height:125px; bottom :15px; left:170px">
                             <logitude-edit-grid GridWidth="100%"
                                                 GridHeight="100%"
                                                 (RowEnded)="OnRowEnded($event)"
@@ -85,10 +73,22 @@
 
                         </div>
                     </td>
-                    <td style=" width:10%; padding-bottom:100px; padding-left:120px;">
+                    <td style=" width:10%; padding-bottom:115px; padding-left:120px; left:150px;">
                         <div><IconButton [IsEnabled]="!IsDisplayOnly" [IsSmall]="true" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton></div>
                     </td>
-                    <td style="width:10%;">
+                    <td style="width:10%; padding-bottom:115px; left:200px; ">
+                        <LogLabel [NoObjectField]="true"
+                                  [ObjectFieldName]="'FollowUpDate'"
+                                  [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"
+                                  [TextCode]="'Customs.DeclarationReferantData.O.FollowUpDate'">
+                        </LogLabel>
+                    </td>
+                    <td style="width:10%; padding-bottom:115px; left:200px; ">
+                        <LogDatePicker [ObjectFieldName]="'FollowUpDate'" [ObjectTableName]="ObjectTableName"
+                                       [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                    </td>
+                    <td style="width:10%; right:250px; top:15px;">
                         <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>

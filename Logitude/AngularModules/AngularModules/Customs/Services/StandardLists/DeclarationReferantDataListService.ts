@@ -59,7 +59,7 @@ export class DeclarationReferantDataListService {
     }
 
     getAll() {
-        
+        debugger;
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
@@ -90,7 +90,7 @@ export class DeclarationReferantDataListService {
     }
 	
     getByFilters(filters: ApiQueryFilters) {
-
+        debugger;
         var callTime = new Date();
 		                        
         var urlparameters = '/getbyfilters?';
