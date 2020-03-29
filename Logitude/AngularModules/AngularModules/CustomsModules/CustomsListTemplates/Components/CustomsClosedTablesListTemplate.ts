@@ -142,14 +142,13 @@ export class CustomsClosedTablesListTemplate {
            
                 listArgs.QueryCode = SelectedQuery.UniqueCode;
                 listArgs.ObjectTableName = objectTablePM.Name;
-
-                
                 switch (listArgs.ObjectTableName) {
                     case 'Customs.GovernmentProcedureType':
                     case "Customs.NotificationDefinition":
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
+                    case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     //case "Customs.InternationalSite":
                         listArgs.SuppressOnRowSelected = false;

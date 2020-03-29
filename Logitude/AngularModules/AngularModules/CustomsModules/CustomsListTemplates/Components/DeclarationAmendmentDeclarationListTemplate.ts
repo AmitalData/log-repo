@@ -54,8 +54,7 @@ export class DeclarationAmendmentListTemplate {
  
 
     ChangeAmendment(id: string) {
-        debugger;
-        this.comp.OpenNewAmendment(id, this.rowData.DeclarationNumber);
+         this.comp.OpenNewAmendment(id, this.rowData.DeclarationNumber);
     }
 
 

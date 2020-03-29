@@ -394,6 +394,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new EntityTypeLookupMap());
 	
+            modelBuilder.Configurations.Add(new ExceptionReasonMap());
+	
             modelBuilder.Configurations.Add(new FacilitationTypeMap());
 	
             modelBuilder.Configurations.Add(new FaultInspectionTypeMap());
@@ -547,6 +549,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PropertiesDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new RansomViolationTypeMap());
+	
+            modelBuilder.Configurations.Add(new ReferantExceptionMap());
 	
             modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 	
@@ -2116,6 +2120,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ExceptionReason> ExceptionReasons 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<FacilitationType> FacilitationTypes 
 	 {
 	      get; set;
@@ -2573,6 +2583,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RansomViolationType> RansomViolationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ReferantException> ReferantExceptions 
 	 {
 	      get; set;
 	 

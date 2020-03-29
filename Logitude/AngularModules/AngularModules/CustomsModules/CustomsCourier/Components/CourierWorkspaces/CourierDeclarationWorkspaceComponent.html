@@ -54,10 +54,10 @@
 
                     <td style="width:15%;">
                         <div class="MediaFill">
-                            <SectionBox [HeaderHeight]="22" [Border]="'1px solid #BABABA'" [Scrolling]="true">
-                                <SectionHead [IsLight]="true">
-                                    <span style="float:right;font-size: 15px; color: #1B90CB;">{{'Customs.CourierMaster.O.CourierMasterQueries' | TextCodeTranslationPipe}}</span>
-                                </SectionHead>
+                            <SectionBox  [Scrolling]="true" [borderLeft]="'2px solid #E4E4E4'">
+                                <SectionHead [IsLight]="false"  >
+                                         <span style="float:right;font-size: 15px; color: #1B90CB;">{{'Customs.CourierMaster.O.CourierMasterQueries' | TextCodeTranslationPipe}}</span>
+                                 </SectionHead>
                                 <SectionBody>
 
 
@@ -78,7 +78,7 @@
                     <div class="ScrollViewer">
                         <div class="ScrollContent">-->
                                     <!-- CourierMaster -->
-                                    <div class="QueriesSection">
+                                    <div class="QueriesSection" *ngIf="counters">
 
                                         <!--<div>{{'Customs.CourierMaster.O.CourierMasterQueries' | TextCodeTranslationPipe}}</div>-->
                                         <!--
@@ -88,13 +88,13 @@
                                                             -->
                                         <div>שטרי מטען</div>
                                         <div style="margin-right:10px;">
-                                            <p class="QueryLink" *ngIf="OpenCourierMasterVisibility" (click)="ViewCourierMasterQuery('OpenCourierMaster')"> {{'Customs.CourierMaster.O.CourierMasterOpen' | TextCodeTranslationPipe}}  </p>
-                                            <p class="QueryLink" *ngIf="UnReleasedFastProcessVisibility" (click)="ViewCourierMasterQuery('UnReleasedFastProcess')"> {{'Customs.CourierMaster.O.UnReleasedFastProcess' | TextCodeTranslationPipe}}  </p>
-                                            <p class="QueryLink" *ngIf="WithoutIdVisibility" (click)="ViewCourierMasterQuery('WithoutId')"> {{'Customs.CourierMaster.O.WithoutId' | TextCodeTranslationPipe}}  </p>
-                                            <p class="QueryLink" *ngIf="WithoutClassificationVisibility" (click)="ViewCourierMasterQuery('WithoutClassification')"> {{'Customs.CourierMaster.O.WithoutClassification' | TextCodeTranslationPipe}}  </p>
-                                            <p class="QueryLink" *ngIf="PendingPaymentVisibility" (click)="ViewCourierMasterQuery('PendingPayment')"> {{'Customs.CourierMaster.O.PendingPayment' | TextCodeTranslationPipe}}  </p>
-                                            <p class="QueryLink" *ngIf="PendingCustomsVisibility" (click)="ViewCourierMasterQuery('PendingCustoms')"> {{'Customs.CourierMaster.O.PendingCustoms' | TextCodeTranslationPipe}}  </p>
-                                            <p class="QueryLink" *ngIf="PendingVisibility" (click)="ViewCourierMasterQuery('Pending')"> {{'Customs.CourierMaster.O.Pending' | TextCodeTranslationPipe}}  </p>
+                                            <p class="QueryLink" *ngIf="OpenCourierMasterVisibility" (click)="ViewCourierMasterQuery('OpenCourierMaster')"> {{'Customs.CourierMaster.O.CourierMasterOpen' | TextCodeTranslationPipe}} ({{counters.OpenCourierMasterCount}}) </p>
+                                            <p class="QueryLink" *ngIf="UnReleasedFastProcessVisibility" (click)="ViewCourierMasterQuery('UnReleasedFastProcess')"> {{'Customs.CourierMaster.O.UnReleasedFastProcess' | TextCodeTranslationPipe}} ({{counters.UnReleasedFastProcessCount}})  </p>
+                                            <p class="QueryLink" *ngIf="WithoutIdVisibility" (click)="ViewCourierMasterQuery('WithoutId')"> {{'Customs.CourierMaster.O.WithoutId' | TextCodeTranslationPipe}} ({{counters.WithoutIdCount}}) </p>
+                                            <p class="QueryLink" *ngIf="WithoutClassificationVisibility" (click)="ViewCourierMasterQuery('WithoutClassification')"> {{'Customs.CourierMaster.O.WithoutClassification' | TextCodeTranslationPipe}} ({{counters.WithoutClassificationCount}})</p>
+                                            <p class="QueryLink" *ngIf="PendingPaymentVisibility" (click)="ViewCourierMasterQuery('PendingPayment')"> {{'Customs.CourierMaster.O.PendingPayment' | TextCodeTranslationPipe}} ({{counters.PendingPaymentCount}}) </p>
+                                            <p class="QueryLink" *ngIf="PendingCustomsVisibility" (click)="ViewCourierMasterQuery('PendingCustoms')"> {{'Customs.CourierMaster.O.PendingCustoms' | TextCodeTranslationPipe}} ({{counters.PendingCustomsCount}}) </p>
+                                            <p class="QueryLink" *ngIf="PendingVisibility" (click)="ViewCourierMasterQuery('Pending')"> {{'Customs.CourierMaster.O.Pending' | TextCodeTranslationPipe}} ({{counters.PendingCount}})</p>
                                         </div>
 
                                     </div>
@@ -102,8 +102,8 @@
                                     <div class="QueriesSection">
                                         <div>שטרי מטען פרטני</div>
                                         <div style="margin-right:10px;">
-                                            <p class="QueryLink" *ngIf="CourierMasterOpenIndividualVisibility" (click)="ViewCourierMasterQuery('CourierMasterOpenIndividual')"> {{'Customs.CourierMaster.O.CourierMasterOpenIndividual' | TextCodeTranslationPipe}}  </p>
-                                            <p class="QueryLink" *ngIf="UnReleasedIndividualVisibility" (click)="ViewCourierMasterQuery('UnReleasedIndividual')"> {{'Customs.CourierMaster.O.UnReleasedIndividual' | TextCodeTranslationPipe}}  </p>
+                                            <p class="QueryLink" *ngIf="CourierMasterOpenIndividualVisibility" (click)="ViewCourierMasterQuery('CourierMasterOpenIndividual')"> {{'Customs.CourierMaster.O.CourierMasterOpenIndividual' | TextCodeTranslationPipe}} ({{counters.CourierMasterOpenIndividualCount}}) </p>
+                                            <p class="QueryLink" *ngIf="UnReleasedIndividualVisibility" (click)="ViewCourierMasterQuery('UnReleasedIndividual')"> {{'Customs.CourierMaster.O.UnReleasedIndividual' | TextCodeTranslationPipe}} ({{counters.UnReleasedIndividualCount}}) </p>
                                         </div>
                                     </div>
 
@@ -111,14 +111,14 @@
 
 
 
-                                    <!--<div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
             <div>My Views</div>
             <div style="height:80px;">
-                <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Customs.CourierMaster'" [BackButtonTitle]="'General.MH.CourierMaster' | TextCodeTranslationPipe" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Customs.Declaration'" [BackButtonTitle]="'General.MH.CourierMaster' | TextCodeTranslationPipe" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
             </div>
         </div>
 
-        <div style="height: 15px;"></div>-->
+        <div style="height: 15px;"></div>
 
                                 </SectionBody>
                             </SectionBox>
@@ -137,7 +137,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label float-start style="margin-right: 10px;">{{ RecentGLAccountsCount }} {{'Customs.Declaration.Q.DeclarationWithoutReleaseQuery' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{ DataSource.rowCount }} {{'CourierMaster.Q.OPENCOURIERMASTERS' | TextCodeTranslationPipe}}</label>
                                             </td>
                                         </tr>
 
@@ -208,7 +208,7 @@
                         </tr>-->
 
                                         <tr style="height:100%;">
-                                            <td style="height: 100%;width:100%; padding: 5px;">
+                                            <td style="height: 100%;width:100%; ">
 
                                                 <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                     <logitude-grid GridWidth="100%" GridHeight="100%"
@@ -217,7 +217,8 @@
                                                                    [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                                                    [columns]="columns"
                                                                    [QueryChangeEvent]="onQueryChangeEvent"
-                                                                   [IsCustomTemplate]="true">
+                                                                   [IsCustomTemplate]="false"
+                                                                   [rowHeight]="40">
                                                     </logitude-grid>
                                                 </div>
                                             </td>

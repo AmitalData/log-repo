@@ -148,12 +148,11 @@ export class CargoSealsQueryComponent
                 this.CargoSealObslist.Clear();
                 if (this.CurrentEntity.CargoSeals != null) {
                     this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
-                        debugger;
-                        if (item.UpdateTypeCode == '2') {
-                            item.CanToAdd = true;
+                         if (item.UpdateTypeCode == '2') {
+                            //item.CanToAdd = true;
                         }
                         else {
-                            item.CanToAdd = false;
+                            //item.CanToAdd = false;
 
                         }
                         this.CargoSealObslist.Insert(new CargoSealComponent(item));
@@ -624,7 +623,7 @@ export class CargoSealsQueryComponent
 
     AddCargoSealCommand() {
         var newCargoSealPM = new CargoSealPM(this.EntityPM);
-        newCargoSealPM.CanToAdd = false;
+        //newCargoSealPM.CanToAdd = false;
           this.CargoSealObslist.Insert(new CargoSealComponent(newCargoSealPM));
     }
 
@@ -697,8 +696,8 @@ export class CargoSealComponent extends BaseComponent {
     public get UpdateTypeName() { return this.entityPM.UpdateTypeName; }
     public set UpdateTypeName(newValue: string) { this.entityPM.UpdateTypeName = newValue; }
 
-    public get CanToAdd() { return this.entityPM.CanToAdd; }
-    public set CanToAdd(newValue: boolean) { this.entityPM.CanToAdd = newValue; }
+    //public get CanToAdd() { return this.entityPM.CanToAdd; }
+    //public set CanToAdd(newValue: boolean) { this.entityPM.CanToAdd = newValue; }
 
 
      public SetLocalName(entity, fieldName) {

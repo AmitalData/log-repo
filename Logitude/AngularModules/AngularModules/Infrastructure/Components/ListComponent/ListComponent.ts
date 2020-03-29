@@ -56,7 +56,7 @@ import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/Accoun
     templateUrl: './ListComponent.html',
     //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],
     //pipes: [TextCodeTranslationPipe],
-    providers: [EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService],
+    providers: [ListComponentArgs , EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService],
 })
 
 export class ListComponent implements OnInit, AfterViewInit {
@@ -823,8 +823,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                     let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
                     if (myLocation != null) {
-
-                        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + this.ObjectTable.Name + "FiltersMenuComponent";
+                        let myObjectTableName = this.ObjectTable.Name;
+                        if (myObjectTableName.startsWith(this.ObjectTable.ClientModuleName + '.')) {
+                            myObjectTableName = myObjectTableName.substr((this.ObjectTable.ClientModuleName + '.').length)
+                        }
+                        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
 
                         SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
                             .then(cmpRef => {
@@ -1543,9 +1546,17 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             myObjectTableName = "Contact";
         }
 
+
+        if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
+            this._ListComponentArgs.SuppressOnRowSelectedField = false;
+            console.log("SuppressOnRowSelectedField");
+            return;
+        }
+
+        //this.CurrentSession.StartBusyIndicator("Loading ...");
+        //var BackGridEvent = $event.BackFromEdit;
         if ($event != null) {
             if (!this.isEditControlOpened) {
-
                 var entityList = $event.rowData;
                 var selectedEntityId = $event.rowData.Id;
 
@@ -1556,10 +1567,14 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
                     case "Customs.CourierPendingReason":
+                    case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
+                    case "Customs.ExceptionReason":
                     //case "Customs.InternationalSite":
                         selectedEntityId = $event.rowData.Code;
                         break;
+                    case "Customs.DeclarationReferantData":
+                        selectedEntityId = $event.rowData.DeclarationId;
                     default:
                         {
                             break;
@@ -2081,6 +2096,27 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     this.OnBackFromEdit(selectedEntityId, $event)
                                     this.RefreshBtnClick();
                                 });
+                            });
+                    }
+                    else if (this.ObjectTableName =="Customs.DeclarationReferantData")
+                    {
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({
+                                    EntityId: selectedEntityId,///$event.rowData.Id
+                                    ObjectTableName: "Customs.Declaration",
+                                    BackButtonLabel: label
+                                });
+                                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                                    this.isEditControlOpened = false;
+                                    this.OnBackFromEdit(selectedEntityId, $event)
+                                });
+                                //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
+                                this.DestroyMe = true;
+                                //}
+
                             });
                     }
 

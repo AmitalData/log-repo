@@ -12,6 +12,8 @@ import { AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 //import {CustomsSettingExtendedListService} from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
+import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 
 @Component({
     moduleId: module.id,
@@ -1442,15 +1444,34 @@ export class MaintenanceComponent {
                 break;
             }
 
-            case "jokerloadtest": {
+            case "jokerremark": {
+                var windowArgs: any = {};
                 var logitudeWindow = new LogitudeWindow();
-                logitudeWindow.Title = "Load Test";//TextCodeTranslator.Translate("Customs.General.O.RequiredFields");
-                logitudeWindow.ShowCloseButton = true;
                 logitudeWindow.Height = 525;
                 logitudeWindow.Width = 750;
-
-
-                logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/LoadTestComponent');
+                logitudeWindow.ShowCloseButton = true;
+                windowArgs.QueType = 2;
+                let EntityPM;
+                var _declarationRemarksService: DeclarationRemarksService = new DeclarationRemarksService();
+                if (windowArgs.QueType == 2) {
+                    _declarationRemarksService.GetSVCOrSRVStatusList(1, "41100314")
+                        .subscribe((response: any) => {
+                            windowArgs.EntityPM = response.Result;
+                            windowArgs.length = response.Result.length;
+                            logitudeWindow.Title = windowArgs.length+ "  הערות מסווג  " ;
+                            logitudeWindow.WindowArgs = windowArgs;
+                            logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                        });
+                } else {
+                    _declarationRemarksService.GetINCorINAtatusList(1, "41100314")
+                        .subscribe((response: any) => {
+                            windowArgs.EntityPM = response.Result;
+                            let counter = response.Result.length;
+                            logitudeWindow.Title = counter + "  הערות מבקר  ";
+                            logitudeWindow.WindowArgs = windowArgs;
+                            logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
+                        });
+                }
                 break;
             }
             default: {

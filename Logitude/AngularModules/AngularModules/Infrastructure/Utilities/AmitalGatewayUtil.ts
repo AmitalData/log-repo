@@ -149,6 +149,43 @@ export class AmitalGatewayUtil {
             "קבצי רכבים");
     }
 
+
+    public ShowCFIFILEMMoveToQueueScreen(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMMoveToQueueScreen",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMMoveToQueueScreen",
+            unifreightMessageM,
+            " העברה לתור");
+    }
+
+    public ShowCFIFILEMMoveSIToOCRScreen(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.ShowCFIFILEMMoveSIToOCRScreen",
+            "CFIHMAIN.LogitudeTask",
+            "ShowCFIFILEMMoveSIToOCRScreen",
+            unifreightMessageM,
+            " העברת חשבונות ספק ל-OCR");
+    }
+
     SendTotangoUserActivity(module: string, activity: string) {
         var req = new UnifreightMessageM();
         req.Requset.push(["module", module]);
@@ -260,6 +297,15 @@ export class AmitalGatewayUtil {
 
                 let mapGeneralLOV = new ShowGeneralLOVReturnSelected();
                 mapGeneralLOV.Run(myParam);
+            }
+                break;
+            case "MapExceptionReasonCodeData": {
+                {
+                    this.SelectCustomsRequestMenu(MaintenanceMenu);
+
+                    let mapExceptionReasonCodeData = new MapExceptionReasonCodeData();
+                    mapExceptionReasonCodeData.Run(myParam);
+                }
             }
                 break;
             case "MapPendingReasonCodeData":
@@ -1216,6 +1262,28 @@ export class MapPendingReasonCodeData {
         };
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent');
+        logWindow.WindowClosed.subscribe(($event1: any) => {
+            AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+        });
+
+    }
+
+}
+
+export class MapExceptionReasonCodeData {
+    public Run(unifreightMessage: UnifreightMessageM) {
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 400;
+        logWindow.Title = 'קשר סטטוס לסיבת חריג';
+        logWindow.WindowArgs = {
+            "UnifreightStatusCode": UnifreightEntityNumber,
+            "FromUnifreight": true,
+        };
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddExceptionReasonToUnifreightStatusComponent');
         logWindow.WindowClosed.subscribe(($event1: any) => {
             AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
         });

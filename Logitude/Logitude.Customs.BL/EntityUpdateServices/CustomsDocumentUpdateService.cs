@@ -36,6 +36,7 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Server.Tools.Utils;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -201,9 +202,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 base.OnUpdating(entityPM, entityPOCO);
                 if (entityPM.DocumentStatusCode == "7")
                 {
-                    UpdateDeclarationCourierStatus(entityPM);
+                    UpdateDeclarationCourierStatus(entityPM, "I");
                 }
-                if(string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                if (string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     UpdateDeclarationCourierStatus380(entityPM);
                 }
@@ -444,7 +445,32 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public const string AvoidSendToCustoms = "Logitude.Customs.BL.EntityUpdateServices.CustomsDocumentUpdateService.AvoidSendToCustoms";
 
-        //protected override void AfterUpdating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
+        protected override void AfterUpdating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
+        {
+            if (entityPM.DocumentStatusCode == "1")
+            {
+                ICustomContext context = MainContext as CustomContext;
+                DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
+                if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
+                {
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+                    if (currentDeclarationCourierStatusPM == null)
+                    {
+                        CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
+                        LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
+                        calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
+                        if (currentDeclarationCourierStatusPM.DocumentStatusCode != "M")
+                        {
+                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
+                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        }
+                    }
+                }
+            }
+        }
 
         public bool IgnoreSendFailure = false;
         private bool _AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady;
@@ -720,7 +746,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        private void UpdateDeclarationCourierStatus(CustomsDocumentPM entityPM)
+        private void UpdateDeclarationCourierStatus(CustomsDocumentPM entityPM, string status)
         {
 
             if (!string.IsNullOrWhiteSpace(entityPM.DeclarationId) && entityPM.DocumentStatusCode == "7")
@@ -729,7 +755,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
                 if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
                 {
-                    string status = "I";
+                    //string status = "I";
                     
                     if (!string.IsNullOrWhiteSpace(status))
                     {
@@ -757,8 +783,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
         }
-
-
 
         private void UpdateDeclarationCourierStatus380(CustomsDocumentPM entityPM)
         {
@@ -797,9 +821,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
         }
-
-
-
 
         private DeclarationPM GetConnectedDeclarationPM(CustomsDocumentPM dirtyEntityPM)
         {

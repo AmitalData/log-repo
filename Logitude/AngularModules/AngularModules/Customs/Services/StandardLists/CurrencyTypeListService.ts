@@ -31,14 +31,13 @@ export class CurrencyTypeListService {
     }
 
     getSingle(code: string) {
-	    var callTime = new Date();
+	   
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-
+        var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, { headers: authHeader }).map(response => {
+
                 var list = response.json();
                     
                 var entity: CurrencyTypeList;
@@ -46,60 +45,54 @@ export class CurrencyTypeListService {
 				{
                    entity = this.MapJsonToEntityList(list);
                 }   
+
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
-			    var servertime = response.headers.get('ServerExecutionTime');
+                var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyType", "GetSingleList", 'code=' + code); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        }
-
-        );
+        });
     }
 
     getAll() {
-
-	   var callTime = new Date();
+        
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getall', {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
               var allLists = response.json();
               var _mappedListsArray: Array< CurrencyTypeList> = [];
 		      if(allLists)
 			  {
-				for (var key in  allLists) {
-				
+				for (var key in  allLists) {				
 				   var entity: CurrencyTypeList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
-
 				 }
                }
+
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = _mappedListsArray;  
+                serviceResponse.Result = _mappedListsArray;
 				serviceResponse.CallTime = callTime;
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyType", "GetAll", ""); 
+                var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyType", "GetAllLists", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        }
-
-        );
+        });
     }
-
 	
     getByFilters(filters: ApiQueryFilters) {
 
-	   var callTime = new Date();       
+        var callTime = new Date();
+		                        
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -151,12 +144,11 @@ export class CurrencyTypeListService {
 				 }
                 }   
 
-                serviceResponse.Result = _mappedListsArray;      
-		        serviceResponse.CallTime = callTime;
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 				
-				            
+                serviceResponse.Result = _mappedListsArray;       
+				serviceResponse.CallTime = callTime;
+                var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+				           
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });        
@@ -164,131 +156,207 @@ export class CurrencyTypeListService {
 
     getSingleFromCache(code: string) {
 
-	   var callTime = new Date(); 	    
+	        var callTime = new Date();
 		 if (!SessionLocator.UseCachedData) {
             return this.getSingle(code);
         }
+	    
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+		var exists = CurrencyTypeListService.CachedData.filter(a => a.Code === code).length;
 
         var serviceResponse: ServiceResponse;
-        serviceResponse = new ServiceResponse();
-
-        if (CurrencyTypeListService.CachedData.length > 0) {
-
-            return Observable.defer(() => {
-
-                var filteredData = CurrencyTypeListService.CachedData.filter(a => a.Code === code)[0];
-				serviceResponse.CallTime = callTime;
-				serviceResponse.Result = filteredData; 
-                return Observable.of(serviceResponse);
-
-            });
-        }
-        else {
-
-            return CachedDataManager.GetClosedTableData("Customs.CurrencyType").map(cachedJson=> {
-
-                var _mappedListsArray: Array<CurrencyTypeList> = [];
-                if (cachedJson) {
+        serviceResponse = new ServiceResponse(); 
+        if (exists === 0) {
+        return Observable.defer(() => {
+            var cacheKey = "CurrencyType_CachedData_" + SessionLocator.Tenant;
+            var _mappedListsArray: Array<CurrencyTypeList> = [];
+                var cachedString = LocalStorageManager.GetItem(cacheKey);
+                if (cachedString) {
+                    var cachedJson = JSON.parse(cachedString);
                     for (var key in cachedJson) {
 
                         var entity: CurrencyTypeList;
                         entity = this.MapJsonToEntityList(cachedJson[key]);
                         _mappedListsArray.push(entity);
-
                     }
+
+                    CurrencyTypeListService.CachedData = _mappedListsArray;
+                    serviceResponse = new ServiceResponse();
+                    
+                    var filteredData = CurrencyTypeListService.CachedData.filter(a => a.Code === code)[0];
+                    serviceResponse.Result = filteredData;
+					serviceResponse.CallTime = callTime;
+ 
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CurrencyType", "GetSingleListFromCache", 'code=' + code); 
+
+
+                    return Observable.of(serviceResponse);
+
+                    
                 }
+				else
+				{
 
-                CurrencyTypeListService.CachedData = _mappedListsArray;
+					return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
+						headers: authHeader
+					}).map(response => {
+						var list = response.json();
+                    
+						var entity: CurrencyTypeList;
+						if(list)
+						{
+						 entity = this.MapJsonToEntityList(list);
+						}   
 
-                var filteredData = CurrencyTypeListService.CachedData.filter(a => a.Code === code)[0];
-				serviceResponse.Result = filteredData; 
-				serviceResponse.CallTime = callTime;
-			     
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CurrencyType", "GetSingleListFromCache", 'code=' + code); 
-
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
-
+					 serviceResponse.Result = entity;
+				     serviceResponse.CallTime = callTime;
+                     var servertime = response.headers.get('ServerExecutionTime');
+                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyType", "GetSingleList", 'code=' + code); 
+                                      
+						return serviceResponse;
+					}).catch(ServiceHelper.HandleServiceError);
+			}
         }
 
+        );
+		}
+		else
+		{
+		   var filteredData = CurrencyTypeListService.CachedData.filter(a => a.Code === code)[0];
+		    serviceResponse.Result = filteredData;
+			serviceResponse.CallTime = callTime;
+		   return Observable.of(serviceResponse);
+		}
     }
 
-    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
+    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
 
-	     var callTime = new Date(); 	           
+		        var callTime = new Date();
 		 if (!SessionLocator.UseCachedData) {
             return this.getByFilters(filters);
         }
 
+  var exists = CurrencyTypeListService.CachedData.length;
+   var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
         for (var i in mykeys) {
             var propName = mykeys[i];
             var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter)
+			{
+				if (exists === 0 || filters.ForceCacheRefresh) {
+					propValue = encodeURIComponent(propValue);
+				}
+
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+			}
+
             if (propName == "AdditionalFilters" && propValue.length > 0)
                 addtionalFiltersValues = JSON.stringify(propValue);
+
+
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var serviceResponse: ServiceResponse;
-        serviceResponse = new ServiceResponse();
 
-        if (CurrencyTypeListService.CachedData.length > 0) {
 
-            return Observable.defer(() => {
-                if(filters.GetAll)
-				{
-					serviceResponse.Result = CurrencyTypeListService.CachedData; 
-				}
-				else
-				{
-					var filteredData = InfraGenericFilter.GetFilteredArray(CurrencyTypeListService.CachedData, filters);
-					serviceResponse.Result = filteredData; 
-					serviceResponse.CallTime = callTime;
-				}
-                return Observable.of(serviceResponse);
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);//
+        
+       
+        if (exists === 0 || filters.ForceCacheRefresh) {
+            var cacheKey = "CurrencyType_CachedData_" + filters.Tenant;
+            var _mappedListsArray: Array<CurrencyTypeList> = [];
+            var serviceResponse: ServiceResponse;
 
-            });
-        }
-        else {
-
-            return CachedDataManager.GetClosedTableData("Customs.CurrencyType").map(cachedJson=> {
-
-                var _mappedListsArray: Array<CurrencyTypeList> = [];
-                if (cachedJson) {
+            if (!filters.ForceCacheRefresh) {
+                var cachedString = LocalStorageManager.GetItem(cacheKey);
+                if (cachedString) {
+                    var cachedJson = JSON.parse(cachedString);
                     for (var key in cachedJson) {
 
                         var entity: CurrencyTypeList;
                         entity = this.MapJsonToEntityList(cachedJson[key]);
                         _mappedListsArray.push(entity);
-
                     }
-                }
 
-
-
-                CurrencyTypeListService.CachedData = _mappedListsArray;
-                if(filters.GetAll)
-				{
-					serviceResponse.Result = _mappedListsArray; 
-				}
-				else
-				{
-							
-					_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-
-							      
-			   
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CurrencyType", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 	
-					serviceResponse.Result = _mappedListsArray; 
+                    CurrencyTypeListService.CachedData = _mappedListsArray;
+                    serviceResponse = new ServiceResponse();
+                     if (!filters.GetAll) {
+                        _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+                    }
+                    serviceResponse.Result = _mappedListsArray;
 					serviceResponse.CallTime = callTime;
-				}
-                return serviceResponse;
+                    
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CurrencyType", "GetAllFromCache", ""); 
 
-            }).catch(ServiceHelper.HandleServiceError);
+                    
+                }
+            }
+            if (serviceResponse) {
+                return Observable.of(serviceResponse);
+            }
+            else {
+                return Observable.defer(() => {
+                    return this._http.get(callUrl, {
+                        headers: authHeader
+                    }).map(response => {
 
-        }		 
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = response.json();
+                        
+                        if (serviceResponse.Result) {
+                            for (var key in serviceResponse.Result) {
+
+                                var entity: CurrencyTypeList;
+                                entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                                _mappedListsArray.push(entity);
+
+                            }
+                        }
+                        if (filters.GetAll) {
+                            LocalStorageManager.SetItem(cacheKey, JSON.stringify(_mappedListsArray))
+                            CurrencyTypeListService.CachedData = _mappedListsArray;
+                        }
+                        else {
+							
+                            _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+                        }
+                        serviceResponse.Result = _mappedListsArray;
+						serviceResponse.CallTime = callTime;
+						
+                    var servertime = response.headers.get('ServerExecutionTime');
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyType", "GetAll", ""); 
+
+                        return serviceResponse;
+                    }).catch(ServiceHelper.HandleServiceError);
+                });
+            }
+        }
+        else {
+            var filteredData = CurrencyTypeListService.CachedData;
+            if (!filters.GetAll) {
+	
+                filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
+            }
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = filteredData;
+			serviceResponse.CallTime = callTime;
+
+            return Observable.of(serviceResponse);
+        }
     }
 	
 	    MapJsonToEntityList(jsonList: any) {

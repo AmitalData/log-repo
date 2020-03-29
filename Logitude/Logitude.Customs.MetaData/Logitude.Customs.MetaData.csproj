@@ -121,6 +121,7 @@
     <None Include="EntityFiles\DBMigrationLine.lxml" />
     <None Include="EntityFiles\DecDangersContacts.lxml" />
     <None Include="EntityFiles\DeclarationReferantData.lxml" />
+    <None Include="EntityFiles\ExceptionReason.lxml" />
     <None Include="EntityFiles\HazardousSubstance.lxml" />
     <None Include="EntityFiles\RequestType.lxml">
       <SubType>Designer</SubType>
@@ -198,6 +199,7 @@
     <None Include="EntityFiles\ImporterDeclarationType.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ReferantException.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

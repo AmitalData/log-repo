@@ -19,12 +19,23 @@ export class DeclarationReferantDataList {
 	ControllerStatus: string;
 	CollectionOfMoneyStatus: string;
 	FollowUpDate: Date;
-	IsExceptional: boolean;
 	WithPaper: boolean;
 	IsClosedForFollowUp: string;
 	IsClassificationRemarks: boolean;
 	IsControllerRemarks: boolean;
 	PreClassification: string;
+	CustomFileNo: string;
+	CustomerName: string;
+	TransportModeId: string;
+	DeclarationOfficeCode: string;
+	VendorName: string;
+	DeclarationStatusTypeName: string;
+	DeclarationOfficeName: string;
+	DeclarationStatusTypeCode: string;
+	ATAOrETA: string;
+	SearchFields: string;
+	ExceptionReasonsList: string;
+	Actions: string;
 	
 }
  

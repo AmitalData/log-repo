@@ -10,6 +10,7 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { CourierMasterPMService } from '../../../Customs/Services/StandardPMs/CourierMasterPMService';
+import { CourierWorksheetSharedDataService } from "../../../Customs/Services/DataChange/CourierWorksheetSharedDataService";
 
 
 @Component({
@@ -24,15 +25,26 @@ export class CourierDeclarationWorkspaceListTemplate {
     
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
     private _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
+    public colorDate: string="Black";
 
-
-    constructor(private CD: ChangeDetectorRef) {
+    constructor(private CD: ChangeDetectorRef, public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService) {
         
     }
 
     setVariables(courierMasterList: CourierMasterList, fieldName: string) {
         this._CourierMasterList = courierMasterList;
         this.fieldName = fieldName;
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var estimatedArrivalDate = new Date(this._CourierMasterList.EstimatedArrivalDate);//.setHours(0, 0, 0, 0);
+        estimatedArrivalDate.setHours(0, 0, 0, 0);
+         if (estimatedArrivalDate.getTime() < today.getTime()) {
+            this.colorDate = "Red";
+        }
+        else if (estimatedArrivalDate.getTime() === today.getTime()) {
+            this.colorDate = "Blue";
+        }
+      
         this.CD.detectChanges();
     }
 
@@ -56,6 +68,8 @@ export class CourierDeclarationWorkspaceListTemplate {
                     logWindow.IsFillScreen = true;
                     logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
                     logWindow.WindowClosed.subscribe(($event1: any) => {
+                        this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+
                         //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
                         //this.isEditControlOpened = false;
                         //this.OnBackFromEdit(selectedEntityId, $event);

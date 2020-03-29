@@ -169,6 +169,8 @@ import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecut
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
 import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
 import { TaskSchedulerHistoryComponent } from '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerHistoryComponent';
+import { DropdownMenuComponent } from './Components/LogitudeComponents/DropdownMenuComponent';
+import { MultiSelectLOVComponent } from './Components/LogitudeComponents/MultiSelectLOVComponent';
 
 export const Directives =
     [
@@ -272,6 +274,10 @@ export const ControlsComponents =
         LogTextBoxComponentV3,
         ImageLibraryComponent,
         TaskSchedulerHistoryComponent
+        DropdownMenuComponent,
+        MultiSelectLOVComponent,
+         
+
     ];
 export const Components =
     [

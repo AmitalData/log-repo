@@ -512,7 +512,7 @@ export class ImporterDetailsComponent extends BaseComponent {
         this.UIProperties.SetEnabled("CasualImporterContact", this.ObjectTableName, true);
         //}
         if (///!AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) ||
-            this.EntityPM.ImporterTypeCode == "2" /*"P"*/ ||
+            //this.EntityPM.ImporterTypeCode == "2" /*"P"*/ || 
             this.EntityPM.ImporterTypeCode == "3" /*"F"*/) {
 
             this.ImporterName = "";

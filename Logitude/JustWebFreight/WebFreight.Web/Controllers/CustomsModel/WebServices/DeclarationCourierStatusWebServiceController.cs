@@ -50,5 +50,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
 
         }
+
+        public HttpResponseMessage GetQueriesCounts()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext context = CustomContext.GetContext(tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(tenant);
+              var counts=  declarationCourierStatusQueryService.GetQueriesCounts(tenant);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, counts);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
     }
 }

@@ -224,6 +224,8 @@ import { SealCompletenesListService } from './Services/StandardLists/SealComplet
 import { SealTypeListService } from './Services/StandardLists/SealTypeListService';
 import { AmendmentTypeListService } from './Services/StandardLists/AmendmentTypeListService';
 import { SealUpdateReasonTypeListService } from './Services/StandardLists/SealUpdateReasonTypeListService';
+import { DeclarationReferantDataListService } from './Services/StandardLists/DeclarationReferantDataListService';
+import { ExceptionReasonListService } from './Services/StandardLists/ExceptionReasonListService';
 
 
 //#endregion
@@ -270,6 +272,7 @@ import { VehiclePMService } from './Services/StandardPMs/VehiclePMService';
 import { VendorCommissionPMService } from './Services/StandardPMs/VendorCommissionPMService';
 import { CouriersVatPMService } from './Services/StandardPMs/CouriersVatPMService';
 import { CourierPendingReasonPMService } from './Services/StandardPMs/CourierPendingReasonPMService';
+import { ExceptionReasonPMService } from './Services/StandardPMs/ExceptionReasonPMService';
 import { CourierMasterPMService } from './Services/StandardPMs/CourierMasterPMService';
 import { CustomDocumentTypePMService } from './Services/StandardPMs/CustomDocumentTypePMService';
 import { UIMessagePMService } from './Services/StandardPMs/UIMessagePMService';
@@ -350,6 +353,7 @@ import { VendorCommissionService } from './Services/WebServices/VendorCommission
 import { ApprovedProfessionListService } from './Services/StandardLists/ApprovedProfessionListService'
 import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
 import { CustomsAutonomyKeywordPMService } from './Services/StandardPMs/CustomsAutonomyKeywordPMService';
+import { CurrencyTypePMService } from './Services/StandardPMs/CurrencyTypePMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -583,6 +587,9 @@ export class ModuleProviders {
             case "SealTypeListService": { myResult = new SealTypeListService(); break; }
             case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
             case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
+            case "DeclarationReferantDataListService": { myResult = new DeclarationReferantDataListService(); break; }
+            case "ExceptionReasonListService": { myResult = new ExceptionReasonListService(); break;}
+
              //#endregion                
 
             //#region StandardPMs
@@ -628,6 +635,7 @@ export class ModuleProviders {
             case "VendorCommissionPMService": { myResult = new VendorCommissionPMService(); break; }
             case "CouriersVatPMService": { myResult = new CouriersVatPMService(); break; }
             case "CourierPendingReasonPMService": { myResult = new CourierPendingReasonPMService(); break; }
+            case "ExceptionReasonPMService": { myResult = new ExceptionReasonPMService(); break; }
             case "CustomsAutonomyKeywordPMService": { myResult = new CustomsAutonomyKeywordPMService(); break; }
             case "CourierMasterPMService": { myResult = new CourierMasterPMService(); break; }
             case "CustomDocumentTypePMService": { myResult = new CustomDocumentTypePMService(); break; }
@@ -637,6 +645,7 @@ export class ModuleProviders {
             case "CustomsAirlinePMService": { myResult = new CustomsAirlinePMService(); break; }
             case "CustomsCountryPMService": { myResult = new CustomsCountryPMService(); break; }
             case "PendingByKeywordPMService": { myResult = new PendingByKeywordPMService(); break; }
+            case "CurrencyTypePMService": { myResult = new CurrencyTypePMService(); break; }
             //#endregion
 
             //#region ExtendedLists

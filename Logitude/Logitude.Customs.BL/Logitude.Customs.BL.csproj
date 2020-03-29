@@ -93,7 +93,9 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -187,8 +189,8 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\ProcessingReasonDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RefundCustomerActivityTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RequestTypeDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\SealTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SealCompletenesDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SealTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SealUpdateReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SeizureFactorTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SeizureMethodTypeDetails.Generated.cs" />
@@ -423,6 +425,7 @@
     <Compile Include="EntityDataMappings\DocumentTypeCustomsDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntitlementTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityTypeLookupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ExceptionReasonDataMapping.cs" />
     <Compile Include="EntityDataMappings\FacilitationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FaultInspectionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FreightPaymentMethodDataMapping.cs" />
@@ -595,6 +598,7 @@
     <Compile Include="EntityDataMappings\Generated\DocumentTypeCustomsDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntitlementTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityTypeLookupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ExceptionReasonDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FacilitationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FaultInspectionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FreightPaymentMethodDataMapping.Generated.cs" />
@@ -674,6 +678,7 @@
     <Compile Include="EntityDataMappings\Generated\ProductNameTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PropertiesDetailsHistoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RansomViolationTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReferantExceptionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RefundCustomerActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RegisteredWarehouseSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestStatusDataMapping.Generated.cs" />
@@ -819,6 +824,7 @@
     <Compile Include="EntityDataMappings\ProductNameTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PropertiesDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\RansomViolationTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReferantExceptionDataMapping.cs" />
     <Compile Include="EntityDataMappings\RefundCustomerActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RegisteredWarehouseSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestStatusDataMapping.cs" />
@@ -903,10 +909,12 @@
     <Compile Include="EntityQueryServices\ClientDrivingLicenseQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientQueryService.cs" />
     <Compile Include="EntityQueryServices\ConsignmentPackageQueryService.cs" />
+    <Compile Include="EntityQueryServices\CurrencyTypeTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomDocumentTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsAutonomyKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
+    <Compile Include="EntityQueryServices\ExceptionReasonQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AmendmentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
@@ -922,6 +930,9 @@
     <Compile Include="EntityQueryServices\Generated\DeclarationPendingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationReferantDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeficitDecisionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExceptionReasonQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExceptionReasonQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReferantExceptionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\HazardousSubstanceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SealCompletenesQueryService.Generated.cs" />
@@ -1328,13 +1339,15 @@
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntsReasonsExpUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\DecDangersContactUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentPackDangerUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CourierPendingReasonUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CurrencyTypeTenantUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CurrencyTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsAirlineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsAutonomyKeywordUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsPartnerFtpUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DecCargoSplitCargoIdentifierUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DecDangersContactUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.Amital.cs" />
     <Compile Include="EntityUpdateServices\ClaimUpdateService.Amital.cs" />
     <Compile Include="EntityUpdateServices\ClaimUpdateService.cs" />
@@ -1355,6 +1368,7 @@
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DeclarationReferantDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GatepassRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AcceptanceStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AccumalationStateUpdateService.Generated.cs" />
@@ -1405,6 +1419,7 @@
     <Compile Include="EntityUpdateServices\Generated\DeficitDecisionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeficitUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DocumentTypeCustomsDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExceptionReasonUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FacilitationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FreightPaymentMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GatepassRequestUpdateService.Generated.cs" />
@@ -1419,6 +1434,7 @@
     <Compile Include="EntityUpdateServices\Generated\PendingByKeywordUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PendingErrorPlaceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PointerLevelUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ReferantExceptionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RefundCustomerActivityTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SealCompletenesUpdateService.Generated.cs" />
@@ -1763,9 +1779,9 @@
     <Compile Include="Messaging\Amital\CustomFile\AmitalCustomFileCommunicationModel.cs" />
     <Compile Include="Messaging\Amital\AmitalCommunicationModelBase.cs" />
     <Compile Include="Messaging\Amital\SendMessageToUServerUtil.cs" />
+    <Compile Include="Messaging\Amital\UnifreightQStatusList.cs" />
     <Compile Include="Messaging\Amital\UnifreightTaskService.cs" />
     <Compile Include="Messaging\Amital\UServerCommunicationService.cs" />
-    <Compile Include="Messaging\Amital\UnifreightQStatusList.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\AnalyzeQueueUtil.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilityQService.cs" />
     <Compile Include="Messaging\CustomsAnalyzeQueue\CourierOVSStatusAvailabilitySplitterQService.cs" />
@@ -1848,6 +1864,7 @@
     <Compile Include="Messaging\Maman\CourierGWMessageECSpclMamanResponseService.cs" />
     <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanResponseService.cs" />
     <Compile Include="Messaging\U2L\CellFile\CellFileUpsertService.cs" />
+    <Compile Include="Messaging\U2L\CommDecReferantData\CommDecReferantDataService.cs" />
     <Compile Include="Messaging\U2L\CommMasterCourier\CommMasterCourierService.cs" />
     <Compile Include="Messaging\U2L\CommDec\CommDecService.cs" />
     <Compile Include="Messaging\U2L\CourierStatus\CourierStatusService.cs" />
@@ -1875,14 +1892,14 @@
     <Compile Include="Messaging\U2L\ImportDeclaration\DeclarationUpsertService.cs" />
     <Compile Include="NotificationBL\NotificationBase.cs" />
     <Compile Include="NotificationBL\NotificationDeclartion.cs" />
-    <Compile Include="PatchDistribution\PatchDistributionBase.cs" />
-    <Compile Include="PatchDistribution\PatchDistributionManager.cs" />
     <Compile Include="PatchDistribution\PatchDistributionMatch.cs" />
+    <Compile Include="PatchDistribution\PatchDistributionManager.cs" />
+    <Compile Include="PatchDistribution\PatchDistributionBase.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0001_PatchDist.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0002_SInvoiceitemsEntry.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0005_SInvoiceitemsEntryTk2.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0003_QueueMessagesShrink.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0004_DeleteQMessWhenDone.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0005_SInvoiceitemsEntryTk2.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0006_QueueMessagesShrinkTk2.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0015_AutomaticPayment.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0008_Diamonds.cs" />

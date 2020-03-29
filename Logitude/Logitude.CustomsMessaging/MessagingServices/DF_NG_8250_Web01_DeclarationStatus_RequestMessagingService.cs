@@ -12,6 +12,7 @@ using UnifreightIIG.Common.ClientSdk;
 using UnifreightIIG.Common.DeclarationStatusQueryRequestServiceReference;
 using UnifreightIIG.Common.TheGateway;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -39,7 +40,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
         public override string MainInterfaceCode { get { return "8250"; } }
+        protected override DF_NG_8251_Web02_DeclarationStatus_Response GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        {
 
+            var MyFake_8250_DeclarationStatus_RequestMessagingService = new Fake_8250_DeclarationStatus_RequestMessagingService();
+            return MyFake_8250_DeclarationStatus_RequestMessagingService.GetFakeCustomsResponse(requestParamsData);
+
+        }
         public static DeclarationStatusResponseData SendInteractive(DeclarationStatusRequestParams searchParams) // moran 13.1.14 - Task 10236 - change to send from service - reuse send code
         {
             

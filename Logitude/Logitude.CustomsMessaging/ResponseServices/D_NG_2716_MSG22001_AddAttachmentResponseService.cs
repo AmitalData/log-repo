@@ -170,6 +170,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
                                 myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
                             }
+                            else
+                            {
+                                customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
+                                myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
+                            }
                         }
                     }
 
@@ -239,7 +244,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 documentsFilingService.Update(documentIn, null, requestParams.LoggingUserId, false);
             }
 
-            if (!string.IsNullOrWhiteSpace(_MyCustomsDocumentPM.DocumentRemarks) &&
+             if (!string.IsNullOrWhiteSpace(_MyCustomsDocumentPM.DocumentRemarks) &&
                 _MyCustomsDocumentPM.DocumentRemarks.Contains(CustomsDocumentUpdateService.WhileAnalayzeCostomResponseSendDEC))
             {
                 LogMessagingUtil.Instance.AppendLine("WhileAnalayzeCostomResponseSendDEC  >>> LoadTest");
@@ -350,15 +355,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
                     currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
 
-                    if (prevVal != currvVal)
-                    {
+                    //if (prevVal != currvVal)
+                    //{
                         LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.CourierDeclarationStatusCode: " + currentDeclarationCourierStatusPM.CourierDeclarationStatusCode);
                         currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         LogMessagingUtil.Instance.AppendLine($"D_NG_2716_MSG22001_AddAttachmentResponseService UpdateDeclarationCourierStatus currentDeclarationCourierStatusPM.DocumentStatusCode = {currentDeclarationCourierStatusPM.DocumentStatusCode}");
-                        currentDeclarationCourierStatusPM.DocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
-                        currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                    }
+                    //}
                 }
 
             }

@@ -7,18 +7,18 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools'
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { UpdateDeleteVehicleRequestParams } from    '../../../../Customs/DataContract/RequestParams/UpdateDeleteVehicleRequestParams';
+import { UpdateDeleteVehicleRequestParams } from '../../../../Customs/DataContract/RequestParams/UpdateDeleteVehicleRequestParams';
 import { SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
-import { EntityPMService } from     '../../../../Infrastructure/Services/EntityPMService';
+import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
 import { VehicleExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/VehicleExtendedPMService';
 
 @Component({
     moduleId: module.id,
-    selector: 'SendVehicleComponent', 
+    selector: 'SendVehicleComponent',
     templateUrl: "SendVehicleComponent.html",
 })
 
@@ -33,7 +33,7 @@ export class SendVehicleComponent {
     ForcePersonalSign: boolean;
     Option: string;
     ResponseData: ClientSearchResponseData;
-    _VehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();ehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();
+    _VehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();
     //------------------------------------------------------//
 
     SaveCompletedEvent: any;
@@ -41,7 +41,7 @@ export class SendVehicleComponent {
     private _CurrentSession = SessionLocator.SelectedSession;
 
     ObjectTableName = "Customs.Vehicle";
-    private static CurrentSession = SessionLocator.SelectedSession;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityPMService: EntityPMService) {
 
     }
@@ -83,87 +83,86 @@ export class SendVehicleComponent {
         this.PostSendVehicleAndPrecalculations(customSendOptionsArgs);
     }
 
-    public static SaveEntityChanges(customSendOptionsArgs, EntityPM: VehiclePM, isDelete: boolean) {
-        EntityPM.Tenant = SessionLocator.Tenant;
+    private reloadEvent: any;
+    public SaveEntityChanges(customSendOptionsArgs, entityPM: VehiclePM, isDelete: boolean) {
+        this.EntityPM = entityPM;
+        this.EntityPM.Tenant = SessionLocator.Tenant;
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //this.ValidationErrorsList = [];
-        if (AppTool.IsNullOrEmpty(EntityPM.Id)) {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             //this.CancelButtonClicked();
             return;
         }
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
-        //if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-        //this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
-        //this.CurrentSession.CurrentEditComponent.SaveChanges()
         let entityPMService = new EntityPMService();
-        entityPMService.update("Customs.Vehicle", EntityPM).then((res: any) => {
+        entityPMService.update("Customs.Vehicle", this.EntityPM).then((res: any) => {
             res.subscribe((myResponse: ServiceResponse) => {
-
                 this.CurrentSession.StopBusyIndicator();
-
                 if (myResponse.HasError) {
                     this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     //this.SaveCompleted.emit(false);
                 }
-
                 else {
-                    EntityPM = myResponse.Result;
-                    if (AppTool.IsNullOrEmpty(EntityPM.Id)) {
+                    this.EntityPM = myResponse.Result;
 
-                        var myErrors: string[] = [];
-                        myErrors.push("this.EntityPM.Id is null");
-                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList  = myErrors;
-                    } else {
-                        if (customSendOptionsArgs == null) {
-                            //this.CancelButtonClicked();
-                        } else {
-                            var currRequestParams = new UpdateDeleteVehicleRequestParams();///Force new GUID On Each Send !!
-                            currRequestParams.LoggingEnabled = true;
-                            currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-                            currRequestParams.Tenant = SessionLocator.Tenant;
+                    if (this.CurrentSession.CurrentEditComponent) {
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                            this.reloadEvent.unsubscribe();
+                            if (isLoadSuccess) {
+                                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                                this.CurrentSession.StartBusyIndicator("");
 
-                            currRequestParams.VehicleId = EntityPM.Id;
-                            currRequestParams.IsDelete = isDelete;
-
-                            CustomMessageProgressComponent
-                                .ShowProgressBar(currRequestParams.PBId,
-                                "שליחת מסר עדכון פרטי רכב", false)
-                                .then((res) => {
-                                    console.log(res);
-                                    //this.CancelButtonClicked();
-                                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                    var myErrors: string[] = [];
+                                    myErrors.push("this.EntityPM.Id is null");
+                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myErrors;
                                 }
-                                ).catch((err) => {
-                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(err);
-                                    //this.CancelButtonClicked();
-                                });
+                                else {
+                                    if (customSendOptionsArgs == null) {
+                                        //this.CancelButtonClicked();
+                                    } else {
+                                        var currRequestParams = new UpdateDeleteVehicleRequestParams();///Force new GUID On Each Send !!
+                                        currRequestParams.LoggingEnabled = true;
+                                        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+                                        currRequestParams.Tenant = SessionLocator.Tenant;
 
-                            var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
+                                        currRequestParams.VehicleId = this.EntityPM.Id;
+                                        currRequestParams.IsDelete = isDelete;
 
-                            myIIGGeneralMessagesService.PostVehicleRequest(currRequestParams)
-                                .subscribe((myServiceResponse: ServiceResponse) => {
-                                    //this.CurrentSession.StopBusyIndicator();
+                                        CustomMessageProgressComponent
+                                            .ShowProgressBar(currRequestParams.PBId,
+                                                "שליחת מסר עדכון פרטי רכב", false)
+                                            .then((res) => {
+                                                console.log(res);
+                                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                            }
+                                            ).catch((err) => {
+                                                this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(err);
+                                            });
 
-                                    //this.ResponseData = myServiceResponse.Result;
-                                    //this.OnMassageDisplayMethod();
-                                });
-                        }
+                                        var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
 
+                                        myIIGGeneralMessagesService.PostVehicleRequest(currRequestParams)
+                                            .subscribe((myServiceResponse: ServiceResponse) => {
+                                            });
+                                    }
+                                }
+                            }
+                        });
                     }
-                }
 
+                }
             }, error => {
                 this.CurrentSession.StopBusyIndicator();
                 var myErrors: string[] = [];
                 myErrors.push(error.message);
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myErrors;
-                
+
             });
         });
-        //}
-
     }
 
     FillValidationErrors() {
@@ -194,9 +193,9 @@ export class SendVehicleComponent {
                 this.FillValidationErrors();
                 return;
             }
-            SendVehicleComponent.SaveEntityChanges(customSendOptionsArgs, this.EntityPM, false);
+            this.SaveEntityChanges(customSendOptionsArgs, this.EntityPM, false);
         });
     }
- 
+
 
 }

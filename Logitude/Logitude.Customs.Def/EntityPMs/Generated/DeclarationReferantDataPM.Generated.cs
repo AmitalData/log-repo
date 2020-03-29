@@ -273,29 +273,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isExceptional ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsExceptional  
-	   {
-	    
-	     get
-		{
-		   return isExceptional;
-		 }
-		 set
-		 {
-		   if(isExceptional != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExceptional",OldValue=isExceptional,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isExceptional=value;
-		   }
-			
-		 }
-	   }
 	  private bool withPaper ;
 	  	  
        
@@ -407,6 +384,52 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PreClassification",OldValue=preClassification,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   preClassification=value;
+		   }
+			
+		 }
+	   }
+	  private string searchFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchFields  
+	   {
+	    
+	     get
+		{
+		   return searchFields;
+		 }
+		 set
+		 {
+		   if(searchFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private string exceptionReasonsList ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExceptionReasonsList  
+	   {
+	    
+	     get
+		{
+		   return exceptionReasonsList;
+		 }
+		 set
+		 {
+		   if(exceptionReasonsList != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExceptionReasonsList",OldValue=exceptionReasonsList,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exceptionReasonsList=value;
 		   }
 			
 		 }

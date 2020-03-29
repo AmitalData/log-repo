@@ -180,8 +180,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     SetWindowArgs(windowArgs) {
-        this.WindowArgs = windowArgs;
+         this.WindowArgs = windowArgs;
         this.CustomsDocumentsTicket = windowArgs.CustomsDocumentsTicket;
+        //if (windowArgs.DocumentTypeCode) {
+        //    this.CustomsDocument.DocumentTypeCode = windowArgs.DocumentTypeCode;
+        //    this.DocumentTypeCode = windowArgs.DocumentTypeCode;
+        //}
         if (this.CustomsDocumentsTicket) {
             this.CustomsDocumentsTicket.CloneMe();
         }
@@ -576,8 +580,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     OkMethod(isSendToQueue: boolean) {
-        debugger;
-         var errors = [];
+          var errors = [];
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);
             if (errors.length > 0) {
