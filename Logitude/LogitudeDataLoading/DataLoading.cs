@@ -24,7 +24,8 @@ namespace LogitudeDataLoading
     {
         public string LoadCustomersFromAfile(int tenant)
         {
-            CacheManager.CacheWrapper = new Dictionary(1000);
+            //CacheManager.CacheWrapper = new Dictionary(1000);
+            CacheManager.CacheWrapper = new MockCacheWrapper();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
             ICommonDataContext otherObjectContext = CommonDataContext.GetContext(tenant);
@@ -497,7 +498,7 @@ namespace LogitudeDataLoading
             string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
             Contact systemContact = contactRep.GetSingleContactByEmail(systemContactEmail, tenant);
             ContactQuery contactQuery = new ContactQuery(contactRep);
-            List<ContactPM> contacts = contactQuery.GetContactPMsByTenant(tenant);
+            List<ContactPM> contacts = contactQuery.GetContactPMsWithoutPassWordsByTenant(tenant);
             ContactPM cont = contacts.Where(d => d.Email == "imardo@il.loreal.com").FirstOrDefault();
 
             string status = "success";
@@ -542,6 +543,7 @@ namespace LogitudeDataLoading
                     {
                         using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadUncommitted, Timeout = new TimeSpan(2, 0, 0) }))
                         {
+                            CacheManager.CacheWrapper = new MockCacheWrapper();
                             for (int j = i; j < i + 10 && j < stringLineArray.Count(); j++)
                             {
 
@@ -575,8 +577,11 @@ namespace LogitudeDataLoading
                                             string phone = readAgentsCodesData[9].Trim() == "NULL" ? null : readAgentsCodesData[9].Trim();
                                             string fax = readAgentsCodesData[10].Trim() == "NULL" ? null : readAgentsCodesData[10].Trim();
                                             string email = readAgentsCodesData[11].Trim() == "NULL" ? null : readAgentsCodesData[11].Trim();
-                                            string contactName = readAgentsCodesData[12].Trim() == "NULL" ? null : readAgentsCodesData[12].Trim();
-
+                                            string contactName = null;
+                                            if (readAgentsCodesData.Length >=13)
+                                            {
+                                                contactName = readAgentsCodesData[12].Trim() == "NULL" ? null : readAgentsCodesData[12].Trim();
+                                            }
                                             string receivablesAccountingCard = null;
                                             if (readAgentsCodesData.Length >= 14)
                                             {
@@ -875,7 +880,7 @@ namespace LogitudeDataLoading
             string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
             Contact systemContact = contactRep.GetSingleContactByEmail(systemContactEmail, tenant);
             ContactQuery contactQuery = new ContactQuery(contactRep);
-            List<ContactPM> contacts = contactQuery.GetContactPMsByTenant(tenant);
+            List<ContactPM> contacts = contactQuery.GetContactPMsWithoutPassWordsByTenant(tenant);
             ContactPM cont = contacts.Where(d => d.Email == "imardo@il.loreal.com").FirstOrDefault();
 
             string status = "success";
@@ -1258,7 +1263,7 @@ namespace LogitudeDataLoading
             string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
             Contact systemContact = contactRep.GetSingleContactByEmail(systemContactEmail, tenant);
             ContactQuery contactQuery = new ContactQuery(contactRep);
-            List<ContactPM> contacts = contactQuery.GetContactPMsByTenant(tenant);
+            List<ContactPM> contacts = contactQuery.GetContactPMsWithoutPassWordsByTenant(tenant);
             string status = "success";
 
             WarehouseRepository warehouseRep = new WarehouseRepository(otherObjectContext);
@@ -1634,7 +1639,7 @@ namespace LogitudeDataLoading
             string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
             Contact systemContact = contactRep.GetSingleContactByEmail(systemContactEmail, tenant);
             ContactQuery contactQuery = new ContactQuery(contactRep);
-            List<ContactPM> contacts = contactQuery.GetContactPMsByTenant(tenant);
+            List<ContactPM> contacts = contactQuery.GetContactPMsWithoutPassWordsByTenant(tenant);
             ContactPM cont = contacts.Where(d => d.Email == "imardo@il.loreal.com").FirstOrDefault();
 
             string status = "success";
