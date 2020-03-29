@@ -28,8 +28,7 @@ import { CountryListService } from '../../../../Common/Services/StandardLists/Co
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import {WarehouseReleasePMExtendedService} from '../../../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
-
-
+import { PackageAmountCalculator } from '../../../../Infrastructure/Utilities/PackageAmountCalculator';
 declare var ResultAsArray: any;
 
 @Component({
@@ -1873,10 +1872,10 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             }
 
             if (AppTool.IsNullOrZero(shipmentPackage.Volume)) {
-                shipmentPackage.Volume = AppTool.ComputePackageVolume(shipmentPackage.Quantity, shipmentPackage.Width, shipmentPackage.Height, shipmentPackage.Length, shipmentPackage.Weight, ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode);
+                shipmentPackage.Volume = PackageAmountCalculator.ComputeVolume(shipmentPackage.Volume, shipmentPackage.Quantity, shipmentPackage.Width, shipmentPackage.Height, shipmentPackage.Length, shipmentPackage.Weight, ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode);
             }
 
-            shipmentPackage.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(shipmentPackage.Quantity, shipmentPackage.Width, shipmentPackage.Height, shipmentPackage.Length, shipmentPackage.Volume, shipmentPackage.Weight, ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode);
+            shipmentPackage.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(shipmentPackage.VolumetricWeight, shipmentPackage.Volume, shipmentPackage.Weight, ratio, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode);
 
             if (item.IsRefrigerated == false) {
                 shipmentPackage.NonActiveContainer = false;
