@@ -1,7 +1,7 @@
 
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import { Http, Headers, Response } from '@angular/http';
-import { HttpClient, HttpResponse, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
 import {AppTool, DateTool} from '../Tools';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
@@ -473,6 +473,34 @@ export class ServiceHelper {
     public static GetLDocumentDownloadToken() {
         return SessionInfo.DocumentDownloadToken;
     }
+
+    public static GetHttpHeaders() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
+
+        return httpOptions;
+    }
+
+    public static GetHttpFullHeaders() {
+
+        const httpOptions: { headers; observe; } = {
+
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            }),
+
+            observe: 'response'
+        };
+
+        return httpOptions;
+    }
+    
 }
 
 class ErrorLogPM {

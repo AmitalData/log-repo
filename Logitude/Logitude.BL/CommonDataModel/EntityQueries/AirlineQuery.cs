@@ -336,8 +336,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 airline.IsExternal = false;
 
-                airline.Logo = this.GetLogo(airline.Id, airline.Tenant);
-
                 AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
                 AccountingSystemPM accountingSystem = accountingSystemHelper.GetAccountingSystem(tenant);
                 if (accountingSystem != null)
@@ -636,52 +634,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  StateName = a.Card.StateName,
                                              };
             return result;
-        }
-
-        private byte[] GetLogo(string carrierId, int tenant)
-        {
-            byte[] output = null;
-
-            if (carrierId != null)
-            {
-                string imageDetailId = (from d in repository.context.Cards where d.Id == carrierId select d.ImageDetailId).FirstOrDefault();
-
-                if (!string.IsNullOrEmpty(imageDetailId))
-                {
-                    ImageDetailRepository imageDetailsRepository = new ImageDetailRepository(tenant);
-                    ImageDetail imageDetail = imageDetailsRepository.GetSingleImageDetail(imageDetailId, tenant);
-
-                    if (imageDetail != null)
-                    {
-                        output = this.GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);
-                    }
-                }
-            }
-
-            return output;
-        }
-        public byte[] GetFile(string fileid, string extention, string location, int tenant)
-        {
-            try
-            {
-                Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
-                {
-                    FileName = fileid,
-                    FolderName = location,
-                    Extension = extention,
-                    Tenant = tenant,
-
-                };
-
-                Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-
-                return storageservice.Read(fileInfo);
-            }
-
-            catch (Exception e)
-            {
-                return null;
-            }
         }
     }
 }

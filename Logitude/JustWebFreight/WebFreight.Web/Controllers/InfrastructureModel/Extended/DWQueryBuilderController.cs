@@ -561,7 +561,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
                 if (filter != null)
                 {
-                    DateSample = dataWarehouseHelper.ResolveWarehoueDateField("", filter.OperationCode, filter.TextValue.ToString(), authToken.Tenant,true);
+                    DateSample = dataWarehouseHelper.ResolveWarehoueDateField("", filter.OperationCode, filter.TextValue.ToString(), filter.DataTypeCode, authToken.Tenant,true);
                 }
                 //DateSample = DateSample.Replace("'","");
                 //DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);

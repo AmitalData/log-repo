@@ -35,7 +35,7 @@ export class WizardDimensionsComponent {
         this.EntityPM = entityPM;
         this.IsPackageTypeVisible = this.EntityPM.TransportModeId == "A" ? false : true;
 
-        this.entityResourceService.getEntityResourceByTableName("ShipmentOrderPackage").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("ShipmentOrderPackage").subscribe((response:any) => {
             this.IsResourcesReady = true;
             this.SaveData();            
             this.SetLabels();

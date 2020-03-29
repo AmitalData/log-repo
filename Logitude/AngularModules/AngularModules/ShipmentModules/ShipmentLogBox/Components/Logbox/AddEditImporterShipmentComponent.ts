@@ -60,7 +60,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
         //this.ShipmentList = args.SelectedShipment;
         this.IsNew = args.IsNew;
         if (this.IsNew) {
-            this._EntityStatusListService.getAll().subscribe(myResult => {
+            this._EntityStatusListService.getAll().subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0].Id;
                 }
@@ -68,7 +68,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
             });
-            this._DepartmentListService.getAll().subscribe(myResult => {
+            this._DepartmentListService.getAll().subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     this.DepartmentId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant)[0].Id;
                 }
@@ -76,7 +76,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
             });
-            this._BranchListService.getAll().subscribe(myResult => {
+            this._BranchListService.getAll().subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     this.BranchId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant)[0].Id;
                 }
@@ -163,7 +163,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
         this._PortExtendedPMService = new PortExtendedPMService();
         if (AppTool.IsNullOrEmpty(this.FromPortId)) {
             //this.ValidationErrorsList.push(msg.replace("%FieldName", "Gatway"));
-            //this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe(Result => {
+            //this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result:any) => {
             //    this.FromPortId = Result.Result.Id;
             //});
         }
@@ -197,7 +197,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                 this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
                 this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
                 this.EntityPM.Tenant = SessionLocator.Tenant;
-                this._ShipmentPMService.insert(this.EntityPM).subscribe(myResult => {
+                this._ShipmentPMService.insert(this.EntityPM).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -213,7 +213,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                 });
             }
             else {
-                this._ShipmentPMService.update(this.EntityPM).subscribe(myResult => {
+                this._ShipmentPMService.update(this.EntityPM).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded"); 

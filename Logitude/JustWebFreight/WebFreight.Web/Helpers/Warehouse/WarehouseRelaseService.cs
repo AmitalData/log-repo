@@ -16,6 +16,8 @@ namespace WebFreight.Web.Helpers.Warehouse
             WarehouseRelease warehouseRelease = warehouseReleaseRepository.GetWarehouseReleasesByReleaseNumberAndShipmentId(releaseNumber , shipmentId, tenant);
             if (warehouseRelease != null && warehouseRelease.IsUsed)
             {
+                if(string.IsNullOrEmpty(warehouseRelease.ConnectedTo)) warehouseRelease.ShipmentId = null;
+               
                 warehouseRelease.IsUsed = false;
                 warehouseReleaseRepository.Update(warehouseRelease);
                 warehouseReleaseRepository.SubmitChanges();
