@@ -9792,6 +9792,8 @@
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
         IsCompositKey="false" />
+       <DCField DCFieldName="&quot;Status&quot;" FieldName="&quot;StatusCode&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;ARPaymentStatus&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="true" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
+
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
