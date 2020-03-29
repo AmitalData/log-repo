@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -72,10 +73,22 @@ namespace WarehouseDataViews.Service
                 {
                     if (!fieldName.Contains("Key") && !fieldName.Contains("Id_Number") && !fieldName.Contains("@CustomFields"))
                     {
-                        string fieldNameCamelCase = fieldName + "as " + fieldName.Replace(" ", "");
+                        string fieldNameCamelCase = fieldName + "as " + ConvertStringToCamelCase(fieldName);
                         result = result.Replace(fieldName, fieldNameCamelCase);
                     }
                 }
+            }
+            return result;
+        }
+
+       public string ConvertStringToCamelCase(string value)
+        {
+            string result = string.Empty;
+            if (!string.IsNullOrEmpty(value))
+            {
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                result = textInfo.ToTitleCase(value.ToLower());
+                result = result.Replace(" ","" );
             }
             return result;
         }

@@ -80,11 +80,14 @@ namespace WarehouseDataViews
             {
                 string customPickListCode = customField["CustomPickListCode"].ToString();
 
-                string fieldCode = customField["DefaultText"].ToString().Replace(" ", "");
+                string fieldCode = ConvertStringToCamelCase(customField["DefaultText"].ToString());
+                
                 string viewName = GetViewName(fieldCode);
                 DropView(viewName, destinationConnectionString);
                 string scriptView = GenerateScriptView(viewName, "DIM_CustomPickLists");
                 scriptView = scriptView.Replace("@CustomPickListCode", "'" + customPickListCode + "'");
+                scriptView = scriptView.Replace("[Value]", "[Value] as ["+ fieldCode + "Value]");
+
                 ExecuteSql(scriptView, destinationConnectionString);
                 //  GrantView(viewName, destinationConnectionString);
 
@@ -130,7 +133,7 @@ namespace WarehouseDataViews
                                  .ToList();
             foreach (DataRow customField in result)
             {
-                string fieldCode = customField["DefaultText"] != null ? customField["DefaultText"].ToString().Replace(" ", "") : "";
+                string fieldCode = customField["DefaultText"] != null ? ConvertStringToCamelCase(customField["DefaultText"].ToString()) : "";
                 if (!string.IsNullOrEmpty(fieldCode)) DropView(GetViewName(fieldCode), destinationConnectionString);
             }
         }
@@ -142,12 +145,12 @@ namespace WarehouseDataViews
             string result = string.Empty;
             foreach (var customField in customObjectFields.AsEnumerable().ToList())
             {
-                string fieldDisplay = customField["DefaultText"].ToString();
+                string fieldDisplay = ConvertStringToCamelCase (customField["DefaultText"].ToString());
                 string fieldName = customField["FieldName"].ToString();
                 string dataTypeCode = customField["DataTypeCode"].ToString();
                 if (dataTypeCode != "LookUp" && dataTypeCode != "Date")
                 {
-                    if(dataTypeCode == "PickList") fieldDisplay = fieldDisplay.Replace(" ", "") + "ViewKey";
+                    if(dataTypeCode == "PickList") fieldDisplay = fieldDisplay + "ViewKey";
                     result += ",CONVERT(" + GetDataWarehouseSqlFieldType(customField) + ",[" + fieldName + "]) as " + "[" + fieldDisplay + "]";
                 }
                
