@@ -103,6 +103,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.LoadRequiredData();
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
@@ -112,6 +113,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.LoadRequiredData();
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
