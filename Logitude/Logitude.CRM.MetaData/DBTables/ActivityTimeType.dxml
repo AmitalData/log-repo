@@ -2,7 +2,8 @@
 <Table
   Name="ActivityTimeTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="CRM">
   <Column
     Name="Code"
     Type="varchar"

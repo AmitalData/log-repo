@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ARInvoiceType,ARInvoiceTypes,,Code,&quot;">
+  SearchFields="&quot;ARInvoiceType,ARInvoiceTypes,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8340edfe-39f2-45d5-abe0-936e188b24ab&quot;"
     FieldName="&quot;Code&quot;"
@@ -213,7 +215,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ARInvoiceType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

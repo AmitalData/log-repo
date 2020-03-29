@@ -2,7 +2,8 @@
 <Table
   Name="HybridPartnersPermissions"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="HybridPartnerId"
     Type="varchar"

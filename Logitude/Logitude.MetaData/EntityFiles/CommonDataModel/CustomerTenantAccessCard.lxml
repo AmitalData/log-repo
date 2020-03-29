@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;CustomerTenantAccessCard,CustomerTenantAccessCards,,Id,&quot;">
+  SearchFields="&quot;CustomerTenantAccessCard,CustomerTenantAccessCards,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;5669517a-ed9c-4421-868d-cfbf1ad6f2ab&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -340,7 +342,7 @@
     ListFieldLable="&quot;CreateByUserIdListLable&quot;"
     ListLableDefaultText="&quot;Create By User&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -362,7 +364,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="CreateByUser" />
   <field
     Id="&quot;b3d2bfd8-1750-4ad1-9796-f6ca59d4688f&quot;"
     FieldName="&quot;CreateDate&quot;"
@@ -1108,7 +1112,7 @@
     IsNullable="false"
     IsForeignKey="false"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"

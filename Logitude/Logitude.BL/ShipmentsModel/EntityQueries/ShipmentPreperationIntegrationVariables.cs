@@ -17,19 +17,30 @@ using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using System.Linq;
 using System.Collections.Generic;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.ShipmentsModel;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.BL.Security;
+using Simplog.Data.ShipmentsModel.Repositories;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ShipmentPreperationIntegrationVariables
     {
         ShipmentIntegrationVariables vars = new ShipmentIntegrationVariables();
+        IShipmentsContext shipmentContext;
         ICommonDataContext commonDataContext;
         IWebFreightContext webFreightContext;
         IQuotesContext quoteContext;
+        ShipmentPM shipment;
+        UserPM loggedUser;
+        TenantPM tenantPM;
         int tenant;
+
         public ShipmentPreperationIntegrationVariables(int tenant)
         {
             this.tenant = tenant;
+            shipmentContext = ShipmentsContext.GetContext(tenant);
             commonDataContext = CommonDataContext.GetContext(tenant);
             webFreightContext = WebFreightContext.GetContext(tenant);
             quoteContext = QuotesContext.GetContext(tenant);
@@ -46,7 +57,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             vars.ChargeTypeAFTId = GetChargeType("AFT");
             vars.PortJFKId = GetPort("JFK");
             vars.PortMIAId = GetPort("MIA");
-            vars.PortJFKId = GetPort("JFK");
+            vars.PortLHRId = GetPort("LHR");
             vars.PortSOUId = GetPort("SOU");
             vars.PortNYCId = GetPort("NYC");
             vars.PortLONId = GetPort("LON");
@@ -75,8 +86,83 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             vars.ShippingAgentId = GetShippingAgent("TestShippingAgentExport1");
             vars.WarehouseId =  GetWarehouse("TestWarehous4444444eExport1", "WR9");
             vars.CustomerId = GetCustomer("TestShipperExpo77777rt1");
+            //vars.AWBShipmentId = CreateAWBShipment();
+            //vars.ShipmentNumber = shipment.ShipmentNumber;
             return vars;
         }
+
+     /*   private string CreateAWBShipment()
+        {
+            GetUserPM();
+            GetTenantPM();
+            CreatShipmentPM();
+            InsertShipment();
+           // GetShipment();
+            return shipment.Id;
+        }
+
+        private void GetShipment()
+        {
+            ShipmentRepository updatedEntityRepository = new ShipmentRepository(shipmentContext);
+            ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+            shipment = updatedShipmentQuery.GetSingleShipmentPMByNumber(shipment.ShipmentNumber, tenant);
+        }
+
+        private void InsertShipment()
+        {
+            ShipmentService service = new ShipmentService(shipmentContext, shipment, SecurityUtility.GetAuthenticatedUser());
+            service.Create();
+        }
+
+        private void GetUserPM()
+        {
+            UserRepository userRepository = new UserRepository(commonDataContext);
+            UserQuery userQuery = new UserQuery(userRepository);
+            string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+            loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, tenant, true);
+        }
+
+        private void GetTenantPM()
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            tenantPM = tenantQuery.GetTenantFromDB(tenant);
+        }
+
+        private void CreatShipmentPM()
+        {
+            shipment = new ShipmentPM();
+            shipment.Tenant = tenant;
+            shipment.ShipmentNumber = "AWBShipmentIntgTest";
+            shipment.CreatedByUserId = loggedUser.Id;
+            shipment.BranchId = loggedUser.BranchId;
+            shipment.DepartmentId = loggedUser.DepartmentId;
+            shipment.ProfitCurrencyId = tenantPM.ProfitCurrencyId;
+            shipment.VolumeUnitCode = tenantPM.VolumeUnitCode;
+            shipment.DimensionsUnitCode = tenantPM.DimensionsUnitCode;
+            shipment.GrossWeightUnitCode = tenantPM.GrossWeightUnitCode;
+            shipment.ChargeableWeightUnitCode = tenantPM.ChargeableWeightUnitCode;
+            shipment.ShipmentLevelCode = "D";
+            shipment.DirectionId = "E";
+            shipment.TransportModeId = "A";
+            shipment.FreightPrepaidCollectId = "C";
+            shipment.OtherPrepaidCollectId = "C";
+            shipment.CreatedByUserId = loggedUser.Id;
+            shipment.UpdatedByUserId = loggedUser.Id;
+            shipment.CustomerId = vars.CustomerId;
+            shipment.ShipperId = vars.AgentId;
+            shipment.IssuingCarrierAgentId = vars.AgentId;
+            shipment.AgentId = vars.AgentId;
+            shipment.FromPortId = vars.PortLHRId;
+            shipment.ToPortId = vars.PortJFKId;
+            shipment.MainCarriageFromPortId = vars.PortLHRId;
+            shipment.MainCarriageToPortId = vars.PortJFKId;
+            shipment.OriginMainCarriageFromPortId = vars.PortLHRId;
+            shipment.AWBCurrencyId = vars.CurrencyEURId;
+            shipment.ValueOfGoodsCurrencyId = vars.CurrencyEURId;
+            shipment.AccountManagerUserId = loggedUser.Id;
+            vars.ConcurrencyGUID = shipment.NewConcurrencyGUID = Guid.NewGuid().ToString();
+        }*/
+
         private string GetWarehouse(string warehouseName,string code)
         {
             WarehouseRepository warehouseRepository = new WarehouseRepository(commonDataContext);

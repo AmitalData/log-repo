@@ -62,7 +62,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;238c4978-19dc-48e1-bcb6-df0baf619feb&quot;"
     FieldName="&quot;Id&quot;"
@@ -1810,7 +1812,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;BankAccount&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"

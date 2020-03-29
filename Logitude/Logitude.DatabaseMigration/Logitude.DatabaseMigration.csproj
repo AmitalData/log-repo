@@ -2239,6 +2239,10 @@
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.cs" />
+    <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.Designer.cs">
+      <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202003271035053_AddAPPaymentExternalAmount.cs" />
     <Compile Include="Migrations\202003271035053_AddAPPaymentExternalAmount.Designer.cs">
       <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>
@@ -4045,6 +4049,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.resx">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.resx">
+      <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003271035053_AddAPPaymentExternalAmount.resx">
       <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>

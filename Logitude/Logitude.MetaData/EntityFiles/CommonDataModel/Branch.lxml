@@ -62,7 +62,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;Branch,Branches,,Id,&quot;">
+  SearchFields="&quot;Branch,Branches,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;d1ebae78-4ce9-4cdf-afa6-830f9cf41958&quot;"
     FieldName="&quot;Id&quot;"
@@ -73,7 +75,7 @@
     ObjectTableName="&quot;Branch&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -298,9 +300,9 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Branch&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="250"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -372,7 +374,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Branch&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
@@ -744,7 +746,7 @@
     ObjectTableName="&quot;Branch&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1035,7 +1037,7 @@
     ObjectTableName="&quot;Branch&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1077,7 +1079,7 @@
     ListLableDefaultText="&quot;AddressId&quot;"
     ListLocalDefaultText="&quot;AddressId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1098,7 +1100,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Address"
+    NavigationPropertyName="Address" />
   <field
     Id="&quot;d578bf8e-6758-49f3-ad11-82644b7494bd&quot;"
     FieldName="&quot;ExternalId&quot;"
@@ -1378,7 +1382,7 @@
     FullFieldLable="&quot;INTTRAContactId&quot;"
     DefaultText="&quot;INTTRA Contact&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1400,7 +1404,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Contact"
+    NavigationPropertyName="INTTRAContact" />
   <field
     Id="&quot;f8b88683-29bf-4e82-aa9e-0c24d81d5a6c&quot;"
     FieldName="&quot;INTTRAAlias&quot;"

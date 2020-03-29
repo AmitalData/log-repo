@@ -60,7 +60,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;9b10c4c3-650a-47dd-889c-c295ab66c5f5&quot;"
     FieldName="&quot;Id&quot;"
@@ -578,7 +580,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ARPaymentCheque&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="true"

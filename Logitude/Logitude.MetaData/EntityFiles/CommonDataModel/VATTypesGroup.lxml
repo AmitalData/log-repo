@@ -40,7 +40,9 @@
   HasHelper="false"
   HasShortTitle="false"
   HasMenuButtons="false"
-  HasFiltersMenu="false">
+  HasFiltersMenu="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;2bc80c3e-6da0-4f87-90e7-6b0bb05724fb&quot;"
     FieldName="&quot;GroupVATTypeId&quot;"
@@ -59,7 +61,11 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="VatType"
+    NavigationPropertyName="GroupVATType" />
   <field
     Id="&quot;83ffb549-ef37-4ea8-b468-f38a00c67b5a&quot;"
     FieldName="&quot;SingleVATTypeId&quot;"
@@ -78,7 +84,11 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="VatType"
+    NavigationPropertyName="SingleVATType" />
   <field
     Id="&quot;4f15e567-542a-42dd-9785-7a6dbb01305c&quot;"
     FieldName="&quot;Tenant&quot;"

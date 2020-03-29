@@ -39,7 +39,9 @@
   IsEditable="true"
   ClientModuleName="&quot;Common&quot;"
   Code="&quot;GLBL&quot;"
-  DescriptionDefaultText="&quot;Logitude supplies the global zones for you. You can modify the names and add local names.&quot;">
+  DescriptionDefaultText="&quot;Logitude supplies the global zones for you. You can modify the names and add local names.&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;eabe8ff2-967c-4c30-ad60-fc126cbc4f01&quot;"
     FieldName="&quot;Id&quot;"
@@ -61,7 +63,8 @@
     NoMetaDataField="true"
     ValidForQuerySection2="&quot;GlobalZoneFollowUp&quot;"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;91985d68-f8b8-426e-a51b-626eca8f868c&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -87,7 +90,7 @@
     Id="&quot;14a0a7e0-a92b-49ec-ac1e-80b5da1b78d1&quot;"
     FieldName="&quot;Notes&quot;"
     ObjectTableName="&quot;GlobalZone&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     PMPropertyPath="&quot;Notes&quot;"
     ListPropertyPath="&quot;Notes&quot;"
     FullFieldLable="&quot;Notes&quot;"
@@ -103,7 +106,8 @@
     NoMetaDataField="true"
     ValidForQuerySection2="&quot;GlobalZoneFollowUp&quot;"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="250" />
   <field
     Id="&quot;5e0de374-c5a0-4354-8933-670084d3ed3b&quot;"
     FieldName="&quot;Code&quot;"
@@ -363,7 +367,7 @@
     ObjectTableName="&quot;GlobalZone&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -425,7 +429,7 @@
     Id="&quot;ee4f8370-4cdb-41b0-8e82-4f374315992b&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;GlobalZone&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

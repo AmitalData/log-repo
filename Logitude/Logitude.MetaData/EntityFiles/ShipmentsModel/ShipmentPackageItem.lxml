@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ShipmentPackageItem,ShipmentPackageItems,,,&quot;">
+  SearchFields="&quot;ShipmentPackageItem,ShipmentPackageItems,,,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;82c0b185-dad3-46e7-8742-3b709853762b&quot;"
     FieldName="&quot;PackageId&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;ShipmentPackageItem&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -107,7 +109,7 @@
     ListLableDefaultText="&quot;PackageId&quot;"
     ListLocalDefaultText="&quot;PackageId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -128,7 +130,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ShipmentPackage"
+    NavigationPropertyName="ShipmentPackage" />
   <field
     Id="&quot;d666b9aa-9bd6-4646-a93a-208f91846e93&quot;"
     FieldName="&quot;LineNumber&quot;"
@@ -356,7 +360,7 @@
     ObjectTableName="&quot;ShipmentPackageItem&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -429,7 +433,7 @@
     ObjectTableName="&quot;ShipmentPackageItem&quot;"
     FieldsDataType="&quot;Decimal&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -462,7 +466,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"

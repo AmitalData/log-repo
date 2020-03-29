@@ -258,7 +258,7 @@ export class ReportComponent {
             logWindow.Width = 1200;
             logWindow.Height = 1000;
 
-            logWindow.Title = "Report Scheduler";
+            logWindow.Title = reportList.Name + " Scheduler";
             logWindow.WindowArgs = windowArgs;
             logWindow.Show('./Report/Components/Scheduler/MainReportSchedulerComponent');
         });

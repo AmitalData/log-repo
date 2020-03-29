@@ -56,7 +56,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="true"
-  SearchFields="&quot;BluesnapContract,BluesnapContracts,,Code,Name&quot;">
+  SearchFields="&quot;BluesnapContract,BluesnapContracts,,Code,Name&quot;"
+  DxmlDatabaseTypeCode="Global"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;109c364e-e602-4db3-8ae5-dd2a3fe116ff&quot;"
     FieldName="&quot;Code&quot;"
@@ -613,7 +615,7 @@
     FullFieldLable="&quot;BluesnapContractTypeCode&quot;"
     DefaultText="&quot;Bluesnap Contract Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -632,7 +634,9 @@
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    ForeignEntity="BluesnapContractType"
+    NavigationPropertyName="BluesnapContractType" />
   <field
     Id="&quot;c07208bd-c19f-42dc-95e4-9eb999212410&quot;"
     FieldName="&quot;BluesnapContractTypeName&quot;"

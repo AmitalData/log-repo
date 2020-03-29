@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentPackages"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -62,7 +63,7 @@
     Name="Quantity"
     Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Weight"
@@ -443,6 +444,13 @@
   <Column
     Name="OnCarriageATA"
     Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseReleaseNumber"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

@@ -2,7 +2,8 @@
 <Table
   Name="Users"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -199,6 +200,19 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LayoutDirection"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Contacts"
@@ -236,4 +250,6 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

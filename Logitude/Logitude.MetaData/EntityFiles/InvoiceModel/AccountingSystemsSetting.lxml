@@ -55,7 +55,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;AccountingSystemsSetting,AccountingSystemsSettings,,Id,&quot;">
+  SearchFields="&quot;AccountingSystemsSetting,AccountingSystemsSettings,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;33cf313d-27bd-4993-b5aa-a1180a6c2cde&quot;"
     FieldName="&quot;UpdateOnNextRequest&quot;"

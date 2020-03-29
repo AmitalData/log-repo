@@ -2,7 +2,8 @@
 <Table
   Name="AgentSharedLogisticsKeys"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Global">
   <Column
     Name="SharedKey"
     Type="varchar"

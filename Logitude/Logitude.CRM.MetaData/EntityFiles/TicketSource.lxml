@@ -39,7 +39,9 @@
   NoViewController="false"
   NoPMController="false"
   HasCompactSearch="false"
-  ApplyDefaultValues="false">
+  ApplyDefaultValues="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;9cf1daf7-4a35-4d3e-a711-7fc00bdd1846&quot;"
     FieldName="&quot;Code&quot;"

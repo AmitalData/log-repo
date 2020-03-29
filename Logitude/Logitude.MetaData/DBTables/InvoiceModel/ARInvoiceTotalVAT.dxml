@@ -2,7 +2,8 @@
 <Table
   Name="ARInvoiceTotalVATs"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Id"
     Type="varchar"
@@ -28,31 +29,31 @@
     Name="InvoiceCurrencyVATAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="LocalVATAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InvoiceCurrencyVatableAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="LocalVatableAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="VatPercent"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ARInvoiceId"
@@ -63,15 +64,17 @@
   </Column>
   <Column
     Name="ProfitCurrencyVATAmount"
-    Type="float">
+    Type="float"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ProfitVatableAmount"
-    Type="float">
+    Type="float"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ExternalVATCard"
@@ -86,6 +89,12 @@
     Size="25">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsRegionalTax"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="VatTypeId"

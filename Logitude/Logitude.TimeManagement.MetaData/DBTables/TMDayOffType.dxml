@@ -2,7 +2,8 @@
 <Table
   Name="TMDayOffTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="TimeManagement">
   <Column
     Name="Code"
     Type="varchar"
