@@ -18,6 +18,10 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using System.Configuration;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Customs.BL.BL;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.Def.ClosedTable;
+using System.Xml.Linq;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -28,7 +32,147 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //entityPM.Id = IdCounter.GetNumber("Customs.CustomsRequestsSheet", entityPM.Tenant);
         }
 
+        public void CancelRequests(List<CustomsRequestsSheetList> entityLists,int  tenant)
+        {
+            var us = new CustomsRequestsSheetUpdateService(tenant);
+            us.CommLogStepCanCancelledAction = CommLogStepCanCancelled;
+            List<CustomsRequestsSheetPM> entityPMs= new List<CustomsRequestsSheetPM>();
+            var qs = new CustomsRequestsSheetQueryService(tenant);
 
+            entityLists.ForEach(x =>
+            {
+                CustomsRequestsSheetPM customsRequestsSheetPM = qs.GetSingle(x.Id, false,false);
+               
+                customsRequestsSheetPM.ChangeSetOp = ChangeSetOperation.Update;
+                customsRequestsSheetPM.RequestStatusCode = "99";
+                entityPMs.Add(customsRequestsSheetPM);
+            });
+
+             us.UpdateMulti(entityPMs, null, null, true);
+        }
+
+        public static void CommLogStepCanCancelled(CustomsRequestsSheet entityPOCO,
+    CustomsRequestsSheetPM entityPM, DateTime? nowIs
+    )
+        {
+            if (entityPOCO.RequestStatusCode == "30")
+            {
+                throw new Exception("Request already analyzed");
+            }
+            nowIs = nowIs ?? DateTime.Now;
+            bool isinteractive = false;
+            var communicationLogStepQuery = new CommunicationLogStepQuery(entityPM.Tenant);
+            var stepList = communicationLogStepQuery
+                .GetCommunicationLogStepListsByLogId(entityPM.RequestComminicationId, entityPM.Tenant);
+            DateTime? canCancellAtTime = null;
+
+            if (!entityPM.IsDCA)
+            {
+                var stepReq = stepList.FirstOrDefault(rec => rec.StepNumber == (int)CustomsStepEnum.StartRequestParams);
+                if (stepReq != null)
+                {
+                    var requestParamXml = stepReq.DocumentData;
+                    isinteractive = Isinteractive(entityPM.Tenant, entityPM.RequestComminicationId);
+                    if (isinteractive)
+                    {
+                        var startAt = entityPM.RequestCreateDate.GetValueOrDefault();
+                        if (entityPM.FutureSendDateTime.HasValue)
+                        {
+                            if (entityPM.FutureSendDateTime.Value > entityPM.RequestCreateDate)
+                            {
+                                startAt = entityPM.FutureSendDateTime.Value;
+                            }
+                        }
+                        if (nowIs.GetValueOrDefault().Subtract(startAt) > TimeSpan.FromMinutes(10))
+                        {
+                            return;//can cancell
+                        }
+                        canCancellAtTime = startAt.AddMinutes(10);
+                    }
+                }
+            }
+            if (!ResponseDataBase.RequestSheetCanCancelled(entityPM.RequestStatusCode, entityPM.IsDCA))
+            {
+                if (!isinteractive)//whill exec later !!
+                {
+                    ///throw new Exception("Unable to cancel request. It has already been sent (Batch proccess)");
+                }
+
+                var currStep = stepList.OrderBy(r => r.StepNumber).FirstOrDefault(r => r.Status != CommStatusEnum.D.ToString());
+                if (currStep != null)
+                {
+                    if (currStep.StepNumber == (int)CustomsStepEnum.ReceivedCustomResponseCorrelation)
+                    {
+                        if (currStep.Status != CommStatusEnum.W.ToString())
+                        {
+                            if (canCancellAtTime != null)
+                            {
+                                throw new Exception(GetMessage(canCancellAtTime));
+                            }
+                            throw new Exception("Unable to cancel request. It has already been sent");
+                        }
+                    }
+                    else if (currStep.StepNumber > (int)CustomsStepEnum.ReceivedCustomResponseCorrelation)
+                    {
+                        if (canCancellAtTime != null)
+                        {
+                            throw new Exception(GetMessage(canCancellAtTime));
+                        }
+                        throw new Exception("Unable to cancel request. It has already been sent");
+
+                    }
+                }
+            }
+        }
+
+
+        public static bool Isinteractive(int tenant, string RequestComminicationId)
+        {
+            SendRequestVIA? curSendRequestVIA = null;
+            var communicationLogStepQuery = new CommunicationLogStepQuery();
+            var requestParamXml = communicationLogStepQuery.GetStartRequestParams(tenant, RequestComminicationId);
+            if (!string.IsNullOrWhiteSpace(requestParamXml))
+            {
+                var xdoc = XDocument.Parse(requestParamXml);
+                var eleRequestVIA = xdoc.Descendants("RequestVIA").FirstOrDefault();
+                var eleRequestVIAValue = eleRequestVIA.Value;
+                if (!String.IsNullOrWhiteSpace(eleRequestVIAValue))
+                {
+                    SendRequestVIA SendRequestVIA;
+                    if (Enum.TryParse<SendRequestVIA>(eleRequestVIAValue, out SendRequestVIA))
+                    {
+                        curSendRequestVIA = SendRequestVIA;
+                    }
+                    //var RequestVIAChangeDueEle = xdoc.Descendants("RequestVIAChangeDue").FirstOrDefault();
+                    //if (RequestVIAChangeDueEle != null)
+                    //{
+                    //    RequestVIAChangeDue = RequestVIAChangeDueEle.Value;
+                    //}
+                }
+            }
+            if (!curSendRequestVIA.HasValue)
+            {
+                return true;//default 
+            }
+            switch (curSendRequestVIA.Value)
+            {
+                case SendRequestVIA.WebServiceInteractive:
+                    return true;//default 
+                    break;
+                case SendRequestVIA.Default:
+                case SendRequestVIA.WebServiceBatch:
+                case SendRequestVIA.DCABatch:
+                default:
+                    return false;//default 
+                    break;
+            }
+        }
+
+
+        private static string GetMessage(DateTime? canCancellMoreTime)
+        {
+            return $"  נשלח בתהליך אינטראקטיבי יתאפשר ביטול החל מהשעה {canCancellMoreTime.GetValueOrDefault().ToShortTimeString()}";
+        }
         protected override void OnUpdating(CustomsRequestsSheetPM entityPM, CustomsRequestsSheet entityPOCO)
         {
 

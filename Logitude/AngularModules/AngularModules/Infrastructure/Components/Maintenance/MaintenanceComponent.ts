@@ -480,7 +480,7 @@ export class MaintenanceComponent {
 
        
         var item = new MenusTablePM();
-        item.CategoryTypeCode = "CMS";
+        item.CategoryTypeCode = "CSM";
         item.Icon = "Settings"
         item.Code = "CSRA";
         item.ObjectTableName = "Re-request Analysis";
@@ -774,14 +774,19 @@ export class MaintenanceComponent {
                         messageWindow.Show("Logged User Is not Customer Care ");
                         return;
                     }
+                    var windowArgs: any = {};;
+                    windowArgs.isReAnAnalysis = true;
 
-                    //SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                    //    .then(cmpRef => {
-                    //        cmpRef.instance.ComponentRef = cmpRef;
-                    //        cmpRef.instance.Run(listArgs);
-                    //        //this.CurrentSession.AddMenuReference(cmpRef);
-                    //    });
-                  
+                    let windowTitle = "גליון בקשות - ניתוח מחדש"//"Customs Settings";
+                    let logWindow = new LogitudeWindow();
+                    logWindow.Width = 1000;
+                    logWindow.Height = 700;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.WindowArgs = windowArgs;
+                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent');
+
+                 
                         
                 
 

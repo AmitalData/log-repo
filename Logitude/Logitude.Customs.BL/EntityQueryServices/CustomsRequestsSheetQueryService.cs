@@ -103,9 +103,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-
-
-
         public List<CustomsRequestsSheetPM> GetRequestInProgress(
             int Tenant,
             string InterfaceTypeCode,

@@ -105,7 +105,7 @@ export class CustomsRequestsSheetsComponent
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
-
+    isReAnAnalysis: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private _CD: ChangeDetectorRef) {
         super();
@@ -113,6 +113,12 @@ export class CustomsRequestsSheetsComponent
         this._AllCustomsRequestsSheetStatusListVM = [];
         console.log("12....");
         
+    }
+
+    SetWindowArgs(args) {
+        if (args != null) {
+            this.isReAnAnalysis = args.isReAnAnalysis;
+        }
     }
 
 
