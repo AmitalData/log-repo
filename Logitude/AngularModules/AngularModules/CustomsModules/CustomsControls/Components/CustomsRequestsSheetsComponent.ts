@@ -17,6 +17,7 @@ import { ObservableCollection } from    '../../../Infrastructure/Utilities/Obser
 import { EntityListService } from   '../../../Infrastructure/Services/EntityListService';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { CustomsRequestsSheetExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsRequestsSheetExtendedListService';
 
 //////////////////////////////////////////////////////////////////
 
@@ -107,7 +108,7 @@ export class CustomsRequestsSheetsComponent
     @Output() onQueryChangeEvent = new EventEmitter();
     isReAnAnalysis: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private _CD: ChangeDetectorRef) {
+    constructor(public entityArgs: EntityArgs, private _CD: ChangeDetectorRef, public customsRequestsSheetExtendedListService: CustomsRequestsSheetExtendedListService) {
         super();
         this._CustomsRequestsSheetStatusListService = new CustomsRequestsSheetStatusListService();
         this._AllCustomsRequestsSheetStatusListVM = [];
@@ -213,7 +214,9 @@ export class CustomsRequestsSheetsComponent
         //this._CD.detectChanges();
         //this.CRSSearch();
     }
-
+    CancelByFilters() {
+        this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs);
+    }
     CRSSearch() {
         
         this.IsSearchButtonEnabled = false;
