@@ -132,7 +132,7 @@ export class CustomsRequestsSheetExtendedListService {
 
     CancelByFilters(filters: ApiQueryFilters) {
 
-        var urlparameters = '/cancelbyfilters?';
+        var urlparameters = '/CancelByFilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
         for (var i in mykeys) {
