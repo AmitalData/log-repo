@@ -350,7 +350,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             window.Show("Can't delete this charge because it's connected to other All In charges");            
         }
 
-        else if (itemComponent.EntityPM.IsAllIN || (itemComponent.EntityPM.IsCostAllIn)) {
+        else if (itemComponent.EntityPM.IsAllIN) {
             var window = new MessageWindow();
             window.Show("Can't delete this charge because it's All In");            
         }
