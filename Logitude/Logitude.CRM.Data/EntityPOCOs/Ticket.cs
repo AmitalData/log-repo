@@ -190,8 +190,11 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string CustomerContactId { get; set; }
 	      
         public virtual Contact CustomerContact { get; set; }
+        [ForeignKey("Quote")]
         [Column("QuoteId")]
 	    public string QuoteId { get; set; }
+	      
+        public virtual Quote Quote { get; set; }
         [Column("QuoteNumber")]
 	    public string QuoteNumber { get; set; }
         [Column("SLAId")]
