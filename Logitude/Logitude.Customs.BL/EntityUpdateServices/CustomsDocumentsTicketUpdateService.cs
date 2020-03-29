@@ -437,6 +437,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     {
                                         status = "X";
                                     }
+
                                 }
                             }
                         }
@@ -470,14 +471,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (currentDeclarationCourierStatusPM != null)
                     {
                         CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
-                        string prevVal = null;
-                        string currvVal = null;
+                        string prevValCourierDeclarationStatusCode = null;
+                        string currvValCourierDeclarationStatusCode = null;
+                        string prevValCourierDocumentStatusCode = null;
+                        string currvValCourierDocumentStatusCode = null;
 
-                        prevVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                        prevValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                        prevValCourierDocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
                         calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
-                        currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                        calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
+                        currvValCourierDocumentStatusCode=currentDeclarationCourierStatusPM.DocumentStatusCode;
+                        currvValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
 
-                        if (prevVal != currvVal)
+                        if (prevValCourierDeclarationStatusCode != currvValCourierDeclarationStatusCode || prevValCourierDocumentStatusCode!= currvValCourierDocumentStatusCode)
                         {
                             DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
                             currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
