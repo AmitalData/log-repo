@@ -78,7 +78,9 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField10 { get; set; }
 
 
-
+        public string ActualEntryDate { get; set; }
+        public string EntryTruckerName { get; set; }
+        public string EntryTruckerReference { get; set; }
 
 
 
