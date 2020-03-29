@@ -1391,11 +1391,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public Summary_AmountPaid: number = 0;
     public Summary_ExternalAmount: number = 0;
     public Summary_AmountPaidColor: string = "#282E30";
+    public Summary_ExternalAmountColor: string = "#282E30";
     UpdateSummary() {
         var Amount: number = 0;
         var AmountPaid: number = 0;
         var ExternalAmount: number = 0;
         var AmountPaidColor: string = "#282E30";
+        var ExternalAmountColor: string = "#282E30";
 
         if (this.AmountInPaymentCurrency) {
             Amount = AppTool.Round(this.AmountInPaymentCurrency, 2);
@@ -1406,24 +1408,26 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             AmountPaid = AppTool.Round(AmountPaid, 2);
         }
 
+        if (this.EntityPM.ExternalPaymentAmount) {
+            ExternalAmount = AppTool.Round(this.EntityPM.ExternalPaymentAmount, 2);
+        }
+
         if (this.IsNegativeAmountEnabled == false) {
             if (AmountPaid < 0) {
                 AmountPaidColor = "#E53030";
             }
         }
 
-        if (AmountPaid > Amount) {
+        if ((AmountPaid + ExternalAmount) > Amount) {
             AmountPaidColor = "#E53030";
-        }
-
-        if (this.EntityPM.ExternalPaymentAmount) {
-            ExternalAmount = AppTool.Round(this.EntityPM.ExternalPaymentAmount, 2);
+            ExternalAmountColor = "#E53030";
         }
 
         this.Summary_Amount = Amount;
         this.Summary_AmountPaid = AmountPaid;
         this.Summary_ExternalAmount = ExternalAmount;
         this.Summary_AmountPaidColor = AmountPaidColor;
+        this.Summary_ExternalAmountColor = ExternalAmountColor;
     }
 
     public ViewEntity(args: APPaymentInvoiceArgs) {

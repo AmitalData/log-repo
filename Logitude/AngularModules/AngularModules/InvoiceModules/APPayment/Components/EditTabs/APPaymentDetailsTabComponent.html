@@ -880,7 +880,7 @@
                                             <div></div>
                                         </div>
                                         <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'" *ngIf="IsExternalPaymentVisible">
-                                            <div style="font-size: 24px; text-align: center;">{{Summary_ExternalAmount | NumbersPipe:'N2'}}</div>
+                                            <div style="font-size: 24px; text-align: center;" [ngStyle]="{color: Summary_ExternalAmountColor}">{{Summary_ExternalAmount | NumbersPipe:'N2'}}</div>
                                             <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">External Amount</div>
                                         </div>
 
