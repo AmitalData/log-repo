@@ -5,6 +5,7 @@ using Logitude.BL.Security;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System;
 
 namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
 {
@@ -81,6 +82,27 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                         UserId = loggedContact.Id,
                         EntityId = entityPM.Id,
                         ObjectTableName = myEntityName,
+                    });
+                }
+            }
+
+            if (entityPM.ExternalPaymentAmount != null && payment.ExternalPaymentAmount == null)
+            {
+                if (entityPM.ExternalPaymentDate != null && payment.ExternalPaymentDate == null)
+                {
+                    string notes = "";
+                    notes += "Amount: " + String.Format("{0:0,0.00}", entityPM.ExternalPaymentAmount.Value);
+                    notes += "\nDate: " + String.Format("{0:dd MMM yyyy}", entityPM.ExternalPaymentDate);
+                    notes += "\nNotes : " + payment.ExternalPaymentNotes;
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "PXTR",
+                        UserId = loggedContact.Id,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = myEntityName,
+                        Notes = notes,
                     });
                 }
             }

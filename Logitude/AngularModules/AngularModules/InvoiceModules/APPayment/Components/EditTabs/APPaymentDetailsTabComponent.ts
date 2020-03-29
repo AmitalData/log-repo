@@ -21,13 +21,11 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {GetAccountingSystemWindowArgs} from '../../../../Common/Args';
-import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {AccountingPaymentMethodList} from '../../../../Invoice/EntityLists/AccountingPaymentMethodList';
 import {AccountingPaymentMethodListService} from '../../../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
-import {GLAccountWithholdingTaxExtendedPMService, GLAccountingWithholdingItem} from  '../../../../Accounting/Services/Others/GLAccountWithholdingTaxExtendedService';
+import {GLAccountWithholdingTaxExtendedPMService} from  '../../../../Accounting/Services/Others/GLAccountWithholdingTaxExtendedService';
 import {BankAccountPMService} from '../../../../Accounting/Services/StandardPMs/BankAccountPMService';
 import {BankAccountPM} from  '../../../../Accounting/EntityPMs/BankAccountPM';
 import {FullAccountingSettingPM} from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
@@ -35,11 +33,6 @@ import { FullAccountingSettingPMService } from '../../../../Accounting/Services/
 import { PaymentChequeExtendedPMService } from '../../../../Accounting/Services/ExtendedPMs/PaymentChequeExtendedPMService';
 import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
-import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMService';
-import { CardPM } from '../../../../Common/EntityPMs/CardPM';
-import { AgentPM } from '../../../../Common/EntityPMs/AgentPM';
-import { AgentPMService } from '../../../../Common/Services/StandardPMs/AgentPMService';
-import { APPaymentPMService } from '../../../../Invoice/Services/StandardPMs/APPaymentPMService';
 
 @Component({
     moduleId: module.id,
@@ -64,7 +57,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private CurrentSession = SessionLocator.SelectedSession;
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
-    IsChequeLinkVisibile:boolean = false;
+    IsChequeLinkVisibile: boolean = false;
+    public IsExternalPaymentVisible: boolean = false;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -78,6 +72,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeOrPaymentRef) &&  this.EntityPM.AutomaticPaymentCheque) {
             this.IsChequeLinkVisibile = true;
 
@@ -87,6 +82,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
                 this.IsMultiCurrency = true;
             }
+        }
+
+        if (SessionLocator.AccountingSettingPM.EnableAPPaymentExternalPayment == true) {
+            this.IsExternalPaymentVisible = true;
+        }
+
+        else if (!AppTool.IsNullOrZero(this.EntityPM.ExternalPaymentAmount)) {
+            this.IsExternalPaymentVisible = true;
         }
 
         this.InitializeServices();
@@ -171,10 +174,18 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     }
 
+    private SessionEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
+
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "ExternalAPPaymentChanged") {
+                    this.UpdateSummary();
+                    this.ComputeOpenAmount();
+                }
+            });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
@@ -201,6 +212,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.LoadCurrencies();
     }
     ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
@@ -1304,8 +1316,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM.AmountInPaymentCurrency != value) {
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
-            this.ComputeOpenAmount();
             this.UpdateSummary();
+            this.ComputeOpenAmount();
 
             this.ItemsSource.Collection.forEach(item => {
                 item.SetUIProperties();
@@ -1368,7 +1380,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     ComputeOpenAmount() {
-        this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid;
+        this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid - this.Summary_ExternalAmount;
     }
     ComputeLocalAmount() {
         this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
@@ -1377,10 +1389,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     // Summary
     public Summary_Amount: number = 0;
     public Summary_AmountPaid: number = 0;
+    public Summary_ExternalAmount: number = 0;
     public Summary_AmountPaidColor: string = "#282E30";
     UpdateSummary() {
         var Amount: number = 0;
         var AmountPaid: number = 0;
+        var ExternalAmount: number = 0;
         var AmountPaidColor: string = "#282E30";
 
         if (this.AmountInPaymentCurrency) {
@@ -1402,8 +1416,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             AmountPaidColor = "#E53030";
         }
 
+        if (this.EntityPM.ExternalPaymentAmount) {
+            ExternalAmount = AppTool.Round(this.EntityPM.ExternalPaymentAmount, 2);
+        }
+
         this.Summary_Amount = Amount;
         this.Summary_AmountPaid = AmountPaid;
+        this.Summary_ExternalAmount = ExternalAmount;
         this.Summary_AmountPaidColor = AmountPaidColor;
     }
 
@@ -1489,7 +1508,6 @@ export class APPaymentInvoiceArgs extends BaseComponent {
     public SortingValue: number = 0;
     public LocalCurrencyId: string = null;
     public IsMultiCurrency: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: APInvoiceList, private trigger: APPaymentDetailsTabComponent) {
         super();
 
@@ -2019,26 +2037,27 @@ export class APPaymentInvoiceArgs extends BaseComponent {
     }
 
     UpdatePayment() {
-        var paymentAmount = this.PaymentPM.AmountInPaymentCurrency == null ? 0 : this.PaymentPM.AmountInPaymentCurrency;
+        //var paymentAmount = this.PaymentPM.AmountInPaymentCurrency == null ? 0 : this.PaymentPM.AmountInPaymentCurrency;
 
-        var allPaidAmounts = 0;
-        this.PaymentPM.PaymentInvoices.forEach(item => {
-            var itemPaidAmount: number = 0;
+        //var allPaidAmounts = 0;
+        //this.PaymentPM.PaymentInvoices.forEach(item => {
+        //    var itemPaidAmount: number = 0;
 
-            if (item.ForeignCurrencyId == this.PaymentPM.PaymentCurrencyId) {
-                itemPaidAmount = item.ForeignAmount;
-            }
+        //    if (item.ForeignCurrencyId == this.PaymentPM.PaymentCurrencyId) {
+        //        itemPaidAmount = item.ForeignAmount;
+        //    }
 
-            else {
-                itemPaidAmount = item.LocalAmount / item.ExchangeRate;
-            }
+        //    else {
+        //        itemPaidAmount = item.LocalAmount / item.ExchangeRate;
+        //    }
 
-            allPaidAmounts += itemPaidAmount;
-        });
+        //    allPaidAmounts += itemPaidAmount;
+        //});
 
-        var openAmount = paymentAmount - allPaidAmounts;
+        //var openAmount = paymentAmount - allPaidAmounts;
 
-        this.trigger.EntityPM.OpenAmount = (openAmount == null) ? 0 : AppTool.Round(openAmount, 2);
+        //this.trigger.EntityPM.OpenAmount = (openAmount == null) ? 0 : AppTool.Round(openAmount, 2);
+
         this.trigger.UpdatePaymentInvoicesErrors();
         this.trigger.UpdateSummary();
         this.trigger.ComputeOpenAmount();

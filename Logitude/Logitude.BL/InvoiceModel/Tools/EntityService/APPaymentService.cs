@@ -646,6 +646,93 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region Update Amounts
         public void UpdatePaymentOpenAmount()
         {
+            List<APInvoicePayment> allConnectedItems = invoicePaymentRepository.GetAPInvoicePaymentByPaymentId(entityPM.Id, entityPM.Tenant).ToList();
+
+            // To Avoid twice same invoice connected
+            double? connectedAmount = 0;
+            List<string> ids = new List<string>();            
+            foreach (APInvoicePayment item in allConnectedItems)
+            {
+                if (!ids.Contains(item.APInvoiceId))
+                {
+                    if (item.PaymentAmount != null)
+                    {
+                        connectedAmount += item.PaymentAmount;
+                    }
+
+                    ids.Add(item.APInvoiceId);
+                }
+            }
+
+            double? Amount = MethodHelper.Roundd(entityPM.AmountInPaymentCurrency, 2);
+            double? ExternalAmount = MethodHelper.Roundd(entityPM.ExternalPaymentAmount, 2);
+            double? PaidAmount = MethodHelper.Roundd(connectedAmount, 2);
+
+            if (PaidAmount > Amount)
+            {
+                throw new Exception("The amount paid is not suitable to the total payment amount!!");
+            }
+
+            else
+            {
+                bool isClosed = entityPM.IsClosed;
+                string StatusCode = entityPM.StatusCode;
+                double? OpenAmount = MethodHelper.Round((Amount - PaidAmount - ExternalAmount), 2);
+
+                if (OpenAmount == 0)
+                {
+                    isClosed = true;
+
+                    if (StatusCode == "AD")
+                    {
+                        StatusCode = "CL";
+                    }
+                }
+
+                else if (OpenAmount == Amount)
+                {
+                    isClosed = false;
+
+                    if (StatusCode != "VD" && StatusCode != "DR")
+                    {
+                        StatusCode = "AD";
+                    }
+                }
+
+                else
+                {
+                    isClosed = false;
+
+                    if (StatusCode != "DR")
+                    {
+                        StatusCode = "AD";
+                    }
+                }
+
+                payment.IsClosed = entityPM.IsClosed = isClosed;
+                payment.StatusCode = entityPM.StatusCode = StatusCode;
+                payment.OpenAmount = entityPM.OpenAmount = OpenAmount;
+                payment.AmountInPaymentCurrency = entityPM.AmountInPaymentCurrency = Amount;
+            }
+
+            if (this.SetVoided)
+            {
+                foreach (APPaymentInvoicePM item in changedList)
+                {
+                    UpdateInvoiceAmounts(item.APInvoiceId);
+                }
+            }
+
+            else
+            {
+                foreach (APPaymentInvoicePM item in changedList.Where(d => d.ChangeSetOp != ChangeSetOperation.None))
+                {
+                    UpdateInvoiceAmounts(item.APInvoiceId);
+                }
+            }
+        }
+        public void UpdatePaymentOpenAmount_Old()
+        {
             bool isClosed = entityPM.IsClosed;
             string StatusCode = entityPM.StatusCode;
             double? Amount = MethodHelper.Roundd(entityPM.AmountInPaymentCurrency, 2);
@@ -661,9 +748,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (StatusCode != "VD" && StatusCode != "DR")
                 {
-                        StatusCode = "AD";
-                    }
+                    StatusCode = "AD";
                 }
+            }
 
             else
             {
@@ -695,7 +782,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         if (StatusCode == "AD")
                         {
                             StatusCode = "CL";
-                        }                   
+                        }
                     }
 
                     else

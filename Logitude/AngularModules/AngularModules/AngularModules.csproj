@@ -361,6 +361,7 @@
     <Content Include="Common\Components\FiltersMenu\CustomerTenantAccessFiltersMenuComponent.js" />
     <Content Include="Common\Components\Helpers\AddEditCustomerSalesNoteComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\LoadSampleData\LoadSampleDataComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedSettingsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\AnalyzeQueue\AnalyzeQueueErrorsTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\AnalyzeQueue\MessageBodyTabComponent.html" />
@@ -994,6 +995,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\AccountingSettings\AccountingAdvancedAPSettingsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
@@ -1120,6 +1122,7 @@
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APPayment\Components\Other\ExternalPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleDeclarations.ts" />
     <Content Include="Infrastructure\Components\CustomControls\RatioBoxComponent.html" />
@@ -1143,6 +1146,7 @@
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\Other\CancelAPPaymentComponent.html" />
+    <Content Include="InvoiceModules\APPayment\Components\Other\ExternalPaymentComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabConsolidation.html" />
