@@ -49,7 +49,7 @@ using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -58,6 +58,20 @@ using Logitude.WarehouseLib.BL.CLoseTable;
 using Logitude.TimeManagement.Data.Repositories;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExceptionReasonUpdateClass
@@ -113,11 +127,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddEditReferantExceptionReasonComponent",
 			      				    NoTS =  false,
-			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "174f",
-			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -133,11 +144,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.ExceptionReason",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ExceptionReason",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "Code",
 					  						OldFieldName =  "Code",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.ExceptionReason",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -192,10 +259,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -206,9 +269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EnglishName",
 					  						OldFieldName =  "EnglishName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.ExceptionReason",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -261,10 +321,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -275,9 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "LocalName",
 					  						OldFieldName =  "LocalName",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.ExceptionReason",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -330,10 +383,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -344,9 +393,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "IsActive",
 					  						OldFieldName =  "IsActive",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.ExceptionReason",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -399,10 +445,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -413,9 +455,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "UnifreightStatusCode",
 					  						OldFieldName =  "UnifreightStatusCode",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.ExceptionReason",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -467,10 +506,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -480,9 +515,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						IsNew =  true,
-					  						IsChecked =  true,
-					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.ExceptionReason",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -532,10 +564,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						IsSpellCheckedFullFieldLable =  false,
-					  						IsSpellCheckedHelpLocalDefaultText =  false,
-					  						IsSpellCheckedShortLocalDefaultText =  false,
-					  						IsSpellCheckedListLocalDefaultText =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -545,32 +573,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ExceptionReasonQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c5df", Name = " Query Group" }, queryGroupRepository);
-	        queryGroupRepository.SubmitChanges();
+						QueryGroup ExceptionReasonQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "174f", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable ExceptionReasonObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ExceptionReason" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ExceptionReasonObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ExceptionReason").ToList();   
 
-			   TextCode ExceptionReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExceptionReason.Q.AllReferantException", DefaultText = "All Referant Exception",LocalDefaultText = "חריגות", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ExceptionReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason.Q.AllReferantException", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.AllReferantException", NameTextCodeDefaultText = "AllReferantException", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode ExceptionReasonTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExceptionReason.Q.AllReferantException", DefaultText = @"All Referant Exception",LocalDefaultText = "חריגות", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ExceptionReasonFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason.Q.AllReferantException", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReasonFeatures.AllReferantException", NameTextCodeDefaultText = "AllReferantException", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllReferantExceptionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExceptionReasonTextCode_0.Id, Code = "AllReferantException",  QueryGroupCode = "c5df", IndexOrder = 0, Tenant = 0, ObjectTableId = ExceptionReasonObjectTable.Id, QuerySection = "Customs.ExceptionReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ExceptionReasonFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+			  Query AllReferantExceptionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExceptionReasonTextCode_0.Id, NameTextCodeCode = ExceptionReasonTextCode_0.Code, ObjectTableName = "Customs.ExceptionReason", Code = "AllReferantException",  QueryGroupCode = "c5df", IndexOrder = 0, Tenant = 0, ObjectTableId = ExceptionReasonObjectTable.Id, QuerySection = "Customs.ExceptionReason", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ExceptionReasonFeature_0.Id,FeatureUniqeCode= ExceptionReasonFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllReferantExceptionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id, IndexOrder = 0, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ExceptionReasonObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReferantExceptionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id, IndexOrder = 1, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ExceptionReasonObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReferantExceptionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id, IndexOrder = 2, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ExceptionReasonObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReferantExceptionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id, IndexOrder = 3, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ExceptionReasonObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReferantExceptionQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id, IndexOrder = 4, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "UnifreightStatusCode" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 167 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReferantExceptionQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReferantExceptionQuery.Id,QueryCode = AllReferantExceptionQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "UnifreightStatusCode" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ExceptionReasonObjectFields.Where(d => d.FieldName == "UnifreightStatusCode" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 167 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -582,74 +611,88 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExceptionReason.Customs.ExceptionReasonHeaderScreen", Name = "Customs.ExceptionReasonHeaderScreen", ObjectTableId = ExceptionReasonObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ExceptionReason.HeaderScreen", Name = "Customs.ExceptionReasonHeaderScreen", ObjectTableId = ExceptionReasonObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField ExceptionReasonCustomsExceptionReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExceptionReasonCustomsExceptionReasonHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id,ScreenCode = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Code, ObjectFieldCode = ExceptionReasonObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ExceptionReasonCustomsExceptionReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ExceptionReasonCustomsExceptionReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ExceptionReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id,ScreenCode = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Code, ObjectFieldCode = ExceptionReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    ExceptionReasonObjectTable.HeaderScreenId = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Id;
+		    ExceptionReasonObjectTable.HeaderScreenCode = ExceptionReasonCustomsExceptionReasonHeaderScreenScreen0.Code;
+
 	   		  
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable ExceptionReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExceptionReason" && d.Tenant == 0).FirstOrDefault();  
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ExceptionReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExceptionReason" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ExceptionReasonGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExceptionReason.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ExceptionReasonGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason.Tab.General", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ExceptionReasonGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason.Tab.General", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReasonFeatures.ERGT", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode ExceptionReasonEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExceptionReason.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ExceptionReasonEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason.Tab.Events", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ExceptionReasonEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExceptionReason.Tab.Events", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReasonFeatures.ERET", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERGT",HtmlComponentName = "AddEditReferantExceptionReasonComponent",HtmlComponentUrl = "./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddEditReferantExceptionReasonComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ExceptionReason.Tab.General" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ControlPath = "./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddEditReferantExceptionReasonComponent", ObjectTableId = ExceptionReasonObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.ExceptionReason.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERGT",HtmlComponentName = "AddEditReferantExceptionReasonComponent",HtmlComponentUrl = "./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddEditReferantExceptionReasonComponent", FeatureId = ExceptionReasonGeneralFeature_TH0.Id,FeatureUniqeCode = ExceptionReasonGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./CustomsModules/CustomsReferant/Components/ReferantExceptionReason/AddEditReferantExceptionReasonComponent", ObjectTableId = ExceptionReasonObjectTable.Id, TabNameTextCodeId = ExceptionReasonGeneralTextCode_TH0.Id, TabNameTextCodeCode = ExceptionReasonGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "ExceptionReason.Tab.Events" && d.ObjectTableId == ExceptionReasonObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ExceptionReasonObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Customs.ExceptionReason.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ERET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ExceptionReasonEventsFeature_TH1.Id,FeatureUniqeCode = ExceptionReasonEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ExceptionReasonObjectTable.Id, TabNameTextCodeId = ExceptionReasonEventsTextCode_TH1.Id, TabNameTextCodeCode = ExceptionReasonEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable ExceptionReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExceptionReason" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature ExceptionReasonFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ExceptionReasonFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ExceptionReasonFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ExceptionReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.PackageFeature", NameTextCodeDefaultText = "ExceptionReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature ExceptionReasonFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ExceptionReasonFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ExceptionReasonFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ExceptionReasonFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ExceptionReasonObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExceptionReason.Features.PackageFeature", NameTextCodeDefaultText = "ExceptionReason Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable ExceptionReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ExceptionReason" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "CREV",
-                EnglishName = "Created",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Created",
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ExceptionReasonObjectTable.Id,
-                ShortView = true,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code = "UPEV",
-                EnglishName = "Updated",
-                Tenant = 0,
-                AddedManually = false,
-				IsManualEntry = false,
-                LocalName = "Updated",
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
                 ObjectTableId = ExceptionReasonObjectTable.Id,
-                ShortView = false,
+				 
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -657,7 +700,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

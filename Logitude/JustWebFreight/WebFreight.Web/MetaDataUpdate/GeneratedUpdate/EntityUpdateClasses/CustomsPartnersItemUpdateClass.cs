@@ -856,7 +856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        List<ObjectField> CustomsPartnersItemObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsPartnersItem").ToList();   
 
 			   TextCode CustomsPartnersItemTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsPartnersItem.Q.ItemQuery", DefaultText = @"Customs Partners Items",LocalDefaultText = "טבלת פריטים", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature CustomsPartnersItemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ITEM", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsPartnersItem.Features.Items", NameTextCodeDefaultText = "Items", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature CustomsPartnersItemFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsPartnersItem.Q.CustomsPartnersItem", ObjectTableId = CustomsPartnersItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsPartnersItemFeatures.CustomsPartnersItem", NameTextCodeDefaultText = "CustomsPartnersItem", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    

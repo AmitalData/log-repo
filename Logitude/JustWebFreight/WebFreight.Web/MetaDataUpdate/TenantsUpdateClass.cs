@@ -468,13 +468,13 @@ namespace WebFreight.Web.MetaDataUpdate
                             CustomUpdate customUpdateClass = new CustomUpdate();
                             customUpdateClass.UpgradeClosedTablesForTenantZero();
                             customUpdateClass.LoadUpdateTenantZero(context);
-                            customUpdateClass.LoadOtherFields(context);
-                            customUpdateClass.loadQueries();
-                            customUpdateClass.loadScreens();
-                            customUpdateClass.LoadObjectTableTabs();
+                            //customUpdateClass.LoadOtherFields(context);
+                            //customUpdateClass.loadQueries();
+                            //customUpdateClass.loadScreens();
+                            //customUpdateClass.LoadObjectTableTabs();
                             customUpdateClass.LoadObjectTableHelperControls();
                             customUpdateClass.LoadMenustables();
-                            customUpdateClass.LoadEventTypes();
+                            //customUpdateClass.LoadEventTypes();
 
                             //CRM
                             

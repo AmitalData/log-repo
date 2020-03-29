@@ -118,8 +118,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Currency Type",
-			      				    Code =  "CURT",
-			      				    Name =  "Customs.CurrencyType",
+			      				    Code =  "eb59",
+			      				    Name =  "Customs.CurrencyType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
@@ -581,6 +581,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CodeSorted",
+					  						OldFieldName =  "CodeSorted",
 					  						ObjectTableName =  "Customs.CurrencyType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -642,7 +643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup CurrencyTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CURT", Name = "Customs.CurrencyType" }, queryGroupRepository);
+	        QueryGroup CurrencyTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "eb59", Name = "Customs.CurrencyType Query Group" }, queryGroupRepository);
 						QueryGroup CurrencyTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "6aa1", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 
@@ -678,11 +679,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CurrencyTypeGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CurrencyType.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CurrencyTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField CurrencyTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CurrencyTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CurrencyTypeCurrencyTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CurrencyTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id,ScreenCode = CurrencyTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CurrencyTypeObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CurrencyTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CurrencyTypeObjectFields.Where(d => d.FieldName == "MehesInactive").FirstOrDefault().Id, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CurrencyTypeCurrencyTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CurrencyTypeObjectFields.Where(d => d.FieldName == "MehesInactive").FirstOrDefault().Id, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id,ScreenCode = CurrencyTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CurrencyTypeObjectFields.Where(d => d.FieldName == "MehesInactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CurrencyTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CurrencyTypeObjectFields.Where(d => d.FieldName == "TenantInactive").FirstOrDefault().Id, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CurrencyTypeCurrencyTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CurrencyTypeObjectFields.Where(d => d.FieldName == "TenantInactive").FirstOrDefault().Id, ScreenId = CurrencyTypeGeneralTabScreenScreen0.Id,ScreenCode = CurrencyTypeGeneralTabScreenScreen0.Code, ObjectFieldCode = CurrencyTypeObjectFields.Where(d => d.FieldName == "TenantInactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -694,10 +695,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CurrencyTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CurrencyType" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature CurrencyTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CurrencyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CurrencyType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CurrencyTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CurrencyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CurrencyType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CurrencyTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CurrencyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CurrencyType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CurrencyTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CurrencyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CurrencyType.Features.PackageFeature", NameTextCodeDefaultText = "CurrencyType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+
+		   Feature CurrencyTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = CurrencyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CurrencyType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CurrencyTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = CurrencyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CurrencyType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CurrencyTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = CurrencyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CurrencyType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature CurrencyTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = CurrencyTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CurrencyType.Features.PackageFeature", NameTextCodeDefaultText = "CurrencyType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 

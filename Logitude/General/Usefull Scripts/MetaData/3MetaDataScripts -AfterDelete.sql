@@ -105,6 +105,13 @@ update ObjectFieldValidations  set ObjectFieldId = (select Id from objectfields 
 update ObjectFieldModifications  set ObjectFieldId = (select Id from objectfields where FieldCode=ObjectFieldModifications.ObjectFieldCode) where objectfieldcode in (select fieldcode from ObjectFields)
 
 ----Screens
+--select code,count(*)
+--from screens group by code
+--having count(*) > 1
+--select * from ObjectTables where id in ('1-1202','1-1244')
+--select * from Screens where code='Customs.Vendor.HeaderScreen'
+--delete from screens where id in ('1-1647','1-1646')
+
 update ScreenModifications set ScreenId = (select Id from Screens where code=ScreenModifications.ScreenCode) where screencode in (select code from screens)
 update ScreenFields set ScreenId = (select Id from Screens where code=ScreenFields.ScreenCode) where screencode in (select code from screens)
 update ObjectTables set HeaderScreenId = (select Id from Screens where code=ObjectTables.HeaderScreenCode)
@@ -162,3 +169,11 @@ on tc.Code = temp.Code
 where tc.ObjectTableId = temp.ObjectTableId
 
  
+
+ select Code,count(*) from TextCodes
+ group by Code having count(*) >1
+
+ select * from textcodes where code='Customs.CustomsVendor.Features.RequestSheets'
+
+
+ select * from ObjectTables where Id in ('1-1244','1-1252')

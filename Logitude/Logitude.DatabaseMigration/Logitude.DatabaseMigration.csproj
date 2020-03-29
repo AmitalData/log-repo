@@ -2163,6 +2163,14 @@
     <Compile Include="Migrations\202003171013160_missingcusoms22.Designer.cs">
       <DependentUpon>202003171013160_missingcusoms22.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003290915454_screenNamelength.cs" />
+    <Compile Include="Migrations\202003290915454_screenNamelength.Designer.cs">
+      <DependentUpon>202003290915454_screenNamelength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003291252313_missingmigrations29032020.cs" />
+    <Compile Include="Migrations\202003291252313_missingmigrations29032020.Designer.cs">
+      <DependentUpon>202003291252313_missingmigrations29032020.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3925,6 +3933,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003171013160_missingcusoms22.resx">
       <DependentUpon>202003171013160_missingcusoms22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003290915454_screenNamelength.resx">
+      <DependentUpon>202003290915454_screenNamelength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003291252313_missingmigrations29032020.resx">
+      <DependentUpon>202003291252313_missingmigrations29032020.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

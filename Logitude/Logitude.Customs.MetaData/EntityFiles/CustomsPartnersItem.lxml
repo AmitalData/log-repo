@@ -21,7 +21,7 @@
   <AdditionalTextCodes />
   <AdditionalFeatures>
   </AdditionalFeatures>
-  <Query Code="&quot;CustomsPartnersItem&quot;" ObjectTableName="&quot;Customs.CustomsPartnersItem&quot;" IsAddNewEntity="true" SystemLevel="true" QuerySection="&quot;Customs.CustomsPartnersItem&quot;" IndexOrder="0" QueryGroupCode="&quot;ITQG&quot;" QueryGroupName="&quot;Customs.CustomsPartnersItem&quot;" LocalTextCode="&quot;טבלת פריטים&quot;" TextCode="&quot;Customs Partners Items&quot;" TextCodeCode="&quot;Customs.CustomsPartnersItem.Q.ItemQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;ITEM&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.CustomsPartnersItem.Features.Items&quot;" FeatureDefaultText="&quot;Items&quot;">
+  <Query Code="&quot;CustomsPartnersItem&quot;" ObjectTableName="&quot;Customs.CustomsPartnersItem&quot;" IsAddNewEntity="true" SystemLevel="true" QuerySection="&quot;Customs.CustomsPartnersItem&quot;" IndexOrder="0" QueryGroupCode="&quot;ITQG&quot;" QueryGroupName="&quot;Customs.CustomsPartnersItem&quot;" LocalTextCode="&quot;טבלת פריטים&quot;" TextCode="&quot;Customs Partners Items&quot;" TextCodeCode="&quot;Customs.CustomsPartnersItem.Q.ItemQuery&quot;" IsSpellChecked="false" >
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;ClassificationCode&quot;" QueryCode="&quot;CustomsPartnersItem&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;ItemCode&quot;" QueryCode="&quot;CustomsPartnersItem&quot;" />

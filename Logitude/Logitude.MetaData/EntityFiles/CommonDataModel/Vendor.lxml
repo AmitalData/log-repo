@@ -4590,68 +4590,6 @@
     <QueryFilters />
   </Query>
   <Screen
-    Name="&quot;Header Screen&quot;"
-    ObjectTableName="&quot;Vendor&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    Code="&quot;Customs.Vendor.HeaderScreen&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="2">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ScreenName="Header Screen" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ScreenName="Header Screen" />
-    </ScreenFields>
-  </Screen>
-  <Screen
-    Name="&quot;General Tab Screen&quot;"
-    ObjectTableName="&quot;Vendor&quot;"
-    IsReadOnly="false"
-    IsHeaderScreen="false"
-    Code="&quot;Customs.Vendor.GeneralTabScreen&quot;"
-    NumberOfColumns="1"
-    NumberOfRows="6">
-    <ScreenFields>
-      <ScreenField
-        Column="0"
-        Row="0"
-        ObjectFieldName="&quot;Code&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="1"
-        ObjectFieldName="&quot;EnglishName&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="2"
-        ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="3"
-        ObjectFieldName="&quot;Website&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="4"
-        ObjectFieldName="&quot;InActive&quot;"
-        ScreenName="General Tab Screen" />
-      <ScreenField
-        Column="0"
-        Row="5"
-        ObjectFieldName="&quot;Notes&quot;"
-        ScreenName="General Tab Screen" />
-    </ScreenFields>
-  </Screen>
-  <Screen
     Name="&quot;Billing Tab Screen&quot;"
     ObjectTableName="&quot;Vendor&quot;"
     IsReadOnly="false"

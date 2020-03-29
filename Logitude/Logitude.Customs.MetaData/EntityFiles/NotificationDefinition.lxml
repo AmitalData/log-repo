@@ -16,7 +16,7 @@
   <AdditionalTextCodes />
   <AdditionalFeatures>
   </AdditionalFeatures>
-  <Query Code="&quot;NotificationDefinition&quot;" ObjectTableName="&quot;Customs.NotificationDefinition&quot;" IsAddNewEntity="true" SystemLevel="true" QuerySection="&quot;Customs.NotificationDefinition&quot;" IndexOrder="0" QueryGroupCode="&quot;NDQG&quot;" QueryGroupName="&quot;Customs.NotificationDefinition&quot;" LocalTextCode="&quot;הגדרת הודעה&quot;" TextCode="&quot;Notification Definition&quot;" TextCodeCode="&quot;Customs.NotificationDefinition.Q.NotificationDefinitionQuery&quot;" IsSpellChecked="false" FeatureCode="&quot;NOTIFICATIONDEFINITION&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.NotificationDefinition.Features.NotificationDefinitions&quot;" FeatureDefaultText="&quot;Notification Definitions&quot;">
+  <Query Code="&quot;NotificationDefinition&quot;" ObjectTableName="&quot;Customs.NotificationDefinition&quot;" IsAddNewEntity="true" SystemLevel="true" QuerySection="&quot;Customs.NotificationDefinition&quot;" IndexOrder="0" QueryGroupCode="&quot;NDQG&quot;" QueryGroupName="&quot;Customs.NotificationDefinition&quot;" LocalTextCode="&quot;הגדרת הודעה&quot;" TextCode="&quot;Notification Definition&quot;" TextCodeCode="&quot;Customs.NotificationDefinition.Q.NotificationDefinitionQuery&quot;" IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="130" ObjectFieldName="&quot;Code&quot;" QueryCode="&quot;NotificationDefinition&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;LocalName&quot;" QueryCode="&quot;NotificationDefinition&quot;" />

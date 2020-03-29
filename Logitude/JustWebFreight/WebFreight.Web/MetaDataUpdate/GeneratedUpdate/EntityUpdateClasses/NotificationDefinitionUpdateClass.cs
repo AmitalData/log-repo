@@ -606,7 +606,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        List<ObjectField> NotificationDefinitionObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.NotificationDefinition").ToList();   
 
 			   TextCode NotificationDefinitionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.NotificationDefinition.Q.NotificationDefinitionQuery", DefaultText = @"Notification Definition",LocalDefaultText = "הגדרת הודעה", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature NotificationDefinitionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFICATIONDEFINITION", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.NotificationDefinition.Features.NotificationDefinitions", NameTextCodeDefaultText = "Notification Definitions", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature NotificationDefinitionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NotificationDefinition.Q.NotificationDefinition", ObjectTableId = NotificationDefinitionObjectTable.Id, Tenant = 0, NameTextCodeCode = "NotificationDefinitionFeatures.NotificationDefinition", NameTextCodeDefaultText = "NotificationDefinition", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    

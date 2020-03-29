@@ -106,7 +106,7 @@
       <MenuItem EventCode="&quot;ClosePhysicalCheck&quot;" TextCodeCode="&quot;Customs.PhysicalCheck.B.ClosePhysicalCheck&quot;" DefaultText="&quot;Close Physical Check&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" FeatureCode="&quot;CLOSEPHYSICALCHECK&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.ClosePhysicalCheck&quot;" FeatureDefaultText="&quot;Close Check&quot;" />
     </MenuButton>
   </MenuButtons>
-  <Query Code="&quot;OpenChecks&quot;" ObjectTableName="&quot;Customs.PhysicalCheck&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PhysicalCheck&quot;" IndexOrder="0" QueryGroupCode="&quot;PHCK&quot;" QueryGroupName="&quot;Customs.PhysicalCheck&quot;" LocalTextCode="&quot;בדיקות פתוחות&quot;" TextCode="&quot;Open Checks&quot;" TextCodeCode="&quot;Customs.PhysicalCheck.Q.OpenChecks&quot;" IsSpellChecked="false" FeatureCode="&quot;BYUPCOMINGCHECK&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.ByUpcomingCheck&quot;" FeatureDefaultText="&quot;By Upcoming Checks&quot;">
+  <Query Code="&quot;OpenChecks&quot;" ObjectTableName="&quot;Customs.PhysicalCheck&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PhysicalCheck&quot;" IndexOrder="0" QueryGroupCode="&quot;PHCK&quot;" QueryGroupName="&quot;Customs.PhysicalCheck&quot;" LocalTextCode="&quot;בדיקות פתוחות&quot;" TextCode="&quot;Open Checks&quot;" TextCodeCode="&quot;Customs.PhysicalCheck.Q.OpenChecks&quot;" IsSpellChecked="false"  IsPackagable="true" >
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="90" ObjectFieldName="&quot;CustomFileNo&quot;" QueryCode="&quot;OpenChecks&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;DeclarationNo&quot;" QueryCode="&quot;OpenChecks&quot;" />
@@ -127,7 +127,7 @@
       <QueryFilter QueryCode="&quot;OpenChecks&quot;" IndexOrder="0" IsPredefined="true" ObjectFieldName="&quot;IsClosed&quot;" PredefinedValue="&quot;false&quot;" />
     </QueryFilters>
   </Query>
-  <Query Code="&quot;ClosedChecks&quot;" ObjectTableName="&quot;Customs.PhysicalCheck&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PhysicalCheck&quot;" IndexOrder="1" QueryGroupCode="&quot;PHCK&quot;" QueryGroupName="&quot;Customs.PhysicalCheck&quot;" LocalTextCode="&quot;בדיקות סגורות&quot;" TextCode="&quot;Closed Checks&quot;" TextCodeCode="&quot;Customs.PhysicalCheck.Q.ClosedChecks&quot;" IsSpellChecked="false" FeatureCode="&quot;BYUPCOMINGCHECK&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.ByUpcomingCheck&quot;" FeatureDefaultText="&quot;By Upcoming Checks&quot;">
+  <Query Code="&quot;ClosedChecks&quot;" ObjectTableName="&quot;Customs.PhysicalCheck&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PhysicalCheck&quot;" IndexOrder="1" QueryGroupCode="&quot;PHCK&quot;" QueryGroupName="&quot;Customs.PhysicalCheck&quot;" LocalTextCode="&quot;בדיקות סגורות&quot;" TextCode="&quot;Closed Checks&quot;" TextCodeCode="&quot;Customs.PhysicalCheck.Q.ClosedChecks&quot;" IsSpellChecked="false"  IsPackagable="true" >
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="90" ObjectFieldName="&quot;CustomFileNo&quot;" QueryCode="&quot;ClosedChecks&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;DeclarationNo&quot;" QueryCode="&quot;ClosedChecks&quot;" />
@@ -148,7 +148,7 @@
       <QueryFilter QueryCode="&quot;ClosedChecks&quot;" IndexOrder="0" IsPredefined="true" ObjectFieldName="&quot;IsClosed&quot;" PredefinedValue="&quot;true&quot;" />
     </QueryFilters>
   </Query>
-  <Query Code="&quot;By Upcoming Checks&quot;" ObjectTableName="&quot;Customs.PhysicalCheck&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PhysicalCheck&quot;" IndexOrder="2" QueryGroupCode="&quot;PHCK&quot;" QueryGroupName="&quot;Customs.PhysicalCheck&quot;" LocalTextCode="&quot;כל הבדיקות&quot;" TextCode="&quot;All Checks&quot;" TextCodeCode="&quot;Customs.PhysicalCheck.Q.AllChecks&quot;" IsSpellChecked="false" FeatureCode="&quot;BYUPCOMINGCHECK&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;Customs.PhysicalCheck.Features.ByUpcomingCheck&quot;" FeatureDefaultText="&quot;By Upcoming Checks&quot;">
+  <Query Code="&quot;By Upcoming Checks&quot;" ObjectTableName="&quot;Customs.PhysicalCheck&quot;" IsAddNewEntity="false" SystemLevel="true" QuerySection="&quot;Customs.PhysicalCheck&quot;" IndexOrder="2" QueryGroupCode="&quot;PHCK&quot;" QueryGroupName="&quot;Customs.PhysicalCheck&quot;" LocalTextCode="&quot;כל הבדיקות&quot;" TextCode="&quot;All Checks&quot;" TextCodeCode="&quot;Customs.PhysicalCheck.Q.AllChecks&quot;" IsSpellChecked="false"  IsPackagable="true" >
     <QueryColumns>
       <QueryColumn IndexOrder="0" ColumnWidth="90" ObjectFieldName="&quot;CustomFileNo&quot;" QueryCode="&quot;By Upcoming Checks&quot;" />
       <QueryColumn IndexOrder="1" ColumnWidth="130" ObjectFieldName="&quot;DeclarationNo&quot;" QueryCode="&quot;By Upcoming Checks&quot;" />
