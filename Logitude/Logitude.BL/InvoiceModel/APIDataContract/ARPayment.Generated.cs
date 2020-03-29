@@ -72,6 +72,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public List<ARPaymentCheque> ARPaymentCheques { get; set; }
     
     public string BankAccountNumber { get; set; }
+    
+    public ARPaymentStatus Status { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
