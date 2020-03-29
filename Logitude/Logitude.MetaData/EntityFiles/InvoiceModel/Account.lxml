@@ -2,7 +2,7 @@
 <entity
   Id="&quot;7039dc8d-f5d4-4ab8-9544-a470c5783e65&quot;"
   ObjectTableName="&quot;Account&quot;"
-  DBTableName="&quot;Accounts&quot;"
+  DBTableName="&quot;Accounts1&quot;"
   ObjectTableSingular="&quot;Account&quot;"
   ObjectTablePlural="&quot;Accounts&quot;"
   DefaultText="&quot;Account&quot;"
@@ -43,7 +43,9 @@
   HasShortTitle="false"
   HasMenuButtons="false"
   HasFiltersMenu="false"
-  Code="&quot;ACCT&quot;">
+  Code="&quot;ACCT&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;5a060f5e-38d3-4ad0-9ce1-8c3b919e398a&quot;"
     FieldName="&quot;Id&quot;"
@@ -64,7 +66,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;aa5f325e-a0e9-4ac3-a981-cfb8ed4dc9b3&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -89,7 +92,7 @@
     Id="&quot;ff5b0007-556a-48e1-9a35-484574c7c25f&quot;"
     FieldName="&quot;Code&quot;"
     ObjectTableName="&quot;Account&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="15"
     IsRequiered="true"
@@ -153,7 +156,7 @@
     Id="&quot;b9688f79-eb83-47ad-8234-11e730a55cf6&quot;"
     FieldName="&quot;Name&quot;"
     ObjectTableName="&quot;Account&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="30"
     IsRequiered="true"
@@ -278,12 +281,15 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="AccountType"
+    NavigationPropertyName="AccountType" />
   <field
     Id="&quot;ec1bdcdc-8984-47ac-ae49-e65a9028a1ec&quot;"
     FieldName="&quot;ExternalAccountingCard&quot;"
     ObjectTableName="&quot;Account&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="25"
     IsRequiered="false"
@@ -349,7 +355,7 @@
     ObjectTableName="&quot;Account&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -413,7 +419,7 @@
     ObjectTableName="&quot;Account&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -475,7 +481,7 @@
     Id="&quot;0a55e967-bcfd-4631-9d7f-0fbc65e18590&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;Account&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

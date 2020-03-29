@@ -2,7 +2,8 @@
 <Table
   Name="APInvoiceLines"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="APInvoiceId"
     Type="varchar"
@@ -28,19 +29,19 @@
     Name="InvoiceCurrencyAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="LocalCurrencyAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ProfitCurrencyAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Notes"
@@ -100,7 +101,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ForiegnCurrencyAmount"

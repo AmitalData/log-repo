@@ -43,7 +43,9 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Global"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;e762f22e-8c48-4b3d-99a4-99a0c7e11329&quot;"
     FieldName="&quot;Code&quot;"
@@ -172,7 +174,7 @@
     Id="&quot;bdd36ae3-7e7b-4194-9aeb-367f21a94661&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;AWBMessagesCCSType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

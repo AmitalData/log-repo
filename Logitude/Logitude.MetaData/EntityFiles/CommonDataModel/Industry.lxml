@@ -40,7 +40,9 @@
   IsEditable="true"
   ClientModuleName="&quot;Common&quot;"
   Code="&quot;IDST&quot;"
-  DescriptionDefaultText="&quot;Define industries for use in queries and reports.&quot;">
+  DescriptionDefaultText="&quot;Define industries for use in queries and reports.&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;17e3ab34-98ec-434d-aeb4-443a0ff255d3&quot;"
     FieldName="&quot;Id&quot;"
@@ -61,7 +63,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;9e4baecb-4c6d-406e-b012-45636d4a93c2&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -282,7 +285,7 @@
     ObjectTableName="&quot;Industry&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="true"
     IsCustom="false"
     MinLength="0"

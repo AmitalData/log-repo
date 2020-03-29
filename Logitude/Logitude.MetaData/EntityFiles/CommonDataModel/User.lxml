@@ -63,7 +63,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;User,Users,Simplog.Infrastructure.NewUserCommand,Id,&quot;">
+  SearchFields="&quot;User,Users,Simplog.Infrastructure.NewUserCommand,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;c9ac1047-83d8-4052-8131-3e3171690d73&quot;"
     FieldName="&quot;Id&quot;"
@@ -74,7 +76,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -116,7 +118,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -137,7 +139,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Contact"
+    NavigationPropertyName="Contact" />
   <field
     Id="&quot;15b4e7ac-be3a-4f30-a185-6f672967c7a7&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -222,7 +226,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="20"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -370,7 +374,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -522,7 +526,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -564,7 +568,7 @@
     ListLableDefaultText="&quot;FreelancerId&quot;"
     ListLocalDefaultText="&quot;FreelancerId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -585,7 +589,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Freelancer" />
   <field
     Id="&quot;faeb3e13-662d-4968-b9c9-a9beebedf925&quot;"
     FieldName="&quot;Email&quot;"
@@ -865,7 +871,7 @@
     ListFieldLable="&quot;DepartmentIdListLable&quot;"
     ListLableDefaultText="&quot;Department&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -887,7 +893,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="true"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Department"
+    NavigationPropertyName="Department" />
   <field
     Id="&quot;36a26e0c-5d16-4ccf-9c3a-8e5f894dafb1&quot;"
     FieldName="&quot;BranchId&quot;"
@@ -942,7 +950,7 @@
     ListFieldLable="&quot;BranchIdListLable&quot;"
     ListLableDefaultText="&quot;Branch&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -964,7 +972,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="true"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Branch"
+    NavigationPropertyName="Branch" />
   <field
     Id="&quot;e1d6bbc4-dd44-4f81-b077-0e33eefc4104&quot;"
     FieldName="&quot;InActive&quot;"
@@ -1353,7 +1363,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1471,7 +1481,7 @@
     FullFieldLable="&quot;BusinessUnitId&quot;"
     DefaultText="&quot;Business Unit&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1493,7 +1503,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="BusinessUnit"
+    NavigationPropertyName="BusinessUnit" />
   <field
     Id="&quot;1b2fc1ca-d9fe-454a-be84-ae9ac847c47c&quot;"
     FieldName="&quot;BusinessUnitName&quot;"
@@ -1811,7 +1823,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1930,7 +1942,7 @@
     FullFieldLable="&quot;ProductTypeCode&quot;"
     DefaultText="&quot;Product Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1952,7 +1964,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ProductType"
+    NavigationPropertyName="ProductType" />
   <field
     Id="&quot;9bbf6eae-1d06-44a6-b353-376eb3e57faa&quot;"
     FieldName="&quot;ProductTypeName&quot;"
@@ -2081,7 +2095,7 @@
     FullFieldLable="&quot;DistributorCode&quot;"
     DefaultText="&quot;Distributor&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2103,7 +2117,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Distributor"
+    NavigationPropertyName="Distributor" />
   <field
     Id="&quot;5e633083-3d93-4803-9f9b-1c8ac6f437c5&quot;"
     FieldName="&quot;IsDistributor&quot;"
@@ -2114,7 +2130,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2412,7 +2428,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2633,7 +2649,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;User&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
@@ -2710,7 +2726,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;User&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
@@ -3948,7 +3964,7 @@
     IsNullable="false"
     IsForeignKey="false"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
@@ -4022,7 +4038,7 @@
     IsNullable="false"
     IsForeignKey="false"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
@@ -4808,7 +4824,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -5030,7 +5046,7 @@
     ObjectTableName="&quot;User&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -5752,7 +5768,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;eef6ef7f-5868-483c-8425-dcb178c087dc&quot;"
     FieldName="&quot;AutomaticLastUpdateDate&quot;"
@@ -5819,7 +5834,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;463b5f11-0d12-4629-88e3-2e5d0530c913&quot;"
     FieldName="&quot;LayoutDirection&quot;"
@@ -5889,7 +5903,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <Query
     Code="&quot;ActiveUsers&quot;"
     TextCode="&quot;Active Users&quot;"

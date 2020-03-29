@@ -43,7 +43,9 @@
   DependencyFilter1="&quot;ShowInLOV&quot;"
   ClientModuleName="&quot;Shipment&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;26a64034-e60e-4463-b6e0-45dc477e9b80&quot;"
     FieldName="&quot;Code&quot;"
@@ -172,7 +174,7 @@
     Id="&quot;480dd0bf-18ea-4581-9636-1cab4e175788&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;ShipmentCustomerType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"
@@ -234,7 +236,7 @@
     ObjectTableName="&quot;ShipmentCustomerType&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     Code="&quot;ShowInLOV&quot;"
-    MaxLength="40"
+    MaxLength="0"
     IsCustom="false"
     MinLength="0"
     DisplayOnLookUp="false"

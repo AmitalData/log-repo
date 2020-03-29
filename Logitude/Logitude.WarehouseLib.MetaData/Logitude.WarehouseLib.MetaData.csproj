@@ -71,6 +71,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WarehouseClassesGenerated.cs</LastGenOutput>
     </None>
+    <None Include="DBTables\WarehouseEntry.dxml" />
+    <None Include="DBTables\WarehouseEntryPackage.dxml" />
+    <None Include="DBTables\WarehouseEntryPackagesRelease.dxml" />
+    <None Include="DBTables\WarehouseEntryStatus.dxml" />
+    <None Include="DBTables\WarehouseRelease.dxml" />
+    <None Include="DBTables\WarehouseReleasePackage.dxml" />
+    <None Include="DBTables\WarehouseReleaseStatus.dxml" />
     <None Include="EntityFiles\WarehouseEntry.lxml" />
     <None Include="EntityFiles\WarehouseEntryPackage.lxml" />
     <None Include="EntityFiles\WarehouseEntryPackagesRelease.lxml" />

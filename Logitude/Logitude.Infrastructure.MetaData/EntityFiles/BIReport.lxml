@@ -60,7 +60,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;85b75266-c0ab-4766-902f-0f7c2efcc89b&quot;"
     FieldName="&quot;Id&quot;"
@@ -1377,9 +1379,9 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;FactTableName&quot;"
-    DefaultText="&quot;Fact Table Name&quot;"
+    DefaultText="&quot;Fact Table&quot;"
     ListFieldLable="&quot;FactTableNameListLable&quot;"
-    ListLableDefaultText="&quot;Fact Table Name&quot;"
+    ListLableDefaultText="&quot;Fact Table&quot;"
     IsNullable="false"
     IsForeignKey="false"
     IsPrimaryKey="false"

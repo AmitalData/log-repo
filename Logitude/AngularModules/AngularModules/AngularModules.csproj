@@ -1074,6 +1074,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
+    <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\DWObjectTableExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportExtendedListService.ts" />
@@ -6644,6 +6645,7 @@
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\AWBSpecialHandlingCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\FBLStockExtenedPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\ShipmentComputedFieldExtendedService.ts" />
     <TypeScriptCompile Include="Shipment\Services\INTRAWebService.ts" />
     <TypeScriptCompile Include="Shipment\Services\Others\LogBoxSignatureClientService.ts" />
     <TypeScriptCompile Include="Shipment\Services\Others\ShipmentAdditionalCloudDataService.ts" />

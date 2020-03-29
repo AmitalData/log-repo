@@ -49,7 +49,9 @@
   CustomFieldsCount="0"
   SearchFields="&quot;ARInvoiceStatus,ARInvoiceStatus,,Code,&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;990da9b6-6efe-4040-bb0c-357d094ceeb3&quot;"
     FieldName="&quot;Code&quot;"
@@ -180,7 +182,7 @@
     Id="&quot;6f7e5d7f-69ec-4f8c-93da-9510fd9985b8&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;ARInvoiceStatus&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

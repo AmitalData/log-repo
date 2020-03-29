@@ -2,7 +2,8 @@
 <Table
   Name="Quotes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"
@@ -911,7 +912,7 @@
     Name="ExchangeRate"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="IsFixedPrice"
@@ -1117,8 +1118,8 @@
   </Column>
   <Column
     Name="QuoteClosingReasonCode"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1152,6 +1153,37 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="RequestDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EstimatedProfitInLocal"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EstimatedProfitInProfit"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProfitCurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProfitExchangeRate"
+    Type="float">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="DirectionId"
@@ -1411,6 +1443,11 @@
   <Relation
     ForeignKeyColumn="MoveTypeId"
     ReferencedTable="MoveTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ProfitCurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

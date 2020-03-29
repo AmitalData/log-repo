@@ -2,7 +2,8 @@
 <Table
   Name="JournalLines"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Accounting">
   <Column
     Name="JournalId"
     Type="varchar"
@@ -27,7 +28,7 @@
   <Column
     Name="ActionCode"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -157,14 +158,16 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ActionId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="JournalId"
     ReferencedTable="Journals"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ActionCode"
-    ReferencedTable="JournalActionTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -192,4 +195,11 @@
     ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ActionId"
+    ReferencedTable="JournalActionTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Index
+    Columns="ActionCode" />
 </Table>

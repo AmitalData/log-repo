@@ -1904,20 +1904,18 @@ export class DWObjectFieldsDetails extends BaseComponent {
         var ObsList = [];
 
         let listDateFields: string[] = ['Date', 'Time']; 
-       // listDateFields.push("Date");
-        //listDateFields.push("Time");
 
         listDateFields.forEach((item) => {
             var dWObjectFieldPM: DWObjectFieldPM = new DWObjectFieldPM();
             dWObjectFieldPM.Code = DWObjectField.Code;
             dWObjectFieldPM.DataTypeCode = item;
-            dWObjectFieldPM.CannotFilter = false;
+            dWObjectFieldPM.CannotFilter = true;
             dWObjectFieldPM.Name = item;
             dWObjectFieldPM.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             var view = new DWObjectFieldsDetails(dWObjectFieldPM, this.MyParentClass);
             view.displayname = DWObjectField.Name + " " + item;
             view.ParentDataTypeCode = "DateParts";
-           
+            
             ObsList.push(view);
             this.Items = ObsList;
             this.IsViewTree = true;

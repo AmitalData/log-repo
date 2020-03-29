@@ -33,7 +33,9 @@
   Code="&quot;OTQG&quot;"
   Name="&quot;EmployeeGroup Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;997e3ba1-e312-4262-a3ca-8fc3d2c41be1&quot;"
     FieldName="&quot;Code&quot;"

@@ -32,7 +32,9 @@
   Code="&quot;TAQG&quot;"
   Name="&quot;TicketStage&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;361b4cf3-9320-4e6a-8351-b7b5667910d7&quot;"
     FieldName="&quot;Id&quot;"

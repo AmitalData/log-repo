@@ -2,7 +2,8 @@
 <Table
   Name="Reports"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -64,7 +65,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="FeatureId"
@@ -113,6 +114,12 @@
     Size="120">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="AvailableForScheduling"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="ReportGroupId"

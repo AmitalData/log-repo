@@ -35,7 +35,9 @@
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;Booking&quot;">
+  ClientModuleName="&quot;Booking&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;2ff0966b-b773-4224-8555-760e397b0614&quot;"
     FieldName="&quot;Code&quot;"

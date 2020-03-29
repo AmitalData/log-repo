@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;CustomerProductActualData,CustomerProductActualDatas,,CustomerId,CustomerId&quot;">
+  SearchFields="&quot;CustomerProductActualData,CustomerProductActualDatas,,CustomerId,CustomerId&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;3e563e2c-c354-42e8-b1ad-7458a7f4ea20&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -186,7 +188,7 @@
     FullFieldLable="&quot;CustomerId&quot;"
     DefaultText="&quot;Customer&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -208,7 +210,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Customer"
+    NavigationPropertyName="Customer" />
   <field
     Id="&quot;24885ed9-87bc-461c-93b4-669632b7723c&quot;"
     FieldName="&quot;ProductTypeCode&quot;"
@@ -261,7 +265,7 @@
     FullFieldLable="&quot;ProductTypeCode&quot;"
     DefaultText="&quot;Product Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -283,7 +287,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ProductType"
+    NavigationPropertyName="ProductType" />
   <field
     Id="&quot;c6bf65c5-7723-4db2-bf7b-dbfb311fec4d&quot;"
     FieldName="&quot;Month&quot;"
@@ -477,7 +483,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -552,7 +558,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -702,7 +708,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"

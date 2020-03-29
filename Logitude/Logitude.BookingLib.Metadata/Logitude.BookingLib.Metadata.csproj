@@ -124,6 +124,19 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BookingClassesGenerator.cs</LastGenOutput>
     </None>
+    <None Include="DBTables\Booking.dxml" />
+    <None Include="DBTables\BookingAnswer.dxml" />
+    <None Include="DBTables\BookingAnswerStatus.dxml" />
+    <None Include="DBTables\BookingLastRequest.dxml" />
+    <None Include="DBTables\BookingLevel.dxml" />
+    <None Include="DBTables\BookingPackage.dxml" />
+    <None Include="DBTables\BookingProduct.dxml" />
+    <None Include="DBTables\BookingSpaceAllocation.dxml" />
+    <None Include="DBTables\BookingStatus.dxml" />
+    <None Include="DBTables\FFRStatus.dxml" />
+    <None Include="DBTables\FlightsSchedulesRequest.dxml" />
+    <None Include="DBTables\FlightsSchedulesRequestStatus.dxml" />
+    <None Include="DBTables\FlightsSchedulesResponse.dxml" />
     <None Include="EntityFiles\Booking.lxml" />
     <None Include="EntityFiles\BookingAnswer.lxml" />
     <None Include="EntityFiles\BookingAnswerStatus.lxml" />

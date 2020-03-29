@@ -2,7 +2,8 @@
 <Table
   Name="Cards"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -374,8 +375,8 @@
   </Column>
   <Column
     Name="UsoCFDICode"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -395,6 +396,18 @@
     Name="CreatedByPartner"
     Type="varchar"
     Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StorageFreeDays"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -479,6 +492,8 @@
     Columns="Tenant,InActive,PartnerTypeId,EnglishName" />
   <Index
     Columns="Tenant,InActive,PartnerTypeId,IsCustomer" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,Code,PartnerTypeId" />
 </Table>

@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;APInvoiceLine,APInvoiceLines,,,&quot;">
+  SearchFields="&quot;APInvoiceLine,APInvoiceLines,,,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;0b6bdb72-7ab9-4878-b4b0-6942ba60efd3&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -140,7 +142,7 @@
     ObjectTableName="&quot;APInvoiceLine&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -213,7 +215,7 @@
     ObjectTableName="&quot;APInvoiceLine&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -402,7 +404,7 @@
     DefaultText="&quot;Invoice&quot;"
     FullLocalDefaultText="&quot;חשבונית&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -424,7 +426,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="APInvoice"
+    NavigationPropertyName="APInvoice" />
   <field
     Id="&quot;7b3c0ee1-3a0d-4e8d-b146-cdd5954f720a&quot;"
     FieldName="&quot;LineNumber&quot;"
@@ -859,7 +863,7 @@
     DefaultText="&quot;Charges Type&quot;"
     FullLocalDefaultText="&quot;סעיף חיוב&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -881,7 +885,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ChargesType"
+    NavigationPropertyName="ChargesType" />
   <field
     Id="&quot;9666f7cb-3851-47b6-844d-bd8b559cf07c&quot;"
     FieldName="&quot;ChargesTypeName&quot;"
@@ -1013,7 +1019,7 @@
     DefaultText="&quot;VAT Type&quot;"
     FullLocalDefaultText="&quot;סוג מע''מ&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1035,7 +1041,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="VatType"
+    NavigationPropertyName="VatType" />
   <field
     Id="&quot;9e57cf82-c523-4865-932d-90049cb1c2a4&quot;"
     FieldName="&quot;VatTypeName&quot;"
@@ -1124,7 +1132,7 @@
     ObjectTableName="&quot;APInvoiceLine&quot;"
     FieldsDataType="&quot;SigDouble&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1241,7 +1249,7 @@
     DefaultText="&quot;Foreign Currency&quot;"
     FullLocalDefaultText="&quot;מטבע זר&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1263,7 +1271,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="Currency" />
   <field
     Id="&quot;7f61c318-d6da-4504-92b1-ed32e1175764&quot;"
     FieldName="&quot;ForiegnExchangeRate&quot;"
@@ -1425,7 +1435,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;APInvoiceLine&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="true"
@@ -1730,7 +1740,7 @@
     ObjectTableName="&quot;APInvoiceLine&quot;"
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -2972,7 +2982,7 @@
     ObjectTableName="&quot;APInvoiceLine&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

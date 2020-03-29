@@ -56,7 +56,10 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;VatTypePercentage,VatTypePercentages,,Id,&quot;">
+  SearchFields="&quot;VatTypePercentage,VatTypePercentages,,Id,&quot;"
+  IsEditable="true"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7793e97d-069d-4902-a365-7f01ffd20eb5&quot;"
     FieldName="&quot;Id&quot;"
@@ -128,7 +131,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    GenerateInList="true"
+    MaxLength="15" />
+
   <field
     Id="&quot;802f1c8b-71e4-4a3c-b6d9-b9e7fd61e74a&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -253,6 +259,7 @@
     IsNullable="false"
     IsForeignKey="false"
     IsPrimaryKey="false"
+    IsRequired="true"
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
@@ -272,7 +279,14 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    HasPMField="true"
+    GenerateInList="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="VatType"
+    NavigationPropertyName="VatType" />
+
   <field
     Id="&quot;cfe38466-af9a-4fc2-8272-7bea4b8a154c&quot;"
     FieldName="&quot;Percentage&quot;"
@@ -412,6 +426,16 @@
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;FromDate&quot;"
+    HelpTextDefaultText="&quot;&quot;"
+    IsNullable="true"
+    HasDataBaseField="true"
+    Code="&quot;FromDate&quot;"
+    DependencyFilter3IsList="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInDocumentReferences="false"
+    CopyToDW="false"
+    HasTemplate="false"
+    IsRequired="false"
     IsSpellCheckedFullFieldLable="true"
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"

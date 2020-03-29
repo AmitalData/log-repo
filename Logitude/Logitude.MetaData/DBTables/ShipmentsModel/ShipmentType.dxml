@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -32,9 +33,17 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="TransportModeId"
     ReferencedTable="TransportModes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

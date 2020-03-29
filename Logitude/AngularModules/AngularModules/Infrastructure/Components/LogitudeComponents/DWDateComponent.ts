@@ -22,7 +22,7 @@ import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
     selector: 'DWDate',
     moduleId: module.id,
     templateUrl: './DWDateComponent.html',
-    inputs: ['DataContext', 'Operation', 'ObjectFieldName', 'SelectedValue'],
+    inputs: ['DataContext', 'Operation', 'ObjectFieldName', 'SelectedValue', 'IsShowTime'],
 
 })
 
@@ -37,7 +37,7 @@ export class DWDateComponent extends BaseComponent {
     ObjectFieldName: string;
     Item: any;
     IsLoad: boolean = false;
-
+    IsShowTime: boolean;
     @Output() ValueChanged = new EventEmitter();
     constructor() {
         super();
@@ -59,7 +59,10 @@ export class DWDateComponent extends BaseComponent {
 
     ngOnInit() {
 
-        if (this.DataContext) this.ObjectTableName = this.DataContext.ParentDimTabelName;
+        if (this.DataContext) {
+            this.ObjectTableName = this.DataContext.ParentDimTabelName;
+            this.IsShowTime = this.DataContext.DataTypeCode == "DateTime" ? true:false;
+        }
 
 
         if (!this.ObjectTableName) this.ObjectTableName = "QueryBuilder";
@@ -291,8 +294,11 @@ export class DWDateComponent extends BaseComponent {
                 var stringOfHours = AppTool.PadLeft("" + myDateParts.Hours, 2, '0');
                 var stringOfMinutes = AppTool.PadLeft("" + myDateParts.Minutes, 2, '0');
                 var stringOfSeconds = AppTool.PadLeft("" + myDateParts.Seconds, 2, '0');
-               
-                result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay + " " + stringOfHours + ":" + stringOfMinutes + ":" + stringOfSeconds;
+                result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay;
+                if (this.IsShowTime) {
+                    result += (" " + stringOfHours + ":" + stringOfMinutes + ":" + stringOfSeconds);
+
+                }
 
 
             }

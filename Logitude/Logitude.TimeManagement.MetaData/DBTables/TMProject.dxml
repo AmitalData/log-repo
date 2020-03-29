@@ -2,7 +2,8 @@
 <Table
   Name="TMProjects"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="TimeManagement">
   <Column
     Name="Id"
     Type="varchar"

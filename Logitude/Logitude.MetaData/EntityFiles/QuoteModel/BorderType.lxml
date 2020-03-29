@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;BorderType,BorderTypes,,Code,&quot;">
+  SearchFields="&quot;BorderType,BorderTypes,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;f2a1c59e-d92b-4430-97df-aeba6cf90aca&quot;"
     FieldName="&quot;Code&quot;"

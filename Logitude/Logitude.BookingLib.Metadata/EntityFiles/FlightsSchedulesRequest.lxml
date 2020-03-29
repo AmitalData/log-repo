@@ -32,7 +32,9 @@
   Code="&quot;d937&quot;"
   Name="&quot;FlightsSchedulesRequest Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;Booking&quot;">
+  ClientModuleName="&quot;Booking&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;3e3c7d7f-0826-4697-b588-3ae290d8a6c9&quot;"
     FieldName="&quot;Id&quot;"

@@ -2,7 +2,8 @@
 <Table
   Name="OccasionTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="CRM">
   <Column
     Name="Id"
     Type="varchar"

@@ -27,7 +27,7 @@ export class ContainersFUsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("ContainerFollowUp", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("ContainerFollowUp", 0).subscribe((response:any) => {
             this.IsResourcesReady = true;
             this.LoadAllScreenData();
             this.SetQueriesVisibility();

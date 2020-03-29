@@ -43,7 +43,9 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   AllowedInQueues="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;db2e868e-814c-4686-8fdd-bc603dba4567&quot;"
     FieldName="&quot;Id&quot;"
@@ -64,7 +66,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;bea7185b-5eec-44c4-a91b-dae92093d811&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -391,7 +394,7 @@
     DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     EnableFullscreenTextBox="false"
-    IsRequired="false"
+    IsRequired="true"
     FullFieldLable="&quot;ChargesTypeId&quot;"
     DefaultText="&quot;Charges Type&quot;"
     IsSpellCheckedFullFieldLable="false"
@@ -400,7 +403,10 @@
     HasDataBaseField="true"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="ChargesType"
+    NavigationPropertyName="ChargesType" />
   <field
     Id="&quot;a9a2d25b-d06d-4826-bf08-8cfbf6cb2da1&quot;"
     FieldName="&quot;ProductTypeCode&quot;"
@@ -455,7 +461,7 @@
     DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     EnableFullscreenTextBox="false"
-    IsRequired="false"
+    IsRequired="true"
     FullFieldLable="&quot;ProductTypeCode&quot;"
     DefaultText="&quot;Product&quot;"
     IsSpellCheckedFullFieldLable="false"
@@ -464,7 +470,10 @@
     HasDataBaseField="true"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="ProductType"
+    NavigationPropertyName="ProductType" />
   <field
     Id="&quot;421dc663-7025-4ae0-8090-8d77a47c2a90&quot;"
     FieldName="&quot;UpdateDate&quot;"
@@ -472,7 +481,7 @@
     FieldsDataType="&quot;DateTime&quot;"
     FieldCode="&quot;ChargesExternalAccountsByProduct.UpdateDate&quot;"
     Code="&quot;UpdateDate&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsCustom="false"
     MinLength="0"
     DisplayOnLookUp="false"
@@ -583,7 +592,7 @@
     DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     EnableFullscreenTextBox="false"
-    IsRequired="false"
+    IsRequired="true"
     FullFieldLable="&quot;UpdatedByUserId&quot;"
     DefaultText="&quot;Updated By&quot;"
     IsSpellCheckedFullFieldLable="false"
@@ -592,7 +601,10 @@
     HasDataBaseField="true"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;8c250260-954b-4ede-9876-52424b96d910&quot;"
     FieldName="&quot;ProductTypeName&quot;"
@@ -628,7 +640,6 @@
     HasDataBaseField="false"
     NoMetaDataField="true" />
   <EventTypes />
-  <AdditionalTextCodes>
-  </AdditionalTextCodes>
+  <AdditionalTextCodes></AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

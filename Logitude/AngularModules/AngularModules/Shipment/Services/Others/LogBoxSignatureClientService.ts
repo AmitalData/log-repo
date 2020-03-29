@@ -1,6 +1,4 @@
-﻿/// <reference path="../../../common/entitypms/agentsharedmanifestpm.ts" />
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -10,15 +8,16 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedManifestPM';
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
+
 export class LogBoxSignatureClientService {
-
-
-    private _http: Http;
+    private _httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/LogBoxSignatureClient';
     }
     
@@ -30,11 +29,8 @@ export class LogBoxSignatureClientService {
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.put(this._apiUrl, JSON.stringify(entityPM),
-                { //.get(this._apiUrl + '/PutSignRequestReceived', {
-                headers: authHeader
-            }).map(response => {
-                //var pm = response.json();
+            return this._httpClient.put(this._apiUrl, JSON.stringify(entityPM), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                //var pm = response;
 
                
 
@@ -43,7 +39,7 @@ export class LogBoxSignatureClientService {
                 //    entity = this.MapJsonToEntityPM(pm);
                 //}
                  
-                var entity = response.json();
+                var entity = response;
                
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
@@ -51,7 +47,7 @@ export class LogBoxSignatureClientService {
 
                 return pmresponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -77,19 +73,19 @@ export class LogBoxSignatureClientService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetMultiSignRequestReceived/?" + IdsParameterString
-                , { headers: authHeader }).map(response => {
+            return this._httpClient.get(this._apiUrl + "/GetMultiSignRequestReceived/?" + IdsParameterString
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    //var res = response.json();
+                    //var res = response;
 
-                    var entity = response.json();
+                    var entity = response;
 
                     var pmresponse: ServiceResponse;
                     pmresponse = new ServiceResponse();
                     pmresponse.Result = entity;
 
                     return pmresponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         ); 
     }

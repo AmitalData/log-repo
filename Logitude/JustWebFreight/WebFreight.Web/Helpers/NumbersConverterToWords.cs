@@ -1195,9 +1195,10 @@ namespace WebFreight.Web.Helpers
                 if (s.Substring(i, 1) != " ")
                 {
                     j = i;
-                    break;
+                   
+                   break;
                 }
-            return s.Substring(j, s.Length);
+            return s.Substring(j, s.Length-1);
         }
         private string RTrim(string s)
         {
