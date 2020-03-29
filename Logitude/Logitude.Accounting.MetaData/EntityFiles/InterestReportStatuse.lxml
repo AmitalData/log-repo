@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Interest Report Statuse&quot;"
-  Code="&quot;b328&quot;"
+  Code="&quot;eaff&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -410,6 +410,16 @@
       LocalName="&quot;הופקה חשבונית&quot;"
       EnglishName="&quot;Invoiced&quot;"
       SearchFields="&quot;2,Invoiced,הופקה חשבונית&quot;" />
+    <Record
+      EnglishName="&quot;Failed&quot;"
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,Failed,נכשלה&quot;"
+      LocalName="&quot;נכשלה&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      LocalName="&quot;בתהליך&quot;"
+      SearchFields="&quot;5,In Progress,בתהליך&quot;"
+      EnglishName="&quot;In Progress&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
