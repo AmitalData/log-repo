@@ -11,6 +11,9 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -38,7 +41,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 result = string.IsNullOrEmpty(result) ? entityPM.OrderNumber : result + "," + entityPM.OrderNumber;
             }
+            DeclarationQueryService declarationQuery = new DeclarationQueryService(poco.Tenant);
+            DeclarationPM declaration = declarationQuery.GetSingle(entityPM.DeclarationId, false, false);
+            if (declaration != null)
+            {
+                if (!string.IsNullOrEmpty(declaration.DeclarationNumber))
+                {
+                    result = string.IsNullOrEmpty(result) ? declaration.DeclarationNumber : result + "," + declaration.DeclarationNumber;
+                }
 
+                if (!string.IsNullOrEmpty(declaration.CustomFileNo))
+                {
+                    result = string.IsNullOrEmpty(result) ? declaration.CustomFileNo : result + "," + declaration.CustomFileNo;
+                }
+            }
             entityPM.SearchFields = result.ToLower();
             poco.SearchFields = entityPM.SearchFields;
         }

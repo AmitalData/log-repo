@@ -35,6 +35,8 @@ export class DeclarationReferantDataList {
 	ATAOrETA: string;
 	SearchFields: string;
 	ExceptionReasonsList: string;
+	DepartmentId: string;
+	ReferentUserId: string;
 	Actions: string;
 	
 }

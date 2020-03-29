@@ -70,6 +70,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                  
                                                                 DeclarationStatusTypeCode = d.DeclarationStatusTypeCode,
                                                                 ExceptionReasonsList = a.ExceptionReasonsList,
+                                                                ReferentUserId=d.ReferentUserId,
+                                                                DepartmentId=d.DepartmentId,
                                                                
                                                              });
             return query;
