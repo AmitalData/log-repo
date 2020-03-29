@@ -40,8 +40,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public AvailableTariffs: Array<TariffSearchSummary> = [];
     public IsGeneratePayablesVisible: boolean = false;
-    private ShipmentPM: ShipmentPM;
-    private QuotePM: QuotePM;
+    private IsShipment: boolean;
+    private IsQuote: boolean;
     private FatherComponent: any;
     private myChargesTypeListService: ChargesTypeListService;
     private dimenstionShipment: ShipmentPM;
@@ -83,6 +83,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.TariffType == "OLC" || this.TariffType == "OFC") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
+           
         }
     }
     private currencyId: string;
@@ -100,13 +101,13 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         if (args != null) {
             var isAutorun = false;
-            if (args['ShipmentPM'] || args['QuotePM']) {
+            if (args['IsShipment'] || args['IsQuote']) {
                 this.IsGeneratePayablesVisible = true;
                 isAutorun = true;
-                if (args['ShipmentPM']) {
-                    this.ShipmentPM = args['ShipmentPM'];
+                if (args['IsShipment']) {
+                    this.IsShipment = args['IsShipment'];
                 } else {
-                    this.QuotePM = args['QuotePM'];
+                    this.IsQuote = args['IsQuote'];
                 }
             }
             if (args['FatherComponent']) {
@@ -146,10 +147,27 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.SetLabels();
             this.SetUIProperties();
             this.SetPortsDependencyFilterValue();
-
+            this.SetContainersInitialValues();
             if (isAutorun) {
                 this.SearchButtonClicked();
             }
+        }
+    }
+    SetContainersInitialValues(): any {
+        if (this.TariffType == "OFC") {
+            this.BCNTGrouped = ShipmentTool.GetByPckageTypeGrouped(this.FatherComponent.EntityPM);
+
+            this.ContainerType1Id = this.BCNTGrouped[0] != null ? this.BCNTGrouped[0].PackageTypeId : null;
+            this.ContainerType2Id = this.BCNTGrouped[1] != null ? this.BCNTGrouped[1].PackageTypeId : null;
+            this.ContainerType3Id = this.BCNTGrouped[2] != null ? this.BCNTGrouped[2].PackageTypeId : null;
+            this.ContainerType4Id = this.BCNTGrouped[3] != null ? this.BCNTGrouped[3].PackageTypeId : null;
+            this.ContainerType5Id = this.BCNTGrouped[4] != null ? this.BCNTGrouped[4].PackageTypeId : null;
+
+            this.Quantity1 = this.BCNTGrouped[0] != null ? this.BCNTGrouped[0].Quantity : null;
+            this.Quantity2 = this.BCNTGrouped[1] != null ? this.BCNTGrouped[1].Quantity : null;
+            this.Quantity3 = this.BCNTGrouped[2] != null ? this.BCNTGrouped[2].Quantity : null;
+            this.Quantity4 = this.BCNTGrouped[3] != null ? this.BCNTGrouped[3].Quantity : null;
+            this.Quantity5 = this.BCNTGrouped[4] != null ? this.BCNTGrouped[4].Quantity : null;
         }
     }
 
@@ -646,7 +664,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     private TariffList_Shipment: ShipmentPayablePM[];
     private TariffList_Quote: QuoteChargePM[];
     GeneratePayablesClicked(item: TariffSearchSummary) {
-        if (this.ShipmentPM) {
+        if (this.IsShipment) {
             this.GenerateShipmentPayablesFromTariff(item);
         }
         else {
@@ -659,7 +677,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     private ValidateShipmentTariffContainers() {
         var isValid = true;
         if (this.TariffType == "OFC") {
-            this.BCNTGrouped = ShipmentTool.GetByPckageTypeGrouped(this.ShipmentPM);
+            this.BCNTGrouped = ShipmentTool.GetByPckageTypeGrouped( this.FatherComponent.EntityPM);
             var checkIfShipmentHasTariffContainers = this.BCNTGrouped.filter(a => a.PackageTypeId == this.ContainerType1Id ||
                 a.PackageTypeId == this.ContainerType2Id ||
                 a.PackageTypeId == this.ContainerType3Id ||
@@ -769,9 +787,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     OverrideTariffPayablesOfShipment(): any {
         this.TariffList_Shipment.forEach(payable => {
-            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId && (d.TariffId == payable.TariffId || d.TariffId == null))[0];
+            var existsPayable: ShipmentPayablePM =  this.FatherComponent.EntityPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId && (d.TariffId == payable.TariffId || d.TariffId == null))[0];
             if (existsPayable != null) {
-                this.ShipmentPM.RemovePayable(existsPayable);
+                 this.FatherComponent.EntityPM.RemovePayable(existsPayable);
             }
         });
         this.AssignTariffPayablesToShipment();
@@ -779,7 +797,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     AssignTariffPayablesToShipment(): any {
         this.TariffList_Shipment.forEach(shipmentPayable => {
-            this.ShipmentPM.AddPayable(shipmentPayable);
+             this.FatherComponent.EntityPM.AddPayable(shipmentPayable);
 
         });
         this.ReloadTariffPayables();
@@ -794,7 +812,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     CheckTariffPayablesDuplicate(): any {
         var isDuplicate = false;
         this.TariffList_Shipment.forEach(payable => {
-            var existsPayable: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId && (d.TariffId == payable.TariffId || d.TariffId == null))[0];
+            var existsPayable: ShipmentPayablePM =  this.FatherComponent.EntityPM.ShipmentPayables.filter(d => d.ChargesTypeId == payable.ChargesTypeId && d.MeasurementId == payable.MeasurementId && (d.TariffId == payable.TariffId || d.TariffId == null))[0];
             if (existsPayable != null) {
                 isDuplicate = true;
             }
@@ -813,7 +831,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.CurrencyId = newRecord.CurrencyId;
                 this.Generator.GetCurrencyCode(shipmentPayable);
                 shipmentPayable.Rate = this.Generator.GetCurrencyRate(shipmentPayable.CurrencyId);
-                shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
+                shipmentPayable.ProfitCurrencyExchangeRate = this.Generator.GetCurrencyRate( this.FatherComponent.EntityPM.ProfitCurrencyId);
                 shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
                 shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
 
@@ -826,7 +844,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
                 var expectedAmountLocal = expectedAmount * rate;
 
-                var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
+                var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate( this.FatherComponent.EntityPM.ProfitCurrencyId);
                 var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
 
                 if (nweQuantity != null) {
@@ -845,10 +863,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.AccountedAmountInProfitCurrency = 0;
                 shipmentPayable.ShipmentPayableLineStatusCode = "EMPT";
                 shipmentPayable.ShipmentPayableAmountTypeCode = "ACCU";
-                shipmentPayable.ShipmentId = this.ShipmentPM.Id;
-                shipmentPayable.ShipmentNumber = this.ShipmentPM.ShipmentNumber;
+                shipmentPayable.ShipmentId =  this.FatherComponent.EntityPM.Id;
+                shipmentPayable.ShipmentNumber =  this.FatherComponent.EntityPM.ShipmentNumber;
                 shipmentPayable.CreateDate = DateTool.GetCurrentDateAsUtc();
-                shipmentPayable.Tenant = this.ShipmentPM.Tenant;
+                shipmentPayable.Tenant =  this.FatherComponent.EntityPM.Tenant;
                 shipmentPayable.CreatedByUserId = SessionLocator.LoggedUserId;
                 shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
                 shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
@@ -881,10 +899,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     ValidateExistPayablesConnectedToTariff(item: TariffSearchSummary) {
         var isValid = true;
-        var existsPayableOnAirFreight: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
+        var existsPayableOnAirFreight: ShipmentPayablePM =  this.FatherComponent.EntityPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
         var existsPayableOnSurcharges: ShipmentPayablePM[] = [];
         item.SurchargesWithoutAllIn.forEach(surcharge => {
-            var payable = this.ShipmentPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != surcharge.TariffId && d.ChargesTypeId == surcharge.ChargeTypeId)[0];
+            var payable =  this.FatherComponent.EntityPM.ShipmentPayables.filter(d => d.TariffId != null && d.TariffId != surcharge.TariffId && d.ChargesTypeId == surcharge.ChargeTypeId)[0];
             if (payable) {
                 existsPayableOnSurcharges.push(payable);
             }
@@ -899,7 +917,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
     ValidateTariffClosedLines() {
         var isValid = true;
-        var closedPayablesLine: ShipmentPayablePM = this.ShipmentPM.ShipmentPayables.filter(d => d.AccountedAmount != null && d.AccountedAmount != 0)[0];
+        var closedPayablesLine: ShipmentPayablePM =  this.FatherComponent.EntityPM.ShipmentPayables.filter(d => d.AccountedAmount != null && d.AccountedAmount != 0)[0];
         if (closedPayablesLine) {
             var messageWindow = new MessageWindow();
             isValid = false;
@@ -913,14 +931,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             case "GRWT": { myQuantity = this.GrossWeight; break; }
             case "CHWT": { myQuantity = this.ChargeableWeight; break; }
             case "VOLU": { myQuantity = this.Volume; break; }
-            case "BTEU": { myQuantity = this.ShipmentPM.TEU; break; }
+            case "BTEU": { myQuantity =  this.FatherComponent.EntityPM.TEU; break; }
             case "FIXD": { myQuantity = 1; break; }
-            case "PRVL": { myQuantity = this.ShipmentPM.ValueOfGoods; break; }
-            case "PRFR": { myQuantity = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+            case "PRVL": { myQuantity =  this.FatherComponent.EntityPM.ValueOfGoods; break; }
+            case "PRFR": { myQuantity = ArrayTool.Sum( this.FatherComponent.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
             case "GWTN": { myQuantity = this.GrossWeightPerTon; break; }
             case "CWKG": { myQuantity = this.ChargeableWeightInKG; break; }
             case "GWKG": { myQuantity = this.GrossWeightInKG; break; }
-            case "QTY": { myQuantity = this.ShipmentPM.NumberOfPackages != null ? this.ShipmentPM.NumberOfPackages : null; break; }
+            case "QTY": { myQuantity =  this.FatherComponent.EntityPM.NumberOfPackages != null ?  this.FatherComponent.EntityPM.NumberOfPackages : null; break; }
             case "VCBM": { myQuantity = this.VolumeInCBM; break; }
             default: { break; }
         }
@@ -983,16 +1001,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     CheckFreightDuplicate(): any {
         var isfreighExists= false;
-        if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT").length > 0) {
+        if ( this.FatherComponent.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT").length > 0) {
             isfreighExists = true;      
         }
         return isfreighExists;
     }
     OverrideTariffQuoteCharges(): any {
         this.TariffList_Quote.forEach(item => {
-            var charge: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostCurrencyId == item.CostCurrencyId && d.CostMeasurementId == item.CostMeasurementId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
+            var charge: QuoteChargePM =  this.FatherComponent.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostCurrencyId == item.CostCurrencyId && d.CostMeasurementId == item.CostMeasurementId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
             if (charge != null) {
-                this.QuotePM.RemoveQuoteChargePM(charge);
+                 this.FatherComponent.EntityPM.RemoveQuoteChargePM(charge);
                 item.ChargesGroupCode = charge.ChargesGroupCode;
             }
         });
@@ -1024,7 +1042,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.ComputeSalePrice();
            
             chargeItem.SetUIProperties_AllIn();
-            this.QuotePM.AddQuoteChargePM(item);
+             this.FatherComponent.EntityPM.AddQuoteChargePM(item);
         });
         this.ReloadTariffCharges();
 
@@ -1038,7 +1056,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     CheckTariffChargesDuplicate(): any {
         var isDuplicate = false;
         this.TariffList_Quote.forEach(item => {
-            var isChargeExists: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostCurrencyId == item.CostCurrencyId && d.CostMeasurementId == item.CostMeasurementId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
+            var isChargeExists: QuoteChargePM =  this.FatherComponent.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargesTypeId && d.CostCurrencyId == item.CostCurrencyId && d.CostMeasurementId == item.CostMeasurementId && (d.TariffId == item.TariffId || d.TariffId == null))[0];
             if (isChargeExists != null) {
                 isDuplicate = true;
             }
@@ -1049,7 +1067,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.myChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var chargesType: ChargesTypeList = myResponse.Result;
-                var chargePM = new QuoteChargePM(this.QuotePM);
+                var chargePM = new QuoteChargePM( this.FatherComponent.EntityPM);
                 chargePM.ChargesTypeId = item.ChargeTypeId;
                 chargePM.ChargesTypeCode = chargesType.Code;
                 chargePM.ChargesTypeName = chargesType.EnglishName;
@@ -1057,12 +1075,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.TariffId = item.TariffId;
                 chargePM.TariffNumber = item.TariffNumber;
                 chargePM.TariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
-                chargePM.Tenant = this.QuotePM.Tenant;
-                chargePM.QuoteId = this.QuotePM.Id;
+                chargePM.Tenant =  this.FatherComponent.EntityPM.Tenant;
+                chargePM.QuoteId =  this.FatherComponent.EntityPM.Id;
                 chargePM.UpdatedByUserId = SessionLocator.LoggedUserId;
                 chargePM.MarkUpTypeCode = "F";
                 chargePM.MarkUpValue = 0;
-                chargePM.QuoteTypeCode = this.QuotePM.QuoteTypeCode;
+                chargePM.QuoteTypeCode =  this.FatherComponent.EntityPM.QuoteTypeCode;
                 chargePM.CostMeasurementId = item.UnitOfMesurmentId;
                 chargePM.CostMeasurementCode = item.UnitOfMesurmentCode;
                 chargePM.CostCurrencyId = item.CurrencyId;
@@ -1072,9 +1090,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.CostUnitPrice = AppTool.Round(item.ActualPrice, 3);
                 chargePM.SaleMeasurementId = item.UnitOfMesurmentId;
                 chargePM.SaleMeasurementCode = item.UnitOfMesurmentCode;
-                chargePM.SaleCurrencyId = this.QuotePM.SaleCurrencyId;
-                chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode(this.QuotePM.SaleCurrencyId);
-                chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate(this.QuotePM.SaleCurrencyId);
+                chargePM.SaleCurrencyId =  this.FatherComponent.EntityPM.SaleCurrencyId;
+                chargePM.SaleCurrencyCode = this.FatherComponent.GetCurrencyCode( this.FatherComponent.EntityPM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.FatherComponent.GetCurrencyRate( this.FatherComponent.EntityPM.SaleCurrencyId);
                 //chargePM.SaleUnitPrice = chargePM.CostUnitPrice;
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
@@ -1086,10 +1104,10 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     ValidateExistChargesConnectedToTariff(item: TariffSearchSummary) {
         var isValid = true;
-        var existsPayableOnAirFreight: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
+        var existsPayableOnAirFreight: QuoteChargePM =  this.FatherComponent.EntityPM.QuoteCharges.filter(d => d.TariffId != null && d.TariffId != item.TariffId && d.ChargesTypeId == item.ChargeTypeId)[0];
         var quoteChargesOnSurcharges: QuoteChargePM[] = [];
         item.SurchargesWithoutAllIn.forEach(surcharge => {
-            var charge = this.QuotePM.QuoteCharges.filter(d => d.TariffId != null && d.TariffId != surcharge.TariffId && d.ChargesTypeId == surcharge.ChargeTypeId)[0];
+            var charge =  this.FatherComponent.EntityPM.QuoteCharges.filter(d => d.TariffId != null && d.TariffId != surcharge.TariffId && d.ChargesTypeId == surcharge.ChargeTypeId)[0];
             if (charge) {
                 quoteChargesOnSurcharges.push(charge);
             }

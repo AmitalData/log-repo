@@ -473,7 +473,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
                 GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
                 VolumeUnit: this.EntityPM.VolumeUnitCode,
-                QuotePM: this.EntityPM,
+                IsQuote: true,
                 FatherComponent: this,
                 TariffType: tariffType
             };
