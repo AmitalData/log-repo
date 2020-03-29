@@ -156,27 +156,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //ApplicationID is  the Customs Document ID - SUCCESS
                 else
                 {
-                    CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(context);
-                    List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
-                    if (customsDocumentsTicketPMList != null) // && customsDocumentsTicketPMList.FirstOrDefault() != null && !string.IsNullOrWhiteSpace(customsDocumentsTicketPMList.FirstOrDefault().RequestedCustomsDocId))
-                    {
-                        //_MyCustomsDocumentPM.DocumentStatusCode = "8"; // Verification Progress
-                        var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                        foreach (var customsDocumentsTicket in customsDocumentsTicketPMList)
-                        {
-                            if (!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId))
-                            {
-                                customsDocumentsTicket.VerificationStatusTypeCode = "8";
-                                customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
-                                myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
-                            }
-                            else
-                            {
-                                customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
-                                myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
-                            }
-                        }
-                    }
+                    //CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(context);
+                    //List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
+                    //if (customsDocumentsTicketPMList != null) // && customsDocumentsTicketPMList.FirstOrDefault() != null && !string.IsNullOrWhiteSpace(customsDocumentsTicketPMList.FirstOrDefault().RequestedCustomsDocId))
+                    //{
+                    //    //_MyCustomsDocumentPM.DocumentStatusCode = "8"; // Verification Progress
+                    //    var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                    //    foreach (var customsDocumentsTicket in customsDocumentsTicketPMList)
+                    //    {
+                    //        if (!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId))
+                    //        {
+                    //            customsDocumentsTicket.VerificationStatusTypeCode = "8";
+                    //            customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
+                    //            myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
+                    //        }
+                    //        else
+                    //        {
+                    //            customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
+                    //            myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
+                    //        }
+                     //    }
+                  //  }
 
                     //else
                     {
@@ -224,7 +224,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogMessagingUtil.Instance.AppendLine("_MyCustomsDocumentPM.DocumentStatusCode == " + _MyCustomsDocumentPM.DocumentStatusCode);
             EnshureIsPartOfDeclaration(context, requestParams.DeclaretionId);
             myCustomsDocumentUpdateService.Update(_MyCustomsDocumentPM, true);
-            UpdateDeclarationCourierStatus(context, _MyCustomsDocumentPM, requestParams.DeclaretionId);
+
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(context);
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
+            if (customsDocumentsTicketPMList != null) // && customsDocumentsTicketPMList.FirstOrDefault() != null && !string.IsNullOrWhiteSpace(customsDocumentsTicketPMList.FirstOrDefault().RequestedCustomsDocId))
+            {
+                //_MyCustomsDocumentPM.DocumentStatusCode = "8"; // Verification Progress
+                var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                foreach (var customsDocumentsTicket in customsDocumentsTicketPMList)
+                {
+                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId))
+                    {
+                        customsDocumentsTicket.VerificationStatusTypeCode = "8";
+                        customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
+                        myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
+                    }
+                    else
+                    {
+                        customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
+                        myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicket, true);
+                    }
+                }
+            }
+
+
+              UpdateDeclarationCourierStatus(context, _MyCustomsDocumentPM, requestParams.DeclaretionId);
             this.MyResponseData.ApplicationID = _MyCustomsDocumentPM.CustomsDocId;
             this.MyResponseData.DocumentNumber = _MyCustomsDocumentPM.ExternalAttachmentId;
             this.MyResponseData.CustomDocument = _MyCustomsDocumentPM.CustomsDocId;
