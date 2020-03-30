@@ -142,12 +142,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             return ssss;
         }
 
-        private static List<PeriodCurrencySummary> GetCurrencyPeriodsSummaries(List<PeriodMExtended> currencyPeriods)
+        private List<PeriodCurrencySummary> GetCurrencyPeriodsSummaries(List<PeriodMExtended> currencyPeriods)
         {
             var ssss = new List<PeriodCurrencySummary>();
 
             foreach (PeriodMExtended currencyPeriod in currencyPeriods)
             {
+                var showCurrencyDetails = GetFilterValue<bool>("Detailed");
+                var customerId = GetFilterValue<string>("CustomerId");
                 PeriodCurrencySummary summary = new PeriodCurrencySummary()
                 {
                     CurrencyId = currencyPeriod.CurrencyId,
@@ -155,7 +157,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     TotalDebit = currencyPeriod.OpenDebit,
                     CurrencyCode = currencyPeriod.CurrencyCode
                 };
-                ssss.Add(summary);
+
+                //if ((showCurrencyDetails && customerId != null && currencyPeriod.CurrencyId != null)||!showCurrencyDetails)
+                    ssss.Add(summary);
             }
 
             return ssss;
@@ -211,7 +215,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.AggregateByGLAccountCurrencies = GetFilterValue<bool>("Detailed");
 
             reportParameters.GroupByDate = AgingReportParam.DateEnum.DueDate;
-            reportParameters.AgingMethod = AgingReportParam.MethodEnum.TotalByMonthMethod.ToString();
+            reportParameters.AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString();
             reportParameters.Aging4AccountTypeCode = (GetFilterValue<string>("GLAccountType") == "2") ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3;
 
             SetReportCategoryParameters(reportParameters);
