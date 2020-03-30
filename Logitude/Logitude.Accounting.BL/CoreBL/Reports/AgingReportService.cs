@@ -19,6 +19,10 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using System.Data.Entity.SqlServer;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityQueries;
+
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
     public class AgingReportService
@@ -453,6 +457,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountDisplayNumber = acc.DisplayNumber,
                          AccountTermName = card.PaymentTerm.EnglishName,
 
+                         CurrencyCode = acc.CurrencyCode,
                          CreditLimitAmount =
                          //cust!=null?(double)cust.CreditLimitAmount:0,
                          cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
@@ -491,17 +496,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                     }
                 }
-
-                
+                CurrencyQuery _CurrencyQuery = new CurrencyQuery(_Param.Tenant);
+                var currencies = _CurrencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
                 List<PeriodMExtended> namedPeriods = (from line in reportList
                                                           //join account in accountsList on line.AccountId equals account.Id
                                                       join account in periodMExtendeds on line.AccountId equals account.AccountId
+                                                      join currency in currencies on line.CurrencyId equals currency.Id
                                                       select new PeriodMExtended()
                                                       {
                                                           OrderDate = line.OrderDate,
                                                           OrderDateB4 = line.OrderDateB4,
                                                           AccountId = line.AccountId,
                                                           CurrencyId = line.CurrencyId,
+                                                          CurrencyCode = currency.Code,
                                                           Total = line.Total,
                                                           AccountEnglishName = account.AccountEnglishName,
                                                           AccountLocalName = account.AccountLocalName,
@@ -524,6 +531,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         OrderDateB4 = r.OrderDateB4,
                         AccountId = r.AccountId,
                         CurrencyId = r.CurrencyId,
+                        CurrencyCode = r.CurrencyCode,
                         Total = r.Total,
                         AccountEnglishName = r.AccountEnglishName,
                         AccountLocalName = r.AccountLocalName,
@@ -1206,6 +1214,7 @@ Period	Acc	Currency	Total
         public string AccountDisplayNumber { get; set; }
         //accountCardlist.Payment Term: //PaymentTermName = card.PaymentTerm == null ? null : card.PaymentTerm.EnglishName,
         public string AccountTermName { get; set; }
+        public string CurrencyCode { get; set; }
 
         /*
         var percentage = 0;
