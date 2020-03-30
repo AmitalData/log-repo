@@ -2087,17 +2087,14 @@
     <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.Designer.cs">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs" />
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </Compile>
-
-    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.cs" />
-    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.Designer.cs">
-      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202003301436490_UsersLayoutDirectionMigration.cs" />
+    <Compile Include="Migrations\202003301436490_UsersLayoutDirectionMigration.Designer.cs">
+      <DependentUpon>202003301436490_UsersLayoutDirectionMigration.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
@@ -3780,15 +3777,12 @@
     <EmbeddedResource Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.resx">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.resx">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </EmbeddedResource>
-
-    <EmbeddedResource Include="Migrations\202003290823147_UsersLayoutDirectionMigration.resx">
-      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003301436490_UsersLayoutDirectionMigration.resx">
+      <DependentUpon>202003301436490_UsersLayoutDirectionMigration.cs</DependentUpon>
     </EmbeddedResource>
-
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
