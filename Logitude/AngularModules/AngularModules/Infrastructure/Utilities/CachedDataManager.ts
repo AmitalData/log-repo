@@ -565,7 +565,7 @@ export class CachedDataManager {
     public static RefreshObjectFieldsModifications() {
         console.log("calling refresh for object fields modifications");
         var generalDomainService: GeneralDomainService = new GeneralDomainService();
-        generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe(response => {
+        generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe((response: ServiceResponse) => {
 
             if (!response.HasError) {
                 window.ObjectFieldModifications = response.Result;

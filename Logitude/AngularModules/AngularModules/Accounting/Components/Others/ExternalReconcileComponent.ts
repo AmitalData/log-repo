@@ -318,8 +318,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe(response => {
-                    this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe(response => {
+                this.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => {
+                    this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
                         logitudeWindow.Height = 400;

@@ -43,7 +43,7 @@ export class CustomizationMainComponent {
  
     private allTablesItems: FieldsTranslations[];
     private LoadTableTranslations() {
-        this.myService.GetTranslationsByParam("T", "", SessionLocator.TenantPM.Language).subscribe(myResult => {
+        this.myService.GetTranslationsByParam("T", "", SessionLocator.TenantPM.Language).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 

@@ -1,38 +1,27 @@
-﻿
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-
-import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
-import {ObjectFieldValidationPM} from '../../EntityPMs/ObjectFieldValidationPM';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ObjectFieldValidationPM } from '../../EntityPMs/ObjectFieldValidationPM';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
 @Injectable()
-
 export class ObjectFieldPMExtendedService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ObjectFieldExtended';
     }
 
-
-
     GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityAutomationIds: string, tenant: number) {
+        var url = this._apiUrl + '/GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds/?' + 'entityAutomationIds=' + entityAutomationIds + '&tenant=' + tenant;
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds/?' + 'entityAutomationIds=' + entityAutomationIds + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-
-            var result = response.json();
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result: any = response;
             var entity: ObjectFieldPM;
             var objectFieldPMLists: ObjectFieldPM[];
             objectFieldPMLists = new Array<ObjectFieldPM>();
@@ -40,22 +29,15 @@ export class ObjectFieldPMExtendedService {
                 entity = this.MapJsonToEntityPM(item);
                 objectFieldPMLists.push(entity);
             });
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = objectFieldPMLists;
 
-            pmresponse.Result = objectFieldPMLists;
-            return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+            return serviceResponse;
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
-
-
- 
-
-
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ObjectFieldPM = null) {
-
-
         if (!entityPM) {
 
             entityPM = new ObjectFieldPM();
@@ -88,8 +70,6 @@ export class ObjectFieldPMExtendedService {
 
         this.MapObjectFieldValidations(entityPM, jsonPM, mapParent); // Call composition tables map methods
 
-
-
         if (mapParent) {
             entityPM.OldEntityPM = this.clone(entityPM);
 
@@ -108,6 +88,7 @@ export class ObjectFieldPMExtendedService {
             entityPM.OldEntityPM = null;
         }
         entityPM.IsDirty = false;
+
         return entityPM;
     }
 

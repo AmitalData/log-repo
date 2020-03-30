@@ -1,22 +1,20 @@
 declare var JSZip: any;
 declare var window: any;
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {Observable} from 'rxjs/Observable';
-import {Guid} from '../Utilities/Guid';
-import {InfraSettings} from '../Utilities/InfraSettings';
-import {SessionLocator} from '../Utilities/SessionLocator';
-import {ServiceHelper} from '../Utilities/ServiceHelper';
-import {WebWorkerService} from '../WebWorker/web-worker.service';
-import {IndexedDbService} from './IndexedDbService'; 
 import { LocalStorageManager } from '../Utilities/LocalStorageManager';
-import { forEach } from '@angular/router/src/utils/collection';
-import { Environment } from '../Locators/Environment';
+import { WebWorkerService } from '../WebWorker/web-worker.service';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { SessionLocator } from '../Utilities/SessionLocator';
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
-@Injectable()
+import { ServiceHelper } from '../Utilities/ServiceHelper';
+import { IndexedDbService } from './IndexedDbService';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
+@Injectable()
 export class EntityResourceService {
     private _apiUrl: string;
     public DbService: IndexedDbService;
@@ -24,10 +22,10 @@ export class EntityResourceService {
     public static ZipFilesDictionary: { [TableName: string]: Array<ZipFileDetails>; } = {};
     public static TablesLoadQueue: { [TableName: string]: any; } = {};
     public static ServerTablesUnzipQueue: { [TableName: string]: any; } = {};
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + "api/EntityResource";
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this.DbService = new IndexedDbService();//InfraSettings.IndexedDbService;//
         window.CurrentService = this;
     }
@@ -78,10 +76,10 @@ export class EntityResourceService {
                     //var observable = Observable.timer(1).flatMap(function test() {
                     //    var authHeader = new Headers();
                     //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-                    //    return this._http.get(this._apiUrl + '?objectTableName=' + objectTableName + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+                    //    return this._http.get(this._apiUrl + '?objectTableName=' + objectTableName + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-                    //        var filejson = response.json();
+                    //        var filejson = response;
                     //        if (filejson) {
                     //            var fileData = EntityResourceService.base64ToBufferConvertor(filejson);
 
@@ -95,10 +93,10 @@ export class EntityResourceService {
                     //    });
                     //}).share();
 
-                    var observable = this.GetResourcesFile(objectTableName, tenant).flatMap(response => {
+                    var observable = this.GetResourcesFile(objectTableName, tenant).flatMap((response: ServiceResponse) => {
 
 
-                        var filejson = response.json();
+                        var filejson = response.Result;
                         if (filejson) {
 
                             if (EntityResourceService.ServerTablesUnzipQueue[objectTableName]) {
@@ -165,6 +163,7 @@ export class EntityResourceService {
         }
 
     }
+
     private HandleError(error, objectTableName: string) {
         console.error("couldn't load entity resources for  " + objectTableName + " " + error);
     }
@@ -179,10 +178,11 @@ export class EntityResourceService {
         //   window.CachedTables.splice(0, 10);
         //  }
     }
+
     private GetResourcesFile(objectTableName: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '?objectTableName=' + objectTableName + '&tenant=' + tenant, { headers: authHeader }).share();
+        var url = this._apiUrl + '?objectTableName=' + objectTableName + '&tenant=' + tenant;
+
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).share();
     }
      
     public static base64ToBufferConvertor(str: string) {
@@ -352,6 +352,7 @@ export class EntityResourceService {
 
 
     }
+
     public UnZipFileAndAddToStorageUsingWebWorker(buffer: any, parentEntityName: string) {
 
         console.time("Unzipping Server File for: " + parentEntityName);
@@ -568,4 +569,3 @@ export class ZipWorkerMessage {
     public FileType: string;
     public FileData: any;
 }
-

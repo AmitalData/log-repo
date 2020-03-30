@@ -9,6 +9,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {AmitalGatewayUtil} from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 
 @Component({
     moduleId: module.id,
@@ -47,7 +48,7 @@ export class Export2ExcelControl {
 
         this.userid = args.userid;
         this.Filters = args.Filters;
-        myService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe(myResult => {
+        myService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe((myResult: any) => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;
@@ -89,7 +90,7 @@ export class Export2ExcelControl {
         this.busyExportingVisibile = true;
         this.btnSaveToFileVisibile = false;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.getExcelData(this.Filters, this.queryCode, this.tenant, this.userid, this.ObjectTableName).subscribe(myResult => {
+        myService.getExcelData(this.Filters, this.queryCode, this.tenant, this.userid, this.ObjectTableName).subscribe((myResult: any) => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;

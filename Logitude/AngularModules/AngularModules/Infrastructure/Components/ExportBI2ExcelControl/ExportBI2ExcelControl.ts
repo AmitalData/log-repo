@@ -126,7 +126,7 @@ export class ExportBI2ExcelControl {
                     this.WebFreightDomainService = new WebFreightDomainService();
                 }
 
-                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe(res => {
+                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe((res: ServiceResponse) => {
                     var pmResponse: ServiceResponse = res;
                     if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
                         if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.ExceptionMessage) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
