@@ -47,7 +47,7 @@ import { CustomsSettingListService } from '../../../Customs/Services/StandardLis
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
-import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
 
 @Component({
@@ -2027,6 +2027,52 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                     else if (this.ObjectTableName =="Customs.DeclarationReferantData")
                     {
+                        var customFile = "";
+                        if ($event != null)customFile = $event.rowData.CustomFileNo;
+                        let myViewModelName = "FieldTemplateComponent.ts-ShowCFIUFILEFromDeclarationReferantData";
+                        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+                            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                                .subscribe(
+                                    (mess: UnifreightMessageM) => {
+                                        var IsMatchUnifreightCallbackCommand = (
+                                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                                            mess.LogitudeEntityNumber == selectedEntityId &&
+                                            mess.LogitudeViewModel == myViewModelName);
+                                        if (IsMatchUnifreightCallbackCommand) {
+                                            sub.unsubscribe();
+                                            SessionLocator.SelectedSession.StopBusyIndicator();
+                                            let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                                            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                                            this.isEditControlOpened = false;
+                                            this.OnBackFromEdit(selectedEntityId, $event)
+                                            //this.CurrentSession.PseventRowSelectEvent.emit({ Name: 'btnComponentComputingPartnerEdit', Value: this.rowData, RowIndex: this.AdditionalData.rowIndex });
+
+                                            //alert("reload");
+                                        }
+                                    }
+                                );
+
+                            SessionLocator.SelectedSession.StartBusyIndicator("");
+                            var unifreightMessageM =
+                                AmitalGatewayUtil.Instance.
+                                    DeclarationMessaging.GetMessage(customFile, selectedEntityId,
+                                        myViewModelName);
+
+
+                            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                                "ScriptableGatewayUtil.ShowCFIUFILEFromDeclarationReferantDataList",
+                                "CFIHMAIN.LogitudeTask",
+                                "ShowCFIUFILEFromDeclarationReferantData",
+                                unifreightMessageM,
+                                " הצגת מסך :הזנת תיק כללי עמילות מכס");
+
+                        }
+                        else {
+                            alert("ShowCFIUFILEFromDeclarationReferantData");
+                        }
+
+                        /*
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
@@ -2045,8 +2091,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 //}
 
                             });
+                            */
                     }
-
+                    
                     else {
 
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
