@@ -163,21 +163,37 @@ export class DeclarationReferantDataFiltersMenuComponent
     
     SelectedValueChangedEmitUser() {
         var RemoveFilter = false;
-        if (this._LOVListUsers.length == 0) {
-            this.apiQueryFilters.removeAdditionalFilter("ReferentUserId");
-            RemoveFilter = true;
-        } else {
-            if (this._LOVListUsers.length > 0) {
-                var UsersListString = "";
-                if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-                    this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ReferentUserId");
-                }
-                this._LOVListUsers.forEach(item => { UsersListString += item["Id"] + ","; });//Id: "1-3697"
-                UsersListString = UsersListString.slice(0, -1); // trim last comma
-                this.apiQueryFilters.addAdditionalFilter("ReferentUserId", UsersListString, null, null, "InList", false, false, false, "string");
-            }
+        //if (this.apiQueryFilters.AdditionalFilters.length > 0) {
+        //    this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ReferentUserId");
+        //}
+
+        //this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
+        //if (itemValue == "All") {
+        //    RemoveFilter = true;
+        //}
+        //if (this._LOVListUsers.length == 0) {
+        //    this.apiQueryFilters.removeAdditionalFilter("ReferentUserId");
+        //    RemoveFilter = true;
+        //    this.SelectedValueChanged.emit({ Filters: null, RemoveFilter: RemoveFilter });
+
+        //} else {
+        if (this.apiQueryFilters.AdditionalFilters.length > 0) {
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ReferentUserId");
         }
+        var UsersListString = "";
+        if (this._LOVListUsers.length > 0) {
+
+            this._LOVListUsers.forEach(item => { UsersListString += item["Id"] + ","; });//Id: "1-3697"
+            UsersListString = UsersListString.slice(0, -1); // trim last comma
+
+        } else {
+            UsersListString = "HowCare"
+            RemoveFilter = true;
+        }
+        this.apiQueryFilters.addAdditionalFilter("ReferentUserId", UsersListString, null, null, "InList", false, false, false, "string", this._LOVListUsers.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+        //}
+
     }
     SelectedValueChangedEmitDepartment() {
         var RemoveFilter = false;
