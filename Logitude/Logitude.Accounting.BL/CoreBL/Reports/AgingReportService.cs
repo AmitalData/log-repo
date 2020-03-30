@@ -500,8 +500,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var currencies = _CurrencyQuery.GetCurrenciesByTenantPM(_Param.Tenant);
                 List<PeriodMExtended> namedPeriods = (from line in reportList
                                                           //join account in accountsList on line.AccountId equals account.Id
-                                                      join account in periodMExtendeds on line.AccountId equals account.AccountId
-                                                      join currency in currencies on line.CurrencyId equals currency.Id
+                                                      join account in periodMExtendeds
+                                                        on line.AccountId equals account.AccountId into accJoin
+                                                      from account in accJoin.DefaultIfEmpty()
+
+                                                      join currency in currencies
+                                                        on line.CurrencyId equals currency.Id into currencyJoin
+                                                      from currency in currencyJoin.DefaultIfEmpty()
+
                                                       select new PeriodMExtended()
                                                       {
                                                           OrderDate = line.OrderDate,
