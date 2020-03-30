@@ -2,7 +2,8 @@
 <Table
   Name="SATInvoiceStatus"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Code"
     Type="varchar"

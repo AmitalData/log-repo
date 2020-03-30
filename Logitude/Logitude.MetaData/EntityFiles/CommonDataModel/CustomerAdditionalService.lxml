@@ -37,7 +37,9 @@
   IsLookUp="false"
   IsEditable="true"
   NoPMController="true"
-  ClientModuleName="&quot;Common&quot;">
+  ClientModuleName="&quot;Common&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;68a2012d-2736-4fc6-9ffd-ad8a6de75a6e&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -202,7 +204,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="Customer"
+    NavigationPropertyName="Customer" />
   <field
     Id="&quot;be1b44f7-cbd3-45a5-81bb-0dc4013515af&quot;"
     FieldName="&quot;AdditionalServiceId&quot;"
@@ -266,7 +271,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="AdditionalService"
+    NavigationPropertyName="AdditionalService" />
   <field
     Id="&quot;98833cdd-7753-42f1-8944-699f591f3324&quot;"
     FieldName="&quot;AdditionalServiceName&quot;"

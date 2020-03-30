@@ -28,7 +28,7 @@ namespace Logitude.IntegrationTest.Shipment
         {
             int quantity = 5;
             int unitPrice = 5;
-            await PostShipment("D", "E", "A");
+            //await PostShipment("D", "E", "A");
             shipmentPM = await GetShipment(ShipmentVariables.ShipmentId);
             ShipmentPM entityPM = UpdateReceivables(shipmentPM, quantity, unitPrice);
             await PutShipment(entityPM);

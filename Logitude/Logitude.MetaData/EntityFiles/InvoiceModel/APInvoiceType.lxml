@@ -43,7 +43,9 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;80b54eed-eb2a-4fa8-a8a4-ad23ef21aab7&quot;"
     FieldName="&quot;Code&quot;"
@@ -110,7 +112,7 @@
     ObjectTableName="&quot;APInvoiceType&quot;"
     FieldsDataType="&quot;Text&quot;"
     DataTypeCode="&quot;Text&quot;"
-    MaxLength="20"
+    MaxLength="40"
     IsRequiered="true"
     IsCustom="false"
     MinLength="0"
@@ -167,7 +169,7 @@
     Id="&quot;48bad0be-a014-4f67-bd48-9a64f97d97a9&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;APInvoiceType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

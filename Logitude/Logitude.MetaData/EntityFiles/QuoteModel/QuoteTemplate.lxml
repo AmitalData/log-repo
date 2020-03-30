@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;QuoteTemplate,QuoteTemplates,Simplog.QuoteLib.NewQuoteTemplateCommand,Id,&quot;">
+  SearchFields="&quot;QuoteTemplate,QuoteTemplates,Simplog.QuoteLib.NewQuoteTemplateCommand,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;2ad50c39-6aa0-48d0-9df2-96516d5a4621&quot;"
     FieldName="&quot;Id&quot;"
@@ -71,7 +73,7 @@
     ObjectTableName="&quot;QuoteTemplate&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -256,7 +258,7 @@
     ListFieldLable="&quot;HeaderDocIdListLable&quot;"
     ListLableDefaultText="&quot;HeaderDocId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -278,7 +280,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Document"
+    NavigationPropertyName="HeaderDoc" />
   <field
     Id="&quot;7f45148e-d8b7-4bba-8b73-83e7d5f5dce7&quot;"
     FieldName="&quot;FooterDocId&quot;"
@@ -330,7 +334,7 @@
     ListFieldLable="&quot;FooterDocIdListLable&quot;"
     ListLableDefaultText="&quot;FooterDocId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -352,7 +356,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Document"
+    NavigationPropertyName="FooterDoc" />
   <field
     Id="&quot;ef054b66-01ec-495f-8c41-f1f82027cc3c&quot;"
     FieldName="&quot;QuoteTemplateSettingId&quot;"
@@ -404,7 +410,7 @@
     ListFieldLable="&quot;QuoteTemplateSettingIdListLable&quot;"
     ListLableDefaultText="&quot;QuoteTemplateSettingId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -426,7 +432,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="QuoteTemplateSetting"
+    NavigationPropertyName="QuoteTemplateSetting" />
   <field
     Id="&quot;2daf531c-741c-4dd2-a89f-2c6f2acdda23&quot;"
     FieldName="&quot;Name&quot;"
@@ -435,7 +443,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;QuoteTemplate&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="60"
     IsRequired="true"
@@ -624,7 +632,7 @@
     FullFieldLable="&quot;OriginalQuoteTemplateId&quot;"
     DefaultText="&quot;Original Quote Template Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -646,7 +654,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="QuoteTemplate"
+    NavigationPropertyName="OriginalQuoteTemplate" />
   <field
     Id="&quot;012d2081-82c0-4ae4-8dda-6f745d3bccfb&quot;"
     FieldName="&quot;CreateDate&quot;"
@@ -840,7 +850,7 @@
     FullFieldLable="&quot;CreatedByUserId&quot;"
     DefaultText="&quot;Created By UserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -862,7 +872,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser" />
   <field
     Id="&quot;a3c42c87-e4d3-48e0-94e6-20b85eb6a7b4&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -912,7 +924,7 @@
     FullFieldLable="&quot;UpdatedByUserId&quot;"
     DefaultText="&quot;Updated By UserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -934,7 +946,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;cc4781ec-cffd-401e-915d-f7e5c9754dbc&quot;"
     FieldName="&quot;SearchFields&quot;"
@@ -1059,7 +1073,7 @@
     ListFieldLable="&quot;TemplateTypeCodeListLable&quot;"
     ListLableDefaultText="&quot;TemplateTypeCode&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1081,7 +1095,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="QuoteType"
+    NavigationPropertyName="QuoteType" />
   <field
     Id="&quot;7acb6384-939c-497e-8bda-8346fe5ed4a1&quot;"
     FieldName="&quot;TemplateTypeName&quot;"
@@ -1167,7 +1183,7 @@
     ObjectTableName="&quot;QuoteTemplate&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="100"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1317,7 +1333,7 @@
     ObjectTableName="&quot;QuoteTemplate&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

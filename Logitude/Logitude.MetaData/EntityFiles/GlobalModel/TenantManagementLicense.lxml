@@ -56,7 +56,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;TenantManagementLicense,TenantManagementLicenses,,Id,&quot;">
+  SearchFields="&quot;TenantManagementLicense,TenantManagementLicenses,,Id,&quot;"
+  DxmlDatabaseTypeCode="Global"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;805e0cc1-7c62-4412-b0db-8091bc44852d&quot;"
     FieldName="&quot;Id&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;TenantManagementLicense&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -285,8 +287,8 @@
     ObjectTableName="&quot;TenantManagementLicense&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="1"
-    IsRequired="true"
+    MaxLength="0"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"

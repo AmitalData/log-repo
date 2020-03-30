@@ -2,7 +2,8 @@
 <Table
   Name="Shipments"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -136,6 +137,12 @@
   </Column>
   <Column
     Name="GrossWeightInKG"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GrossWeightPerStorageDays"
     Type="float">
     <Constraints
       Nullable="true" />
@@ -552,13 +559,13 @@
     Name="OpenReceivablesInLocalCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="AccountedReceivablesInLocalCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ProfitInLocalCurrency"
@@ -1973,7 +1980,7 @@
   </Column>
   <Column
     Name="SecurityKey"
-    Type="nvarchar"
+    Type="varchar"
     Size="40">
     <Constraints
       Nullable="true" />
@@ -2507,6 +2514,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ENSNumber"
     Type="varchar"
     Size="25">
@@ -2889,6 +2902,19 @@
   <Column
     Name="FirstARInvoiceApprovalDate"
     Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseStorageFreeDays"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SLAC"
+    Type="varchar"
+    Size="5">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3603,6 +3629,8 @@
     Columns="QuoteId" />
   <Index
     Columns="Tenant,ShipmentNumber" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
 </Table>

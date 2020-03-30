@@ -54,7 +54,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WarehouseViewsService.cs" />
+    <Compile Include="Service\GeneralWarehouseViewsService.cs" />
+    <Compile Include="Service\WarehouseViewsService.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -83,6 +84,7 @@
   <ItemGroup>
     <Content Include="WarehouseViewsScript\DIM_Branches.sql" />
     <Content Include="WarehouseViewsScript\DIM_Currencies.sql" />
+    <Content Include="WarehouseViewsScript\DIM_CustomPickLists.sql" />
     <Content Include="WarehouseViewsScript\DIM_Dates.sql" />
     <Content Include="WarehouseViewsScript\DIM_Departments.sql" />
     <Content Include="WarehouseViewsScript\DIM_Directions.sql" />

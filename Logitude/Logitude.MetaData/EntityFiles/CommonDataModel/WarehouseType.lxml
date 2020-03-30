@@ -43,7 +43,9 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8332de36-009b-4b45-a2d0-90600236b543&quot;"
     FieldName="&quot;Code&quot;"
@@ -174,7 +176,7 @@
     Id="&quot;200cd875-9bdd-44c2-8bd3-e68360379f7d&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;WarehouseType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

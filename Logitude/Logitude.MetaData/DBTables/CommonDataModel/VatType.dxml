@@ -2,7 +2,8 @@
 <Table
   Name="VatTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -110,6 +111,12 @@
     Type="float">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsRegionalTax"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <UniqueConstraint
     Columns="Tenant,Code" />

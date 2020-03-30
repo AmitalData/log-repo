@@ -58,7 +58,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;CustomerProductLocation,CustomerProductLocations,,CustomerId,CustomerId&quot;">
+  SearchFields="&quot;CustomerProductLocation,CustomerProductLocations,,CustomerId,CustomerId&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;93e8880c-7d5e-40d4-b3d6-7a1e180d4e46&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -184,7 +186,7 @@
     FullFieldLable="&quot;CustomerId&quot;"
     DefaultText="&quot;Customer&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -206,7 +208,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Customer"
+    NavigationPropertyName="Customer" />
   <field
     Id="&quot;aa4e90c6-4101-4910-9be0-4ddd521cb38f&quot;"
     FieldName="&quot;ProductTypeCode&quot;"
@@ -259,7 +263,7 @@
     FullFieldLable="&quot;ProductTypeCode&quot;"
     DefaultText="&quot;Product Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -281,7 +285,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ProductType"
+    NavigationPropertyName="ProductType" />
   <field
     Id="&quot;bd40e284-2c86-4c6b-8582-425005c54ae9&quot;"
     FieldName="&quot;CountryId&quot;"
@@ -334,7 +340,7 @@
     FullFieldLable="&quot;CountryId&quot;"
     DefaultText="&quot;Country&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -356,7 +362,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Country"
+    NavigationPropertyName="Country" />
   <field
     Id="&quot;93117a37-f33f-47d3-8ffc-4c9a75fb65cf&quot;"
     FieldName="&quot;PotentialChargeableWeight&quot;"
@@ -400,7 +408,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -475,7 +483,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -550,7 +558,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -625,7 +633,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -850,7 +858,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"
@@ -923,7 +931,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"

@@ -58,7 +58,9 @@
   SearchFields="&quot;CountryCity,CountryCities,,Id,&quot;"
   DescriptionTextCodeId="&quot;1-69449&quot;"
   ClientModuleName="&quot;Common&quot;"
-  DescriptionDefaultText="&quot;Manage the cities to be used in addresses.&quot;">
+  DescriptionDefaultText="&quot;Manage the cities to be used in addresses.&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;9042039e-e55c-4188-b5d6-bb6f1be91c89&quot;"
     FieldName="&quot;Id&quot;"
@@ -69,7 +71,7 @@
     ObjectTableName="&quot;CountryCity&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="false"
@@ -466,7 +468,7 @@
     FullFieldLable="&quot;CountryId&quot;"
     DefaultText="&quot;Country&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     IsComposition="false"
     IsMaxLength="false"
@@ -488,7 +490,9 @@
     Code="&quot;CountryId&quot;"
     CopyToDW="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ForeignEntity="Country"
+    NavigationPropertyName="Country" />
   <field
     Id="&quot;98ef1561-136d-44fe-b9fd-3b9d5c14ea32&quot;"
     FieldName="&quot;InActive&quot;"
@@ -499,7 +503,7 @@
     ObjectTableName="&quot;CountryCity&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="true"
@@ -572,7 +576,7 @@
     ObjectTableName="&quot;CountryCity&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="true"
@@ -717,7 +721,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;CountryCity&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
@@ -787,7 +791,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;CountryCity&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
@@ -1183,7 +1187,7 @@
     FullFieldLable="&quot;StateId&quot;"
     DefaultText="&quot;State&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1203,7 +1207,9 @@
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    ForeignEntity="State"
+    NavigationPropertyName="State" />
   <field
     Id="&quot;043258b2-7282-49f9-847b-fea84b1a66df&quot;"
     FieldName="&quot;StateEnglishName&quot;"

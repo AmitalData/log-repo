@@ -32,7 +32,9 @@
   Code="&quot;4979&quot;"
   Name="&quot;EmployeeGroupLine Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;58a270c9-769d-4427-a6e0-6ad6413f0ca4&quot;"
     FieldName="&quot;Id&quot;"

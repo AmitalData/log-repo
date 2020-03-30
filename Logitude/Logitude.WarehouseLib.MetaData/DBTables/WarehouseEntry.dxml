@@ -2,7 +2,8 @@
 <Table
   Name="WarehouseEntries"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Warehouse">
   <Column
     Name="Id"
     Type="varchar"

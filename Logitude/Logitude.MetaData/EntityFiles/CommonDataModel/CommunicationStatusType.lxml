@@ -59,7 +59,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;CommunicationStatusType,CommunicationStatusTypes,,Code,&quot;">
+  SearchFields="&quot;CommunicationStatusType,CommunicationStatusTypes,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;5b03cc8f-56e4-4c31-8c8c-864a233adb39&quot;"
     FieldName="&quot;Code&quot;"
@@ -70,7 +72,7 @@
     ObjectTableName="&quot;CommunicationStatusType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="4"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -143,7 +145,7 @@
     ObjectTableName="&quot;CommunicationStatusType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="20"
+    MaxLength="40"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -217,7 +219,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;CommunicationStatusType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"
