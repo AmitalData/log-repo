@@ -28,6 +28,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
 import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     selector: 'LogBoxDocuments',
@@ -130,7 +131,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     this.ShipmentPM = myResult.Result;
                     this.ShipmentTypeId = myResult.Result.ShipmentTypeId;
                     this.DocsSentToAgent = myResult.Result.DocsSentToAgent;
-                    this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
+                    this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
                         if (Status.Result && (myResult.Result.StatusId == Status.Result.Id)) {
                             this.DisableAddDocumentButton = true;
                         }
@@ -968,7 +969,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     this._documentsFilingExtendedPMService.ShareDocumentsWithAgent(SharedDocsIds).subscribe((myResult:any) => {
                         if (!myResult.HasError) {
                             this.DocsSentToAgent = true;
-                            this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
+                            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
                                 if (Status.Result) {
                                     this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe(myShipmentResult => {
                                         if (!myShipmentResult.HasError) {

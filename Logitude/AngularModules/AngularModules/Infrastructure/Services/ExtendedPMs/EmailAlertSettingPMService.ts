@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { ServiceHelper } from '../../Utilities/ServiceHelper';
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { EmailAlertSettingPM } from '../../EntityPMs/EmailAlertSettingPM';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class EmailAlertSettingPMService {
@@ -16,49 +15,32 @@ export class EmailAlertSettingPMService {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/EmailAlertSetting';
     }
 
-    getAllEmailAlerts(tenant: number): Observable<ServiceResponse> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
-
+    getAllEmailAlerts(tenant: number) {
         var url = this.apiUrl + '/GetEmailAlertSettingsByTenant?' + 'tenant=' + tenant;
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
 
-        return this.httpClient.get(url, httpOptions).pipe(
-            map(response => {
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                serviceResponse.Result = response;
+            serviceResponse.Result = response;
 
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
+            return serviceResponse;
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 
-    updateAllAlerts(allAlerts: EmailAlertSettingPM[], tenant: number): Observable<ServiceResponse> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
-
+    updateAllAlerts(allAlerts: EmailAlertSettingPM[], tenant: number) {
         var url = this.apiUrl + "?tenant=" + tenant;
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-
         var env: EmailAlertSettingsEnvelope = new EmailAlertSettingsEnvelope();
+
         env.EmailAlerts = [];
         env.EmailAlerts = allAlerts;
         var postString: string;
         postString = JSON.stringify(env);
         console.log(postString);
 
-        return this.httpClient.put(url, postString, httpOptions).pipe(
-            map(response => {
+        return this.httpClient.put(url, postString, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 serviceResponse.Result = response;
 
                 return serviceResponse;

@@ -1,30 +1,25 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {ApiQueryFilters} from '../../DataContracts/ApiQueryFilters';
+
 
 export class FFRWebService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FFRWebService';
     }
 
     Send(myBookingId: string, myTenant: number, myRecipient: string, isCancellationSent: boolean) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetMessageResult?myBookingId=' + myBookingId + '&myTenant=' + myTenant + '&myRecipient=' + myRecipient + '&isCancellationSent=' + isCancellationSent;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-
-                var myJsonResult = response.json();
-
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var mappedResult: FFRResult = new FFRResult();
 
                 if (myJsonResult) {
@@ -38,9 +33,10 @@ export class FFRWebService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
+
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 }

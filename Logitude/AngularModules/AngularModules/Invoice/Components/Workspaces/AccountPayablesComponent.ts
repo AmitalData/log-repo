@@ -69,7 +69,7 @@ export class AccountPayablesComponent {
     }
 
     LoadBarQueries(months: number, days: number, index: number, currency: number) {
-        this.myChartsService.GetMoneyOutStatusForTenant(months, days, this.TenantPM.Id, index, currency).subscribe(myResult => {
+        this.myChartsService.GetMoneyOutStatusForTenant(months, days, this.TenantPM.Id, index, currency).subscribe((myResult: ServiceResponse) => {
             this.FillBarsMoney(myResult);
         });
     }

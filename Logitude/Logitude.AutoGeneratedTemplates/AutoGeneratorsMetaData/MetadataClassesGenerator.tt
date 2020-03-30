@@ -203,7 +203,7 @@ namespace <#= UpdateClassnamespacestring #>
 	             <#+
 	  foreach (XAttribute p in entity.Attributes())
             {
-				if(p.Name != "Id" && p.Name != "ParentTableName" && p.Name != "NoViewController" && p.Name != "NoPMController" && p.Name != "DxmlDatabaseTypeCode" && p.Name != "DxmlDatabaseSchemaCode"
+				if(p.Name != "Id" && p.Name != "ParentTableName" && p.Name != "NoViewController" && p.Name != "NoPMController" && p.Name != "DxmlDatabaseTypeCode" && p.Name != "DxmlDatabaseSchemaCode" && p.Name != "DBTableShortName"
 					&& p.Name != "HasCompactSearch"  && p.Name != "ApplyDefaultValues"  && p.Name != "HasCustomValidator" && p.Name != "ApplyOnPropertyChangedCode" && p.Name != "HasApiHelper" && p.Name != "SortingByDirection"
 					  && p.Name != "DescriptionTextCodeId" && p.Name != "DownloadToExcelFeatureCode"
 					  && p.Name != "Code1"  && p.Name != "Name1" && p.Name != "Code2"  && p.Name != "Name2"
@@ -598,7 +598,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 					&& p.Name != "FullNameTextCodeId"
 					&& p.Name != "HelpTextCodeId"
 					&& p.Name != "ListTextCodeId" && p.Name != "LookUpTableId"
-                 && p.Name != "ModelName"
+                 && p.Name != "ModelName" && p.Name != "DontBuildRelationOnDB" && p.Name != "ShortName"
 					
 
 )

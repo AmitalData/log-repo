@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 
@@ -137,7 +137,7 @@ export class TipsComponent implements OnInit {
                 tipVisibility.IsVisible = this.isTipVisible;
                 window.TipsVisibilities = window.TipsVisibilities.filter(d=> d.TipCode != this.Tip.Code && d.UserId != SessionInfo.LoggedUserId);
                 window.TipsVisibilities.push(tipVisibility);
-                this._tipsVisibilityService.update(tipVisibility).subscribe(res => {
+                this._tipsVisibilityService.update(tipVisibility).subscribe((res: ServiceResponse) => {
                     this.IsStartSave = false;
                 });
                 // Update
@@ -148,8 +148,8 @@ export class TipsComponent implements OnInit {
                 tipVisibility.TipCode = this.Tip.Code;
                 tipVisibility.UserId = SessionInfo.LoggedUserId;
                 tipVisibility.Tenant = SessionInfo.LoggedUserTenant;
-        
-                this._tipsVisibilityService.insert(tipVisibility).subscribe(res => {
+
+                this._tipsVisibilityService.insert(tipVisibility).subscribe((res: ServiceResponse) => {
                     var pmResponse: ServiceResponse = res;
                     this.IsStartSave = false;
                     if (!pmResponse.HasError) {
