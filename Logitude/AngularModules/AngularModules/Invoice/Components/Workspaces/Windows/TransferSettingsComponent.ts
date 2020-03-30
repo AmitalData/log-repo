@@ -173,8 +173,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             this.UIProperties.SetEnabled("IsAPInvoicesTransferEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsARPaymentsTransferEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsAPPaymentsTransferEnabled", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("TransferToFTPActivated", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("TransferFTPDetailId", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("TransferToFTPActivated", this.ObjectTableName, false);            
         }
 
         else {
@@ -202,6 +201,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         this.UIProperties.SetEnabled("ARInvoiceTransferStartDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("APInvoiceTransferStartDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("TransferToDropboxActivated", this.ObjectTableName, this.IsDropBoxConnected);
+        this.UIProperties.SetEnabled("TransferFTPDetailHost", this.ObjectTableName, false);
 
         var isReceivableVATableTempCardRequired = false;
         var isReceivableVATExemptTempCardRequired = false;
