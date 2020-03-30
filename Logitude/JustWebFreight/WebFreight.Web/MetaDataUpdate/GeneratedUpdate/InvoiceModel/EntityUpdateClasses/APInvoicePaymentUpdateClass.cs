@@ -83,7 +83,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             {
 			
 	             				    ObjectTableName =  "APInvoicePayment",
-			      				    DBTableName =  "APInvoicePayment",
+			      				    DBTableName =  "APInvoicePayments",
 			      				    ObjectTableSingular =  "A/P Invoice Payment",
 			      				    ObjectTablePlural =  "A/P Invoice Payments",
 			      				    DefaultText =  "A/P Invoice Payment",
@@ -435,7 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APInvoicePayment",
 					  						FieldsDataType =  "Double",
 					  						Code =  "ExchangeRate",
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -491,7 +491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APInvoicePayment",
 					  						FieldsDataType =  "Double",
 					  						Code =  "PaymentAmount",
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
