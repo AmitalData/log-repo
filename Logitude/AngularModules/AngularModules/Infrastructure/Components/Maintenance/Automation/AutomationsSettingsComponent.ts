@@ -120,7 +120,7 @@ export class AutomationsSettingsComponent implements OnInit {
         });
 
         if (entityObjectTableIds) {
-            this.objectFieldPMExtendedService.GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityObjectTableIds, SessionLocator.Tenant).subscribe(res => {
+            this.objectFieldPMExtendedService.GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityObjectTableIds, SessionLocator.Tenant).subscribe((res: ServiceResponse) => {
                 var pmResponse: ServiceResponse = res;
                 if (pmResponse.Result) {
                     this.EntityObjectAutomationFieldLists = pmResponse.Result;//pmResponse.Result.filter(d => entityObjectTableIds.split(',').indexOf(d.ObjectTableId) != -1);

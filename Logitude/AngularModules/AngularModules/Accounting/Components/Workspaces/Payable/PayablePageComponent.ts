@@ -154,7 +154,7 @@ export class PayablePageComponent {
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Payables");
             listArgs.Perspective = "GLAccountPayables";
             listArgs.IgnoreSelectedPerspective = true;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -263,7 +263,7 @@ export class PayablePageComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Payables");
             listArgs.DisplayTitle = displayTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

@@ -108,7 +108,7 @@ export class NewBIReport extends BaseComponent {
 
     FillFactTableNamesList() {
         this.SelectdFactTableName = "";
-        this.DWObjectTableExtendedListService.GetFactTablesNames().subscribe(response => {
+        this.DWObjectTableExtendedListService.GetFactTablesNames().subscribe((response: ServiceResponse) => {
             var factTablesNames: string[] = response.Result;
             factTablesNames.forEach((factTable: string) => {
                 switch (factTable) {
@@ -356,8 +356,8 @@ export class NewBIReport extends BaseComponent {
             return;
         }
             
-        
-        this.BIReportExtendedPMService.DoesReportExist(this.EntityPM.Name, this.EntityPM.BIReportFolderId).subscribe(response => {
+
+        this.BIReportExtendedPMService.DoesReportExist(this.EntityPM.Name, this.EntityPM.BIReportFolderId).subscribe((response: ServiceResponse) => {
             if (response.Result == true) {
                 this.ValidationErrorsList.push("Please use other name for your report so it is different from others");
             }

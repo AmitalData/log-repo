@@ -215,9 +215,9 @@ export class HomeComponent implements OnDestroy{
             this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
         }
         //this.loginService.CurrentTenant = SessionLocator.TenantPM.Id;
-        this.loginService.CheckTenantMangmnt(SessionLocator.LoggedUserId).subscribe(myResult2 => {
+        this.loginService.CheckTenantMangmnt(SessionLocator.LoggedUserId).subscribe((myResult2: any) => {
             SessionLocator.BlockType = null;
-            var tt: TenantUserDataClass = myResult2;
+            var tt: any = myResult2;
             this.TrialMessage = "";
             this.messageWindow.Close();
             var user: UserPM = SessionLocator.LoggedUserPM;

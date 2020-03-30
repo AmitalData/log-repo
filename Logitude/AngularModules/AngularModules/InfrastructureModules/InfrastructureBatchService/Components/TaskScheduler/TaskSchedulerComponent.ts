@@ -62,7 +62,7 @@ export class TaskSchedulerComponent implements OnInit {
     public GetTasksSchedular() {
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this.infraDomainService.GetAllTasksSchedulerPMs(this.SchedulerType).subscribe(myResult => {
+        this.infraDomainService.GetAllTasksSchedulerPMs(this.SchedulerType).subscribe((myResult: ServiceResponse) => {
             if (myResult == null) {
                 this.ItemsSource = [];
                 this.FixedItemsSource = [];

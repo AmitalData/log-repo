@@ -609,7 +609,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
         var service = new ChartsService();
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.EntityPM.Id).subscribe(myResult => {
+                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
                     this.LineData = myResult;
                     this.FillLineQueries();
                 });
@@ -618,7 +618,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
 
         else {
             var days = this.ComputeDays();
-            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, this.EntityPM.Id).subscribe(myResult => {
+            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
                 this.LineData = myResult;
                 this.FillLineQueries();
             });

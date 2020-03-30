@@ -43,7 +43,7 @@ export class AirlineSurchargeTabComponent extends BaseComponent implements OnIni
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe((response: any) => {
             this.EntityPM = entityArgs.EntityPM;
             this.TenantPM = SessionLocator.TenantPM;
             this.setLabels();
@@ -199,8 +199,8 @@ export class AirlineSurchargeTabComponent extends BaseComponent implements OnIni
     //TarrifHeader.O.EditSurchargeTarrif
 
     private RunNewWindow(itemComponent: TariffHeaderItem, windowTitle: string) {
-        this._entityResourceService.getEntityResourceByTableName("TarrifCharge", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TarrifCharge", 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe((response: any) => {
                 this.Clone(itemComponent);
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Title = windowTitle;

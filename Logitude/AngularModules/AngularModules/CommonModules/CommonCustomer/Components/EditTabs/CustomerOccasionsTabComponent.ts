@@ -21,7 +21,7 @@ export class CustomerOccasionsTabComponent {
 
         this.EntityPM = entityArgs.EntityPM;
 
-        entityResourceService.getEntityResourceByTableName("Occasion").subscribe(response => {
+        entityResourceService.getEntityResourceByTableName("Occasion").subscribe((response: any) => {
             this.IsResourcesReady = true;
             this.LoadOccasions();            
         });  

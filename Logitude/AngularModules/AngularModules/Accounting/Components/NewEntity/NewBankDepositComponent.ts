@@ -40,7 +40,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     constructor() {
         super();
 
-        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe(res => { });
+        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => { });
 
         this.EntityPM = new BankDepositPM();
         this.EntityPM.AccountingDate = new Date();

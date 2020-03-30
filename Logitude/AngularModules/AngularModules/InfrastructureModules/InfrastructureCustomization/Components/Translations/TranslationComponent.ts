@@ -29,7 +29,7 @@ export class TranslationComponent extends BaseComponent  {
     public Count: number;
 
     private LoadTextCodeTypes() {
-        this.myService.GetTextCodeTypes().subscribe(myResult => {
+        this.myService.GetTextCodeTypes().subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -89,7 +89,7 @@ export class TranslationComponent extends BaseComponent  {
             this.isLoading = true;
             this.CurrentSession.StartBusyIndicatorLoading();
 
-            this.myService.LoadAllFieldsTranslations(SessionLocator.TenantPM.Language, this.ObjectTableId, code).subscribe(myResult => {
+            this.myService.LoadAllFieldsTranslations(SessionLocator.TenantPM.Language, this.ObjectTableId, code).subscribe((myResult: ServiceResponse) => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     this.loadedTranslations = myResponse.Result;

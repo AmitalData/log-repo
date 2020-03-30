@@ -210,7 +210,7 @@ export class BookingsComponent {
             listArgs.ObjectTableName = "Booking";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = "Operations";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -459,7 +459,7 @@ export class BookingsComponent {
         logWindow.Height = 530;
         logWindow.WindowArgs = args;
         logWindow.Title = "Flight Schedules / Availability";
-        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe((response: any) => {
             logWindow.Show('./CommonModules/CommonFlightsSchedules/Components/FlightsSchedules/FlightsSchedulesComponent');
         });
     }
