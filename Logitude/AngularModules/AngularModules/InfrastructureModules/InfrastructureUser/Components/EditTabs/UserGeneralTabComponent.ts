@@ -30,9 +30,20 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.BuildTechnologyList();
         this.SetUIProperties();
         this.Listen();
-        this.CheckSecurityPolicySettingToShowPhone();        
+        this.CheckSecurityPolicySettingToShowPhone();
+        this.BuildLayoutDirectionList();
+        this.SetSelectedDirection();
+      
     }
-
+    private SetSelectedDirection() {
+        if (this.EntityPM.LayoutDirection == 'ltr') {
+            this.SelectedDirection = this.LayoutDirections[0];
+        }
+        else if (this.EntityPM.LayoutDirection == 'rtl') {
+            this.SelectedDirection = this.LayoutDirections[1];
+        }
+        else this.SelectedDirection = this.LayoutDirections[2];
+    }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
@@ -60,7 +71,31 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
+    public LayoutDirections: CodeNameClass[];
+    BuildLayoutDirectionList() {
 
+        this.LayoutDirections = [];
+        this.LayoutDirections.push(new CodeNameClass("1", "LTR"));
+        this.LayoutDirections.push(new CodeNameClass("2", "RTL"));
+        this.LayoutDirections.push(new CodeNameClass("3", "Not set"));
+
+    }
+
+    private selectedDirection: CodeNameClass;
+    get SelectedDirection() { return this.selectedDirection; }
+    set SelectedDirection(value: CodeNameClass) {
+        if (this.selectedDirection != value) {
+            this.selectedDirection = value;
+            if (value.Code == "3") {
+                if (!AppTool.IsNullOrEmpty(this.EntityPM.LayoutDirection)) {
+                    this.EntityPM.LayoutDirection = null;
+                }
+            } else if ( this.EntityPM.LayoutDirection != value.Name.toLowerCase()) {
+                this.EntityPM.LayoutDirection = value.Name.toLowerCase();
+            }
+
+        }
+    }
     public SelectedTechnology: CodeNameClass;
     BuildTechnologyList() {
         this.TechnologyList = [];
@@ -113,11 +148,14 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public IsLicencedUserVisible: boolean = false;
     public IsShowContactInMobileVisiable: boolean = false;
     public IsAdditionalPackagesOnlyVisible: boolean = false;
+    public IsLayoutDirectionVisibile: boolean = false;
     SetUIProperties() {
         if (FeatureLocator.HasFeaturePermession("User", "PERSONALID")) {
             this.IsPersonalIdVisible = true;
         }
-
+        if (FeatureLocator.HasFeaturePermession("User", "LYDR")) {
+            this.IsLayoutDirectionVisibile = true;
+        }
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.IsExpirationDateVisible = true;
         }

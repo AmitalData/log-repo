@@ -356,8 +356,8 @@ export class ChargesTypePM {
     private applyRegionalTax: boolean;
     public get ApplyRegionalTax() { return this.applyRegionalTax; }
     public set ApplyRegionalTax(newValue: boolean) { if (this.applyRegionalTax != newValue) { this.applyRegionalTax = newValue; this.MarkAsDirty("ApplyRegionalTax"); } }
-
-
+       
+	 
 
     public OldEntityPM: ChargesTypePM;
 		
@@ -381,4 +381,4 @@ export class ChargesTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

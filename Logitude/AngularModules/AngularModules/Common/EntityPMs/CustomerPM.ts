@@ -1350,6 +1350,7 @@ export class CustomerPM {
     public set StorageFreeDays(newValue: number) { if (this.storageFreeDays != newValue) { this.storageFreeDays = newValue; this.MarkAsDirty("StorageFreeDays"); } }
        
 	 
+
     public OldEntityPM: CustomerPM;
 		
     public IsDirty: boolean;
