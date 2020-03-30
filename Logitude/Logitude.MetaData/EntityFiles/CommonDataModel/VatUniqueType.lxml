@@ -2,7 +2,7 @@
 <entity
   Id="&quot;c5cdc663-65ba-4de4-ae07-126c62a12a0f&quot;"
   ObjectTableName="&quot;VatUniqueType&quot;"
-  DBTableName="&quot;VatUniqueTypes&quot;"
+  DBTableName="&quot;VatUniqueType&quot;"
   ObjectTableSingular="&quot;VAT Unique Type&quot;"
   ObjectTablePlural="&quot;VAT Unique Types&quot;"
   DefaultText="&quot;VAT Unique Type&quot;"
@@ -37,7 +37,9 @@
   IsEditable="true"
   ClientModuleName="&quot;Common&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;ec71b392-04df-46e8-9329-6abe0c75083e&quot;"
     FieldName="&quot;ViewOrder&quot;"

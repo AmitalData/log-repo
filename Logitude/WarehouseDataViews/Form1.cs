@@ -13,9 +13,13 @@ namespace WarehouseDataViews
 {
     public partial class Form1 : Form
     {
-        string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
-        string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
 
+
+        string dbSourceConnection = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
+        string dbDestinationConnection = "DWPrivate,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
+        //private string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
+        //private string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
+        private int? tenant = 951;
         //string dbSourceConnection = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
         //string dbDestinationConnection = "UnicargoDW, UnicargoDBUser,Y&P95et1,logitude-ep.database.windows.net";
 
@@ -24,6 +28,7 @@ namespace WarehouseDataViews
             InitializeComponent();
             this.SourceConnectionTextBox.Text = dbSourceConnection;
             this.DestinationConnectionTextBox.Text = dbDestinationConnection;
+            this.TenantTextBox.Text = tenant.ToString() ;
         }
 
         private void CreateViewsButton_Click(object sender, EventArgs e)
@@ -35,13 +40,13 @@ namespace WarehouseDataViews
             try
             {
                 ResultLabel.Text = "";
-                if (!string.IsNullOrEmpty(dbSourceConnection) && !string.IsNullOrEmpty(dbDestinationConnection))
+                if (!string.IsNullOrEmpty(dbSourceConnection) && !string.IsNullOrEmpty(dbDestinationConnection) && tenant !=null)
                 {
-                    WarehouseViewsService warehouseViewsService = new WarehouseViewsService();
+                    WarehouseViewsService warehouseViewsService = new WarehouseViewsService((int)tenant);
                     string sourceConnectionString = warehouseViewsService.BuildConnectionString(dbSourceConnection);
                     string destinationConnectionString = warehouseViewsService.BuildConnectionString(dbDestinationConnection);
-                    CreateDimensionViews(sourceConnectionString, destinationConnectionString);
-                    CreateFactViews(warehouseViewsService, sourceConnectionString, destinationConnectionString);
+                    warehouseViewsService.CreateAllDimensionViews(sourceConnectionString, destinationConnectionString);
+                    warehouseViewsService.CreateFactShipmentView(sourceConnectionString, destinationConnectionString);
                     SetResultLable(true);
                 }
                 else MessageBox.Show("Connection Problem");
@@ -51,40 +56,11 @@ namespace WarehouseDataViews
                 DisplayExceptionMessage(ex);
             }
         }
-        private void CreateDimensionViews(string sourceConnectionString, string destinationConnectionString)
-        {
-            WarehouseViewsService warehouseViewsService = new WarehouseViewsService();
-            DataTable dimensionDWobjectFieldOnFact = warehouseViewsService.GetDimensionDWobjectFieldOnFactShipment(sourceConnectionString);
-            foreach (DataRow row in dimensionDWobjectFieldOnFact.Rows)
-            {
-                string fieldCode=  row["Code"].ToString();
-                string dimensionTableCode = row["DimensionTableCode"].ToString();
-                if (!string.IsNullOrEmpty(fieldCode) && fieldCode!= "[Parent Tenant]" &&  !string.IsNullOrEmpty(dimensionTableCode))
-                {
-                    if (dimensionTableCode != "DIM_Dates")
-                    {
-                        if (fieldCode == "[Notify 1]") fieldCode = "[Notify One]";
-                        else if (fieldCode == "[Notify 2]") fieldCode = "[Notify Two]";
-                        warehouseViewsService.DropView(fieldCode, destinationConnectionString);
-                        warehouseViewsService.CreateDimensionView(fieldCode, dimensionTableCode, destinationConnectionString);
-                    }
-                  //  warehouseViewsService.GrantView(fieldCode, destinationConnectionString);
-                }
-            }
-        }
 
-
-
-        private  void CreateFactViews(WarehouseViewsService warehouseViewsService,string sourceConnection,  string destinationConnectionString)
-        {
-            warehouseViewsService.DropView("Shipment", destinationConnectionString);
-            warehouseViewsService.CreateFactView("Fact_Shipments", sourceConnection , destinationConnectionString);
-           // warehouseViewsService.GrantView("Shipment", destinationConnectionString);
-        }
-
-
+       
         private void DeleteViewsButton_Click(object sender, EventArgs e)
         {
+
             DeleteDataWarehouseViews();
         }
         private void DeleteDataWarehouseViews()
@@ -92,13 +68,13 @@ namespace WarehouseDataViews
             try
             {
                 ResultLabel.Text = "";
-                if (!string.IsNullOrEmpty(dbSourceConnection) && !string.IsNullOrEmpty(dbDestinationConnection))
+                if (!string.IsNullOrEmpty(dbSourceConnection) && !string.IsNullOrEmpty(dbDestinationConnection) && tenant!=null)
                 {
-                    WarehouseViewsService warehouseViewsService = new WarehouseViewsService();
+                    WarehouseViewsService warehouseViewsService = new WarehouseViewsService((int)tenant);
                     string sourceConnectionString = warehouseViewsService.BuildConnectionString(dbSourceConnection);
                     string destinationConnectionString = warehouseViewsService.BuildConnectionString(dbDestinationConnection);
-                    DeleteDimensionViews(sourceConnectionString, destinationConnectionString);
-                    warehouseViewsService.DropView("Shipment", destinationConnectionString);
+                    warehouseViewsService.DeleteDimensionViews(sourceConnectionString, destinationConnectionString);
+                    warehouseViewsService.DropView("ShipmentView", destinationConnectionString);
                     SetResultLable(true);
                 }
                 else MessageBox.Show("Connection Problem");
@@ -110,17 +86,7 @@ namespace WarehouseDataViews
             }
 
         }
-        private  void DeleteDimensionViews( string sourceConnectionString, string destinationConnectionString)
-        {
-            WarehouseViewsService warehouseViewsService = new WarehouseViewsService();
-            DataTable dimensionDWobjectFieldOnFact = warehouseViewsService.GetDimensionDWobjectFieldOnFactShipment(sourceConnectionString);
-            foreach (DataRow row in dimensionDWobjectFieldOnFact.Rows)
-            {
-                string fieldCode  = row["Code"].ToString();
-                if (!string.IsNullOrEmpty(fieldCode)) warehouseViewsService.DropView(fieldCode, destinationConnectionString);
-            }
-        }
-
+      
 
         private void DisplayExceptionMessage(Exception ex)
         {
@@ -146,5 +112,13 @@ namespace WarehouseDataViews
             this.dbDestinationConnection = destinationConnectionTextBox.Text;
         }
 
+        private void TenantTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox destinationConnectionTextBox = sender as TextBox;
+            if (!string.IsNullOrEmpty(destinationConnectionTextBox.Text))
+            {
+                this.tenant = Int32.Parse(destinationConnectionTextBox.Text);
+            }
+        }
     }
 }

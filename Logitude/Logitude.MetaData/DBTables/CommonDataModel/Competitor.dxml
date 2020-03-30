@@ -2,7 +2,8 @@
 <Table
   Name="Competitors"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -22,7 +23,7 @@
     Type="nvarchar"
     Size="60">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Website"

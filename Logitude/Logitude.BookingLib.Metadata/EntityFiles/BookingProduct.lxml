@@ -42,7 +42,9 @@
   NoPMController="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
-  HasMenuButtons="false">
+  HasMenuButtons="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8665de7e-7c41-47e6-86b1-0fc2d6b34bcc&quot;"
     FieldName="&quot;Id&quot;"

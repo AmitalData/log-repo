@@ -38,7 +38,9 @@
   IsLookUp="true"
   IsEditable="false"
   HasCustomFilter="true"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a3c83b92-a852-43f4-a4b1-72901d039745&quot;"
     FieldName="&quot;Id&quot;"
@@ -59,7 +61,8 @@
     HasPMField="false"
     DisplayInList="true"
     NoMetaDataField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;2d418b88-0e21-4314-9e49-54a931dd93d5&quot;"
     FieldName="&quot;Service&quot;"
@@ -79,7 +82,8 @@
     HasPMField="false"
     DisplayInList="true"
     NoMetaDataField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="40" />
   <field
     Id="&quot;30b9573c-5a3d-4c5d-a5c0-d9834f48e605&quot;"
     FieldName="&quot;IsTemperatureSensitive&quot;"
@@ -353,7 +357,7 @@
     ObjectTableName="&quot;AWBDescriptionOfGoods&quot;"
     FieldsDataType="&quot;Text&quot;"
     DataTypeCode="&quot;Text&quot;"
-    MaxLength="2"
+    MaxLength="4"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"

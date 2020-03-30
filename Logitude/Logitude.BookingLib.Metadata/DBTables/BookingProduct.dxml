@@ -2,7 +2,8 @@
 <Table
   Name="BookingProducts"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Booking">
   <Column
     Name="Id"
     Type="varchar"

@@ -57,7 +57,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a27c27e0-8746-49e3-9ee4-8d2aa06ba276&quot;"
     FieldName="&quot;Id&quot;"
@@ -68,7 +70,7 @@
     ObjectTableName="&quot;TenantAdditionalData&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

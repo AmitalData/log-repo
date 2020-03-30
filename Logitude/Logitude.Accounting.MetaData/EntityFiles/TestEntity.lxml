@@ -26,7 +26,9 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;Test Entity&quot;">
+  DefaultText="&quot;Test Entity&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;e9a90bc8-cb9c-47d0-9fce-444aac92a425&quot;"
     FieldName="&quot;Id&quot;"

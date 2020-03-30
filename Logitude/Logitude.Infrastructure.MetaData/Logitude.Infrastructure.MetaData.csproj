@@ -83,6 +83,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="DBTables\BatchTaskExecution.dxml" />
+    <None Include="DBTables\BatchTaskExecutionStatus.dxml" />
+    <None Include="DBTables\BIReport.dxml" />
+    <None Include="DBTables\BIReportFolder.dxml" />
+    <None Include="DBTables\BIReportsExecutionLog.dxml" />
+    <None Include="DBTables\BIReportsType.dxml" />
+    <None Include="DBTables\BusinessProcessQueue.dxml" />
+    <None Include="DBTables\BusinessRole.dxml" />
+    <None Include="DBTables\FeatureToggle.dxml" />
+    <None Include="DBTables\LastRunDetail.dxml" />
+    <None Include="DBTables\LBPTeamMember.dxml" />
+    <None Include="DBTables\PriceStep.dxml" />
+    <None Include="DBTables\SharedLogisticsSetting.dxml" />
+    <None Include="DBTables\Team.dxml" />
+    <None Include="DBTables\TeamMemberBusinessRole.dxml" />
+    <None Include="DBTables\Toggle.dxml" />
     <None Include="EntityFiles\BatchTaskExecution.lxml" />
     <None Include="EntityFiles\BatchTaskExecutionStatus.lxml" />
     <None Include="EntityFiles\BIReport.lxml">

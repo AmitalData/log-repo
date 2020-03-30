@@ -41,7 +41,9 @@
   ClientModuleName="&quot;Common&quot;"
   NewWizardComponentPath="&quot;./Common/Components/Maintenance/BusinessUnit/NewBusinessUnitComponent&quot;"
   Code="&quot;BUQG&quot;"
-  DescriptionDefaultText="&quot;Define the business units you want to work with for controlling access to information and sharing of information.&quot;">
+  DescriptionDefaultText="&quot;Define the business units you want to work with for controlling access to information and sharing of information.&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;b5f76249-47b4-4d07-a68a-b024db8155e9&quot;"
     FieldName="&quot;Id&quot;"
@@ -62,7 +64,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="50" />
   <field
     Id="&quot;5d6c911d-3cc2-4c6d-aced-4f77c712091f&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -278,7 +281,7 @@
     ObjectTableName="&quot;BusinessUnit&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"

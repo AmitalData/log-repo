@@ -37,7 +37,9 @@
   IsEditable="true"
   ClientModuleName="&quot;Shipment&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a38de818-dedf-47f3-ad30-8e778786f926&quot;"
     FieldName="&quot;Code&quot;"
@@ -169,7 +171,7 @@
     Id="&quot;d3006a91-8d65-46a1-94e1-239edb7a12ad&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;AWBInformation&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

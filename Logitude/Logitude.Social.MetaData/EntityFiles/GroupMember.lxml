@@ -26,7 +26,9 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;Group Member&quot;">
+  DefaultText="&quot;Group Member&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;51766975-53e2-481d-9466-c0164511023f&quot;"
     FieldName="&quot;GroupId&quot;"

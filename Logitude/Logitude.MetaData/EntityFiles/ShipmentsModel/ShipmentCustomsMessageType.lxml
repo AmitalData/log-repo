@@ -43,7 +43,9 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;3a650e35-43a4-46df-b30a-05b5677ef8da&quot;"
     FieldName="&quot;Code&quot;"
@@ -173,7 +175,7 @@
     Id="&quot;0e96604b-96f7-4896-afb1-eb8019c15326&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;ShipmentCustomsMessageType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

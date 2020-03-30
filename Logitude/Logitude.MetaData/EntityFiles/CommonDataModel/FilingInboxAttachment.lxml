@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;FilingInboxAttachment,FilingInboxAttachments,,Id,&quot;">
+  SearchFields="&quot;FilingInboxAttachment,FilingInboxAttachments,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;c519c5bf-c02f-41bf-abe2-939e0bb3c007&quot;"
     FieldName="&quot;Id&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;FilingInboxAttachment&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -211,9 +213,9 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;FilingInboxAttachment&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="250"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -287,7 +289,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -327,7 +329,7 @@
     FullFieldLable="&quot;DocumentId&quot;"
     DefaultText="&quot;Document&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -349,7 +351,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Document"
+    NavigationPropertyName="Document" />
   <field
     Id="&quot;f8179668-2c66-4342-81e5-b934979729d9&quot;"
     FieldName="&quot;FilingInboxId&quot;"
@@ -362,7 +366,7 @@
     LookUpTableName="&quot;FilingInbox&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -402,7 +406,7 @@
     FullFieldLable="&quot;FilingInboxId&quot;"
     DefaultText="&quot;Filing Inbox&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -424,7 +428,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="FilingInbox"
+    NavigationPropertyName="FilingInbox" />
   <field
     Id="&quot;dfd4d7b6-b5a0-4ab0-b985-ef21811cc52b&quot;"
     FieldName="&quot;AttachLogs&quot;"

@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;CustomsInterfaceSetting,CustomsInterfaceSettings,,Tenant,&quot;">
+  SearchFields="&quot;CustomsInterfaceSetting,CustomsInterfaceSettings,,Tenant,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;33f73eb1-7fc2-40f5-a075-c1dffceef094&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -139,7 +141,7 @@
     ObjectTableName="&quot;CustomsInterfaceSetting&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -254,7 +256,7 @@
     FullFieldLable="&quot;LocalCustomsInterfaceCode&quot;"
     DefaultText="&quot;Local Customs Interface&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -275,7 +277,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="CustomsInterface"
+    NavigationPropertyName="LocalCustomsInterface" />
   <field
     Id="&quot;bd5ac025-dd9d-4d5e-b2a7-790e6accf927&quot;"
     FieldName="&quot;ImportToUSAInterfaceCode&quot;"
@@ -328,7 +332,7 @@
     FullFieldLable="&quot;ImportToUSAInterfaceCode&quot;"
     DefaultText="&quot;Import to USA (Manifest &amp; ISF)&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -349,7 +353,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="CustomsInterface"
+    NavigationPropertyName="ImportToUSAInterface" />
   <field
     Id="&quot;464d4785-9666-419b-953c-1fd8a52a04cf&quot;"
     FieldName="&quot;ExportFromUSAInterfaceCode&quot;"
@@ -402,7 +408,7 @@
     FullFieldLable="&quot;ExportFromUSAInterfaceCode&quot;"
     DefaultText="&quot;Export from USA (SED)&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -423,7 +429,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="CustomsInterface"
+    NavigationPropertyName="ExportFromUSAInterface" />
   <field
     Id="&quot;1f295f73-af6e-495f-8a5d-071e919f0b57&quot;"
     FieldName="&quot;LocalCompanyId&quot;"
@@ -692,7 +700,7 @@
     FullFieldLable="&quot;ArtemusOutSettingsId&quot;"
     DefaultText="&quot;Out Settings&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -713,7 +721,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="FTPDetail"
+    NavigationPropertyName="ArtemusOutSettings" />
   <field
     Id="&quot;bda5911a-531e-4806-9369-1228b6e57307&quot;"
     FieldName="&quot;ArtemusInSettingsId&quot;"
@@ -766,7 +776,7 @@
     FullFieldLable="&quot;ArtemusInSettingsId&quot;"
     DefaultText="&quot;In Settings&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -787,7 +797,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="FTPDetail"
+    NavigationPropertyName="ArtemusInSettings" />
   <field
     Id="&quot;f7ff215f-b778-4743-adbd-e2c0e6ebeba0&quot;"
     FieldName="&quot;ArtemusOutSettingsHost&quot;"

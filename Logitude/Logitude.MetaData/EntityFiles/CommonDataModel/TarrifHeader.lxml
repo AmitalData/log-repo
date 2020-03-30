@@ -54,7 +54,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;TarrifHeader,TarrifHeaders,,Id,&quot;">
+  SearchFields="&quot;TarrifHeader,TarrifHeaders,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;f84f7eb1-6a87-43fb-bc14-d85792240dd3&quot;"
     FieldName="&quot;Id&quot;"
@@ -65,7 +67,7 @@
     ObjectTableName="&quot;TarrifHeader&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -248,7 +250,7 @@
     FullFieldLable="&quot;CardId&quot;"
     DefaultText="&quot;Card&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -269,7 +271,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Card" />
   <field
     Id="&quot;bf19369a-dd28-4dc7-a610-2edc31ff1afd&quot;"
     FieldName="&quot;TarrifTypeCode&quot;"
@@ -321,7 +325,7 @@
     FullFieldLable="&quot;TarrifTypeCode&quot;"
     DefaultText="&quot;Tariff Type Code&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -342,7 +346,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="TarrifType"
+    NavigationPropertyName="TarrifType" />
   <field
     Id="&quot;696a7034-3f9c-4e07-b38e-7b748d5c43d3&quot;"
     FieldName="&quot;FromDate&quot;"
@@ -354,7 +360,7 @@
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -639,7 +645,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;TarrifHeader&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
@@ -711,7 +717,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;TarrifHeader&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"

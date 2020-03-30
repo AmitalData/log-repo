@@ -40,7 +40,9 @@
   HasShortTitle="false"
   HasMenuButtons="false"
   HasFiltersMenu="false"
-  ParentTableName="TenantManagement">
+  ParentTableName="TenantManagement"
+  DxmlDatabaseTypeCode="Global"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7c0ac4d4-6b8f-480c-88d9-59479f28775b&quot;"
     FieldName="&quot;Id&quot;"
@@ -60,7 +62,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15" />
   <field
     Id="&quot;f1d681be-ebcd-4ff6-a6a6-2db07ee309c0&quot;"
     FieldName="&quot;Tenant&quot;"
