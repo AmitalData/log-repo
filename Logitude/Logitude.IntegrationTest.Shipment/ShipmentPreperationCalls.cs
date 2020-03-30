@@ -7,6 +7,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
+using Logitude.IntegrationTest.Shipment.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -73,6 +74,7 @@ namespace Logitude.IntegrationTest.Shipment
             shipmentPM.AWBCurrencyId = ShipmentVariables.CurrencyEURId;
             shipmentPM.ValueOfGoodsCurrencyId = ShipmentVariables.CurrencyEURId;
             shipmentPM.AccountManagerUserId = CorePreparationVariables.UserId;
+            shipmentPM.ShipmentPackages = IntegrationShipmentPackages.ShipmentPackages();
 
             ShipmentVariables.ConcurrencyGUID = shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
             return shipmentPM;
