@@ -492,7 +492,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.CourierDeclarationStatusCode: " + currentDeclarationCourierStatusPM.CourierDeclarationStatusCode);
                     }
                 }
-            }
+           }
         }
     }
 }
