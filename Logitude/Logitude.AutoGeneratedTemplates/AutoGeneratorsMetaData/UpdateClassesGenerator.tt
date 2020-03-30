@@ -182,7 +182,7 @@ namespace <#= UpdateClassnamespacestring #>
 	             <#+
 	  foreach (XAttribute p in entity.Attributes())
             {
-				if(p.Name != "Id" && p.Name != "ParentTableName" && p.Name != "NoViewController" && p.Name != "NoPMController" && p.Name != "DxmlDatabaseTypeCode" && p.Name != "DxmlDatabaseSchemaCode" && p.Name = "DBTableShortName"
+				if(p.Name != "Id" && p.Name != "ParentTableName" && p.Name != "NoViewController" && p.Name != "NoPMController" && p.Name != "DxmlDatabaseTypeCode" && p.Name != "DxmlDatabaseSchemaCode" && p.Name != "DBTableShortName"
 					&& p.Name != "HasCompactSearch"  && p.Name != "ApplyDefaultValues"  && p.Name != "HasCustomValidator" && p.Name != "ApplyOnPropertyChangedCode" && p.Name != "HasApiHelper" && p.Name != "SortingByDirection")
                 {
 				  #>
