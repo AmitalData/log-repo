@@ -159,7 +159,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-
+        [HttpGet]
         public HttpResponseMessage CancelByFilters([FromUri] ApiQueryFilters filters)
         {
             try

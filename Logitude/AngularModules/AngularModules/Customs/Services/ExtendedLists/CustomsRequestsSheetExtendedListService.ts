@@ -132,7 +132,7 @@ export class CustomsRequestsSheetExtendedListService {
 
     CancelByFilters(filters: ApiQueryFilters) {
 
-        var urlparameters = '/CancelByFilters?';
+        var urlparameters = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended/CancelByFilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
         for (var i in mykeys) {
@@ -160,7 +160,7 @@ export class CustomsRequestsSheetExtendedListService {
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        var callUrl = this._apiUrl.concat(urlparameters);//
+        var callUrl = urlparameters;//this._apiUrl.concat(urlparameters);//
 
 
         return Observable.defer(() => {

@@ -26,6 +26,7 @@ import { CustomsRequestsSheetExtendedListService } from '../../../Customs/Servic
     selector: 'CustomsRequestsSheetsComponent',
     moduleId: module.id,
     templateUrl: './CustomsRequestsSheetsComponent.html',
+    providers: [CustomsRequestsSheetExtendedListService]
 })
 
 
@@ -215,8 +216,110 @@ export class CustomsRequestsSheetsComponent
         //this.CRSSearch();
     }
     CancelByFilters() {
+        debugger;
+        this.InitFilter();
         this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs);
     }
+
+
+    InitFilter() {
+
+ 
+          var  filters = new ApiQueryFilters();
+        
+ 
+        filters.GetAll = true;
+        filters.GetCount = true;
+ 
+        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
+            filters.SortBy = "RequestCreateDate";
+        }
+        if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
+            filters.SortDirection = "Descending";
+        }
+
+        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+        let objectTableName = "";
+        let objectTableId1 = "";
+        if (this.entityArgs) {
+            if (!AppTool.IsNullOrEmpty(this.entityArgs.ObjectTableName)) {
+                objectTableName = this.entityArgs.ObjectTableName;
+                var objectTablePM = //window.ObjectTables.filter(d => d.Id == ObjectTableId)[0];
+                    window.ObjectTables.filter(t => t.Name == objectTableName)[0];
+                objectTableId1 = objectTablePM.Id;
+            }
+        }
+        //if (!AppTool.IsNullOrEmpty(objectTableName)) {
+        if (objectTableName === "Customs.Notification") {
+            //////never tested !!!!!!!- copy from silverlight
+            filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        }
+        else {
+            if (!AppTool.IsNullOrEmpty(objectTableName) && objectTableName != "Customs.Declaration") {
+                //////never tested !!!!!!!- copy from silverlight
+                //filters.addAdditionalFilter("ObjectTableId1", objectTableId, null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("ObjectTableId1", objectTableId1, null, null, "Equals", false, false, false, "string");
+                let EntityId1 = this.entityArgs.EntityPM.Id;
+                if (AppTool.IsNullOrEmpty(EntityId1)) {
+                    EntityId1 = "new Entity do not get any rows !!!!";
+                }
+                //filters.addAdditionalFilter("EntityId1", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("EntityId1", EntityId1, null, null, "Equals", false, false, false, "string");
+
+            }
+
+            else {
+
+                if (this.FromDateTime != null || this.ToDateTime != null) {// for Region
+                    filters.addAdditionalFilter("RequestCreateDate", this.FromDateTime, this.ToDateTime, null, "Between", false, false, false, "DateTime");
+                }
+
+                if (this.MyRequestOnly) {
+                    filters.addAdditionalFilter("RequestOwnerId", SessionLocator.LoggedUserId, null, null, "Equals", false, false, false, "string");
+                }
+
+                if (!AppTool.IsNullOrEmpty(this.CorrelationId)) {
+                    filters.addAdditionalFilter("CorrelationId", this.CorrelationId, null, null, "Equals", false, false, false, "string");
+                }
+
+                if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
+                    filters.addAdditionalFilter("CustomFileNo", this.CustomFileNo, null, null, "Equals", false, false, false, "string");
+                }
+                if (!AppTool.IsNullOrEmpty(this.InterfaceTypeCode)) {
+
+                    filters.addAdditionalFilter("InterfaceTypeCode", this.InterfaceTypeCode, null, null, "Equals", false, false, false, "string");
+
+                }
+                if (!AppTool.IsNullOrEmpty(this.SearchFields)) {
+                    filters.addAdditionalFilter("SearchFields", this.SearchFields, null, null, "Contains", false, false, false, "string");
+
+                }
+
+
+                if (!AppTool.IsNullOrEmpty(this.EntityReference)) {
+
+                    filters.addAdditionalFilter("EntityReference", this.EntityReference, null, null, "Equals", false, false, false, "string");
+                }
+                if (AppTool.IsNullOrEmpty(objectTableName) || objectTableName == "Customs.Declaration") {
+                    this.GetRequestStatusString(filters);
+                }
+
+
+                if (this.IsRestored) {
+                    filters.addAdditionalFilter("IsRestored", this.IsRestored, null, null, "Equals", false, false, false, "boolean");
+                }
+                //_SelectedDCAValue: string = 'ALL';//'ALL';//DCA//!DCA
+                if (this._SelectedDCAValue != "ALL") {
+                    filters.addAdditionalFilter("IsDCA", this._SelectedDCAValue === "DCA", null, null, "Equals", false, false, false, "boolean");
+
+                }
+            }
+        }
+
+        this.filterAgrs = filters;
+
+    }
+
     CRSSearch() {
         
         this.IsSearchButtonEnabled = false;
