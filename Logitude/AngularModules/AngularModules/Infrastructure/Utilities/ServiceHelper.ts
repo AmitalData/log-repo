@@ -500,18 +500,6 @@ export class ServiceHelper {
 
         return httpOptions;
     }
-
-    public static GetLoginHttpHeaders() {
-
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            })
-        };
-
-        return httpOptions;
-    }
     
 }
 

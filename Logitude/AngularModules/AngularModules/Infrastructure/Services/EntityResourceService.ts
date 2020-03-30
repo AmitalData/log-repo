@@ -93,10 +93,10 @@ export class EntityResourceService {
                     //    });
                     //}).share();
 
-                    var observable = this.GetResourcesFile(objectTableName, tenant).flatMap((response: ServiceResponse) => {
+                    var observable = this.GetResourcesFile(objectTableName, tenant).flatMap((response: any) => {
 
 
-                        var filejson = response.Result;
+                        var filejson = response;
                         if (filejson) {
 
                             if (EntityResourceService.ServerTablesUnzipQueue[objectTableName]) {
