@@ -46,14 +46,16 @@
   CustomFieldsCount="0"
   DescriptionTextCodeId="&quot;1-69460&quot;"
   SearchFields="&quot;AdditionalService,AdditionalServices,,Id,Name&quot;"
-  DescriptionDefaultText="&quot;Define the services that you want to supply to your customers in addition to the regular products.&quot;">
+  DescriptionDefaultText="&quot;Define the services that you want to supply to your customers in addition to the regular products.&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;e36b0e98-270d-42eb-94b8-6b669b5fbe7a&quot;"
     FieldName="&quot;Id&quot;"
     ObjectTableName="&quot;AdditionalService&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="100"
+    MaxLength="15"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="false"
@@ -298,7 +300,7 @@
     ObjectTableName="&quot;AdditionalService&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="true"

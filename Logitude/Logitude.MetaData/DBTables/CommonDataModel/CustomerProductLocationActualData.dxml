@@ -2,7 +2,8 @@
 <Table
   Name="CustomerProductLocationActualDatas"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="CustomerId"
     Type="varchar"

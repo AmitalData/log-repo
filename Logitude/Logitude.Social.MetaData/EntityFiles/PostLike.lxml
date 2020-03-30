@@ -27,7 +27,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   ParentTableName="Post"
-  DefaultText="&quot;Post Like&quot;">
+  DefaultText="&quot;Post Like&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;17a1c3cd-ca50-4a89-a36d-a0dc34e5168b&quot;"
     FieldName="&quot;PostId&quot;"

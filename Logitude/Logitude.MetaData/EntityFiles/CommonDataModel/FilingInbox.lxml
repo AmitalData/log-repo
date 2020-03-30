@@ -40,7 +40,9 @@
   HasHelper="false"
   HasShortTitle="false"
   HasMenuButtons="false"
-  HasFiltersMenu="false">
+  HasFiltersMenu="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;97fb2ef1-c5c2-4230-9981-317d0b50e49f&quot;"
     FieldName="&quot;Id&quot;"
@@ -61,7 +63,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;9d9bceeb-ba2d-4e7e-91fc-096a77793a10&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -210,7 +213,7 @@
     ObjectTableName="&quot;FilingInbox&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -271,7 +274,7 @@
     ObjectTableName="&quot;FilingInbox&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -333,7 +336,7 @@
     ObjectTableName="&quot;FilingInbox&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -451,7 +454,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;7660533c-cfaa-4f30-a6dc-c89743f3556e&quot;"
     FieldName="&quot;BodyDocumentId&quot;"
@@ -507,12 +513,15 @@
     Code="&quot;BodyDocumentId&quot;"
     DependencyFilter3IsList="false"
     CopyToDW="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="Document"
+    NavigationPropertyName="BodyDocument" />
   <field
     Id="&quot;3e2e9e0d-d800-438a-809d-a448a6925ba2&quot;"
     FieldName="&quot;FileName&quot;"
@@ -578,7 +587,7 @@
     Id="&quot;a35b83d1-2ea5-41bc-a937-bd25123113df&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;FilingInbox&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     Code="&quot;SearchFields&quot;"
     MaxLength="1000"
     IsCustom="false"

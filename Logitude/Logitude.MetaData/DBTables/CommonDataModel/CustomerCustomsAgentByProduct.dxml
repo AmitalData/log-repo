@@ -2,7 +2,8 @@
 <Table
   Name="CustomerCustomsAgentByProducts"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="ProductTypeCode"
     Type="varchar"

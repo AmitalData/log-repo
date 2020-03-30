@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;INTTRASetting,INTTRASettings,,Id,&quot;">
+  SearchFields="&quot;INTTRASetting,INTTRASettings,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;da422698-2e6c-4b3f-b9a0-ba863d8d2770&quot;"
     FieldName="&quot;Id&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;INTTRASetting&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -255,7 +257,7 @@
     FullFieldLable="&quot;OutSettingsId&quot;"
     DefaultText="&quot;Out Settings&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -277,7 +279,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="FTPDetail"
+    NavigationPropertyName="OutFTPDetail" />
   <field
     Id="&quot;98cce340-7c3e-49f8-983f-e21e6a33929e&quot;"
     FieldName="&quot;InSettingsId&quot;"
@@ -330,7 +334,7 @@
     FullFieldLable="&quot;InSettingsId&quot;"
     DefaultText="&quot;In Settings&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -352,7 +356,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="FTPDetail"
+    NavigationPropertyName="InFTPDetail" />
   <field
     Id="&quot;75b59f40-9fbf-4bf7-9474-c15476c50764&quot;"
     FieldName="&quot;INTTRASettingModeCode&quot;"
@@ -405,7 +411,7 @@
     FullFieldLable="&quot;INTTRASettingModeCode&quot;"
     DefaultText="&quot;Mode&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -427,7 +433,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="INTTRASettingMode"
+    NavigationPropertyName="INTTRASettingMode" />
   <field
     Id="&quot;a1b393f1-4946-42dd-a9f6-fb37b08d869c&quot;"
     FieldName="&quot;OutSettingsHost&quot;"

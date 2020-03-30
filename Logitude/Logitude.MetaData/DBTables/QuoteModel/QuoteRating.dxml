@@ -2,7 +2,8 @@
 <Table
   Name="QuoteRatings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Code"
     Type="varchar"

@@ -2236,10 +2236,18 @@
     <Compile Include="Migrations\202003251225103_Abed_AddLastRunDetailToContext.Designer.cs">
       <DependentUpon>202003251225103_Abed_AddLastRunDetailToContext.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs" />
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.cs" />
+    <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.Designer.cs">
+      <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
+    </Compile>
+
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.cs" />
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.Designer.cs">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
     </Compile>
 
     <Compile Include="Migrations\Configuration.cs" />
@@ -4043,9 +4051,15 @@
     <EmbeddedResource Include="Migrations\202003251225103_Abed_AddLastRunDetailToContext.resx">
       <DependentUpon>202003251225103_Abed_AddLastRunDetailToContext.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.resx">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.resx">
+      <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202003290823147_UsersLayoutDirectionMigration.resx">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
     </EmbeddedResource>
 
   </ItemGroup>

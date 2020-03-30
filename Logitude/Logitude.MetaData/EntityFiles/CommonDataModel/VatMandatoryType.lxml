@@ -2,7 +2,7 @@
 <entity
   Id="&quot;405d3657-79bb-4ef5-94da-77188d9919e2&quot;"
   ObjectTableName="&quot;VatMandatoryType&quot;"
-  DBTableName="&quot;VatMandatoryTypes&quot;"
+  DBTableName="&quot;VatMandatoryType&quot;"
   ObjectTableSingular="&quot;VAT Mandatory Type&quot;"
   ObjectTablePlural="&quot;VAT Mandatory Types&quot;"
   DefaultText="&quot;VAT Mandatory Type&quot;"
@@ -38,7 +38,9 @@
   NoPMController="true"
   ClientModuleName="&quot;Common&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;651fefe0-c90b-4b4e-ace4-3d9d76195d5b&quot;"
     FieldName="&quot;ViewOrder&quot;"

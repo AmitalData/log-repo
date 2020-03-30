@@ -2,26 +2,27 @@
 <Table
   Name="QuoteClosingReasons"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Code"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="2">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
     Name="Name"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="60">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="SearchFields"
     Type="nvarchar"
-    Size="-1">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>

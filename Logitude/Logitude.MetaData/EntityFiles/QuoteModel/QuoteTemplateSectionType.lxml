@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;QuoteTemplateSectionType,QuoteTemplateSectionTypes,,Code,&quot;">
+  SearchFields="&quot;QuoteTemplateSectionType,QuoteTemplateSectionTypes,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;66ecdef5-5625-4c31-b0c0-7fac0bd2cebb&quot;"
     FieldName="&quot;Code&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;QuoteTemplateSectionType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="60"
+    MaxLength="2"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

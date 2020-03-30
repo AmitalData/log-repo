@@ -58,7 +58,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="true"
-  SearchFields="&quot;VatMandatoryType,VatMandatoryTypes,,Code,&quot;">
+  SearchFields="&quot;VatMandatoryType,VatMandatoryTypes,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;ce5507b6-bcb9-48df-b9f9-fac009c663b5&quot;"
     FieldName="&quot;Code&quot;"

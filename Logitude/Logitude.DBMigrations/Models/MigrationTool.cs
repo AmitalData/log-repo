@@ -760,8 +760,6 @@ namespace Logitude.DBMigrations.Models
 
         private string GetScriptFromViewDefinition(ViewDefinition viewDefinition, string dxmlFileName)
         {
-            return null;
-
             string viewScript = "-- DataView Script From " + dxmlFileName + "\n";
 
             if (DatabaseType.ToLower() == "oracle")
@@ -790,8 +788,6 @@ namespace Logitude.DBMigrations.Models
 
         private string GetScriptFromProcedureDefinition(ProcedureDefinition procedureDefinition, string dxmlFileName)
         {
-            return null;
-
             string procedureScript = "-- Procedure Script From " + dxmlFileName + "\n";
 
             if (DatabaseType.ToLower() == "oracle")
@@ -820,8 +816,6 @@ namespace Logitude.DBMigrations.Models
 
         private string GetScriptFromTriggerDefinition(TriggerDefinition triggerDefinition, string dxmlFileName)
         {
-            return null;
-
             string triggerScript = "-- Trigger Script From " + dxmlFileName + "\n";
 
             if (DatabaseType.ToLower() == "oracle")

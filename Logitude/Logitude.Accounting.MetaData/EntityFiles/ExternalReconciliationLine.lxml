@@ -58,7 +58,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;da61c748-a2b4-48a4-8e48-f7fe6c5ce6c5&quot;"
     FieldName="&quot;ReconciliationId&quot;"

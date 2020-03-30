@@ -195,6 +195,10 @@ export class CachedDataManager {
             if (tablesCalls[k].ClientModuleName) {
                 //promises.push(entityListService.getAllFromCache(chachedTables[k].Name, filters)).then(res=> {
                 try {
+                    if (tablesCalls[k].Name == "VatType")
+                        filters.ForceCacheRefresh = true;
+                    else
+                        filters.ForceCacheRefresh = false;
 
                     var myCachedDataManagerServices = new CachedDataManagerServices();
                     myCachedDataManagerServices.getAllFromCache(tablesCalls[k].Name, filters).then((res: any) => {

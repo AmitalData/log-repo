@@ -2,7 +2,8 @@
 <Table
   Name="Followers"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Social">
   <Column
     Name="FolloweeUserId"
     Type="varchar"
@@ -39,7 +40,7 @@
   </Column>
   <Column
     Name="CancelledDate"
-    Type="bit">
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>

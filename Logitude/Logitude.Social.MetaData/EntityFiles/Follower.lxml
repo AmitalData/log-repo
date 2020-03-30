@@ -55,7 +55,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8167e7ff-8d86-4b28-b27d-88842437da28&quot;"
     FieldName="&quot;FolloweeUserId&quot;"

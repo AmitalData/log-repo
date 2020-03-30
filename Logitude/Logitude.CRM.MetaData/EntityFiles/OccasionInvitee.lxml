@@ -59,7 +59,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;77528d40-4bd1-4794-b523-f4388796c274&quot;"
     FieldName="&quot;Id&quot;"

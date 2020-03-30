@@ -33,7 +33,9 @@
   HasDynamicHeader="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsEditable="true">
+  IsEditable="true"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;f1ef254f-e3a4-4c97-9402-b08448c4929e&quot;"
     FieldName="&quot;Id&quot;"
@@ -53,7 +55,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;80ce1419-6cf0-4db4-8226-4c4254a6c3e1&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -86,12 +89,13 @@
     ListFieldLable="&quot;CodeListLable&quot;"
     ListLableDefaultText="&quot;Code&quot;"
     ListLocalDefaultText="&quot;Code&quot;"
-    IsRequired="false"
+    IsRequired="true"
     HasDataBaseField="true"
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="7" />
   <field
     Id="&quot;77e5ee82-dec6-4570-9ecc-10ccf341d48d&quot;"
     FieldName="&quot;Name&quot;"
@@ -105,12 +109,13 @@
     ListFieldLable="&quot;NameListLable&quot;"
     ListLableDefaultText="&quot;Name&quot;"
     ListLocalDefaultText="&quot;Name&quot;"
-    IsRequired="false"
+    IsRequired="true"
     HasDataBaseField="true"
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="40" />
   <field
     Id="&quot;087ff402-bdad-4d55-91ed-0bc61b60a1f3&quot;"
     FieldName="&quot;DocumentTypeId&quot;"
@@ -124,12 +129,16 @@
     ListFieldLable="&quot;DocumentTypeIdListLable&quot;"
     ListLableDefaultText="&quot;DocumentTypeId&quot;"
     ListLocalDefaultText="&quot;DocumentTypeId&quot;"
-    IsRequired="false"
+    IsRequired="true"
     HasDataBaseField="true"
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="DocumentType"
+    NavigationPropertyName="DocumentType" />
   <field
     Id="&quot;4c75ddac-8e26-443c-96ce-abdee0583964&quot;"
     FieldName="&quot;IndexOrder&quot;"

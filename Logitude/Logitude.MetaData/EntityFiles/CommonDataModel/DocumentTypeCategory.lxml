@@ -38,7 +38,9 @@
   IsEditable="false"
   ClientModuleName="&quot;Common&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;eea878bf-3216-400e-9085-3bbc5d0de625&quot;"
     FieldName="&quot;Code&quot;"
@@ -170,7 +172,7 @@
     Id="&quot;fa4dcca2-a7d0-4d78-9104-5f6f3e92568d&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;DocumentTypeCategory&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

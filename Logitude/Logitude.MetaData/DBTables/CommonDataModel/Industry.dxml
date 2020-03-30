@@ -2,7 +2,8 @@
 <Table
   Name="Industries"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -20,10 +21,10 @@
   </Column>
   <Column
     Name="Code"
-    Type="nvarchar"
+    Type="varchar"
     Size="3">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="SearchFields"

@@ -40,7 +40,9 @@
   HasShortTitle="false"
   HasMenuButtons="false"
   HasFiltersMenu="false"
-  ParentTableName="Quote">
+  ParentTableName="Quote"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a8df9bee-09ca-41d4-9d00-2de9839b73a1&quot;"
     FieldName="&quot;Id&quot;"
@@ -60,7 +62,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15" />
   <field
     Id="&quot;030008aa-e09e-4958-af05-fb842351a69c&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -94,18 +97,22 @@
     ListLableDefaultText="&quot;QuoteId&quot;"
     ListLocalDefaultText="&quot;QuoteId&quot;"
     ValidForQuerySection1="&quot;QuoteTotalVAT&quot;"
-    IsRequired="false"
+    IsRequired="true"
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="Quote"
+    NavigationPropertyName="Quote" />
   <field
     Id="&quot;4e3f2eaa-b265-40b1-a8d9-f753b4645a6f&quot;"
     FieldName="&quot;QuoteCurrencyVATAmount&quot;"
     ObjectTableName="&quot;QuoteTotalVAT&quot;"
     FieldsDataType="&quot;Double&quot;"
     DataTypeCode="&quot;Double&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -166,7 +173,7 @@
     ObjectTableName="&quot;QuoteTotalVAT&quot;"
     FieldsDataType="&quot;Double&quot;"
     DataTypeCode="&quot;Double&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -227,7 +234,7 @@
     ObjectTableName="&quot;QuoteTotalVAT&quot;"
     FieldsDataType="&quot;Double&quot;"
     DataTypeCode="&quot;Double&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -288,7 +295,7 @@
     ObjectTableName="&quot;QuoteTotalVAT&quot;"
     FieldsDataType="&quot;Double&quot;"
     DataTypeCode="&quot;Double&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -349,7 +356,7 @@
     ObjectTableName="&quot;QuoteTotalVAT&quot;"
     FieldsDataType="&quot;Double&quot;"
     DataTypeCode="&quot;Double&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -410,7 +417,7 @@
     ObjectTableName="&quot;QuoteTotalVAT&quot;"
     FieldsDataType="&quot;Double&quot;"
     DataTypeCode="&quot;Double&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -471,7 +478,7 @@
     ObjectTableName="&quot;QuoteTotalVAT&quot;"
     FieldsDataType="&quot;Double&quot;"
     DataTypeCode="&quot;Double&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -707,7 +714,10 @@
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="VatType"
+    NavigationPropertyName="VatType" />
   <field
     Id="&quot;ca4f2094-c0f3-4011-8574-5c72d27281ea&quot;"
     FieldName="&quot;VatTypeName&quot;"

@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;DWHSetting,DWHSettings,,Tenant,&quot;">
+  SearchFields="&quot;DWHSetting,DWHSettings,,Tenant,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;19661500-7180-47ac-b559-442be0155074&quot;"
     FieldName="&quot;IsParentTenant&quot;"

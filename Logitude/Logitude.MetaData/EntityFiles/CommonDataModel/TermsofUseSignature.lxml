@@ -54,7 +54,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;TermsofUseSignature,TermsofUseSignatures,,Id,&quot;">
+  SearchFields="&quot;TermsofUseSignature,TermsofUseSignatures,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;554332f5-38f7-4abf-8340-7cb07f1b9a56&quot;"
     FieldName="&quot;Id&quot;"
@@ -65,7 +67,7 @@
     ObjectTableName="&quot;TermsofUseSignature&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -251,7 +253,7 @@
     FullFieldLable="&quot;ContactId&quot;"
     DefaultText="&quot;Contact&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -272,7 +274,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Contact"
+    NavigationPropertyName="Contact" />
   <field
     Id="&quot;d9905ecc-f4ab-4455-9ce6-d71133f66172&quot;"
     FieldName="&quot;SignedDatetime&quot;"
@@ -283,7 +287,7 @@
     ObjectTableName="&quot;TermsofUseSignature&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="0"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -358,7 +362,7 @@
     ObjectTableName="&quot;TermsofUseSignature&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="40"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -401,7 +405,7 @@
     ShortFieldLable="&quot;TermsofUseVersion&quot;"
     ShortFieldLableDefaultText="&quot;Terms of Use Version&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -422,7 +426,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="TermsofUse"
+    NavigationPropertyName="TermsofUse" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

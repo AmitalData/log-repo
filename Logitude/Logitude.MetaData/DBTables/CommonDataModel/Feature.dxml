@@ -2,7 +2,8 @@
 <Table
   Name="Features"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -27,7 +28,7 @@
   <Column
     Name="Code"
     Type="varchar"
-    Size="80">
+    Size="120">
     <Constraints
       Nullable="false" />
   </Column>

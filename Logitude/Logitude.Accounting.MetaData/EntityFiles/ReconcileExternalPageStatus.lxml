@@ -48,7 +48,9 @@
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
-  HasApiHelper="false">
+  HasApiHelper="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;d35af5c6-f63e-462b-ac30-c71dd1f64902&quot;"
     FieldName="&quot;Code&quot;"

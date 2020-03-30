@@ -2,7 +2,8 @@
 <Table
   Name="EmailProviders"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="ProviderNumber"
     Type="varchar"

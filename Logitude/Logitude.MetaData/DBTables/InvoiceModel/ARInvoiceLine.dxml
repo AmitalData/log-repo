@@ -2,7 +2,8 @@
 <Table
   Name="ARInvoiceLines"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Id"
     Type="varchar"
@@ -21,19 +22,19 @@
     Name="ForiegnCurrencyAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="LocalCurrencyAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InvoiceCurrencyAmount"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ExchangeRateDate"
@@ -59,7 +60,7 @@
     Name="ForiegnExchangeRate"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="LineNumber"
@@ -101,9 +102,10 @@
   </Column>
   <Column
     Name="ProfitCurrencyAmount"
-    Type="float">
+    Type="float"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="VatPercentage"
@@ -202,6 +204,12 @@
     Name="VatTypeId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsRegionalTax"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>

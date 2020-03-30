@@ -38,7 +38,9 @@
   IsEditable="true"
   ClientModuleName="&quot;Common&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;538f17b0-ac97-4cbb-8aab-dcec86a58e36&quot;"
     FieldName="&quot;Code&quot;"
@@ -170,7 +172,7 @@
     Id="&quot;86d93bd4-9756-46cf-92c6-220626c8bca6&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;RateClass&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

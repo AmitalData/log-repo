@@ -46,14 +46,16 @@
   DescriptionTextCodeId="&quot;1-69453&quot;"
   SearchFields="&quot;Commodity,Commodities,,Id,&quot;"
   ClientModuleName="&quot;Common&quot;"
-  DescriptionDefaultText="&quot;Manage the commodities to be used in shipments and printed and sent in FWB and FHL messages.&quot;">
+  DescriptionDefaultText="&quot;Manage the commodities to be used in shipments and printed and sent in FWB and FHL messages.&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;81fe28b6-ef03-4b43-90c2-7f0c9174db31&quot;"
     FieldName="&quot;Id&quot;"
     ObjectTableName="&quot;Commodity&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="false"
@@ -363,7 +365,7 @@
     ObjectTableName="&quot;Commodity&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="true"
     DisplayOnLookUp="false"
     CanFilter="true"
@@ -464,7 +466,7 @@
     FullFieldLable="&quot;AirlineId&quot;"
     DefaultText="&quot;Airline&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     IsComposition="false"
     IsMaxLength="false"
@@ -490,7 +492,9 @@
     HelpTextCode="&quot;AirlineId&quot;"
     IsSpellCheckedHelpLocalDefaultText="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ForeignEntity="Card"
+    NavigationPropertyName="Airline" />
   <Records />
   <Query
     Code="&quot;All Commodities&quot;"

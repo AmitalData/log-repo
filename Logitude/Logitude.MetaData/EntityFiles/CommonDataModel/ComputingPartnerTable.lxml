@@ -35,7 +35,9 @@
   IsLookUp="false"
   IsEditable="true"
   NoPMController="true"
-  NoViewsController="true">
+  NoViewsController="true"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;fd9e6b06-b598-4d18-b552-6bdf48d6ccb2&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -127,7 +129,7 @@
     ObjectTableName="&quot;ComputingPartnerTable&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -191,7 +193,7 @@
     ObjectTableName="&quot;ComputingPartnerTable&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -255,7 +257,7 @@
     ObjectTableName="&quot;ComputingPartnerTable&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -319,7 +321,7 @@
     ObjectTableName="&quot;ComputingPartnerTable&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -383,7 +385,7 @@
     ObjectTableName="&quot;ComputingPartnerTable&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -449,7 +451,7 @@
     ObjectTableName="&quot;ComputingPartnerTable&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -566,12 +568,15 @@
     DisplayInDocumentReferences="false"
     CopyToDW="false"
     HasTemplate="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser" />
   <field
     Id="&quot;b0e42596-3465-4286-bbc1-22589a15c296&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -629,12 +634,15 @@
     DisplayInDocumentReferences="false"
     CopyToDW="false"
     HasTemplate="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;210b011e-f682-47e2-bb0e-9d17d7bc9863&quot;"
     FieldName="&quot;ObjectTableId&quot;"
@@ -698,7 +706,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="ObjectTable"
+    NavigationPropertyName="ObjectTable" />
   <field
     Id="&quot;4aafecf8-23d3-41db-baae-1c4774aa85c5&quot;"
     FieldName="&quot;ComputingPartnerId&quot;"
@@ -762,7 +773,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="ComputingPartner"
+    NavigationPropertyName="ComputingPartner" />
   <field
     Id="&quot;4bc5e6ce-c8e0-4b1c-ab45-a8f231e4cef7&quot;"
     FieldsDataType="&quot;Text&quot;"
