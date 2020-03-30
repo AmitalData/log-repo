@@ -488,7 +488,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
 
     ComputeVolumetricWeight() {
-        //this.volume = AppTool.ComputePackageVolume(null, null, null, null, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode);
         this.weight = AppTool.ComputePackageVolumetricWeight(null, null, null, null, this.Volume, this.ChargeableWeight, this.Ratio, null, this.VolumeUnitCode, this.GrossWeightCode, this.WeightCode);
     }
     ComputeVolume() {
@@ -677,7 +676,6 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     private ValidateShipmentTariffContainers() {
         var isValid = true;
         if (this.TariffType == "OFC") {
-            this.BCNTGrouped = ShipmentTool.GetByPckageTypeGrouped( this.FatherComponent.EntityPM);
             var checkIfShipmentHasTariffContainers = this.BCNTGrouped.filter(a => a.PackageTypeId == this.ContainerType1Id ||
                 a.PackageTypeId == this.ContainerType2Id ||
                 a.PackageTypeId == this.ContainerType3Id ||
@@ -707,9 +705,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                     notes = "Includes the following charges as all-in: " + item.AllIn;
                 }
 
+                // FCL Shipment 
                 if (this.TariffType == "OFC") {
-                     // Generate FCL Frieght
-                    if (this.ContainerType1Id) {
+                    // Generate FCL Frieght
+                    var shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType1Id)[0];
+                    if (this.ContainerType1Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType1Id, this.Quantity1);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
@@ -717,7 +717,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                             });
                         }
                     }
-                    if (this.ContainerType2Id) {
+                    shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType2Id)[0];
+                    if (this.ContainerType2Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType2Id, this.Quantity2);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
@@ -725,7 +726,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                             });
                         }
                     }
-                    if (this.ContainerType3Id) {
+                    shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType3Id)[0];
+                    if (this.ContainerType3Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType3Id, this.Quantity3);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
@@ -733,7 +735,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                             });
                         }
                     }
-                    if (this.ContainerType4Id) {
+                    shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType4Id)[0];
+                    if (this.ContainerType4Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType4Id, this.Quantity4);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
@@ -741,7 +744,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                             });
                         }
                     }
-                    if (this.ContainerType5Id) {
+                    shipmentContainer = this.BCNTGrouped.filter(f => f.PackageTypeId == this.ContainerType5Id)[0];
+                    if (this.ContainerType5Id && shipmentContainer) {
                         this.AddNewTariffPayable(item, notes, this.ContainerType5Id, this.Quantity5);
                         if (item != null && item.SurchargesWithoutAllIn != null) {
                             item.SurchargesWithoutAllIn.forEach(surcharge => {
