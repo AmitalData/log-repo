@@ -59,7 +59,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.QBOOAuth = entityPM.QBOOAuth;
             poco.AllowManualARPaymentNumber = entityPM.AllowManualARPaymentNumber;
             poco.AllowRegionalTaxManagement = entityPM.AllowRegionalTaxManagement;
-
+            poco.TransferToFTPActivated = entityPM.TransferToFTPActivated;
+            poco.TransferFTPDetailId = entityPM.TransferFTPDetailId;
         }
     }
 }

@@ -356,7 +356,7 @@
                                                 </table>
                                             </td>
                                         </tr>
-
+                                        
                                         <!-- AR Invoice Transfering Enabled -->
                                         <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO || IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI">
                                             <td style="width:185px;">
@@ -402,11 +402,11 @@
                                             </td>
                                         </tr>
 
-                            <!-- AP Payment Transfering Enabled -->
-                            <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO || IsAccountingSystem_AI_GI">
-                                <td style="width:185px;">
-                                    <LogLabel [ObjectFieldName]="'IsAPPaymentsTransferEnabled'" [Text]="'AP Payment transfer enabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
+                                        <!-- AP Payment Transfering Enabled -->
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO || IsAccountingSystem_AI_GI">
+                                            <td style="width:185px;">
+                                                <LogLabel [ObjectFieldName]="'IsAPPaymentsTransferEnabled'" [Text]="'AP Payment transfer enabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
 
                                             <td style="width:200px;">
                                                 <LogCheckBox [ObjectFieldName]="'IsAPPaymentsTransferEnabled'" [Checked]="IsAPPaymentsTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
@@ -416,6 +416,40 @@
                                                 <div></div>
                                             </td>
                                         </tr>
+
+                                        <!--FTP-->
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_AI_GI">
+                                            <td style="width:185px;">
+                                                <LogLabel [ObjectFieldName]="'TransferToFTPActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:200px;">
+                                                <LogCheckBox [ObjectFieldName]="'TransferToFTPActivated'" [Checked]="TransferToFTPActivated" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                            </td>
+
+                                            <td colspan="2">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Out Settings -->
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_AI_GI">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'TransferFTPDetailHost'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'TransferFTPDetailHost'" [Text]="TransferFTPDetailHost" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td colspan="2" style="padding-left: 5px;">
+                                                <div>
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditFTPClicked()" [IsEnabled]="TransferFTPDetailId != null"></IconButton>
+                                                    <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddFTPClicked()"></IconButton>
+                                                </div>
+                                            </td>
+                                        </tr>
+
 
                                         <tr>
                                             <td>

@@ -270,6 +270,21 @@ export class AccountingSettingPM {
     public set AllowRegionalTaxManagement(newValue: boolean) { if (this.allowRegionalTaxManagement != newValue) { this.allowRegionalTaxManagement = newValue; this.MarkAsDirty("AllowRegionalTaxManagement"); } }
        
 	 
+    private transferToFTPActivated: boolean;
+    public get TransferToFTPActivated() { return this.transferToFTPActivated; }
+    public set TransferToFTPActivated(newValue: boolean) { if (this.transferToFTPActivated != newValue) { this.transferToFTPActivated = newValue; this.MarkAsDirty("TransferToFTPActivated"); } }
+       
+	 
+    private transferFTPDetailId: string;
+    public get TransferFTPDetailId() { return this.transferFTPDetailId; }
+    public set TransferFTPDetailId(newValue: string) { if (this.transferFTPDetailId != newValue) { this.transferFTPDetailId = newValue; this.MarkAsDirty("TransferFTPDetailId"); } }
+       
+	 
+    private transferFTPDetailHost: string;
+    public get TransferFTPDetailHost() { return this.transferFTPDetailHost; }
+    public set TransferFTPDetailHost(newValue: string) { if (this.transferFTPDetailHost != newValue) { this.transferFTPDetailHost = newValue; this.MarkAsDirty("TransferFTPDetailHost"); } }
+       
+	 
 
     public OldEntityPM: AccountingSettingPM;
 		

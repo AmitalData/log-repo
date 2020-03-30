@@ -30,7 +30,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public AccountingSettingPM GetSingleAccountingSettingPMById(int id)
         {
-            AccountingSettingPM account = (from a in repository.context.AccountingSettings
+            AccountingSettingPM account = (from a in repository.context.AccountingSettings.Include("TransferFTPDetail")
                                            where a.Id == id
                                            select new AccountingSettingPM()
                                            {
@@ -79,6 +79,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                QBOOAuth=a.QBOOAuth,
                                                AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                               TransferToFTPActivated = a.TransferToFTPActivated,
+                                               TransferFTPDetailId = a.TransferFTPDetailId,
+                                               TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
                                            }).FirstOrDefault();
 
             return account;
@@ -86,7 +89,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public AccountingSettingPM GetSinglePM(int id)
         {
-            AccountingSettingPM account = (from a in repository.context.AccountingSettings
+            AccountingSettingPM account = (from a in repository.context.AccountingSettings.Include("TransferFTPDetail")
                                            where a.Id == id
                                            select new AccountingSettingPM()
                                            {
@@ -135,6 +138,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                QBOOAuth = a.QBOOAuth,
                                                AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                               TransferToFTPActivated = a.TransferToFTPActivated,
+                                               TransferFTPDetailId = a.TransferFTPDetailId,
+                                               TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
                                            }).FirstOrDefault();
 
             if (account != null)
@@ -156,7 +162,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
 
-                    var systems = (from a in repository.context.AccountingSettings
+                    var systems = (from a in repository.context.AccountingSettings.Include("TransferFTPDetail")
                                    where a.Id == id
                                    select new AccountingSettingPM()
                                    {
@@ -205,6 +211,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        QBOOAuth = a.QBOOAuth,
                                        AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                        AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                       TransferToFTPActivated = a.TransferToFTPActivated,
+                                       TransferFTPDetailId = a.TransferFTPDetailId,
+                                       TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
                                    });
 
                     foreach (var c in systems)
@@ -227,7 +236,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             else
             {
-                entity = (from a in repository.context.AccountingSettings
+                entity = (from a in repository.context.AccountingSettings.Include("TransferFTPDetail")
                           where a.Id == id
                           select new AccountingSettingPM()
                           {
@@ -276,6 +285,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               QBOOAuth = a.QBOOAuth,
                               AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                               AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                              TransferToFTPActivated = a.TransferToFTPActivated,
+                              TransferFTPDetailId = a.TransferFTPDetailId,
+                              TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
                           }).FirstOrDefault();
             }
 
@@ -333,6 +345,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             QBOOAuth = a.QBOOAuth,
                                                             AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                             AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                                            TransferToFTPActivated = a.TransferToFTPActivated,
+                                                            TransferFTPDetailId = a.TransferFTPDetailId,
                                                         });
 
             return accounts;
@@ -388,6 +402,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            QBOOAuth = a.QBOOAuth,
                                                            AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
                                                            AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
+                                                           TransferToFTPActivated = a.TransferToFTPActivated,
+                                                           TransferFTPDetailId = a.TransferFTPDetailId,
                                                        };
             return result;
         }

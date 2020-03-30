@@ -123,8 +123,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public IsAccountingSystem_HV_RH: boolean = false;
     public IsAccountingSystem_QB_QBO: boolean = false;
     public IsAccountingSystem_QB_QBO_old: boolean = false;
-
     public IsAccountingSystem_AI_GI: boolean = false;
+    public CanTransferToFTP: boolean = false;
     SetUIProperties() {
         var isAccountingSystem_NO: boolean = false;
         var isAccountingSystem_HV_RH: boolean = false;
@@ -156,7 +156,6 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         this.IsAccountingSystem_HV_RH = isAccountingSystem_HV_RH;
         this.IsAccountingSystem_QB_QBO = isAccountingSystem_QB_QBO;
         this.IsAccountingSystem_QB_QBO_old = IsAccountingSystem_QB_QBO_old;
-
         this.IsAccountingSystem_AI_GI = isAccountingSystem_AI_GI;
 
         var isDemoTenant = false;
@@ -174,27 +173,30 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             this.UIProperties.SetEnabled("IsAPInvoicesTransferEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsARPaymentsTransferEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsAPPaymentsTransferEnabled", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("TransferToFTPActivated", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("TransferFTPDetailId", this.ObjectTableName, false);
         }
 
         else {
             var isARInvoicesTransferEnabled = false;
             var isAPInvoicesTransferEnabled = false;
-
             var isARPaymentsTransferEnabled = false;
             var isAPPaymentsTransferEnabled = false;
+            var canTransferToFTP = false;
 
             if (SessionLocator.AccountingSystemPM) {
                 isARInvoicesTransferEnabled = SessionLocator.AccountingSystemPM.AllowARInvoicesTransfer;
                 isAPInvoicesTransferEnabled = SessionLocator.AccountingSystemPM.AllowAPInvoicesTransfer;
                 isARPaymentsTransferEnabled = SessionLocator.AccountingSystemPM.AllowARPaymentsTransfer;
                 isAPPaymentsTransferEnabled = SessionLocator.AccountingSystemPM.AllowAPPaymentsTransfer;
+                canTransferToFTP = SessionLocator.AccountingSystemPM.CanTransferToFTP;
             }
 
             this.UIProperties.SetEnabled("IsARInvoicesTransferEnabled", this.ObjectTableName, isARInvoicesTransferEnabled);
             this.UIProperties.SetEnabled("IsAPInvoicesTransferEnabled", this.ObjectTableName, isAPInvoicesTransferEnabled);
-
             this.UIProperties.SetEnabled("IsARPaymentsTransferEnabled", this.ObjectTableName, isARPaymentsTransferEnabled);
             this.UIProperties.SetEnabled("IsAPPaymentsTransferEnabled", this.ObjectTableName, isAPPaymentsTransferEnabled);
+            this.UIProperties.SetEnabled("TransferToFTPActivated", this.ObjectTableName, canTransferToFTP);
         }
 
         this.UIProperties.SetEnabled("ARInvoiceTransferStartDate", this.ObjectTableName, false);
@@ -300,6 +302,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                         this.IsAPInvoicesTransferEnabled = SessionLocator.AccountingSystemPM.AllowAPInvoicesTransfer;
                         this.IsARPaymentsTransferEnabled = SessionLocator.AccountingSystemPM.AllowARPaymentsTransfer;
                         this.IsAPPaymentsTransferEnabled = SessionLocator.AccountingSystemPM.AllowAPPaymentsTransfer;
+                        this.CanTransferToFTP = SessionLocator.AccountingSystemPM.CanTransferToFTP;
 
                         this.SetUIProperties();
                     }
@@ -405,7 +408,6 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         }
     }
 
-
     get IsAPPaymentsTransferEnabled() { return this.EntityPM.IsAPPaymentsTransferEnabled; }
     set IsAPPaymentsTransferEnabled(value: boolean) {
         if (this.EntityPM.IsAPPaymentsTransferEnabled != value) {
@@ -413,8 +415,30 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         }
     }
 
+    get TransferToFTPActivated() { return this.EntityPM.TransferToFTPActivated; }
+    set TransferToFTPActivated(value: boolean) {
+        if (this.EntityPM.TransferToFTPActivated != value) {
+            this.EntityPM.TransferToFTPActivated = value;
 
+            this.SetUIProperties();
+        }
+    }
 
+    get TransferFTPDetailId() { return this.EntityPM.TransferFTPDetailId; }
+    set TransferFTPDetailId(value: string) {
+        if (this.EntityPM.TransferFTPDetailId != value) {
+            this.EntityPM.TransferFTPDetailId = value;
+
+            this.SetUIProperties();
+        }
+    }
+
+    get TransferFTPDetailHost() { return this.EntityPM.TransferFTPDetailHost; }
+    set TransferFTPDetailHost(value: string) {
+        if (this.EntityPM.TransferFTPDetailHost != value) {
+            this.EntityPM.TransferFTPDetailHost = value;
+        }
+    }
 
     public get TransferToDropboxActivated() { return this.EntityPM.TransferToDropboxActivated; }
     public set TransferToDropboxActivated(value: boolean) {
@@ -724,5 +748,38 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         logWindow.Title = windowTitle;
         logWindow.IsShowCloseButton = false;
         logWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/DropBox/DropBoxConnectionComponent');
+    }
+
+    AddFTPClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Add FTP Detail";
+        logWindow.WindowArgs = { IsNew: true };
+        logWindow.Show('./Common/Components/Maintenance/CustomsInterface/FTPDetailComponent');
+
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.TransferFTPDetailId = comp.EntityPM.Id;
+                    this.TransferFTPDetailHost = comp.EntityPM.Host;
+                }
+            });
+        });
+    }
+    EditFTPClicked() {
+        if (!AppTool.IsNullOrEmpty(this.TransferFTPDetailId)) {
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = "Edit FTP Detail";
+            logWindow.WindowArgs = { IsNew: false, EntityId: this.TransferFTPDetailId };
+            logWindow.Show('./Common/Components/Maintenance/CustomsInterface/FTPDetailComponent');
+
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        this.TransferFTPDetailHost = comp.EntityPM.Host;
+                    }                
+                });
+            });
+        }
     }
 }
