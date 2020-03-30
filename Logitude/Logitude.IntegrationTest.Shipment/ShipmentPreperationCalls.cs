@@ -35,13 +35,13 @@ namespace Logitude.IntegrationTest.Shipment
                 throw new Exception(Ex.Message);
             }
         }
-        public static async Task PostShipment(string shipmentLevelCode, string directionId, string transportModeId)
+       /* public static async Task PostShipment(string shipmentLevelCode, string directionId, string transportModeId)
         {
             shipmentPM = CreateShipmentPM(shipmentLevelCode, directionId, transportModeId);
             HttpResponseMessage response = await RestClientService.PostAsync(shipmentPM, "shipment");
             shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
             ShipmentVariables.ShipmentIdFromPrepare = shipmentPM.Id;
-        }
+        }*/
 
         private static ShipmentPM  CreateShipmentPM(string shipmentLevelCode, string directionId, string transportModeId)
         {
