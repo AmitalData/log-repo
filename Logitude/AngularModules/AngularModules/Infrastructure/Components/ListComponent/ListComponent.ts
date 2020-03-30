@@ -2383,7 +2383,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                         } else if (this.ObjectTableName == "AccountingIntegrityCheck") {
                             this.RunNewAccountingIntegrityCheckWizard();
                         }
-
+                        else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
+                            this.RunNewCustomsFileWizard();
+                        }
+                        
                         else {
 
                             this.RunNewGenaricEntity();
@@ -2955,6 +2958,18 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                 });
             });
+    }
+
+    RunNewCustomsFileWizard() {
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            AmitalGatewayUtil.Instance.NewCustomsFileScreen(
+                "ShowCFIFILEMMoveSIToOCRScreen");
+        } else {
+            var myMessageWindow = new MessageWindow();
+            let mess = "NewCustomsFileScreen";
+            myMessageWindow.Show(mess);
+            this.RefreshBtnClick();
+        }
     }
 
     RunNewMasterWizard() {

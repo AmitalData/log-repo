@@ -186,6 +186,23 @@ export class AmitalGatewayUtil {
             " העברת חשבונות ספק ל-OCR");
     }
 
+
+    public NewCustomsFileScreen(
+        ViewModelName: string
+    ) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage("", "", ViewModelName);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.NewCustomsFileScreen",
+            "CFIHMAIN.LogitudeTask",
+            "NewCustomsFileScreen",
+            unifreightMessageM,
+            "פתיחת תיק עמילות חדש");
+    }
+
+
     SendTotangoUserActivity(module: string, activity: string) {
         var req = new UnifreightMessageM();
         req.Requset.push(["module", module]);

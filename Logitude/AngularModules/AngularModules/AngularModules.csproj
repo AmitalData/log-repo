@@ -7875,6 +7875,7 @@
     <Folder Include="Booking\DataContracts\" />
     <Folder Include="Booking\EntityPMInitServices\" />
     <Folder Include="CRM\Components\Tickets\MainTab\" />
+    <Folder Include="CustomsModules\CustomsReferant\Components\NewEntity\" />
     <Folder Include="CustomsModules\PaymentOrder\" />
     <Folder Include="Customs\Components\CouriersVat\" />
     <Folder Include="Customs\Components\Courier\" />

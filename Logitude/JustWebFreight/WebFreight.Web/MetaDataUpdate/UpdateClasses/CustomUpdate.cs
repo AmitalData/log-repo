@@ -12952,6 +12952,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
              AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.All", DefaultText = "All", LocalDefaultText = "הכל", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CourierAlreadyExist", DefaultText = "There is already master courier with the same values", LocalDefaultText = "קיים בלדר ראשי עם נתונים זהים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.NewCustomsFile", DefaultText = "New Customs File", LocalDefaultText = "פתיחת תיק חדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
 
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.CustomBank", DefaultText = "Custom Banks", LocalDefaultText = "בנקים מותאמים אישית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);

@@ -111,9 +111,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
-			      				    NewWizardComponentPath =  "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewDeclarationComponent",
+			      				    NewWizardComponentPath =  "",
 			      				    NoTS =  false,
-			      				    NoDefaultFeatures =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    Code1 =  "fa77",
@@ -122,7 +121,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
