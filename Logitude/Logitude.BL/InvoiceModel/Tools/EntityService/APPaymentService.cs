@@ -31,6 +31,7 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using System.Xml.Serialization;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.InvoiceModel.EntityOtherServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -48,6 +49,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private ContactPM loggedContact;
         private List<APPaymentInvoicePM> changedList;
         private bool SetVoided = false;
+        private bool isTransferToDropbox;
+        private bool TransferToDropboxActivated;
+        bool setApproved;
+
         public APPaymentService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -58,8 +63,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentRepository = new APInvoicePaymentRepository(this.objectContext);
             this.changedList = new List<APPaymentInvoicePM>();
             this.loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
+            this.GetAccountingSystem();
         }
-        bool setApproved;
+        
+        private void GetAccountingSystem()
+        {
+            AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
+            AccountingSystemRepository accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
+            AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
+            AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+            this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
+            this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+        }
+
+       
         public void Create(APPaymentPM theEntityPm)
         {
             this.isNewEntity = true;
@@ -97,6 +114,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.BuildSearchFields();
 
+            // DropBox
+            this.CreateAPPaymentMessage(setApproved);
+
             //Full Accounting 
             AddAPPaymentJournalAndJournalLines(theEntityPm, setApproved);
             this.VoidAPPaymentInFullAccounting(theEntityPm, setVoided);
@@ -105,6 +125,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.SubmitChanges();
             this.TraceConnected();
             this.GetForeignFields();
+        }
+
+        private void CreateAPPaymentMessage(bool setApproved)
+        {
+            if (setApproved && this.isTransferToDropbox && this.TransferToDropboxActivated)
+            {
+                if (!string.IsNullOrEmpty(entityPM.TransferError))
+                {
+                    throw new ApplicationException(entityPM.TransferError);
+                }
+                else
+                {
+                    this.payment = paymentRepository.GetSingleAPPayment(this.entityPM.Id);
+                    List<APPayment> entities = new List<APPayment>();
+                    entities.Add(this.payment);
+                    APPaymentMessageHelper myHelper = new APPaymentMessageHelper(entities, this.payment.PaymentNo + ".xml", tenant, true);
+                    myHelper.Transfer();
+                }
+            }
         }
 
         public FullAccountingSettingPM GetFullAccountingSetting(APPaymentPM entityPM)
@@ -408,6 +447,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.BuildSearchFields();
+
+            // DropBox
+            this.CreateAPPaymentMessage(setApproved);
 
             //Full Accounting 
             AddAPPaymentJournalAndJournalLines(theEntityPm, setApproved);
