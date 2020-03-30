@@ -95,6 +95,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                  LayoutDirection = a.LayoutDirection
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -180,6 +181,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                              LayoutDirection= a.LayoutDirection
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -267,6 +269,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                      LayoutDirection = a.LayoutDirection
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -351,6 +354,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                  LayoutDirection = a.LayoutDirection
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -423,6 +427,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                              LayoutDirection = a.LayoutDirection
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -510,6 +515,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                      LayoutDirection = a.LayoutDirection
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -595,6 +601,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                  LayoutDirection = a.LayoutDirection
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -668,6 +675,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                              LayoutDirection = a.LayoutDirection
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -754,6 +762,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                      LayoutDirection = a.LayoutDirection
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -837,6 +846,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                  LayoutDirection = a.LayoutDirection
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -909,6 +919,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                              LayoutDirection = a.LayoutDirection
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -987,6 +998,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                            UserRoles = a.UserRoles,
                                            AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                           LayoutDirection = a.LayoutDirection
                                        };
             return users;
         }
@@ -1051,6 +1063,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                             UserRoles = a.UserRoles,
                             AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                            LayoutDirection = a.LayoutDirection
                         };
 
             IQueryable<UserPM> query2 = null;
@@ -1339,6 +1352,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                  UserRoles = a.UserRoles,
+                                 LayoutDirection = a.LayoutDirection
                              }).FirstOrDefault();
 
             if (entity != null)
@@ -1401,6 +1415,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         IsTwoFactorAuthenticationEnabled = a.IsTwoFactorAuthenticationEnabled,
                                         DocumentFilingInbox = a.DocumentFilingInbox,
                                         ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                        
                                     }).ToList();
             return users;
         }
@@ -1447,6 +1462,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                      LayoutDirection = a.LayoutDirection
                                   }).ToList();
             return users;
         }
@@ -1574,6 +1590,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                           ShowInboxToolTip = a.ShowInboxToolTip,
                           ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                          LayoutDirection = a.LayoutDirection
                       }).FirstOrDefault();
 
             if (entity != null)
