@@ -35,14 +35,16 @@
 
     <div [style.text-align]="'right'" class="TextTrimming" *ngIf="fieldName == 'AccumulatedAmount'">{{ rowData[fieldName] | NumbersPipe:'N2'}}</div>
 
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'StandardInterestPercentage'">{{ rowData[fieldName] | NumbersPipe:'N2' }}%</div>
+    <div [style.text-align]="'right'" class="TextTrimming" *ngIf="fieldName == 'TotalInterest'">{{ rowData[fieldName] | NumbersPipe:'N2'}}</div>
+
+    <!--<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'StandardInterestPercentage'">{{ rowData[fieldName] | NumbersPipe:'N2' }}%</div>
 
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'ExceptionalInterestPercentage'">{{ rowData[fieldName] | NumbersPipe:'N2' }}%</div>
 
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'CreditInterestPercentage'">{{ rowData[fieldName] | NumbersPipe:'N2' }}%</div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'CreditInterestPercentage'">{{ rowData[fieldName] | NumbersPipe:'N2' }}%</div>-->
 
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'ShowDetails'">
-        <button style="height: 18px;margin-top: 3px;" class="Button sm" (click)="LogWindowShow(item)">
+    <div [style.text-align]="'center'" class="TextTrimming" *ngIf="fieldName == 'ShowDetails'">
+        <button style="height: 18px;margin:auto;margin-top:3px;width:80%;" class="Button sm" (click)="LogWindowShow(item)">
             {{'InterestReport.O.ShowDetails' | TextCodeTranslationPipe}}
         </button>
     </div>

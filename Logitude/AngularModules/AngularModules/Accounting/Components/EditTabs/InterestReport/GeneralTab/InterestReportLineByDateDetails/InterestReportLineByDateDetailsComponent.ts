@@ -21,12 +21,15 @@ export class InterestReportLineByDateDetailsComponent {
     public EntityPM: InterestReportLinesByDatePM;
     public myService: InterestTransactionExtendedListService;
     public InterestTransactions: ObservableCollection;
+    public InterestLineDataList: ObservableCollection;
+
     public isRTL: boolean = false;
     public IconCode: string=null;
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.myService = new InterestTransactionExtendedListService();
         this.InterestTransactions = new ObservableCollection([]);
+        this.InterestLineDataList = new ObservableCollection([]);
     }
 
     //Grid Header Label
@@ -36,6 +39,10 @@ export class InterestReportLineByDateDetailsComponent {
     public CurrencyCodeHeader = TextCodeTranslator.Translate("InterestTransaction.F.CurrencyCode");
     public ForiegnAmountHeader = TextCodeTranslator.Translate("InterestTransaction.F.ForeignAmount");
     public JournalNumberHeader = TextCodeTranslator.Translate("InterestTransaction.F.JournalNumber");
+    public TotalAmountHeader = TextCodeTranslator.Translate("InterestReportLinesByDate.F.TotalAmount");
+    public TotalInterestHeader = TextCodeTranslator.Translate("InterestReportLinesByDate.F.TotalInterest");
+    public PercentageHeader = TextCodeTranslator.Translate("InterestReportLinesByDate.O.Percentage");
+    public TotalHeader = TextCodeTranslator.Translate("InterestReportLinesByDate.O.Total");
 
     public interestTransactionsWithTotal: InterestTransactionsWithTotal;
     public TotalLocalAmount: number;
@@ -89,14 +96,39 @@ export class InterestReportLineByDateDetailsComponent {
         this.EntityPM = entityPM;
         this.GetAllInterestLinesByDate(this.EntityPM.InterestReportId, this.EntityPM.FromDate);
         this.ReportIsLoading = true;
+        this.BuildInterestLineData();
     }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+    InterestLineParameters:InterestLineParameters[]=[];
+    BuildInterestLineData(){
+        var interestLine1:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.StandardInterestPercentage"),this.EntityPM.StandardInterestPercentage,this.EntityPM.StandardInterestAmount,this.EntityPM.StandardInterestAmount * this.EntityPM.StandardInterestPercentage);
+        var interestLine2:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.ExceptionalInterestPercentage"),this.EntityPM.ExceptionalInterestPercentage,this.EntityPM.ExceptionalInterestAmount,this.EntityPM.ExceptionalInterestAmount * this.EntityPM.ExceptionalInterestPercentage);
+        var interestLine3:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.CreditInterestPercentage"),this.EntityPM.CreditInterestPercentage,this.EntityPM.CreditInterestAmount,this.EntityPM.CreditInterestAmount * this.EntityPM.CreditInterestPercentage);
+        this.InterestLineParameters.push(interestLine1);
+        this.InterestLineParameters.push(interestLine2);
+        this.InterestLineParameters.push(interestLine3);
+        this.InterestLineDataList.InsertCollection(this.InterestLineParameters);
+    }
 }
-
-export class  InterestTransactionsWithTotal {
+ 
+  export class  InterestTransactionsWithTotal {
     public interestTransactionLists: InterestTransactionList[];
     public TotalLocalAmount: number;
+  }
+  export class  InterestLineParameters {
+    public Title:string;
+    public Percentage: number;
+    public TotalInterest: number;
+    public TotalAmount: number;
+
+    constructor(Title:string,Percentage:number,TotalInterest:number,TotalAmount:number){
+        this.Title=Title;
+        this.Percentage=Percentage;
+        this.TotalInterest=TotalInterest;
+        this.TotalAmount=TotalAmount;
+              }
+               
   }

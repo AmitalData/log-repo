@@ -45,8 +45,63 @@
 
 <div class="TabHolder">
     <table>
-        <tr style="height: 79%;">
-            <td>
+        <tr style="height: 25%;">
+            <td colspan="2">
+                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestLineDataList" [UseVirtuallization]="true">
+
+                  
+
+                    <!--InterestValueDate -->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="''">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.Title}} </div>
+                        </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!--Percentage-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="PercentageHeader">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.Percentage | NumbersPipe:'N2'}}% </div>
+                        </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!--TotalAmount-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="TotalAmountHeader">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <div [style.text-align]="'right'"> {{item.TotalInterest | NumbersPipe:'N2'}} </div>
+                        </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!--TotalInterest-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="TotalInterestHeader">
+                        <ng-template let-item>
+                        <log-cell-template  #logcelltemplate>
+                            <div [style.text-align]="'right'"> {{item.TotalAmount | NumbersPipe:'N2'}} </div>
+                        </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+               
+
+                </logitude-edit-grid>
+ 
+            </td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td *ngIf="EntityPM"><span style="color:#3c4949;font-size: 16px;"> {{'InterestReportLinesByDate.O.Total' | TextCodeTranslationPipe}}</span> <span style="color: grey;font-size: 16px;">{{EntityPM.TotalInterest}}</span></td>
+            <td *ngIf="EntityPM"><span style="color:#3c4949;font-size: 16px;">{{'InterestReportLinesByDate.F.CalculationDetails' | TextCodeTranslationPipe}}</span> <span style="color: grey;font-size: 16px;">{{EntityPM.CalculationDetails}}</span></td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td colspan="2">{{'InterestReportLinesByDate.O.TransactionDetails' | TextCodeTranslationPipe}}</td>
+        </tr>
+        <tr style="height: 40%;">
+            <td colspan="2">
                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestTransactions" [UseVirtuallization]="true">
 
                     <!-- InterestEntityTypeCode -->
@@ -109,6 +164,7 @@
         <tr><td><div></div></td></tr>
     </table>
 </div>
+ 
 
 <!-- Footer -->
 <div style="position: absolute; left: -15px; bottom: -10px; right: -15px;">

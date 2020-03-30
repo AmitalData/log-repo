@@ -122,6 +122,11 @@ export class InterestReportLinesByDatePM {
     public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
        
 	 
+    private totalInterest: number;
+    public get TotalInterest() { return this.totalInterest; }
+    public set TotalInterest(newValue: number) { if (this.totalInterest != newValue) { this.totalInterest = newValue; this.MarkAsDirty("TotalInterest"); } }
+       
+	 
 
     public OldEntityPM: InterestReportLinesByDatePM;
 	
