@@ -2243,6 +2243,10 @@
     <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.Designer.cs">
       <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.cs" />
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.Designer.cs">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -4048,6 +4052,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.resx">
       <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003290823147_UsersLayoutDirectionMigration.resx">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
