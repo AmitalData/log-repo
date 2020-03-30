@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -22,23 +23,23 @@ import {WarehouseEntryList} from '../../EntityLists/WarehouseEntryList';
 @Injectable()
 
 export class WarehouseEntryListService {
-	private _http: Http;
+	private _http: HttpClient;
     private _apiUrl: string;   
 	public static CachedData: Array<WarehouseEntryList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/warehouseentryviews';  
     }
 
     getSingle(id: string) {
 	   
-        var authHeader = new Headers();
+        
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var list = response.json();
+                var list = response;
                     
                 var entity: WarehouseEntryList;
 				if(list)
@@ -54,19 +55,19 @@ export class WarehouseEntryListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntry", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     getAll() {
         
-	   var authHeader = new Headers();
+	   
        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl+'/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-              var allLists = response.json();
+              var allLists = response;
               var _mappedListsArray: Array< WarehouseEntryList> = [];
 		      if(allLists)
 			  {
@@ -85,7 +86,7 @@ export class WarehouseEntryListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntry", "GetAllLists", ""); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 	
@@ -120,7 +121,7 @@ export class WarehouseEntryListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
+        
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
         
@@ -131,7 +132,7 @@ export class WarehouseEntryListService {
             }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array< WarehouseEntryList> = [];
 				if(serviceResponse.Result)
 				{
@@ -150,7 +151,7 @@ export class WarehouseEntryListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntry", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });        
     }
 

@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -23,24 +24,24 @@ import {WarehouseEntryPackagesReleasePM} from '../../EntityPMs/WarehouseEntryPac
 @Injectable()
 
 export class WarehouseEntryPackagesReleasePMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/warehouseentrypackagesreleases';      
     }
 
  get(entrypackageid: string, releasepackageid: string) {
          
          
-        var authHeader = new Headers();
+        
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
 		 return Observable.defer(() => {
                 return this._http.get(this._apiUrl+'/getsingle?'+'entrypackageid=' + entrypackageid+'&'+'releasepackageid=' + releasepackageid, {
                     headers: authHeader
                 }).map(response => {
-                    var pm = response.json();
+                    var pm = response;
 
                    
 					
@@ -59,7 +60,7 @@ export class WarehouseEntryPackagesReleasePMService {
 				 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 
@@ -68,7 +69,7 @@ export class WarehouseEntryPackagesReleasePMService {
         var callTime = new Date();        
         return Observable.defer(() => {
 
-                var authHeader = new Headers();
+                
                 authHeader.append('Token', SessionInfo.Token);
                 authHeader.append('Content-Type', 'application/json');
 
@@ -88,7 +89,7 @@ export class WarehouseEntryPackagesReleasePMService {
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
                         { headers: authHeader }).map((response) => {
 
-                            var pm = response.json();
+                            var pm = response;
 							if(pm)
 							{
                                var mappedResult:  WarehouseEntryPackagesReleasePM;
@@ -103,7 +104,7 @@ export class WarehouseEntryPackagesReleasePMService {
                             
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
@@ -123,7 +124,7 @@ export class WarehouseEntryPackagesReleasePMService {
             var callTime = new Date();         
             return Observable.defer(() => {
 
-                var authHeader = new Headers();
+                
                 authHeader.append('Token', SessionInfo.Token);
                 authHeader.append('Content-Type', 'application/json');
 
@@ -144,7 +145,7 @@ export class WarehouseEntryPackagesReleasePMService {
                         { headers: authHeader }).map((response) => {
                  
 
-                            var pm = response.json();
+                            var pm = response;
 							if(pm)
 							{
                                var mappedResult:  WarehouseEntryPackagesReleasePM;
@@ -157,7 +158,7 @@ export class WarehouseEntryPackagesReleasePMService {
 					                           
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 

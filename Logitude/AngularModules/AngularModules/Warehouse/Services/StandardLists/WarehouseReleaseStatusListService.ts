@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -22,24 +23,24 @@ import {WarehouseReleaseStatusList} from '../../EntityLists/WarehouseReleaseStat
 @Injectable()
 
 export class WarehouseReleaseStatusListService {
-	private _http: Http;
+	private _http: HttpClient;
     private _apiUrl: string;   
 	public static CachedData: Array<WarehouseReleaseStatusList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/warehousereleasestatusviews';  
     }
 
     getSingle(code: string) {
 	    var callTime = new Date();
-        var authHeader = new Headers();
+        
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
                 headers: authHeader
             }).map(response => {
-                var list = response.json();
+                var list = response;
                     
                 var entity: WarehouseReleaseStatusList;
 				if(list)
@@ -54,7 +55,7 @@ export class WarehouseReleaseStatusListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseReleaseStatus", "GetSingleList", 'code=' + code); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -63,14 +64,14 @@ export class WarehouseReleaseStatusListService {
     getAll() {
 
 	   var callTime = new Date();
-	   var authHeader = new Headers();
+	   
        authHeader.append('Token', SessionInfo.Token);
        return Observable.defer(() => {
             return this._http.get(this._apiUrl+'/getall', {
                 headers: authHeader
             }).map(response => {
 
-              var allLists = response.json();
+              var allLists = response;
               var _mappedListsArray: Array< WarehouseReleaseStatusList> = [];
 		      if(allLists)
 			  {
@@ -90,7 +91,7 @@ export class WarehouseReleaseStatusListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseReleaseStatus", "GetAll", ""); 
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -127,7 +128,7 @@ export class WarehouseReleaseStatusListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
+        
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
         
@@ -138,7 +139,7 @@ export class WarehouseReleaseStatusListService {
             }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array< WarehouseReleaseStatusList> = [];
 				if(serviceResponse.Result)
 				{
@@ -158,7 +159,7 @@ export class WarehouseReleaseStatusListService {
                  				
 				            
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });        
     }
 
@@ -208,7 +209,7 @@ export class WarehouseReleaseStatusListService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -286,7 +287,7 @@ export class WarehouseReleaseStatusListService {
 				}
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }		 
     }

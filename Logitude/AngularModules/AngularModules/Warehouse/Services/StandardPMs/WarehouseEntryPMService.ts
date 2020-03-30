@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -25,24 +26,24 @@ import {WarehouseEntryValidator} from '../../Validators/WarehouseEntryValidator'
 @Injectable()
 
 export class WarehouseEntryPMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/warehouseentries';      
     }
 
  get(id: string) {
          
          
-        var authHeader = new Headers();
+        
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
 		 return Observable.defer(() => {
                 return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
                     headers: authHeader
                 }).map(response => {
-                    var pm = response.json();
+                    var pm = response;
 
                    
 					
@@ -61,7 +62,7 @@ export class WarehouseEntryPMService {
 				 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 
@@ -70,7 +71,7 @@ export class WarehouseEntryPMService {
         var callTime = new Date();        
         return Observable.defer(() => {
 
-                var authHeader = new Headers();
+                
                 authHeader.append('Token', SessionInfo.Token);
                 authHeader.append('Content-Type', 'application/json');
 
@@ -96,7 +97,7 @@ export class WarehouseEntryPMService {
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
                         { headers: authHeader }).map((response) => {
 
-                            var pm = response.json();
+                            var pm = response;
 							if(pm)
 							{
                                var mappedResult:  WarehouseEntryPM;
@@ -111,7 +112,7 @@ export class WarehouseEntryPMService {
                             
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
@@ -131,7 +132,7 @@ export class WarehouseEntryPMService {
             var callTime = new Date();         
             return Observable.defer(() => {
 
-                var authHeader = new Headers();
+                
                 authHeader.append('Token', SessionInfo.Token);
                 authHeader.append('Content-Type', 'application/json');
 
@@ -158,7 +159,7 @@ export class WarehouseEntryPMService {
                         { headers: authHeader }).map((response) => {
                  
 
-                            var pm = response.json();
+                            var pm = response;
 							if(pm)
 							{
                                var mappedResult:  WarehouseEntryPM;
@@ -171,7 +172,7 @@ export class WarehouseEntryPMService {
 					                           
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
