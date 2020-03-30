@@ -1,35 +1,30 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 
 export class QueueMessagesWebService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QueueMessagesWebService';
     }
 
     UpdateTenantManagementStatistics(tenantId: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetUpdateTenantManagementStatistics?tenantId=' + tenantId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
-                                
+                //var myJsonResult = response;
                 //var serviceResponse: ServiceResponse;
                 //serviceResponse = new ServiceResponse();
                 //serviceResponse.Result = myJsonResult;
-                //return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+                return response;
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 }

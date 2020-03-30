@@ -10,6 +10,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     selector: 'DWAskUserFiltersComponent',
@@ -170,7 +171,7 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
         }
     }
     GetRowData(QueryData: DWQueryData) {
-        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe((myResult: ServiceResponse) => {
             if (!myResult.HasError) {
                 this.rowData = this.rowData.concat(myResult.Result.SQLDataResult);
                 this.PageIndex = this.PageIndex + 1000;
@@ -186,7 +187,7 @@ export class DWAskUserFiltersComponent extends BaseComponent implements OnInit {
                     this.CurrentSession.StartBusyIndicator("Loading " + this.count);
                     if (this.count == this.totalDataLoaded) {
                         this.PageIndex = this.PageIndex + 1;
-                        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
+                        this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe((myResult: ServiceResponse) => {
                             if (!myResult.HasError) {
                                 this.CurrentSession.StopBusyIndicator();
                                 this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count, IsParentTenant: this.isParentTenant});// more than 10000

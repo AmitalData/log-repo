@@ -618,8 +618,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             //this.ToSend()
             var next = true;
             if (next) {
-                this.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe(response => {
-                    this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe(response => {
+                this.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => {
+                    this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
                         logitudeWindow.Height = 400;

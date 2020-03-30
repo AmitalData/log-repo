@@ -253,7 +253,7 @@ export class LoginComponent implements OnInit {
                 this.loginService.LoggedUserId = SessionInfo.LoggedUserId;
                 this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
 
-                this.loginService.GetLoggedUser().subscribe(myResult => {
+                this.loginService.GetLoggedUser().subscribe((myResult: any) => {
 
                     var iGlobalDomainService = new GlobalDomainService();
 
@@ -293,7 +293,7 @@ export class LoginComponent implements OnInit {
     }
 
     OneUsePasswordMethod() {
-        this.loginService.GetOneUsePassword().subscribe(userData => {
+        this.loginService.GetOneUsePassword().subscribe((userData: any) => {
 
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 var message = "Can't use this key (" + SessionLocator.ExternalParams.OneTimePasswordId + ") again because you used it before ";
@@ -335,7 +335,7 @@ export class LoginComponent implements OnInit {
 
     ShowTenantList: boolean = false;
     PostUserValidation(loginParameters) {
-        this.loginService.PostUserValidation(loginParameters).subscribe(userData => {
+        this.loginService.PostUserValidation(loginParameters).subscribe((userData: any) => {
 
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 this.LoginFailed = true;
@@ -424,7 +424,7 @@ export class LoginComponent implements OnInit {
     public UserMobileNumber: string;
     public LoggedUserData: any = null;
     PostLoginData() {
-        this.loginService.PostLoginData(this.LoginParams).subscribe(userData => {
+        this.loginService.PostLoginData(this.LoginParams).subscribe((userData: any) => {
             if (userData.TwoFactorkey) {
                 window.localStorage.setItem('TwoFactorkey', userData.TwoFactorkey);
             }
@@ -444,7 +444,7 @@ export class LoginComponent implements OnInit {
     VerifyClicked() {
         if (!AppTool.IsNullOrEmpty(this.VerficationCode)) {
             this.HidePendingLoading = false;
-            this.loginService.PostAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.VerficationCode, Number(this.LoggedUserData.CurrentTenant + "")).subscribe(res => {
+            this.loginService.PostAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.VerficationCode, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res:any) => {
                 this.HidePendingLoading = true;
                 if (res == true) {
                     this.ShowTwoFactorAuthenScreen = false;
@@ -459,7 +459,7 @@ export class LoginComponent implements OnInit {
     }
     ResendVerificationCodeClicked() {
         this.HidePendingLoading = false;
-        this.loginService.PostResendAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.LoggedUserData.Id, Number(this.LoggedUserData.CurrentTenant + "")).subscribe(res => {
+        this.loginService.PostResendAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.LoggedUserData.Id, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res: any) => {
             this.HidePendingLoading = true;
             if (res) {
             }
@@ -512,7 +512,7 @@ export class LoginComponent implements OnInit {
                     });
                 });
 
-                this.generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe(response => {
+                this.generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe((response: ServiceResponse) => {
 
                     if (!response.HasError) {
                         window.ObjectFieldModifications = response.Result;
@@ -687,11 +687,14 @@ export class LoginComponent implements OnInit {
                     this.IncreaseProgressBar();
                 });
 
-                this.loginService.GetGlobalSetting().subscribe(myResult => {
+                this.loginService.GetGlobalSetting().subscribe((myResult: any) => {
 
                     // Accounting - Abdullah
                     if (InfraSettings.TenantPM) {
-                        myResult.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase():(InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
+
+
+                        myResult.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase() : (InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
+
                     }
 
                     //
@@ -702,7 +705,7 @@ export class LoginComponent implements OnInit {
                     //20
                 });
 
-                this.loginService.GetTenantSetting().subscribe(myResult => {
+                this.loginService.GetTenantSetting().subscribe((myResult: any) => {
                     SessionLocator.TenantSettings = myResult;
                     this.IncreaseProgressBar();
                     //21
@@ -842,7 +845,7 @@ export class LoginComponent implements OnInit {
             }
         });
 
-        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Shipments").subscribe(Result => {
+        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Shipments").subscribe((Result: ServiceResponse) => {
             //var ObsList = [];
             if (!Result.HasError) {
                 window.DWObjectFields = Result.Result;
@@ -857,7 +860,7 @@ export class LoginComponent implements OnInit {
             }
         });
 
-        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Charges").subscribe(Result => {
+        this.myInfrastructureDomainService.getDWObjectFieldsWithChildrenByDWTableId("Fact_Charges").subscribe((Result: ServiceResponse) => {
             if (!Result.HasError) {
                 window.DWObjectFields.concat(Result.Result);
                 this.IncreaseProgressBar();

@@ -208,8 +208,10 @@
                                         <LogCheckBox [ObjectFieldName]="'AdditionalPackagesOnly'" [Checked]="AdditionalPackagesOnly" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                     </td>
                                 </tr>
-                                <!-- AdditionalPackagesOnly  -->
-                                <tr class="FormFieldRow">
+
+                                    
+                                <!-- LayoutDirection  -->
+                                <tr class="FormFieldRow" *ngIf="IsLayoutDirectionVisibile">
                                     <td colspan="2">
                                         <table>
                                             <tr>
@@ -219,7 +221,7 @@
                                                 <td style="width:180px">
                                                     <ComboBox [ItemsSource]="LayoutDirections" [Binding]="'Name'" [SelectedItem]="SelectedDirection" (SelectedItemChanged)="SelectedDirection=$event"></ComboBox>
                                                 </td>
-                                               <td></td>
+                                                <td></td>
 
                                             </tr>
 
@@ -228,9 +230,9 @@
 
 
                                     </td>
-                                   
+
                                 </tr>
-                               
+
                                 <!-- Notes -->
                                 <tr style="height: 100px;">
                                     <td colspan="2">

@@ -26,46 +26,31 @@ export class WebhookKeysExtendedPMService {
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/webhookkeysextended';
     }
 
-    get(id: string): Observable<ServiceResponse> {
-        const headers: HttpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Token': ServiceHelper.GetLoggedUserToken()
-        });
-
+    get(id: string) {
         var callTime = new Date();
         var url = this.apiUrl + '/getsingle?' + 'id=' + id;
         return Observable.defer(() => {
-            return this.httpClient.get(url, { headers, observe: 'response' }).pipe(
-                tap((event: HttpEvent<any>) => {
-                    if (event instanceof HttpResponse) {
-                        var servertime = event.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WebhookKeys", "GetSinglePM", 'id=' + id);
+            return this.httpClient.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                if (response instanceof HttpResponse) {
+                    var pm = response.body;
+                    var entity: WebhookKeysPM;
+                    if (pm) {
+                        entity = this.MapJsonToEntityPM(pm);
                     }
-                }),
-                map((response: HttpEvent<any>) => {
-                    if (response instanceof HttpResponse) {
-                        var pm = response.body;
-                        var entity: WebhookKeysPM;
-                        if (pm) {
-                            entity = this.MapJsonToEntityPM(pm);
-                        }
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = entity;
 
-                        return serviceResponse;
-                    }
-                }),
-                catchError(ServiceHelper.HandleServiceError));
+                    var servertime = response.headers.get('ServerExecutionTime');
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WebhookKeys", "GetSinglePM", 'id=' + id);
+
+                    return serviceResponse;
+                }
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
-    insert(entityPM: WebhookKeysPM): Observable<ServiceResponse> {
-        const headers: HttpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Token': ServiceHelper.GetLoggedUserToken()
-        });
-
+    insert(entityPM: WebhookKeysPM) {
         var callTime = new Date();
         return Observable.defer(() => {
             var validator: ClassLevelValidator;
@@ -78,26 +63,21 @@ export class WebhookKeysExtendedPMService {
                 var mappedEntity: WebhookKeysPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
                 var url = this.apiUrl + '/PostWebhookKeys';
-                return this.httpClient.post(url, JSON.stringify(mappedEntity), { headers, observe: 'response' }).pipe(
-                    tap((event: HttpEvent<any>) => {
-                        if (event instanceof HttpResponse) {
-                            var servertime = event.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WebhookKeys", "SaveChanges", "");
+                return this.httpClient.post(url, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                    if (response instanceof HttpResponse) {
+                        var pm = response.body;
+                        if (pm) {
+                            var mappedResult: WebhookKeysPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            serviceResponse.Result = mappedResult;
                         }
-                    }),
-                    map((response: HttpEvent<any>) => {
-                        if (response instanceof HttpResponse) {
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: WebhookKeysPM;
-                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
-                            return serviceResponse;
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WebhookKeys", "SaveChanges", "");
 
-                        }
-                    }),
-                    catchError(ServiceHelper.HandleServiceError));
+                        return serviceResponse;
+
+                    }
+                }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
                 serviceResponse.HasError = true;
@@ -108,12 +88,7 @@ export class WebhookKeysExtendedPMService {
         });
     }
 
-    update(entityPM: WebhookKeysPM): Observable<ServiceResponse> {
-        const headers: HttpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Token': ServiceHelper.GetLoggedUserToken()
-        });
-
+    update(entityPM: WebhookKeysPM)  {
         var callTime = new Date();
         return Observable.defer(() => {
             var validator: ClassLevelValidator;
@@ -126,26 +101,22 @@ export class WebhookKeysExtendedPMService {
                 var mappedEntity: WebhookKeysPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this.httpClient.put(this.apiUrl, JSON.stringify(mappedEntity), { headers, observe: 'response' }).pipe(
-                    tap((event: HttpEvent<any>) => {
-                        if (event instanceof HttpResponse) {
-                            var servertime = event.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WebhookKeys", "SaveChanges", "");
+                return this.httpClient.put(this.apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                    if (response instanceof HttpResponse) {
+                        var pm = response.body;
+                        if (pm) {
+                            var mappedResult: WebhookKeysPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            serviceResponse.Result = mappedResult;
                         }
-                    }),
-                    map((response: HttpEvent<any>) => {
-                        if (response instanceof HttpResponse) {
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: WebhookKeysPM;
-                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
 
-                            return serviceResponse;
-                        }
-                    }),
-                    catchError(ServiceHelper.HandleServiceError));
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WebhookKeys", "SaveChanges", "");
+
+
+                        return serviceResponse;
+                    }
+                }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
                 serviceResponse.HasError = true;
@@ -156,36 +127,28 @@ export class WebhookKeysExtendedPMService {
         });
     }
 
-    PushHookContent(DataToPush: any): Observable<ServiceResponse> {
-        const headers: HttpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Token': ServiceHelper.GetLoggedUserToken()
-        });
-
-        var callTime = new Date();
+    PushHookContent(DataToPush: any)  {
         return Observable.defer(() => {
             var errorsArray = [];
-
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
+
             if (errorsArray.length == 0) {
                 var url = this.apiUrl + '/PostPushHookContent';
-                return this.httpClient.post(url, JSON.stringify(DataToPush), { headers, observe: 'response' }).pipe(
-                    map((response: HttpEvent<any>) => {
-                        if (response instanceof HttpResponse) {
-                            if (response.status == 200) {
-                                serviceResponse.HasError = false;
-                                serviceResponse.Result = "Data Pushed Successfully";
-                            }
-                            else {
-                                serviceResponse.HasError = true;
-                                serviceResponse.Result = "Data Didn't Pushed Successfully";
-                            }
-
-                            return serviceResponse;
+                return this.httpClient.post(url, JSON.stringify(DataToPush), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                    if (response instanceof HttpResponse) {
+                        if (response.status == 200) {
+                            serviceResponse.HasError = false;
+                            serviceResponse.Result = "Data Pushed Successfully";
                         }
-                    }),
-                    catchError(ServiceHelper.HandleServiceError));
+                        else {
+                            serviceResponse.HasError = true;
+                            serviceResponse.Result = "Data Didn't Pushed Successfully";
+                        }
+
+                        return serviceResponse;
+                    }
+                }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
                 serviceResponse.HasError = true;
@@ -262,5 +225,4 @@ export class WebhookKeysExtendedPMService {
         entityPM.Tenant = InfraSettings.TenantPM.Id;
         return entityPM;
     }
-	
 }
