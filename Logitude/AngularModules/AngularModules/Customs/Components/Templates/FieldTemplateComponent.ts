@@ -156,7 +156,7 @@ export class FieldTemplateComponent {
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMMoveToQueueScreen(
                 this.Entity.CustomFileNo,
-                this.Entity.Id,
+                this.Entity.DeclarationId,
                 "ShowCFIFILEMMoveToQueueScreen");
         } else {
             var myMessageWindow = new MessageWindow();
@@ -178,7 +178,7 @@ export class FieldTemplateComponent {
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             AmitalGatewayUtil.Instance.ShowCFIFILEMMoveSIToOCRScreen(
                 this.Entity.CustomFileNo,
-                this.Entity.Id,
+                this.Entity.DeclarationId,
                 "ShowCFIFILEMMoveSIToOCRScreen");
         } else {
             var myMessageWindow = new MessageWindow();
@@ -186,6 +186,37 @@ export class FieldTemplateComponent {
             myMessageWindow.Show(mess);
         }
     }
+
+    ShowDeclaration(event) {
+        if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
+            SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
+        }
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                //var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: this.Entity.DeclarationId,
+                    SelectedTabCode: "DEGC",
+                    ObjectTableName: "Customs.Declaration",
+                    //BackButtonLabel: label
+                });
+                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                    if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
+                        SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
+                    }
+                    this.OnBackFromEdit(this.Entity.DeclarationId, event)
+                });
+            });
+    }
+
+
+    OnBackFromEdit(selectedEntityId, $event) {
+        if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentListComponent != null) {
+            SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+        }
+    }
+
 
     public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
 
