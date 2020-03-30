@@ -218,7 +218,7 @@ export class CustomsRequestsSheetsComponent
     CancelByFilters() {
         debugger;
         this.InitFilter();
-        this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs);
+        this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs).subscribe();
     }
 
 

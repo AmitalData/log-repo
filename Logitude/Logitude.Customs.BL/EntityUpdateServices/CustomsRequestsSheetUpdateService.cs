@@ -32,9 +32,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //entityPM.Id = IdCounter.GetNumber("Customs.CustomsRequestsSheet", entityPM.Tenant);
         }
 
-        public void CancelRequests(List<CustomsRequestsSheetList> entityLists,int  tenant)
+        public void CancelRequests(List<CustomsRequestsSheetList> entityLists,int  tenant , ICustomContext customContext)
         {
-            var us = new CustomsRequestsSheetUpdateService(tenant);
+             var us = new CustomsRequestsSheetUpdateService(customContext, new Dictionary<string, IContext>(),tenant);
             us.CommLogStepCanCancelledAction = CommLogStepCanCancelled;
             List<CustomsRequestsSheetPM> entityPMs= new List<CustomsRequestsSheetPM>();
             var qs = new CustomsRequestsSheetQueryService(tenant);
@@ -45,10 +45,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                
                 customsRequestsSheetPM.ChangeSetOp = ChangeSetOperation.Update;
                 customsRequestsSheetPM.RequestStatusCode = "99";
-                entityPMs.Add(customsRequestsSheetPM);
+                us.Update(customsRequestsSheetPM, true);
+          //      entityPMs.Add(customsRequestsSheetPM);
             });
 
-             us.UpdateMulti(entityPMs, null, null, true);
+         //    us.UpdateMulti(entityPMs, null, null, true);
         }
 
         public static void CommLogStepCanCancelled(CustomsRequestsSheet entityPOCO,

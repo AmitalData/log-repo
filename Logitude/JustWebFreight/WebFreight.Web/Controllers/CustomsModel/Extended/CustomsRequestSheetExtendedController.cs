@@ -264,7 +264,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 CustomsRequestsSheetUpdateService customsRequestsSheetUpdate = new CustomsRequestsSheetUpdateService(MyContext);
 
 
-                customsRequestsSheetUpdate.CancelRequests(entityLists, tenant);
+                customsRequestsSheetUpdate.CancelRequests(entityLists, tenant, MyContext);
 
 
                 ServiceResponse response = new ServiceResponse();
