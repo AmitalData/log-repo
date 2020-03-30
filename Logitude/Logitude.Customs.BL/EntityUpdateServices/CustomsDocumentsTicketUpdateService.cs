@@ -384,8 +384,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICustomContext context = MainContext as CustomContext;
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
             CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
-            if (docType != null && docType.IsCourierManadatory)
-            //if (entityPM.DocumentTypeCode == "380")
+           if (docType != null)
+            ////if (entityPM.DocumentTypeCode == "380")
             {
                 //ICustomContext context = MainContext as CustomContext;
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
@@ -492,7 +492,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.CourierDeclarationStatusCode: " + currentDeclarationCourierStatusPM.CourierDeclarationStatusCode);
                     }
                 }
-            }
+           }
         }
     }
 }
