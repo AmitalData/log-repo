@@ -416,7 +416,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             var myCustomsDocumentQueryService = new CustomsDocumentQueryService(context);
                             customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, entityPM.Tenant);
                         }
-                        if (customsDocumentPMList == null || customsDocumentPMList.Count() < 1)
+                        if ((customsDocumentPMList == null || customsDocumentPMList.Count() < 1) && docType.IsCourierManadatory)
                         {
                             status = "M";
                         }
