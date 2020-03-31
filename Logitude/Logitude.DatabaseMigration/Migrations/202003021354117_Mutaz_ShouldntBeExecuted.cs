@@ -7,9 +7,9 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            AlterColumn("dbo.GLAccounts", "DisplayNumber", c => c.String(nullable: false, maxLength: 15, unicode: false));
-            CreateIndex("dbo.Tenants", "ChargeableWeightUnitCode");
-            AddForeignKey("dbo.Tenants", "ChargeableWeightUnitCode", "dbo.WeightUnits", "Code");
+            //AlterColumn("dbo.GLAccounts", "DisplayNumber", c => c.String(nullable: false, maxLength: 15, unicode: false));
+            //CreateIndex("dbo.Tenants", "ChargeableWeightUnitCode");
+            //AddForeignKey("dbo.Tenants", "ChargeableWeightUnitCode", "dbo.WeightUnits", "Code");
 
         }
 
