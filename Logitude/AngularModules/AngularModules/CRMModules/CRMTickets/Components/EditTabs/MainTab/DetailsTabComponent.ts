@@ -380,7 +380,7 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
     set SeverityId(newValue: string) {
         if (this.Trigger.EntityPM.SeverityId != newValue) {
             this.Trigger.EntityPM.SeverityId = newValue;
-            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe(result => {
+            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe((result:any) => {
                 var severity: TicketSeverityList = result.Result;
                 if (severity != null)
                     this.Trigger.EntityPM.SeverityName = severity.Name;

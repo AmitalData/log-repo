@@ -60,7 +60,7 @@ export class NewOpportunityComponent extends BaseComponent   {
                 this.EntityPM.BusinessUnitId = null;
             else {
                 var listService: UserListService = new UserListService();
-                listService.getAllFromCache().subscribe(result => {
+                listService.getAllFromCache().subscribe((result:any) => {
                     var list: UserList = result.Result.filter(p => p.Id == value)[0];
                     if (list != null)
                         this.EntityPM.BusinessUnitId = list.BusinessUnitId;
@@ -79,7 +79,7 @@ export class NewOpportunityComponent extends BaseComponent   {
     OkButtonClicked() {
         this.CurrentSession.StartBusyIndicatorCreating();
         this.myService = new OpportunityPMService();
-        this.myService.insert(this.EntityPM).subscribe(myResult => {
+        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -162,7 +162,7 @@ export class NewOpportunityComponent extends BaseComponent   {
         if (!AppTool.IsNullOrEmpty(this.CustomerId)) {
 
             var cardService: CardListService = new CardListService();
-            cardService.getAll().subscribe(result => {
+            cardService.getAll().subscribe((result:any) => {
                 var list: CardList = result.Result.filter(p => p.Id == this.CustomerId)[0];
                 if (list != null) {
                     myContactId = list.PrimaryContactId;                          
@@ -206,7 +206,7 @@ export class NewOpportunityComponent extends BaseComponent   {
         var isConfirmNeeded: boolean = false;
         this.newOpportunityTypeId = newValue;
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == newValue)[0];
             if (typeList != null) {
                 this.newOpportunityTypeCode = typeList.Code;
@@ -290,7 +290,7 @@ export class NewOpportunityComponent extends BaseComponent   {
     SetSubject() {
 
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
 
             var type: OpportunityTypeList = result.Result.filter(d => d.Id == this.OpportunityTypeId)[0];
             if (type != null) {
@@ -304,7 +304,7 @@ export class NewOpportunityComponent extends BaseComponent   {
 
     SetUIProperties() {
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
-        oppTypeListService.getAllFromCache().subscribe(result => {
+        oppTypeListService.getAllFromCache().subscribe((result:any) => {
 
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == this.EntityPM.OpportunityTypeId)[0];
             var typeCode: string = typeList == null ? null : typeList.Code;

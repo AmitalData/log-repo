@@ -204,7 +204,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
 
         });
         this.Clone(item);
-        editWindow.WindowClosed.subscribe(result => {
+        editWindow.WindowClosed.subscribe((result:any) => {
             if (result == "Cancel") {
                 this.RejectChanges();
             }
@@ -318,7 +318,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
 
     getAdditionalSerivceList() {
         var AddtionalService: AdditionalServiceListService = new AdditionalServiceListService();
-        AddtionalService.getAllFromCache().subscribe(result => {
+        AddtionalService.getAllFromCache().subscribe((result:any) => {
             this.ToggleButtonListService = [];
             this.ToggleButtonListService = result.Result.filter(s => !s.InActive);
             this.ToggleButtonListService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
@@ -354,7 +354,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
             this.EntityPM.RatingCode = value;
 
             var ratingListService: RatingListService = new RatingListService();
-            ratingListService.getAllFromCache().subscribe(result => {
+            ratingListService.getAllFromCache().subscribe((result:any) => {
                 var ratingList: RatingList = result.Result.filter(p => p.Code == value)[0];
                 if (ratingList != null)
                     this.EntityPM.RatingName = ratingList.Name;
@@ -532,7 +532,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
 
 
         var stageService: StageListService = new StageListService();
-        stageService.getAllFromCache().subscribe(result => {
+        stageService.getAllFromCache().subscribe((result:any) => {
             var myStage: StageList = result.Result.filter(d => d.Id == this.StageId && d.Tenant == SessionLocator.Tenant)[0];
 
 
@@ -578,7 +578,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     }
     getCompetitorList() {
         var competitorListService: CompetitorListService = new CompetitorListService();
-        competitorListService.getAll().subscribe(result => {
+        competitorListService.getAll().subscribe((result:any) => {
             this.AllCompetitors = result.Result;
             this.BuildCompetitorToggleButtonList();
             this.BuildCompetitorsObsList();
@@ -894,7 +894,7 @@ export class ServiceItemClass {
                 var type: string = null;
 
                 var addtionalService: AdditionalServiceListService = new AdditionalServiceListService();
-                addtionalService.getSingleFromCache(this.Id).subscribe(result => {
+                addtionalService.getSingleFromCache(this.Id).subscribe((result:any) => {
                     var typeList = result.Result;
                     if (typeList != null) {
                         type = typeList.Name;

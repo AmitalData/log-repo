@@ -59,7 +59,7 @@ export class OccasionWorkspaceComponent {
 
     public AllOccasionsCount: number = 0;
     LoadQueriesCounts() {
-        this.myDomainService.GetOccasionsSummary().subscribe(myResult => {
+        this.myDomainService.GetOccasionsSummary().subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: OccasionSummary = myResponse.Result;

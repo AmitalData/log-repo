@@ -302,7 +302,7 @@ export class OccasionMainTabComponent extends BaseComponent {
             contactsIds = contactsIds + item.ContactId + ",";
         });
 
-        service.GetCountOfOccasionAllCustomers(contactsIds).subscribe(myResult => {
+        service.GetCountOfOccasionAllCustomers(contactsIds).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             var list_AllCustomers = [];
             if (!mm.HasError) {

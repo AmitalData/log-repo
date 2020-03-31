@@ -439,7 +439,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
     public UpcomingActivitiesCount: number = 0;
     public UpcomingActivitiesList: UpcomingActivityItem[];
     public LoadActivitiesSummary() {
-        this.myDomainService.GetUpcomigActivities(this.OwnerId, this.BusinessUnitId, null, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myDomainService.GetUpcomigActivities(this.OwnerId, this.BusinessUnitId, null, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.UpcomingActivitiesList = [];
                 this.UpcomingActivitiesCount = 0;
@@ -545,7 +545,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
     //Spot Light
     private SpotlightData: DailySpotlightClass;
     private LoadSpotLightData() {
-        this.myDomainService.GetCRMDailySpotlightCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myDomainService.GetCRMDailySpotlightCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.SpotlightData = myResponse.Result;
@@ -1166,7 +1166,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
         }
 
         var myService: OpportunityListService = new OpportunityListService();
-        myService.getByFilters(filters).subscribe(myResult => {
+        myService.getByFilters(filters).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.TopOpportunitiesList = [];
             }
@@ -1278,7 +1278,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
         filters.PageSize = 10;
         filters.GetCount = true;
         var service = new ContactListService();
-        service.getByFilters(filters).subscribe(myResult => {
+        service.getByFilters(filters).subscribe((myResult:any) => {
             if (myResult != null) {
                 this.FatherComp.UpcomingCount = myResult.Count;
                 if (myResult.Count != 0) {

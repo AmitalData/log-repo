@@ -105,7 +105,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
     private GetAllUsers() {
         var filters = new ApiQueryFilters();
-        this.UserListService.getAllFromCache(filters).subscribe(myResult => {
+        this.UserListService.getAllFromCache(filters).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.UsersList = myResponse.Result;

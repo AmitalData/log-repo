@@ -456,7 +456,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     set SeverityId(newValue: string) {
         if (this.EntityPM.SeverityId != newValue) {
             this.EntityPM.SeverityId = newValue;
-            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe(result => {
+            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe((result:any) => {
                 var severity: TicketSeverityList = result.Result;
                 if (severity != null)
                     this.EntityPM.SeverityName = severity.Name;

@@ -1244,7 +1244,6 @@
     <Content Include="CRM\Components\EditTabs\Stages\StageGeneralTabComponent.html" />
     <Content Include="CRM\Components\EditTabs\Tickets\MainTab\ActivitiesTabComponent.html" />
     <Content Include="CRM\Components\Maintenance\Questionnaire\AddEditPickListComponent.html" />
-    <Content Include="CRM\Components\Maintenance\Questionnaire\AddEditQuestionnaireComponent.html" />
     <Content Include="CRM\Components\Maintenance\Questionnaire\AddEditQuestionnaireQuestionComponent.html" />
     <Content Include="CRM\Components\Maintenance\TicketSettings\TicketSettingsComponent.html" />
     <Content Include="CRM\Components\MenuButtons\CloseAsWonOrLostComponent.html" />
@@ -3844,7 +3843,6 @@
     <TypeScriptCompile Include="CRM\Components\EditTabs\Stages\StageGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\EditTabs\Tickets\MainTab\ActivitiesTabComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\Maintenance\Questionnaire\AddEditPickListComponent.ts" />
-    <TypeScriptCompile Include="CRM\Components\Maintenance\Questionnaire\AddEditQuestionnaireComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\Maintenance\Questionnaire\AddEditQuestionnaireQuestionComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\Maintenance\TicketSettings\TicketSettingsComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\MenuButtons\CloseAsWonOrLostComponent.ts" />

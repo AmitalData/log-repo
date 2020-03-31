@@ -94,7 +94,7 @@ export class NewOccasionComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorCreating();
             var service = new OccasionPMService();
-            service.insert(this.EntityPM).subscribe(myResult => {
+            service.insert(this.EntityPM).subscribe((myResult:any) => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);

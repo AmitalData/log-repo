@@ -545,7 +545,7 @@ export class ReadyForActivationComponent extends BaseComponent {
     }
 
     ShowQuestionnaire() {
-        this._QuestionnairePMService.get(SessionLocator.TenantPM.DefaultQuestionnaireId).subscribe(response => {
+        this._QuestionnairePMService.get(SessionLocator.TenantPM.DefaultQuestionnaireId).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             var result = response.Result;
             if (result) {

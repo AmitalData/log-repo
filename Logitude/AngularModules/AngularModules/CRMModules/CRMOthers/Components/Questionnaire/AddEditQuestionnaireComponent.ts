@@ -135,7 +135,7 @@ export class AddEditQuestionnaireComponent extends BaseComponent{
                 else {
 
                     this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-                    this._QuestionnairePMService.get(args.EntityId).subscribe(response => {
+                    this._QuestionnairePMService.get(args.EntityId).subscribe((response:any) => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                         this.EntityPM = response.Result;
