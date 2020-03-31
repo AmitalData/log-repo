@@ -199,6 +199,16 @@
                                     </td>
                                 </tr>
 
+                                     <!-- DontShowLocalLabels  -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'DontShowLocalLabels'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'DontShowLocalLabels'" [Checked]="DontShowLocalLabels" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+                                    </tr>
+
                                 <!-- AdditionalPackagesOnly  -->
                                 <tr class="FormFieldRow" *ngIf="IsAdditionalPackagesOnlyVisible">
                                     <td>
