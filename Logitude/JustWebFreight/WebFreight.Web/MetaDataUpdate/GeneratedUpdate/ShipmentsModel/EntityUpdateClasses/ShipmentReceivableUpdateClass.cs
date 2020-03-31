@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "ShipmentReceivable",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ShipmentReceivables",
-			      				    OldDBTableName =  "ShipmentReceivables",
 			      				    ObjectTableSingular =  "Shipment Receivable",
 			      				    ObjectTablePlural =  "Shipment Receivables",
 			      				    HasCustomFilter =  false,
@@ -120,6 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    Code =  "8043",
 			      				    Name =  "ShipmentReceivable",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Shipment",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -140,12 +140,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentId",
-					  						OldFieldName =  "ShipmentId",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -201,7 +200,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ARInvoiceLineId",
-					  						OldFieldName =  "ARInvoiceLineId",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -262,11 +260,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AmountInProfitCurrency",
-					  						OldFieldName =  "AmountInProfitCurrency",
 					  						ObjectTableName =  "ShipmentReceivable",
-					  						FieldsDataType =  "Decimal",
+					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -328,9 +325,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "ShipmentReceivable",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -389,7 +385,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IATACodeId",
-					  						OldFieldName =  "IATACodeId",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "IATACode",
@@ -452,11 +447,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsExchangeRateFixed",
-					  						OldFieldName =  "IsExchangeRateFixed",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -513,7 +507,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrint",
-					  						OldFieldName =  "AWBPrint",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -574,7 +567,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DueTypeCode",
-					  						OldFieldName =  "DueTypeCode",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "DueType",
@@ -637,7 +629,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentReceivableLineStatusCode",
-					  						OldFieldName =  "ShipmentReceivableLineStatusCode",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentReceivableLineStatus",
@@ -681,7 +672,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "ShipmentReceivableLineStatusCode",
 					  						DefaultText =  "Status Type",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
+					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
@@ -700,7 +691,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PrepaidCollectId",
-					  						OldFieldName =  "PrepaidCollectId",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
@@ -765,7 +755,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MeasurementId",
-					  						OldFieldName =  "MeasurementId",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Measurement",
@@ -830,11 +819,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Quantity",
-					  						OldFieldName =  "Quantity",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -891,11 +879,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Rate",
-					  						OldFieldName =  "Rate",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -952,7 +939,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CurrencyId",
-					  						OldFieldName =  "CurrencyId",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -1020,11 +1006,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "UnitPrice",
-					  						OldFieldName =  "UnitPrice",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1081,11 +1066,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TotalAmount",
-					  						OldFieldName =  "TotalAmount",
 					  						ObjectTableName =  "ShipmentReceivable",
-					  						FieldsDataType =  "Decimal",
+					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1144,11 +1128,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TotalAmountLocal",
-					  						OldFieldName =  "TotalAmountLocal",
 					  						ObjectTableName =  "ShipmentReceivable",
-					  						FieldsDataType =  "Decimal",
+					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1207,7 +1190,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ChargesTypeId",
-					  						OldFieldName =  "ChargesTypeId",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChargesType",
@@ -1270,7 +1252,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FixedAmountCode",
-					  						OldFieldName =  "FixedAmountCode",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "FixedAmount",
@@ -1331,7 +1312,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "VatTypeId",
-					  						OldFieldName =  "VatTypeId",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatType",
@@ -1398,7 +1378,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsBackToBack",
-					  						OldFieldName =  "IsBackToBack",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1462,11 +1441,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsExpense",
-					  						OldFieldName =  "IsExpense",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1524,11 +1502,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "QuoteSaleMinAmount",
-					  						OldFieldName =  "QuoteSaleMinAmount",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1586,11 +1563,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "QuoteSaleMaxAmount",
-					  						OldFieldName =  "QuoteSaleMaxAmount",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1648,7 +1624,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "UOMPercentage",
-					  						OldFieldName =  "UOMPercentage",
 					  						ObjectTableName =  "ShipmentReceivable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

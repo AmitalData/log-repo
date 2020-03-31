@@ -2,7 +2,8 @@
 <Table
   Name="CustomsTransferHeaders"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -62,6 +63,13 @@
     Name="Notes"
     Type="nvarchar"
     Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipmentNumber"
+    Type="nvarchar"
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>

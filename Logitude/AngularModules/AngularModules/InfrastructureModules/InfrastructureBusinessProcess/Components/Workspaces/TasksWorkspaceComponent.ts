@@ -30,7 +30,7 @@ export class TasksWorkspaceComponent {
 
     private teamsIdsList: string;
     private GetTeamsForLoggedUser() {
-        this.businessProcessDomainService.GetTeamsForLoggedUser(SessionLocator.LoggedUserId).subscribe(myResult => {
+        this.businessProcessDomainService.GetTeamsForLoggedUser(SessionLocator.LoggedUserId).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -54,8 +54,8 @@ export class TasksWorkspaceComponent {
     public NoQueuesVisibility: boolean = false;
     private LoadQueues(myFilter: string) {    
         this.QueuesItemsSource = [];
-            
-        this.businessProcessDomainService.GetQueuesWithCounts(myFilter).subscribe(myResult => {
+
+        this.businessProcessDomainService.GetQueuesWithCounts(myFilter).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 

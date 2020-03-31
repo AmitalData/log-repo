@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ARInvoicePayment,ARInvoicePayments,,Id,Code&quot;">
+  SearchFields="&quot;ARInvoicePayment,ARInvoicePayments,,Id,Code&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;91fab772-f474-4d17-9a01-b96cf1168410&quot;"
     FieldName="&quot;Id&quot;"
@@ -71,8 +73,8 @@
     ObjectTableName="&quot;ARInvoicePayment&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
-    IsRequired="false"
+    MaxLength="15"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -113,7 +115,7 @@
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
-    IsPrimaryKey="false"
+    IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
@@ -419,7 +421,7 @@
     ListLableDefaultText="&quot;Payment&quot;"
     ListLocalDefaultText="&quot;תשלום &quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -441,7 +443,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ARPayment"
+    NavigationPropertyName="ARPayment" />
   <field
     Id="&quot;d3765b0e-d463-4b97-a12a-f032fb06646c&quot;"
     FieldName="&quot;ARInvoiceId&quot;"
@@ -498,7 +502,7 @@
     ListLableDefaultText="&quot;A/R Invoice Id&quot;"
     ListLocalDefaultText="&quot;חשבונית&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -520,7 +524,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ARInvoice"
+    NavigationPropertyName="ARInvoice" />
   <field
     Id="&quot;e5ecb0c7-0cda-4022-b7dd-fa9f8d451768&quot;"
     FieldName="&quot;ForeignCurrencyId&quot;"
@@ -577,7 +583,7 @@
     ListLableDefaultText="&quot;Foreign Currency Id&quot;"
     ListLocalDefaultText="&quot;מטבע זר&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -599,7 +605,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="ForeignCurrency" />
   <field
     Id="&quot;29b3561f-47a5-4474-9648-5d6a97a6c5a5&quot;"
     FieldName="&quot;InvoiceId&quot;"
@@ -829,7 +837,7 @@
     ObjectTableName="&quot;ARInvoicePayment&quot;"
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -903,7 +911,7 @@
     ObjectTableName="&quot;ARInvoicePayment&quot;"
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

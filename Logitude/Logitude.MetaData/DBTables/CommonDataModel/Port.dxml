@@ -2,7 +2,8 @@
 <Table
   Name="Ports"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -192,6 +193,33 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CountryCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CountryName"
+    Type="varchar"
+    Size="120">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StateCode"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryId"
     ReferencedTable="Countries"
@@ -204,6 +232,8 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InActive,IsAir,EnglishName" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,Code,CountryId" />
 </Table>

@@ -59,7 +59,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;FeaturePackageType,FeaturePackageTypes,,Code,&quot;">
+  SearchFields="&quot;FeaturePackageType,FeaturePackageTypes,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;bace75ca-cb8d-4c66-a28b-0aba80f493b9&quot;"
     FieldName="&quot;Code&quot;"
@@ -145,7 +147,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="10"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"

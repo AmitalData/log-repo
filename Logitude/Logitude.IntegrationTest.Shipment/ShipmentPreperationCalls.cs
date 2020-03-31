@@ -18,6 +18,7 @@ namespace Logitude.IntegrationTest.Shipment
 {
     class ShipmentPreperationCalls
     {
+        static ShipmentPM shipmentPM = new ShipmentPM();
         static ShipmentIntegrationVariables vars;
         public static async Task PrepareVariables()
         {
@@ -33,49 +34,92 @@ namespace Logitude.IntegrationTest.Shipment
                 throw new Exception(Ex.Message);
             }
         }
+        public static async Task PostShipment(string shipmentLevelCode, string directionId, string transportModeId)
+        {
+            shipmentPM = CreateShipmentPM(shipmentLevelCode, directionId, transportModeId);
+            HttpResponseMessage response = await RestClientService.PostAsync(shipmentPM, "shipment");
+            shipmentPM = RestClientService.ParseResponse<ShipmentPM>(response);
+            ShipmentVariables.ShipmentId = shipmentPM.Id;
+        }
+
+        private static ShipmentPM  CreateShipmentPM(string shipmentLevelCode, string directionId, string transportModeId)
+        {
+            shipmentPM.Tenant = IntegrationTestLoginParameters.Tenant;
+            shipmentPM.CreatedByUserId = IntegrationTestLoginParameters.LoginUserId;
+            shipmentPM.BranchId = CorePreparationVariables.BranchId;
+            shipmentPM.DepartmentId = CorePreparationVariables.DepartmentId;
+            shipmentPM.ProfitCurrencyId = CorePreparationVariables.TenantPM.ProfitCurrencyId;
+            shipmentPM.VolumeUnitCode = CorePreparationVariables.TenantPM.VolumeUnitCode;
+            shipmentPM.DimensionsUnitCode = CorePreparationVariables.TenantPM.DimensionsUnitCode;
+            shipmentPM.GrossWeightUnitCode = CorePreparationVariables.TenantPM.GrossWeightUnitCode;
+            shipmentPM.ChargeableWeightUnitCode = CorePreparationVariables.TenantPM.ChargeableWeightUnitCode;
+            shipmentPM.ShipmentLevelCode = shipmentLevelCode;
+            shipmentPM.DirectionId = directionId;
+            shipmentPM.TransportModeId = transportModeId;
+            //shipmentPM.MainCarriageTransportModeId = "";
+            shipmentPM.FreightPrepaidCollectId = "C";
+            shipmentPM.OtherPrepaidCollectId = "C";
+            shipmentPM.CreatedByUserId = CorePreparationVariables.UserId;
+            shipmentPM.UpdatedByUserId = CorePreparationVariables.UserId;
+            shipmentPM.CustomerId = ShipmentVariables.ShipperExport1;
+            shipmentPM.ShipperId = ShipmentVariables.ShipperExport1;
+            shipmentPM.IssuingCarrierAgentId = ShipmentVariables.AgentId;
+            shipmentPM.AgentId = ShipmentVariables.AgentId;
+            shipmentPM.FromPortId = ShipmentVariables.PortLHRId;
+            shipmentPM.ToPortId = ShipmentVariables.PortJFKId;
+            shipmentPM.MainCarriageFromPortId = ShipmentVariables.PortLHRId; ;
+            shipmentPM.MainCarriageToPortId = ShipmentVariables.PortJFKId;
+            shipmentPM.OriginMainCarriageFromPortId = ShipmentVariables.PortLHRId;
+            shipmentPM.AWBCurrencyId = ShipmentVariables.CurrencyEURId;
+            shipmentPM.ValueOfGoodsCurrencyId = ShipmentVariables.CurrencyEURId;
+            shipmentPM.AccountManagerUserId = CorePreparationVariables.UserId;
+
+            ShipmentVariables.ConcurrencyGUID = shipmentPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            return shipmentPM;
+        }
         public static void VarsMap()
         {
             ShipmentVariables.CurrencyEURId = vars.CurrencyEURId;
             ShipmentVariables.IncotermLDEId = vars.IncotermLDEId;
-            //    ShipmentVariables.MeasurmentGRWTId = await GetMeasurmentId("GRWT");
-            //    var chargeGroup = new ChargesGroupList();
-            //    chargeGroup = await GetChargeGroup("COMM");
-            //    ShipmentVariables.ChargeGroupCOMMId = chargeGroup.Id;
-            //    ShipmentVariables.ChargeGroupCOMMCode = chargeGroup.Code;
-            //    ShipmentVariables.ChargeTypeAFTId = await GetChargeTypeId("AFT");
+            ShipmentVariables.MeasurmentGRWTId = vars.MeasurementGRWTId;
 
-            //    ShipmentVariables.PortLHRId = await GetPortId("LHR");
-            //    ShipmentVariables.PortMIAId = await GetPortId("MIA");
-            //    ShipmentVariables.PortJFKId = await GetPortId("JFK");
-            //    ShipmentVariables.PortSOUId = await GetPortId("SOU");
-            //    ShipmentVariables.PortNYCId = await GetPortId("NYC");
-            //    ShipmentVariables.PortLONId = await GetPortId("LON");
-            //    ShipmentVariables.PortMANId = await GetPortId("MAN");
-            //    ShipmentVariables.GlobalZoneEUId = await GetGlobalZoneId("EU");
-            //    ShipmentVariables.CountryGBId = await GetCountrytId("GB");
-            //    ShipmentVariables.CountryUSId = await GetCountrytId("US");
-            //    ShipmentVariables.StateAKId = await GetStateId("AK");
-            //    ShipmentVariables.AirlineAAId = await GetAirlineId("AA");
-            //    ShipmentVariables.AirlineBAId = await GetAirlineId("BA");
-            //    ShipmentVariables.ShippingLineMSCUId = await GetShippingLineId("MSCU");
-            //    ShipmentVariables.ShippingLineMAEUId = await GetShippingLineId("MAEU");
-            //    ShipmentVariables.MoveTypeMTAId = await GetMoveTypeId("MTA", "A");
-            //    ShipmentVariables.MoveTypeMTOId = await GetMoveTypeId("MTO", "O");
-            //    ShipmentVariables.VesselPTId = await GetVesselId("PT");
-            //    ShipmentVariables.PackageTypePC1Id = await GetPackageTypeId("PC1", "O", true);
-            //    ShipmentVariables.PackageTypePC2Id = await GetPackageTypeId("PC2", "O", true);
-            //    ShipmentVariables.PackageTypePP1Id = await GetPackageTypeId("PP1", "A", false);
-            //    ShipmentVariables.PackageTypePP2Id = await GetPackageTypeId("PP2", "A", false);
-            //    ShipmentVariables.PaymentTermCashId = await GetPaymentTermId("Cash");
-            //    ShipmentVariables.VATTypeZeroId = await GetVATTypeId("ZERO");
-            //    ShipmentVariables.QuoteStageQTDRId = await GetQuoteStageId("QTDR");
-            //  ShipmentVariables.VendorId = await GetVendorId("TestVendor");
-            //    ShipmentVariables.AgentId = await GetAgentId("TestAgentExport1");
-            //    ShipmentVariables.CustomerId = await GetCustomerId("TestShipperExport1");
-            //    ShipmentVariables.CustomAgentId = await GetCustomsAgentId("TestCustomAgentExport1");
-            //    ShipmentVariables.ShippingAgentId = await GetShippingAgentId("TestShippingAgentExport1");
-            //    ShipmentVariables.WarehouseId = await GetWarehouseId("TestWarehouseExport1", "WR2");
-            //    ShipmentVariables.ShipperExport1 = await GetCustomerId("TstShipExport1");
+            ShipmentVariables.ChargeGroupCOMMCode = vars.ChargeGroupCOMMCode;
+            ShipmentVariables.ChargeGroupCOMMId = vars.ChargeGroupCOMMId;
+
+            ShipmentVariables.ChargeTypeAFTId = vars.ChargeTypeAFTId;
+
+            ShipmentVariables.PortLHRId = vars.PortLHRId;
+            ShipmentVariables.PortMIAId = vars.PortMIAId;
+            ShipmentVariables.PortJFKId = vars.PortJFKId;
+            ShipmentVariables.PortSOUId = vars.PortSOUId;
+            ShipmentVariables.PortNYCId = vars.PortNYCId;
+            ShipmentVariables.PortLONId = vars.PortLONId;
+            ShipmentVariables.PortMANId = vars.PortMANId;
+            ShipmentVariables.GlobalZoneEUId = vars.GlobalZoneEUId;
+            ShipmentVariables.CountryGBId = vars.CountryGBId;
+            ShipmentVariables.CountryUSId = vars.CountryUSId;
+            ShipmentVariables.StateAKId = vars.StateAKId;
+            ShipmentVariables.AirlineAAId = vars.AirlineAAId;
+            ShipmentVariables.AirlineBAId = vars.AirlineBAId;
+            ShipmentVariables.ShippingLineMSCUId = vars.ShippingLineMSCUId;
+            ShipmentVariables.ShippingLineMAEUId = vars.ShippingLineMAEUId;
+            ShipmentVariables.MoveTypeMTAId = vars.MoveTypeMTAId;
+            ShipmentVariables.MoveTypeMTOId = vars.MoveTypeMTOId;
+            ShipmentVariables.VesselPTId = vars.VesselPTId;
+            ShipmentVariables.PackageTypePC1Id = vars.PackageTypePC1Id;
+            ShipmentVariables.PackageTypePC2Id = vars.PackageTypePC2Id;
+            ShipmentVariables.PackageTypePP1Id = vars.PackageTypePP1Id;
+            ShipmentVariables.PackageTypePP2Id = vars.PackageTypePP2Id;
+            ShipmentVariables.PaymentTermCashId = vars.PaymentTermCashId;
+            ShipmentVariables.VATTypeZeroId = vars.VATTypeZeroId;
+            ShipmentVariables.QuoteStageQTDRId = vars.QuoteStageQTDRId;
+            ShipmentVariables.VendorId = vars.VendorId;
+            ShipmentVariables.AgentId = vars.AgentId;
+            ShipmentVariables.CustomerId = vars.CustomerId;
+            ShipmentVariables.CustomAgentId = vars.CustomAgentId;
+            ShipmentVariables.ShippingAgentId = vars.ShippingAgentId;
+            ShipmentVariables.WarehouseId = vars.WarehouseId;
+            ShipmentVariables.ShipperExport1 = vars.ShipperExport1;
 
         }
         //    public static async Task<string> GetCurrencyId(string currencyCode)

@@ -26,7 +26,9 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;Feed&quot;">
+  DefaultText="&quot;Feed&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7ed6d62b-7e65-4a17-b4b5-6347580a140f&quot;"
     FieldName="&quot;PostId&quot;"

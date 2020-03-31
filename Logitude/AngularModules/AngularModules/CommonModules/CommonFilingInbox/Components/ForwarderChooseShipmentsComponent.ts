@@ -20,6 +20,7 @@ import {ShipmentPMService} from '../../../Shipment/Services/StandardPMs/Shipment
 import {EntityStatusExtendedListService} from '../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     moduleId: module.id,
@@ -467,7 +468,7 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
             this.SourceEntity.MainCarriageFromPortId = this.SourceEntity.FromPortId;
             this.SourceEntity.MainCarriageToPortId = this.SourceEntity.ToPortId;
             this.SourceEntity.MainCarriageToPortId = this.SourceEntity.ToPortId;
-            this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
+            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
                 this.SourceEntity.StatusId = Status.Result.Id;
                 this._ShipmentPMService.update(this.SourceEntity).subscribe(myResult => {
                     if (!myResult.HasError) {

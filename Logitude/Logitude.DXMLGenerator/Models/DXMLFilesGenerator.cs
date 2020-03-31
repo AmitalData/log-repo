@@ -794,7 +794,7 @@ namespace Logitude.DXMLGenerator.Models
             }
             else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("InfrastructureModel".ToLower()))
             {
-                return "BusinessInfrastructure";
+                return "Infrastructure";
             }
             else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("InvoiceModel".ToLower()))
             {

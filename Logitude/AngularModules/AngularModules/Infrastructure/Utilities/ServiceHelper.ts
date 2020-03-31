@@ -285,7 +285,7 @@ export class ServiceHelper {
                             if (exception) {
                                 if (exception.indexOf("Internet Connection Problem") > -1) {
                                     var loginService: LoginService = new LoginService();
-                                    loginService.GetDocumentDownloadToken().subscribe(myResult => {
+                                    loginService.GetDocumentDownloadToken().subscribe((myResult: any) => {
                                         if (myResult) {
                                             SessionInfo.DocumentDownloadToken = myResult;
                                         }

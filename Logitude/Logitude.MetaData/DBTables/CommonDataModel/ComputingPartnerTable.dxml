@@ -2,7 +2,8 @@
 <Table
   Name="ComputingPartnerTables"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="ObjectTableId"
     Type="varchar"

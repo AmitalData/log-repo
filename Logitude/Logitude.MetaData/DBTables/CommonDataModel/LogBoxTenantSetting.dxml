@@ -2,7 +2,8 @@
 <Table
   Name="LogBoxTenantSettings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="int">
@@ -37,8 +38,8 @@
   </Column>
   <Column
     Name="StockTypeCode"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

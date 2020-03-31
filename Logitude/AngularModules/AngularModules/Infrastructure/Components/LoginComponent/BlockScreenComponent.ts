@@ -77,7 +77,7 @@ export class BlockScreenComponent {
         //    this.SampleLogoURL = temp;
         //}
         //else {
-        this.loginService.GetGlobalSetting().subscribe(Setting => {
+        this.loginService.GetGlobalSetting().subscribe((Setting: any) => {
             if (Setting) {
                 ObjectsLocator.GlobalSetting = Setting;
                 this.loginService.GetTenantManagement().subscribe(TenantManagement => {

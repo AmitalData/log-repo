@@ -49,7 +49,9 @@
   CustomFieldsCount="0"
   SearchFields="&quot;ARInvoiceTransferStatus,ARInvoiceTransferStatus,,Code,&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7f2984b6-3d3d-4ec6-9f9d-c372f942bcd9&quot;"
     FieldName="&quot;Code&quot;"

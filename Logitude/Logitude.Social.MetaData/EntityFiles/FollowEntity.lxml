@@ -26,7 +26,9 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;Follow Entity&quot;">
+  DefaultText="&quot;Follow Entity&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;a2025625-3164-495a-9a73-b10b8f1ad01e&quot;"
     FieldName="&quot;Id&quot;"

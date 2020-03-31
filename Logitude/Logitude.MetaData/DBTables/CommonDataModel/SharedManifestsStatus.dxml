@@ -2,7 +2,8 @@
 <Table
   Name="SharedManifestsStatuses"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="StatusCode"
     Type="varchar"

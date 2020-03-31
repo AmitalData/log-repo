@@ -2,7 +2,8 @@
 <Table
   Name="TranslationHeaders"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Code"
     Type="varchar"

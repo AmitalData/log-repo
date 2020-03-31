@@ -2,7 +2,8 @@
 <Table
   Name="ARPayments"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Id"
     Type="varchar"
@@ -28,7 +29,7 @@
     Name="CreateDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="CreatedByUserId"
@@ -61,7 +62,7 @@
     Name="AmountInLocalCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="BranchId"
@@ -108,7 +109,7 @@
     Name="AmountInPaymentCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="PaidBy"
@@ -150,7 +151,7 @@
     Name="PaymentCurrencyExchangeRate"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ExchangeRateDate"
@@ -169,7 +170,7 @@
     Name="RegisterDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="SearchFields"
@@ -180,9 +181,10 @@
   </Column>
   <Column
     Name="OpenAmount"
-    Type="float">
+    Type="float"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="OpenAmountInLocalCurrency"
@@ -235,7 +237,7 @@
     Name="UpdateDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ProfitCurrencyExchangeRate"
@@ -400,6 +402,19 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="AccountingCancelationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CancelationNotes"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="BankAccountLiteId"
     Type="varchar"
     Size="15">
@@ -451,6 +466,76 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Field1"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field2"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field3"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field4"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field5"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field6"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field7"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field8"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field9"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field10"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

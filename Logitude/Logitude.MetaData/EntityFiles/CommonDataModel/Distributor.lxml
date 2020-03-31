@@ -36,7 +36,9 @@
   IsLookUp="true"
   IsEditable="true"
   ClientModuleName="&quot;Common&quot;"
-  Code="&quot;DIST&quot;">
+  Code="&quot;DIST&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;deca9e77-68d5-4b5f-8a61-c804f1d60bf3&quot;"
     FieldName="&quot;Code&quot;"

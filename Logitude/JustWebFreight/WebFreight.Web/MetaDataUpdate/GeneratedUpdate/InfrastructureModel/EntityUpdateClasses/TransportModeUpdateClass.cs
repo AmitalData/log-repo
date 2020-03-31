@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "TransportMode",
 			      				    IsNew =  false,
 			      				    DBTableName =  "TransportModes",
-			      				    OldDBTableName =  "TransportModes",
 			      				    ObjectTableSingular =  "Transport Mode",
 			      				    ObjectTablePlural =  "TransportModes",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Transport Mode",
-			      				    Code =  "699e",
+			      				    Code =  "75ea",
 			      				    Name =  "TransportMode",
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  false,
@@ -141,9 +140,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "TransportMode",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "TransportMode",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

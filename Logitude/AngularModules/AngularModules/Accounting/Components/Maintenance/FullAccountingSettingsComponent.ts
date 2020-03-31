@@ -60,8 +60,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
         this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) => {
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
+            this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
+                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => { });
             });
 
             });

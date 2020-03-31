@@ -35,7 +35,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return context.VatUniqueTypes;
         }
-
+        public IQueryable<VatUniqueType> GetVatUniqueType()
+        {
+            return context.VatUniqueTypes;
+        }
+        
         public IQueryable<VatUniqueType> GetAll()
         {
             return context.VatUniqueTypes;

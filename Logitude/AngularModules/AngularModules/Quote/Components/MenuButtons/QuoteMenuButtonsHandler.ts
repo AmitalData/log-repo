@@ -721,7 +721,7 @@ export class QuoteMenuButtonsHandler {
                     if (!myResult.HasError) {
                         var count = myResult.Result;
 
-                        if (count != 0) {
+                        if (count != null && count != 0) {
                             var window = new MessageWindow();
                             window.Width = 450;
                             window.Height = 180;

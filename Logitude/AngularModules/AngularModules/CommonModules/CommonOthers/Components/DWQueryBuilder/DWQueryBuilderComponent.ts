@@ -18,6 +18,7 @@ import { DWObjectTableListService } from '../../../../Infrastructure/Services/St
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DWQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWQueryPMService';
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 
 @Component({
@@ -141,7 +142,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get(this.FactTableName).subscribe(myResult => {
                 if (!myResult.HasError) {
-                    this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(myResult.Result.Code).subscribe(Result => {//getDWObjectFieldsByDWTableId
+                    this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(myResult.Result.Code).subscribe((Result: ServiceResponse) => {//getDWObjectFieldsByDWTableId
                         if (!Result.HasError) {
                             var MyGroups = [];
                             var MyAllGroups = [];
@@ -833,7 +834,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
             this.StartBusyIndicator("Loading ..");
             this.IsPreview = !StopPreview;
-            this._DWQueryBuilderService.GetNewDWQueryData(this.DWQueryData).subscribe(myResult => {
+            this._DWQueryBuilderService.GetNewDWQueryData(this.DWQueryData).subscribe((myResult: ServiceResponse) => {
                 this.StopBusyIndicator();
                 if (!myResult.HasError) {
                     //this.SampleData = myResult.Result.SQLDataResult;
@@ -1854,7 +1855,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     
         _DWObjectTablePMService.get(DWObjectField.DimensionTableCode).subscribe(myResult => {
             if (!myResult.HasError) {
-                _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe(Result => {
+                _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe((Result: ServiceResponse) => {
                     if (!Result.HasError) {
                         Result.Result.forEach((field) => {
                             if (field.DisplayInQueryBuilder == true) {

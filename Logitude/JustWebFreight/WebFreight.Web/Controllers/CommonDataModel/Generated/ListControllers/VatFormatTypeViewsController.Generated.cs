@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				VatFormatTypeRepository  vatFormatTypeRepository = new VatFormatTypeRepository(MyContext);
-				IQueryable<VatFormatType> entityPocos = vatFormatTypeRepository.GetVatFormatTypes();
+				IQueryable<VatFormatType> entityPocos = vatFormatTypeRepository.GetVatFormatType();
 
 				VatFormatTypeQuery vatFormatTypeQuery = new VatFormatTypeQuery(vatFormatTypeRepository);
 			    IQueryable<VatFormatTypeList> entityLists = vatFormatTypeQuery.GetIQueryableEntityList(entityPocos);
@@ -130,7 +130,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     ObjectTableName = "VatFormatType",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "VatFormatTypes",
+                    QuerySection = "VatFormatType",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -213,7 +213,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 VatFormatTypeRepository  vatFormatTypeRepository = new VatFormatTypeRepository(MyContext);
-                IQueryable<VatFormatType> entityPocos = vatFormatTypeRepository.GetVatFormatTypes();
+                IQueryable<VatFormatType> entityPocos = vatFormatTypeRepository.GetVatFormatType();
 
                 VatFormatTypeQuery vatFormatTypeQuery = new VatFormatTypeQuery(vatFormatTypeRepository);
                 

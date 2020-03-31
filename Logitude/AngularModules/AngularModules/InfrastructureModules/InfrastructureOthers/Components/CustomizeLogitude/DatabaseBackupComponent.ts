@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 import {Observable}     from 'rxjs/Rx';
@@ -62,7 +62,7 @@ export class DatabaseBackupComponent implements OnInit {
         this.Backupsub = this.BackUpTimer().subscribe(res => {
 
             if (!this.IsStopTimer) {
-                this._backUpService.CheckIfDatabaseBackupIsBuilt(SessionInfo.LoggedUserTenant).subscribe(res => {
+                this._backUpService.CheckIfDatabaseBackupIsBuilt(SessionInfo.LoggedUserTenant).subscribe((res: ServiceResponse) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var result = pmResponse.Result;
@@ -90,7 +90,7 @@ export class DatabaseBackupComponent implements OnInit {
        
         this.PreparingTextBlock = TextCodeTranslator.Translate("General.M.PreparingYourData");
 
-        this._backUpService.SetDatabaseDataBackupNotReady(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._backUpService.SetDatabaseDataBackupNotReady(SessionInfo.LoggedUserTenant).subscribe((res: ServiceResponse) => {
 
       
             this.IsShowProgressLoading = true;
@@ -105,7 +105,7 @@ export class DatabaseBackupComponent implements OnInit {
 
 
     BackUpForClientDataTables() {
-        this._backUpService.BackUpForClientData(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._backUpService.BackUpForClientData(SessionInfo.LoggedUserTenant).subscribe((res: ServiceResponse) => {
 
             var result = res;
             this.StartBackUpTimer();

@@ -84,7 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			
 	             				    ObjectTableName =  "ShipmentPackageHarmonize",
 			      				    IsNew =  false,
-			      				    DBTableName =  "ShipmentPackageHarmonizes",
+			      				    DBTableName =  "ShipmentPackageHarmonize",
 			      				    OldDBTableName =  "ShipmentPackageHarmonizes",
 			      				    ObjectTableSingular =  "Shipment Package Harmonize",
 			      				    ObjectTablePlural =  "Shipment Package Harmonizes",

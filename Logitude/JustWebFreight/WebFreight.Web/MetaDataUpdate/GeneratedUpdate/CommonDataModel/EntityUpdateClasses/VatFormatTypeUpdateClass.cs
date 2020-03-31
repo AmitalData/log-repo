@@ -83,7 +83,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "VatFormatType",
-			      				    DBTableName =  "VatFormatTypes",
+			      				    DBTableName =  "VatFormatType",
 			      				    ObjectTableSingular =  "VAT Format Type",
 			      				    ObjectTablePlural =  "VAT Format Types",
 			      				    DefaultText =  "VAT Format Type",
@@ -194,7 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "VatFormatType",
 					  						FieldsDataType =  "Text",
 					  						DataTypeCode =  "Text",
-					  						MaxLength =  40,
+					  						MaxLength =  60,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  true,

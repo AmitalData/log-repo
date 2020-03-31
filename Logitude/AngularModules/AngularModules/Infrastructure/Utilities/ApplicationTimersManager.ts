@@ -217,7 +217,7 @@ export class ApplicationTimersManager {
 
             if (!this.IsUpgradingEnd) {
 
-                this.logitudeApplicationService.GetCheckIsupgradingSystem().subscribe(res => {
+                this.logitudeApplicationService.GetCheckIsupgradingSystem().subscribe((res: ServiceResponse) => {
 
                     var pmResponse: ServiceResponse = res;
 
@@ -256,7 +256,7 @@ export class ApplicationTimersManager {
         try {
 
 
-            this.logitudeApplicationService.GetCurrenctUserValidity().subscribe(res => {
+            this.logitudeApplicationService.GetCurrenctUserValidity().subscribe((res: ServiceResponse) => {
 
                 var response: ServiceResponse = res;
                  
@@ -325,7 +325,7 @@ export class ApplicationTimersManager {
                     var logJson = window.sessionStorage.getItem(key)
                     var errorLog: ErrorLogPM = JSON.parse(logJson);
 
-                    this.logService.insert(errorLog).subscribe(response => {
+                    this.logService.insert(errorLog).subscribe((response: ServiceResponse) => {
                       
                         window.sessionStorage.removeItem(["ErrorLogs", response.Result.Id]);
 
@@ -375,7 +375,7 @@ export class ApplicationTimersManager {
                     break;
             }
             if (tobeAddedLogsList.length > 0) {
-                this.performanceLogService.insertLogsList(tobeAddedLogsList).subscribe(response => {
+                this.performanceLogService.insertLogsList(tobeAddedLogsList).subscribe((response: ServiceResponse) => {
                 }, error => {
                     console.error("Adding Performance Log Timer: ", error);
                 });
