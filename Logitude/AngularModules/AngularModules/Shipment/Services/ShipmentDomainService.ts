@@ -54,8 +54,6 @@ export class ShipmentDomainService {
     }
 
     CheckHousesOpenAmounts(masterId) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/CheckHousesOpenAmounts?masterId=' + masterId;
 
@@ -70,8 +68,6 @@ export class ShipmentDomainService {
         });
     }
     GetRecentShipments() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetRecentShipments';
 
@@ -86,8 +82,6 @@ export class ShipmentDomainService {
         });
     }
     GetDeparturesArrivals(myDirectionId: string, myTransportModeId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetDeparturesArrivals?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
 
@@ -114,8 +108,6 @@ export class ShipmentDomainService {
 
 
     GetShipmentCarrierStatuses(entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetShipmentCarrierStatuses?entityId=' + entityId;
 
@@ -139,8 +131,6 @@ export class ShipmentDomainService {
         });
     }
     GetLoggedTenantMessagingStockLists() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetLoggedTenantMessagingStockLists';
 
@@ -162,8 +152,6 @@ export class ShipmentDomainService {
         });
     }
     GetLoggedTenantMessagingStockUsageHistoryLists(stockId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetLoggedTenantMessagingStockUsageHistoryLists?stockId=' + stockId;
 
@@ -187,9 +175,6 @@ export class ShipmentDomainService {
     ValidateShipmentMasterFieldExistance(entityId: string, myBookingId: string, myMasterField: string, myAirlinePrefixField: string, myDirectionId: string, myTransportModeId: string, myShipmentLevelCode: string, isCancelled: boolean) {
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
 
             var args = new ValidateShipmentMasterArgs();
             args.ShipmentId = entityId;
@@ -228,8 +213,6 @@ export class ShipmentDomainService {
         });
     }
     GetInvoiceOpenAmountReceivables(invoiceTypeCode: string, entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetInvoiceOpenAmountReceivables?invoiceTypeCode=' + invoiceTypeCode + '&entityId=' + entityId;
 
@@ -245,8 +228,6 @@ export class ShipmentDomainService {
         });
     }
     GetShipmentsQuotesCount( ) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetShipmentsQuotesCount?';
 
@@ -261,8 +242,6 @@ export class ShipmentDomainService {
         });
     }
     GetShipmentConsolidationPackages(masterId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetShipmentConsolidationPackages?masterId=' + masterId;
 
@@ -277,8 +256,6 @@ export class ShipmentDomainService {
         });
     }
     GetShipmentConnectedEntities(shipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetShipmentConnectedEntities?shipmentId=' + shipmentId;
 
@@ -299,8 +276,6 @@ export class ShipmentDomainService {
         });
     }
     GetShipmentsQueriesCounts(tenant: number, transportModeId: string, directionId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&directionId=' + directionId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -322,8 +297,6 @@ export class ShipmentDomainService {
         });
     }
     GetAllMasterHousesPayables(allHousesIdsString: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAllMasterHousesPayables?allHousesIdsString=' + allHousesIdsString;
 
@@ -339,8 +312,6 @@ export class ShipmentDomainService {
         });
     }
     GetAllMasterHousesReceivables(allHousesIdsString: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAllMasterHousesReceivables?allHousesIdsString=' + allHousesIdsString;
 
@@ -356,8 +327,6 @@ export class ShipmentDomainService {
         });
     }
     GetConnectedShipmentsByMasterIdAndTenant(masterId: string,tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetConnectedShipmentsByMasterIdAndTenant?masterId=' + masterId + '&currentTenant=' + tenant;
 
@@ -384,8 +353,6 @@ export class ShipmentDomainService {
         });
     }
     GetShipmentsCountByQuoteId(quoteId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetShipmentsCountByQuoteId?quoteId=' + quoteId;
 
@@ -400,8 +367,6 @@ export class ShipmentDomainService {
         });
     }
     GetShipmentLevelCode(myShipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetShipmentLevelCode?myShipmentId=' + myShipmentId;
 
@@ -417,8 +382,6 @@ export class ShipmentDomainService {
         });
     }
     GetInvoiceOpenAmountPayables(entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetInvoiceOpenAmountPayables?entityId=' +  entityId;
 
@@ -434,8 +397,6 @@ export class ShipmentDomainService {
         });
     }
     GetPayableInvoices(PayableId: string, PayableParentId:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetPayableInvoices?PayableId=' + PayableId + '&PayableParentId=' + PayableParentId ;
 
@@ -449,8 +410,6 @@ export class ShipmentDomainService {
         });
     }
     GetShipmentsByQuoteId(quoteId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetShipmentsByQuoteId?quoteId=' + quoteId;
 
@@ -465,8 +424,6 @@ export class ShipmentDomainService {
         });
     }
     GetSingleShipmentPMByNumber(shipmentNumber: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', sessionStorage.getItem("Token"));
 
         var url = this._apiUrl + '/GetSingleShipmentPMByNumber?shipmentNumber=' + shipmentNumber;
 
@@ -481,8 +438,6 @@ export class ShipmentDomainService {
         });
     }
     GetSingleShipmentPMWithoutComposition(id: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetSingleShipmentPMWithoutComposition?id=' + id;
 
@@ -498,8 +453,6 @@ export class ShipmentDomainService {
         });
     }
     BlockNewARInvoice(shipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetBlockNewARInvoice?shipmentId=' + shipmentId;
 
@@ -538,8 +491,6 @@ export class ShipmentDomainService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
             return this._httpClient.get(urlparameters, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
@@ -550,8 +501,6 @@ export class ShipmentDomainService {
         });
     }
     GetMessagingStockListForTenantManagmentTab(tenantManagementId: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetMessagingStockListForTenantManagmentTab?tenantManagementId=' + tenantManagementId;
 
@@ -567,8 +516,7 @@ export class ShipmentDomainService {
     }
 
     GetShipmentCustomsTransmissionByShipmnetId(shipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetShipmentCustomsTransmissionByShipmnetId?shipmentId=' + shipmentId;
         return Observable.defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -581,8 +529,6 @@ export class ShipmentDomainService {
     }
 
     DisconnectQuote(shipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetDisconnectQuote?shipmentId=' + shipmentId;
 
@@ -682,8 +628,6 @@ export class ShipmentDomainService {
     }
 
     SendToCustoms_AES(shipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetSendToAESCustoms?shipmentId=' + shipmentId;
 
@@ -698,8 +642,7 @@ export class ShipmentDomainService {
         });
     }
     GetArtemusStatus(shipmentNumber:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetArtemusStatus?shipmentNumber=' + shipmentNumber;
         return Observable.defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -724,8 +667,6 @@ export class ShipmentDomainService {
     }
 
     DownloadShipmentPackages(shipmentNumber: string, shipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetDownloadShipmentPackages?shipmentNumber=' + shipmentNumber + '&shipmentId=' + shipmentId;
 
@@ -741,8 +682,6 @@ export class ShipmentDomainService {
     }
 
     CreateMissingMasters() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetCreateMissingMasterData';
 
@@ -759,8 +698,6 @@ export class ShipmentDomainService {
     }
 
     CheckIfConnectedEntryOrRelease(shipmentId) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetIfConnectedEntryOrRelease?shipmentId=' + shipmentId;
 
@@ -776,9 +713,7 @@ export class ShipmentDomainService {
     }
 
     PostUploadExcelFile(filter: ExcelPackageFilter) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
+
         return Observable.defer(() => {
             return this._httpClient.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
@@ -792,8 +727,6 @@ export class ShipmentDomainService {
     }
 
     CheckIfHouseConnectedToMaster(houseId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetIfHouseConnectedToMaster?houseId=' + houseId;
 
@@ -809,8 +742,6 @@ export class ShipmentDomainService {
     }
 
     SetAMANACStartDate(entityCode: string, myStartDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
         var url = this._apiUrl + '/GetSetAMANACStartDate?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
@@ -827,8 +758,6 @@ export class ShipmentDomainService {
         });
     }
     GetOnStartDateEntitiesIds(entityCode: string, myStartDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
         var url = this._apiUrl + '/GetOnStartDateEntitiesIds?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
@@ -845,8 +774,6 @@ export class ShipmentDomainService {
         });
     }
     BlockTransferEntities(ids: string[], entityCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetBlockForTransfer?allIdsString=' + AppTool.GetIdsArrayText(ids) + "&entityCode=" + entityCode;
 
@@ -862,8 +789,6 @@ export class ShipmentDomainService {
         });
     }
     SendToAMANAC(shipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetSendToAMANAC?shipmentId=' + shipmentId;
 
@@ -879,8 +804,6 @@ export class ShipmentDomainService {
     }
 
     MarkShipmentAsBlocked(shipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetMarkShipmentAsBlocked?shipmentId=' + shipmentId;
 
@@ -897,8 +820,6 @@ export class ShipmentDomainService {
     }
 
     UnblockedShipment(shipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetUnblockedShipment?shipmentId=' + shipmentId;
 
@@ -915,8 +836,6 @@ export class ShipmentDomainService {
     }
 
     GetShipmentsTransferSummary() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetShipmentsTransferSummary', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -932,8 +851,6 @@ export class ShipmentDomainService {
     }
 
     RebuildTransferFile(entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetRebuildTransferFile?entityId=' + entityId;
 

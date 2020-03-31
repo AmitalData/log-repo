@@ -23,8 +23,7 @@ export class AWBSpecialHandlingCodeExtendedPMService {
     }
 
     get(id: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var callTime = new Date();
         return Observable.defer(() => {
             return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
@@ -56,10 +55,6 @@ export class AWBSpecialHandlingCodeExtendedPMService {
     insert(entityPM: AWBSpecialHandlingCodePM) {
         var callTime = new Date();
         return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
@@ -100,10 +95,6 @@ export class AWBSpecialHandlingCodeExtendedPMService {
     update(entityPM: AWBSpecialHandlingCodePM) {
         var callTime = new Date();
         return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();

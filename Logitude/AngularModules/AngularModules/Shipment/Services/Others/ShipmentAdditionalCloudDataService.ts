@@ -23,9 +23,6 @@ export class ShipmentAdditionalCloudDataService {
     
     get(id: string) {
 
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
             return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
@@ -56,8 +53,6 @@ export class ShipmentAdditionalCloudDataService {
     getsingledata(id: string) {
 
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetSingleData?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
@@ -88,9 +83,6 @@ export class ShipmentAdditionalCloudDataService {
     update(entityPM: any) {
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
             var response: ServiceResponse;
             response = new ServiceResponse();
             //errorsArray = [];
@@ -113,9 +105,7 @@ export class ShipmentAdditionalCloudDataService {
     updateUserID(entityPM: any) {
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
+
             var response: ServiceResponse;
             response = new ServiceResponse();
             //errorsArray = [];
@@ -138,11 +128,9 @@ export class ShipmentAdditionalCloudDataService {
     getSingleWithoutToken(id: string, Tenant: number) {
 
 
-        var authHeader = new Headers();
-        //authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._httpClient.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant, ServiceHelper.GetHttpHeaders()).pipe(
+            return this._httpClient.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant).pipe(
                 map((response) => {
                     //if (response instanceof HttpResponse) {
                         var pm = response;

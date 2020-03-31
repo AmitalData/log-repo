@@ -20,10 +20,6 @@ export class SplitShipmentService {
     Split(entityPM: SplitShipmentHelper) {
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
             var mappedEntity: SplitShipmentHelper = this.MapSplitShipmentHelper(entityPM, false);
 
             return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
