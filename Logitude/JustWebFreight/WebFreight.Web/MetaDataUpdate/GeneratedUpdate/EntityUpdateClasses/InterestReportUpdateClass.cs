@@ -2150,6 +2150,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOInterestForDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.InterestForDate ", DefaultText = "Interest For Date ",LocalDefaultText = @"חישוב ריבית לתאריך", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode InterestReportTextCode_InterestReportOClosingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ClosingBalance", DefaultText = "Closing Balance",LocalDefaultText = @"יתרת סגירה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

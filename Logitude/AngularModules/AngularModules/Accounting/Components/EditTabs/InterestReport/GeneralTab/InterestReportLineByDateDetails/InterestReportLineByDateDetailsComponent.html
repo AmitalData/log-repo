@@ -43,9 +43,9 @@
     }
 </style>
 
-<div class="TabHolder">
+<div style="height: 92%; margin-top: 0;" class="TabHolder CurvedArea">
     <table>
-        <tr style="height: 25%;">
+        <tr style="height: 23%;">
             <td colspan="3">
                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestLineDataList" [UseVirtuallization]="true">
 
@@ -164,23 +164,25 @@
         </tr>
         <tr><td><div></div></td></tr>
     </table>
-</div>
- 
-
 <!-- Footer -->
-<div style="position: absolute; left: -15px; bottom: -10px; right: -15px;">
-    <div class="tab-footer">
-        <div class="footer-title">
-            {{'InterestTransaction.O.TotalLocalAmount' | TextCodeTranslationPipe}}
-        </div>
-        <div class="footer-summery">
-            <div class="footer-cell" [class.border-left]="isRTL" [style.text-align]="isRTL ? 'right' : 'left'" [style.float]="isRTL ? 'right' : 'left'">
-                <div style="font-size: 15px; color: #008c7a; font-weight: bold;">{{TotalLocalAmount | NumbersPipe:'N2'}}</div>
-                <div style="font-size: 13px; color: #6f6f6f;"> {{'InterestTransaction.F.LocalAmount' | TextCodeTranslationPipe}}</div>
+    <div style="position: absolute; left: -4px; bottom: -5px; right: -4px;">
+        <div class="tab-footer">
+            <div class="footer-title">
+                {{'InterestTransaction.O.TotalLocalAmount' | TextCodeTranslationPipe}}
+            </div>
+            <div class="footer-summery">
+                <div class="footer-cell" [class.border-left]="isRTL" [style.text-align]="isRTL ? 'right' : 'left'" [style.float]="isRTL ? 'right' : 'left'">
+                    <div style="font-size: 15px; color: #008c7a; font-weight: bold;">{{TotalLocalAmount | NumbersPipe:'N2'}}</div>
+                    <div style="font-size: 13px; color: #6f6f6f;"> {{'InterestTransaction.F.LocalAmount' | TextCodeTranslationPipe}}</div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+ 
+
+
+
 
 
 <div style="position: absolute; left: 0px; bottom: 0px; right: 0px;">
