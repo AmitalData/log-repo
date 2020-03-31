@@ -16,8 +16,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PayableVATableTempCard).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PayableVATExemptTempCard).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QBOrealMeID).HasMaxLength(200);
-            this.Property(t => t.QBOAccessToken).HasMaxLength(200);
-            this.Property(t => t.QBOAccessTokenSecret).HasMaxLength(200);
+            this.Property(t => t.QBOAccessToken).HasMaxLength(4096);
+            this.Property(t => t.QBOAccessTokenSecret).HasMaxLength(4096);
             this.Property(t => t.RegistryDateTypeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ReceivableVATCard).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PayableVATCard).HasMaxLength(15).IsUnicode(false);

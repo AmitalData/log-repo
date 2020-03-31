@@ -12,11 +12,38 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="QBOrealMeID"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QBOAccessToken"
+    Type="nvarchar"
+    Size="4096">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QBOAccessTokenSecret"
+    Type="nvarchar"
+    Size="4096">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="AccountingSystemCode"
     Type="varchar"
     Size="4">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="AllowMinusInvoicelines"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="AllowVoidARI"
@@ -67,47 +94,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsARPaymentChronologicalDates"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ReceivableVATableTempCard"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ReceivableVATExemptTempCard"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PayableVATableTempCard"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PayableVATExemptTempCard"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="AllowClosureWithoutPayables"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsSingleTaxPerInvoice"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -125,10 +112,10 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsARPaymentsTransferEnabled"
-    Type="bit">
+    Name="APInvoiceTransferStartDate"
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ARInvoiceTransferStartDate"
@@ -137,10 +124,22 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="APInvoiceTransferStartDate"
-    Type="datetime">
+    Name="AllowPositiveAmountsInTheCreditNote"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsSingleTaxPerInvoice"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsARPaymentsTransferEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="ARPaymentTransferStartDate"
@@ -149,34 +148,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="QBOrealMeID"
-    Type="nvarchar"
-    Size="200">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QBOAccessToken"
-    Type="nvarchar"
-    Size="200">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QBOAccessTokenSecret"
-    Type="nvarchar"
-    Size="200">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AllowMinusInvoicelines"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AllowPositiveAmountsInTheCreditNote"
+    Name="TransferToDropboxActivated"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -189,46 +161,6 @@
   </Column>
   <Column
     Name="NotifyPastDateOnInvoiceEdit"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsAPPaymentsTransferEnabled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="RefreshToken"
-    Type="nvarchar"
-    Size="2000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QBOOAuth"
-    Type="int"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ReceivableVATCard"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PayableVATCard"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="TransferToDropboxActivated"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -247,7 +179,27 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ReceivableVATCard"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PayableVATCard"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="EnableMultiCurrencyARPayments"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAPPaymentsTransferEnabled"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -271,10 +223,58 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="PayableVATableTempCard"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PayableVATExemptTempCard"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReceivableVATableTempCard"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReceivableVATExemptTempCard"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsARPaymentChronologicalDates"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="EnableInvoiceStocksManagement"
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="QBOOAuth"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RefreshToken"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="AllowManualARPaymentNumber"

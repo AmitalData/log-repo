@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "AccountingSetting",
 			      				    IsNew =  false,
 			      				    DBTableName =  "AccountingSettings",
-			      				    OldDBTableName =  "AccountingSettings",
 			      				    ObjectTableSingular =  "Accounting Setting",
 			      				    ObjectTablePlural =  "Accounting Settings",
 			      				    HasCustomFilter =  false,
@@ -115,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Accounting Setting",
-			      				    Code =  "1f5c",
+			      				    Code =  "f7ed",
 			      				    Name =  "AccountingSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -139,7 +138,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountingSystemCode",
-					  						OldFieldName =  "AccountingSystemCode",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AccountingSystem",
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TempCard1",
-					  						OldFieldName =  "TempCard1",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -268,11 +265,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowMinusInvoicelines",
-					  						OldFieldName =  "AllowMinusInvoicelines",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -333,11 +329,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowVoidARI",
-					  						OldFieldName =  "AllowVoidARI",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -398,11 +393,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowVoidARP",
-					  						OldFieldName =  "AllowVoidARP",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -463,11 +457,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowVoidAPI",
-					  						OldFieldName =  "AllowVoidAPI",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -528,11 +521,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowVoidAPP",
-					  						OldFieldName =  "AllowVoidAPP",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -593,11 +585,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowManualInvoiceNumber",
-					  						OldFieldName =  "AllowManualInvoiceNumber",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -658,11 +649,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsVatNumberMandatoryInAR",
-					  						OldFieldName =  "IsVatNumberMandatoryInAR",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -723,11 +713,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsVatNumberMandatoryInAP",
-					  						OldFieldName =  "IsVatNumberMandatoryInAP",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -788,11 +777,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsARInvoiceChronologicalDates",
-					  						OldFieldName =  "IsChronologicalDates",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -853,7 +841,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VATableTempCard",
-					  						OldFieldName =  "VATableTempCard",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -915,7 +902,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VATExemptTempCard",
-					  						OldFieldName =  "VATExemptTempCard",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -977,11 +963,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowClosureWithoutPayables",
-					  						OldFieldName =  "AllowClosureWithoutPayables",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1042,11 +1027,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsARInvoicesTransferEnabled",
-					  						OldFieldName =  "IsARInvoicesTransferEnabled",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1106,11 +1090,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsAPInvoicesTransferEnabled",
-					  						OldFieldName =  "IsAPInvoicesTransferEnabled",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1170,11 +1153,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "APInvoiceTransferStartDate",
-					  						OldFieldName =  "APInvoiceTransferStartDate",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1234,11 +1216,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ARInvoiceTransferStartDate",
-					  						OldFieldName =  "ARInvoiceTransferStartDate",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1298,11 +1279,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowPositiveAmountsInTheCreditNote",
-					  						OldFieldName =  "AllowPositiveAmountsInTheCreditNote",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1361,11 +1341,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsSingleTaxPerInvoice",
-					  						OldFieldName =  "IsSingleTaxPerInvoice",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1427,11 +1406,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsARPaymentsTransferEnabled",
-					  						OldFieldName =  "IsARPaymentsTransferEnabled",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1491,11 +1469,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ARPaymentTransferStartDate",
-					  						OldFieldName =  "ARPaymentTransferStartDate",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1555,7 +1532,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatNumber",
-					  						OldFieldName =  "VatNumber",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1620,7 +1596,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentTermId",
-					  						OldFieldName =  "PaymentTermId",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentTerm",
@@ -1685,11 +1660,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TransferToDropboxActivated",
-					  						OldFieldName =  "TransferToDropboxActivated",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1748,11 +1722,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnableMultiPercentageVATTypes",
-					  						OldFieldName =  "EnableMultiPercentageVATTypes",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1812,11 +1785,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "NotifyPastDateOnInvoiceEdit",
-					  						OldFieldName =  "NotifyPastDateOnInvoiceEdit",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1876,11 +1848,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnableMultiRateAPInvoices",
-					  						OldFieldName =  "EnableMultiRateAPInvoices",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1940,7 +1911,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RegistryDateTypeCode",
-					  						OldFieldName =  "RegistryDateTypeCode",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "RegistryDateType",
@@ -2003,7 +1973,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ReceivableVATCard",
-					  						OldFieldName =  "ReceivableVATCard",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2067,7 +2036,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PayableVATCard",
-					  						OldFieldName =  "PayableVATCard",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2131,11 +2099,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnableMultiCurrencyARPayments",
-					  						OldFieldName =  "EnableMultiCurrencyARPayments",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2195,11 +2162,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsAPPaymentsTransferEnabled",
-					  						OldFieldName =  "IsAPPaymentsTransferEnabled",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2259,11 +2225,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnableMultiCurrencyAPPayments",
-					  						OldFieldName =  "EnableMultiCurrencyAPPayments",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2323,11 +2288,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnableNegativeOffsetARPayments",
-					  						OldFieldName =  "EnableNegativeOffsetARPayments",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2387,11 +2351,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnableNegativeOffsetAPPayments",
-					  						OldFieldName =  "EnableNegativeOffsetAPPayments",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2451,7 +2414,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PayableVATableTempCard",
-					  						OldFieldName =  "PayableVATableTempCard",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2515,7 +2477,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PayableVATExemptTempCard",
-					  						OldFieldName =  "PayableVATExemptTempCard",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2579,7 +2540,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ReceivableVATableTempCard",
-					  						OldFieldName =  "ReceivableVATableTempCard",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2643,7 +2603,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ReceivableVATExemptTempCard",
-					  						OldFieldName =  "ReceivableVATExemptTempCard",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2707,7 +2666,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsARPaymentChronologicalDates",
-					  						OldFieldName =  "IsARPaymentChronologicalDates",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2768,7 +2726,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnableInvoiceStocksManagement",
-					  						OldFieldName =  "EnableInvoiceStocksManagement",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2825,7 +2782,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "QBOOAuth",
-					  						OldFieldName =  "QBOOAuth",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2884,7 +2840,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RefreshToken",
-					  						OldFieldName =  "RefreshToken",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2941,7 +2896,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowManualARPaymentNumber",
-					  						OldFieldName =  "AllowManualARPaymentNumber",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3002,7 +2956,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowRegionalTaxManagement",
-					  						OldFieldName =  "AllowRegionalTaxManagement",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
