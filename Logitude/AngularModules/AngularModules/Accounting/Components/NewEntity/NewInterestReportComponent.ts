@@ -85,6 +85,19 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
         }
     }
 
+    get CustomerId() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.CustomerId;
+        }
+        else
+            return null;
+    }
+    set CustomerId(newValue: string) {
+        if (this.EntityPM.CustomerId != newValue) {
+            this.EntityPM.CustomerId = newValue;
+        }
+    }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

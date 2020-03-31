@@ -572,6 +572,133 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string customerId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerId  
+	   {
+	    
+	     get
+		{
+		   return customerId;
+		 }
+		 set
+		 {
+		   if(customerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerId",OldValue=customerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerId=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<InterestReportLinesByDatePM> interestReportLinesByDates;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("InterestReportLinesByDateInterestReport", "Id","InterestReportId")]
+	   [DataMember]
+	   public virtual List<InterestReportLinesByDatePM> InterestReportLinesByDates  
+	   {
+	        get
+             {
+                 if (interestReportLinesByDates == null)
+                 {
+                     interestReportLinesByDates = new List<InterestReportLinesByDatePM>();
+                 }
+                 return interestReportLinesByDates;
+              }
+             set { interestReportLinesByDates = value; }
+	    }
+		   
+	   private List<InterestReportLinesByDatePM>  deletedInterestReportLinesByDates;
+	   public virtual List<InterestReportLinesByDatePM> DeletedInterestReportLinesByDates  
+	   {
+	        get
+             {
+                 if ( deletedInterestReportLinesByDates == null)
+                 {
+                      deletedInterestReportLinesByDates = new List<InterestReportLinesByDatePM>();
+                 }
+                 return  deletedInterestReportLinesByDates;
+              }
+             set {  deletedInterestReportLinesByDates = value; }
+	    }
+	  	  private string customerName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerName  
+	   {
+	    
+	     get
+		{
+		   return customerName;
+		 }
+		 set
+		 {
+		   if(customerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=customerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerName=value;
+		   }
+			
+		 }
+	   }
+	  private int? gLAccountMinimumInterest ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? GLAccountMinimumInterest  
+	   {
+	    
+	     get
+		{
+		   return gLAccountMinimumInterest;
+		 }
+		 set
+		 {
+		   if(gLAccountMinimumInterest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountMinimumInterest",OldValue=gLAccountMinimumInterest,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   gLAccountMinimumInterest=value;
+		   }
+			
+		 }
+	   }
+	  private string customerLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerLocalName  
+	   {
+	    
+	     get
+		{
+		   return customerLocalName;
+		 }
+		 set
+		 {
+		   if(customerLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerLocalName",OldValue=customerLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -1393,6 +1393,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.NextLegName = shipment.NextLeg != null ? shipment.NextLeg.Name : null;
             shipmentPM.ShipmentTypeViewField = (shipment.ShipmentType != null ? shipment.ShipmentType.Name : "") + " " + (shipment.ShipmentLevel != null ? shipment.ShipmentLevel.Name : "");
             shipmentPM.CASSCode = shipment.CASSCode;
+            shipmentPM.SLAC = shipment.SLAC;
             shipmentPM.NoFreightFile = shipment.NoFreightFile;
             shipmentPM.DeliveryOrder = shipment.DeliveryOrder;
             shipmentPM.FreightLocationId = shipment.FreightLocationId;
@@ -1763,6 +1764,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ComputedStatusDate = shipment.ComputedStatusDate;
             shipmentPM.FinalArrivalDate = shipment.FinalArrivalDate;
             shipmentPM.EstimatedFinalArrivalDate = shipment.EstimatedFinalArrivalDate;
+            shipmentPM.CreateDateTime = shipment.CreateDateTime;
             shipmentPM.ActualFinalArrivalDate = shipment.ActualFinalArrivalDate;
             shipmentPM.CustomFileId = shipment.CustomFileId;
             shipmentPM.CustomFileNumber = shipment.CustomFileNumber;
@@ -3359,6 +3361,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
             shipmentPM.ActualFinalArrivalDate = shipment.ActualFinalArrivalDate;
             shipmentPM.EstimatedFinalArrivalDate = shipment.EstimatedFinalArrivalDate;
+            shipmentPM.CreateDateTime = shipment.CreateDateTime;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
@@ -4121,6 +4124,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         CustomClearancePointContactId = s.CustomClearancePointContactId,
                                                         CustomClearancePointReference1 = s.CustomClearancePointReference1,
                                                         CASSCode = s.CASSCode,
+                                                        SLAC = s.SLAC,
                                                         FreelancerId = s.FreelancerId,
                                                         FreelancerAddressId = s.FreelancerAddressId,
                                                         FreelancerContactId = s.FreelancerContactId,
@@ -10974,6 +10978,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ActualFinalArrivalDate = s.ActualFinalArrivalDate,
                                                          AMSBL = s.AMSBL,
                                                          CASSCode = s.CASSCode,
+                                                         SLAC = s.SLAC,
                                                          FreelancerId = s.FreelancerId,
                                                          FreelancerAddressId = s.FreelancerAddressId,
                                                          FreelancerContactId = s.FreelancerContactId,

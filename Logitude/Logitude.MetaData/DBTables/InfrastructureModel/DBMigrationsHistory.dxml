@@ -5,19 +5,19 @@
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
 
-  <Column Name="DxmlFileName" Type="varchar" Size="200">
+  <Column Name="DxmlFileName" Type="varchar" Size="500">
     <Constraints Nullable="false" />
   </Column>
 
-  <Column Name="TableName" Type="varchar" Size="100">
+  <Column Name="TableName" Type="varchar" Size="500">
     <Constraints Nullable="false" />
   </Column>
 
-  <Column Name="ColumnName" Type="varchar" Size="100">
+  <Column Name="ColumnName" Type="varchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
 
-  <Column Name="MigrationType" Type="varchar" Size="40">
+  <Column Name="MigrationType" Type="varchar" Size="50">
     <Constraints Nullable="false" />
   </Column>
   

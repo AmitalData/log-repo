@@ -89,7 +89,6 @@ export class ReceivablePageComponent {
                         this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => {
                             this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => {
                                 this._entityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => {
-
                                     this.isReady = true;
                                 });
                             });
@@ -178,7 +177,7 @@ export class ReceivablePageComponent {
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Receivables");
             listArgs.Perspective = "GLAccountRecievable";
             listArgs.IgnoreSelectedPerspective = true;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -255,7 +254,7 @@ export class ReceivablePageComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Receivables");
             //listArgs.DisplayTitle = displayTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

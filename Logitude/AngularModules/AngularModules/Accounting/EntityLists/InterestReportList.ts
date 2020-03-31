@@ -32,6 +32,10 @@ export class InterestReportList {
 	InterestReportStatusName: string;
 	SearchFields: string;
 	InterestReportStatusLocalName: string;
+	CustomerId: string;
+	CustomerName: string;
+	GLAccountMinimumInterest: number;
+	CustomerLocalName: string;
 	
 }
  

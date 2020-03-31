@@ -84,6 +84,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SocialClassesGenerator.cs</LastGenOutput>
     </None>
+    <None Include="DBTables\ConversationHeader.dxml" />
+    <None Include="DBTables\ConversationHeaderMessage.dxml" />
+    <None Include="DBTables\ConversationHeaderParticipant.dxml" />
+    <None Include="DBTables\Feed.dxml" />
+    <None Include="DBTables\FollowEntity.dxml" />
+    <None Include="DBTables\Follower.dxml" />
+    <None Include="DBTables\Group.dxml" />
+    <None Include="DBTables\GroupMember.dxml" />
+    <None Include="DBTables\Post.dxml" />
+    <None Include="DBTables\PostLike.dxml" />
     <None Include="EntityFiles\ConversationHeader.lxml" />
     <None Include="EntityFiles\ConversationHeaderMessage.lxml" />
     <None Include="EntityFiles\ConversationHeaderParticipant.lxml" />

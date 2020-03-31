@@ -9,6 +9,7 @@ import {HybridPartnerPM} from '../../../../Common/EntityPMs/HybridPartnerPM';
  import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
  import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
  import {WebFreightDomainService} from '../../../../Infrastructure/Services/WebFreightDomainService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 declare var window: any;
 
@@ -31,7 +32,7 @@ export class HybridPartnerTabComponent extends BaseComponent {
         this._HybridPartnerPMService = new HybridPartnerPMService(); 
         this.myentityPM = entityArgs.EntityPM;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.getHypridPartnerLogo(this.myentityPM.LogoId).subscribe(myResult => {
+        myService.getHypridPartnerLogo(this.myentityPM.LogoId).subscribe((myResult: ServiceResponse) => {
             if (myResult) {
                 this.Source = "data:image/JPEG;base64," + myResult;
                
@@ -95,7 +96,7 @@ export class HybridPartnerTabComponent extends BaseComponent {
         logitudeWindow.Show('./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/HybridPartnerUploadLogoComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             var myService: WebFreightDomainService = new WebFreightDomainService();
-            myService.getHypridPartnerLogo(this.myentityPM.LogoId).subscribe(myResult => {
+            myService.getHypridPartnerLogo(this.myentityPM.LogoId).subscribe((myResult: ServiceResponse) => {
                 if (myResult) {
                     this.Source = "data:image/JPEG;base64," + myResult;
 

@@ -409,6 +409,14 @@
     <Compile Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.Designer.cs">
       <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.cs" />
+    <Compile Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.Designer.cs">
+      <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.cs" />
+    <Compile Include="Migrations\202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.Designer.cs">
+      <DependentUpon>202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs" />
     <Compile Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.Designer.cs">
       <DependentUpon>202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs</DependentUpon>
@@ -576,6 +584,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002250701051_WesamAddSearchFieldsToWebHookKeysTable.resx">
       <DependentUpon>202002250701051_WesamAddSearchFieldsToWebHookKeysTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003031004593_WesamGlobalDBMigrationFixes.resx">
+      <DependentUpon>202003031004593_WesamGlobalDBMigrationFixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.resx">
+      <DependentUpon>202003051034035_Abed_AddBatchServicesDefinitionMapToGlobalContext.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.resx">
       <DependentUpon>202003080908423_AddTMPersonalAccessTokenFieldToSettings_Maheera.cs</DependentUpon>

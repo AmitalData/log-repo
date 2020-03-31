@@ -344,6 +344,7 @@ export class VatTypeListService {
                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetAll", ""); 
 
 
+
                         return serviceResponse;
                     }).catch(ServiceHelper.HandleServiceError);
                 });

@@ -141,7 +141,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
                 InternalUsers = entityPm.InternalUsers,
             };
 
-            inboundEmailService.ApplyEmailSending(line, entityPm.EntityId, myTable.Id, ticket.GuidId, entityPm.NotifyMe, entityPm.CreatedByContactId, myInboundEmail.ObjectTableId);
+            inboundEmailService.ApplyEmailSending(line, entityPm.EntityId, myTable.Id, ticket.GuidId, entityPm.NotifyMe, entityPm.CreatedByContactId, myInboundEmail.ObjectTableId, entityPm.IsContainsQuotationAttachment);
         }
 
         public string GetSenderEmail(int tenant,string guidId, string supportMailboxId)

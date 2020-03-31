@@ -22,6 +22,9 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { EditShipmentLinkRendererComponent } from "../TemplateRenderer/EditShipmentLinkRendererComponent";
 import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { LastRunDetailPM } from '../../../../Infrastructure/EntityPMs/LastRunDetailPM';
+import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/LastRunDetailExtendedPMService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
     moduleId: module.id,
     templateUrl: 'BIReportPreviewComponent.html',
@@ -42,6 +45,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public _DWQueryBuilderService: DWQueryBuilderService;
     public _DWQueryBuilderHelper: DWQueryBuilderHelper
     public _BIReportPMService: BIReportPMService;
+    public LastRunDetailExtendedPMService: LastRunDetailExtendedPMService;
     DataContext: any = this;
     public _InfrastructureDomainService: InfrastructureDomainService;
     public _ShipmentPMService: ShipmentPMService;
@@ -99,6 +103,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this._InfrastructureDomainService = new InfrastructureDomainService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._BIReportPMService = new BIReportPMService();
+        this.LastRunDetailExtendedPMService = new LastRunDetailExtendedPMService();
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._ShipmentPMService = new ShipmentPMService();
     }
@@ -117,9 +122,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.ShowFixedFilters.emit(this.showStaticFilters);
     }
 
-    public LoadBIReportData() {
+    public LoadBIReportData(IsBIReportUpdated = false) {
         if (this.DWQueryId != null) {
-            this._InfrastructureDomainService.GetByBIReportId(this.EntityId, this.DWQueryId).subscribe(myResult => {
+            this._InfrastructureDomainService.GetByBIReportId(this.EntityId, this.DWQueryId).subscribe((myResult: ServiceResponse) => {
                 if (!myResult.HasError) {
                     var result: BIReportXMLData = myResult.Result;
                     this.ReportXML = result;
@@ -127,7 +132,14 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     this.EntityPM = result.BIReportPM;
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                     // this.BuildColumns(result);
-                    this.BuildRows(result);
+                    if (IsBIReportUpdated) {
+                        this._BIReportPMService.update(this.EntityPM).subscribe(response => {
+                            this.BuildRows(result);
+                        });
+                    }
+                    else {
+                        this.BuildRows(result);
+                    }
                 }
             });
         }
@@ -586,7 +598,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             result.DWQueryData.ColumnsSort = result.DWQueryData.ColumnsSort.replace(/,\s*$/, "");
         }
 
-        this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
+        this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe((myResult: ServiceResponse) => {
             if (!myResult.HasError) {
                 this.BIReportXMLData = myResult.Result;
                 this.EntityPM = this.BIReportXMLData.BIReportPM;
@@ -620,6 +632,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         var windowArgs: any = {};
         windowArgs.DWQueryId = this.DWQueryId;
         windowArgs.IsBIReportEditScreen = true;
+        windowArgs.FactTableName = this.EntityPM.FactTableName;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
         logWindow.Height = 780;
@@ -640,7 +653,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     else {
                         this.SelectedFiltersDataSource = [];
                     }
-                    this.LoadBIReportData();
+                    this.LoadBIReportData(true);
                 }
             });
         });
@@ -676,11 +689,9 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             this.StopBusyIndicator();
         }
         else {
+            var lastRunDetail: LastRunDetailPM = this.FillLastRunDetails();
 
-            var todayDate: Date = DateTool.GetCurrentDateAsUtc();
-            this.EntityPM.LastRunDate = todayDate;
-            this.EntityPM.LastRunByUserId = SessionLocator.LoggedUserId;
-            this._BIReportPMService.update(this.EntityPM).subscribe(myResult => {
+            this.LastRunDetailExtendedPMService.UpdateLastRunDetails(lastRunDetail, SessionLocator.LoggedUserId).subscribe((myResult: ServiceResponse) => {
                 this.HasValidationError = false;
                 this.rowData = MyData.rowData;
                 this.isParentTenant = MyData.IsParentTenant;
@@ -692,6 +703,17 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
         this.StopBusyIndicator();
     }
+    private FillLastRunDetails() {
+        var lastRunDetail: LastRunDetailPM = new LastRunDetailPM();
+        var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
+        lastRunDetail.Id = this.EntityPM.LastRunId;
+        lastRunDetail.Tenant = SessionLocator.Tenant;
+        lastRunDetail.LastRunByUserId;
+        lastRunDetail.LastRunDate = todayDate;
+        lastRunDetail.LastRunByUserId = SessionLocator.LoggedUserId;
+        return lastRunDetail;
+    }
+
     OnComputeFiltersComplete(MyData) {
         this.BIReportXMLData.DWQueryData = MyData;
         this.ExportToExcelAction();
@@ -743,6 +765,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         windowArgs.DWQueryId = this.EntityPM.DWQueryId;
         windowArgs.IsCopy = true;
         windowArgs.BIReportFolderId = this.EntityPM.BIReportFolderId;
+        windowArgs.FactTableName = this.EntityPM.FactTableName;
         //windowArgs.ComponentRef = this.ComponentRef;
         //windowArgs.BackCompleted = this.BackCompleted;
         logWindow.WindowArgs = windowArgs;
@@ -766,7 +789,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     // save
-                    this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe(myResult => {
+                    this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
                         if (!myResult.HasError) {
                             if (this.ComponentRef) {
                                 this.BackCompleted.emit(true);

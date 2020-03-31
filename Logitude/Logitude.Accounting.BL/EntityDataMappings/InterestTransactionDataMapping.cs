@@ -22,13 +22,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
            
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
             AddPOCOPropertyName(POCOPropertyNames.Id);
+            AddPOCOPropertyName(POCOPropertyNames.InterestValueDate);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.Id = entityPM.Id;
-
+                entityPOCO.InterestValueDate = entityPM.InterestValueDate.Date;
             }
         }
 

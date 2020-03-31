@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "User",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Users",
-			      				    OldDBTableName =  "Users",
 			      				    ObjectTableSingular =  "User",
 			      				    ObjectTablePlural =  "Users",
 			      				    DescriptionDefaultText =  "Manage your Logitude users, associate users to roles and define restrictions.",
@@ -128,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureUser/Components/NewUserComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
-			      				    AllowedForComputingPartners =  true,
+			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -146,11 +145,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsFreelancer",
-					  						OldFieldName =  "IsFreelancer",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -200,6 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsFreelancer",
@@ -212,7 +211,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Email",
-					  						OldFieldName =  "Email",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -264,6 +262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Email",
@@ -276,7 +275,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Password",
-					  						OldFieldName =  "Password",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -325,6 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Password",
@@ -337,7 +336,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -389,6 +387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EnglishName",
@@ -401,7 +400,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DepartmentId",
-					  						OldFieldName =  "DepartmentId",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Department",
@@ -454,6 +452,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DepartmentId",
@@ -466,7 +465,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BranchId",
-					  						OldFieldName =  "BranchId",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Branch",
@@ -519,6 +517,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BranchId",
@@ -531,7 +530,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -583,6 +581,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InActive",
@@ -595,7 +594,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -647,6 +645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
@@ -659,7 +658,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -709,6 +707,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ComputedLocalName",
@@ -721,7 +720,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DepartmentName",
-					  						OldFieldName =  "DepartmentName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -773,6 +771,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DepartmentName",
@@ -785,7 +784,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BranchName",
-					  						OldFieldName =  "BranchName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -837,6 +835,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BranchName",
@@ -849,11 +848,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsSalesman",
-					  						OldFieldName =  "IsSalesman",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -901,6 +899,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsSalesman",
@@ -913,7 +912,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BusinessUnitId",
-					  						OldFieldName =  "BusinessUnitId",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BusinessUnit",
@@ -964,6 +962,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BusinessUnitId",
@@ -976,7 +975,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BusinessUnitName",
-					  						OldFieldName =  "BusinessUnitName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1028,6 +1026,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BusinessUnitName",
@@ -1040,7 +1039,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1093,6 +1091,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Create Date",
@@ -1105,7 +1104,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExpirationDate",
-					  						OldFieldName =  "ExpirationDate",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1158,6 +1156,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ExpirationDate",
@@ -1170,7 +1169,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LastLoginDate",
-					  						OldFieldName =  "LastLoginDate",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1223,6 +1221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LastLoginDate",
@@ -1235,11 +1234,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LicencedUser",
-					  						OldFieldName =  "LicencedUser",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1289,6 +1287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1300,7 +1299,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ProductTypeCode",
-					  						OldFieldName =  "ProductTypeCode",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ProductType",
@@ -1351,6 +1349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ProductTypeCode",
@@ -1363,7 +1362,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ProductTypeName",
-					  						OldFieldName =  "ProductTypeName",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1415,6 +1413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ProductTypeName",
@@ -1427,7 +1426,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DistributorCode",
-					  						OldFieldName =  "DistributorCode",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Distributor",
@@ -1478,6 +1476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DistributorCode",
@@ -1490,11 +1489,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsDistributor",
-					  						OldFieldName =  "IsDistributor",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1542,6 +1540,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsDistributor",
@@ -1554,7 +1553,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ActiveUsers",
-					  						OldFieldName =  "ActiveUsers",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1604,6 +1602,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ActiveUsers",
@@ -1616,7 +1615,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InactiveUsers",
-					  						OldFieldName =  "InactiveUsers",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1666,6 +1664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InactiveUsers",
@@ -1678,7 +1677,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ActiveNotLicensed",
-					  						OldFieldName =  "ActiveNotLicensed",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1728,6 +1726,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ActiveNotLicensed",
@@ -1740,11 +1739,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsShowContactDetailsInTheMobileApp",
-					  						OldFieldName =  "IsShowContactDetailsInTheMobileApp",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1790,6 +1788,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsShowContactDetailsInTheMobileApp",
@@ -1802,7 +1801,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PersonalId",
-					  						OldFieldName =  "PersonalId",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1854,6 +1852,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "PersonalId",
@@ -1866,7 +1865,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EmployeeGroupCustomFilter",
-					  						OldFieldName =  "EmployeeGroupCustomFilter",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1915,6 +1913,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "EmployeeGroupCustomFilter",
@@ -1927,9 +1926,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "User",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -1980,6 +1978,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
@@ -1992,9 +1991,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "User",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -2043,6 +2041,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2054,7 +2053,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BusinessPhone",
-					  						OldFieldName =  "BusinessPhone",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2108,6 +2106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "BusinessPhone",
@@ -2120,7 +2119,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Mobile",
-					  						OldFieldName =  "Mobile",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2174,6 +2172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Mobile",
@@ -2186,11 +2185,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsTwoFactorAuthenticationEnabled",
-					  						OldFieldName =  "IsTwoFactorAuthenticationEnabled",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2236,6 +2234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsTwoFactorAuthenticationEnabled",
@@ -2248,11 +2247,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SetAngularAsDefault",
-					  						OldFieldName =  "SetAngularAsDefault",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2298,6 +2296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "SetAngularAsDefault",
@@ -2310,7 +2309,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Technology",
-					  						OldFieldName =  "Technology",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2362,6 +2360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Technology",
@@ -2374,7 +2373,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DocumentFilingInbox",
-					  						OldFieldName =  "DocumentFilingInbox",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2424,6 +2422,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "DocumentFilingInbox",
@@ -2436,7 +2435,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ShowLocalNameInLOV",
-					  						OldFieldName =  "ShowLocalNameInLOV",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2483,6 +2481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2494,7 +2493,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "UserRoles",
-					  						OldFieldName =  "UserRoles",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2542,6 +2540,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2553,7 +2552,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AdditionalPackagesOnly",
-					  						OldFieldName =  "AdditionalPackagesOnly",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2601,6 +2599,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2631,6 +2630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LayoutDirection",
 					  						ListPropertyPath =  "LayoutDirection",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2648,6 +2648,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LayoutDirection",
 					  						DefaultText =  "Layout Direction",
+					  						FullLocalDefaultText =  "כיוון קריאה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2655,6 +2656,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -2864,8 +2866,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature UserFeature_User_Feature_ViewsSharing  = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.ViewsSharing ", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.ENABLESHAEDVIEWS", NameTextCodeDefaultText = @"Views Sharing " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature UserFeature_User_Feature_EditSharedViews = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "User.Feature.EditSharedViews", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.User.Feature.EditSharedViews", NameTextCodeDefaultText = @"Edit Shared Views" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
-		   Feature UserFeature_LYDR = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LYDR", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.LYDR", NameTextCodeDefaultText = @"Layout Direction" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

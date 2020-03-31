@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;AirlineMessagingRule,AirlineMessagingRules,,Id,&quot;">
+  SearchFields="&quot;AirlineMessagingRule,AirlineMessagingRules,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;29230332-11fd-49f3-8a57-2e5e112af00a&quot;"
     FieldName="&quot;Id&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;AirlineMessagingRule&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -213,7 +215,7 @@
     ObjectTableName="&quot;AirlineMessagingRule&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -254,7 +256,7 @@
     ListLableDefaultText="&quot;CreatedByUserId&quot;"
     ListLocalDefaultText="&quot;CreatedByUserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -275,7 +277,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser" />
   <field
     Id="&quot;df6c0055-0089-41a1-bc41-40805f078595&quot;"
     FieldName="&quot;CreateDate&quot;"
@@ -359,7 +363,7 @@
     ObjectTableName="&quot;AirlineMessagingRule&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -400,7 +404,7 @@
     ListLableDefaultText="&quot;UpdatedByUserId&quot;"
     ListLocalDefaultText="&quot;UpdatedByUserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -421,7 +425,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;15ab0c46-a247-4ddb-b574-e2f8dced6106&quot;"
     FieldName="&quot;UpdateDate&quot;"
@@ -660,7 +666,7 @@
     LookUpTableName="&quot;ObjectField&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -700,7 +706,7 @@
     FullFieldLable="&quot;RuleFieldId&quot;"
     DefaultText="&quot;Rule Field&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -722,7 +728,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ObjectField"
+    NavigationPropertyName="RuleField" />
   <field
     Id="&quot;1736854a-68aa-4bdf-b553-3552594d376d&quot;"
     FieldName="&quot;RuleFieldName&quot;"
@@ -809,7 +817,7 @@
     ObjectTableName="&quot;AirlineMessagingRule&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -883,7 +891,7 @@
     ObjectTableName="&quot;AirlineMessagingRule&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1001,7 +1009,7 @@
     ListFieldLable="&quot;AirlineIdListLable&quot;"
     ListLableDefaultText="&quot;Airline&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1023,7 +1031,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Airline" />
   <field
     Id="&quot;6d4fe721-9a6d-435f-97f8-c29889b76502&quot;"
     FieldName="&quot;InActive&quot;"
@@ -1111,7 +1121,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="200"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"

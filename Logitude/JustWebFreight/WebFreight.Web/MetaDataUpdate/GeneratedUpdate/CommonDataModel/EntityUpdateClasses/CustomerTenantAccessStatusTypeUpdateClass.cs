@@ -243,7 +243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						Code =  "EnglishName",
 					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -253,7 +253,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "LocalName",
 					  						ObjectTableName =  "CustomerTenantAccessStatusType",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						DataTypeCode =  "Text",
 					  						MaxLength =  25,
 					  						IsCustom =  false,
@@ -302,7 +302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						Code =  "LocalName",
 					  						DependencyFilter3IsList =  false,
 					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -312,7 +312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "CustomerTenantAccessStatusType",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						DataTypeCode =  "Text",
 					  						MaxLength =  52,
 					  						IsCustom =  false,

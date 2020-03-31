@@ -19,12 +19,12 @@ namespace WarehouseDataService.Helper
         string destinationConnectionString = string.Empty;
 
         WarehouseServiceHelper warehouseServiceHelper;
-        WarehouseHelper warehouseHelper;
+        MainDataWarehouseService mainDataWarehouseService;
 
         public WarehouseService()
         {
 
-            warehouseHelper = new WarehouseHelper("Service", ApplicationInfo.Mode);
+            mainDataWarehouseService = new MainDataWarehouseService("Service", ApplicationInfo.Mode);
             warehouseServiceHelper = new WarehouseServiceHelper();
             BuildConnectionString();
         }
@@ -87,8 +87,8 @@ namespace WarehouseDataService.Helper
                     {
                         isBuildStart = true;
                         warehouseServiceHelper.UpdateDWHBuildStatus("IsFullBuildDWRunning", true, sourceConnectionString);
-                        warehouseHelper.BuildDataBase(sourceConnectionString, destinationConnectionString);
-                        warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
+                        mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString);
+                        mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
                         warehouseServiceHelper.UpdateDWHBuildStatus("IsFullBuildDWRunning", false, sourceConnectionString);
                         warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                     }
@@ -117,8 +117,8 @@ namespace WarehouseDataService.Helper
                             if (!isFullBuildDWRunning)
                             {
                                 warehouseServiceHelper.UpdateDWHBuildStatus("IsIncrementalDWRunning", true, sourceConnectionString);
-                                warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString);
-                                warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update");
+                                mainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString);
+                                mainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update");
                                 warehouseServiceHelper.UpdateDWHBuildStatus("IsIncrementalDWRunning", false, sourceConnectionString);
                                 warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                                 Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);

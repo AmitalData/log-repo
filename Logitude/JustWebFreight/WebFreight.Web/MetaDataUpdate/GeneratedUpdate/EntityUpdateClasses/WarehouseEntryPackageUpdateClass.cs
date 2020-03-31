@@ -1182,7 +1182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "WarehouseEntryPackage",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  100,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,

@@ -216,7 +216,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                         var ResponseData = JsonConvert.SerializeObject(ImporterShipment.Id);
                         var Donemsg = "Shipment Added To Importer Tenant Successfully " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, null, null, "");
+                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
                         return Request.CreateResponse(HttpStatusCode.OK, new List<string>() { ImporterShipment.Id, ImporterShipment.ShipmentNumber });
                     }
                     else
@@ -378,7 +378,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>());
                         shipmentService.Update();
                         var Donemsg = "Shipment Updated Successfully " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, null, null, "");
+                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
                         return Request.CreateResponse(HttpStatusCode.OK, new List<string>() { ImporterShipment.Id, ImporterShipment.ShipmentNumber });
                     }
                     else
@@ -913,6 +913,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
 
             }
+
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
 
             if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)

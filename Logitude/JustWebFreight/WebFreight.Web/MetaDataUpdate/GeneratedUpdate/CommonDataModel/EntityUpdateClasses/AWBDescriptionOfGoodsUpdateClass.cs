@@ -366,7 +366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "AWBDescriptionOfGoods",
 					  						FieldsDataType =  "Text",
 					  						DataTypeCode =  "Text",
-					  						MaxLength =  2,
+					  						MaxLength =  4,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,

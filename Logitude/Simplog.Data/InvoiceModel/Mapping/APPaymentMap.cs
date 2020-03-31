@@ -74,14 +74,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .IsRequired()
                 .HasMaxLength(15)
                 .IsUnicode(false);
-            
-            this.Property(t => t.PaymentMethodId)
-                .IsRequired()
-                .HasMaxLength(15)
-                .IsUnicode(false);
 
             this.Property(t => t.AccountingPaymentMethodId)
-              .HasMaxLength(15)
+              .HasMaxLength(15).IsRequired()
               .IsUnicode(false);
 
             this.Property(t => t.VendorAddressId)
@@ -124,14 +119,23 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.BankAccountId)
                 .HasMaxLength(15).IsUnicode(true);
 
+            this.Property(t => t.Field1).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field2).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field3).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field4).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field5).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field6).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field7).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field8).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field9).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Field10).HasMaxLength(250).IsUnicode(true);
 
 
-
-        //public string VendorBankAddress { get; set; }
-        //public string VendorBankName { get; set; }
-        //public string VendorBankAccountNumber { get; set; }
-        //public string VendorSwift { get; set; }
-        //public string VendorIBANNumber { get; set; }
+            //public string VendorBankAddress { get; set; }
+            //public string VendorBankName { get; set; }
+            //public string VendorBankAccountNumber { get; set; }
+            //public string VendorSwift { get; set; }
+            //public string VendorIBANNumber { get; set; }
 
 
             this.Property(t => t.VendorBankAddress)
@@ -157,18 +161,18 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.PaymentNo).HasColumnName("PaymentNo");
-            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
             this.Property(t => t.PrintDate).HasColumnName("PrintDate");
-            this.Property(t => t.AmountInLocalCurrency).HasColumnName("AmountInLocalCurrency");
+            this.Property(t => t.AmountInLocalCurrency).HasColumnName("AmountInLocalCurrency").IsRequired();
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
-            this.Property(t => t.AmountInPaymentCurrency).HasColumnName("AmountInPaymentCurrency");
+            this.Property(t => t.AmountInPaymentCurrency).HasColumnName("AmountInPaymentCurrency").IsRequired();
             this.Property(t => t.PrintNotes).HasColumnName("PrintNotes");
             this.Property(t => t.InternalNotes).HasColumnName("InternalNotes");
-            this.Property(t => t.PaymentCurrencyExchangeRate).HasColumnName("PaymentCurrencyExchangeRate");
+            this.Property(t => t.PaymentCurrencyExchangeRate).HasColumnName("PaymentCurrencyExchangeRate").IsRequired();
             
-            this.Property(t => t.OpenAmount).HasColumnName("OpenAmount");
+            this.Property(t => t.OpenAmount).HasColumnName("OpenAmount").IsRequired();
             this.Property(t => t.ChequeOrPaymentRef).HasColumnName("ChequeOrPaymentRef");
-            this.Property(t => t.ValueDate).HasColumnName("ValueDate");
+            this.Property(t => t.ValueDate).HasColumnName("ValueDate").IsRequired();
             this.Property(t => t.Bank).HasColumnName("Bank");
             this.Property(t => t.BankBranch).HasColumnName("BankBranch");
             this.Property(t => t.Account).HasColumnName("Account");
@@ -178,16 +182,15 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.VendorId).HasColumnName("VendorId");
             this.Property(t => t.StatusCode).HasColumnName("StatusCode");
             this.Property(t => t.PaymentCurrencyId).HasColumnName("PaymentCurrencyId");
-            this.Property(t => t.PaymentMethodId).HasColumnName("PaymentMethodId");
             this.Property(t => t.AccountingPaymentMethodId).HasColumnName("AccountingPaymentMethodId");            
             this.Property(t => t.VendorAddressId).HasColumnName("VendorAddressId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.BranchId).HasColumnName("BranchId");
             this.Property(t => t.ProfitCurrencyExchangeRate).HasColumnName("ProfitCurrencyExchangeRate");
             this.Property(t => t.AmountInProfitCurrency).HasColumnName("AmountInProfitCurrency");
-            this.Property(t => t.RegisterDate).HasColumnName("RegisterDate");
+            this.Property(t => t.RegisterDate).HasColumnName("RegisterDate").IsRequired();
             this.Property(t => t.CreditCardTypeId).HasColumnName("CreditCardTypeId");
             this.Property(t => t.ExternalAccountingEntityId).HasColumnName("ExternalAccountingEntityId");
             this.Property(t => t.TransferStatusCode).HasColumnName("TransferStatusCode");
@@ -203,6 +206,16 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.VendorBankAccountNumber).HasColumnName("VendorBankAccountNumber");
             this.Property(t => t.VendorSwift).HasColumnName("VendorSwift");
             this.Property(t => t.VendorIBANNumber).HasColumnName("VendorIBANNumber");
+            this.Property(t => t.Field1).HasColumnName("Field1");
+            this.Property(t => t.Field2).HasColumnName("Field2");
+            this.Property(t => t.Field3).HasColumnName("Field3");
+            this.Property(t => t.Field4).HasColumnName("Field4");
+            this.Property(t => t.Field5).HasColumnName("Field5");
+            this.Property(t => t.Field6).HasColumnName("Field6");
+            this.Property(t => t.Field7).HasColumnName("Field7");
+            this.Property(t => t.Field8).HasColumnName("Field8");
+            this.Property(t => t.Field9).HasColumnName("Field9");
+            this.Property(t => t.Field10).HasColumnName("Field10");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -222,10 +235,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .WithMany()
                 .HasForeignKey(d => d.VendorAddressId)
                 .WillCascadeOnDelete(false);
-            this.HasRequired(t => t.PaymentMethod)
-                .WithMany()
-                .HasForeignKey(d => d.PaymentMethodId);
-            this.HasOptional(t => t.AccountingPaymentMethod)
+            
+            this.HasRequired(t => t.AccountingPaymentMethod)
                .WithMany()
                .HasForeignKey(d => d.AccountingPaymentMethodId);
             this.HasRequired(t => t.Status)
@@ -265,9 +276,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
                 .WithMany()
                 .HasForeignKey(d => d.TransferStatusCode);
 
-            this.HasRequired(t => t.ApprovedByUser)
-              .WithMany()
-              .HasForeignKey(d => d.ApprovedByUserId);
+            this.HasOptional(t => t.ApprovedByUser).WithMany().HasForeignKey(d => d.ApprovedByUserId);
         }
     }
 }

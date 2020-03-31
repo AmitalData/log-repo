@@ -16,6 +16,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -72,6 +74,22 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 InterestReportStatuse interestReportStatuse = interestReportStatuseRepository.GetSingle(entityPOCO.InterestReportStatusCode);
                 entityPM.InterestReportStatusName = showLocals ? interestReportStatuse.LocalName:interestReportStatuse.EnglishName;
                 entityPM.InterestReportStatusLocalName = showLocals ? interestReportStatuse.LocalName : interestReportStatuse.EnglishName;
+            }
+
+            if (entityPOCO.CustomerId != null)
+            {
+                CustomerQuery customerQuery = new CustomerQuery(entityPOCO.Tenant);
+                CustomerPM customerPM = customerQuery.GetBasicSinglePM(entityPOCO.CustomerId, entityPOCO.Tenant,true);
+                entityPM.CustomerName = showLocals ? customerPM.LocalName : customerPM.EnglishName;
+                entityPM.CustomerLocalName = customerPM.LocalName;
+
+            }
+
+            if (entityPOCO.GLAccountId != null)
+            {
+                GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
+                GLAccount gLAccount = gLAccountRepository.GetSingle(entityPOCO.GLAccountId, entityPOCO.Tenant);
+                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
             }
         }
 

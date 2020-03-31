@@ -125,6 +125,11 @@ export class ReportPM {
     public set FeatureUniqeCode(newValue: string) { if (this.featureUniqeCode != newValue) { this.featureUniqeCode = newValue; this.MarkAsDirty("FeatureUniqeCode"); } }
        
 	 
+    private availableForScheduling: boolean;
+    public get AvailableForScheduling() { return this.availableForScheduling; }
+    public set AvailableForScheduling(newValue: boolean) { if (this.availableForScheduling != newValue) { this.availableForScheduling = newValue; this.MarkAsDirty("AvailableForScheduling"); } }
+       
+	 
 
     public OldEntityPM: ReportPM;
 		

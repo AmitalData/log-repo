@@ -55,7 +55,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;ShipmentCustomsTransmission,ShipmentCustomsTransmissions,,Id,&quot;">
+  SearchFields="&quot;ShipmentCustomsTransmission,ShipmentCustomsTransmissions,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;5692e10f-116d-457e-9cf1-067f2a7c7288&quot;"
     FieldName="&quot;Id&quot;"
@@ -66,7 +68,7 @@
     ObjectTableName="&quot;ShipmentCustomsTransmission&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -210,7 +212,7 @@
     ObjectTableName="&quot;ShipmentCustomsTransmission&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -251,7 +253,7 @@
     ListLableDefaultText="&quot;ShipmentId&quot;"
     ListLocalDefaultText="&quot;ShipmentId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -271,7 +273,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Shipment"
+    NavigationPropertyName="Shipment" />
   <field
     Id="&quot;af0b21ca-2bb2-4e91-b4c8-94e5aa74447c&quot;"
     FieldName="&quot;SentByUserId&quot;"
@@ -282,7 +286,7 @@
     ObjectTableName="&quot;ShipmentCustomsTransmission&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -323,7 +327,7 @@
     ListLableDefaultText="&quot;SentByUserId&quot;"
     ListLocalDefaultText="&quot;SentByUserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -343,7 +347,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="SendByUser" />
   <field
     Id="&quot;997ff4b3-86ee-463b-aa5d-25bc4f39c3da&quot;"
     FieldName="&quot;CommunicationLogId&quot;"
@@ -354,7 +360,7 @@
     ObjectTableName="&quot;ShipmentCustomsTransmission&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -395,7 +401,7 @@
     ListLableDefaultText="&quot;CommunicationLogId&quot;"
     ListLocalDefaultText="&quot;CommunicationLogId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -415,7 +421,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="CommunicationLog"
+    NavigationPropertyName="CommunicationLog" />
   <field
     Id="&quot;c8cd8606-406d-47c2-8444-379a53d479ac&quot;"
     FieldName="&quot;LastSendDate&quot;"
@@ -497,7 +505,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentCustomsTransmission&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -545,7 +553,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -612,7 +620,7 @@
     FullFieldLable="&quot;MessageCode&quot;"
     DefaultText="&quot;Message Code&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -633,7 +641,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ShipmentCustomsMessageType"
+    NavigationPropertyName="ShipmentCustomsMessageType" />
   <field
     Id="&quot;0c6f7bc8-20c1-4092-8272-019353b2a74d&quot;"
     FieldName="&quot;Status&quot;"
@@ -684,7 +694,7 @@
     FullFieldLable="&quot;Status&quot;"
     DefaultText="&quot;Status&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -705,7 +715,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="CustomsTransmissionsStatus"
+    NavigationPropertyName="CustomsTransmissionsStatus" />
   <field
     Id="&quot;1abf8953-0bae-423b-8e47-c55883276f5d&quot;"
     FieldName="&quot;StatusName&quot;"

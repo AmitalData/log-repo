@@ -56,7 +56,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;18c4ce77-4933-437a-ba8d-7ee669ec0913&quot;"
     FieldName="&quot;Id&quot;"
@@ -457,7 +459,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"

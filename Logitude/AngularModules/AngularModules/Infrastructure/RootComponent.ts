@@ -38,7 +38,7 @@ export class RootComponent implements OnInit {
 
     Boot(args: any) {
         ServiceHelper.Http = args["Http"];
-        SessionLocator.Http = args["Http"];
+        ServiceHelper.HttpClient = args["HttpClient"];
         DynamicLoader.Compiler = args["Compiler"];
         DynamicLoader.Resolver = args["Resolver"];
         DynamicLoader.Injector = args["Injector"];
@@ -276,7 +276,7 @@ export class RootComponent implements OnInit {
         }
         this._FinishLogin = true;
         var termsofUseService = new TermsofUseService();
-        termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe(res => {
+        termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult: TermsofUseArgs = pmResponse.Result;

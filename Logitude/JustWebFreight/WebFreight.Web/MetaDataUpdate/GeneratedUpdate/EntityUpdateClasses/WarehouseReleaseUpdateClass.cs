@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "WarehouseRelease",
 			      				    IsNew =  false,
 			      				    DBTableName =  "WarehouseReleases",
-			      				    OldDBTableName =  "WarehouseReleases",
 			      				    ObjectTableSingular =  "WarehouseRelease",
 			      				    ObjectTablePlural =  "WarehouseReleases",
 			      				    HasCustomFilter =  true,
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -201,7 +199,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -259,7 +256,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -319,7 +315,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -377,7 +372,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReleaseNumber",
-					  						OldFieldName =  "ReleaseNumber",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -438,7 +432,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -498,7 +491,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentId",
-					  						OldFieldName =  "ShipmentId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -558,7 +550,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentNumber",
-					  						OldFieldName =  "ShipmentNumber",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -618,7 +609,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "WarehouseId",
-					  						OldFieldName =  "WarehouseId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Warehouse",
@@ -678,7 +668,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExpectedReleaseDate",
-					  						OldFieldName =  "ExpectedReleaseDate",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -738,7 +727,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActualReleaseDate",
-					  						OldFieldName =  "ActualReleaseDate",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -798,7 +786,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReleaseBy",
-					  						OldFieldName =  "ReleaseBy",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -859,7 +846,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SpecialInstruction",
-					  						OldFieldName =  "SpecialInstruction",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -919,7 +905,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusCode",
-					  						OldFieldName =  "StatusCode",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "WarehouseReleaseStatus",
@@ -977,7 +962,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalPieces",
-					  						OldFieldName =  "TotalPieces",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1037,7 +1021,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalGrossWeight",
-					  						OldFieldName =  "TotalGrossWeight",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1099,7 +1082,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GrossWeightUnitCode",
-					  						OldFieldName =  "GrossWeightUnitCode",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1159,7 +1141,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalVolume",
-					  						OldFieldName =  "TotalVolume",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1221,7 +1202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VolumeUnitCode",
-					  						OldFieldName =  "VolumeUnitCode",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1281,7 +1261,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1342,7 +1321,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerRef1",
-					  						OldFieldName =  "CustomerRef1",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1399,7 +1377,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerRef2",
-					  						OldFieldName =  "CustomerRef2",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1456,7 +1433,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "HouseNumber",
-					  						OldFieldName =  "HouseNumber",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1517,7 +1493,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MasterNumber",
-					  						OldFieldName =  "MasterNumber",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1578,7 +1553,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "WarehouseReleasePackages",
-					  						OldFieldName =  "WarehouseReleasePackages",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1636,7 +1610,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "WarehouseName",
-					  						OldFieldName =  "WarehouseName",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1697,7 +1670,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1758,7 +1730,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "References",
-					  						OldFieldName =  "References",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1819,7 +1790,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1880,7 +1850,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DimensionsUnitCode",
-					  						OldFieldName =  "DimensionsUnitCode",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1937,7 +1906,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentTypeId",
-					  						OldFieldName =  "ShipmentTypeId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1994,7 +1962,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentNumberWithType",
-					  						OldFieldName =  "ShipmentNumberWithType",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2051,7 +2018,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransportModeId",
-					  						OldFieldName =  "TransportModeId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TransportMode",
@@ -2065,7 +2031,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -2096,7 +2062,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TransportModeIdListLable",
 					  						ListLableDefaultText =  "Transport Mode",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
+					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
@@ -2114,7 +2080,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentLevelCode",
-					  						OldFieldName =  "ShipmentLevelCode",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentLevel",
@@ -2172,7 +2137,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2229,7 +2193,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityDate",
-					  						OldFieldName =  "ActivityDate",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2286,7 +2249,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityTypeName",
-					  						OldFieldName =  "ActivityTypeName",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2343,7 +2305,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityByUserName",
-					  						OldFieldName =  "ActivityByUserName",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2400,7 +2361,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Routing",
-					  						OldFieldName =  "Routing",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2457,7 +2417,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DirectionName",
-					  						OldFieldName =  "DirectionName",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2514,7 +2473,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransportModeName",
-					  						OldFieldName =  "TransportModeName",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2571,7 +2529,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DirectionId",
-					  						OldFieldName =  "DirectionId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Direction",
@@ -2585,7 +2542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -2616,7 +2573,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "DirectionIdListLable",
 					  						ListLableDefaultText =  "Direction",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
+					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
@@ -2634,7 +2591,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReleaseDate",
-					  						OldFieldName =  "ReleaseDate",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2695,7 +2651,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalQuantity",
-					  						OldFieldName =  "TotalQuantity",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2756,7 +2711,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedReleases",
-					  						OldFieldName =  "CreatedReleases",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2813,7 +2767,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReleasedReleases",
-					  						OldFieldName =  "ReleasedReleases",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2870,7 +2823,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CanncelledReleases",
-					  						OldFieldName =  "CanncelledReleases",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2927,7 +2879,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChargeableWeightUnitCode",
-					  						OldFieldName =  "VolumetricWeightUnitCode",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2984,7 +2935,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConnectedTo",
-					  						OldFieldName =  "ConnectedTo",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3041,7 +2991,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FromPortId",
-					  						OldFieldName =  "FromPortId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Warehouse",
@@ -3101,7 +3050,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToPortId",
-					  						OldFieldName =  "ToPortId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -3161,7 +3109,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerAddressId",
-					  						OldFieldName =  "CustomerAddressId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3218,7 +3165,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalVolumetricWeight",
-					  						OldFieldName =  "TotalVolumetricWeight",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3280,7 +3226,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Ratio",
-					  						OldFieldName =  "Ratio",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3339,7 +3284,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToTypeCode",
-					  						OldFieldName =  "ToTypeCode",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3396,7 +3340,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToPartnerCardId",
-					  						OldFieldName =  "ToPartnerCardId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -3454,7 +3397,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToAddressId",
-					  						OldFieldName =  "ToAddressId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -3512,7 +3454,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToAddressZipCode",
-					  						OldFieldName =  "ToAddressZipCode",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3569,7 +3510,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToAddressCity",
-					  						OldFieldName =  "ToAddressCity",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3626,7 +3566,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToAddressCountryId",
-					  						OldFieldName =  "ToAddressCountryId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -3684,7 +3623,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsUsed",
-					  						OldFieldName =  "IsUsed",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3741,7 +3679,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Destination",
-					  						OldFieldName =  "Destination",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3798,6 +3735,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TruckerId",
+					  						OldFieldName =  "TruckerId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -3818,6 +3756,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TruckerId",
 					  						ListPropertyPath =  "TruckerId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3854,6 +3793,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TruckerReference",
+					  						OldFieldName =  "TruckerReference",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3873,6 +3813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TruckerReference",
 					  						ListPropertyPath =  "TruckerReference",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3889,7 +3830,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TruckerReference",
-					  						DefaultText =  "Trucker Reference",
+					  						DefaultText =  "Truck Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3939,33 +3880,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CreatedReleasesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseReleaseTextCode_0.Id, NameTextCodeCode = WarehouseReleaseTextCode_0.Code, ObjectTableName = "WarehouseRelease", Code = "CreatedReleasesQuery",  QueryGroupCode = "2e12", IndexOrder = 0, Tenant = 0, ObjectTableId = WarehouseReleaseObjectTable.Id, QuerySection = "WarehouseRelease", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseReleaseFeature_0.Id,FeatureUniqeCode= WarehouseReleaseFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CreatedReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CreatedReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CreatedReleasesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CreatedReleasesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CreatedReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
              AdvancedQueryFilter CreatedReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CreatedReleases" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CreatedReleases" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedReleasesQueryQuery.Id,QueryCode = CreatedReleasesQueryQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
@@ -3974,33 +3911,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ReleasedQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseReleaseTextCode_1.Id, NameTextCodeCode = WarehouseReleaseTextCode_1.Code, ObjectTableName = "WarehouseRelease", Code = "ReleasedQuery",  QueryGroupCode = "2e12", IndexOrder = 1, Tenant = 0, ObjectTableId = WarehouseReleaseObjectTable.Id, QuerySection = "WarehouseRelease", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseReleaseFeature_1.Id,FeatureUniqeCode= WarehouseReleaseFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ReleasedQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ReleasedQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ReleasedQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn ReleasedQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ReleasedQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
              AdvancedQueryFilter ReleasedQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleasedReleases" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleasedReleases" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ReleasedQueryQuery.Id,QueryCode = ReleasedQueryQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
@@ -4009,33 +3942,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CancelledReleasesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseReleaseTextCode_2.Id, NameTextCodeCode = WarehouseReleaseTextCode_2.Code, ObjectTableName = "WarehouseRelease", Code = "CancelledReleasesQuery",  QueryGroupCode = "2e12", IndexOrder = 2, Tenant = 0, ObjectTableId = WarehouseReleaseObjectTable.Id, QuerySection = "WarehouseRelease", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseReleaseFeature_2.Id,FeatureUniqeCode= WarehouseReleaseFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn CancelledReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn CancelledReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledReleasesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn CancelledReleasesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn CancelledReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
              AdvancedQueryFilter CancelledReleasesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "CARE",PredefinedValue2 = null, QueryId = CancelledReleasesQueryQuery.Id,QueryCode = CancelledReleasesQueryQuery.UniqueCode, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
@@ -4044,33 +3973,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllReleasesQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = WarehouseReleaseTextCode_3.Id, NameTextCodeCode = WarehouseReleaseTextCode_3.Code, ObjectTableName = "WarehouseRelease", Code = "AllReleasesQuery",  QueryGroupCode = "2e12", IndexOrder = 3, Tenant = 0, ObjectTableId = WarehouseReleaseObjectTable.Id, QuerySection = "WarehouseRelease", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = WarehouseReleaseFeature_3.Id,FeatureUniqeCode= WarehouseReleaseFeature_3.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 1, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 2, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseBy" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 3, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 4, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 5, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "HouseNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 6, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "MasterNumber" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 7, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "WarehouseName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 8, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "CustomerName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 9, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "References" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 10, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllReleasesQueryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 12, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "ReleaseDate" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllReleasesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 13, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllReleasesQueryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReleasesQueryQuery.Id,QueryCode = AllReleasesQueryQuery.UniqueCode, IndexOrder = 11, ObjectFieldId = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseReleaseObjectFields.Where(d => d.FieldName == "TotalQuantity" && d.ObjectTableId == WarehouseReleaseObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 

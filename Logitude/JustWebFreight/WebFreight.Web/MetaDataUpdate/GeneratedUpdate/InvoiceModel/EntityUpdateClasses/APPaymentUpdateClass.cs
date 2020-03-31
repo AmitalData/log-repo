@@ -89,7 +89,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableSingular =  "A/P Payment",
 			      				    ObjectTablePlural =  "A/P Payments",
 			      				    HasCustomFilter =  true,
-			      				    HasCustomFields =  false,
+			      				    HasCustomFields =  true,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -111,10 +111,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
+			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
-			      				    MaxNumberOfCustomFields =  0,
+			      				    MaxNumberOfCustomFields =  10,
 			      				    DefaultText =  "A/P Payment",
 			      				    Code =  "APPY",
 			      				    Name =  "AP Payments",
@@ -145,7 +145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  20,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
@@ -811,7 +811,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						LookUpTableName =  "APPaymentStatus",
 					  						MinLength =  0,
 					  						MaxLength =  2,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -941,7 +941,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APPayment",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1338,7 +1338,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "PrintNotes",
 					  						OldFieldName =  "PrintNotes",
 					  						ObjectTableName =  "APPayment",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  500,
 					  						IsRequired =  false,
@@ -1405,7 +1405,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "InternalNotes",
 					  						OldFieldName =  "InternalNotes",
 					  						ObjectTableName =  "APPayment",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -1810,7 +1810,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APPayment",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1980,7 +1980,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1:Payment # \n2:Vendor \n3:Reference",
 					  						HelpLocalDefaultText =  "חיפוש לפי מספר תשלום\\ספק",
-					  						IsMaxLength =  false,
+					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2194,7 +2194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APPayment",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  30,
+					  						MaxLength =  20,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2710,7 +2710,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 						FieldName =  "TransferError",
 					  						OldFieldName =  "TransferError",
 					  						ObjectTableName =  "APPayment",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -2756,7 +2756,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListFieldLable =  "TransferErrorListLable",
 					  						ListLableDefaultText =  "Transfer Error",
 					  						ListLocalDefaultText =  "שגיאה בהעברה",
-					  						IsMaxLength =  false,
+					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2782,7 +2782,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						LookUpTableName =  "APPaymentTransferStatus",
 					  						MinLength =  0,
 					  						MaxLength =  2,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -3234,7 +3234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APPayment",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3360,7 +3360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AccountingPaymentMethod",
 					  						MinLength =  0,
-					  						MaxLength =  20,
+					  						MaxLength =  15,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -4524,7 +4524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FullFieldLable =  "CancelationNotes",
 					  						DefaultText =  "Cancelation Notes",
 					  						FullLocalDefaultText =  "הערות ביטול",
-					  						IsMaxLength =  false,
+					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4847,6 +4847,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
          
             ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "JournalNumber").FirstOrDefault().Id, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id,ScreenCode = APPaymentAPPaymentFullACCHeaderScreenScreen2.Code, ObjectFieldCode = APPaymentObjectFields.Where(d => d.FieldName == "JournalNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
+	      
+
+	         Screen APPaymentAdditionalFieldsScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AdditionalFields", Name = "Additional Fields", ObjectTableId = APPaymentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
@@ -4863,7 +4867,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature APPaymentGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.General", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.APPG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode APPaymentDocsOutTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Docs", DefaultText = "Docs Out",LocalDefaultText = "מסמכים שיצאו", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode APPaymentDocsOutTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = "מסמכים שיצאו", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature APPaymentDocsOutFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.DocsOut", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.APDO", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
@@ -5286,6 +5290,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APPaymentTextCode_APPaymentOAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.AmountToPay", DefaultText = "Amount To Pay",LocalDefaultText = @"סכום שהותאם", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentOShipmentNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.ShipmentNo", DefaultText = "Shipment #",LocalDefaultText = @"משלוח", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentSAPPaymentAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.S.APPayment.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = @"Additional Fields", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

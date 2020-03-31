@@ -22,6 +22,7 @@ using MeatadataGeneratorTool.DataContractsModule;
 using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
 using System.Diagnostics;
+using System.IO;
 
 namespace MeatadataGeneratorTool
 {
@@ -30,10 +31,27 @@ namespace MeatadataGeneratorTool
         public string Code { get; set; }
         public string Name { get; set; }
     }
+
+    public class DxmlDatabaseType
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class DxmlDatabaseSchema
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+    }
+
     public class ObjectTableViewModel : PropertyChangedImplementation
     {
 
         public List<ObjectTableType> ObjectTableTypes { get; set; }
+
+        public List<DxmlDatabaseType> DxmlDatabaseTypes { get; set; }
+
+        public List<DxmlDatabaseSchema> DxmlDatabaseSchemas { get; set; }
 
         public ObservableCollection<ObjectFieldsViewModel> ObsList { get; set; }
 
@@ -379,6 +397,13 @@ namespace MeatadataGeneratorTool
             ToBeDisplayOnLookUpList = new ObservableCollection<ObjectFieldsViewModel>();
             ToBeDisplayOnLookUpLocalList = new ObservableCollection<ObjectFieldsViewModel>();
             ObjectTableTypes = new List<ObjectTableType>() { new ObjectTableType { Code = "MD", Name = "Master Data" }, new ObjectTableType() { Code = "BR", Name = "Business Record" } };
+            DxmlDatabaseTypes = new List<DxmlDatabaseType>() {
+                new DxmlDatabaseType { Code = "Main", Name = "Main Database" },
+                new DxmlDatabaseType { Code = "Global", Name = "Global Database" },
+                new DxmlDatabaseType() { Code = "SystemLogs", Name = "SystemLogs Database" } };
+            DxmlDatabaseSchemas = new List<DxmlDatabaseSchema>() {
+                new DxmlDatabaseSchema { Code = "dbo", Name = "Dbo Schema" },
+                new DxmlDatabaseSchema() { Code = "Customs", Name = "Customs Schema" } };
             this.AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
             this.AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
 			this.AdditionalFeaturesTempList = new ObservableCollection<FeaturesViewModel>();
@@ -1298,6 +1323,20 @@ namespace MeatadataGeneratorTool
             set { dBTableName = value; IsDirty = true; FirePropertyChanged("DBTableName"); }
         }
 
+        string dBTableOldNames;
+        public string DBTableOldNames
+        {
+            get { return dBTableOldNames; }
+            set { dBTableOldNames = value; FirePropertyChanged("DBTableOldNames"); }
+        }
+
+        string dBTableShortName;
+        public string DBTableShortName
+        {
+            get { return dBTableShortName; }
+            set { dBTableShortName = value; IsDirty = true; FirePropertyChanged("DBTableShortName"); }
+        }
+        
         string olddBTableName;
         public string OldDBTableName
         {
@@ -1582,6 +1621,20 @@ namespace MeatadataGeneratorTool
         {
             get { return objectTableTypeCode; }
             set { objectTableTypeCode = value; FirePropertyChanged("ObjectTableTypeCode"); }
+        }
+
+        string dxmlDatabaseTypeCode;
+        public string DxmlDatabaseTypeCode
+        {
+            get { return dxmlDatabaseTypeCode; }
+            set { dxmlDatabaseTypeCode = value; FirePropertyChanged("DxmlDatabaseTypeCode"); }
+        }
+
+        string dxmlDatabaseSchemaCode;
+        public string DxmlDatabaseSchemaCode
+        {
+            get { return dxmlDatabaseSchemaCode; }
+            set { dxmlDatabaseSchemaCode = value; FirePropertyChanged("DxmlDatabaseSchemaCode"); }
         }
 
         int maxNumberOfCustomFields;
@@ -2493,12 +2546,27 @@ namespace MeatadataGeneratorTool
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
-            if ((ObjectTableName.Contains("Customs") ? ObjectTableName.Substring(9).Length > 30 : ObjectTableName.Length > 30) || (DBTableName.Contains("Customs") ? DBTableName.Substring(9).Length > 30 : DBTableName.Length > 30))
+            //if ((ObjectTableName.Contains("Customs") ? ObjectTableName.Substring(9).Length > 30 : ObjectTableName.Length > 30) || (DBTableName.Contains("Customs") ? DBTableName.Substring(9).Length > 30 : DBTableName.Length > 30))
+            //{
+            //    ErrorMessages = "ObjectTableName and DataBase Table Name Shouldn't be more than 30 char. length ..";
+            //    ErrorsVisibility = Visibility.Visible;
+            //    return false;
+            //}
+
+            if (string.IsNullOrEmpty(DxmlDatabaseTypeCode) && ObsList.Where(f => f.IsDBField).Any())
             {
-                ErrorMessages = "ObjectTableName and DataBase Table Name Shouldn't be more than 30 char. length ..";
+                ErrorMessages = "Database Type is Required";
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
+
+            if (string.IsNullOrEmpty(DxmlDatabaseSchemaCode) && ObsList.Where(f => f.IsDBField).Any())
+            {
+                ErrorMessages = "Database Schema is Required";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+
             try
             {
                 ErrorsVisibility = Visibility.Collapsed;
@@ -2611,7 +2679,16 @@ namespace MeatadataGeneratorTool
                 }
                 if (DataContractsObsList != null)
                 {
-                    ErrorMessages = "";
+                    if(!(ErrorMessages.Contains("Cannot Find Foreign Entity") || ErrorMessages.Contains("Database Type is Required") || ErrorMessages.Contains("Database Schema is Required")))
+                    {
+                        ErrorMessages = "";
+                    }
+                    else
+                    {
+                        ErrorMessages = string.Join("\n\n", ErrorMessages.Split(new string[] { "\n\n" }, StringSplitOptions.None).Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required")).ToArray());
+                        ErrorMessages = string.Join("\n", ErrorMessages.Split('\n').Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required") || l.Contains("Field Errors:") || string.IsNullOrEmpty(l)).ToArray());
+                    }
+
                     foreach (var item in DataContractsObsList)
                     {
                         if (item.DCFieldsObsList != null && item.DCFieldsObsList.Where(a => a.IsKey == true).Count() == 0)
@@ -2625,12 +2702,15 @@ namespace MeatadataGeneratorTool
                     }
                 }
 
-
                 if (ErrorMessages == "")
                 {
                     //UpdateObsList(this);
                     succeeded = true;
+
                     XmlGeneratorClass.GenerateXmlFileFromTool(this);
+
+                    XmlGeneratorClass.GenerateDXMLFileFromTool(this);
+
                     // App.CurrentControl.Close();
                     Environment.Exit(0);
                 }
@@ -2639,7 +2719,6 @@ namespace MeatadataGeneratorTool
                     ErrorsVisibility = Visibility.Visible;
                 }
             }
-
             catch (Exception ex)
             {
                 string error = ex.Message + "\n" + ex.StackTrace != null ? ex.StackTrace : "";
@@ -2802,6 +2881,16 @@ namespace MeatadataGeneratorTool
                 if (string.IsNullOrEmpty(item.Operator))
                 {
                     str.AppendLine("Operator is Required");
+                }
+            }
+
+            if (item.IsForeignKey && !string.IsNullOrEmpty(item.ForeignEntity))
+            {
+                string foreignEntityFileName = App.GetForeignEntityFileName(item.ForeignEntity);
+
+                if (!App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == foreignEntityFileName.ToLower() + ".lxml").Any() && !App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == foreignEntityFileName.ToLower() + ".dxml").Any())
+                {
+                    str.AppendLine("Cannot Find Foreign Entity " + item.ForeignEntity);
                 }
             }
 

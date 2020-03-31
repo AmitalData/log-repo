@@ -656,7 +656,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "RevenueExpenseType",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  1,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6192,10 +6192,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "UpdateDate",
 					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Date",
+					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -8699,6 +8699,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLaccountODebtAbove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.DebtAbove", DefaultText = "Debt Above",LocalDefaultText = @"חוב מעל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Balance", DefaultText = "Balance",LocalDefaultText = @"יתרה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AgingReportOPreviewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.PreviewReport", DefaultText = "Preview",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

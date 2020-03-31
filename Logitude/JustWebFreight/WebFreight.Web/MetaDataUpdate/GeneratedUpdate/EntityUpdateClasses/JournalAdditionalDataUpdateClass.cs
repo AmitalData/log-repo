@@ -249,7 +249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "JournalAdditionalData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  3,
 					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,

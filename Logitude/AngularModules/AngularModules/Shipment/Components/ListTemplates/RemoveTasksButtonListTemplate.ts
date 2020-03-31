@@ -178,7 +178,7 @@ export class RemoveTasksButtonListTemplate {
         //this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe(AdditionalResult => {
+                this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe((AdditionalResult:any) => {
                     //this.CurrentSession.StopBusyIndicator();
                     this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response1 => {
                         var newWindow = new LogitudeWindow();

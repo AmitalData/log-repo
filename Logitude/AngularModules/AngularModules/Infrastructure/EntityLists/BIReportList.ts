@@ -25,8 +25,9 @@ export class BIReportList {
 	CreatedByUserName: string;
 	UpdatedByUserName: string;
 	LastRunDate: Date;
-	LastRunByUserId: string;
 	LastRunByUserName: string;
+	FactTableName: string;
+	LastRunId: string;
 	
 }
  

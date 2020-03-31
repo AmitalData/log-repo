@@ -31,10 +31,12 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.SetUIProperties();
         this.Listen();
         this.CheckSecurityPolicySettingToShowPhone();
+
         this.BuildLayoutDirectionList();
         this.SetSelectedDirection();
-      
+       // this.SelectedDirection = this.EntityPM.LayoutDirection == 'ltr' ? this.LayoutDirections[0] : this.LayoutDirections[1];
     }
+       
     private SetSelectedDirection() {
         if (this.EntityPM.LayoutDirection == 'ltr') {
             this.SelectedDirection = this.LayoutDirections[0];
@@ -44,6 +46,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
         else this.SelectedDirection = this.LayoutDirections[2];
     }
+
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
@@ -72,14 +75,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
     public LayoutDirections: CodeNameClass[];
-    BuildLayoutDirectionList() {
-
-        this.LayoutDirections = [];
-        this.LayoutDirections.push(new CodeNameClass("1", "LTR"));
-        this.LayoutDirections.push(new CodeNameClass("2", "RTL"));
-        this.LayoutDirections.push(new CodeNameClass("3", "Not set"));
-
-    }
+   
 
     private selectedDirection: CodeNameClass;
     get SelectedDirection() { return this.selectedDirection; }
@@ -201,7 +197,16 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.UIProperties.SetEnabled("IsShowContactDetailsInTheMobileApp", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("ShowLocalNameInLOV", this.ObjectTableName, isEditingEnabled);
     }
+   
+    BuildLayoutDirectionList() {
 
+        this.LayoutDirections = [];
+        this.LayoutDirections.push(new CodeNameClass("1", "LTR"));
+        this.LayoutDirections.push(new CodeNameClass("2", "RTL"));
+        this.LayoutDirections.push(new CodeNameClass("3", "Not set"));
+    }
+
+   
     public get Email() { return this.EntityPM.Email; }
     public set Email(value: string) {
         if (this.EntityPM.Email != value) {

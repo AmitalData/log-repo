@@ -252,7 +252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "AWBMessagesCCSType",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						DataTypeCode =  "Text",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,

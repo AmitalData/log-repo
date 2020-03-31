@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "ObjectTable",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ObjectTables",
-			      				    OldDBTableName =  "ObjectTables",
 			      				    ObjectTableSingular =  "Object Table",
 			      				    ObjectTablePlural =  "ObjectTables",
 			      				    HasCustomFilter =  false,
@@ -119,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Object Table",
-			      				    Code =  "a01f",
+			      				    Code =  "6c8e",
 			      				    Name =  "ObjectTable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -130,6 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "ObjectTable,ObjectTables,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -142,7 +142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -193,6 +192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -204,7 +204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "HasDocuments",
-					  						OldFieldName =  "HasDocuments",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -252,6 +251,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "HasDocuments",
@@ -264,7 +264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "AllowedForComputingPartners",
-					  						OldFieldName =  "AllowedForComputingPartners",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -312,6 +311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowedForComputingPartners",
@@ -324,7 +324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -375,6 +374,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Name",
@@ -387,7 +387,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "DisplayName",
-					  						OldFieldName =  "DisplayName",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -436,6 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -447,7 +447,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "AllowedInQueues",
-					  						OldFieldName =  "AllowedInQueues",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -495,6 +494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AllowedInQueues",
@@ -507,9 +507,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LovDisplayMemberPath",
-					  						OldFieldName =  "LovDisplayMemberPath",
 					  						ObjectTableName =  "ObjectTable",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
@@ -548,13 +547,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DefaultText =  "Display Member Path",
 					  						ListFieldLable =  "LovDisplayMemberPathListLable",
 					  						ListLableDefaultText =  "Display Member Path",
-					  						IsMaxLength =  false,
+					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -566,9 +566,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LovDisplayMemberPathLocal",
-					  						OldFieldName =  "LovDisplayMemberPathLocal",
 					  						ObjectTableName =  "ObjectTable",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  30,
 					  						IsRequired =  false,
@@ -607,13 +606,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DefaultText =  "Display Member Path Local",
 					  						ListFieldLable =  "LovDisplayMemberPathLocalListLable",
 					  						ListLableDefaultText =  "Display Member Path Local",
-					  						IsMaxLength =  false,
+					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -645,6 +645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsTabsHidden",
 					  						ListPropertyPath =  "IsTabsHidden",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -669,6 +670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -682,7 +684,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable ObjectTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ObjectTable" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> ObjectTableObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ObjectTable").ToList();
+		       
+	      
+
+	         Screen ObjectTableObjectTableHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ObjectTable.HeaderScreen", Name = "ObjectTableHeaderScreen", ObjectTableId = ObjectTableObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ObjectTableObjectTable.HeaderScreenId = ObjectTableObjectTableHeaderScreenScreen0.Id;
+		    ObjectTableObjectTable.HeaderScreenCode = ObjectTableObjectTableHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

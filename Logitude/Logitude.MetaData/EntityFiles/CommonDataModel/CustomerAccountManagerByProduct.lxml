@@ -59,7 +59,9 @@
   HasDocuments="true"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;CustomerAccountManagerByProduct,CustomerAccountManagerByProducts,,Id,&quot;">
+  SearchFields="&quot;CustomerAccountManagerByProduct,CustomerAccountManagerByProducts,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;b4380b79-bf8e-431e-8839-e929f5bc3fa8&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -260,7 +262,7 @@
     FullFieldLable="&quot;AccountManagerId&quot;"
     DefaultText="&quot;Account Manager&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -282,7 +284,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="AccountManagerUser" />
   <field
     Id="&quot;66b770b8-0d83-4035-b3d5-7faa9a47d787&quot;"
     FieldName="&quot;CustomerId&quot;"

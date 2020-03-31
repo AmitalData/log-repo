@@ -312,7 +312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "BusinessUnit",
 					  						FieldsDataType =  "Boolean",
 					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,

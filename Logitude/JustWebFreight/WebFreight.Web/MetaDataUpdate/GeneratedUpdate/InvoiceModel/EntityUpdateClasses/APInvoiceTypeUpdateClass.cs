@@ -194,7 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ObjectTableName =  "APInvoiceType",
 					  						FieldsDataType =  "Text",
 					  						DataTypeCode =  "Text",
-					  						MaxLength =  20,
+					  						MaxLength =  40,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  true,
@@ -248,7 +248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "APInvoiceType",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						DataTypeCode =  "Text",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,

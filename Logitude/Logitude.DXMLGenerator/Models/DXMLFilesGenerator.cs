@@ -15,8 +15,10 @@ namespace Logitude.DXMLGenerator.Models
     {
         private readonly string Root = ConfigurationManager.AppSettings["Root"];
 
-        private string ConnectionString;
-        private string ErrorsFileName;
+        private readonly string ConnectionString;
+        private readonly string ErrorsFileName;
+        private readonly bool IncludeCustoms;
+
         private List<string> ExcludedTables;
         private List<string> ExcludedTablesNames;
         private int GeneratedDXMLFilesCounter = 0;
@@ -27,10 +29,11 @@ namespace Logitude.DXMLGenerator.Models
         private List<Index> Indexes;
         private List<UniqueConstraint> UniqueConstraints;
 
-        public DXMLFilesGenerator(string connectionString, string errorsFileName)
+        public DXMLFilesGenerator(string connectionString, string errorsFileName, bool includeCustoms)
         {
             ConnectionString = connectionString;
             ErrorsFileName = errorsFileName;
+            IncludeCustoms = includeCustoms;
             BuildExcludedTablesList();
             ReadColumnsDefaultValues();
             ReadIndexes();
@@ -80,7 +83,9 @@ namespace Logitude.DXMLGenerator.Models
 
         private List<DBTable> GetTablesFromDB()
         {
-            string queryString = @"SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES";
+            string queryCondition = IncludeCustoms ? null : " WHERE TABLE_SCHEMA = 'dbo'";
+
+            string queryString = @"SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES" + queryCondition;
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
@@ -201,15 +206,35 @@ namespace Logitude.DXMLGenerator.Models
                 reader.Close();
                 connection.Close();
 
+                List<string> tableColumnsNames = columnsDefinitions.Select(c => c.Name).ToList();
+
+                string tableDBType = GetDatabaseType(table.DBName);
+                List<RelationDefinition> tableRelations = GetTableRelations(table.Name);
+                List<IndexDefinition> tableIndexes = GetTableIndexes(table.Name).Where(i => !tableRelations.Select(r => r.ForeignKeyColumn).Contains(i.Columns)).ToList();
+
+                List<IndexDefinition> indexesWithWrongColumns = tableIndexes
+                    .Where(i => (!tableColumnsNames.Contains(i.Columns) && !i.Columns.Contains(",")) || (i.Columns.Split(',')
+                    .Where(cc => tableColumnsNames.All(c => c != cc)).Any() && i.Columns.Contains(","))).ToList();
+
+                List<IndexDefinition> indexesWithWrongInclude = tableIndexes
+                    .Where(i => (i.Include != null && !tableColumnsNames.Contains(i.Include) && !i.Include.Contains(",")) || (i.Include != null && i.Include.Split(',')
+                    .Where(cc => tableColumnsNames.All(c => c != cc)).Any() && i.Include.Contains(","))).ToList();
+
+                List<IndexDefinition> wrongIndexes = indexesWithWrongColumns.Concat(indexesWithWrongInclude).ToList();
+
+                tableIndexes = tableIndexes.Where(i => !wrongIndexes.Select(ii => ii.Columns).Contains(i.Columns)).ToList();
+
+                List<UniqueConstraintDefinition> tableUniqueConstraints = GetTableUniqueConstraints(table.Name);
+
                 tableDefinition = new TableDefinition
                 {
                     Name = table.Name,
                     Schema = table.Schema,
-                    DBType = GetDatabaseType(table.DBName),
+                    DBType = tableDBType,
                     Columns = columnsDefinitions,
-                    Relations = GetTableRelations(table.Name),
-                    Indexes = GetTableIndexes(table.Name),
-                    UniqueConstraints = GetTableUniqueConstraints(table.Name)
+                    Relations = tableRelations,
+                    Indexes = tableIndexes,
+                    UniqueConstraints = tableUniqueConstraints
                 };
             }
             catch (Exception)
@@ -299,13 +324,23 @@ namespace Logitude.DXMLGenerator.Models
                 try
                 {
                     string path = GetPathForDXMLFile(tableDefinition.Name, true);
+
                     if (!String.IsNullOrEmpty(path))
                     {
+                        string dxmlModule = GetModuleNameForDXMLFile(path);
+                        tableDefinition.Module = dxmlModule;
+
                         XmlSerializerNamespaces emptyNamespace = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(TableDefinition));
-                        TextWriter textWriter = new StreamWriter(path);
-                        xmlSerializer.Serialize(textWriter, tableDefinition, emptyNamespace);
-                        textWriter.Close();
+                        FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+                        XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
+                        XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+
+                        xmlSerializer.Serialize(xmlWriter, tableDefinition, emptyNamespace);
+                        xmlWriter.Close();
+                        xmlWriter.Dispose();
+                        fileStream.Close();
+
                         GeneratedDXMLFilesCounter++;
                     }
                     else
@@ -629,7 +664,17 @@ namespace Logitude.DXMLGenerator.Models
                 IncludedColumns = (String.IsNullOrEmpty(l.Split(',')[2]) || l.Split(',')[2] == "NULL") ? null : l.Split(',')[2].Replace("; ", ",")
             }).ToList();
 
-            Indexes = indexes;
+            List<Index> processedIndexes = new List<Index>();
+
+            foreach(var index in indexes)
+            {
+                if(!processedIndexes.Where(i => i.TableName.ToLower() == index.TableName.ToLower() && i.Columns.ToLower() == index.Columns.ToLower()).Any())
+                {
+                    processedIndexes.Add(index);
+                }
+            }
+
+            Indexes = processedIndexes;
         }
 
         private void ReadUniqueConstraints()
@@ -645,7 +690,17 @@ namespace Logitude.DXMLGenerator.Models
                 Columns = l.Split(',')[1].Replace("; ", ",")
             }).ToList();
 
-            UniqueConstraints = uniqueConstraints;
+            List<UniqueConstraint> processedUniqueConstraints = new List<UniqueConstraint>();
+
+            foreach (var uniqueConstraint in uniqueConstraints)
+            {
+                if (!processedUniqueConstraints.Where(u => u.TableName.ToLower() == uniqueConstraint.TableName.ToLower() && u.Columns.ToLower() == uniqueConstraint.Columns.ToLower()).Any())
+                {
+                    processedUniqueConstraints.Add(uniqueConstraint);
+                }
+            }
+
+            UniqueConstraints = processedUniqueConstraints;
         }
         
         private List<IndexDefinition> GetTableIndexes(string tableName)
@@ -688,6 +743,78 @@ namespace Logitude.DXMLGenerator.Models
             if (!String.IsNullOrEmpty(ErrorsData))
             {
                 Console.WriteLine("\n" + "Errors Are Exported To /Errors/" + ErrorsFileName + "\n");
+            }
+        }
+
+        private string GetModuleNameForDXMLFile(string dxmlFilePath)
+        {
+            if (dxmlFilePath.ToLower().Contains("Logitude.Accounting.MetaData".ToLower()))
+            {
+                return "Accounting";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.BookingLib.MetaData".ToLower()))
+            {
+                return "Booking";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.CRM.MetaData".ToLower()))
+            {
+                return "CRM";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.Customs.MetaData".ToLower()))
+            {
+                return "Customs";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.Social.MetaData".ToLower()))
+            {
+                return "Social";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.TariffModule.MetaData".ToLower()))
+            {
+                return "Tariff";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.TimeManagement.MetaData".ToLower()))
+            {
+                return "TimeManagement";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.WarehouseLib.MetaData".ToLower()))
+            {
+                return "Warehouse";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.Infrastructure.MetaData".ToLower()))
+            {
+                return "Infrastructure";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("CommonDataModel".ToLower()))
+            {
+                return "Common";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("GlobalModel".ToLower()))
+            {
+                return "Global";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("InfrastructureModel".ToLower()))
+            {
+                return "Infrastructure";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("InvoiceModel".ToLower()))
+            {
+                return "Invoice";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("QuoteModel".ToLower()))
+            {
+                return "Quote";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("ShipmentsModel".ToLower()))
+            {
+                return "Shipment";
+            }
+            else if (dxmlFilePath.ToLower().Contains("Logitude.MetaData".ToLower()) && dxmlFilePath.ToLower().Contains("SystemLogsModel".ToLower()))
+            {
+                return "SystemLogs";
+            }
+            else
+            {
+                return null;
             }
         }
     }

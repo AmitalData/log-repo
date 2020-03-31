@@ -538,7 +538,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             m3 = this.AutomaticReconcileMethodList.AutomaticReconcile3;
         }
 
-        this._LedgerTransactionExtendedListService.getAutomaticReconcileByFilter(m1, m2, m3, this.GLAccountPM.Id, filters).subscribe(myResult => {
+        this._LedgerTransactionExtendedListService.getAutomaticReconcileByFilter(m1, m2, m3, this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             var result = mm.Result;
@@ -618,8 +618,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             //this.ToSend()
             var next = true;
             if (next) {
-                this.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe(response => {
-                    this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe(response => {
+                this.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => {
+                    this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
                         logitudeWindow.Height = 400;

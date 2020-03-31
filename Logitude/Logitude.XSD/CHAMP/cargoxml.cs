@@ -5136,11 +5136,11 @@ namespace CHAMP
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.champ.aero/GCCS/CargoXML")]
     public partial class ShippersLoadAndCount {
         
-        private int sLACField;
+        private string sLACField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public int SLAC {
+        public string SLAC {
             get {
                 return this.sLACField;
             }

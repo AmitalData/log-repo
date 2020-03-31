@@ -35,6 +35,7 @@ namespace Logitude.XSD
         public bool IsViaColoader { get; set; }
         public string ColoaderKey { get; set; }
         public string MainHarmonize { get; set; }
+        public string SLAC { get; set; }
 
         #region Amounts
         public int NumberOfPackages { get; set; }
@@ -124,6 +125,11 @@ namespace Logitude.XSD
             this.ShipmentNumber = string.IsNullOrEmpty(Shipment.ShipmentNumber) ? null : Shipment.ShipmentNumber;
             this.MasterShipmentNumber = string.IsNullOrEmpty(MasterData.MasterShipmentNumber) ? null : MasterData.MasterShipmentNumber;
             this.MainHarmonize = string.IsNullOrEmpty(Shipment.MainHarmonize) ? null : FormatHelper.FormatString(Shipment.MainHarmonize, FormatHelper.PatternType.AlphaNumeric, 18);
+
+            if (!string.IsNullOrEmpty(Shipment.SLAC))
+            {
+                this.SLAC = FormatHelper.FormatInteger(5, Shipment.SLAC);
+            }
 
             if (Shipment.ViaColoader)
             {

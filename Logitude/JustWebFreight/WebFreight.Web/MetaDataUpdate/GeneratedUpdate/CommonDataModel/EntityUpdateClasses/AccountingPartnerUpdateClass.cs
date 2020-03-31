@@ -84,7 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			
 	             				    ObjectTableName =  "AccountingPartner",
 			      				    IsNew =  false,
-			      				    DBTableName =  "AccountingPartner",
+			      				    DBTableName =  "AccountingPartners",
 			      				    OldDBTableName =  "AccountingPartners",
 			      				    ObjectTableSingular =  "Accounting Partner",
 			      				    ObjectTablePlural =  "Accounting Partners",

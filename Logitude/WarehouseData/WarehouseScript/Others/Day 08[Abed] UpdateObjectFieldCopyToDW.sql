@@ -5,7 +5,7 @@
 
 
 update  ObjectFields set CopyToDW = 0 
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'DWHSetting') and (FieldName = 'Tenant' or FieldName = 'ParentTenant')
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'DWHSetting') and ( FieldName = 'ParentTenant')
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'Direction') and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'TransportMode')and (FieldName = 'Id' or FieldName = 'Name'  )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentLevel')and (FieldName = 'Code' or FieldName = 'Name'  )
@@ -60,7 +60,8 @@ or FieldName = 'StatusDate' or FieldName = 'CustomsDeclarationNumber' or  FieldN
 or FieldName = 'ColoaderId' or FieldName = 'ColoaderReference1'or FieldName = 'ShipperNotExporterId' or FieldName = 'ShipperNotExporterReference' or FieldName = 'ReleasingAgentId' or FieldName = 'ReleasingAgentReference1' or FieldName ='Ratio' or FieldName ='VolumetricWeight' or FieldName ='WarehouseLegActualEntryDate'  or FieldName ='WarehouseLegExpectedEntryDate'  or FieldName ='WarehouseLegActualReleaseDate'  or FieldName ='WarehouseLegExpectedReleaseDate' or FieldName ='ChargeableWeightUnitCode'
 or FieldName = 'IncludesCustoms' or FieldName = 'DeclarationNumber' or FieldName = 'DeclarationDate' or FieldName = 'TerminalAvailable' or FieldName = 'WarehouseLegLastFreeDate'
 or FieldName = 'OrderGrossWeight' or FieldName = 'OrderChargeableWeight' or FieldName = 'BookingVolume' or FieldName = 'BookingNumberOfPackages' or FieldName = 'EstimateProfitInProfitCurrency'or FieldName = 'EstimateProfitInLocalCurrency'
-or FieldName = 'GrossWeightUnitCode'or FieldName = 'VolumeUnitCode' or FieldName = 'ConsigneeNotImporterId'or FieldName = 'IssuingCarrierAgentId' or FieldName = 'OnCarriageTransportModeId'or FieldName = 'FirstARInvoiceApprovalDate' or FieldName = 'FreightForwarderId'
+or FieldName = 'GrossWeightUnitCode'or FieldName = 'VolumeUnitCode' or FieldName = 'ConsigneeNotImporterId'or FieldName = 'IssuingCarrierAgentId' or FieldName = 'OnCarriageTransportModeId'or FieldName = 'FirstARInvoiceApprovalDate' or FieldName = 'FreightForwarderId' or FieldName = 'FreightRelease'
+
 )
 
 
@@ -75,5 +76,18 @@ or FieldName='BookingConfirmationNumber' or FieldName='MainCarriageATA' or Field
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'MoveType') and (FieldName = 'Code' or FieldName = 'MoveTypeEnglishName' or FieldName = 'MoveTypeLocalName' or FieldName = 'TransportModeId' )
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'Vessel') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' or FieldName = 'Notes' or FieldName = 'IMOCode' or FieldName='EnglishName')
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'SpecialServicesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName' )
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation')
+update  ObjectFields  set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation' or FieldName ='NumberOfDeliveries' or FieldName ='OperationallyClosedByUserId' or FieldName ='LastPickupATA' or FieldName ='LastPickupATD' or FieldName ='LastPickupETA' or FieldName ='LastPickupETD' or  FieldName ='DeliveryToPortId' or FieldName ='DeliveryFrom' or FieldName ='DeliveryTo' or FieldName ='PickupFrom' or FieldName ='PickupTo')
+
+
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentPayable') and (FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId'  or FieldName = 'OpenAmount' or FieldName = 'OpenAmountInLocalCurrency' or FieldName = 'OpenAmountInProfitCurrency' or FieldName = 'AccountedAmount' or FieldName = 'AccountedAmountInLocalCurrency' or FieldName = 'AccountedAmountInProfitCurrency' )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'APInvoiceLineId') and (FieldName = 'EntityPayableId' or FieldName = 'LineNumber')
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'APInvoice') and (FieldName = 'InvoiceNumber' or FieldName = 'AmountInInvoiceCurrency'  or FieldName = 'InvoiceCurrencyId' or FieldName = 'InvoiceCurrencyExchangeRate' )
+
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentReceivable') and (FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId' or FieldName = 'TotalAmount' or FieldName = 'TotalAmountLocal' or FieldName =  'ARInvoiceLineId' )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoiceLineId') and (FieldName = 'ReceivableId' or FieldName = 'ARInvoiceId')
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoice') and (FieldName = 'InvoiceNumber' or FieldName = 'AmountInInvoiceCurrency'  or FieldName = 'InvoiceCurrencyId' or FieldName = 'InvoiceCurrencyExchangeRate' )
+
+
+
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ChargesType') and (FieldName = 'Code' or FieldName = 'EnglishName' or FieldName = 'LocalName'  or FieldName = 'ChargesGroupCode' or FieldName='ChargesGroupId')
 

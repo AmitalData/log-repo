@@ -4,6 +4,8 @@ import {ShipmentTool, RoutingHelper} from '../Tools';
 import {Validator} from '../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import { ShipmentPickupValidator } from './ShipmentPickupValidator';
+import { ShipmentDeliveryValidator } from './ShipmentDeliveryValidator';
 
 export interface IShipmentValidator {
     Validate(shipmentPM: ShipmentPM): any[];
@@ -206,18 +208,28 @@ export class ShipmentValidator implements IShipmentValidator {
         });
     }
     private ValidatePickups() {
-        this.entityPM.ShipmentPickUps.forEach(item => {
-            Validator.TryValidateObject(item, "ShipmentPickUpDelivery", this.Errors);
 
-            // Validate item Logic
+        var validator = new ShipmentPickupValidator();
+        
+        this.entityPM.ShipmentPickUps.forEach(item => {
+            var errors: string[] = validator.Validate(item, this.entityPM);
+
+            errors.forEach(i => {
+                this.Errors.push(i);
+            }); 
         });
     }
     private ValidateDeliveries() {
-        this.entityPM.ShipmentDeliveries.forEach(item => {
-            Validator.TryValidateObject(item, "ShipmentPickUpDelivery", this.Errors);
+        var validator = new ShipmentDeliveryValidator();
 
-            // Validate item Logic
+        this.entityPM.ShipmentDeliveries.forEach(item => {
+            var errors: string[] = validator.Validate(item, this.entityPM);
+
+            errors.forEach(i => {
+                this.Errors.push(i);
+            });            
         });
+
     }
     private ValidatePayables() {
 

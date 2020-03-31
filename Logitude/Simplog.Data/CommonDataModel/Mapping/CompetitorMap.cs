@@ -22,7 +22,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.Name)
-                .HasMaxLength(60)
+                .HasMaxLength(60).IsRequired()
                 .IsUnicode(true);
 
             this.Property(t => t.Website)

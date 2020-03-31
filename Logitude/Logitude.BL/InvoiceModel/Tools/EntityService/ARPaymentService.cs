@@ -402,7 +402,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // DropBox
             this.CreateARInvoiceMessage(setApproved);
 
-
+            theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
             paymentRepository.Update(newPayment);
             paymentRepository.SubmitChanges();
 
@@ -421,7 +421,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildEntitiesNumbers();
         }
 
-
+        private JournalPM GetApprovedJournalByAccountingEntityId(ARPaymentPM aRPaymentPM)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            return journalQuery.GetApprovedJournalByAccountingEntityId(aRPaymentPM.Id, "3", aRPaymentPM.Tenant);
+        }
 
         private void ValidateHigherStatus()
         {
@@ -1721,7 +1725,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBook.ChangeSetOp = ChangeSetOperation.Update;
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
-                                    CancelJournal();
+                                    CancelJournal(entityPm);
                                 }
                             }
                         }
@@ -1760,14 +1764,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBook.ChangeSetOp = ChangeSetOperation.Update;
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
-                                    CancelJournal();
+                                    CancelJournal(entityPm);
                                 }
                             }
                         }
                         else if (entityPm.AccountingPaymentMethodCode == "BT")
                         {
                             CreateVoidedARPaymentEvent("ARPayment Cancel");
-                            CancelJournal();
+                            CancelJournal(entityPm);
                         }
                     }
                 }
@@ -1827,7 +1831,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Notes = note,
             });
         }
-        private void CancelJournal()
+        private void CancelJournal(ARPaymentPM entityPm)
         {
 
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
@@ -1850,9 +1854,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalUpdate.Update(journalPM, new StornoOverrideM()
                 {
                     AccountingEntityCode = "3",
+                    LineNotes = entityPM.CancelationNotes,
                     AccountingEntityId = entityPM.Id,
                     AccountingEntityReference = entityPM.PaymentNo
                 });
+                JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(entityPm);
+
+                entityPM.VoidedByJournalNumber = voidedByJournal != null ? voidedByJournal.JournalNumber : null;
+
             }
         }
 
@@ -1883,7 +1892,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // get payment line LT
             LedgerTransactionListQueryService ltListQuery = new LedgerTransactionListQueryService(ctx);
-            List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(splittedAccount != null ? splittedAccount.GLAccountId : paymentPM.GLAccountId, paymentPM.Tenant);
+ 
+            string accountId = GetGLAccountIdForReconciledTransactions(paymentPM.GLAccountId, paymentPM.Tenant, paymentPM.PaymentCurrencyId);
+
+            List<LedgerTransactionList> accountingTransactionList = ltListQuery.GetByAccountId(splittedAccount != null ? splittedAccount.GLAccountId : accountId, paymentPM.Tenant);
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
 
@@ -1917,6 +1929,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ///....
 
             }
+        }
+        private string GetGLAccountIdForReconciledTransactions(string glAccountId, int tenant, string paymentCurrencyId)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            
+            GLAccountPM gLAccount = glAccountQuery.GetSingleGLAccountPM(glAccountId, tenant);
+            if (gLAccount != null)
+            {
+                if (gLAccount.IsMultiCurrency.Value)
+                {
+
+                    GLAccountCurrencyRepository glAccountCurrencyRepository = new GLAccountCurrencyRepository(tenant);
+                    GLAccountCurrency gLAccountCurrency = glAccountCurrencyRepository.GetEntityByCurrencyAndGLAccountId(gLAccount.Id, paymentCurrencyId, tenant);
+                    if (gLAccountCurrency != null)
+                    {
+                        return gLAccountCurrency.GLAccountId;
+                    }
+                    else return gLAccount.Id;
+                }
+
+            }
+            return null;
         }
         private ReconciliationLinePM CreatePaymentRecoLine(ARPaymentPM paymentPM)
         {

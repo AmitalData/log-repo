@@ -687,6 +687,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
+ 
         this.EntityPM.BillToPartnerTypeId = this.BillToPartnerTypeId;
         this.CurrentSession.StartBusyIndicatorLoading();
 

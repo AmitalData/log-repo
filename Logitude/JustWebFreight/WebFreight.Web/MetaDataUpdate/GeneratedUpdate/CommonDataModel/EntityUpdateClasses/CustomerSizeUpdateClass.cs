@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "CustomerSize",
 					  						FieldsDataType =  "Boolean",
 					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -241,7 +241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  

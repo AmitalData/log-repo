@@ -1060,7 +1060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Competitor",
 					  						FieldsDataType =  "Boolean",
 					  						DataTypeCode =  "Boolean",
-					  						MaxLength =  15,
+					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,

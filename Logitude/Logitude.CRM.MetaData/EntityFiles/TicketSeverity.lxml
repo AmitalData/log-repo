@@ -32,7 +32,9 @@
   Code="&quot;TSQG&quot;"
   Name="&quot;TicketSeverity&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;77dd94a9-60b3-41cf-9c1a-5351fac9b48f&quot;"
     FieldName="&quot;Id&quot;"

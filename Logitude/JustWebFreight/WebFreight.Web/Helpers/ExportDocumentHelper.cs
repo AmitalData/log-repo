@@ -50,6 +50,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
+using WebFreight.Web.AccountingModel.Reports.Interest;
 
 namespace WebFreight.Web.Helpers
 {
@@ -510,6 +511,16 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                     break;
 
+                case "ITDT":
+                    {
+                        InterestPrintService service = new InterestPrintService();
+                        InterestDataProvider InterestReportDP = service.LoadDataProvider(entityId, tenant);
+                        theT2 = System.DateTime.Now.Ticks;
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "ITDT", Name = "InterestDataProvider", BusinessObjectValue = InterestReportDP };
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+
+                    }
+                    break;
                 case "JRPR":
                     {
                         JournalPrintService service = new JournalPrintService();

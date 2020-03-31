@@ -60,7 +60,7 @@ export class BookingWizardLoadComponent implements AfterViewInit {
     private ImportWizard() {
         var myBookingWizardArgs: BookingWizardArgs = new BookingWizardArgs();
         myBookingWizardArgs.EntityPM = this.EntityPM;
-        this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe(response=> {
+        this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe((response: any) => {
             SessionLocator.DynamicLoader.Load('./Booking/Components/BookingWizard/BookingWizardComponent', this.target)
                 .then(cmpRef => {
                     cmpRef.instance.SetWindowArgs(myBookingWizardArgs);

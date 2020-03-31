@@ -113,11 +113,13 @@ import { TaxWithholdingAssessOfficeListService } from './Services/StandardLists/
 import { ExternalReconciliationExtendedPMService } from './Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
 import { ReconcileExternalPageExtendedListService } from './Services/ExtendedLists/ReconcileExternalPageExtendedListService';
 import { ExternalReconciliationExtendedListService } from './Services/ExtendedLists/ExternalReconciliationExtendedListService';
+import { InterestTransactionExtendedListService } from './Services/ExtendedLists/InterestTransactionExtendedListService';
 import { AutomaticExternalRconcilMthodListService } from './Services/StandardLists/AutomaticExternalReconcileMethodListService';
 import { TaxReportExtendedPMService } from './Services/ExtendedPMs/TaxReportExtendedPMService';
 import { OpenFormatReportStatusListService } from './Services/StandardLists/OpenFormatReportStatusListService';
 
 import { InterestBasesTypeMenuButtonsHandler } from './Components/MenuButtons/InterestBasesTypeMenuButtonsHandler';
+import { InterestReportMenuButtonsHandler } from './Components/MenuButtons/InterestReportMenuButtonsHandler';
 import { JournalMenuButtonsHandler } from './Components/MenuButtons/JournalMenuButtonsHandler';
 import { GLAccountMenuButtonsHandler } from './Components/MenuButtons/GLAccountMenuButtonsHandler';
 import { CashBookMenuButtonsHandler } from './Components/MenuButtons/CashBookMenuButtonsHandler';
@@ -139,6 +141,7 @@ import { InterestBasesTypePMService } from './Services/StandardPMs/InterestBases
 import { InterestReportListService } from './Services/StandardLists/InterestReportListService';
 import { InterestReportLineListService } from './Services/StandardLists/InterestReportLineListService';
 import { InterestReportStatuseListService } from './Services/StandardLists/InterestReportStatuseListService';
+import { InterestReportLinesByDateListService } from './Services/StandardLists/InterestReportLinesByDateListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -238,6 +241,7 @@ export class ModuleProviders {
             case "TaxReportLineTransmitStatusListService": { myResult = new TaxReportLineTransmitStatusListService(); break; }
             case "GLAccountMoreDataPMService": { myResult = new GLAccountMoreDataPMService(); break; }
             case "InterestReportStatuseListService": { myResult = new InterestReportStatuseListService(); break; }
+            case "InterestReportLinesByDateListService": { myResult = new InterestReportLinesByDateListService(); break; }
 
             case "TaxReportStatusListService": { myResult = new TaxReportStatusListService(); break; }
             case "TaxReportLineTypeListService": { myResult = new TaxReportLineTypeListService(); break; }
@@ -278,9 +282,11 @@ export class ModuleProviders {
             case "AccountingNoteExtendedListService": { myResult = new AccountingNoteExtendedListService; break; }
             case "IntegrityCheckStatusListService": { myResult = new IntegrityCheckStatusListService; break; }
             case "GLAccountOpService": { myResult = new AccountingOpService(); break; }
+            case "InterestTransactionExtendedListService": { myResult = new InterestTransactionExtendedListService(); break; }
 
             //Menu Buttons
             case "JournalMenuButtonsHandler": { myResult = new JournalMenuButtonsHandler; break; }
+            case "InterestReportMenuButtonsHandler": { myResult = new InterestReportMenuButtonsHandler; break; }
             case "GLAccountMenuButtonsHandler": { myResult = new GLAccountMenuButtonsHandler; break; }
             case "CashBookMenuButtonsHandler": { myResult = new CashBookMenuButtonsHandler; break; }
             case "BankDepositMenuButtonsHandler": { myResult = new BankDepositMenuButtonsHandler; break; }

@@ -129,7 +129,7 @@ export class OperationsComponent implements OnInit {
 
                         case "BOOK": {
                             if (this.Page_BOOK == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("Booking", 0).subscribe((response:any) => {
                                     SessionLocator.DynamicLoader.Load('./Booking/Components/Workspaces/BookingsComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_BOOK = cmpRef.instance;
@@ -156,7 +156,7 @@ export class OperationsComponent implements OnInit {
 
                         case "SHMA": {
                             if (this.Page_SHMA == null) {
-                                this._entityResourceService.getEntityResourceByTableName("AgentSharedManifest", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("AgentSharedManifest", 0).subscribe((response:any) => {
                             
                                     SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestsWorkSpaces', myLocation.viewContainerRef)
                                             .then(cmpRef => {

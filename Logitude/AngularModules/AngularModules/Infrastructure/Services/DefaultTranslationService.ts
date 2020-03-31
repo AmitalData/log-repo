@@ -1,32 +1,27 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
-import {ServiceHelper} from '../Utilities/ServiceHelper';
-import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import {TextCodePM} from '../EntityPMs/TextCodePM';
-import {TextCodePMService} from './StandardPMs/TextCodePMService';
+import { TextCodePMService } from './StandardPMs/TextCodePMService';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { ServiceHelper } from '../Utilities/ServiceHelper';
+import { TextCodePM } from '../EntityPMs/TextCodePM';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
-
 export class DefaultTranslationService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DefaultTranslation';
     }
 
     Post(args: DefaultTranslationAPIHelper) {
         return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
             var mappedEntity: DefaultTranslationAPIHelper = this.MapJsonToDefaultTranslationAPIHelper(args, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var myJsonResult = response;
 
                 var mappedResult: DefaultTranslationAPIHelper = this.MapJsonToDefaultTranslationAPIHelper(myJsonResult, true, args);
 
@@ -34,7 +29,7 @@ export class DefaultTranslationService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

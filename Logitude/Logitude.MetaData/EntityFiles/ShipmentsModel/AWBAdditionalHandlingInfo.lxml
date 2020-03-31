@@ -58,7 +58,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;AWBAdditionalHandlingInfo,AWBAdditionalHandlingInfos,,Code,Code&quot;">
+  SearchFields="&quot;AWBAdditionalHandlingInfo,AWBAdditionalHandlingInfos,,Code,Code&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;17e3aa8d-7de6-4ada-915a-ae16c73cb6fe&quot;"
     FieldName="&quot;Id&quot;"
@@ -69,7 +71,7 @@
     ObjectTableName="&quot;AWBAdditionalHandlingInfo&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -441,7 +443,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;AWBAdditionalHandlingInfo&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

@@ -19,6 +19,7 @@ namespace Logitude.IntegrationTest.Shipmen
             await LoginService.GetLoginTokenByUserEmailAndTenant();
             await CorePreparationCalls.PrepareVariables();
             await ShipmentPreperationCalls.PrepareVariables();
+            await ShipmentPreperationCalls.PostShipment("D","E","A");
         }
 
         [AssemblyCleanup]

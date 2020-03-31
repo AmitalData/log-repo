@@ -66,8 +66,7 @@
                                                     [SelectedValue]="DimensionsUnitCode"
                                                     [HideColumns]="true"
                                                     [DependencyFilter1Value]="DimensionsDependencyProperty1"
-                                                    [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList"                                                      
-                                                    >
+                                                    [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList">
                                             </LogLov>
                                         </div>
 
@@ -112,75 +111,87 @@
 
                                     <!-- Icon -->
                                     <log-column [width]="'25'">
-                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
-                                            <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template  #logcelltemplate [TabIndex]="-1">
+                                                <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Package Type -->
                                     <log-column [width]="'200'" [header]="'QuotePackage.CH.PackageTypeNameListLable' | TextCodeTranslationPipe" *ngIf="TransportModeId != 'A'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            {{item.PackageTypeName}}
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template  #logcelltemplate [IsEnabled]="false">
+                                                {{item.PackageTypeName}}
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Quantity -->
                                     <log-column [width]="'120'" [header]="'QuotePackage.CH.QuantityListLable' | TextCodeTranslationPipe">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+                                            <log-cell-template  #logcelltemplate>
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Quantity">
+                                                    {{item.Quantity}}
+                                                </div>
 
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Quantity">
-                                                {{item.Quantity}}
-                                            </div>
-
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Dimensions -->
                                     <log-column [width]="'230'" [header]="'QuotePackage.CH.DimensionsListLable' | TextCodeTranslationPipe">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                            {{item.Dimensions}}
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template  #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                                                {{item.Dimensions}}
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Volume -->
                                     <log-column [width]="'120'" [header]="'QuotePackage.CH.VolumeListLable' | TextCodeTranslationPipe">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
-                                                {{item.Volume | NumbersPipe:'N3'}}
-                                            </div>
+                                        <ng-template let-item>
+                                            <log-cell-template  #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                                                    {{item.Volume | NumbersPipe:'N3'}}
+                                                </div>
 
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Gross Weight -->
                                     <log-column [width]="'120'" [header]="'QuotePackage.CH.GrossWeightListLable' | TextCodeTranslationPipe">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+                                            <log-cell-template  #logcelltemplate>
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.GrossWeight | NumbersPipe:'N3'">
+                                                    {{item.GrossWeight | NumbersPipe:'N3'}}
+                                                </div>
 
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.GrossWeight | NumbersPipe:'N3'">
-                                                {{item.GrossWeight | NumbersPipe:'N3'}}
-                                            </div>
-
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'GrossWeight'" [Text]="item.GrossWeight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'GrossWeight'" [Text]="item.GrossWeight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Buttons -->
                                     <log-column [width]="'100'">
-                                        <log-cell-template template="let item">
-                                            <div class="LeftCenter" style="height: 20px;">
-                                                <span class="CellSeparator"></span>
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
-                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackageClicked(item)" [disabled]="!IsEditingEnabled"></IconButton>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template >
+                                                <div class="LeftCenter" style="height: 20px;">
+                                                    <span class="CellSeparator"></span>
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
+                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackageClicked(item)" [disabled]="!IsEditingEnabled"></IconButton>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

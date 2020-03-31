@@ -27,7 +27,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Tenant, 
 	         DefaultWarningPercentage, 
 	         AirDefaultStepsId, 
-	         LCLDefaultStepsId,
+	         LCLDefaultStepsId, 
+	         ContainerDefaults,
 	      }
 
 
@@ -41,7 +42,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         AirDefaultStepsId, 
 	         LCLDefaultStepsId, 
 	         AirDefaultSteps, 
-	         LCLDefaultSteps,
+	         LCLDefaultSteps, 
+	         ContainerDefaults,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -73,6 +75,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLDefaultStepsId))
             {
 				entityPOCO.LCLDefaultStepsId = entityPM.LCLDefaultStepsId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerDefaults))
+            {
+				entityPOCO.ContainerDefaults = entityPM.ContainerDefaults;
 			}
 			}
 
@@ -109,6 +116,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.LCLDefaultStepsId = entityPOCO.LCLDefaultStepsId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerDefaults))
+            {
+					entityPM.ContainerDefaults = entityPOCO.ContainerDefaults;
+            }
+
 		}
 
 		public void PMToOldPM(TariffSettingPM entityPM, TariffSettingPM oldEntityPM)
@@ -138,6 +150,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LCLDefaultStepsId))
             {
                 oldEntityPM.LCLDefaultStepsId = entityPM.LCLDefaultStepsId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerDefaults))
+            {
+                oldEntityPM.ContainerDefaults = entityPM.ContainerDefaults;
             }
 			
 		}

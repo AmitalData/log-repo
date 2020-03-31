@@ -402,9 +402,10 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Fill Report Data
 
-            dataProvider.TotalFCLShipments = shipments.Where(d => d.ShipmentType.Contains("FCL")).Count();
-            dataProvider.TotalLCLShipments = shipments.Where(d => d.ShipmentType.Contains("LCL")).Count();
-            dataProvider.TotalLCLWeight = shipments.Where(d => d.ShipmentType.Contains("LCL")).Sum(d => d.GrossWeightInKG);
+
+            dataProvider.TotalFCLShipments = shipments.Where(d => d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO").Count();
+            dataProvider.TotalLCLShipments = shipments.Where(d => d.ShipmentTypeId == "LCLD").Count();
+            dataProvider.TotalLCLWeight = shipments.Where(d => d.ShipmentTypeId == "LCLD").Sum(d => d.GrossWeightInKG);
             dataProvider.TotalShipments = shipments.Count();
             dataProvider.TotalTEU = shipments.Sum(d => d.TEU);
 
@@ -418,13 +419,13 @@ namespace WebFreight.Web.ReportsWebServices
                                                              select new ShippingLineStatisticsDataProvider.ShippingLineStatisticsReport()
                                                              {
                                                                  Carrier = gr.Key.MainCarriageCarrierName == null ? "(No Carrier Specified)" : gr.Key.MainCarriageCarrierName,
-                                                                 FCLShipments = gr.Where(t => t.ShipmentType.Contains("FCL")).Count(),
-                                                                 LCLShipments = gr.Where(t => t.ShipmentType.Contains("LCL")).Count(),
+                                                                 FCLShipments = gr.Where(d =>  d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO").Count(),
+                                                                 LCLShipments = gr.Where(d =>  d.ShipmentTypeId == "LCLD").Count(),
                                                                  TotalShipments = gr.Count(),
-                                                                 LCLWeight = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.GrossWeightInKG),
+                                                                 LCLWeight = gr.Where(d => d.ShipmentTypeId == "LCLD").Sum(t => t.GrossWeightInKG),
                                                                  TEU = gr.Sum(t => t.TEU),
                                                                  PercentageFromTotalShipment = ((double)gr.Count() / (double)dataProvider.TotalShipments),
-                                                                 VolumeInCBM = gr.Where(t => t.ShipmentType.Contains("LCL")).Sum(t => t.VolumeInCBM),
+                                                                 VolumeInCBM = gr.Where(d => d.ShipmentTypeId == "LCLD").Sum(t => t.VolumeInCBM),
                                                              }).ToList();
             #endregion
 
@@ -1128,7 +1129,7 @@ namespace WebFreight.Web.ReportsWebServices
                      Notes = d.InternalNotes,
                      RegisterDate = d.RegisterDate,
                      ValueDate = d.ValueDate,
-                     PaymentMethod = d.PaymentMethod == null ? null : d.PaymentMethod.Name,
+                     PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
                      BillToVendorId = d.VendorId,
                      BranchId = d.BranchId,
                  }).ToList();
