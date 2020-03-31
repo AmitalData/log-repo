@@ -311,7 +311,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public MyShipmentsCount: string;
     public RequestedCount: string;
     public AllShipmentsCount: string;
-    public searchFields: string;
+    public searchFields: string = null;
     public AgentShipmentsLabel: string = "Agent Shipments";
     public RequestedDocsLable: string = "Action Required";
     public isPrivateLabel: boolean = false;
@@ -803,14 +803,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         if (event) {
             temp = event.replace(/\s+$/, '');
         }
-        this.searchFields = temp;
-        this.SearchFilter = temp;
-        //if (this.searchFields != temp) {
+        if (this.searchFields != temp) {
+            this.searchFields = temp;
+            this.SearchFilter = temp;
+            //if (this.searchFields != temp) {
             this.LoadImporterShipments();
             ServiceLocator.SendTotangoUserActivity("LogBox", "SearchFields filter changed");
-        //}
-        //this.SearchFieldchangeevent.emit(this.searchFields);
-        //this.SelectedRow = null;
+            //}
+            //this.SearchFieldchangeevent.emit(this.searchFields);
+            //this.SelectedRow = null;
+        }
     }
 
     OnFirstRowSelected(event) {
