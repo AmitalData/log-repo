@@ -159,7 +159,7 @@ export class MaintenanceComponent {
             item2.ObjectTableName = "Terms of Use";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
         }
-
+   
         if (FeatureLocator.HasFeaturePermession("General", "SYSTEMSETTINGS")) {
 
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyAddress")) {
@@ -477,6 +477,17 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsSetting")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
+
+       
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = "CSM";
+        item.Icon = "Settings"
+        item.Code = "CSRA";
+        item.ObjectTableName = "Re-request Analysis";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+             
+
+
     }
     private BuildAccountingMenus() {
 
@@ -743,6 +754,43 @@ export class MaintenanceComponent {
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
                     logWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsSettingsComponent');
+                    break;
+                }
+                case "CSRA": {
+                    let test = true;
+                    let strict = true;
+                    if (test) {
+                        if (DateTool.GetCurrentDateAsUtc().valueOf() < new Date(2017, 7, 20).valueOf()) {
+                            strict = false;
+                        }
+                    }
+                    let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
+                    LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
+                    let allowed = false;
+                    allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
+                    if (strict && !SessionLocator.LoggedUserPM.IsCustomerCare && allowed) {
+
+                        let messageWindow = new MessageWindow()
+                        messageWindow.Show("Logged User Is not Customer Care ");
+                        return;
+                    }
+                    var windowArgs: any = {};;
+                    windowArgs.isReAnAnalysis = true;
+
+                    let windowTitle = "גליון בקשות - ניתוח מחדש"//"Customs Settings";
+                    let logWindow = new LogitudeWindow();
+                    logWindow.Width = 1300;
+                    logWindow.Height = 700;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.WindowArgs = windowArgs;
+                    logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent');
+
+                 
+                        
+                
+
+ 
                     break;
                 }
                 case "COAD": {

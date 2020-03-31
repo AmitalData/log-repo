@@ -14583,6 +14583,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature customFeature = tenantFeatures.Where(d => d.Code == "CUSTOMS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature notificationDefinitionFeature = tenantFeatures.Where(d => d.Code == "NOTIFICATIONDEFINITION" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature customsSettingFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSETTING" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature rerequestAnalysisFeature = tenantFeatures.Where(d => d.Code == "RerequestAnalysis" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature customsHouseTypeAdditionalFeature = tenantFeatures.Where(d => d.Code == "HOUSETYPEADDITIONAL" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature customsProceduralFaultsFeature = tenantFeatures.Where(d => d.Code == "PROCEDURALFAULTS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature vehiclesFeature = tenantFeatures.Where(d => d.Code == "VEHICLE" && d.FeatureTypeCode == "MENU").FirstOrDefault();
@@ -14640,7 +14641,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTDD", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 12, CategoryTypeCode = "CSM", TextCode = "General.MC.Customs.DocumentsDefinition", Icon = "Settings", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsDocumentsDefinition").FirstOrDefault().Id, FeatureId = documentsDefinitionFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCPR", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 57, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.CourierPendingReason", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CourierPendingReason").FirstOrDefault().Id, FeatureId = customCourierPendingReasonFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCAL", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 58, CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.CustomsAirline", Icon = "list", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CustomsAirline").FirstOrDefault().Id, FeatureId = customCustomsAirlineMTCFeature.Id }, MenusTablesRepository, tenantMenusTables);
-            
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSRA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 62,
+                CategoryTypeCode = "CSM", TextCode = "General.MC.Tables.ReAnalysis",
+                HtmlView= "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", 
+                Icon = "Settings", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id, FeatureId = rerequestAnalysisFeature.Id }, MenusTablesRepository, tenantMenusTables);
+
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CFTP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 59,
                 CategoryTypeCode = "CSM", TextCode = "General.MC.Customs.CustomsPartnerFtp",
                 Icon = "Settings",
@@ -14784,7 +14789,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             ObjectTablePM claimObjectTable = objectTables.Where(d => d.Name == "Customs.Claim").FirstOrDefault();
             ObjectTablePM CustomsAirlineObject = objectTables.Where(d => d.Name == "Customs.CustomsAirline").FirstOrDefault();
             ObjectTablePM PendingByKeywordObject = objectTables.Where(d => d.Name == "Customs.PendingByKeyword").FirstOrDefault();
-
+ 
             #region closed Tables
             ObjectTablePM checkEntityTypeObject = objectTables.Where(d => d.Name == "Customs.CheckEntityType" && d.Tenant == 0).FirstOrDefault();
             ObjectTablePM checkRepresentativeTypeObject = objectTables.Where(d => d.Name == "Customs.CheckRepresentativeType" && d.Tenant == 0).FirstOrDefault();
@@ -15174,6 +15179,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature GeneralInterfaceManagementFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERFACEMANAGEMENT", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.InterfaceManagement", NameTextCodeDefaultText = "Interface Management", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralNotificationDefinitionFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFICATIONDEFINITION", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Notification Definition", NameTextCodeDefaultText = "Notification Definition", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralCustomsSettingFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSETTING", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsSetting", NameTextCodeDefaultText = "Customs Setting", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature GeneralRerequestAnalysisFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RerequestAnalysis", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.RerequestAnalysis", NameTextCodeDefaultText = "Re-request analysis", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralCustomsHouseTypeAdditionalFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HOUSETYPEADDITIONAL", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsHouseTypeAdditional", NameTextCodeDefaultText = "Customs House Type Additional", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralProceduralFaultsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROCEDURALFAULTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ProceduralFaults", NameTextCodeDefaultText = "Procedural Faults", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralVehiclesFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VEHICLE", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Vehicles", NameTextCodeDefaultText = "Vehicles", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
