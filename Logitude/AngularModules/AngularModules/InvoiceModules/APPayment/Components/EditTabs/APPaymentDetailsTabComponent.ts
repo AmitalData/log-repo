@@ -1391,13 +1391,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public Summary_AmountPaid: number = 0;
     public Summary_ExternalAmount: number = 0;
     public Summary_AmountPaidColor: string = "#282E30";
-    public Summary_ExternalAmountColor: string = "#282E30";
+    public Summary_ExternalAmountColor: string = "#1E4AC4";
     UpdateSummary() {
         var Amount: number = 0;
         var AmountPaid: number = 0;
         var ExternalAmount: number = 0;
         var AmountPaidColor: string = "#282E30";
-        var ExternalAmountColor: string = "#282E30";
+        var ExternalAmountColor: string = "#1E4AC4";
 
         if (this.AmountInPaymentCurrency) {
             Amount = AppTool.Round(this.AmountInPaymentCurrency, 2);
@@ -1428,6 +1428,15 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.Summary_ExternalAmount = ExternalAmount;
         this.Summary_AmountPaidColor = AmountPaidColor;
         this.Summary_ExternalAmountColor = ExternalAmountColor;
+    }
+
+    EnterExternalPaymentClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { EntityPM: this.EntityPM };
+        logWindow.Title = "External Payment";
+        logWindow.Width = 650;
+        logWindow.Height = 450;
+        logWindow.Show('./InvoiceModules/APPayment/Components/Other/ExternalPaymentComponent');
     }
 
     public ViewEntity(args: APPaymentInvoiceArgs) {
