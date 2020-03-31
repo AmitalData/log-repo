@@ -1956,275 +1956,278 @@ namespace MeatadataGeneratorTool
 
         public static void GenerateDXMLFileFromTool(ObjectTableViewModel table)
         {
-            if (!string.IsNullOrEmpty(App.DirectOpenPath))
+            if(table.ObsList.Where(f => f.IsDBField).Any())
             {
-                string entityName = Path.GetFileName(App.DirectOpenPath).Replace(".lxml", string.Empty);
-                string dxmlFilePath = App.DirectOpenPath.Replace("EntityFiles", "DBTables").Replace("lxml", "dxml");
-                List<XElement> indexElements = new List<XElement>();
-                List<XElement> uniqueConstraintElements = new List<XElement>();
-                List<XElement> columnWithDefaultValueElements = new List<XElement>();
-
-                if (File.Exists(dxmlFilePath))
+                if (!string.IsNullOrEmpty(App.DirectOpenPath))
                 {
-                    XDocument oldDoc = XDocument.Load(dxmlFilePath);
-                    foreach (var indexElement in oldDoc.Descendants("Index").ToList())
-                    {
-                        indexElements.Add(indexElement);
-                    }
+                    string entityName = Path.GetFileName(App.DirectOpenPath).Replace(".lxml", string.Empty);
+                    string dxmlFilePath = App.DirectOpenPath.Replace("EntityFiles", "DBTables").Replace("lxml", "dxml");
+                    List<XElement> indexElements = new List<XElement>();
+                    List<XElement> uniqueConstraintElements = new List<XElement>();
+                    List<XElement> columnWithDefaultValueElements = new List<XElement>();
 
-                    foreach (var uniqueConstraintElement in oldDoc.Descendants("UniqueConstraint").ToList())
-                    {
-                        uniqueConstraintElements.Add(uniqueConstraintElement);
-                    }
-
-                    foreach (var columnWithDefaultValueElement in oldDoc.Descendants("Column").Where(x => x.Attribute("DefaultValue") != null).ToList())
-                    {
-                        columnWithDefaultValueElements.Add(columnWithDefaultValueElement);
-                    }
-                }
-
-                XmlDocument doc = new XmlDocument();
-                XmlElement tableElement = (XmlElement)doc.AppendChild(doc.CreateElement("Table"));
-
-                tableElement.SetAttribute("Name", table.DBTableName);
-
-                if (!string.IsNullOrEmpty(table.DBTableShortName))
-                {
-                    tableElement.SetAttribute("ShortName", table.DBTableShortName);
-                }
-
-                string dbTableOldNames = null;
-
-                if (!string.IsNullOrEmpty(table.DBTableOldNames))
-                {
-                    if (table.DBTableOldNames.Contains(","))
-                    {
-                        var oldNamesExceptName = table.DBTableOldNames.Split(',').Where(x => x != table.DBTableName);
-
-                        dbTableOldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
-                    }
-                    else
-                    {
-                        dbTableOldNames = table.DBTableName == table.DBTableOldNames ? null : table.DBTableOldNames;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(dbTableOldNames))
-                {
-                    tableElement.SetAttribute("OldNames", dbTableOldNames);
-                }
-
-
-                tableElement.SetAttribute("Schema", table.DxmlDatabaseSchemaCode);
-                tableElement.SetAttribute("DBType", table.DxmlDatabaseTypeCode);
-
-                if (!string.IsNullOrEmpty(table.ClientModuleName))
-                {
-                    tableElement.SetAttribute("Module", table.ClientModuleName);
-                }
-
-                foreach (ObjectFieldsViewModel field in table.ObsList.Where(f => f.IsDBField))
-                {
-                    XmlElement columnElement = doc.CreateElement("Column");
-                    tableElement.AppendChild(columnElement);
-
-                    string fieldName = field.FieldName;
-                    string fieldShortName = field.ShortName;
-                    string fieldDataType = field.FieldDataType;
-                    int fieldMaxLength = field.MaxLength;
-                    bool fieldIsMaxLength = field.IsMaxLength;
-                    bool fieldIsPrimaryKey = field.IsPrimaryKey;
-                    bool fieldIsRequired = field.IsRequired;
-                    bool fieldIsNullable = field.IsNullable;
-                    bool fieldIsFixedLength = field.IsFixedLength;
-                    string fieldOldNames = field.OldNames;
-                    int? fieldNumberOfDigits = field.NumberOfDigits;
-                    int? fieldDigitsAfterPoint = field.DigitsAfterPoint;
-
-                    string dxmlColumnDataType = GetDataTypeForDXMLColumn(fieldDataType, fieldIsFixedLength);
-                    bool dxmlColumnNullable = GetNullableForDXMLColumn(fieldIsRequired, fieldIsNullable, fieldIsPrimaryKey, dxmlColumnDataType);
-                    int dxmlColumnSize = new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
-
-
-                    columnElement.SetAttribute("Name", fieldName);
-
-                    if (!string.IsNullOrEmpty(fieldShortName))
-                    {
-                        columnElement.SetAttribute("ShortName", fieldShortName);
-                    }
-
-                    string oldNames = null;
-
-                    if (!String.IsNullOrEmpty(fieldOldNames))
-                    {
-                        if (fieldOldNames.Contains(","))
-                        {
-                            var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName);
-
-                            oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
-                        }
-                        else
-                        {
-                            oldNames = (fieldName == fieldOldNames) ? null : fieldOldNames;
-                        }
-                    }
-
-                    if (!String.IsNullOrEmpty(oldNames))
-                    {
-                        columnElement.SetAttribute("OldNames", oldNames);
-                    }
-
-                    columnElement.SetAttribute("Type", dxmlColumnDataType);
-
-                    if (dxmlColumnSize != 0)
-                    {
-                        columnElement.SetAttribute("Size", dxmlColumnSize.ToString());
-                    }
-
-                    if (dxmlColumnDataType == "decimal" && fieldNumberOfDigits != null)
-                    {
-                        columnElement.SetAttribute("Precision", fieldNumberOfDigits.ToString());
-                    }
-
-                    if (dxmlColumnDataType == "decimal" && fieldDigitsAfterPoint != null)
-                    {
-                        columnElement.SetAttribute("Scale", fieldDigitsAfterPoint.ToString());
-                    }
-
-                    string dxmlColumnName;
-                    if (!string.IsNullOrEmpty(field.OldNames))
-                    {
-                        dxmlColumnName = !field.OldNames.Contains(",") ? field.OldNames : field.OldNames.Split(',').Last();
-                    }
-                    else
-                    {
-                        dxmlColumnName = field.FieldName;
-                    }
-
-                    XElement columnWithDefaultValueElement = columnWithDefaultValueElements.Where(x => x.Attribute("Name").Value == dxmlColumnName).FirstOrDefault();
-                    if (columnWithDefaultValueElement != null)
-                    {
-                        columnElement.SetAttribute("DefaultValue", columnWithDefaultValueElement.Attribute("DefaultValue").Value);
-                    }
-
-                    XmlElement constraintsElement = doc.CreateElement("Constraints");
-                    columnElement.AppendChild(constraintsElement);
-
-                    if (fieldIsPrimaryKey)
-                    {
-                        constraintsElement.SetAttribute("PrimaryKey", "true");
-                    }
-
-                    constraintsElement.SetAttribute("Nullable", dxmlColumnNullable ? "true" : "false");
-                }
-
-                List<string> processedForeignKeyFields = new List<string>();
-
-                foreach (ObjectFieldsViewModel field in table.ObsList.Where(f => f.IsDBField && f.IsForeignKey))
-                {
-                    if (!processedForeignKeyFields.Contains(field.FieldName))
-                    {
-                        XmlElement relationElement = doc.CreateElement("Relation");
-                        tableElement.AppendChild(relationElement);
-
-                        string dontBuildRelationOnDB = field.DontBuildRelationOnDB ? "true" : "false";
-
-                        string fieldNavigationPropertyName = field.NavigationPropertyName;
-
-                        string[] filedsWithSameNavigationPropertyName = table.ObsList.Where(f => f.IsDBField && f.IsForeignKey && f.NavigationPropertyName == fieldNavigationPropertyName).Select(f => f.FieldName).ToArray();
-
-                        string foreignKeyColumn = filedsWithSameNavigationPropertyName.Length == 1 ? filedsWithSameNavigationPropertyName[0] : string.Join(",", filedsWithSameNavigationPropertyName);
-
-                        relationElement.SetAttribute("ForeignKeyColumn", foreignKeyColumn);
-
-                        ForeignEntityData foreignEntityData;
-
-                        if(field.ForeignEntity.ToLower() == entityName.ToLower())
-                        {
-                            foreignEntityData = GetForeignEntityData(table);
-                        }
-                        else
-                        {
-                            foreignEntityData = GetForeignEntityData(field.ForeignEntity);
-                        }
-
-                        if (foreignEntityData != null)
-                        {
-                            relationElement.SetAttribute("ReferencedTable", foreignEntityData.ReferencedTable);
-                            relationElement.SetAttribute("ReferencedColumn", foreignEntityData.ReferencedColumn);
-                            relationElement.SetAttribute("ReferencedTableSchema", foreignEntityData.ReferencedTableSchema);
-                        }
-
-                        if (field.DontBuildRelationOnDB)
-                        {
-                            relationElement.SetAttribute("Ignore", dontBuildRelationOnDB);
-                        }
-
-                        foreach (string fieldName in filedsWithSameNavigationPropertyName)
-                        {
-                            processedForeignKeyFields.Add(fieldName);
-                        }
-                    }
-                }
-
-                foreach (var indexElement in indexElements)
-                {
-                    XmlElement indexXmlElement = doc.CreateElement("Index");
-
-                    if (indexElement.Attribute("Columns") != null)
-                    {
-                        indexXmlElement.SetAttribute("Columns", indexElement.Attribute("Columns").Value);
-                    }
-
-                    if (indexElement.Attribute("Include") != null)
-                    {
-                        indexXmlElement.SetAttribute("Include", indexElement.Attribute("Include").Value);
-                    }
-
-                    tableElement.AppendChild(indexXmlElement);
-                }
-
-                foreach (var uniqueConstraintElement in uniqueConstraintElements)
-                {
-                    XmlElement uniqueConstraintXmlElement = doc.CreateElement("UniqueConstraint");
-
-                    if (uniqueConstraintElement.Attribute("Columns") != null)
-                    {
-                        uniqueConstraintXmlElement.SetAttribute("Columns", uniqueConstraintElement.Attribute("Columns").Value);
-                    }
-
-                    tableElement.AppendChild(uniqueConstraintXmlElement);
-                }
-
-                try
-                {
-                    //doc.Save(dxmlFilePath);
-                    FileStream fileStream;
                     if (File.Exists(dxmlFilePath))
                     {
-                        fileStream = new FileStream(dxmlFilePath, FileMode.Truncate, FileAccess.Write);
+                        XDocument oldDoc = XDocument.Load(dxmlFilePath);
+                        foreach (var indexElement in oldDoc.Descendants("Index").ToList())
+                        {
+                            indexElements.Add(indexElement);
+                        }
+
+                        foreach (var uniqueConstraintElement in oldDoc.Descendants("UniqueConstraint").ToList())
+                        {
+                            uniqueConstraintElements.Add(uniqueConstraintElement);
+                        }
+
+                        foreach (var columnWithDefaultValueElement in oldDoc.Descendants("Column").Where(x => x.Attribute("DefaultValue") != null).ToList())
+                        {
+                            columnWithDefaultValueElements.Add(columnWithDefaultValueElement);
+                        }
                     }
-                    else
+
+                    XmlDocument doc = new XmlDocument();
+                    XmlElement tableElement = (XmlElement)doc.AppendChild(doc.CreateElement("Table"));
+
+                    tableElement.SetAttribute("Name", table.DBTableName);
+
+                    if (!string.IsNullOrEmpty(table.DBTableShortName))
                     {
-                        fileStream = new FileStream(dxmlFilePath, FileMode.CreateNew, FileAccess.Write);
+                        tableElement.SetAttribute("ShortName", table.DBTableShortName);
                     }
 
-                    XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
-                    XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+                    string dbTableOldNames = null;
 
-                    doc.Save(xmlWriter);
-                    xmlWriter.Close();
-                    xmlWriter.Dispose();
-                    fileStream.Close();
+                    if (!string.IsNullOrEmpty(table.DBTableOldNames))
+                    {
+                        if (table.DBTableOldNames.Contains(","))
+                        {
+                            var oldNamesExceptName = table.DBTableOldNames.Split(',').Where(x => x != table.DBTableName);
+
+                            dbTableOldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
+                        }
+                        else
+                        {
+                            dbTableOldNames = table.DBTableName == table.DBTableOldNames ? null : table.DBTableOldNames;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(dbTableOldNames))
+                    {
+                        tableElement.SetAttribute("OldNames", dbTableOldNames);
+                    }
+
+
+                    tableElement.SetAttribute("Schema", table.DxmlDatabaseSchemaCode);
+                    tableElement.SetAttribute("DBType", table.DxmlDatabaseTypeCode);
+
+                    if (!string.IsNullOrEmpty(table.ClientModuleName))
+                    {
+                        tableElement.SetAttribute("Module", table.ClientModuleName);
+                    }
+
+                    foreach (ObjectFieldsViewModel field in table.ObsList.Where(f => f.IsDBField))
+                    {
+                        XmlElement columnElement = doc.CreateElement("Column");
+                        tableElement.AppendChild(columnElement);
+
+                        string fieldName = field.FieldName;
+                        string fieldShortName = field.ShortName;
+                        string fieldDataType = field.FieldDataType;
+                        int fieldMaxLength = field.MaxLength;
+                        bool fieldIsMaxLength = field.IsMaxLength;
+                        bool fieldIsPrimaryKey = field.IsPrimaryKey;
+                        bool fieldIsRequired = field.IsRequired;
+                        bool fieldIsNullable = field.IsNullable;
+                        bool fieldIsFixedLength = field.IsFixedLength;
+                        string fieldOldNames = field.OldNames;
+                        int? fieldNumberOfDigits = field.NumberOfDigits;
+                        int? fieldDigitsAfterPoint = field.DigitsAfterPoint;
+
+                        string dxmlColumnDataType = GetDataTypeForDXMLColumn(fieldDataType, fieldIsFixedLength);
+                        bool dxmlColumnNullable = GetNullableForDXMLColumn(fieldIsRequired, fieldIsNullable, fieldIsPrimaryKey, dxmlColumnDataType);
+                        int dxmlColumnSize = new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
+
+
+                        columnElement.SetAttribute("Name", fieldName);
+
+                        if (!string.IsNullOrEmpty(fieldShortName))
+                        {
+                            columnElement.SetAttribute("ShortName", fieldShortName);
+                        }
+
+                        string oldNames = null;
+
+                        if (!String.IsNullOrEmpty(fieldOldNames))
+                        {
+                            if (fieldOldNames.Contains(","))
+                            {
+                                var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName);
+
+                                oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
+                            }
+                            else
+                            {
+                                oldNames = (fieldName == fieldOldNames) ? null : fieldOldNames;
+                            }
+                        }
+
+                        if (!String.IsNullOrEmpty(oldNames))
+                        {
+                            columnElement.SetAttribute("OldNames", oldNames);
+                        }
+
+                        columnElement.SetAttribute("Type", dxmlColumnDataType);
+
+                        if (dxmlColumnSize != 0)
+                        {
+                            columnElement.SetAttribute("Size", dxmlColumnSize.ToString());
+                        }
+
+                        if (dxmlColumnDataType == "decimal" && fieldNumberOfDigits != null)
+                        {
+                            columnElement.SetAttribute("Precision", fieldNumberOfDigits.ToString());
+                        }
+
+                        if (dxmlColumnDataType == "decimal" && fieldDigitsAfterPoint != null)
+                        {
+                            columnElement.SetAttribute("Scale", fieldDigitsAfterPoint.ToString());
+                        }
+
+                        string dxmlColumnName;
+                        if (!string.IsNullOrEmpty(field.OldNames))
+                        {
+                            dxmlColumnName = !field.OldNames.Contains(",") ? field.OldNames : field.OldNames.Split(',').Last();
+                        }
+                        else
+                        {
+                            dxmlColumnName = field.FieldName;
+                        }
+
+                        XElement columnWithDefaultValueElement = columnWithDefaultValueElements.Where(x => x.Attribute("Name").Value == dxmlColumnName).FirstOrDefault();
+                        if (columnWithDefaultValueElement != null)
+                        {
+                            columnElement.SetAttribute("DefaultValue", columnWithDefaultValueElement.Attribute("DefaultValue").Value);
+                        }
+
+                        XmlElement constraintsElement = doc.CreateElement("Constraints");
+                        columnElement.AppendChild(constraintsElement);
+
+                        if (fieldIsPrimaryKey)
+                        {
+                            constraintsElement.SetAttribute("PrimaryKey", "true");
+                        }
+
+                        constraintsElement.SetAttribute("Nullable", dxmlColumnNullable ? "true" : "false");
+                    }
+
+                    List<string> processedForeignKeyFields = new List<string>();
+
+                    foreach (ObjectFieldsViewModel field in table.ObsList.Where(f => f.IsDBField && f.IsForeignKey))
+                    {
+                        if (!processedForeignKeyFields.Contains(field.FieldName))
+                        {
+                            XmlElement relationElement = doc.CreateElement("Relation");
+                            tableElement.AppendChild(relationElement);
+
+                            string dontBuildRelationOnDB = field.DontBuildRelationOnDB ? "true" : "false";
+
+                            string fieldNavigationPropertyName = field.NavigationPropertyName;
+
+                            string[] filedsWithSameNavigationPropertyName = table.ObsList.Where(f => f.IsDBField && f.IsForeignKey && f.NavigationPropertyName == fieldNavigationPropertyName).Select(f => f.FieldName).ToArray();
+
+                            string foreignKeyColumn = filedsWithSameNavigationPropertyName.Length == 1 ? filedsWithSameNavigationPropertyName[0] : string.Join(",", filedsWithSameNavigationPropertyName);
+
+                            relationElement.SetAttribute("ForeignKeyColumn", foreignKeyColumn);
+
+                            ForeignEntityData foreignEntityData;
+
+                            if (field.ForeignEntity.ToLower() == entityName.ToLower())
+                            {
+                                foreignEntityData = GetForeignEntityData(table);
+                            }
+                            else
+                            {
+                                foreignEntityData = GetForeignEntityData(field.ForeignEntity);
+                            }
+
+                            if (foreignEntityData != null)
+                            {
+                                relationElement.SetAttribute("ReferencedTable", foreignEntityData.ReferencedTable);
+                                relationElement.SetAttribute("ReferencedColumn", foreignEntityData.ReferencedColumn);
+                                relationElement.SetAttribute("ReferencedTableSchema", foreignEntityData.ReferencedTableSchema);
+                            }
+
+                            if (field.DontBuildRelationOnDB)
+                            {
+                                relationElement.SetAttribute("Ignore", dontBuildRelationOnDB);
+                            }
+
+                            foreach (string fieldName in filedsWithSameNavigationPropertyName)
+                            {
+                                processedForeignKeyFields.Add(fieldName);
+                            }
+                        }
+                    }
+
+                    foreach (var indexElement in indexElements)
+                    {
+                        XmlElement indexXmlElement = doc.CreateElement("Index");
+
+                        if (indexElement.Attribute("Columns") != null)
+                        {
+                            indexXmlElement.SetAttribute("Columns", indexElement.Attribute("Columns").Value);
+                        }
+
+                        if (indexElement.Attribute("Include") != null)
+                        {
+                            indexXmlElement.SetAttribute("Include", indexElement.Attribute("Include").Value);
+                        }
+
+                        tableElement.AppendChild(indexXmlElement);
+                    }
+
+                    foreach (var uniqueConstraintElement in uniqueConstraintElements)
+                    {
+                        XmlElement uniqueConstraintXmlElement = doc.CreateElement("UniqueConstraint");
+
+                        if (uniqueConstraintElement.Attribute("Columns") != null)
+                        {
+                            uniqueConstraintXmlElement.SetAttribute("Columns", uniqueConstraintElement.Attribute("Columns").Value);
+                        }
+
+                        tableElement.AppendChild(uniqueConstraintXmlElement);
+                    }
+
+                    try
+                    {
+                        //doc.Save(dxmlFilePath);
+                        FileStream fileStream;
+                        if (File.Exists(dxmlFilePath))
+                        {
+                            fileStream = new FileStream(dxmlFilePath, FileMode.Truncate, FileAccess.Write);
+                        }
+                        else
+                        {
+                            fileStream = new FileStream(dxmlFilePath, FileMode.CreateNew, FileAccess.Write);
+                        }
+
+                        XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
+                        XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+
+                        doc.Save(xmlWriter);
+                        xmlWriter.Close();
+                        xmlWriter.Dispose();
+                        fileStream.Close();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show("Error: " + exception.Message);
+                    }
                 }
-                catch (Exception exception)
+                else
                 {
-                    MessageBox.Show("Error: " + exception.Message);
+                    MessageBox.Show("DXML File Path Is Not Valid");
                 }
-            }
-            else
-            {
-                MessageBox.Show("DXML File Path Is Not Valid");
             }
         }
 
