@@ -22,6 +22,7 @@ using Logitude.Customs.Data.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.Def.ClosedTable;
 using System.Xml.Linq;
+ 
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -362,6 +363,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return entityKeyString;
         }
 
+      
     }
 
 }

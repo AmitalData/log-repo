@@ -216,11 +216,14 @@ export class CustomsRequestsSheetsComponent
         //this.CRSSearch();
     }
     CancelByFilters() {
-        debugger;
-        this.InitFilter();
+         this.InitFilter();
         this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs).subscribe();
     }
 
+    ReAnalysisByFilters() {
+        this.InitFilter();
+        this.customsRequestsSheetExtendedListService.ReAnalysisByFilters(this.filterAgrs).subscribe();
+    }
 
     InitFilter() {
 
