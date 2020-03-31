@@ -65,7 +65,7 @@
                                 <td>
                                     <div class="MediaFill">
                                         <div class="MediaFillRelative">
-                                            <LogTextBox [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [DigitsAfterPoint]="3" [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             <div class="Value" style="position: absolute; left: 10px; top: 7px;" *ngIf="DataContext.VatIsMultiPercentage">Multi</div>
                                         </div>
                                     </div>
