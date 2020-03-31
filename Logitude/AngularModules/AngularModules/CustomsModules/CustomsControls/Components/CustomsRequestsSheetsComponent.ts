@@ -18,6 +18,7 @@ import { EntityListService } from   '../../../Infrastructure/Services/EntityList
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { CustomsRequestsSheetExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsRequestsSheetExtendedListService';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 //////////////////////////////////////////////////////////////////
 
@@ -216,14 +217,95 @@ export class CustomsRequestsSheetsComponent
         //this.CRSSearch();
     }
     CancelByFilters() {
+         if (!this.CheckValidation("Cancel")) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 150;
+            messageWindow.ShowErrorIcon = true;
+            messageWindow.Show("You cannot cancel a request other than status 30.");
+            return;
+        }
+        this.CurrentSession.StartBusyIndicator("");
+
          this.InitFilter();
-        this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs).subscribe();
+        this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs).subscribe(
+            data => {
+                this.CurrentSession.StopBusyIndicator();
+
+                if (data.HasError) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 150;
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show("Error canceling requests.");
+                }
+
+                else {
+                 var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 150;
+                messageWindow.ShowErrorIcon = true;
+                messageWindow.Show("Requests canceled successfully.");
+                }
+
+           
+            }
+        );
+
+       
+      
+        
     }
 
     ReAnalysisByFilters() {
+        if (!this.CheckValidation("ReAnalysis")) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 150;
+            messageWindow.ShowErrorIcon = true;
+            messageWindow.Show("Requests in different statuses cannot be re-analyzed from failure or request registered");
+            return;
+        }
+        this.CurrentSession.StartBusyIndicator("");
+
         this.InitFilter();
-        this.customsRequestsSheetExtendedListService.ReAnalysisByFilters(this.filterAgrs).subscribe();
+        this.customsRequestsSheetExtendedListService.ReAnalysisByFilters(this.filterAgrs).subscribe(
+            data => {
+                this.CurrentSession.StopBusyIndicator();
+
+                if (data.HasError) {
+               
+                        var messageWindow = new MessageWindow();
+                        messageWindow.Width = 400;
+                        messageWindow.Height = 150;
+                        messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show("Error re-analysis requests.");
+                  
+                }
+                else {
+    var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 150;
+                messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show("The requests were registered for re-analysis and sent in the background.");
+                }
+            
+            });
     }
+    CheckValidation(type: string) {
+        if (this.AllCRSSChecked) return false;
+
+        this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
+
+            if (requestStatus.IsChecked) {
+                if (type == "ReAnalysis" && requestStatus.MyItem.Code != "21" && requestStatus.MyItem.Code != "25")
+                    return false;
+                if (type == "Cancel" && requestStatus.MyItem.Code != "30")
+                    return false;
+            }
+        });
+        return true;
+     }
 
     InitFilter() {
 

@@ -779,7 +779,7 @@ export class MaintenanceComponent {
 
                     let windowTitle = "גליון בקשות - ניתוח מחדש"//"Customs Settings";
                     let logWindow = new LogitudeWindow();
-                    logWindow.Width = 1000;
+                    logWindow.Width = 1300;
                     logWindow.Height = 700;
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
