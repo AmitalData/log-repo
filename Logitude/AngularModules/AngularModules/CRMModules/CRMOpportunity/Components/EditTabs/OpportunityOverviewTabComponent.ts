@@ -269,7 +269,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     LoadQuotesList() {
         this.QuotesObslist = [];
         var quoteDomainService: QuoteDomainService = new QuoteDomainService();
-        quoteDomainService.GetQuotesByOpportunityId(this.EntityPM.Id).subscribe(result => {
+        quoteDomainService.GetQuotesByOpportunityId(this.EntityPM.Id).subscribe((result:any) => {
             var quoteList: Array<QuoteList> = result.Result;
             quoteList.sort((a, b) => {
                 return (DateTool.GetDateParts(a.OpenDate).DateObject === DateTool.GetDateParts(b.OpenDate).DateObject) ? 0 : (DateTool.GetDateParts(a.OpenDate).DateObject < DateTool.GetDateParts(b.OpenDate).DateObject) ? -1 : 1
