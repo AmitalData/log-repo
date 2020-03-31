@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CommunicationLog",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CommunicationLogs",
-			      				    OldDBTableName =  "CommunicationLogs",
 			      				    ObjectTableSingular =  "Communication Log",
 			      				    ObjectTablePlural =  "Communication Logs",
 			      				    HasCustomFilter =  true,
@@ -140,13 +139,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -270,11 +267,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -337,9 +333,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Subject",
-					  						OldFieldName =  "Subject",
 					  						ObjectTableName =  "CommunicationLog",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  500,
 					  						IsRequired =  false,
@@ -404,11 +399,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DoneDate",
-					  						OldFieldName =  "DoneDate",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -469,7 +463,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InOut",
-					  						OldFieldName =  "InOut",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -537,7 +530,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CC",
-					  						OldFieldName =  "CC",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -601,12 +593,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DocumentOutId",
-					  						OldFieldName =  "DocumentOutId",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "DocsOut",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  40,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -666,7 +657,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DocumentInId",
-					  						OldFieldName =  "DocumentInId",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "DocsIn",
@@ -731,7 +721,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "To",
-					  						OldFieldName =  "To",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -798,7 +787,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CommunicationStatusTypeCode",
-					  						OldFieldName =  "CommunicationStatusTypeCode",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CommunicationStatusType",
@@ -863,7 +851,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CommunicationStatusTypeName",
-					  						OldFieldName =  "CommunicationStatusTypeName",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -929,7 +916,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CommunicationLogTypeCode",
-					  						OldFieldName =  "CommunicationLogTypeCode",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CommunicationLogType",
@@ -994,7 +980,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CommunicationLogTypeName",
-					  						OldFieldName =  "CommunicationLogTypeName",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1060,7 +1045,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Retries",
-					  						OldFieldName =  "Retries",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1127,7 +1111,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BCC",
-					  						OldFieldName =  "BCC",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1191,13 +1174,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ObjectTableId",
-					  						OldFieldName =  "ObjectTableId",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ObjectTable",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -1256,7 +1238,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ObjectTableName",
-					  						OldFieldName =  "ObjectTableName",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1322,7 +1303,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "From",
-					  						OldFieldName =  "From",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1389,7 +1369,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LastStatusDate",
-					  						OldFieldName =  "LastStatusDate",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1455,7 +1434,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EntityReference",
-					  						OldFieldName =  "EntityReference",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1522,9 +1500,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "CommunicationLog",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -1584,7 +1561,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1647,11 +1623,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CreateDateUTC",
-					  						OldFieldName =  "CreateDateUTC",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1712,11 +1687,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DoneDateUTC",
-					  						OldFieldName =  "DoneDateUTC",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1777,11 +1751,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LastStatusDateUTC",
-					  						OldFieldName =  "LastStatusDateUTC",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1842,11 +1815,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "NextTryDateTimeUTC",
-					  						OldFieldName =  "NextTryDateTimeUTC",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1907,11 +1879,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "NextTryDateTime",
-					  						OldFieldName =  "NextTryDateTime",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1972,7 +1943,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "QueueName",
-					  						OldFieldName =  "QueueName",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2037,7 +2007,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Priority",
-					  						OldFieldName =  "Priority",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2102,7 +2071,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TenantName",
-					  						OldFieldName =  "TenantName",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2167,7 +2135,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AWBNumber",
-					  						OldFieldName =  "AWBNumber",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2232,11 +2199,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -2297,7 +2263,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EmailDeliveryError",
-					  						OldFieldName =  "EmailDeliveryError",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2362,7 +2327,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LogSettings",
-					  						OldFieldName =  "LogSettings",
 					  						ObjectTableName =  "CommunicationLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

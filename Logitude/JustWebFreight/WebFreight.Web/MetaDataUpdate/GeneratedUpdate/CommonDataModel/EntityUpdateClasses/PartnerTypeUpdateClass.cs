@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "PartnerType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "PartnerTypes",
-			      				    OldDBTableName =  "PartnerTypes",
 			      				    ObjectTableSingular =  "Partner Type",
 			      				    ObjectTablePlural =  "PartnerTypes",
 			      				    HasCustomFilter =  false,
@@ -117,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Partner Type",
-			      				    Code =  "1438",
+			      				    Code =  "4539",
 			      				    Name =  "PartnerType",
 			      				    CloseTableCode =  "Id",
 			      				    CloseTableName =  "Name",
@@ -143,7 +142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "PartnerType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -185,7 +183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FullFieldLable =  "Id",
 					  						DefaultText =  "ID",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
+					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "PartnerType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -265,9 +262,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "PartnerType",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
