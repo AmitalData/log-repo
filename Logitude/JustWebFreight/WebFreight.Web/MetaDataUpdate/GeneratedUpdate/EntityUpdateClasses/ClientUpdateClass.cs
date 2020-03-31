@@ -2429,7 +2429,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        List<ObjectField> ClientObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.Client").ToList();   
 
 			   TextCode ClientTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.Q.ClientQuery", DefaultText = @"Clients",LocalDefaultText = "לקוח", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature ClientFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLIENTS", ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Clients", NameTextCodeDefaultText = "All Customers Accounts", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ClientFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Client.Q.Clients", ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClientFeatures.Clients", NameTextCodeDefaultText = "Clients", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -2469,7 +2469,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
                  
 			   TextCode ClientRequestSheetsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.TH.RequestSheets", DefaultText = "Request Sheets",LocalDefaultText = "גיליון בקשה", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ClientRequestSheetsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEETS", ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsVendor.Features.RequestSheets", NameTextCodeDefaultText = "Request Sheets", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ClientRequestSheetsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Client.Tab.RequestSheets", ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "ClientFeatures.CLRS", NameTextCodeDefaultText = "Request Sheets", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 

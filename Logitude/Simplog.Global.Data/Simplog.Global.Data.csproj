@@ -417,6 +417,10 @@
     <Compile Include="Migrations\202003260849424_missinnnnnnnng.Designer.cs">
       <DependentUpon>202003260849424_missinnnnnnnng.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003301335202_missingGlobal.cs" />
+    <Compile Include="Migrations\202003301335202_missingGlobal.Designer.cs">
+      <DependentUpon>202003301335202_missingGlobal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -582,6 +586,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003260849424_missinnnnnnnng.resx">
       <DependentUpon>202003260849424_missinnnnnnnng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301335202_missingGlobal.resx">
+      <DependentUpon>202003301335202_missingGlobal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

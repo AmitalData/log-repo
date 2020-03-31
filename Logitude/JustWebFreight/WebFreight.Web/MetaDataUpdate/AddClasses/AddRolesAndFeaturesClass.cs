@@ -14,8 +14,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddRolesAndFeaturesClass
     {
-        private static Dictionary<string, Feature> AddedFeatures = new Dictionary<string, Feature>();
-        private static Dictionary<string, TextCode> AddedTextCodes = new Dictionary<string, TextCode>();
+        //private static Dictionary<string, Feature> AddedFeatures = new Dictionary<string, Feature>();
+        //private static Dictionary<string, TextCode> AddedTextCodes = new Dictionary<string, TextCode>();
         public static Role AddRole(RoleDetails roleDetails, RoleRepository roleRepository, Dictionary<string, Role> tenantRoles)
         {
             if (tenantRoles.Keys.Contains(roleDetails.Code))
@@ -91,8 +91,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                 if (updatedTextCode == null)
                 {
-                    if (!AddedTextCodes.Keys.Contains(featureDetails.NameTextCodeCode))
-                    {
+                    //if (!AddedTextCodes.Keys.Contains(featureDetails.NameTextCodeCode))
+                    //{
                         updatedTextCode = new TextCode()
                         {
                             Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
@@ -103,12 +103,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                             TextCodeTypeCode = "O",
                         };
                         textCodeReposit.Add(updatedTextCode);
-                        AddedTextCodes.Add(featureDetails.NameTextCodeCode, updatedTextCode);
-                    }
-                    else
-                    {
-                        updatedTextCode = AddedTextCodes[featureDetails.NameTextCodeCode];
-                    }
+                    //    AddedTextCodes.Add(featureDetails.NameTextCodeCode, updatedTextCode);
+                    //}
+                    //else
+                    //{
+                    //    updatedTextCode = AddedTextCodes[featureDetails.NameTextCodeCode];
+                    //}
                     updatedFeature.NameTextCodeId = updatedTextCode.Id;
                     updatedFeature.NameTextCodeCode = updatedTextCode.Code;
                 }
@@ -134,8 +134,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             else
             {
-                if (!AddedFeatures.ContainsKey(featureDetails.Code))
-                {
+                //if (!AddedFeatures.ContainsKey(featureDetails.Code))
+                //{
                     TextCode newTextCode = null;
                     if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
                     {
@@ -144,8 +144,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                     if (newTextCode == null)
                     {
-                        if (!AddedTextCodes.Keys.Contains(featureDetails.NameTextCodeCode))
-                        {
+                        //if (!AddedTextCodes.Keys.Contains(featureDetails.NameTextCodeCode))
+                        //{
                             newTextCode = new TextCode()
                             {
                                 Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
@@ -158,12 +158,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                             textCodeReposit.Add(newTextCode);
                             textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
-                            AddedTextCodes.Add(featureDetails.NameTextCodeCode, newTextCode);
-                        }
-                        else
-                        {
-                            newTextCode = AddedTextCodes[featureDetails.NameTextCodeCode];
-                        }
+                        //    AddedTextCodes.Add(featureDetails.NameTextCodeCode, newTextCode);
+                        //}
+                        //else
+                        //{
+                        //    newTextCode = AddedTextCodes[featureDetails.NameTextCodeCode];
+                        //}
                     }
 
                     Feature newFeature = new Feature()
@@ -187,13 +187,13 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     //table.UpdateKey = NewKey;
                     //Repo.Update(table);
                     //Repo.SubmitChanges();
-                    AddedFeatures.Add(featureDetails.Code, newFeature);
+                    //AddedFeatures.Add(featureDetails.Code, newFeature);
                     return newFeature;
-                }
-                else
-                {
-                    return AddedFeatures[featureDetails.Code];
-                }
+                //}
+                //else
+                //{
+                //    return AddedFeatures[featureDetails.Code];
+                //}
             }
             //}
             //else

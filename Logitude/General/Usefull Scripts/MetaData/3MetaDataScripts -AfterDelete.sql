@@ -173,7 +173,3 @@ where tc.ObjectTableId = temp.ObjectTableId
  select Code,count(*) from TextCodes
  group by Code having count(*) >1
 
- select * from textcodes where code='Customs.CustomsVendor.Features.RequestSheets'
-
-
- select * from ObjectTables where Id in ('1-1244','1-1252')

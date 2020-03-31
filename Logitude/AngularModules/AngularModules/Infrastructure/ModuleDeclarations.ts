@@ -273,7 +273,7 @@ export const ControlsComponents =
         LastSuccessfulLoginComponent,
         LogTextBoxComponentV3,
         ImageLibraryComponent,
-        TaskSchedulerHistoryComponent
+        TaskSchedulerHistoryComponent,
         DropdownMenuComponent,
         MultiSelectLOVComponent,
          
