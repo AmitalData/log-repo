@@ -514,7 +514,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                           OrderDateB4 = line.OrderDateB4,
                                                           AccountId = line.AccountId,
                                                           CurrencyId = line.CurrencyId,
-                                                          CurrencyCode = currency.Code,
+                                                          CurrencyCode = currency == null ? null : currency.Code,
                                                           Total = line.Total,
                                                           AccountEnglishName = account.AccountEnglishName,
                                                           AccountLocalName = account.AccountLocalName,
