@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -33,160 +33,130 @@ export class WarehouseEntryPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/warehouseentries';      
     }
 
- get(id: string) {
-         
-         
-        
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();		
-		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response;
+	get(id: string) {       
 
-                   
-					
-                    var entity: WarehouseEntryPM;
-					if(pm)
-					{
-                      entity = this.MapJsonToEntityPM(pm);
-                    }
+		var callTime = new Date();		
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
+		return Observable.defer(() => {
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+				.pipe(
+					map((response: HttpResponse<any>) => {
+						var pm = response.body;
+				
+						var entity: WarehouseEntryPM;
+						if (pm) {
+							entity = this.MapJsonToEntityPM(pm);
+						}
+
+						var serviceResponse: ServiceResponse = new ServiceResponse();
+						serviceResponse.Result = entity;
               
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntry", "GetSinglePM", 'id=' + id);
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntry", "GetSinglePM", 'id=' + id);
 				 
-                return serviceResponse;
+						return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
-            });                    
-    }
+					}),
+					
+					catchError(ServiceHelper.HandleServiceError));
+		});                    
+	}
 
-	 insert(entityPM: WarehouseEntryPM) {
+	insert(entityPM: WarehouseEntryPM) {
  
-        var callTime = new Date();        
-        return Observable.defer(() => {
+		var callTime = new Date();  
+		
+		return Observable.defer(() => {
 
-                
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
+			var serviceResponse: ServiceResponse = new ServiceResponse();
+			var validator: ClassLevelValidator = new ClassLevelValidator();                
+			var errorsArray = validator.Validate("WarehouseEntry", entityPM);
 
-                var validator: ClassLevelValidator;
-                 
-                validator = new ClassLevelValidator();
-                 
-                var errorsArray = validator.Validate("WarehouseEntry", entityPM);
-                var customValidator :WarehouseEntryValidator = new WarehouseEntryValidator();
-                var validationErrorsArr = customValidator.Validate(entityPM);
-				if(validationErrorsArr)
-				{
-					errorsArray = errorsArray.concat(validationErrorsArr);
-				}
-                 
+			var customValidator :WarehouseEntryValidator = new WarehouseEntryValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-				 if (errorsArray.length == 0) {
-                    var mappedEntity: WarehouseEntryPM;
-                    mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+			if (errorsArray.length == 0) {
+
+				var mappedEntity: WarehouseEntryPM = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
+				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
 
-                            var pm = response;
-							if(pm)
-							{
-                               var mappedResult:  WarehouseEntryPM;
-                               mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
-							   serviceResponse.Result = mappedResult;
+							var pm = response.body;
+							if (pm) {
+								var mappedResult: WarehouseEntryPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								serviceResponse.Result = mappedResult;
+							}						
+
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntry", "SaveChanges", "");                    
+												                             
+							return serviceResponse;
+						}),
+
+						catchError(ServiceHelper.HandleServiceError));
+			}
+
+			else {
+				serviceResponse.HasError = true;
+				serviceResponse.ErrorsArray = errorsArray;
+				return Observable.of(serviceResponse);
+			}
+		});
+	}
+
+	update(entityPM: WarehouseEntryPM) {
+
+		var callTime = new Date();     
+		
+		return Observable.defer(() => {
+
+			var serviceResponse: ServiceResponse = new ServiceResponse();
+			var validator: ClassLevelValidator = new ClassLevelValidator();               
+			var errorsArray = validator.Validate("WarehouseEntry", entityPM);
+
+			var customValidator :WarehouseEntryValidator = new WarehouseEntryValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
+
+			if (errorsArray.length == 0) {
+
+				var mappedEntity: WarehouseEntryPM = this.MapJsonToEntityPM(entityPM, false);
+				
+				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
+                 
+							var pm = response.body;
+							if (pm) {
+								var mappedResult: WarehouseEntryPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								serviceResponse.Result = mappedResult;
 							}
-							
-
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntry", "SaveChanges", "");                    
-												 
-                            
-                            return serviceResponse;
-
-                        }),catchError(ServiceHelper.HandleServiceError));
-                }
-                else {
-
-                    serviceResponse.HasError = true;
-                    serviceResponse.ErrorsArray = errorsArray;
-
-                    return Observable.of(serviceResponse);
-                   
-                }
-            }
-
-            );
-    }
-
-    update(entityPM: WarehouseEntryPM) {
-
-            var callTime = new Date();         
-            return Observable.defer(() => {
-
-                
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
-
-                var validator: ClassLevelValidator;
-                 
-                validator = new ClassLevelValidator();
-               
-                var errorsArray = validator.Validate("WarehouseEntry", entityPM);
-                var customValidator :WarehouseEntryValidator = new WarehouseEntryValidator();
-                var validationErrorsArr = customValidator.Validate(entityPM);
-				if(validationErrorsArr)
-				{
-					errorsArray = errorsArray.concat(validationErrorsArr);
-				}
-                 
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-				 if (errorsArray.length == 0) {
-                    var mappedEntity: WarehouseEntryPM;
-                    mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-				
-				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
-                 
-
-                            var pm = response;
-							if(pm)
-							{
-                               var mappedResult:  WarehouseEntryPM;
-                               mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
-							   serviceResponse.Result = mappedResult;
-							 }
 							 
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntry", "SaveChanges", "");                    
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntry", "SaveChanges", "");                    
 					                           
-                            return serviceResponse;
+							return serviceResponse;
+						}),
 
-                        }),catchError(ServiceHelper.HandleServiceError));
-                }
-                else {
+						catchError(ServiceHelper.HandleServiceError));
+			}
 
-                    serviceResponse.HasError = true;
-                    serviceResponse.ErrorsArray = errorsArray;
-
-                    return Observable.of(serviceResponse);
-                   
-                }
-            }
-
-            );
-
-    }
+			else {
+				serviceResponse.HasError = true;
+				serviceResponse.ErrorsArray = errorsArray;
+				return Observable.of(serviceResponse);
+			}
+		});
+	}
 
    
 

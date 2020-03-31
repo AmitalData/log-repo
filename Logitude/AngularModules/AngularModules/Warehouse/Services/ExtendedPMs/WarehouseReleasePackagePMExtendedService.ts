@@ -1,4 +1,4 @@
-﻿
+
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
@@ -30,7 +30,7 @@ export class WarehouseReleasePackagePMExtendedService {
         
         return this._http.get(this._apiUrl + "/getWarehouseReleasePackagePMListsByWarehouseReleaseId" + '?warehouseReleaseId=' + warehouseReleaseId +  '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response;
+            var result:any = response;
             var entity: WarehouseReleasePackagePM;
             var warehouseReleasePackagePMLists: WarehouseReleasePackagePM[];
             warehouseReleasePackagePMLists = new Array<WarehouseReleasePackagePM>();
@@ -52,7 +52,7 @@ export class WarehouseReleasePackagePMExtendedService {
         
         
         return this._http.get(this._apiUrl + '/GetWarehouseReleasePackagePMThatNotUsedForAnyEntityLists', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result = response;
+            var result:any = response;
             var entity: WarehouseReleasePackagePM;
             var warehouseReleasePackagePMLists: WarehouseReleasePackagePM[];
             warehouseReleasePackagePMLists = new Array<WarehouseReleasePackagePM>();

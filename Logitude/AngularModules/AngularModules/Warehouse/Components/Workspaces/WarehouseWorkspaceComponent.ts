@@ -185,7 +185,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
     LoadDataSummary() {
 
         // this.CurrentSession.StartBusyIndicatorLoading();
-        this.warehouseReleasePMExtendedService.GetCrossDockWorkspaceSummary(this.SelectedTransportFilter, this.SelectedDirectionFilter).subscribe(res => {
+        this.warehouseReleasePMExtendedService.GetCrossDockWorkspaceSummary(this.SelectedTransportFilter, this.SelectedDirectionFilter).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
 
             //  this.CurrentSession.StopBusyIndicator();

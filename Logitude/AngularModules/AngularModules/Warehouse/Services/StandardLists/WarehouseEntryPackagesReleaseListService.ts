@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -31,129 +31,126 @@ export class WarehouseEntryPackagesReleaseListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/warehouseentrypackagesreleaseviews';  
     }
 
-    getSingle(entrypackageid: string, releasepackageid: string) {
+	getSingle(entrypackageid: string, releasepackageid: string) {
 	   
-        
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'entrypackageid=' + entrypackageid+'&'+'releasepackageid=' + releasepackageid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+		var callTime = new Date();
 
-                var list = response;
-                    
-                var entity: WarehouseEntryPackagesReleaseList;
-				if(list)
-				{
-                   entity = this.MapJsonToEntityList(list);
-                }   
+		return Observable.defer(() => {
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'entrypackageid=' + entrypackageid+'&'+'releasepackageid=' + releasepackageid, ServiceHelper.GetHttpFullHeaders())
+				.pipe(			
+					map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = entity;  
-				serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntryPackagesRelease", "GetSingleList", 'entrypackageid=' + entrypackageid+'&'+'releasepackageid=' + releasepackageid); 
+						var list = response.body;                   
+						var entity: WarehouseEntryPackagesReleaseList;
+						if (list) {
+							entity = this.MapJsonToEntityList(list);
+						}   
 
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
+						var serviceResponse: ServiceResponse = new ServiceResponse(); 
+						serviceResponse.Result = entity;  
+						serviceResponse.CallTime = callTime;
 
-    getAll() {
-        
-	   
-       authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
-       return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntryPackagesRelease", "GetSingleList", 'entrypackageid=' + entrypackageid+'&'+'releasepackageid=' + releasepackageid); 
 
-              var allLists = response;
-              var _mappedListsArray: Array< WarehouseEntryPackagesReleaseList> = [];
-		      if(allLists)
-			  {
-				for (var key in  allLists) {				
-				   var entity: WarehouseEntryPackagesReleaseList;
-                   entity = this.MapJsonToEntityList(allLists[key]);
-				   _mappedListsArray.push(entity);
-				 }
-               }
+						return serviceResponse;
+					}),
+			
+					catchError(ServiceHelper.HandleServiceError));
+		});
+	}
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = _mappedListsArray;
-				serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntryPackagesRelease", "GetAllLists", ""); 
+	getAll() {
 
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
+		var callTime = new Date();
+
+		return Observable.defer(() => {
+			return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
+				.pipe(
+					map((response: HttpResponse<any>) => {
+
+						var allLists = response.body;
+						var _mappedListsArray: Array<WarehouseEntryPackagesReleaseList> = [];
+						if (allLists) {
+							for (var key in allLists) {				
+								var entity: WarehouseEntryPackagesReleaseList = this.MapJsonToEntityList(allLists[key]);
+								_mappedListsArray.push(entity);
+							}
+						}
+
+						var serviceResponse: ServiceResponse = new ServiceResponse(); 
+						serviceResponse.Result = _mappedListsArray;
+						serviceResponse.CallTime = callTime;
+
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntryPackagesRelease", "GetAllLists", ""); 
+
+						return serviceResponse;
+					}),
+			
+					catchError(ServiceHelper.HandleServiceError));
+		});
+	}
 	
-    getByFilters(filters: ApiQueryFilters) {
+	getByFilters(filters: ApiQueryFilters) {
 
-        var callTime = new Date();
-		                        
-        var urlparameters = '/getbyfilters?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
+		var callTime = new Date();		                        
+		var urlparameters = '/getbyfilters?';
+		var mykeys = Object.keys(filters);
+		var addtionalFiltersValues = null;
 
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+		for (var i in mykeys) {
+			var propName = mykeys[i];
+			var propValue = filters[propName];
+			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
             if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
+				urlparameters = urlparameters.concat('&');
             }
-            if (!ignoreFilter)
-                {
-					propValue = encodeURIComponent(propValue);
-					urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-				}
 
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
+            if (!ignoreFilter) {
+				propValue = encodeURIComponent(propValue);
+				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+			}
 
-
-        }
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+			if (propName == "AdditionalFilters" && propValue.length > 0) {
+				addtionalFiltersValues = JSON.stringify(propValue);
+			}
         }
 
-        
-        authHeader.append('Token', SessionInfo.Token);
-        var callUrl = this._apiUrl.concat(urlparameters);//
-        
-		
-	   return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+		if (addtionalFiltersValues) {
+			urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+		}
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response;
-                var _mappedListsArray: Array< WarehouseEntryPackagesReleaseList> = [];
-				if(serviceResponse.Result)
-				{
-                for (var key in serviceResponse.Result) {
-				
-				   var entity: WarehouseEntryPackagesReleaseList;
-                   entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-				   _mappedListsArray.push(entity);
+		var callUrl = this._apiUrl.concat(urlparameters);
+        		
+		return Observable.defer(() => {
+			return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
+				.pipe(
+					map((response: HttpResponse<any>) => {
 
-				 }
-                }   
+						var serviceResponse: ServiceResponse = response.body;
+						var _mappedListsArray: Array<WarehouseEntryPackagesReleaseList> = [];
 
-                serviceResponse.Result = _mappedListsArray;       
-				serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntryPackagesRelease", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+						if (serviceResponse.Result) {
+							for (var key in serviceResponse.Result) {				
+								var entity: WarehouseEntryPackagesReleaseList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								_mappedListsArray.push(entity);
+							}
+						}   
+
+						serviceResponse.Result = _mappedListsArray;       
+						serviceResponse.CallTime = callTime;
+
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WarehouseEntryPackagesRelease", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });        
-    }
+						return serviceResponse;
+					}),
+			
+					catchError(ServiceHelper.HandleServiceError));
+		});        
+	}
 
 	
 	    MapJsonToEntityList(jsonList: any) {

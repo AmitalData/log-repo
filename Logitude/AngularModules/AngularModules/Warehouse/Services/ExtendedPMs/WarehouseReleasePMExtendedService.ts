@@ -32,9 +32,6 @@ export class WarehouseReleasePMExtendedService {
 
         return Observable.defer(() => {
 
-            
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
 
@@ -49,10 +46,8 @@ export class WarehouseReleasePMExtendedService {
                 var mappedEntity: WarehouseReleasePM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl + '/postwarehousereleasepm', JSON.stringify(mappedEntity),
-
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                return this._http.post(this._apiUrl + '/postwarehousereleasepm', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: WarehouseReleasePM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -73,20 +68,14 @@ export class WarehouseReleasePMExtendedService {
                 return Observable.of(serviceResponse);
 
             }
-        }
-
-        );
+        });
     }
 
     CancelRelease(entityPM: WarehouseReleasePM) {
 
         return Observable.defer(() => {
 
-            
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var validator: ClassLevelValidator;
+              var validator: ClassLevelValidator;
 
             validator = new ClassLevelValidator();
 
@@ -98,10 +87,8 @@ export class WarehouseReleasePMExtendedService {
                 var mappedEntity: WarehouseReleasePM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl + '/PutCancelWarehouseReleasePM', JSON.stringify(mappedEntity),
-
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                return this._http.put(this._apiUrl + '/PutCancelWarehouseReleasePM', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: WarehouseReleasePM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
