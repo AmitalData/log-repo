@@ -35,7 +35,7 @@ namespace Logitude.DeploymentAgentService
         
         protected override void OnStart(string[] args)
         {
-            WriteToLogsFile("Deployment Agent Service Is Started");
+            WriteToLogsFile("Deployment Agent Service Started");
             ServiceTimer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             ServiceTimer.Interval = ServiceIntervalInSeconds * 1000;
             ServiceTimer.Enabled = true;
@@ -43,7 +43,7 @@ namespace Logitude.DeploymentAgentService
 
         protected override void OnStop()
         {
-            WriteToLogsFile("Deployment Agent Service Is Stopped");
+            WriteToLogsFile("Deployment Agent Service Stopped");
         }
 
         protected void OnElapsedTime(object source, ElapsedEventArgs e)
@@ -76,7 +76,7 @@ namespace Logitude.DeploymentAgentService
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Cannot Read Configurations File From FTP Server With Exception: " + exception.Message);
+                WriteToLogsFile("Cannot Read FTP Configurations File With Exception: " + exception.Message);
             }
 
             return configurations;
@@ -111,29 +111,27 @@ namespace Logitude.DeploymentAgentService
             string packageVersion = configurations.CurrentPackage.Version;
             string packageUrl = configurations.CurrentPackage.Url;
 
-            bool createCurrentDeploymentStatusFileResult = CreateCurrentDeploymentStatusFile();
-            if (createCurrentDeploymentStatusFileResult)
+            WriteToLogsFile("Deployment Process For Version " + packageVersion + " Started");
+
+            bool createIISTempFolderResult = CreateIISTempFolder();
+            if (createIISTempFolderResult)
             {
-                bool createIISTempFolderResult = CreateIISTempFolder();
-                if (createIISTempFolderResult)
+                bool downloadPackageFromFTPResult = DownloadPackageFromFTP(packageUrl);
+                if (downloadPackageFromFTPResult)
                 {
-                    bool downloadPackageFromFTPResult = DownloadPackageFromFTP(packageUrl);
-                    if (downloadPackageFromFTPResult)
+                    bool extractDownloadedPackageResult = ExtractDownloadedPackage(packageUrl);
+                    if (extractDownloadedPackageResult)
                     {
-                        bool extractDownloadedPackageResult = ExtractDownloadedPackage(packageUrl);
-                        if (extractDownloadedPackageResult)
+                        bool copyConfigFilesToIISTempFolderResult = CopyConfigFilesToIISTempFolder();
+                        if (copyConfigFilesToIISTempFolderResult)
                         {
-                            bool copyConfigFilesToIISTempFolderResult = CopyConfigFilesToIISTempFolder();
-                            if (copyConfigFilesToIISTempFolderResult)
+                            bool renameIISFolderResult = RenameIISFolder(IISFolderName, IISFolderName + ".Old");
+                            if (renameIISFolderResult)
                             {
-                                bool renameIISFolderResult = RenameIISFolder(IISFolderName, IISFolderName + ".Old");
-                                if (renameIISFolderResult)
+                                bool renameIISTempFolderResult = RenameIISFolder(IISFolderName + ".Temp", IISFolderName);
+                                if (renameIISTempFolderResult)
                                 {
-                                    bool renameIISTempFolderResult = RenameIISFolder(IISFolderName + ".Temp", IISFolderName);
-                                    if (renameIISTempFolderResult)
-                                    {
-                                        UpdateCurrentVersion(packageVersion);
-                                    }
+                                    UpdateCurrentVersion(packageVersion);
                                 }
                             }
                         }
@@ -144,54 +142,24 @@ namespace Logitude.DeploymentAgentService
             ServiceTimer.Enabled = true;
         }
 
-        protected bool CreateCurrentDeploymentStatusFile()
-        {
-            bool result = false;
-
-            try
-            {
-                string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\CurrentDeploymentStatus.txt";
-                if (!File.Exists(filePath))
-                {
-                    File.Create(filePath).Dispose();
-                }
-                else
-                {
-                    File.Delete(filePath);
-                    File.Create(filePath).Dispose();
-                }
-
-                result = true;
-            }
-            catch (Exception exception)
-            {
-                WriteToLogsFile("Cannot Create Current Deployment Status File With Exception: " + exception.Message);
-            }
-
-            return result;
-        }
-
         protected bool CreateIISTempFolder()
         {
-            WriteCurrentStatus("Creating IIS Temp Folder ...");
-
+            WriteToLogsFile("Create IIS Temp Folder Started");
+            
             bool result = false;
 
             try
             {
                 string iisTempFolderUrl = @"C:\inetpub\wwwroot\" + IISFolderName + ".Temp";
-                if (!Directory.Exists(iisTempFolderUrl))
+                if (Directory.Exists(iisTempFolderUrl))
                 {
-                    Directory.CreateDirectory(iisTempFolderUrl);
+                    DeleteDirectoryContents(iisTempFolderUrl);
+                    DeleteDirectory(iisTempFolderUrl);
                 }
-                else
-                {
-                    DeleteFolder(iisTempFolderUrl);
-                    Directory.CreateDirectory(iisTempFolderUrl);
-                }
-
+                Directory.CreateDirectory(iisTempFolderUrl);
+                
                 result = true;
-                WriteCurrentStatus("IIS Temp Folder Created Successfully");
+                WriteToLogsFile("IIS Temp Folder Created Successfully");
             }
             catch(Exception exception)
             {
@@ -203,9 +171,9 @@ namespace Logitude.DeploymentAgentService
 
         protected bool DownloadPackageFromFTP(string packageUrl)
         {
-            WriteCurrentStatus("Downloading Package From FTP ...");
+            WriteToLogsFile("Download Package From FTP Started");
 
-            bool downloadPackageFromFTPCompleted = false;
+            bool isDownloadPackageFromFTPCompleted = false;
             bool result = false;
 
             try
@@ -215,7 +183,7 @@ namespace Logitude.DeploymentAgentService
                 webClient.Credentials = new NetworkCredential(FTPUsername, FTPPassword);
 
                 webClient.DownloadFileCompleted += (sender, e) => {
-                    downloadPackageFromFTPCompleted = true;
+                    isDownloadPackageFromFTPCompleted = true;
                 };
 
                 webClient.DownloadFileAsync(new Uri(packageFileFtpUrl), @"C:\inetpub\wwwroot\" + IISFolderName + @".Temp\" + Path.GetFileName(packageFileFtpUrl));
@@ -225,15 +193,15 @@ namespace Logitude.DeploymentAgentService
                 WriteToLogsFile("Cannot Download Package From FTP With Exception: " + exception.Message);
             }
 
-            while (!downloadPackageFromFTPCompleted)
+            while (!isDownloadPackageFromFTPCompleted)
             {
                 //Do something while package downloading
             }
 
-            if (downloadPackageFromFTPCompleted)
+            if (isDownloadPackageFromFTPCompleted)
             {
                 result = true;
-                WriteCurrentStatus("Package Downloaded Successfully");
+                WriteToLogsFile("Package Downloaded Successfully");
             }
 
             return result;
@@ -241,7 +209,7 @@ namespace Logitude.DeploymentAgentService
 
         protected bool ExtractDownloadedPackage(string packageUrl)
         {
-            WriteCurrentStatus("Extracting The Downloaded Package ...");
+            WriteToLogsFile("Extract The Downloaded Package Started");
 
             bool result = false;
 
@@ -251,7 +219,7 @@ namespace Logitude.DeploymentAgentService
                 ZipFile.ExtractToDirectory(@"C:\inetpub\wwwroot\" + IISFolderName + @".Temp\" + Path.GetFileName(packageFileFtpUrl), @"C:\inetpub\wwwroot\" + IISFolderName + ".Temp");
 
                 result = true;
-                WriteCurrentStatus("The Downloaded Package Extracted Successfully");
+                WriteToLogsFile("The Downloaded Package Extracted Successfully");
             }
             catch(Exception exception)
             {
@@ -263,7 +231,7 @@ namespace Logitude.DeploymentAgentService
 
         protected bool CopyConfigFilesToIISTempFolder()
         {
-            WriteCurrentStatus("Copying Config Files To IIS Temp Folder ...");
+            WriteToLogsFile("Copy Config Files To IIS Temp Folder Started");
 
             bool result = false;
 
@@ -274,7 +242,7 @@ namespace Logitude.DeploymentAgentService
                 Copy(agentConfigFilesUrl, iisTempFolderPath);
 
                 result = true;
-                WriteCurrentStatus("Config Files Copied Successfully");
+                WriteToLogsFile("Config Files Copied Successfully");
             }
             catch(Exception exception)
             {
@@ -284,46 +252,31 @@ namespace Logitude.DeploymentAgentService
             return result;
         }
 
-        protected bool RenameIISFolder(string oldFolderName, string newFolderName)
+        protected bool RenameIISFolder(string sourceFolderName, string destinationFolderName)
         {
-            WriteCurrentStatus("Renaming Folder " + oldFolderName + " To " + newFolderName + " On IIS ...");
+            WriteToLogsFile("Rename Folder " + sourceFolderName + " To " + destinationFolderName + " On IIS Started");
 
             bool result = false;
 
-            string sourceUrl = @"C:\inetpub\wwwroot\" + oldFolderName;
-            string destinationUrl = @"C:\inetpub\wwwroot\" + newFolderName;
+            string sourceUrl = @"C:\inetpub\wwwroot\" + sourceFolderName;
+            string destinationUrl = @"C:\inetpub\wwwroot\" + destinationFolderName;
 
             try
             {
+                if (destinationUrl.EndsWith(".Old") && Directory.Exists(destinationUrl))
+                {
+                    DeleteDirectoryContents(destinationUrl);
+                    DeleteDirectory(destinationUrl);
+                }
                 Directory.Move(sourceUrl, destinationUrl);
 
                 result = true;
-                WriteCurrentStatus("Folder " + oldFolderName + " Renamed To " + newFolderName + " On IIS Successfully");
+                WriteToLogsFile("Folder " + sourceFolderName + " Renamed To " + destinationFolderName + " On IIS Successfully");
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Cannot Rename Folder From " + oldFolderName + " To " + newFolderName + " With Exception: " + exception.Message);
+                WriteToLogsFile("Cannot Rename Folder From " + sourceFolderName + " To " + destinationFolderName + " With Exception: " + exception.Message);
             }
-
-            //if (Directory.Exists(sourceUrl) && !Directory.Exists(destinationUrl))
-            //{
-            //    try
-            //    {
-            //        Directory.Move(sourceUrl, destinationUrl);
-            //        result = true;
-            //    }
-            //    catch (Exception exception)
-            //    {
-            //        WriteToLogsFile("Cannot Rename Folder From " + oldFolderName + " To " + newFolderName + " With Exception: " + exception.Message);
-            //    }
-            //}
-            //else
-            //{
-            //    if (!Directory.Exists(sourceUrl) && Directory.Exists(destinationUrl))
-            //    {
-            //        result = true;
-            //    }
-            //}
 
             return result;
         }
@@ -331,68 +284,74 @@ namespace Logitude.DeploymentAgentService
         protected void UpdateCurrentVersion(string packageVersion)
         {
             CurrentVersion = packageVersion;
-            WriteCurrentStatus("The Deployment Process For Version " + packageVersion + " Completed Successfully");
+            WriteToLogsFile("The Deployment Process For Version " + packageVersion + " Completed Successfully");
         }
 
         protected void Copy(string sourceDirectory, string targetDirectory)
         {
-            DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
-            DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
-            CopyAll(diSource, diTarget);
+            DirectoryInfo sourceDirectoryinfo = new DirectoryInfo(sourceDirectory);
+            DirectoryInfo targetDirectoryInfo = new DirectoryInfo(targetDirectory);
+            CopyAll(sourceDirectoryinfo, targetDirectoryInfo);
         }
 
-        protected void CopyAll(DirectoryInfo source, DirectoryInfo target)
+        protected void CopyAll(DirectoryInfo sourceDirectoryinfo, DirectoryInfo targetDirectoryInfo)
         {
-            foreach (FileInfo fi in source.GetFiles())
+            foreach (FileInfo fileInfo in sourceDirectoryinfo.GetFiles())
             {
-                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+                fileInfo.CopyTo(Path.Combine(targetDirectoryInfo.FullName, fileInfo.Name), true);
             }
 
-            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+            foreach (DirectoryInfo directoryInfo in sourceDirectoryinfo.GetDirectories())
             {
-                DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(diSourceSubDir, nextTargetSubDir);
+                DirectoryInfo nextTargetSubDir = targetDirectoryInfo.CreateSubdirectory(directoryInfo.Name);
+                CopyAll(directoryInfo, nextTargetSubDir);
             }
         }
 
-        protected void DeleteFolder(string folderUrl)
+        protected void DeleteDirectoryContents(string directoryUrl)
         {
-            DirectoryInfo dir = new DirectoryInfo(folderUrl);
+            DirectoryInfo directoryInfo = new DirectoryInfo(directoryUrl);
 
-            foreach (FileInfo fi in dir.GetFiles())
+            foreach (FileInfo fileInfo in directoryInfo.GetFiles())
             {
-                fi.Delete();
+                fileInfo.Delete();
             }
 
-            foreach (DirectoryInfo di in dir.GetDirectories())
+            foreach (DirectoryInfo subDirectoryInfo in directoryInfo.GetDirectories())
             {
-                DeleteFolder(di.FullName);
-                di.Delete();
+                DeleteDirectoryContents(subDirectoryInfo.FullName);
+                subDirectoryInfo.Delete();
             }
+        }
+
+        protected void DeleteDirectory(string directoryUrl)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(directoryUrl);
+            directoryInfo.Delete();
         }
 
         protected void WriteToLogsFile(string log)
         {
             try
             {
-                string path = AppDomain.CurrentDomain.BaseDirectory + "\\Logs";
-                if (!Directory.Exists(path))
+                string logsFolderPath = AppDomain.CurrentDomain.BaseDirectory + "\\Logs";
+                if (!Directory.Exists(logsFolderPath))
                 {
-                    Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(logsFolderPath);
                 }
-                string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\Logs\\ServiceLog_" + GetCurrentDateTime(false).Replace('/', '_') + ".txt";
-                if (!File.Exists(filepath))
+                string logsFilepath = AppDomain.CurrentDomain.BaseDirectory + "\\Logs\\ServiceLog_" + GetCurrentDateTime(false).Replace('/', '_') + ".txt";
+                if (!File.Exists(logsFilepath))
                 {
-                    using (StreamWriter streamWriter = File.CreateText(filepath))
+                    using (StreamWriter streamWriter = File.CreateText(logsFilepath))
                     {
-                        streamWriter.WriteLine(log.TrimEnd('.') + ". At " + GetCurrentDateTime(true));
+                        streamWriter.WriteLine(log.Replace("\n", " ").TrimEnd('.') + ". At " + GetCurrentDateTime(true));
                     }
                 }
                 else
                 {
-                    using (StreamWriter streamWriter = File.AppendText(filepath))
+                    using (StreamWriter streamWriter = File.AppendText(logsFilepath))
                     {
-                        streamWriter.WriteLine(log.TrimEnd('.') + ". At " + GetCurrentDateTime(true));
+                        streamWriter.WriteLine(log.Replace("\n", " ").TrimEnd('.') + ". At " + GetCurrentDateTime(true));
                     }
                 }
             }
@@ -402,29 +361,12 @@ namespace Logitude.DeploymentAgentService
             }
         }
 
-        protected void WriteCurrentStatus(string status)
-        {
-            try
-            {
-                string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\CurrentDeploymentStatus.txt";
-
-                using (StreamWriter streamWriter = File.AppendText(filePath))
-                {
-                    streamWriter.WriteLine(status + ". At " + GetCurrentDateTime(true));
-                }
-            }
-            catch (Exception exception)
-            {
-                WriteToLogsFile("Cannot Write Current Deployment Status With Exception: " + exception.Message);
-            }
-        }
-
-        protected string GetCurrentDateTime(bool withTime)
+        protected string GetCurrentDateTime(bool isWithTime)
         {
             string dateTimeFormat = "dd/MM/yyyy";
-            if (withTime)
+            if (isWithTime)
             {
-                dateTimeFormat += " hh:mm tt";
+                dateTimeFormat += " hh:mm:ss tt";
             }
 
             return DateTime.Now.ToString(dateTimeFormat);
