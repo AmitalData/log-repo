@@ -16,6 +16,7 @@ import { ExceptionReasonPM } from '../../EntityPMs/ExceptionReasonPM';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { KeyValuePair } from '../../../CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent';
+import { ReferantExceptionExtendedPMService } from '../../Services/ExtendedPMs/ReferantExceptionExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -30,18 +31,22 @@ export class ReferantSpotlightDataTemplate
         this.ShowBusyIndicator = false;
     }
     public DataContext: any = this;
+    IsDisplayOnly: boolean;
+    DeletedCodeList: string[] = [];
     public ReferantExceptionItemsSource: ObservableCollection;
     public ObjectTableName: string = "Customs.DeclarationReferantData";
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    private _DeclarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
-    private referantExceptionPmService: ReferantExceptionPMService = new ReferantExceptionPMService();
+    private _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
+    private _referantExceptionPMService: ReferantExceptionPMService = new ReferantExceptionPMService();
+    private _referantExceptionExtendedPMService: ReferantExceptionExtendedPMService = new ReferantExceptionExtendedPMService();
+
+
 
     _IsReady: boolean = false;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe(response => {
-            this._IsReady = true;
         });
         this.ReferantExceptionItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -60,19 +65,22 @@ export class ReferantSpotlightDataTemplate
     Run(entity: DeclarationReferantDataPM) {
         this.EntityPM = entity;
         this.LoadReferantException();
+        this.IsDisplayOnly = false;
+
     }
     private LoadReferantException() {
         this.ShowBusyIndicator = true;
         this.SplitExceptionList(this.EntityPM.ExceptionReasonsList);
         this.getData(this.ExceptionsList);
         this.ShowBusyIndicator = false;
-
+        this._IsReady = true;
+        this.DeletedCodeList = [];
     }
 
     private ReferantExceptionListPM : ReferantExceptionPM[] = [];
     getData(ExceptionsList: string[]) {
         for (let exceptionReasonsCode of this.ExceptionsList) {
-            this.referantExceptionPmService.get(this.EntityPM.DeclarationId, exceptionReasonsCode)
+            this._referantExceptionPMService.get(this.EntityPM.DeclarationId, exceptionReasonsCode)
                 .subscribe((response: any) => {
                     this.ReferantExceptionListPM.push = response.Result;
                     this.ReferantExceptionItemsSource.Insert(new ExceptionReason(response.Result, this));
@@ -155,25 +163,22 @@ export class ReferantSpotlightDataTemplate
             this.ValidationErrorsList = this.errors;
         }
         if (this.errors.length == 0) {
-            this.ShowBusyIndicator = true;
-            this.BuildExceptionReasonsList();
-            this._DeclarationReferantDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-
-
-                 });
-            this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
-                if (item.IsNew == true) {
-                    this.referantExceptionPmService.insert(item.EntityPM).subscribe((response: ServiceResponse) => {
-                    });
-                } else if (item.EntityPM.IsDirty == true) {
-                    this.referantExceptionPmService.update(item.EntityPM).subscribe((response: ServiceResponse) => {
-                    });
-                }
+                this.ShowBusyIndicator = true;
+                this.BuildExceptionReasonsList();
+            this._declarationReferantDataPMService.update(this.EntityPM).subscribe();
+            this.DeletedCodeList.forEach((item: string) => {
+                this._referantExceptionExtendedPMService.Delete(this.EntityPM.DeclarationId, item).subscribe();
             });
+                this.ReferantExceptionItemsSource.Collection.forEach((item: ExceptionReason) => {
+                    if (item.IsNew == true) {
+                        this._referantExceptionPMService.insert(item.EntityPM).subscribe();
+                    } else if (item.EntityPM.IsDirty == true) {
+                        this._referantExceptionPMService.update(item.EntityPM).subscribe();
+                    }
+                });
         }
         this.ShowBusyIndicator = false;
     }
-    
     DeleteButtonClicked(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
             var msg = "שורה זו תמחק, האם להמשיך?" 
@@ -186,6 +191,7 @@ export class ReferantSpotlightDataTemplate
                     this.ReferantExceptionItemsSource.Remove(item);
                     this.ExceptionsList = this.ExceptionsList.filter(e => e !== item.ExceptionReasonsCode);
                     this.ReferantExceptionListPM.splice(this.ReferantExceptionListPM.indexOf(item), 1);
+                    this.DeletedCodeList.push(item.ExceptionReasonsCode);
                 }
             });
         }
@@ -235,8 +241,7 @@ export class ExceptionReason extends BaseComponent {
     set ExceptionReasonsCode(value: string) {
         if (this.EntityPM.ExceptionReasonsCode != value) {
             this.EntityPM.ExceptionReasonsCode = value;
-
-        }
+        } 
     }
     get ExceptionRemarks() { return this.EntityPM.ExceptionRemarks; }
     set ExceptionRemarks(value: string) {
