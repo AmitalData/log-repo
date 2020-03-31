@@ -41,7 +41,7 @@ export class ProjectsWorkspaceComponent {
     public MyProjectsQueriesVisibility: boolean = false;
     LoadQueriesCounts() {
         var myService: TimeManagementDomainService = new TimeManagementDomainService();
-        myService.GetProjectsCounts(SessionLocator.LoggedUserId).subscribe(myResult => {
+        myService.GetProjectsCounts(SessionLocator.LoggedUserId).subscribe((myResult:any) => {
             if (myResult != null) {
                 this.MyProjectsCount = myResult.MyProjectsCount > 1000 ? "1000+" : myResult.MyProjectsCount.toString();
                 this.AllProjectsCount = myResult.AllProjectsCount > 1000 ? "1000+" : myResult.AllProjectsCount.toString();

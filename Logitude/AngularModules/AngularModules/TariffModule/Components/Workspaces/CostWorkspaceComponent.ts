@@ -336,7 +336,7 @@ export class CostWorkspaceComponent implements OnInit {
     public RecentTariffsList: TariffList[] = [];
     LoadRecentTariffs() {
         var tariffService: TariffDomainService = new TariffDomainService();
-        tariffService.GetRecentTariffs().subscribe(myResult => {
+        tariffService.GetRecentTariffs().subscribe((myResult:any) => {
             if (myResult == null) {
                 this.RecentTariffsList = [];
                 this.RecentTariffsCount = 0;

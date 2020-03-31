@@ -6744,12 +6744,14 @@
     <TypeScriptCompile Include="TariffModule\Services\ExtendedPMs\TariffVersionExtendedPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffProductListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSettingListService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSurchargesUpdateListService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSurchargesUpdateMethodListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffProductPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffSettingPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffSurchargesUpdatePMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\TariffDomainService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffTypeListService.ts" />
-    <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffVersionListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Validators\TariffValidator.ts" />
     <TypeScriptCompile Include="test.ts" />
@@ -6872,6 +6874,7 @@
     <TypeScriptCompile Include="Warehouse\Services\StandardPMs\WarehouseEntryPackagesReleasePMService.ts" />
     <TypeScriptCompile Include="Warehouse\Services\StandardPMs\WarehouseEntryPMService.ts" />
     <TypeScriptCompile Include="Warehouse\Services\StandardPMs\WarehouseReleasePMService.ts" />
+    <TypeScriptCompile Include="Warehouse\Tools.ts" />
     <TypeScriptCompile Include="Warehouse\Validators\WarehouseEntryValidator.ts" />
     <TypeScriptCompile Include="Warehouse\Validators\WarehouseReleaseValidator.ts" />
   </ItemGroup>

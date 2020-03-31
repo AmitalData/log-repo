@@ -546,7 +546,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             tariffSearchArgs.Quantity4 = this.Quantity4;
             tariffSearchArgs.Quantity5 = this.Quantity5;
 
-            this.myDomainService.GetAvailableAirlineFreightTariffs(tariffSearchArgs).subscribe(res => {
+            this.myDomainService.GetAvailableAirlineFreightTariffs(tariffSearchArgs).subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;
