@@ -170,7 +170,7 @@ export class SocialMessagesComponent implements OnInit {
             this.MessageFilters.PageIndex = this.PageIndex;
             this.MessageFilters.PageSize = this.PageSize;
 
-            this.conversationHeaderExtendedPMService.GetMessageByFiltered(this.MessageFilters).subscribe(res => {
+            this.conversationHeaderExtendedPMService.GetMessageByFiltered(this.MessageFilters).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 this.IsLoadedMessages = true;
                 this.StopBusyIndicator();
@@ -288,7 +288,7 @@ export class SocialMessagesComponent implements OnInit {
                 item.EntityPM.IsWaitingForResponse = true;
             }
 
-            this.conversationHeaderPMService.update(item.EntityPM).subscribe(res => {
+            this.conversationHeaderPMService.update(item.EntityPM).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 this.IsStartWaitingLoading = false;
 
