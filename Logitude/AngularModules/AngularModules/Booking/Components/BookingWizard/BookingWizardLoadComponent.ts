@@ -40,7 +40,7 @@ export class BookingWizardLoadComponent implements AfterViewInit {
 
             var myService: BookingPMService = new BookingPMService();
 
-            myService.get(this.EntityId).subscribe(myResult => {
+            myService.get(this.EntityId).subscribe((myResult:any) => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {

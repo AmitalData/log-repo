@@ -1240,7 +1240,6 @@
     <Content Include="CRM\Components\EditTabs\Opportunity\OpportunityDocsOutTabComponent.html" />
     <Content Include="CRM\Components\EditTabs\Opportunity\OpportunityProductsTabComponent.html" />
     <Content Include="CRM\Components\EditTabs\Opportunity\ProductHistoryDetailsComponent.html" />
-    <Content Include="CRM\Components\EditTabs\Opportunity\QuotesWindowComponent.html" />
     <Content Include="CRM\Components\EditTabs\Others\BlockedCustomerComponent.html" />
     <Content Include="CRM\Components\EditTabs\Stages\StageGeneralTabComponent.html" />
     <Content Include="CRM\Components\EditTabs\Tickets\MainTab\ActivitiesTabComponent.html" />
@@ -3841,7 +3840,6 @@
     <TypeScriptCompile Include="CRM\Components\EditTabs\Opportunity\OpportunityDocsOutTabComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\EditTabs\Opportunity\OpportunityProductsTabComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\EditTabs\Opportunity\ProductHistoryDetailsComponent.ts" />
-    <TypeScriptCompile Include="CRM\Components\EditTabs\Opportunity\QuotesWindowComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\EditTabs\Others\BlockedCustomerComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\EditTabs\Stages\StageGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\EditTabs\Tickets\MainTab\ActivitiesTabComponent.ts" />

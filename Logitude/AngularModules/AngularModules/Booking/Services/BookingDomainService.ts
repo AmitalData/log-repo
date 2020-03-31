@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Observable}     from 'rxjs/Rx';
@@ -9,23 +10,24 @@ import {BookingAnswerPM} from '../EntityPMs/BookingAnswerPM';
 import {ChartingDataClass} from '../../Infrastructure/DataContracts/Dashboard/ChartingDataClass';
 import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
 
+@Injectable()
+
 export class BookingDomainService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/BookingDomain';
     }
 
     GetBookingsCounts() {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var url = this._apiUrl + '/GetBookingsCounts';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
                 var myResult = new BookingsDataCounts();
 
                 if (myJsonResult) {
@@ -41,58 +43,54 @@ export class BookingDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetRecentBookings() {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetRecentBookings';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetBookingAnswerPMs(bookingId: string) {  
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var url = this._apiUrl + '/GetBookingAnswerPMs?bookingId=' + bookingId;
         
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
 
 
     GetBookingsDashBoard(Tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var url = this._apiUrl + '/GetBookingsDashBoard?tenant=' + Tenant;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists: ChartingDataClass[] = response.json();
+                var allLists: any = response;
                 var myList: Array<ChartingDataClass> = new Array<ChartingDataClass>();
                 for (var key in allLists) {
                     var entity: ChartingDataClass;
@@ -106,21 +104,20 @@ export class BookingDomainService {
                 serviceResponse.Result = myList;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
 
 
     ValidateBookingForSending(bookingId: string, isCancellationSent: boolean) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var url = this._apiUrl + '/GetValidateBookingForSending?bookingId=' + bookingId + "&isCancellationSent=" + isCancellationSent;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
                 var myResult = new BookingValidatorResultClass();
 
                 if (myJsonResult) {
@@ -136,16 +133,12 @@ export class BookingDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     ValidateBookingMasterFieldExistance(entityId: string, myMasterField: string, myAirlinePrefixField: string, myDirectionId: string, myTransportModeId: string, isCancelled: boolean, tenant: number) {
         return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
 
             var args = new ValidateShipmentMasterArgs();
             args.BookingId = entityId;
@@ -157,16 +150,15 @@ export class BookingDomainService {
 
             var mappedEntity: ValidateShipmentMasterArgs = this.MapJsonToValidateShipmentMasterArgs(args, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                { headers: authHeader }).map((res) => {
-                    var myJsonResult = res.json();
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var myJsonResult = res;
 
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();
                     serviceResponse.Result = myJsonResult;
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
