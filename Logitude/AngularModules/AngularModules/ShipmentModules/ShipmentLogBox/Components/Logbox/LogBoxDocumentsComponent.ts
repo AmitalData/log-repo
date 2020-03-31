@@ -968,9 +968,9 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                     this._documentsFilingExtendedPMService.ShareDocumentsWithAgent(SharedDocsIds).subscribe((myResult:any) => {
                         if (!myResult.HasError) {
                             this.DocsSentToAgent = true;
-                            this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
+                            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status:any) => {
                                 if (Status.Result) {
-                                    this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe(myShipmentResult => {
+                                    this._ShipmentPMService.get(this.SelectedShipment.Id).subscribe((myShipmentResult:any) => {
                                         if (!myShipmentResult.HasError) {
                                             this.ShipmentPM = myShipmentResult.Result;
                                             this.ShipmentPM.StatusId = Status.Result.Id;

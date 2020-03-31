@@ -76,7 +76,7 @@ export class ReferenceNumberCellDisplayListTemplate {
             }
             else {
                 if (rowData['PartnerLogoId']) {
-                    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
+                    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
                         if (myResult) {
                             this.Source = "data:image/JPEG;base64," + myResult;
                             if (this.CurrentSession.Imgs.filter(a => a.LogoId == rowData['PartnerLogoId']).length == 0) {

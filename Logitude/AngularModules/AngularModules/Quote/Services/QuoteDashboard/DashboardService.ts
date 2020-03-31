@@ -21,9 +21,6 @@ export class DashboardService {
 
     GetDashboardChartValues(entity: QuoteDashboardArguments) {
         return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
 
             return this._http.post(this._apiUrl, JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
                     var allLists = response;

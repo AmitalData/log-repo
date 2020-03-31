@@ -3642,7 +3642,10 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
     <TypeScriptCompile Include="Quote\DataContracts\QuoteDashboardArguments.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteDocumentVersionExtendedPMService.ts" />
+    <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateDetailsFieldExtendedPMService.ts" />
+    <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateHeaderFieldExtendedPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\QuoteDashboard\DashboardService.ts" />
+    <TypeScriptCompile Include="Quote\Services\StandardLists\QuoteFollowUpListService.ts" />
     <TypeScriptCompile Include="Quote\Services\StandardPMs\QuoteTemplateSectionPMService.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\AutomationTestReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\VDKFilterComponent.ts" />
@@ -6401,7 +6404,6 @@
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateTextCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="Quote\EntityPMs\QuoteVATsTotalPM.ts" />
     <TypeScriptCompile Include="Quote\Services\ExtendedPMs\QuoteTemplateTextDesignExtendedPMService.ts" />
-    <TypeScriptCompile Include="Quote\Services\StandardLists\QuoteFollowUpsListService.ts" />
     <TypeScriptCompile Include="Quote\Services\StandardPMs\QuoteTemplateSettingPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\StandardPMs\QuoteTemplateTableDesignPMService.ts" />
     <TypeScriptCompile Include="Quote\Services\StandardPMs\QuoteTemplateTextDesignPMService.ts" />
@@ -6628,6 +6630,7 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBAdditionalHandlingInfoPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ContainerFollowUpPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\CustomsTransferHeaderPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentCustomsTransmissionPMService.ts" />
     <TypeScriptCompile Include="Shipment\Validators\ShipmentDeliveryValidator.ts" />
     <TypeScriptCompile Include="Shipment\Validators\ShipmentPickupValidator.ts" />
@@ -6693,8 +6696,6 @@
     <TypeScriptCompile Include="Social\Services\StandardPMs\PostPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\FBLStockListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBSpecialHandlingCodePMService.ts" />
-    <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
-    <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Args.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />

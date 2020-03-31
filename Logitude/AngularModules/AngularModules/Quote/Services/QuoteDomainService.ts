@@ -23,17 +23,11 @@ export class QuoteDomainService {
     }
     
     GetQuotesCounts(ownerId: string, businessUnitId: string, directionId: string, transportModeId: string, RecordsTypeCode: string) {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
 
         var url = this._apiUrl + '/GetQuotesCounts?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&directionId=' + directionId + '&transportModeId=' + transportModeId + '&RecordsTypeCode=' + RecordsTypeCode;
 
         return Observable.defer(() => {
-            return this._httpClient.get(url, httpOptions).pipe(
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
                 
                 map(response => {
                     var myJsonResult = response;
@@ -58,8 +52,6 @@ export class QuoteDomainService {
     }
 
     GetQuotesByOpportunityId(oportunityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetQuotesByOpportunityId?oportunityId=' + oportunityId;
 
@@ -78,9 +70,7 @@ export class QuoteDomainService {
 
     }
     ConnectQuotesToOpportunity(oportunityId: string, quotesIds:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
+   
         var url = this._apiUrl + '/GetConnectQuotesToOpportunity?opportunityId=' + oportunityId + '&quotesIds=' + quotesIds;
 
         return Observable.defer(() => {
@@ -97,17 +87,11 @@ export class QuoteDomainService {
 
     }
     GetRecentQuotes(ownerId: string, businessUnitId: string) {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
 
         var url = this._apiUrl + '/GetRecentQuotes?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId;
 
         return Observable.defer(() => {
-            return this._httpClient.get(url, httpOptions).pipe(
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
                 
                 map(response => {
                     var allLists = response;
@@ -123,9 +107,6 @@ export class QuoteDomainService {
     }  
     GetDataCountsForCRM(tenant: number, customerid: string) {
         var _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomersData';
-        var authHeader = new Headers();
-
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = _apiUrl + '/GetDataCountsForCRM?customerId=' + customerid + '&tenant=' + tenant;
 
@@ -140,8 +121,6 @@ export class QuoteDomainService {
         });
     }
     GetStageFunnelData(ownerId: string, businessUnitId: string, RecordsTypeCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetStageFunnelData?OwnerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -156,9 +135,6 @@ export class QuoteDomainService {
     }    
     GetCRMMoneyInformation(tenant: number, customerid: string) {
         var _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomersData';
-        var authHeader = new Headers();
-
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = _apiUrl + '/GetCRMMoneyInformation?CRMMoneyCustomerId=' + customerid + '&tenant=' + tenant;
 
@@ -173,8 +149,6 @@ export class QuoteDomainService {
         });
     }
     GetSingleQuoteStageListByCode(code: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetSingleQuoteStageListByCode?code=' + code;
 
@@ -205,10 +179,6 @@ export class QuoteDomainService {
     ComputeQuoteAutomaticSubject(entityPM: QuotePM) {
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
             var iService = new QuotePMService();
             var mappedEntity: QuotePM = iService.MapJsonToEntityPM(entityPM, false);
 
@@ -223,8 +193,7 @@ export class QuoteDomainService {
         });
     }
     GetActivitiesByQuoteId(entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetActivitiesByQuoteId?entityId=' + entityId;
         return Observable.defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -238,8 +207,6 @@ export class QuoteDomainService {
         });
     }
     GetIsQuoteConnectedToShipment(quoteId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetIsQuoteConnectedToShipment?quoteId=' + quoteId;
 
@@ -259,8 +226,6 @@ export class QuoteDomainService {
     }
 
     GetQuoteSettings() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetQuoteSettings';
 
@@ -279,10 +244,6 @@ export class QuoteDomainService {
     }
     UpdateQuoteSettings(entityPM: QuoteSettingPM) {
         return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
 
             var mappedEntity: QuoteSettingPM = this.MapQuoteSettings(entityPM, false);
 
@@ -322,8 +283,6 @@ export class QuoteDomainService {
     }
 
     GetQuoteConnectedEntities(quoteId: string, opportunityId: string ) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetQuoteConnectedEntities?quoteId=' + quoteId + '&opportunityId=' + opportunityId;
 

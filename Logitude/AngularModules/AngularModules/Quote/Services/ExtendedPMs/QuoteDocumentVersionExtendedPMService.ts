@@ -22,8 +22,6 @@ export class QuoteDocumentVersionExtendedPMService {
 
     GetQuoteDocumentVersionByQuoteId(quoteId: string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return this._http.get(this._apiUrl + '/GetQuoteDocumentVersionByQuoteId/?' + 'quoteId=' + quoteId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var result = response;
             var pmresponse: ServiceResponse;

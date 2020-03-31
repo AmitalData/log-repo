@@ -78,7 +78,7 @@ export class ApprovePaymentButtonListTemplate {
         //this.fieldName = fieldName;
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
-        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
+        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
         //        this.Source = "data:image/JPEG;base64," + myResult;
         //        this.CD.detectChanges(); 
         //    });
@@ -88,7 +88,7 @@ export class ApprovePaymentButtonListTemplate {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         //this.CurrentSession.SessionEvent.emit("DisableBusyIndicator");
         //this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe((AdditionalResult:any) => {
                     //this.CurrentSession.StopBusyIndicator();
@@ -132,7 +132,7 @@ export class ApprovePaymentButtonListTemplate {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Loading ..")
-                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe(myResult => {
+                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         this.CurrentSession.StopBusyIndicator();
                         this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
@@ -183,7 +183,7 @@ export class ApprovePaymentButtonListTemplate {
     EditButtonClicked() {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();

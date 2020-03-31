@@ -25,8 +25,6 @@ export class QuoteTemplateSectionExtendedPMService {
 
     GetQuoteTemplateSectionByQuoteTemplateId(quoteTemplateId: string, tenant: number) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return this._http.get(this._apiUrl + '/GetQuoteTemplateSectionByQuoteTemplateId/?' + 'quoteTemplateId=' + quoteTemplateId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
             var result: any = response;
@@ -49,9 +47,7 @@ export class QuoteTemplateSectionExtendedPMService {
 
     updateSections(quoteTemplateSections: any) {
         return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
+
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
@@ -59,17 +55,13 @@ export class QuoteTemplateSectionExtendedPMService {
                 var pm = res;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
-        }
-        );
-
+        } );
     }
 
 
    // GetDownloadQuoteTemplateSectionPdfFile(string sectionTypeCode, string sectionDocId, string quoteTemplateId, int tenant, string settingId, string quoteId)
     DownloadQuoteTemplateSectionPdfFile(sectionTypeCode: string, sectionDocId: string, quoteTemplateId: string, settingId: string, quoteId: string, userId:string, tenant: number) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return this._http.get(this._apiUrl + '/GetDownloadQuoteTemplateSectionPdfFile/?' + 'sectionTypeCode=' + sectionTypeCode + '&sectionDocId=' + sectionDocId + '&quoteTemplateId=' + quoteTemplateId + '&settingId=' + settingId + '&quoteId=' + quoteId + '&userId=' + userId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
             var result = response;
@@ -85,8 +77,7 @@ export class QuoteTemplateSectionExtendedPMService {
 
     GetQuoteTemplatePdfReport(quoteId: string, quoteTemplateId: string, userId: string, isFromLibrary: boolean = false) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         return this._http.get(this._apiUrl + '/GetQuoteTemplatePdfReport/?' + 'quoteId=' + quoteId + '&quoteTemplateId=' + quoteTemplateId + '&userId=' + userId + '&isFromLibrary=' + isFromLibrary, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var result = response;
             var pmresponse: ServiceResponse;
@@ -100,8 +91,7 @@ export class QuoteTemplateSectionExtendedPMService {
 
 
  GetMakeQuoteTemplateSectionsIncluded(quoteId: string, quotetemplateId: string, quotetemplatesectionId: string, tenant: number) {
-     var authHeader = new Headers();
-     authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
      return this._http.get(this._apiUrl + '/GetMakeQuoteTemplateSectionsIncluded/?' + 'quoteId=' + quoteId + '&quotetemplateId=' + quotetemplateId + '&quotetemplatesectionId=' + quotetemplatesectionId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
          var result = response;
          var pmresponse: ServiceResponse;
@@ -113,8 +103,7 @@ export class QuoteTemplateSectionExtendedPMService {
  }
 
  GetMakeQuoteTemplateSectionsExcluded(quoteId: string, quotetemplateId: string, quotetemplatesectionId: string, tenant: number) {
-     var authHeader = new Headers();
-     authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
      return this._http.get(this._apiUrl + '/GetMakeQuoteTemplateSectionsExcluded/?' + 'quoteId=' + quoteId + '&quotetemplateId=' + quotetemplateId + '&quotetemplatesectionId=' + quotetemplatesectionId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
          var result = response;
          var pmresponse: ServiceResponse;

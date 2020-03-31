@@ -500,7 +500,31 @@ export class ServiceHelper {
 
         return httpOptions;
     }
-    
+
+    public static GetHttpHeadersWithoutToken() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+
+        return httpOptions;
+    }
+
+    public static GetHttpFullHeadersWithoutToken() {
+
+        const httpOptions: { headers; observe; } = {
+
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+
+            observe: 'response'
+        };
+
+        return httpOptions;
+    }
 }
 
 class ErrorLogPM {

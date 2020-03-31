@@ -38,7 +38,7 @@ export class ReactivateShipmentComponent {
         // save
         var myService: ShipmentPMService = new ShipmentPMService();
 
-        myService.update(this.EntityPM).subscribe(myResult => {
+        myService.update(this.EntityPM).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
             this.CurrentSession.CloseCurrentWindowEmit('OK');
         });        

@@ -34,8 +34,6 @@ export class QuoteTemplateDetailsFieldExtendedPMService {
 
     GetQuoteTemplateDetailsFieldByQuoteTemplateId(quoteTemplateId: string, tenant: number) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return this._http.get(this._apiUrl + '/GetQuoteTemplateDetailsFieldByQuoteTemplateId/?' + 'quoteTemplateId=' + quoteTemplateId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
             var result: any = response;
@@ -58,9 +56,7 @@ export class QuoteTemplateDetailsFieldExtendedPMService {
 
     updateDetailsFields(quoteTemplateDetailsFields: any) {
         return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
+
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 

@@ -145,7 +145,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
             else if (!AppTool.IsNullOrEmpty(this.warehouseReleasePM.ShipmentId)) {
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe(res => {
+                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe((res:any) => {
                     var shipResponse: ServiceResponse = res;
                     this.CurrentSession.StopBusyIndicator();
                     if (!shipResponse.HasError) {

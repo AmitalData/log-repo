@@ -399,7 +399,7 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
         if (this.ValidationErrorsList.length == 0) {
-            this._ShipmentPMService.GetSingleByCustomerReference1(this.CustomerReference1).subscribe(myResult => {
+            this._ShipmentPMService.GetSingleByCustomerReference1(this.CustomerReference1).subscribe((myResult:any) => {
                 if (myResult.Result) {
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Title = "Warning !";

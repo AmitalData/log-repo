@@ -372,7 +372,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
+        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 var Id = myResult.Result;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)

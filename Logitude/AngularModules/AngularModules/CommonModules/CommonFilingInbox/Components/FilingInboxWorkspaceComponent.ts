@@ -1427,11 +1427,11 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             // open dsv window
             var hasSharedDocs;
             this._ShipmentPMService = new ShipmentPMService();
-            this._ShipmentPMService.get(this.EntityId).subscribe(myResult => {
+            this._ShipmentPMService.get(this.EntityId).subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     if (SessionLocator.PrivateLableSettings) {
                         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
-                        this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.EntityId, SessionLocator.Tenant).subscribe(res => {
+                        this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.EntityId, SessionLocator.Tenant).subscribe((res:any) => {
                             if (res.Result == false && summary.Attaches.filter(a => a.IsSharedWithAgent == true).length == 0) {
                                 hasSharedDocs = false;
                             }
