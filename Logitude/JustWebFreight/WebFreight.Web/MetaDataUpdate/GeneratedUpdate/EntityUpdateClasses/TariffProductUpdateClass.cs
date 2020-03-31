@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "TariffProduct",
 			      				    IsNew =  true,
 			      				    DBTableName =  "TariffProducts",
-			      				    OldDBTableName =  "TariffProducts",
 			      				    ObjectTableSingular =  "Tariff Product",
 			      				    ObjectTablePlural =  "Tariff Products",
 			      				    HasCustomFilter =  false,
@@ -147,7 +146,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "TariffProduct",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -207,7 +205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "TariffProduct",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -267,7 +264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "TariffProduct",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -327,7 +323,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LacalName",
 					  						ObjectTableName =  "TariffProduct",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -387,7 +382,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
 					  						ObjectTableName =  "TariffProduct",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -447,7 +441,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "TariffProduct",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,

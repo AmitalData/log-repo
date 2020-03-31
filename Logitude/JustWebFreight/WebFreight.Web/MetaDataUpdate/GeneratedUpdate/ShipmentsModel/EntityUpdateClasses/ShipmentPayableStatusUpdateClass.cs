@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "ShipmentPayableStatus",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						FieldCode =  "ShipmentPayableStatus.SearchFields",
 					  						Code =  "SearchFields",
 					  						MaxLength =  1000,
