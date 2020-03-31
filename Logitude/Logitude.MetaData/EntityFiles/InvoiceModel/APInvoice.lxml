@@ -9809,6 +9809,16 @@
         ScreenName="FullAccHeaderScreen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;APInvoice&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;APInvoice.AdditionalFields&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;Details&quot;"
     TabLocalName="&quot;פרטים&quot;"
@@ -10983,6 +10993,11 @@
       DefaultText="&quot;Amount To Pay&quot;"
       LocalDefaultText="&quot;סכום שהותאם&quot;"
       TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.S.APInvoice.AdditionalFields&quot;"
+      DefaultText="&quot;Additional Fields&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

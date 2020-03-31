@@ -5395,6 +5395,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		    APInvoiceObjectTable.HeaderScreenCode = APInvoiceFullAccHeaderScreenScreen2.Code;
 
 	   		  
+	      
+
+	         Screen APInvoiceAdditionalFieldsScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APInvoice.AdditionalFields", Name = "Additional Fields", ObjectTableId = APInvoiceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
@@ -5882,6 +5886,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APInvoiceTextCode_APInvoiceCHShipmentNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.CH.ShipmentNo", DefaultText = "Shipment #",LocalDefaultText = @"משלוח", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceTextCode_APInvoiceCHAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.CH.AmountToPay", DefaultText = "Amount To Pay",LocalDefaultText = @"סכום שהותאם", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APInvoiceTextCode_APInvoiceSAPInvoiceAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.S.APInvoice.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

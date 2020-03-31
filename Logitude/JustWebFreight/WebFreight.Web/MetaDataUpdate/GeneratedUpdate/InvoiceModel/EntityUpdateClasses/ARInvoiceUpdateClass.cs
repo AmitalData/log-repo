@@ -8597,6 +8597,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
          
             ScreenField ARInvoiceARInvoiceGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ObjectFieldId = ARInvoiceObjectFields.Where(d => d.FieldName == "Intercompany").FirstOrDefault().Id, ScreenId = ARInvoiceGeneralTabScreenScreen2.Id,ScreenCode = ARInvoiceGeneralTabScreenScreen2.Code, ObjectFieldCode = ARInvoiceObjectFields.Where(d => d.FieldName == "Intercompany").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
+	      
+
+	         Screen ARInvoiceAdditionalFieldsScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoice.AdditionalFields", Name = "Additional Fields", ObjectTableId = ARInvoiceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
@@ -9570,6 +9574,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceOOtherPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.OtherPayments", DefaultText = "Other Payments",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOStatusNameRateListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.StatusNameRateListLable", DefaultText = "Status",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceSARInvoiceAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.S.ARInvoice.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

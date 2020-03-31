@@ -15905,6 +15905,16 @@
         ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ARInvoice.AdditionalFields&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <Tab
     TabName="&quot;Details&quot;"
     TabLocalName="&quot;פרטים&quot;"
@@ -17586,6 +17596,11 @@
       Code="&quot;ARInvoice.O.StatusNameRateListLable&quot;"
       DefaultText="&quot;Status&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.S.ARInvoice.AdditionalFields&quot;"
+      DefaultText="&quot;Additional Fields&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
