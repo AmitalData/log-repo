@@ -244,6 +244,8 @@ export class InvoiceTool {
                                     }
 
                                     var myDate = new Date();
+                                    myDate.setUTCMonth(0);
+                                    myDate.setUTCDate(1);
                                     myDate.setUTCFullYear(dateYear);
                                     myDate.setUTCMonth(dateMonth - 1);
                                     myDate.setUTCDate(dateDay);
@@ -317,6 +319,8 @@ export class InvoiceTool {
                                     }
 
                                     var myDate = new Date();
+                                    myDate.setUTCMonth(0);
+                                    myDate.setUTCDate(1);
                                     myDate.setUTCFullYear(dateYear);
                                     myDate.setUTCMonth(dateMonth - 1);
                                     myDate.setUTCDate(dateDay);
@@ -390,6 +394,8 @@ export class InvoiceTool {
                                     }
 
                                     var myDate = new Date();
+                                    myDate.setUTCMonth(0);
+                                    myDate.setUTCDate(1);
                                     myDate.setUTCFullYear(dateYear);
                                     myDate.setUTCMonth(dateMonth - 1);
                                     myDate.setUTCDate(dateDay);
