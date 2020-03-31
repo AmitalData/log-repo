@@ -23,6 +23,7 @@ export class InterestReportLineByDateDetailsComponent {
     public InterestTransactions: ObservableCollection;
     public InterestLineDataList: ObservableCollection;
     public TotalInterests:number;
+    public TotalAmount:number;
     public isRTL: boolean = false;
     public IconCode: string=null;
     constructor() {
@@ -104,10 +105,11 @@ export class InterestReportLineByDateDetailsComponent {
     }
     InterestLineParameters:InterestLineParameters[]=[];
     BuildInterestLineData(){
-        var interestLine1:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.StandardInterestPercentage"),this.EntityPM.StandardInterestPercentage,this.EntityPM.StandardInterestAmount,this.EntityPM.StandardInterestAmount * (this.EntityPM.StandardInterestPercentage/100));
-        var interestLine2:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.ExceptionalInterestPercentage"),this.EntityPM.ExceptionalInterestPercentage,this.EntityPM.ExceptionalInterestAmount,this.EntityPM.ExceptionalInterestAmount * (this.EntityPM.ExceptionalInterestPercentage/100));
-        var interestLine3:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.CreditInterestPercentage"),this.EntityPM.CreditInterestPercentage,this.EntityPM.CreditInterestAmount,this.EntityPM.CreditInterestAmount * (this.EntityPM.CreditInterestPercentage/100));
-       this.TotalInterests = (this.EntityPM.StandardInterestAmount * (this.EntityPM.StandardInterestPercentage/100)) +(this.EntityPM.ExceptionalInterestAmount * (this.EntityPM.ExceptionalInterestPercentage/100))+(this.EntityPM.CreditInterestAmount * (this.EntityPM.CreditInterestPercentage/100));
+        var interestLine1:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.StandardInterestPercentage"),this.EntityPM.StandardInterestPercentage,this.EntityPM.StandardInterestAmount,this.EntityPM.CalculatedStandInterestAmount);
+        var interestLine2:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.ExceptionalInterestPercentage"),this.EntityPM.ExceptionalInterestPercentage,this.EntityPM.ExceptionalInterestAmount,this.EntityPM.CalculatedExcepInterestAmount);
+        var interestLine3:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.CreditInterestPercentage"),this.EntityPM.CreditInterestPercentage,this.EntityPM.CreditInterestAmount,this.EntityPM.CalculatedCreditInterestAmount);
+        this.TotalInterests =  this.EntityPM.CalculatedStandInterestAmount + this.EntityPM.CalculatedExcepInterestAmount +this.EntityPM.CalculatedCreditInterestAmount;
+        this.TotalAmount =  this.EntityPM.StandardInterestAmount + this.EntityPM.ExceptionalInterestAmount +this.EntityPM.CreditInterestAmount;
         this.InterestLineParameters.push(interestLine1);
         this.InterestLineParameters.push(interestLine2);
         this.InterestLineParameters.push(interestLine3);
