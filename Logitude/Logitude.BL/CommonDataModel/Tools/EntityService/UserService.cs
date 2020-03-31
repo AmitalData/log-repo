@@ -411,6 +411,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             contact.Fax = user.Fax;
             contact.InActive = user.InActive;
             contact.LocalName = user.LocalName;
+            contact.DontShowLocalLabels = user.DontShowLocalLabels;
             contact.Mobile = user.Mobile;
             contact.Password = user.Password != null ? user.Password : contact.Password;
             contact.Notes = user.Notes;
