@@ -2091,6 +2091,10 @@
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003301436490_UsersLayoutDirectionMigration.cs" />
+    <Compile Include="Migrations\202003301436490_UsersLayoutDirectionMigration.Designer.cs">
+      <DependentUpon>202003301436490_UsersLayoutDirectionMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.cs" />
     <Compile Include="Migrations\202002041333119_InterestTransactionMigration.Designer.cs">
@@ -3775,6 +3779,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.resx">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301436490_UsersLayoutDirectionMigration.resx">
+      <DependentUpon>202003301436490_UsersLayoutDirectionMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
