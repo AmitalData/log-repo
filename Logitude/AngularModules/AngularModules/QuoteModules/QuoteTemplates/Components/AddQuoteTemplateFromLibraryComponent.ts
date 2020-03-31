@@ -46,7 +46,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
         this.AreaName = args.AreaName;
         this.QuoteTypeCode = !AppTool.IsNullOrEmpty(args.QuoteTypeCode) ? args.QuoteTypeCode:"" ;
         
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe((response:any) => {
             this.IsLoadTextCode = true;
             this.QuoteTemplateLists = [];
             this.FullQuoteTemplateLists = [];
@@ -84,7 +84,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
 
 
 
-        this.quoteTemplateExtendedPMService.GetQuoteTemplateListsFromLibrary(this.QuoteTypeCode).subscribe(res => {
+        this.quoteTemplateExtendedPMService.GetQuoteTemplateListsFromLibrary(this.QuoteTypeCode).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -122,7 +122,7 @@ export class AddQuoteTemplateFromLibraryComponent extends BaseComponent implemen
 
 
 
-        this.quoteTemplateExtendedPMService.GetCopyQuoteTemplateFromLibrary(item.Id, SessionLocator.LoggedUserId).subscribe(res => {
+        this.quoteTemplateExtendedPMService.GetCopyQuoteTemplateFromLibrary(item.Id, SessionLocator.LoggedUserId).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
