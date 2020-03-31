@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShipmentPreperationCalls.cs" />
     <Compile Include="ShipmentVariables.cs" />
+    <Compile Include="Tests\CreateShipment.cs" />
     <Compile Include="Tests\IntegrationShipmentPickUpDeliveriesPackages.cs" />
     <Compile Include="Tests\IntegrationShipmentDeliveries.cs" />
     <Compile Include="Tests\IntegrationShipmentPickUps.cs" />
