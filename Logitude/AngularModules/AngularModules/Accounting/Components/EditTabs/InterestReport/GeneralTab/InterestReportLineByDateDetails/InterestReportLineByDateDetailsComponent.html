@@ -46,7 +46,7 @@
 <div class="TabHolder">
     <table>
         <tr style="height: 25%;">
-            <td colspan="2">
+            <td colspan="3">
                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestLineDataList" [UseVirtuallization]="true">
 
                   
@@ -94,14 +94,15 @@
             </td>
         </tr>
         <tr class="TabTitleRow">
-            <td *ngIf="EntityPM"><span style="color:#3c4949;font-size: 16px;"> {{'InterestReportLinesByDate.O.Total' | TextCodeTranslationPipe}}</span> <span style="color: grey;font-size: 16px;">{{EntityPM.TotalInterest}}</span></td>
-            <td *ngIf="EntityPM"><span style="color:#3c4949;font-size: 16px;">{{'InterestReportLinesByDate.F.CalculationDetails' | TextCodeTranslationPipe}}</span> <span style="color: grey;font-size: 16px;">{{EntityPM.CalculationDetails}}</span></td>
+            <td [style.width]="isRTL? '390px': '470px'"   ><span [style.float]="isRTL? 'left': 'right'" [style.margin-left]="isRTL? '5px': '0px'" [style.margin-right]="isRTL? '0px': '5px'" style="color:#3c4949;font-size: 16px;"> {{'InterestReportLinesByDate.O.Total' | TextCodeTranslationPipe}}</span> </td>
+            <td *ngIf="EntityPM"  [style.width]="isRTL? '130px': '50px'"  ><span [style.float]="isRTL? 'left': 'right'" [style.float]="isRTL? 'none': 'right'"  style="color: grey;font-size: 16px;">{{TotalInterests | NumbersPipe:'N2'}}</span></td>
+            <td [style.float]="isRTL? 'left': 'right'" *ngIf="EntityPM"><span [style.margin-left]="isRTL? '0px': '15px'" [style.margin-right]="isRTL? '15px': '0px'" style="color:#3c4949;font-size: 16px;">{{'InterestReportLinesByDate.F.CalculationDetails' | TextCodeTranslationPipe}}</span> <span style="color: grey;font-size: 16px;">{{EntityPM.CalculationDetails}}</span></td>
         </tr>
         <tr class="TabTitleRow">
-            <td colspan="2">{{'InterestReportLinesByDate.O.TransactionDetails' | TextCodeTranslationPipe}}</td>
+            <td colspan="3">{{'InterestReportLinesByDate.O.TransactionDetails' | TextCodeTranslationPipe}}</td>
         </tr>
         <tr style="height: 40%;">
-            <td colspan="2">
+            <td colspan="3">
                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestTransactions" [UseVirtuallization]="true">
 
                     <!-- InterestEntityTypeCode -->
