@@ -375,7 +375,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     string currvVal = null;
 
                     prevVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
-                    calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
+                   // calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
                     calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
                     currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
 
