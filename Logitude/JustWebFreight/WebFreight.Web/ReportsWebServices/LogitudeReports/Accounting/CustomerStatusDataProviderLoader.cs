@@ -210,7 +210,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportParameters.AgingForDate = GetFilterValue<DateTime>("AgingForDate");
             reportParameters.NumberOfmonthsbackwards = monthsBackwards;
             reportParameters.VendorCustomerId = GetFilterValue<string>("CustomerId");
-            reportParameters.CollectorId = GetFilterValue<string>("CollectoId");
+            reportParameters.CollectorId = GetFilterValue<string>("CollectorId");
             reportParameters.SalesmanId = GetFilterValue<string>("SalesmanId");
             reportParameters.AggregateByGLAccountCurrencies = GetFilterValue<bool>("Detailed");
 
