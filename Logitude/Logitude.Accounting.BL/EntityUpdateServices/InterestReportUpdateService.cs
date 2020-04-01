@@ -102,108 +102,122 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CancelInterestReport(InterestReport entityPoco, InterestReportPM entityPM)
         {
-            if (entityPoco.InterestReportStatusCode == "1")
-            {
-                CreateEvent("IRCN", entityPM);
-            }
-            else if(entityPoco.InterestReportStatusCode == "4" || entityPoco.InterestReportStatusCode == "2") {
-                InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(entityPoco.Tenant);
-                List<InterestTransactionPM> interestTransactions = interestTransactionQueryService.GetInterestTransactionsByInterestReportId(entityPoco.Id, entityPoco.Tenant);
-                foreach(InterestTransactionPM transaction in interestTransactions)
-                {
-                   
-                    transaction.InterestReportId = null;
-                    transaction.IsClosed = false;
-                    InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(),entityPoco.Tenant);
-                    interestTransactionUpdateService.Update(transaction, true);
-                }
+          
+             if(entityPoco.InterestReportStatusCode == "4" || entityPoco.InterestReportStatusCode == "2") {
+                GetAndUpdateRelatedInterestTransactions(entityPoco);
+               
                 if (entityPoco.InterestReportStatusCode == "2")
                 {
-                    CreateAutoCreditInvoice(EntityPOCO);
-                }
-                
-             
-
-
-
+                    CreateautoCreditInvoice(EntityPOCO);
+                }                
             }
+            CreateEvent("IRCN", entityPM);
+        }
+        private void GetAndUpdateRelatedInterestTransactions(InterestReport interestReport)
+        {
+            InterestTransactionQueryService interestTransactionQueryService = new InterestTransactionQueryService(interestReport.Tenant);
+            List<InterestTransactionPM> interestTransactions = interestTransactionQueryService.GetInterestTransactionsByInterestReportId(interestReport.Id, interestReport.Tenant);
+            foreach (InterestTransactionPM transaction in interestTransactions)
+            {
+
+                transaction.InterestReportId = null;
+                transaction.IsClosed = false;
+                transaction.ChangeSetOp = ChangeSetOperation.Update;
+                InterestTransactionUpdateService interestTransactionUpdateService = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), interestReport.Tenant);
+                interestTransactionUpdateService.Update(transaction, true);
+            }
+        }
+        private ARInvoicePM MapautoCreditInvoice(ARInvoicePM autoCreditInvoice,ARInvoicePM aRInvoice)
+        {
+            autoCreditInvoice.StatusCode = "AC";
+            autoCreditInvoice.StatusName = "Auto Credit";
+            autoCreditInvoice.IsAutoCredit = true;
+            autoCreditInvoice.ARInvoiceTypeCode = aRInvoice.ARInvoiceTypeCode == "CI" ? "CC" : "CD";
+            autoCreditInvoice.DebitAccount = aRInvoice.DebitAccount;
+            autoCreditInvoice.TransferStatusCode = aRInvoice.TransferStatusCode;
+            autoCreditInvoice.BillToAddressId = aRInvoice.BillToAddressId;
+            autoCreditInvoice.BillToId = aRInvoice.BillToId;
+            autoCreditInvoice.InternalNotes = aRInvoice.InternalNotes;
+            autoCreditInvoice.InvoiceCurrencyExchangeRate = aRInvoice.InvoiceCurrencyExchangeRate;
+            autoCreditInvoice.InvoiceCurrencyId = aRInvoice.InvoiceCurrencyId;
+            autoCreditInvoice.InvoiceCurrencyCode = aRInvoice.InvoiceCurrencyCode;
+            autoCreditInvoice.PrintNotes = aRInvoice.PrintNotes;
+            autoCreditInvoice.PaymentTermId = aRInvoice.PaymentTermId;
+            autoCreditInvoice.PrepaidCollectId = aRInvoice.PrepaidCollectId;
+            autoCreditInvoice.LocalCurrencyId = aRInvoice.LocalCurrencyId;
+            autoCreditInvoice.VatNumber = aRInvoice.VatNumber;
+            autoCreditInvoice.CreatedByUserId = aRInvoice.CreatedByUserId;
+            autoCreditInvoice.IssuedByUserId = aRInvoice.IssuedByUserId;
+            autoCreditInvoice.PrintByUserId = aRInvoice.PrintByUserId;
+            autoCreditInvoice.InvoiceDate = DateTime.Now;// AutoCreditDate != null ?  AutoCreditDate : DateTool.GetCurrentDateAsUtc();
+            autoCreditInvoice.DueDate = aRInvoice.DueDate;
+            autoCreditInvoice.PrintDate = aRInvoice.PrintDate;
+            autoCreditInvoice.Sent = aRInvoice.Sent;
+            autoCreditInvoice.ExchangeRateDate = aRInvoice.ExchangeRateDate;
+            autoCreditInvoice.BranchId = aRInvoice.BranchId;
+            autoCreditInvoice.ExpectedPaymentDate = aRInvoice.ExpectedPaymentDate;
+            autoCreditInvoice.ProfitCurrencyId = aRInvoice.ProfitCurrencyId;
+            autoCreditInvoice.ProfitCurrencyCode = aRInvoice.ProfitCurrencyCode;
+            autoCreditInvoice.ProfitCurrencyExchangeRate = aRInvoice.ProfitCurrencyExchangeRate;
+            autoCreditInvoice.MainEntityId = aRInvoice.MainEntityId;
+            autoCreditInvoice.MainEntityReference = aRInvoice.MainEntityReference;
+            autoCreditInvoice.MainEntityStatus = aRInvoice.MainEntityStatus;
+            autoCreditInvoice.AccountingExternalCode = aRInvoice.AccountingExternalCode;
+            autoCreditInvoice.IsConstituentInvoice = aRInvoice.IsConstituentInvoice;
+            autoCreditInvoice.IsConsolidationInvoice = aRInvoice.IsConsolidationInvoice;
+            autoCreditInvoice.SubTotalInInvoiceCurrency = aRInvoice.SubTotalInInvoiceCurrency * -1;
+            autoCreditInvoice.SubTotalInLocalCurrency = aRInvoice.SubTotalInLocalCurrency * -1;
+            autoCreditInvoice.AmountInInvoiceCurrency = aRInvoice.AmountInInvoiceCurrency * -1;
+            autoCreditInvoice.AmountInLocalCurrency = aRInvoice.AmountInLocalCurrency * -1;
+            autoCreditInvoice.AmountInProfitCurrency = aRInvoice.AmountInProfitCurrency * -1;
+            autoCreditInvoice.AmountDue = 0;
+            autoCreditInvoice.AmountDueInLocalCurrency = 0;
+            autoCreditInvoice.AmountDueInProfitCurrency = 0;
+            autoCreditInvoice.CreditedByARInvoiceId = aRInvoice.Id;
+            autoCreditInvoice.AutoCreditByARInvoiceNumber = aRInvoice.InvoiceNumber;
+            autoCreditInvoice.IsGeneralInvoice = aRInvoice.IsGeneralInvoice;
+            autoCreditInvoice.SalesmanUserId = aRInvoice.SalesmanUserId;
+            autoCreditInvoice.SATPaymentMethodCode = aRInvoice.SATPaymentMethodCode;
+            autoCreditInvoice.MetodoPagoCode = aRInvoice.MetodoPagoCode;
+            autoCreditInvoice.IsInvoiceNumberFromStock = aRInvoice.IsInvoiceNumberFromStock;
+            autoCreditInvoice.IsInvoiceNumberManuallySet = aRInvoice.IsInvoiceNumberManuallySet;
+            autoCreditInvoice.Tenant = aRInvoice.Tenant;
+            autoCreditInvoice = CreateautoCreditInvoiceLines(autoCreditInvoice, aRInvoice);
+            return autoCreditInvoice;
 
         }
-        private void CreateAutoCreditInvoice(InterestReport interestReport)
+        private void UpdateCreditedInvoice(ARInvoicePM aRInvoice, ARInvoicePM autoCreditInvoice, ARInvoiceService invoiceService)
         {
-            ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(Tenant);
-            ARInvoicePM aRInvoice = aRInvoiceQuery.GetSinglePM(interestReport.ARinvoiceId, Tenant);
+            aRInvoice.IsCancelled = true;
+            aRInvoice.CancelledByARInvoiceId = autoCreditInvoice.Id;
+            aRInvoice.StatusCode = "AR";
+            aRInvoice.AmountDue = 0;
+            aRInvoice.AmountDueInLocalCurrency = 0;
+            aRInvoice.AmountDueInProfitCurrency = 0;
+            invoiceService.Update(aRInvoice, true);
+        }
+        private void CreateautoCreditInvoice(InterestReport interestReport)
+        {
+           
+            ARInvoicePM aRInvoice = GetInteresReportARInvoice(interestReport);
             if (aRInvoice != null)
             {
-                ARInvoicePM AutoCreditInvoice = new ARInvoicePM();
-                AutoCreditInvoice.StatusCode = "AC";
-                AutoCreditInvoice.StatusName = "Auto Credit";
-                AutoCreditInvoice.IsAutoCredit = true;
-                AutoCreditInvoice.ARInvoiceTypeCode = aRInvoice.ARInvoiceTypeCode == "CI" ? "CC" : "CD";
-                AutoCreditInvoice.DebitAccount = aRInvoice.DebitAccount;
-                AutoCreditInvoice.TransferStatusCode = aRInvoice.TransferStatusCode;
-                AutoCreditInvoice.BillToAddressId = aRInvoice.BillToAddressId;
-                AutoCreditInvoice.BillToId = aRInvoice.BillToId;
-                AutoCreditInvoice.InternalNotes = aRInvoice.InternalNotes;
-                AutoCreditInvoice.InvoiceCurrencyExchangeRate = aRInvoice.InvoiceCurrencyExchangeRate;
-                AutoCreditInvoice.InvoiceCurrencyId = aRInvoice.InvoiceCurrencyId;
-                AutoCreditInvoice.InvoiceCurrencyCode = aRInvoice.InvoiceCurrencyCode;
-                AutoCreditInvoice.PrintNotes = aRInvoice.PrintNotes;
-                AutoCreditInvoice.PaymentTermId = aRInvoice.PaymentTermId;
-                AutoCreditInvoice.PrepaidCollectId = aRInvoice.PrepaidCollectId;
-                AutoCreditInvoice.LocalCurrencyId = aRInvoice.LocalCurrencyId;
-                AutoCreditInvoice.VatNumber = aRInvoice.VatNumber;
-                AutoCreditInvoice.CreatedByUserId = aRInvoice.CreatedByUserId;
-                AutoCreditInvoice.IssuedByUserId = aRInvoice.IssuedByUserId;
-                AutoCreditInvoice.PrintByUserId = aRInvoice.PrintByUserId;
-                AutoCreditInvoice.InvoiceDate = DateTime.Now;// AutoCreditDate != null ?  AutoCreditDate : DateTool.GetCurrentDateAsUtc();
-                AutoCreditInvoice.DueDate = aRInvoice.DueDate;
-                AutoCreditInvoice.PrintDate = aRInvoice.PrintDate;
-                AutoCreditInvoice.Sent = aRInvoice.Sent;
-                AutoCreditInvoice.ExchangeRateDate = aRInvoice.ExchangeRateDate;
-                AutoCreditInvoice.BranchId = aRInvoice.BranchId;
-                AutoCreditInvoice.ExpectedPaymentDate = aRInvoice.ExpectedPaymentDate;
-                AutoCreditInvoice.ProfitCurrencyId = aRInvoice.ProfitCurrencyId;
-                AutoCreditInvoice.ProfitCurrencyCode = aRInvoice.ProfitCurrencyCode;
-                AutoCreditInvoice.ProfitCurrencyExchangeRate = aRInvoice.ProfitCurrencyExchangeRate;
-                AutoCreditInvoice.MainEntityId = aRInvoice.MainEntityId;
-                AutoCreditInvoice.MainEntityReference = aRInvoice.MainEntityReference;
-                AutoCreditInvoice.MainEntityStatus = aRInvoice.MainEntityStatus;
-                AutoCreditInvoice.AccountingExternalCode = aRInvoice.AccountingExternalCode;
-                AutoCreditInvoice.IsConstituentInvoice = aRInvoice.IsConstituentInvoice;
-                AutoCreditInvoice.IsConsolidationInvoice = aRInvoice.IsConsolidationInvoice;
-                AutoCreditInvoice.SubTotalInInvoiceCurrency = aRInvoice.SubTotalInInvoiceCurrency * -1;
-                AutoCreditInvoice.SubTotalInLocalCurrency = aRInvoice.SubTotalInLocalCurrency * -1;
-                AutoCreditInvoice.AmountInInvoiceCurrency = aRInvoice.AmountInInvoiceCurrency * -1;
-                AutoCreditInvoice.AmountInLocalCurrency = aRInvoice.AmountInLocalCurrency * -1;
-                AutoCreditInvoice.AmountInProfitCurrency = aRInvoice.AmountInProfitCurrency * -1;
-                AutoCreditInvoice.AmountDue = 0;
-                AutoCreditInvoice.AmountDueInLocalCurrency = 0;
-                AutoCreditInvoice.AmountDueInProfitCurrency = 0;
-                AutoCreditInvoice.CreditedByARInvoiceId = aRInvoice.Id;
-                AutoCreditInvoice.AutoCreditByARInvoiceNumber = aRInvoice.InvoiceNumber;
-                AutoCreditInvoice.IsGeneralInvoice = aRInvoice.IsGeneralInvoice;
-                AutoCreditInvoice.SalesmanUserId = aRInvoice.SalesmanUserId;
-                AutoCreditInvoice.SATPaymentMethodCode = aRInvoice.SATPaymentMethodCode;
-                AutoCreditInvoice.MetodoPagoCode = aRInvoice.MetodoPagoCode;
-                AutoCreditInvoice.IsInvoiceNumberFromStock = aRInvoice.IsInvoiceNumberFromStock;
-                AutoCreditInvoice.IsInvoiceNumberManuallySet = aRInvoice.IsInvoiceNumberManuallySet;
-
-                AutoCreditInvoice = CreateAutoCreditInvoiceLines(AutoCreditInvoice, aRInvoice);
+                ARInvoicePM autoCreditInvoice = new ARInvoicePM();
+                autoCreditInvoice = MapautoCreditInvoice(autoCreditInvoice,aRInvoice);
                 IInvoiceContext invoiceContext = InvoiceContext.GetContext(aRInvoice.Tenant);
-
                 ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, aRInvoice.Tenant);
-                invoiceService.Create(AutoCreditInvoice);
-                aRInvoice.IsCancelled = true;
-                aRInvoice.CancelledByARInvoiceId = AutoCreditInvoice.Id;
-                aRInvoice.StatusCode = "AR";
-                aRInvoice.AmountDue = 0;
-                aRInvoice.AmountDueInLocalCurrency = 0;
-                aRInvoice.AmountDueInProfitCurrency = 0;
-                invoiceService.Update(aRInvoice, true);
+                invoiceService.Create(autoCreditInvoice);
+                UpdateCreditedInvoice(aRInvoice, autoCreditInvoice, invoiceService);             
             }
         }
-        private ARInvoicePM CreateAutoCreditInvoiceLines(ARInvoicePM AutoCreditInvoice, ARInvoicePM invoice)
+        private ARInvoicePM GetInteresReportARInvoice(InterestReport interestReport)
+        {
+            ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(Tenant);
+           return aRInvoiceQuery.GetSinglePM(interestReport.ARinvoiceId, Tenant);
+
+        }
+
+        private ARInvoicePM CreateautoCreditInvoiceLines(ARInvoicePM autoCreditInvoice, ARInvoicePM invoice)
         { int index = 1;
             foreach (ARInvoiceLinePM item in invoice.InvoiceLines){
              ARInvoiceLinePM newInvoiceLine = new ARInvoiceLinePM();
@@ -239,10 +253,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             newInvoiceLine.IsExpense = item.IsExpense;
             newInvoiceLine.GLAccountId = item.GLAccountId;
             newInvoiceLine.LineActionCode = "1";
-            AutoCreditInvoice.InvoiceLines.Add(newInvoiceLine);
+            autoCreditInvoice.InvoiceLines.Add(newInvoiceLine);
             index++;
              }
-            return AutoCreditInvoice;
+            return autoCreditInvoice;
         }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         public static ContactPM GetLoggedContact(int tenant)

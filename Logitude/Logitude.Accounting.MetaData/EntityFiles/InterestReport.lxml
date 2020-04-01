@@ -10,7 +10,7 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
-  HasShortTitle="false"
+  HasShortTitle="true"
   HasFiltersMenu="false"
   HasCustomValidator="false"
   IsEditable="false"
@@ -2310,6 +2310,17 @@
     IsPackagable="true"
     IndexOrder="0"
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    TabLocalName="&quot;אירועים&quot;"
+    ObjectTableName="&quot;InterestReport&quot;"
+    Code="&quot;IREV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;InterestReport.TH.Events&quot;"
+    IsPackagable="false"
+    IndexOrder="1"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>

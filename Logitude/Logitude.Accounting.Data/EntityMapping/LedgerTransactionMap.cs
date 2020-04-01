@@ -41,7 +41,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.DocumentDate).HasColumnName("DocumentDate").IsRequired();
 
-            this.Property(t => t.DueDate).HasColumnName("DueDate");
+            this.Property(t => t.DueDate).HasColumnName("DueDate").IsRequired();
 
             this.Property(t => t.LocalAmountDebit).HasColumnName("LocalAmountDebit").HasPrecision(16, 2);
 

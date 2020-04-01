@@ -155,7 +155,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     ShowErrorMessage() {
 
         var messageWindow = new MessageWindow();
-        messageWindow.Show("Cant cancel this report , there’s a recent (with Higher interestReportDate) report for this customer , please cancel it first");
+        messageWindow.Show(TextCodeTranslator.Translate("InterestReport.O.CantCancel")); 
     }
     UpdateReport() {
         this.EntityPM.InterestReportStatusCode = "3";
@@ -168,17 +168,19 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
 
     }
     OpenConfirmWindow() {
-        var confirmMessage: string =null;
-        if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4") {
-            confirmMessage = "Please confirm canceling the report";
-        } else {
-            confirmMessage = "ARinvoice already issued for this report , cancelling the report will create an Auto Credit Invoice , Continue ?";
-        }
+        var confirmMessage: string = null;
         let confirmWindow = new ConfirmWindow();
+        if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4") {
+            confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
+            confirmWindow.ShowWarningImage = true;
+        } else {
+            confirmMessage = TextCodeTranslator.Translate("InterestReport.O.CancelingInvoicedReportMessage");
+        }
+       
         confirmWindow.Width = 400;
         confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
         confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
-
+        
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.UpdateReport();

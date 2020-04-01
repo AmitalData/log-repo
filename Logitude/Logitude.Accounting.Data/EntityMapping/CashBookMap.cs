@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.CashBookTypeCode).HasColumnName("CashBookTypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.CashBookTypeCode).HasColumnName("CashBookTypeCode").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.TotalAmount).HasColumnName("TotalAmount").HasPrecision(16, 2);
 

@@ -110,6 +110,7 @@
     <Content Include="Accounting\Components\ShortTitles\BankAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankDepositShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.html" />
+    <Content Include="Accounting\Components\ShortTitles\InterestReportShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\TaxReportShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\GLAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\ExternalReconciliationShortTitleComponent.html" />
@@ -451,6 +452,7 @@
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestReportShortTitleComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.ts" />
