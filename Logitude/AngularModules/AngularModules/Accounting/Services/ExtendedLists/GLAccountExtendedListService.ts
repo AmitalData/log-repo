@@ -339,7 +339,7 @@ export class GLAccountExtendedListService {
     GetAccountReconcilesCount(accountId: string) {
       //  var authHeader = new Headers();
        // authHeader.append('Token', SessionInfo.Token);
-       return this.httpClient.get(this._apiUrl + '/GetAccountReconcilesCount?glAccountId=',  ServiceHelper.GetHttpHeaders()).pipe(
+       return this.httpClient.get(this._apiUrl + '/GetAccountReconcilesCount?glAccountId='+ accountId,  ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
          
             var res = response;

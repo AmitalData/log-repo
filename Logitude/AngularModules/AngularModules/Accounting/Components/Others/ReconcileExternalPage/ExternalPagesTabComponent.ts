@@ -624,7 +624,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         if(this.ObjectTableName != 'GLAccount')
             console.error("[ExternalAdjustButtonClicked] table is not glaccount !!!!!!!");
 
-        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) =>
+        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) =>
         {
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
