@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "InterestReport",
 			      				    IsNew =  true,
 			      				    DBTableName =  "InterestReports",
-			      				    OldDBTableName =  "InterestReports",
 			      				    ObjectTableSingular =  "InterestReport",
 			      				    ObjectTablePlural =  "InterestReports",
 			      				    HasCustomFilter =  false,
@@ -142,7 +141,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -203,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -264,7 +261,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDateTime",
-					  						OldFieldName =  "CreateDateTime",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -327,7 +323,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -390,7 +385,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDateTime",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -451,7 +445,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -510,7 +503,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountId",
-					  						OldFieldName =  "GLAccountId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -571,7 +563,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReportNumber",
-					  						OldFieldName =  "ReportNumber",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -634,7 +625,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestCalculationDate",
-					  						OldFieldName =  "InterestCalculationDate",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -692,7 +682,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalAmount",
-					  						OldFieldName =  "TotalAmount",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -757,7 +746,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OpenBalance",
-					  						OldFieldName =  "OpenBalance",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -817,7 +805,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CloseBalance",
-					  						OldFieldName =  "CloseBalance",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -877,7 +864,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ARinvoiceId",
-					  						OldFieldName =  "ARinvoiceId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -935,7 +921,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InvoiceAmount",
-					  						OldFieldName =  "InvoiceAmount",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1000,7 +985,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountInterestCreditLimit",
-					  						OldFieldName =  "GLAccountInterestCreditLimit",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1060,7 +1044,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportStatusCode",
-					  						OldFieldName =  "InterestReportStatusCode",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "InterestReportStatuse",
@@ -1124,7 +1107,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByLocalName",
-					  						OldFieldName =  "CreatedByLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1187,7 +1169,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountDisplayNumber",
-					  						OldFieldName =  "GLAccountDisplayNumber",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1250,7 +1231,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountLocalName",
-					  						OldFieldName =  "GLAccountLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1313,7 +1293,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ARInvoiceNumber",
-					  						OldFieldName =  "ARInvoiceNumber",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1376,7 +1355,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByLocalName",
-					  						OldFieldName =  "UpdatedByLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1438,7 +1416,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportStatusName",
-					  						OldFieldName =  "InterestReportStatusName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1501,7 +1478,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1561,7 +1537,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportStatusLocalName",
-					  						OldFieldName =  "InterestReportStatusLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1623,7 +1598,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -1682,7 +1656,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestReportLinesByDates",
-					  						OldFieldName =  "InterestReportLinesByDates",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1740,7 +1713,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1797,7 +1769,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GLAccountMinimumInterest",
-					  						OldFieldName =  "GLAccountMinimumInterest",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1855,7 +1826,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerLocalName",
-					  						OldFieldName =  "CustomerLocalName",
 					  						ObjectTableName =  "InterestReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2045,6 +2015,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "IRCN",
+                EnglishName =  "Cancelled",
+                LocalName =  "בוטל",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = InterestReportObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -2056,6 +2044,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature InterestReportFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreateInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.CreateInvoice", NameTextCodeDefaultText = "Create Invoice", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 			   Feature InterestReportFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestPrint", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature InterestReportFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IRCN", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -2121,6 +2110,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureUniqeCode=  InterestReportFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
+			   MenuButton InterestReportMenuButton11 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "IRCN",
+						Index = 1, 
+						IsActive = true,
+						LabelTextCodeCode = "InterestReport.B.Cancel",
+						LabelTextCodeDefaultText = "Cancel",
+						Tenant = 0,
+						MenuButtonGroupId = InterestReportMenuButtonGroup.Id,
+						ParentMenuButtonId = InterestReportMenuButton1.Id,
+						ObjectTableId = InterestReportObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  InterestReportFeature_MB11.Id,
+						Style = null,
+						LocalDefaultText = "ביטול דוח",
+						FeatureUniqeCode=  InterestReportFeature_MB11.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
@@ -2149,6 +2156,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode InterestReportTextCode_InterestReportOApprove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Approve", DefaultText = "Approve",LocalDefaultText = @"אישור", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOInterestForDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.InterestForDate ", DefaultText = "Interest For Date ",LocalDefaultText = @"חישוב ריבית לתאריך", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOCantCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CantCancel", DefaultText = "Cant cancel this report , there’s a recent (with Higher interestReportDate) report for this customer , please cancel it first",LocalDefaultText = @"לא ניתן לבטל את הדוח מכיוון שקיים דוח מאוחר יותר ללקוח זה , אנא בטל אותו קודם", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOConfirmCancelling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ConfirmCancelling", DefaultText = "Please confirm canceling the report",LocalDefaultText = @"הדוח הנ”ל יבוטל , האם להמשיך", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportTextCode_InterestReportOCancelingInvoicedReportMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.CancelingInvoicedReportMessage", DefaultText = "ARinvoice already issued for this report , cancelling the report will create an Auto Credit Invoice , Continue ?",LocalDefaultText = @"לדוח זה כבר הופקה חשבונית , ביטול הדוח יבטל את החשבונית , האם להמשיך ?", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.Repositories
                                      select a.CloseBalance).FirstOrDefault();
             return closedBalance != null ? closedBalance.Value : 0;
         }
-
+       
    }
 
 }

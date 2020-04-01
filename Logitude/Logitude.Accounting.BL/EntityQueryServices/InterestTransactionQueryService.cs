@@ -20,7 +20,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestTransactionPMs;
 
         }
+        public List<InterestTransactionPM> GetInterestTransactionsByInterestReportId(string interestReportId, int tenant)
+        {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);
+            List<InterestTransaction> interestTransactions = (from a in context.InterestTransactions
+                                                                    where a.InterestReportId == interestReportId && a.Tenant== tenant select a).ToList();
+            List<InterestTransactionPM> interestTransactionPMs = interestTransactions.Select(r => this.GetEntityPM(r)).ToList();
+            return interestTransactionPMs;
 
+        }
         private List<InterestTransactionPM> MapInterestTransactionsPocosToPMs(IQueryable<InterestTransaction> interestTransactions)
         {
             List<InterestTransactionPM> interestTransactionPMs = new List<InterestTransactionPM>();
