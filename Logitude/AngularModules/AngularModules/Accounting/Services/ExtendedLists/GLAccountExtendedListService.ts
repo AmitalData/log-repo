@@ -477,7 +477,7 @@ export class GLAccountExtendedListService {
      //   var authHeader = new Headers();
      //   authHeader.append('Token', SessionInfo.Token);
 
-     return this.httpClient.get(this._apiUrl + '/GetParentAccountId?' + 'id=' + id + '&' + 'parentId=',  ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetParentAccountId?' + 'id=' + id + '&' + 'parentId=' + parentId,  ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
          
             var list = response;
