@@ -317,6 +317,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "SHCO":
                 case "INMA":
                 case "ABOCO":
+                case "SHCMR":
                     return true;
 
                 default:
