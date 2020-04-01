@@ -2091,9 +2091,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 payment.StatusCode = "AD";
                             }
                         }
-                    }
 
-                    paymentRepository.Update(payment);
+                        paymentRepository.Update(payment);
+                    }
                 }
             }
         }
