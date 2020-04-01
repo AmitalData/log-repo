@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {AppTool} from '../../Infrastructure/Tools';
@@ -1423,9 +1423,8 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetAllowAirline?isAllowed=' + isAllowed + "&code=" + code + "&myTenantId=" + myTenantId;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var done: string = response;
-
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
@@ -1441,8 +1440,8 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetIsDirect?forwarderTenantId=' + forwarderTenantId + "&airlineTenantId=" + airlineTenantId;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var done: string = response;
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -1459,8 +1458,8 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetRegistrationRequested?isRequested=' + isRequested + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var done: string = response;
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -1477,8 +1476,8 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetRegisteringAirline?isRegistered=' + isRegistered + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode + "&loggedContactName=" + loggedContactName;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var done: string = response;
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -1495,8 +1494,8 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetSetIsDirect?isDirect=' + isDirect + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var done: string = response;
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -1513,8 +1512,8 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetSetIsDeclined?isDeclined=' + isDeclined + "&declineNotes=" + declineNotes + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var done: string = response;
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -1639,8 +1638,8 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetCardContactProducts?cardId=' + cardId + "&contactId=" + contactId;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var done: string = response;
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -1787,8 +1786,8 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetRemoveCarrierAreaFromCarrier?areaId=' + areaId;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var done: string = response;
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

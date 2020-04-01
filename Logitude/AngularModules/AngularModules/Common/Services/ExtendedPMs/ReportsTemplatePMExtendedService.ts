@@ -1,4 +1,4 @@
-﻿
+
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
@@ -119,7 +119,7 @@ export class ReportsTemplatePMExtendedService {
 
                         return response;
 
-                    });
+                    }));
             }
             else {
 

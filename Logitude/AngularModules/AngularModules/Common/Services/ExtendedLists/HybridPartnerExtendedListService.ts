@@ -32,36 +32,11 @@ export class HybridPartnerExtendedListService {
   //  }
     
 
-    GetHybridPartnerLists(tenant : number) {
-	   var authHeader = new Headers();
-       authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-       return Observable.defer(() => {
-           return this._http.get(this._apiUrl + '/GetHybridPartnerLists/?' + 'tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-              var allLists = response;
-              var _mappedListsArray: Array<HybridPartnerList> = [];
-		      if(allLists)
-			  {
-				for (var key in  allLists) {
-				
-				   var entity: HybridPartnerList;
-                   entity = this.MapJsonToEntityList(allLists[key]);
-				   _mappedListsArray.push(entity);
-
-				 }
-               }
-                return _mappedListsArray;
-            });
-        }
-
-        );
-    }
-
-    GetHybridPartnerListWithNoRequest(tenant: number) {
+    GetHybridPartnerLists(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetHybridPartnerListWithNoRequest/?' + 'tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetHybridPartnerLists/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 var _mappedListsArray: Array<HybridPartnerList> = [];
@@ -75,12 +50,34 @@ export class HybridPartnerExtendedListService {
                     }
                 }
                 return _mappedListsArray;
-            });
+            }));
         }
 
         );
     }
 
+    GetHybridPartnerListWithNoRequest(tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetHybridPartnerListWithNoRequest/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var allLists = response;
+                var _mappedListsArray: Array<HybridPartnerList> = [];
+                if (allLists) {
+                    for (var key in allLists) {
+                        var entity: HybridPartnerList;
+                        entity = this.MapJsonToEntityList(allLists[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+                return _mappedListsArray;
+            }));
+        }
+
+        );
+    }
 
 
 
@@ -89,13 +86,12 @@ export class HybridPartnerExtendedListService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetAllowdHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
                 var allLists = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = allLists;
                 return pmresponse;
-            });
+            }));
         }
 
         );
@@ -112,11 +108,8 @@ export class HybridPartnerExtendedListService {
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = allLists;
 
-
-
-
                 return pmresponse;
-            });
+            }));
         }
 
         );

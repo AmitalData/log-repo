@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Rx';
@@ -364,13 +364,11 @@ export class GlobalDomainService {
         var url = this._apiUrl + '/GetUpdateTenantZeroService?Message=' + Message;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var itemJason = response;
-                var itemMapped: Boolean = itemJason;
-
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var itemJason: Boolean = response.body;
+         
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = itemMapped;
+                serviceResponse.Result = itemJason;
                 return serviceResponse;
             }),catchError(ServiceHelper.HandleServiceError));
         });

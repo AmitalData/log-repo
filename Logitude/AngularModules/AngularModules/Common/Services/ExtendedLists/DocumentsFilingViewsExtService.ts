@@ -1,6 +1,6 @@
 
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -57,10 +57,9 @@ export class DocumentsFilingViewsExtService {
 
 
         return Observable.defer(() => {
-            return this._http.get(callUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                var serviceResponse: ServiceResponse = response.body;
                 var _mappedListsArray: Array<DocumentsFilingList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {

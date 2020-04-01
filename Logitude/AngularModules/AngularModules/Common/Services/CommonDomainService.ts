@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -419,9 +419,7 @@ export class CommonDomainService {
                     serviceResponse.Result = null;
                 }
                 return serviceResponse;
-            }).catch(
-                ServiceHelper.HandleServiceError
-                );
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -459,7 +457,7 @@ export class CommonDomainService {
                     serviceResponse.Result = myResult;
                 }
                 return serviceResponse;
-            });
+            }));
         });
     }
 
@@ -579,9 +577,7 @@ export class CommonDomainService {
                     serviceResponse.Result = null;
                 }
                 return serviceResponse;
-            }).catch(
-                ServiceHelper.HandleServiceError
-                );
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -673,10 +669,9 @@ export class CommonDomainService {
         var _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ComputingPartnerViewsExtended';
         var callUrl = _apiUrl.concat(urlparameters);//
         return Observable.defer(() => {
-            return this._http.get(callUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                var serviceResponse: ServiceResponse = response.body;
                 //var _mappedListsArray: Array<ComputingPartnerList> = [];
                 //if (serviceResponse.Result) {
                 //    for (var key in serviceResponse.Result) {
@@ -731,10 +726,9 @@ export class CommonDomainService {
         var _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ComputingPartnerViewsExtended';
         var callUrl = _apiUrl.concat(urlparameters);//
         return Observable.defer(() => {
-            return this._http.get(callUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                var serviceResponse: ServiceResponse = response.body;
                 //var _mappedListsArray: Array<ComputingPartnerList> = [];
                 //if (serviceResponse.Result) {
                 //    for (var key in serviceResponse.Result) {
@@ -1004,9 +998,9 @@ export class CommonDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(urlparameters,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(urlparameters, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse = response;
+                serviceResponse = response.body;
                 //var _mappedListsArray: Array<FilingInboxPM> = [];
                 //if (serviceResponse.Result) {
                 //    for (var key in serviceResponse.Result) {
@@ -1071,7 +1065,7 @@ export class CommonDomainService {
                 var myList: any = response;
 
                 return myList;
-            });
+            }));
         });
 
     }

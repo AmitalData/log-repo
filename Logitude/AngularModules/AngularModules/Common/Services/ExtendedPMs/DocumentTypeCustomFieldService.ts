@@ -148,7 +148,7 @@ export class DocumentTypeCustomFieldService {
 
                         return response;
 
-                    });
+                    }));
             }
             else {
 

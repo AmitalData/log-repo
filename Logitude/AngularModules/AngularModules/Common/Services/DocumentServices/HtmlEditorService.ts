@@ -27,7 +27,7 @@ export class HtmlEditorService {
         authHeader.append('Content-Type', 'application/json');
 
         return this._http.get(this._apiUrl + '?docOutId=' + docOutId + '&entityId=' + entityId + '&objecttableId=' + objecttableId + '&childEntityId=' + childEntityId + '&childEntityObjectTableId=' + childEntityObjectTableId + '&tenant=' + tenant + '&userId=' + userId + '&theIsSendMail=' + theIsSendMail + '&documentTemplateId=' + documentTemplateId + '&subject=' + subject + "&mode=" + mode + "&from=" + from + "&replyTo=" + replyTo + "&cc=" + cc + "&bcc=" + bcc
-            ,ServiceHelper.GetHttpHeaders()).pipe(mapsubscribe((result:any) => {
+            ,ServiceHelper.GetHttpHeaders()).pipe(map((result:any) => {
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
@@ -45,7 +45,7 @@ export class HtmlEditorService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
 
-        return this._http.get(this._apiUrl + '?documentId=' + documentId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(mapsubscribe((result:any) => {
+        return this._http.get(this._apiUrl + '?documentId=' + documentId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(result => {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
@@ -60,12 +60,11 @@ export class HtmlEditorService {
         authHeader.append('Content-Type', 'application/json');
         return Observable.defer(() => {
                 return this._http.post(this._apiUrl + '/postsendhtmldocument', JSON.stringify(sendHtmlFilter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result :any = response;
-
+       
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = result;
+                    pmresponse.Result = response;
                 return pmresponse;
                 }),catchError(ServiceHelper.HandleServiceError));
         }

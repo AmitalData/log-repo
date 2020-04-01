@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -32,7 +32,7 @@ export class UserLastSettingsExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getbyuseridfiltername?' + 'userid=' + UserId + '&filtername=' + FilterName, ServiceHelper.GetHttpFullHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/getbyuseridfiltername?' + 'userid=' + UserId + '&filtername=' + FilterName, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
 
@@ -62,11 +62,9 @@ export class UserLastSettingsExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getallByUserIdNameSpace?' + 'userid=' + UserId + '&regionnamespace=' + NameSpace,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/getallByUserIdNameSpace?' + 'userid=' + UserId + '&regionnamespace=' + NameSpace, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                 var pm = response;
-
-
-
+    
                 //var entity: UserLastSettingsPM;
                 //if (pm) {
                 //    entity = this.MapJsonToEntityPM(pm);
@@ -74,7 +72,7 @@ export class UserLastSettingsExtendedPMService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                serviceResponse.Result = pm;
+                serviceResponse.Result = response.body;
 
                 var servertime = response.headers.get('ServerExecutionTime');
                 // PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "UserLastSettings", "GetSinglePM", 'id=' + id);

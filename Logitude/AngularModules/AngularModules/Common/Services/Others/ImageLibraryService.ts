@@ -20,7 +20,7 @@ export class ImageLibraryService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getdownloadfile/?' + 'filename=' + filename + '&documentExtension=' + documentExtension + '&fileLocation=' + fileLocation + '&type=' + type + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(mapsubscribe((result:any) => {
+        return this._http.get(this._apiUrl + '/getdownloadfile/?' + 'filename=' + filename + '&documentExtension=' + documentExtension + '&fileLocation=' + fileLocation + '&type=' + type + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(result => {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;

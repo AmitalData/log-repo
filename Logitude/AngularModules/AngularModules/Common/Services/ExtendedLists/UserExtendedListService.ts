@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse} from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -52,9 +52,9 @@ export class UserExtendedListService {
         var callUrl = this._apiUrl.concat(urlparameters);
 
         return Observable.defer(() => {
-            return this._http.get(callUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var serviceResponse: ServiceResponse = response.body ;
+                
 
                 var _mappedListsArray: Array<UserExtendedList> = [];
                 if (serviceResponse.Result) {

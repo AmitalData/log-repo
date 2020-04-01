@@ -1,5 +1,5 @@
-﻿import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -85,9 +85,9 @@ export class AWBStackDomainService {
         var url = this._apiUrl + '/GetCardHasAssignedMawbStacks?airlineId=' + airlineId + '&customerId=' + customerId;
 
         return Observable.defer(() => {
-            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var itemJason = response;
-                var itemMapped: Boolean = itemJason; //== "true" ? true : false;
+            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+      
+                var itemMapped: Boolean = response.body;   //== "true" ? true : false;
                 return itemMapped;
             }),catchError(ServiceHelper.HandleServiceError));
         });

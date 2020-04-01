@@ -699,7 +699,7 @@ export class CustomsDocumentsComponent
 
         myCommunicationLogStepListService
             .GetRequestComminicationIdByEntityId2(SessionLocator.Tenant, "2715", "30", objecttable.Id, customsDocumentsTicket.customsDocumentsTicketPM.DocumentsFilingId)
-            .subscribe((rsp) => {
+            .subscribe((rsp:any) => {
                 var myCustomsRequestsSheet = rsp.Result;
 
 

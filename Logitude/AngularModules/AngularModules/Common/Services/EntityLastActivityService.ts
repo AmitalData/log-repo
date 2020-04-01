@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';  
@@ -18,7 +18,7 @@ export class EntityLastActivityService {
 
     setServiceArgs(serviceArgs: ServiceArgs) {
         this._serviceArgs = serviceArgs;
-        this._http = serviceArgs.http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/EntityLastActivity';
     }
 
@@ -31,7 +31,7 @@ export class EntityLastActivityService {
                 var myResult = response;
 
                 return myResult;
-            });
+            }));
         });
     }
 }

@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import {Observable}  from 'rxjs/Rx';
@@ -58,14 +58,12 @@ export class PortExtendedListService {
         var callUrl = this._apiUrl.concat(urlparameters);
 
         return Observable.defer(() => {
-            return this._http.get(callUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var viewResponse: ServiceResponse;
-                viewResponse = response;
+                var viewResponse: ServiceResponse = response.body;
                 var _mappedListsArray: Array<PortList> = [];
                 if (viewResponse.Result) {
                     for (var key in viewResponse.Result) {
-
                         var entity: PortList;
                         entity = this.MapJsonToEntityList(viewResponse.Result[key]);
                         _mappedListsArray.push(entity);
@@ -73,7 +71,9 @@ export class PortExtendedListService {
                 }
                 viewResponse.Result = _mappedListsArray;
                 return viewResponse;
-            });
+
+                
+            }));
         }
         );
     }

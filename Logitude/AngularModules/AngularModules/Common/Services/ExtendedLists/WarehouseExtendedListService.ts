@@ -7,7 +7,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 @Injectable()
 
@@ -49,11 +49,11 @@ export class WarehouseExtendedListService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var callUrl = this._apiUrl.concat(urlparameters);
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var viewResponse: ServiceResponse;
-                viewResponse = response;
+        return Observable.defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+
+                var viewResponse: ServiceResponse = response.body;
                 var _mappedListsArray: Array<CardList> = [];
                 if (viewResponse.Result) {
                     for (var key in viewResponse.Result) {
@@ -65,7 +65,7 @@ export class WarehouseExtendedListService {
                 }
                 viewResponse.Result = _mappedListsArray;
                 return viewResponse;
-            });
+            }));
         }
         );
     }
