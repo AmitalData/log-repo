@@ -1058,6 +1058,12 @@ export class EditComponent implements OnDestroy {
                         break;
                     }
 
+                    case "Simplog.FreightLib.Views.TariffTranslations": {
+                        myComponentName = "TariffTranslationsTabComponent";
+                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/TariffTranslations/TariffTranslationsTabComponent";
+                        break;
+                    }
+
                     default: {
 
                         if (!AppTool.IsNullOrEmpty(mySelectedTab.EntityPM.HtmlComponentUrl)) {

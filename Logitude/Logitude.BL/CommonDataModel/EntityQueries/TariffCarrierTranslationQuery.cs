@@ -49,9 +49,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entityPM;
         }
 
-        public IQueryable<TariffCarrierTranslationPM> GetTranslationsByCarrier(string carrierId, int tenant)
+        public List<TariffCarrierTranslationPM> GetTranslationsByCarrier(string carrierId, int tenant)
         {
-            IQueryable<TariffCarrierTranslationPM> myResult =
+            List<TariffCarrierTranslationPM> myResult =
                 (from a in repository.Context.TariffCarrierTranslations.Include("Port").Include("Carrier").Include("CreatedByUser").Include("UpdatedByUser")
                  where a.CarrierId == carrierId && a.Tenant == tenant
                  select new TariffCarrierTranslationPM()
@@ -70,7 +70,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                      UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
                      SearchFields = a.SearchFields,
-                 });
+                 }).ToList();
 
             return myResult;
         }

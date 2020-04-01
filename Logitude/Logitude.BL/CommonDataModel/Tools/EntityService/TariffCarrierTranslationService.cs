@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -72,6 +73,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 Tenant = entityPM.Tenant,
             };
 
+            TariffCarrierTranslationValidating.Validate(entityPM, objectContext, this.isNewEntity);
             TariffCarrierTranslationMapping.MapEntity(entityPM, Poco, isNewEntity);
 
             entityRepository.Add(Poco);
@@ -87,8 +89,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPM.UpdateDate = todayDateTime;
             entityPM.UpdatedByUserId = this.loggedContactId;
 
-            this.Poco = entityRepository.GetSingleTariffCarrierTranslation(entityPM.Id);
+            this.Poco = entityRepository.GetSingleTariffCarrierTranslation(entityPM.Id, tenant);
 
+            TariffCarrierTranslationValidating.Validate(entityPM, objectContext, this.isNewEntity);
             TariffCarrierTranslationMapping.MapEntity(entityPM, Poco, isNewEntity);
 
             entityRepository.Update(Poco);

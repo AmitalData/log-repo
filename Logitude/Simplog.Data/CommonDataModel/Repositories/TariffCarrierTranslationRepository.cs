@@ -31,9 +31,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from d in Context.TariffCarrierTranslations where d.Tenant == tenant select d);
         }
 
-        public TariffCarrierTranslation GetSingleTariffCarrierTranslation(string id)
+        public TariffCarrierTranslation GetSingleTariffCarrierTranslation(string id, int tenant)
         {
-            return (from d in Context.TariffCarrierTranslations where d.Id == id select d).FirstOrDefault();
+            return (from d in Context.TariffCarrierTranslations where d.Id == id && d.Tenant == tenant select d).FirstOrDefault();
         }
 
         public List<TariffCarrierTranslation> All()

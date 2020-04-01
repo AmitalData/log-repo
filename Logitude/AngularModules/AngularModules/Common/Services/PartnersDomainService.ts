@@ -44,6 +44,7 @@ import { CarrierAreaList } from '../EntityLists/CarrierAreaList';
 import { CarrierAreaPM } from '../EntityPMs/CarrierAreaPM';
 import { CarrierAreasPortPM } from '../EntityPMs/CarrierAreasPortPM';
 import { AccountingPartnerPMService } from './StandardPMs/AccountingPartnerPMService';
+import { TariffCarrierTranslationPM } from '../EntityPMs/TariffCarrierTranslationPM';
 
 @Injectable()
 
@@ -1812,6 +1813,79 @@ export class PartnersDomainService {
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetAllTariffTranslationsByCarrierId(carrierId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetAllTariffTranslationsByCarrierId?carrierId=' + carrierId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var listJason = response.json();
+                var listMapped: Array<TariffCarrierTranslationPM> = [];
+
+                for (var itemJeson in listJason) {
+                    var itemMapped: TariffCarrierTranslationPM = this.MapTariffTranslationPM(listJason[itemJeson]);
+                    listMapped.push(itemMapped);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = listMapped;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    MapTariffTranslationPM(jsonList: any, mapParent: boolean = true) {
+        var entityPM: TariffCarrierTranslationPM = null;
+
+        if (jsonList) {
+            entityPM = new TariffCarrierTranslationPM();
+
+            var jsonListKeys = Object.keys(jsonList);
+
+            for (var key in jsonListKeys) {
+                var property = jsonListKeys[key];
+
+                if (property === "UIProperties" || property === "entityParentPM") {
+                    continue;
+                }
+
+                entityPM[property] = jsonList[property];
+            }
+            
+            entityPM.IsDirty = false;
+
+            if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);               
+            }
+            else {
+                entityPM.OldEntityPM = null;
+            }
+        }
+
+        return entityPM;
+    }
+
+    RemoveTranslationFromCarrier(id: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetRemoveTranslationFromCarrier?id=' + id;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = done;
+                return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
