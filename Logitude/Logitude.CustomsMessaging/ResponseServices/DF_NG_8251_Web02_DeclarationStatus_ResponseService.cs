@@ -208,13 +208,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (!string.IsNullOrWhiteSpace(availableStatus))
                                 {
                                     RaiseStatus(declarationPM, "", availableStatus);
-                                    if(availableStatus != "SMG") RaiseStatus(declarationPM, "", "SMG");
+                                    if (availableStatus != "SMG")
+                                    {
+                                        RaiseStatus(declarationPM, "", "SMG");
+                                        declarationPM.AvailabilityDate = DateTime.Now;
+
+                                    }
                                 }
 
 
                                 if(availableStatus == "SMG")
                                 {
-                                    declarationPM.AvailabilityDate = DateTime.Now;
                                     var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
                                     var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
 
