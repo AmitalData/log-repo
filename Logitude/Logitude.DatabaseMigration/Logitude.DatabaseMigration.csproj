@@ -2239,13 +2239,10 @@
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.cs" />
     <Compile Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.Designer.cs">
       <DependentUpon>202003281703184_GLAccountInternalNumberConstraintMigration.cs</DependentUpon>
     </Compile>
-
-
     <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.cs" />
     <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.Designer.cs">
       <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
@@ -2261,6 +2258,10 @@
     <Compile Include="Migrations\202003311235295_clearthingsup.cs" />
     <Compile Include="Migrations\202003311235295_clearthingsup.Designer.cs">
       <DependentUpon>202003311235295_clearthingsup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.cs" />
+    <Compile Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.Designer.cs">
+      <DependentUpon>202003312156526_AddTariffCarrierTranslation_Samar.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
@@ -4082,6 +4083,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003311235295_clearthingsup.resx">
       <DependentUpon>202003311235295_clearthingsup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.resx">
+      <DependentUpon>202003312156526_AddTariffCarrierTranslation_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
