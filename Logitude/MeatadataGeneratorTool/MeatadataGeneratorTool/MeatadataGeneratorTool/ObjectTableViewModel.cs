@@ -2890,7 +2890,7 @@ namespace MeatadataGeneratorTool
 
                 if (!App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == foreignEntityFileName.ToLower() + ".lxml").Any() && !App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == foreignEntityFileName.ToLower() + ".dxml").Any())
                 {
-                   // str.AppendLine("Cannot Find Foreign Entity " + item.ForeignEntity);
+                    str.AppendLine("Cannot Find Foreign Entity " + item.ForeignEntity);
                 }
             }
 
