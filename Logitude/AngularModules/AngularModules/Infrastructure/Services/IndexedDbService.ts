@@ -92,7 +92,7 @@ export class IndexedDbService {
                 return observer.next("Ok");
 
                 //InfraSettings.LogitudeIndexedDB = request.result;
-                //viewmodel._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(res => {
+                //viewmodel._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe((res:any) => {
                 //    //var buffer = viewmodel.base64ToBuffer(res);
                 //    //viewmodel.handleFile(buffer);
 

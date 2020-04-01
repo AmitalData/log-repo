@@ -44,7 +44,7 @@ export class NewEntityComponent {
         this.entityArgs.ObjectTableName = this.ObjectTableName;
         this.entityArgs.IsNewEntity = true;
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             this.InitEntityPM();
             this.BuildEditTabs();
             this.RunComponent();
@@ -100,7 +100,7 @@ export class NewEntityComponent {
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
-                res.subscribe(response => {
+                res.subscribe((response:any) => {
                  
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
 

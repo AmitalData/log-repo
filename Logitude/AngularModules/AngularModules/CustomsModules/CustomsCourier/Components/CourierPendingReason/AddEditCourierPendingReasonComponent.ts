@@ -45,7 +45,7 @@ export class AddEditCourierPendingReasonComponent
         super();
 
         this.CurrentSession.StartBusyIndicator("");
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
 
             this.CurrentSession.StopBusyIndicator();
             if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
@@ -65,7 +65,7 @@ export class AddEditCourierPendingReasonComponent
     Loaded: boolean = false;
     ngOnInit() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             this.CurrentSession.StopBusyIndicator();
             this.Loaded = true;
         });
@@ -83,7 +83,7 @@ export class AddEditCourierPendingReasonComponent
                 this.UnifreightStatusCode = args.UnifreightStatusCode;
                 this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
 
-                this._CourierPendingReasonExtendedListService.GetCourierPendingReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe(response => {
+                this._CourierPendingReasonExtendedListService.GetCourierPendingReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe((response:any) => {
                     var courierPendingReasonResult: CourierPendingReasonPM[] = response.Result;
                     if (courierPendingReasonResult != null && courierPendingReasonResult.length > 0) {
                         this.isNewRecord = false;
@@ -116,7 +116,7 @@ export class AddEditCourierPendingReasonComponent
             if (this.EntityPM != null && !AppTool.IsNullOrEmpty(this.EntityPM.Code)) {
                 this.EntityPM.UnifreightStatusCode = null;
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this._CourierPendingReasonPMService.update(this.EntityPM).subscribe(myResult => {
+                this._CourierPendingReasonPMService.update(this.EntityPM).subscribe((myResult:any) => {
                     this.CurrentSession.StopBusyIndicator();
                     if (myResult.HasError) {
                         this.ValidationErrorsList = [];
@@ -128,7 +128,7 @@ export class AddEditCourierPendingReasonComponent
             }
             if (newValue) {
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this._CourierPendingReasonPMService.get(newValue).subscribe(response => {
+                this._CourierPendingReasonPMService.get(newValue).subscribe((response:any) => {
                     if (!response.HasError && response.Result != null) {
                         this.CurrentSession.StopBusyIndicator();
                         if (!AppTool.IsNullOrEmpty(response.Result.UnifreightStatusCode) && response.Result.UnifreightStatusCode != this.UnifreightStatusCode) {
@@ -199,7 +199,7 @@ export class AddEditCourierPendingReasonComponent
             }
             this.EntityPM.UnifreightStatusCode = this._UnifreightStatusCode;
             if (this.isNewRecord) {
-                this._CourierPendingReasonPMService.insert(this.EntityPM).subscribe(myResult => {
+                this._CourierPendingReasonPMService.insert(this.EntityPM).subscribe((myResult:any) => {
                     if (myResult.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
@@ -209,7 +209,7 @@ export class AddEditCourierPendingReasonComponent
                 });
             }
             else {
-                this._CourierPendingReasonPMService.update(this.EntityPM).subscribe(myResult => {
+                this._CourierPendingReasonPMService.update(this.EntityPM).subscribe((myResult:any) => {
                     if (myResult.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(myResult.ErrorsArray[0]);

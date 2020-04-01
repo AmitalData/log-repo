@@ -1,7 +1,8 @@
 /// <reference path="../../../infrastructure/datacontracts/serviceresponse.ts" />
 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 //import 'rxjs/add/operator/map';
 //import Rx from 'rxjs/Rx';
 import {Observable}     from 'rxjs/Rx';
@@ -15,11 +16,11 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 export class HybridPartnerExtendedListService {
 
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     private _serviceArgs: ServiceArgs;
 	private CachedData: Array<HybridPartnerList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/HybridPartnerExtendedList';  
     }
 
@@ -35,11 +36,9 @@ export class HybridPartnerExtendedListService {
 	   var authHeader = new Headers();
        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
        return Observable.defer(() => {
-           return this._http.get(this._apiUrl + '/GetHybridPartnerLists/?' + 'tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
+           return this._http.get(this._apiUrl + '/GetHybridPartnerLists/?' + 'tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-              var allLists = response.json();
+              var allLists = response;
               var _mappedListsArray: Array<HybridPartnerList> = [];
 		      if(allLists)
 			  {
@@ -62,11 +61,9 @@ export class HybridPartnerExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetHybridPartnerListWithNoRequest/?' + 'tenant=' + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetHybridPartnerListWithNoRequest/?' + 'tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<HybridPartnerList> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -91,11 +88,9 @@ export class HybridPartnerExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAllowdHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetAllowdHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = allLists;
@@ -110,11 +105,9 @@ export class HybridPartnerExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAllowingHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetAllowingHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = allLists;

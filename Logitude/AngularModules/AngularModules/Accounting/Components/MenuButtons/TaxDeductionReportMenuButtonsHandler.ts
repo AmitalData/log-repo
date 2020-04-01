@@ -100,7 +100,7 @@ export class TaxDeductionReportMenuButtonsHandler {
                         myPrintHelper.ShowPrintControl();
                     }
 
-                    //this.documentTypeListExtendedService.getDocumentTypeListByCode("TDDP", this.EntityPM.Tenant).subscribe(myResult => {
+                    //this.documentTypeListExtendedService.getDocumentTypeListByCode("TDDP", this.EntityPM.Tenant).subscribe((myResult:any) => {
                     
                     //    var mm: ServiceResponse = myResult;
                     //    if (!mm.HasError) {
@@ -108,7 +108,7 @@ export class TaxDeductionReportMenuButtonsHandler {
 
                     //        if (this.documentType) {
 
-                    //            this.documentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.documentType.Id, this.objectTable.Id, this.EntityPM.Id, this.EntityPM.Tenant).subscribe(myResult => {
+                    //            this.documentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.documentType.Id, this.objectTable.Id, this.EntityPM.Id, this.EntityPM.Tenant).subscribe((myResult:any) => {
                                
                     //                var mm: ServiceResponse = myResult;
                     //                if (!mm.HasError) {
@@ -129,7 +129,7 @@ export class TaxDeductionReportMenuButtonsHandler {
                     //});
 
 
-                    //this._DocumentsFilingViewsExtService.get(this.EntityPM.Id, this.objectTable.Id).subscribe(myResult => {
+                    //this._DocumentsFilingViewsExtService.get(this.EntityPM.Id, this.objectTable.Id).subscribe((myResult:any) => {
                     //    console.log("[GetLastDocumentsFilingPM]", myResult);
                     //    var mm: ServiceResponse = myResult;
                     //    if (!mm.HasError) {
@@ -156,7 +156,7 @@ export class TaxDeductionReportMenuButtonsHandler {
               
 
 
-                        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.EntityPM.Id, this.objectTable.Id).subscribe(myResult => {
+                        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.EntityPM.Id, this.objectTable.Id).subscribe((myResult:any) => {
                             console.log("[GetLastDocumentsFilingPM]", myResult);
                             var mm: ServiceResponse = myResult;
                             if (!mm.HasError) {

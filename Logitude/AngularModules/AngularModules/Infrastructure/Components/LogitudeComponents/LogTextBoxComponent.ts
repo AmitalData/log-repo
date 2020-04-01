@@ -1884,7 +1884,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             wind.Title = "";
 
         wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
-        wind.WindowClosed.subscribe(res => {
+        wind.WindowClosed.subscribe((res:any) => {
             console.log("Rsukt--", res);
             if (res != "<!#cancelled>") {
                 this.TextValue = res;

@@ -37,7 +37,7 @@ export class InterfaceManagementsListTemplate {
 
         //if (AppTool.IsNullOrEmpty(InterfaceManagementsListTemplate.translate_CommunicationLogBView)) {
         //    this._entityResourceService.getEntityResourceByTableName("CommunicationLog")
-        //        .subscribe(response => {
+        //        .subscribe((response:any) => {
         //            InterfaceManagementsListTemplate.translate_CommunicationLogBView = TextCodeTranslator.Translate("CommunicationLog.B.View");// itzik : Translate +_entityResourceService - its bad :due that i done this- 
         //        });
         //}

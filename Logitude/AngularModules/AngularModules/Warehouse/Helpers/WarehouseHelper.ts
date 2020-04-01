@@ -240,7 +240,7 @@ export class WarehouseHelper {
                 if (this._warehouseEntryPMService == null) this._warehouseEntryPMService = new WarehouseEntryPMService();
                 if (entityPM.ActualEntryDate) entityPM.StatusCode = "ENTE";
 
-                    this._warehouseEntryPMService.insert(entityPM).subscribe(res => {
+                    this._warehouseEntryPMService.insert(entityPM).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
 
                         if (!pmResponse.HasError) {
@@ -351,7 +351,7 @@ export class WarehouseHelper {
                 if (this._warehouseReleasePMExtendedService == null) this._warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
                 if (entityPM.ActualReleaseDate) entityPM.StatusCode = "RELE";
 
-                this._warehouseReleasePMExtendedService.Insert(entityPM).subscribe(res => {
+                this._warehouseReleasePMExtendedService.Insert(entityPM).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();

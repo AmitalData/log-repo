@@ -112,7 +112,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
 
                         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
                         if (!AppTool.IsNullOrEmpty(this.EntityId)) {
-                            this.customerFieldsUpdateSettingPMService.get(this.EntityId).subscribe(response => {
+                            this.customerFieldsUpdateSettingPMService.get(this.EntityId).subscribe((response:any) => {
                                 this.CurrentSession.StopBusyIndicator();
 
                                 var pmResponse: ServiceResponse = response;
@@ -151,7 +151,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             if (this.IsNewEntity) {
-                this.customerFieldsUpdateSettingPMService.insert(this.EntityPM).subscribe(response => {
+                this.customerFieldsUpdateSettingPMService.insert(this.EntityPM).subscribe((response:any) => {
 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {
@@ -163,7 +163,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
 
                 });
             } else {
-                this.customerFieldsUpdateSettingPMService.update(this.EntityPM).subscribe(response => {
+                this.customerFieldsUpdateSettingPMService.update(this.EntityPM).subscribe((response:any) => {
 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (!response.HasError) {

@@ -74,7 +74,7 @@ export class CancelChequeComponent extends BaseComponent {
             this.entityPM.PaymentChequeStatusCode = "4";
             this.entityPM.CancelledByUserId = SessionLocator.LoggedUserId;
             this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-            this.paymentChequePMService.update(this.entityPM).subscribe(myResult => {
+            this.paymentChequePMService.update(this.entityPM).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

@@ -36,7 +36,7 @@ export class CustomsSpotlightComponent {
         this.ShowBusyIndicator = true;
 
         var physicalCheckPMService = new PhysicalCheckPMService();
-        physicalCheckPMService.get(this.EntityId).subscribe(response => {
+        physicalCheckPMService.get(this.EntityId).subscribe((response:any) => {
             var result = response.Result;
             if (!AppTool.IsNullOrEmpty(result)) {
                 this.MyEntityArg = new EntityArgs();

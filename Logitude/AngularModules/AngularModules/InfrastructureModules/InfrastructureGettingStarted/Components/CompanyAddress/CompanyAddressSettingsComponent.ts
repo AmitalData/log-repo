@@ -125,7 +125,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     InitializeData() {
         if (this.TenantAddress != null) {
             var countryListService: CountryListService = new CountryListService();
-            countryListService.getAllFromCache().subscribe(result => {                
+            countryListService.getAllFromCache().subscribe((result:any) => {                
                 this.SetUIProperties_State();
 
                 if (AppTool.IsNullOrEmpty(this.TenantAddress.Id)) {

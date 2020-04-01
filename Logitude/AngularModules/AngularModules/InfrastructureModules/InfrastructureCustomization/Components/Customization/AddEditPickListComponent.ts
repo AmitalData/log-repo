@@ -80,7 +80,7 @@ export class AddEditPickListComponent extends BaseComponent {
         //logWindow.Title = "Add New Custom Field";
         //var windowArgs: any = {};
         //this.myService = new GeneralDomainService();
-        //this.myService.GetFieldDataTypes().subscribe(myResult => {
+        //this.myService.GetFieldDataTypes().subscribe((myResult:any) => {
         //    var myResponse: ServiceResponse = myResult;
         //    if (!myResponse.HasError) {
         //        windowArgs.IsNew = true;
@@ -96,7 +96,7 @@ export class AddEditPickListComponent extends BaseComponent {
         //        logWindow.WindowArgs = windowArgs;
         //        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
         //        logWindow.WindowClosed.subscribe((event: any) => {
-        //            this.myService.GetCustomFieldsByTableId(this.ObjecttableId).subscribe(myResult => {
+        //            this.myService.GetCustomFieldsByTableId(this.ObjecttableId).subscribe((myResult:any) => {
         //                var myResponse: ServiceResponse = myResult;
         //                if (!myResponse.HasError) {
 
@@ -128,7 +128,7 @@ export class AddEditPickListComponent extends BaseComponent {
         //logWindow.Title = "Add New Custom Field";
         //var windowArgs: any = {};
         //this.myService = new GeneralDomainService();
-        //this.myService.GetFieldDataTypes().subscribe(myResult => {
+        //this.myService.GetFieldDataTypes().subscribe((myResult:any) => {
         //    var myResponse: ServiceResponse = myResult;
         //    if (!myResponse.HasError) {
         //        windowArgs.IsNew = false;
@@ -144,7 +144,7 @@ export class AddEditPickListComponent extends BaseComponent {
         //        logWindow.WindowArgs = windowArgs;
         //        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
         //        logWindow.WindowClosed.subscribe((event: any) => {
-        //            this.myService.GetCustomFieldsByTableId(this.ObjecttableId).subscribe(myResult => {
+        //            this.myService.GetCustomFieldsByTableId(this.ObjecttableId).subscribe((myResult:any) => {
         //                var myResponse: ServiceResponse = myResult;
         //                if (!myResponse.HasError) {
 

@@ -1,6 +1,7 @@
 ﻿
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -17,10 +18,10 @@ import { AgentSharedLogisticsKey } from '../../EntityPMs/AgentSharedLogisticsKey
 @Injectable()
 export class AgentSharedLogisticsKeyPMService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AgentSharedLogisticsKeys';
     }
 
@@ -30,9 +31,9 @@ export class AgentSharedLogisticsKeyPMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + "/GetSingle" + '?key=' + key , { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetSingle" + '?key=' + key ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result :any = response;
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -42,16 +43,16 @@ export class AgentSharedLogisticsKeyPMService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     GetSingleByAgentId(agentId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + "/GetSingleByAgentId" + '?agentId=' + agentId + "&tenant=" + SessionInfo.LoggedUserTenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetSingleByAgentId" + '?agentId=' + agentId + "&tenant=" + SessionInfo.LoggedUserTenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result :any = response;
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -61,7 +62,7 @@ export class AgentSharedLogisticsKeyPMService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     
@@ -75,9 +76,9 @@ export class AgentSharedLogisticsKeyPMService {
         //    { headers: authHeader }).map((response) => {
 
         //    });string agentId, string invitedEmail, int tenant
-        return this._http.post(this._apiUrl + "/PostAgentSharedLogisticsKeyInvitation" + '?agentId=' + agentId + '&invitedEmail=' + invitedEmail + "&tenant=" + tenant, "", { headers: authHeader }).map(response => {
+        return this._http.post(this._apiUrl + "/PostAgentSharedLogisticsKeyInvitation" + '?agentId=' + agentId + '&invitedEmail=' + invitedEmail + "&tenant=" + tenant, "",ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result :any = response;
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -87,7 +88,7 @@ export class AgentSharedLogisticsKeyPMService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
  
@@ -107,13 +108,12 @@ export class AgentSharedLogisticsKeyPMService {
 
 
 
-            return this._http.put(this._apiUrl + "?updatedByAgentId=" + updatedByAgentId + '&isAccepted=' + isAccepted , JSON.stringify(entity),
-                { headers: authHeader }).map((response) => {
+            return this._http.put(this._apiUrl + "?updatedByAgentId=" + updatedByAgentId + '&isAccepted=' + isAccepted , JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
 
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         });
     }

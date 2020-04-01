@@ -516,9 +516,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
     //    var _DWObjectTablePMService = new DWObjectTablePMService();
     //    var _DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
     //    var ObsList = [];
-    //    _DWObjectTablePMService.get(DWObjectField.DimensionTableCode).subscribe(myResult => {
+    //    _DWObjectTablePMService.get(DWObjectField.DimensionTableCode).subscribe((myResult:any) => {
     //        if (!myResult.HasError) {
-    //            _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe(Result => {
+    //            _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe((Result:any) => {
     //                if (!Result.HasError) {
     //                    Result.Result.forEach((field) => {
     //                        if (field.DisplayInQueryBuilder == true) {

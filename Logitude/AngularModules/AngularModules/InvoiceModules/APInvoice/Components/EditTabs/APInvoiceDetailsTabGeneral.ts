@@ -1086,7 +1086,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
 
         var myService: CardListService = new CardListService();
-        myService.getSingle(this.VendorId).subscribe(myResult => {
+        myService.getSingle(this.VendorId).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var card: CardList = myResponse.Result;

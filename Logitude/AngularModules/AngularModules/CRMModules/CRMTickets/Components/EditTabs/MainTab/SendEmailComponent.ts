@@ -105,7 +105,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
     private GetAllUsers() {
         var filters = new ApiQueryFilters();
-        this.UserListService.getAllFromCache(filters).subscribe(myResult => {
+        this.UserListService.getAllFromCache(filters).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.UsersList = myResponse.Result;
@@ -689,7 +689,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     documentInPMs: DocumentsFilingPM[];
     IsCloseAttachmentDocsIn: boolean;
     public AttachInternalFile() {
-        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.Ticket.Id, null, this.TicketObjectTable.Id, "I", SessionLocator.Tenant, true).subscribe(res => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.Ticket.Id, null, this.TicketObjectTable.Id, "I", SessionLocator.Tenant, true).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -762,7 +762,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     CurrentDocument: DocumentsFilingPM;
     AttachExternalFile() {
         //if (!this.CurrentDocument) {
-        this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.documentTypeId, this.EntityPM.EntityId, "", "", this.TicketObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
+        this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.documentTypeId, this.EntityPM.EntityId, "", "", this.TicketObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

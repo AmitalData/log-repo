@@ -99,7 +99,7 @@ export class JournalPageComponent implements AfterViewInit {
     journalSummary: JournalSummary = new JournalSummary();
     LoadQueriesCounts() {
 
-        this._JournalExtendedListService.GetJournalsSummary().subscribe(myResult => {
+        this._JournalExtendedListService.GetJournalsSummary().subscribe((myResult:any) => {
             if (myResult != null) {
 
                 this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();

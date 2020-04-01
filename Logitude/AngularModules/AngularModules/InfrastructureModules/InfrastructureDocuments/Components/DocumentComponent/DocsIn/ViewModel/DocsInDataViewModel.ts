@@ -323,7 +323,7 @@ export class DocsInDataViewModel extends BaseComponent{
             this.DownloadButtonVisibility = true;
             this.Received = this.CurrentDocument.Received;
             if (this.DocsInComponent.ObjectTableName == "Shipment") {
-                this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.DocsInComponent.EntityId, this.FileName,"DOUP").subscribe(res => {
+                this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.DocsInComponent.EntityId, this.FileName,"DOUP").subscribe((res:any) => {
 
                 });
             }
@@ -339,7 +339,7 @@ export class DocsInDataViewModel extends BaseComponent{
     CreateDocument(propertyName: string, value: any) {
 
         if (this.CurrentDocument == null) {
-            this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.Id, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant).subscribe(res => {
+            this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.Id, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant).subscribe((res:any) => {
 
 
                 var pmResponse: ServiceResponse = res;
@@ -450,7 +450,7 @@ export class DocsInDataViewModel extends BaseComponent{
             if (messageLoading) {
                 this.CurrentSession.StartBusyIndicator(messageLoading);
             }
-            this.DocsInComponent.documentsFilingPMService.update(this.CurrentDocument).subscribe(res => {
+            this.DocsInComponent.documentsFilingPMService.update(this.CurrentDocument).subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -641,7 +641,7 @@ export class DocsInDataViewModel extends BaseComponent{
     AdditionalButtonClicked() {
         //  Creating Document"
         this.CurrentSession.StartBusyIndicator("Creating Document");
-        this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.CurrentDocument.DocumentTypeId, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant).subscribe(res => {
+        this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.CurrentDocument.DocumentTypeId, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant).subscribe((res:any) => {
 
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;

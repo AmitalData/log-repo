@@ -46,7 +46,7 @@ export class EditProductComponent extends BaseComponent {
         this._currencyListService = new CurrencyListService();
 
         if (!AppTool.IsNullOrEmpty(SessionLocator.TenantPM.ProfitCurrencyId)) {
-            this._currencyListService.getAllFromCache().subscribe(result => {
+            this._currencyListService.getAllFromCache().subscribe((result:any) => {
 
                 var list: CurrencyList = result.Result.filter(d => d.Id == (SessionLocator.TenantPM.ProfitCurrencyId))[0];
                 if (list != null) {
@@ -91,7 +91,7 @@ export class EditProductComponent extends BaseComponent {
             var data: Array<CountryList> = [];
             var _countryListService: CountryListService = new CountryListService();
             if (this.CountriesToggleObsListTemp.length == 0) {
-                _countryListService.getAllFromCache().subscribe(result => {
+                _countryListService.getAllFromCache().subscribe((result:any) => {
                     data = result.Result.filter(d => d.Tenant == SessionLocator.Tenant);
                     data.sort((a, b) => { return (a.EnglishName === b.EnglishName) ? 0 : (a.EnglishName < b.EnglishName) ? -1 : 1 }).forEach(item => {
                         this.CountriesToggleObsListTemp.push(new CountryListViewModel(item, this.EntityPM.entityPM, this.EntityPM.DataContext));

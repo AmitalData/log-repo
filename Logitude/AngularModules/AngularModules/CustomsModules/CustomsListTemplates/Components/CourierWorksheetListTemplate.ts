@@ -317,7 +317,7 @@ export class CourierWorksheetListTemplate {
         this.ButtonClick(event);
         this.CurrentSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 let mess = "";
@@ -586,7 +586,7 @@ export class CourierWorksheetListTemplate {
                     declarationMamanSpecialActionPM.DeclarationId = declarationId;
                     declarationMamanSpecialActionPM.MamanSpecialActionCode = mamanSpecialActionCode;
 
-                    this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe(res => {
+                    this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe((res:any) => {
                         this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
                             .subscribe((myResponse: ServiceResponse) => {
                                 this.CurrentSession.StopBusyIndicator();

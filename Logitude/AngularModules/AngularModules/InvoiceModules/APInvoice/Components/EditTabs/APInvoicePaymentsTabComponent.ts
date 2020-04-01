@@ -59,7 +59,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
             this.ConnectFeatureTitle = "You have no permission to connect invoices";
         }
 
-        entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe(response => {
+        entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe((response:any) => {
             this.IsResourcesReady = true;
             this.Listen();
             this.LoadInvoicePayments();

@@ -50,7 +50,7 @@ export class ReportSchedulerDateListTemplate {
     }
 
     EditTaskClicked() {
-        this.myTasksSchedulerPMService.get(this.rowData["Id"]).subscribe(myResult => {
+        this.myTasksSchedulerPMService.get(this.rowData["Id"]).subscribe((myResult:any) => {
             if (myResult.Result) {
                 var MyTask = new TaskReportSchedulerItemClass(myResult.Result, null, false);
                 this.CurrentSession.FireEvent({ Name: 'IsEditReportScheduler', DataContext: MyTask })

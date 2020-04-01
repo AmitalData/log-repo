@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 //import Rx from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -19,10 +20,10 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 export class CarrierExtendedListService {
 
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     private CachedData: Array<CardList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/carrierviews';
         this.CachedData = [];
     }
@@ -56,12 +57,10 @@ export class CarrierExtendedListService {
         var callUrl = this._apiUrl.concat(urlparameters);
 
         return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(callUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var viewResponse: ServiceResponse;
-                viewResponse = response.json();
+                viewResponse = response;
                 var _mappedListsArray: Array<CardList> = [];
                 if (viewResponse.Result) {
                     for (var key in viewResponse.Result) {

@@ -71,7 +71,7 @@ export class EditPostComponent implements OnInit {
                     this.PostViewModelData.BodyText = this.PostViewModelData.ViewMode.ConvertBodyText(this.BodyText);
                     
                     this.CurrentSession.StartBusyIndicatorSaving();
-                    this.postPMService.update(this.PostViewModelData.EntityPM).subscribe(res => {
+                    this.postPMService.update(this.PostViewModelData.EntityPM).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         this.CurrentSession.StopBusyIndicator();
                         if (!pmResponse.HasError && pmResponse.Result) {

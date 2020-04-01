@@ -156,7 +156,7 @@ export class FTPDetailComponent extends BaseComponent {
             var myService: FTPDetailPMService = new FTPDetailPMService();
 
             if (this.IsNew) {
-                myService.insert(this.EntityPM).subscribe(myResult => {
+                myService.insert(this.EntityPM).subscribe((myResult:any) => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.CurrentSession.StopBusyIndicator();
@@ -171,7 +171,7 @@ export class FTPDetailComponent extends BaseComponent {
             }
 
             else {
-                myService.update(this.EntityPM).subscribe(myResult => {
+                myService.update(this.EntityPM).subscribe((myResult:any) => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.CurrentSession.StopBusyIndicator();

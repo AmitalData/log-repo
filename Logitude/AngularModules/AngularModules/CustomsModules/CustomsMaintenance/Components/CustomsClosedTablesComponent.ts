@@ -44,9 +44,9 @@ export class CustomsClosedTablesComponent implements OnInit {
     constructor() {
         this._entityListService = new EntityListService();
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             //try {
-            this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response:any) => {
                 //this._IsLoaded = true;
             });
             //} catch (err) {
@@ -58,9 +58,9 @@ export class CustomsClosedTablesComponent implements OnInit {
     ngOnInit() {
         //this._entityListService = new EntityListService();
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             //try {
-            this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response:any) => {
                 this._IsLoaded = true;
             });
             //} catch (err) {

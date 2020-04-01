@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Rx';
 import { TenantManagementList } from '../../Infrastructure/EntityLists/TenantManagementList';
@@ -14,9 +15,9 @@ import { ObjectsUpdater } from '../../Infrastructure/Locators/ObjectsUpdater';
 
 export class GlobalDomainService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GlobalDomain';
     }
 
@@ -27,9 +28,9 @@ export class GlobalDomainService {
         var url = this._apiUrl + '/GetMessagingStockTenantsList?tenant=' + tenant;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<TenantManagementList> = [];
 
                 for (var itemJeson in listJason) {
@@ -40,7 +41,7 @@ export class GlobalDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
@@ -55,16 +56,14 @@ export class GlobalDomainService {
          
 
 
-            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineVatTypesById?Id=' + Id , {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineVatTypesById?Id=' + Id ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
             
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -79,16 +78,14 @@ export class GlobalDomainService {
 
 
 
-            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineReceivableChargesTypesById?Id=' + Id, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineReceivableChargesTypesById?Id=' + Id,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -103,16 +100,14 @@ export class GlobalDomainService {
 
 
 
-            return this._http.get(this._apiUrl + '/GetQuickBooksOnlinePayablesChargesTypesById?Id=' + Id, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetQuickBooksOnlinePayablesChargesTypesById?Id=' + Id,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -127,16 +122,14 @@ export class GlobalDomainService {
 
 
 
-            return this._http.get(this._apiUrl + '/GetQuickBooksOnlinePaymentMethodsById?Id=' + Id, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetQuickBooksOnlinePaymentMethodsById?Id=' + Id,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
@@ -151,16 +144,14 @@ export class GlobalDomainService {
 
 
 
-            return this._http.get(this._apiUrl + '/GetQuickBooksOnlinePaymentTermsById?Id=' + Id, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetQuickBooksOnlinePaymentTermsById?Id=' + Id,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -175,16 +166,14 @@ export class GlobalDomainService {
 
 
 
-            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineCurrenciesById?Id=' + Id, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineCurrenciesById?Id=' + Id,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
@@ -199,16 +188,14 @@ export class GlobalDomainService {
 
 
 
-            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineCustomersById?Id=' + Id, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineCustomersById?Id=' + Id,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
@@ -223,16 +210,14 @@ export class GlobalDomainService {
 
 
 
-            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineVendorById?Id=' + Id, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetQuickBooksOnlineVendorById?Id=' + Id,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
@@ -243,15 +228,15 @@ export class GlobalDomainService {
         var url = this._apiUrl + '/GetAccountingSystem?AccountingSystemCode=' + AccountingSystemCode;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myResultJason = response.json();
+                var myResultJason = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResultJason;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
@@ -264,14 +249,12 @@ export class GlobalDomainService {
 
         return Observable.defer(() => {
 
-            return this._http.get(this._apiUrl + '/GetInvoiceToQuickBooks?Customerid=' + id + '&invoiceId=' + invoiceId, {
-                headers: authHeader
-            }).map(response => {     
+            return this._http.get(this._apiUrl + '/GetInvoiceToQuickBooks?Customerid=' + id + '&invoiceId=' + invoiceId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {     
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -282,14 +265,12 @@ export class GlobalDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuickbooksDomain';
         return Observable.defer(() => {
 
-            return this._http.get(this._apiUrl + '/GetQuickBooksQueries?CardName=' + args.CardName + '&SearchField=' + args.SearchField + '&SearchText=' + SearchText + '&ReceivableCard=' + args.ReceivableCard + '&PayableCard=' + args.PayableCard + '&LogitudeCardName=' + args.LogitudeCardName, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetQuickBooksQueries?CardName=' + args.CardName + '&SearchField=' + args.SearchField + '&SearchText=' + SearchText + '&ReceivableCard=' + args.ReceivableCard + '&PayableCard=' + args.PayableCard + '&LogitudeCardName=' + args.LogitudeCardName,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
@@ -310,15 +291,13 @@ export class GlobalDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAllHelpResources?', {
-                headers: authHeader
-            }).map(response => {
-                var myResult = response.json();
+            return this._http.get(this._apiUrl + '/GetAllHelpResources?',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -329,15 +308,15 @@ export class GlobalDomainService {
         var url = this._apiUrl + '/GetAirlineTenantExistsForAirline?code=' + code;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myResultJason = response.json();
+                var myResultJason = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResultJason;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -348,9 +327,9 @@ export class GlobalDomainService {
         var url = this._apiUrl + '/GetAllBatchServicesDefinitionsPMs?filterByDateCode=' + filterByDateCode;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<BatchServicesDefinitionPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -361,7 +340,7 @@ export class GlobalDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -385,15 +364,15 @@ export class GlobalDomainService {
         var url = this._apiUrl + '/GetUpdateTenantZeroService?Message=' + Message;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var itemJason = response.json();
+                var itemJason = response;
                 var itemMapped: Boolean = itemJason;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = itemMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -404,9 +383,9 @@ export class GlobalDomainService {
         var url = this._apiUrl + '/GetParentTenants?';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<TenantManagementList> = [];
 
                 for (var itemJeson in listJason) {
@@ -417,7 +396,7 @@ export class GlobalDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -428,8 +407,8 @@ export class GlobalDomainService {
         var url = this._apiUrl + '/GetTenantManagementJS?loggeduserid=' + LoggedUserId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var iResultJson = response.json();
+            return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var iResultJson = response;
                 var iResultMapped: TenantManagementJS;
 
                 if (iResultJson) {
@@ -440,7 +419,7 @@ export class GlobalDomainService {
                 serviceResponse.Result = iResultMapped;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     MapTenantManagementJS(jsonList: any) {

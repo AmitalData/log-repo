@@ -62,7 +62,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     }
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe((response:any) => {
 
             this.Start(args);
         });

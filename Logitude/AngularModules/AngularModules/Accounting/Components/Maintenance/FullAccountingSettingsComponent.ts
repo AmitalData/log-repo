@@ -96,7 +96,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.EntityPM = new FullAccountingSettingPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.Id = SessionLocator.Tenant.toString();
-        this.fullAccountingSettingPMService.insert(this.EntityPM).subscribe(myResult => {
+        this.fullAccountingSettingPMService.insert(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) { // Success
@@ -485,7 +485,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     SubmitChanges(ControlAccountId:string) {
         //console.log("EntityPM: ", this.EntityPM);
-        this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
+        this.fullAccountingSettingPMService.update(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) { // Success

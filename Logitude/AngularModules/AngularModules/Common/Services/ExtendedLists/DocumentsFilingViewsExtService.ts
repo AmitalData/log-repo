@@ -1,6 +1,7 @@
 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -14,11 +15,11 @@ import {DocumentsFilingList} from '../../EntityLists/DocumentsFilingList';
 @Injectable()
 
 export class DocumentsFilingViewsExtService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     public static CachedData: Array<DocumentsFilingList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/documentsfilingviewsext';
     }
 
@@ -56,12 +57,10 @@ export class DocumentsFilingViewsExtService {
 
 
         return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(callUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array<DocumentsFilingList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -75,21 +74,20 @@ export class DocumentsFilingViewsExtService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetLastDocumentsFilingPM(entityId: string, objectTable: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetLastDocumentsFilingPM?entityId=" + entityId + "&objectTable=" + objectTable,
-            { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetLastDocumentsFilingPM?entityId=" + entityId + "&objectTable=" + objectTable,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var pmresponse: ServiceResponse = new ServiceResponse();
-                pmresponse.Result = response.json();
+                pmresponse.Result = response;
                 return pmresponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
     }
 
 

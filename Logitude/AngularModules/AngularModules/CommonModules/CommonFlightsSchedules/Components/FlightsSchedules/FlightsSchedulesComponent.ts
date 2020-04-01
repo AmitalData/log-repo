@@ -70,7 +70,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
     SetWindowArgs(args: FlightsSchedulesArgs) {
         this.args = args; 
 
-        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe((response:any) => {
             this.IsResourcesReady = true;
 
             if (args.BookingPM != null) {

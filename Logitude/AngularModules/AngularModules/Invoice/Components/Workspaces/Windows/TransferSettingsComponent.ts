@@ -48,14 +48,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     constructor(entityResourceService: EntityResourceService) {
         super();
         this.OldSessionAccountingSystem = SessionLocator.AccountingSystemPM;
-        this.QBOWindowSessionEvent = this.CurrentSession.SessionEvent.subscribe(res => {
+        this.QBOWindowSessionEvent = this.CurrentSession.SessionEvent.subscribe((res:any) => {
             if (res.Name == "QBOWindowCLosed") {
                 this.QBOWindowCLosed(res.Timer);
                 this.RefreshData();
             }
         });
 
-        entityResourceService.getEntityResourceByTableName("AccountingSetting").subscribe(res => {
+        entityResourceService.getEntityResourceByTableName("AccountingSetting").subscribe((res:any) => {
             this.InitializeServices();
             this.LoadData();
         });

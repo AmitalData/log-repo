@@ -84,11 +84,11 @@ export class AutomationsSettingsComponent implements OnInit {
                     this.LoadAutomationsList();
                 }
 
-                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
 
 
                     if (tableName == "Master") {
-                        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((response:any) => {
                             this.LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName);
 
                         });
@@ -162,7 +162,7 @@ export class AutomationsSettingsComponent implements OnInit {
 
         this.CurrentSession.StartBusyIndicatorLoading();
         this.AutomationList = [];
-        this._automationExtendedPMService.getAutomationesByObjectTableId(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
+        this._automationExtendedPMService.getAutomationesByObjectTableId(this.ObjectTableId, SessionLocator.Tenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -377,7 +377,7 @@ export class AutomationsSettingsComponent implements OnInit {
             //});
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-            this._automationExtendedPMService.putAuomationList(automationArgsLists).subscribe(res => {
+            this._automationExtendedPMService.putAuomationList(automationArgsLists).subscribe((res:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindow();
             });

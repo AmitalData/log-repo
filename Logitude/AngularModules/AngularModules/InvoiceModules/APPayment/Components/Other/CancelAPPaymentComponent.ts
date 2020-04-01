@@ -46,7 +46,7 @@ export class CancelAPPaymentComponent extends BaseComponent {
 
     constructor() {
         super();
-        this._entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.SetUIProperties();
         });

@@ -37,7 +37,7 @@ export class ClaimImporterDeclAP3LoisComponent extends BaseComponent {
         this.ClaimImporterDeclarsP3Loilist = new ObservableCollection([]);
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsP3Loi").subscribe(response => { });
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsP3Loi").subscribe((response:any) => { });
     }
 
     SetWindowArgs(args: any) {

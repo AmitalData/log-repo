@@ -116,25 +116,25 @@ export class BanksPageComponent {
     }
 
     LoadQueriesCounts() {
-        this._BankAccountExtendedListService.GetBankAccountsSummary().subscribe(myResult => {
+        this._BankAccountExtendedListService.GetBankAccountsSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this._BankAccountSummary.AllBankAccountsCount = myResult.AllBankAccountsCount > 1000 ? "1000+" : myResult.AllBankAccountsCount.toString();
             }
         });
 
-        this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe(myResult => {
+        this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.paymentChequeSummary.AllPaymenChequesCount = myResult.AllPaymentChequesCount > 1000 ? "1000+" : myResult.AllPaymentChequesCount.toString();
             }
         });
 
-        this.myBankDepositService.GetBankDepositsSummary().subscribe(myResult => {
+        this.myBankDepositService.GetBankDepositsSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.bankDepositSummary.TodaysDepositCount = myResult.TodaysDepositCount > 1000 ? "1000+" : myResult.TodaysDepositCount.toString();
             }
         });
 
-        this.myCashBookExtendedListService.GetCashBookSummary().subscribe(myResult => {
+        this.myCashBookExtendedListService.GetCashBookSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.cashBookSummary.AllCashbookCount = myResult.AllCashbookCount > 1000 ? "1000+" : myResult.AllCashbookCount.toString();
                 this.cashBookSummary.CashCashbookCount = myResult.CashCashbookCount > 1000 ? "1000+" : myResult.CashCashbookCount.toString();

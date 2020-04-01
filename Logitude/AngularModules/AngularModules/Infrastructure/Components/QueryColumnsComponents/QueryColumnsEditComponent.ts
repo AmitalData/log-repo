@@ -475,7 +475,7 @@ export class QueryColumnsEditComponent {
         //            this.myQueryColumnsPMService = new QueryColumnsPMService();
         //            this.myQueryColumnsPMService.setServiceArgs(this.serviceArgs);
         //        }
-        //        this.myQueryColumnsPMService.insert(queryColumn).subscribe(myResult => {
+        //        this.myQueryColumnsPMService.insert(queryColumn).subscribe((myResult:any) => {
         //            this.CurrentSession.CloseCurrentWindow();
         //        });
         //    }
@@ -503,7 +503,7 @@ export class QueryColumnsEditComponent {
                     qc.Tenant = SessionInfo.LoggedUserTenant;
                     qc.IndexOrder = queryColumn.IndexOrder;
                     qc.UserId = SessionInfo.LoggedUserId;
-                    this.myQueryColumnsPMService.update(qc).subscribe(myResult => {
+                    this.myQueryColumnsPMService.update(qc).subscribe((myResult:any) => {
                         Length++;
                         if (Length == this.OrderedQueryColumnsList.length && this.removedQueryColumnList.length == 0) {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -527,7 +527,7 @@ export class QueryColumnsEditComponent {
                     this.myQueryColumnsPMService = new QueryColumnsPMService();
                     this.myQueryColumnsPMService.setServiceArgs(this.serviceArgs);
                 }
-                this.myQueryColumnsPMService.delete(queryColumn).subscribe(myResult => {
+                this.myQueryColumnsPMService.delete(queryColumn).subscribe((myResult:any) => {
                     removedQueryLength = removedQueryLength + 1;
                     if (removedQueryLength == this.removedQueryColumnList.length) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();

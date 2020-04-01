@@ -1020,7 +1020,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         return newEntity;
     }
     SubmitChanges(entity) {
-        this._ReconciliationExtendedPMService.insert(entity).subscribe(myResult => {
+        this._ReconciliationExtendedPMService.insert(entity).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             var _callback:RecoCallback = mm.Result;

@@ -129,7 +129,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
     }
 
     LoadUserRolesMethod() {
-        this._roleExtendedPMService.GetRolesForUser(null, SessionLocator.Tenant).subscribe(res => {
+        this._roleExtendedPMService.GetRolesForUser(null, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -181,7 +181,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                 this.NewUserPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.NewUserPM.Technology = "AG";
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-                this.userPMService.insert(this.NewUserPM).subscribe(myResult => {
+                this.userPMService.insert(this.NewUserPM).subscribe((myResult:any) => {
                     if (myResult) {
 
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -237,7 +237,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             email = email.trim();
 
             if (email.indexOf('.') > 0 && email.indexOf('@') > 0) {
-                this._passwordChangeService.CheckIfUserIsExists(email, SessionLocator.Tenant, false, false).subscribe(res => {
+                this._passwordChangeService.CheckIfUserIsExists(email, SessionLocator.Tenant, false, false).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;

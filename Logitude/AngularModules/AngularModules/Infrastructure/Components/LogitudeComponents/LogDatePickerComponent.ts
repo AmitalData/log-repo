@@ -371,7 +371,7 @@ export class LogDatePickerComponent
         //this.LogitudeForm.addControl(this.ObjectFieldName, this.ctrl);
         //if (objectFieldAvailable) {
         if (objectFieldAvailable || this.ForceSubscribe) {
-            //this.ctrl.valueChanges.subscribe(res=> {
+            //this.ctrl.valueChanges.subscribe((res:any)=> {
             //    this.uiProperty.UIPropertyChanged.emit("valuechanges");
             //    this.ValueChanged.emit(res);
 

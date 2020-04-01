@@ -49,14 +49,14 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
     }
 
     FillHybridPartnerList() {
-        this._HybridPartnerListService.GetHybridPartnerLists(SessionLocator.Tenant).subscribe(res => {
+        this._HybridPartnerListService.GetHybridPartnerLists(SessionLocator.Tenant).subscribe((res:any) => {
             this.hybridPartnerList = [];
             res.forEach((item, key) => {
                 this.hybridPartnerList.push(new HybridPartnerData(item, this));
             });
             this.CurrentSession.StopBusyIndicator();
         });
-        this._HybridPartnerListService.GetHybridPartnerListWithNoRequest(SessionLocator.Tenant).subscribe(res => {
+        this._HybridPartnerListService.GetHybridPartnerListWithNoRequest(SessionLocator.Tenant).subscribe((res:any) => {
             this.allhybridPartnerList = [];
             res.forEach((item, key) => {
                 this.allhybridPartnerList.push(new HybridPartnerData(item, this));
@@ -73,7 +73,7 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
 
     SendRequest(item) {
         this.CurrentSession.StartBusyIndicator("loading ...");
-        this._CustomerTenantAccessRequestExtendedPMService.get(item.ReqId).subscribe(res => {
+        this._CustomerTenantAccessRequestExtendedPMService.get(item.ReqId).subscribe((res:any) => {
             if (!res.HasError) { 
                 var temp = res.Result;
                 temp.RequestStatus = "W";
@@ -106,7 +106,7 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
         //FillErrors(errors);
 
         if (this.ValidationErrorsList.length == 0) {
-            this._CustomerPMService.get(SessionLocator.TenantPM.CustomerId).subscribe(res => {
+            this._CustomerPMService.get(SessionLocator.TenantPM.CustomerId).subscribe((res:any) => {
                
                 if (!res.HasError) {
                     var CustomerPm = res.Result;
@@ -120,7 +120,7 @@ export class ActivationWizardComponent implements OnInit, AfterViewInit {
                                 pm.RequestStatus = "N",
                                 pm.Tenant = SessionLocator.Tenant;
 
-                            this._CustomerTenantAccessRequestExtendedPMService.insert(pm).subscribe(res => {
+                            this._CustomerTenantAccessRequestExtendedPMService.insert(pm).subscribe((res:any) => {
                                 // We Need To check If There Are Errors.
                                 this.FillHybridPartnerList();
                                 this.CurrentSession.StopBusyIndicator();

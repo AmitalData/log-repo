@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';  
 import {ServiceArgs} from '../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -9,7 +10,7 @@ import {Observable} from 'rxjs/Rx';
 
 export class EntityLastActivityService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     private _serviceArgs: ServiceArgs;
     constructor() {
 
@@ -25,11 +26,9 @@ export class EntityLastActivityService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetActivityLog?entityId=' + entityId + '&objectTableId=' + objectTableId + '&loggedContactId=' + loggedContactId + '&logCode=' + logCode, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetActivityLog?entityId=' + entityId + '&objectTableId=' + objectTableId + '&loggedContactId=' + loggedContactId + '&logCode=' + logCode,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myResult = response.json();
+                var myResult = response;
 
                 return myResult;
             });

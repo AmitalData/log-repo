@@ -1,6 +1,7 @@
 ﻿
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -16,10 +17,10 @@ import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFiel
 @Injectable()
 export class ReportsTemplatePMExtendedService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportsTemplateExtended';
     }
 
@@ -27,9 +28,9 @@ export class ReportsTemplatePMExtendedService {
     GetReportsTemplatePMsByReportId(reportId: string, reportType:string = "") {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetReportsTemplatePMsByReportId" + '?reportId=' + reportId + "&reportType=" + reportType  , { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetReportsTemplatePMsByReportId" + '?reportId=' + reportId + "&reportType=" + reportType  ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result :any = response;
             var entity: ReportsTemplatePM;
             var ReportsTemplatePMLists: ReportsTemplatePM[];
             ReportsTemplatePMLists = new Array<ReportsTemplatePM>();
@@ -48,15 +49,15 @@ export class ReportsTemplatePMExtendedService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     GetCopyReportsTemplate(reportsTemplateId: string, userId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetCopyReportsTemplateByReportsTemplateId" + '?reportsTemplateId=' + reportsTemplateId + "&userId=" + userId, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetCopyReportsTemplateByReportsTemplateId" + '?reportsTemplateId=' + reportsTemplateId + "&userId=" + userId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var entity: ReportsTemplatePM;
-            var result = response.json();
+            var result :any = response;
             entity = this.MapJsonToEntityPM(result);
              
             
@@ -69,21 +70,21 @@ export class ReportsTemplatePMExtendedService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     GetReportTemplateEditorHtmlData(reportsTemplateId: string, version: number, userId: string, subject: string, from: string, replyTo: string, cc: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetReportTemplateEditorHtmlData" + '?reportsTemplateId=' + reportsTemplateId + "&version=" + version + "&userId=" + userId + "&subject=" + subject + "&from=" + from + "&replyTo=" + replyTo + "&cc=" + cc, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetReportTemplateEditorHtmlData" + '?reportsTemplateId=' + reportsTemplateId + "&version=" + version + "&userId=" + userId + "&subject=" + subject + "&from=" + from + "&replyTo=" + replyTo + "&cc=" + cc,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result :any = response;
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
             return pmresponse;
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     
@@ -108,9 +109,8 @@ export class ReportsTemplatePMExtendedService {
             if (errorsArray.length == 0) {
                 var mappedEntity: ReportsTemplatePM;
                 mappedEntity = this.MapJsonToEntityPM(reportsTemplatePM, false);
-                return this._http.post(this._apiUrl + '/PostReportTemplate', JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                return this._http.post(this._apiUrl + '/PostReportTemplate', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: ReportsTemplatePM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, reportsTemplatePM);
@@ -138,8 +138,8 @@ export class ReportsTemplatePMExtendedService {
     GetMessageReportsTemplateBodyByReportTemplateIdAndVersion(reportsTemplateId: string, version: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetMessageReportsTemplateBodyByReportTemplateIdAndVersion" + '?reportsTemplateId=' + reportsTemplateId + "&version=" + version, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + "/GetMessageReportsTemplateBodyByReportTemplateIdAndVersion" + '?reportsTemplateId=' + reportsTemplateId + "&version=" + version,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
@@ -149,7 +149,7 @@ export class ReportsTemplatePMExtendedService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     SaveReportTemplateMessageBody(reportsTemplatePM: ReportsTemplatePM) {
@@ -167,9 +167,8 @@ export class ReportsTemplatePMExtendedService {
             if (errorsArray.length == 0) {
                 var mappedEntity: ReportsTemplatePM;
                 mappedEntity = this.MapJsonToEntityPM(reportsTemplatePM, false);
-                return this._http.put(this._apiUrl + '/PutSaveReportTemplateMessageBody', JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                return this._http.put(this._apiUrl + '/PutSaveReportTemplateMessageBody', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: ReportsTemplatePM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, reportsTemplatePM);
@@ -178,7 +177,7 @@ export class ReportsTemplatePMExtendedService {
 
                         return response;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
