@@ -1726,6 +1726,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
                                     CancelJournal(entityPm);
+                                    CancelledInterestTransactions(entityPm);
                                 }
                             }
                         }
@@ -1765,6 +1766,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
                                     CancelJournal(entityPm);
+                                    CancelledInterestTransactions(entityPm);
                                 }
                             }
                         }
@@ -1772,6 +1774,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             CreateVoidedARPaymentEvent("ARPayment Cancel");
                             CancelJournal(entityPm);
+                            CancelledInterestTransactions(entityPm);
                         }
                     }
                 }
@@ -1831,6 +1834,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Notes = note,
             });
         }
+
+        public void CancelledInterestTransactions(ARPaymentPM entityPm)
+        {
+            IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
+            InterestReportUpdate.CancelledInterestTransactionsByARPayment(entityPm.Id, entityPm.Tenant);
+        }
+
         private void CancelJournal(ARPaymentPM entityPm)
         {
 

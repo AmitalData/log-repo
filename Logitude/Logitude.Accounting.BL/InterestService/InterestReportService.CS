@@ -200,6 +200,18 @@ namespace Logitude.Accounting.BL.InterestService
             return loggedcontact;
         }
 
+        public void CancelledInterestTransactionsByARPayment(string EntityId,int Tenant)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(MyContext);
+            List<InterestTransaction> AllEntities = interestTransactionRepository.GetAll(Tenant).Where(s=>s.InterestEntityTypeCode=="2" && s.EntityId== EntityId).ToList();
+            for (int i=0; i< AllEntities.Count;i++)
+            {
+                AllEntities[i].IsCancelled = true;
+                interestTransactionRepository.Update(AllEntities[i]);
+            }
+            MyContext.SaveChanges();
+        }
 
     }
 
