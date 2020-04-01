@@ -17,7 +17,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
 
         }
 
-        public void Update(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
+        public void UpdateConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
         {
             InterestReportService interestReportService = new InterestReportService();
             interestReportService.PutConfirmCreateInvoice(interestReportPM, Tenant, MainContext);

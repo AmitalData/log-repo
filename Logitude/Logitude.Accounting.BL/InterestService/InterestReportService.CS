@@ -19,9 +19,9 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
 
-namespace Logitude.Accounting.BL
+namespace Logitude.Accounting.BL.InterestService
 {
-    public   class InterestService
+    public class InterestReportService
     {
         public InterestTransactionsWithTotal GetAllInterestTransactionByDate(string ReportId, DateTime InterestCalculationDate, int Tenant, IAccountingContext MyContext=null)
         {
