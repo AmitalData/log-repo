@@ -222,7 +222,7 @@ export class CustomsRequestsSheetsComponent
             messageWindow.Width = 400;
             messageWindow.Height = 150;
             messageWindow.ShowErrorIcon = true;
-            messageWindow.Show("You cannot cancel a request other than status 30.");
+            messageWindow.Show("You cannot cancel a request other than status 15.");
             return;
         }
         this.CurrentSession.StartBusyIndicator("");
@@ -295,15 +295,17 @@ export class CustomsRequestsSheetsComponent
     CheckValidation(type: string) {
         if (this.AllCRSSChecked) return false;
 
-        this._AllCustomsRequestsSheetStatusListVM.forEach((requestStatus) => {
-
-            if (requestStatus.IsChecked) {
-                if (type == "ReAnalysis" && requestStatus.MyItem.Code != "21" && requestStatus.MyItem.Code != "25")
+        for (var i = 0; i < this._AllCustomsRequestsSheetStatusListVM.length; i++) {
+            if (this._AllCustomsRequestsSheetStatusListVM[i].IsChecked) {
+                if (type == "ReAnalysis" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "21" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "25")
                     return false;
-                if (type == "Cancel" && requestStatus.MyItem.Code != "30")
+                if (type == "Cancel" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "15")
                     return false;
             }
-        });
+        }  
+
+            
+      
         return true;
      }
 
