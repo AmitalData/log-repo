@@ -35,7 +35,7 @@ export class SATInterfaceSettingsComponent {
     }
 
     private LoadData() {
-        this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe(response => {
+        this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe((response:any) => {
             if (!response.HasError) {
                 this.EntityPM = response.Result;
                
@@ -73,7 +73,7 @@ export class SATInterfaceSettingsComponent {
                 }
                 else {
 
-                    this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe(response => {
+                    this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe((response:any) => {
                         if (!response.HasError) {
                             SessionLocator.SATInterfaceSettings  = response.Result;
 

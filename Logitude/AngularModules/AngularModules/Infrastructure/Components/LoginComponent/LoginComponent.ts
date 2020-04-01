@@ -820,7 +820,7 @@ export class LoginComponent implements OnInit {
             //31
         });
 
-        this.sATInterfaceSettingPMService.get(CurrentTenant).subscribe(myResult => {
+        this.sATInterfaceSettingPMService.get(CurrentTenant).subscribe((myResult:any) => {
             SessionLocator.SATInterfaceSettings = myResult.Result;
             this.IncreaseProgressBar();
             //32
