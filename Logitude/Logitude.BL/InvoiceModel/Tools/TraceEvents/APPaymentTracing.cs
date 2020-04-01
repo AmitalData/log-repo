@@ -93,7 +93,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     string notes = "";
                     notes += "Amount: " + String.Format("{0:0,0.00}", entityPM.ExternalPaymentAmount.Value);
                     notes += "\nDate: " + String.Format("{0:dd MMM yyyy}", entityPM.ExternalPaymentDate);
-                    notes += "\nNotes : " + payment.ExternalPaymentNotes;
+                    notes += "\nNotes : " + entityPM.ExternalPaymentNotes;
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
