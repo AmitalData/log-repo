@@ -155,6 +155,7 @@ namespace WebFreight.Web.ReportsWebServices
                 this.GetNotify2Data(awbDp, shipmentPM, addressRepository);
                 this.GetAgentData(awbDp, shipmentPM, addressRepository);
                 this.GetConsolidatorData(awbDp, shipmentPM);
+                this.GetOpenedByUser(awbDp, shipmentPM.CreatedByUserId);
 
                 #region PlaceOfDelivery
 
@@ -198,6 +199,18 @@ namespace WebFreight.Web.ReportsWebServices
             return awbDp;
         }
 
+        private void GetOpenedByUser(AWBDataProvider awbDp, string createdByUserId)
+        {
+            ContactRepository contactRepository = new ContactRepository(myCommonContext);
+            if (!string.IsNullOrEmpty(createdByUserId))
+            {
+                Contact createdByContact = contactRepository.GetSingleContact(createdByUserId, myTenant);
+                if (createdByContact != null)
+                {
+                    awbDp.OpenedBy = createdByContact.EnglishName;
+                }
+            }
+        }
         private void GetLoggedTenantData(AWBDataProvider awbDp)
         {
             TenantRepository tenantRepository = new TenantRepository(myTenant);
