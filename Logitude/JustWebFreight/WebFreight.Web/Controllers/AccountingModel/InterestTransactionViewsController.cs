@@ -55,7 +55,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("InterestTransaction", "READ", authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                InterestService interestTransactionQuery = new InterestService();
+                InterestReportService interestTransactionQuery = new InterestReportService();
                 InterestTransactionsWithTotal myResult  = interestTransactionQuery.GetAllInterestTransactionByDate(ReportId, InterestCalculationDate, tenant, MyContext);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -77,7 +77,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
 
 
-                InterestService interestTransactionQuery = new InterestService();
+                InterestReportService interestTransactionQuery = new InterestReportService();
                 interestReportPM = interestTransactionQuery.PutConfirmCreateInvoice(interestReportPM, tenant, MyContext);
 
 
