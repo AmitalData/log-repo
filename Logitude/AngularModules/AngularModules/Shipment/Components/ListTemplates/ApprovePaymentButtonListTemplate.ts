@@ -66,7 +66,7 @@ export class ApprovePaymentButtonListTemplate {
         this.ShowRenewButtons = (this.rowData['IsDepositionRequired'] == true);
         if (SessionLocator.PrivateLableSettings) {
             this.ShowButtons = (this.rowData['IsImporterApprovalRequried'] == true);// && AppTool.IsNullOrEmpty(this.rowData['ApprovedByUserName'])
-            this.ShowRemoveButton = (this.rowData['IsDigitalSignRequired'] == true || this.rowData['IsRequestedDocuments'] == true || this.rowData['IsDepositionRequired'] == true);
+            this.ShowRemoveButton = (this.rowData['IsDigitalSignRequired'] == true || this.rowData['IsRequestedDocuments'] == true || this.rowData['IsDepositionRequired'] == true || this.rowData['RequestedDocumentsCount'] > 0);
             //if (SessionLocator.PrivateLableSettings) {
             //    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
             //        if (res.Result == false) {
@@ -90,7 +90,7 @@ export class ApprovePaymentButtonListTemplate {
         //this.CurrentSession.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe(AdditionalResult => {
+                this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe((AdditionalResult:any) => {
                     //this.CurrentSession.StopBusyIndicator();
                     this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response1 => {
                         var newWindow = new LogitudeWindow();
@@ -107,7 +107,7 @@ export class ApprovePaymentButtonListTemplate {
                         var windowArgs: any = {};
                         //windowArgs.IsNew = false;
                         windowArgs.EntityPm = myResult.Result
-                        windowArgs.AdditionalData = AdditionalResult.Result
+                        windowArgs.AdditionalData = AdditionalResult.Result;
                         newWindow.WindowArgs = windowArgs;
                         //newWindow.Add(control); 
                         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');

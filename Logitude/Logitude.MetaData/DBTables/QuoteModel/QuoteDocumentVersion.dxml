@@ -2,7 +2,8 @@
 <Table
   Name="QuoteDocumentVersions"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="QuoteId"
     Type="varchar"

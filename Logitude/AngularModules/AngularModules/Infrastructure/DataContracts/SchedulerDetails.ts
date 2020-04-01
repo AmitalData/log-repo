@@ -28,8 +28,15 @@ export class FTPSchedulerDetails {
 }
 
 export class ReportSchedulerDetails {
-    public Recepients: string;
+    public CreatedByUserId: string;
+    public Recepients: ReportSchedulerRecepients;
     public ReportTemplateId: string;
     public ReportFilterItems: Array<QueryFilterItem>;
+}
+
+export class ReportSchedulerRecepients {
+    public To: string;
+    public Cc: string;
+    public Bcc: string;
 }
 

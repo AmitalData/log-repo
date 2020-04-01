@@ -43,7 +43,9 @@
   NoViewsController="true"
   ClientModuleName="&quot;Invoice&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;71fe5761-7261-4ed5-a3c8-8cd5b120148f&quot;"
     FieldName="&quot;Code&quot;"
@@ -169,7 +171,7 @@
     Id="&quot;a5d8cc8a-4f02-4e86-88bb-e40f9d65960e&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;AccountingTransferType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

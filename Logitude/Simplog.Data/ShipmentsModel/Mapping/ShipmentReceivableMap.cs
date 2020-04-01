@@ -41,7 +41,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChargesTypeId).HasColumnName("ChargesTypeId");
             this.Property(t => t.Rate).HasColumnName("Rate");
             this.Property(t => t.PayableLocal).HasColumnName("PayableLocal");
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
             this.Property(t => t.UpdateByUserId).HasColumnName("UpdateByUserId");
             this.Property(t => t.PrepaidCollectId).HasColumnName("PrepaidCollectId");
             this.Property(t => t.AWBPrint).HasColumnName("AWBPrint");
@@ -55,7 +55,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ProfitCurrencyExchangeRate).HasColumnName("ProfitCurrencyExchangeRate");
             this.Property(t => t.ARInvoiceId).HasColumnName("ARInvoiceId");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
-            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
             this.Property(t => t.IATACodeId).HasColumnName("IATACodeId");
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
             this.Property(t => t.IsBackToBack).HasColumnName("IsBackToBack");

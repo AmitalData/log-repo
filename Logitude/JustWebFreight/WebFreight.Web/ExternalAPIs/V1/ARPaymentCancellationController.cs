@@ -100,9 +100,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         public void CheckPaymentStatus(ARPaymentPM paymentPM)
         {
-            if(paymentPM.StatusCode != "AD")
+            if(paymentPM.StatusCode != "AD" && paymentPM.StatusCode !="CL")
             {
-                throw new Exception("Payment Status <> Approved - Cant Void");
+                throw new Exception("Payment Status <> Approved/Closed - Cant Void");
             }
         }
 

@@ -55,7 +55,7 @@ export class CustomerSalesTabComponent implements OnDestroy {
         this.RegardingEntity = "Regarding Customer : " + this.EntityPM.Code + " " + this.EntityPM.EnglishName;
         
         if (FeatureLocator.HasFeaturePermession("General", "TICKET")) {
-            this.IsTicketTabDim = true;
+           this.IsTicketTabDim = true;
         }
 
         this.BuildScreenData();
@@ -222,8 +222,12 @@ export class CustomerSalesTabComponent implements OnDestroy {
                             myTempList.push(item);
                         });
 
+                        var length = 5;
+                        if (!this.IsTicketTabDim) {
+                            length = 10;
+                        }
                         myTempList.forEach(item => {
-                            if (this.ActivityObsList.length < 5) {
+                            if (this.ActivityObsList.length < length) {
                                 this.ActivityObsList.push(new ActivityData(item, this));
                             }
                         });

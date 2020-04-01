@@ -196,7 +196,7 @@ export class ManageDefaultsComponent {
             this.myDomainService = new CommonDomainService();
         }
 
-        this.myDomainService.InvokeUpdateAutoDisplay(myChargeId, myPropertyTypeCode, isAutoDisplay).subscribe(myResult => {
+        this.myDomainService.InvokeUpdateAutoDisplay(myChargeId, myPropertyTypeCode, isAutoDisplay).subscribe((myResult:any) => {
 
         });
     }

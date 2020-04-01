@@ -1,33 +1,27 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {ApiQueryFilters} from '../../DataContracts/ApiQueryFilters';
 import {ShipmentPM} from '../../../Shipment/EntityPMs/ShipmentPM';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 
 @Injectable()
-
 export class FSRWebService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FSRWebService';
     }
 
     SendFSR(shipmentId: string, objectTableId: string, myRecipient: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetSendFSR?shipmentId=' + shipmentId + '&objectTableId=' + objectTableId + '&myRecipient=' + myRecipient;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-
-                var myJsonResult = response.json();
-
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var mappedResult: FSRResultClass = new FSRResultClass();
 
                 if (myJsonResult) {
@@ -40,23 +34,19 @@ export class FSRWebService {
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
+
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     SendFSRShipment(entityPM: ShipmentPM) {
-
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-
         var mappedEntity: ShipmentPM;
         mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
         return Observable.defer(() => {
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
 
                 var mappedResult: FSRResultClass = new FSRResultClass();
 
@@ -70,22 +60,18 @@ export class FSRWebService {
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
+
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     SendBookingFSR(bookingId: string, objectTableId: string, myRecipient: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetSendBookingFSR?bookingId=' + bookingId + '&objectTableId=' + objectTableId + '&myRecipient=' + myRecipient;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-
-                var myJsonResult = response.json();
-
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var mappedResult: FSRResultClass = new FSRResultClass();
 
                 if (myJsonResult) {
@@ -99,13 +85,12 @@ export class FSRWebService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     private MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: ShipmentPM = null) {
         if (!entityPM) {
-
             entityPM = new ShipmentPM();
         }
 
@@ -120,7 +105,6 @@ export class FSRWebService {
             entityPM[property] = jsonPM[property];
         }
 
-
         entityPM.IsDirty = false;
 
         if (getCallMap) {
@@ -134,6 +118,7 @@ export class FSRWebService {
 
         return entityPM;
     }
+
     private clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
@@ -147,8 +132,8 @@ export class FSRWebService {
 
             var property = jsonPMKeys[key];
             entityPM[property] = jsonPM[property];
-
         }
+
         return entityPM;
     }
 }

@@ -47,6 +47,13 @@ namespace WebFreight.Web.DataProviders
             set { packageDescriptionOfGoods = value; }
         }
 
+        private string descriptionOfGoodsWithoutHCCode = "";
+        public string DescriptionOfGoodsWithoutHCCode
+        {
+            get { return descriptionOfGoodsWithoutHCCode; }
+            set { descriptionOfGoodsWithoutHCCode = value; }
+        }
+
         private string packageGrossWeight = "";
         public string PackageGrossWeight
         {

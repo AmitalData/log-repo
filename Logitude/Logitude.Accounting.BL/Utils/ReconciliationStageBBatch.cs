@@ -48,8 +48,9 @@ namespace Logitude.Accounting.BL.Utils
         {
             try
             {
-                int SUB_BATCH_SIZE = 5; // 100;
+                int SUB_BATCH_SIZE = 50; // 100;
                 int tenant = reconciliationStageBArg.Tenant;
+                string myGLAccountId = reconciliationStageBArg.GLAccountId;
                 BatchTaskExecutionPM batchTaskExecutionPM = reconciliationStageBArg.BatchTask;
                 BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = null;
                 if (batchTaskExecutionPM != null)
@@ -59,7 +60,15 @@ namespace Logitude.Accounting.BL.Utils
 
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 JournalLineQueryService journalLineQueryService = new JournalLineQueryService(context);
-                IQueryable<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOs = journalLineQueryService.GetQJournalLinesByExternalNo_NotReconciled(tenant);
+                IQueryable<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOs;
+                if (String.IsNullOrEmpty(myGLAccountId))
+                {
+                    journalLine_LT_DTOs = journalLineQueryService.GetQJournalLinesByExternalNo_NotReconciled(tenant);
+                }
+                else
+                {
+                    journalLine_LT_DTOs = journalLineQueryService.GetQJournalLinesByExternalNoGLAcc_NotReconciled(tenant, myGLAccountId);
+                }
                 List<JournalLineLedgerTransactionAccDTO> journalLine_LT_DTOsList = journalLine_LT_DTOs.ToList().OrderBy(l => l.AccId).ToList();
                 var journalLineGroups = journalLine_LT_DTOsList.GroupBy(l => l.AccId);
                 // IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
@@ -256,12 +265,15 @@ namespace Logitude.Accounting.BL.Utils
                 this._valueToMatch = 0m;
                 if (journalLine.ActionCode == "1")
                 {
-                    this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
+      //              this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
+      //              this._valueToMatch = -(journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
+                    this._valueToMatch = ledgerTransaction.OpenAmount; ///+ (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
                 }
                 else if (journalLine.ActionCode == "2")
                 {
                    // this._valueToMatch = -(journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
-                    this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
+             //       this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
+                    this._valueToMatch = ledgerTransaction.OpenAmount; //+ (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
                 }
                 this._oneLineLedger = ledgerTransaction; // ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
                 this._oneLineLedger.AmountToReconcile = _valueToMatch;
@@ -279,6 +291,7 @@ namespace Logitude.Accounting.BL.Utils
     public class ReconciliationStageBArg
     {
         public int Tenant { get; set; }
+        public string GLAccountId { get; set; }
         public BatchTaskExecutionPM BatchTask { get; set; }
     }
 

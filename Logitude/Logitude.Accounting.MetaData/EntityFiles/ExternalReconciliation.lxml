@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;8d9f&quot;"
+  Code="&quot;f857&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -59,7 +59,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;253fbf29-edc6-49b6-8ad5-a5a1f31defcb&quot;"
     FieldName="&quot;Id&quot;"
@@ -289,7 +291,7 @@
     ObjectTableName="&quot;ExternalReconciliation&quot;"
     FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -1007,6 +1009,7 @@
   <field
     Id="&quot;71486884-8b8a-42e8-8465-4f74f8e123f0&quot;"
     FieldName="&quot;BankAccountId&quot;"
+    OldFieldName="&quot;BankAccountId&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1030,6 +1033,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;BankAccountId&quot;"
     ListPropertyPath="&quot;BankAccountId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1187,6 +1191,13 @@
       FeatureDefaultText="&quot;Cancel Reconciltiation&quot;" />
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.CantReconcileTwoTransfer&quot;"
+      DefaultText="&quot;One line at a time must be marked when making a deferred check payment reconcile.&quot;"
+      LocalDefaultText="&quot;יש לסמן שורה אחת בכל פעם כאשר מבצעים התאמה של פירעון שיק דחוי.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

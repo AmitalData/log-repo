@@ -1069,9 +1069,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 CardPM cardPM = GetCardById(cardId, tenant);
 
 
-                if (cardPM.PartnerTypeId == PartnerTypeValues.Customer || cardPM.PartnerTypeId == PartnerTypeValues.CustomClearance || cardPM.PartnerTypeId == PartnerTypeValues.CustomAgent || cardPM.PartnerTypeId == PartnerTypeValues.CustomsShipper || cardPM.PartnerTypeId == PartnerTypeValues.Coloader)
-                    msg = GetCustomersErrorMessage(tenant, connectedCards);
-                else 
+                //if (cardPM.PartnerTypeId == PartnerTypeValues.CustomClearance || cardPM.PartnerTypeId == PartnerTypeValues.CustomAgent || cardPM.PartnerTypeId == PartnerTypeValues.CustomsShipper || cardPM.PartnerTypeId == PartnerTypeValues.Coloader)
+                //    msg = GetCustomersErrorMessage(tenant, connectedCards);
+                //else
                     msg = GetVendorsWarningMessage(tenant, connectedCards);
                 throw new ApplicationException(msg);
             }

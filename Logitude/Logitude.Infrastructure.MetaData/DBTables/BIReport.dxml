@@ -2,7 +2,8 @@
 <Table
   Name="BIReports"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -99,13 +100,14 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="LastRunDate"
-    Type="datetime">
+    Name="FactTableName"
+    Type="varchar"
+    Size="30">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="LastRunByUserId"
+    Name="LastRunId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -137,8 +139,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="LastRunByUserId"
-    ReferencedTable="Users"
+    ForeignKeyColumn="LastRunId"
+    ReferencedTable="LastRunDetails"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

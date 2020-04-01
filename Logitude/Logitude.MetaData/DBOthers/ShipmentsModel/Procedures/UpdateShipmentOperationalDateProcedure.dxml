@@ -1,4 +1,4 @@
-<Procedure DBType="Main" Name="usp_UpdateShipmentOperationalDate" Schema="dbo">
+<Procedure DBType="Main" Name="usp_UpdateShipmentOperationalDate" Schema="dbo" Module="Shipment">
   <SqlScript>
     <![CDATA[
 CREATE PROCEDURE [dbo].[usp_UpdateShipmentOperationalDate]

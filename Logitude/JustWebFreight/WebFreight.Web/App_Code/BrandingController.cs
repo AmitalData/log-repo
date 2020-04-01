@@ -16,7 +16,7 @@ using System.Net.Http;
 using System.Web.Http;
 
 namespace WebFreight.Web.App_Code
-{
+{ 
     public class BrandingController : ApiController
     {
         public string GetTenantLogoUri(int tenant)

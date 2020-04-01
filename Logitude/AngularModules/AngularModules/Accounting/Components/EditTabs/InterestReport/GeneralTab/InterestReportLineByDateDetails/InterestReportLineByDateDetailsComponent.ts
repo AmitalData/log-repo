@@ -43,7 +43,7 @@ export class InterestReportLineByDateDetailsComponent {
     GetAllInterestLinesByDate(InterestReportId: string, InterestCalculationDate: Date) {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ReportIsLoading = true;
-        this.myService.GetAllInterestTransactionByDate(InterestReportId, InterestCalculationDate).subscribe(myResult => {
+        this.myService.GetAllInterestTransactionByDate(InterestReportId, InterestCalculationDate).subscribe((myResult: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             this.ReportIsLoading = false;
             var mm: ServiceResponse = myResult;

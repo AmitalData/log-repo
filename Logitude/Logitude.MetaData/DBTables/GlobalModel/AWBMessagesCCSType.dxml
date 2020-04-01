@@ -2,7 +2,8 @@
 <Table
   Name="AWBMessagesCCSTypes"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Global">
   <Column
     Name="Code"
     Type="varchar"

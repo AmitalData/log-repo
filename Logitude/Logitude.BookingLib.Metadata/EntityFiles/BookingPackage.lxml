@@ -33,7 +33,9 @@
   Code="&quot;63fd&quot;"
   Name="&quot;BookingPackage Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;Booking&quot;">
+  ClientModuleName="&quot;Booking&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;538b7629-9218-4d23-9d2d-1c67220baa5d&quot;"
     FieldName="&quot;Id&quot;"
@@ -594,7 +596,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;d1720d5e-cb51-46f1-89eb-7d6759806a0d&quot;"
     FieldName="&quot;Height&quot;"
@@ -646,7 +649,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;0bf3a75c-43da-4420-bf2b-f17a4ad14344&quot;"
     FieldName="&quot;Width&quot;"
@@ -698,7 +702,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;36dc7292-777d-49b1-9700-74bb70069c4e&quot;"
     FieldName="&quot;Length&quot;"
@@ -750,7 +755,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;5ef3366c-895c-4cae-bfee-8eefcf5c59a5&quot;"
     FieldName="&quot;UnNumber&quot;"
@@ -895,7 +901,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;5048e2f2-97a6-4d11-bfc0-0cf03e955dd0&quot;"
     FieldName="&quot;Ventilation&quot;"
@@ -944,7 +951,8 @@
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
-    CanAutomateSetValue="false" />
+    CanAutomateSetValue="false"
+    NumberOfDigits="18" />
   <field
     Id="&quot;c297bc66-4bd7-47da-b56c-8d9ce0ad5bfd&quot;"
     FieldName="&quot;Seal2&quot;"

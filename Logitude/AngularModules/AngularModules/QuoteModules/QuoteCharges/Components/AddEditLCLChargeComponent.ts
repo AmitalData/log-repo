@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import {AppTool,} from '../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -18,14 +18,13 @@ import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesVali
 import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
 import { PriceStepList } from '../../../Infrastructure/EntityLists/PriceStepList';
 import { MeasurementList } from '../../../Common/EntityLists/MeasurementList';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     moduleId: module.id,
     templateUrl: './AddEditLCLChargeComponent.html',
 })
 
-export class AddEditLCLChargeComponent extends BaseComponent {
+export class AddEditLCLChargeComponent extends BaseComponent implements OnDestroy {
     public QuotePM: QuotePM;
     public EntityPM: QuoteChargePM;
     public DataContext: QuoteChargeItem;
@@ -45,7 +44,8 @@ export class AddEditLCLChargeComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;    
     private IsHyprid: boolean;
     private ChargesTypeCode: string;
-    
+    private PropertyChangedEvent: any = null;
+
     constructor() {
         super();
 
@@ -66,6 +66,23 @@ export class AddEditLCLChargeComponent extends BaseComponent {
         });
         this.IsHyprid = SessionLocator.TenantPM.IsHybrid;
     }
+    private propertiesChanges = [];
+    private ListenPropertyChanged() {
+
+        if (this.PropertyChangedEvent) {
+            AppTool.KillEventEmitter(this.PropertyChangedEvent);
+            this.PropertyChangedEvent = null;
+        }
+
+        this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe(s => {
+            if (s) {
+                this.propertiesChanges.push(s.PropertyName);
+            }
+        });
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.PropertyChangedEvent);
+    }
 
     SetDataContext(dataContext: QuoteChargeItem) {
         this.QuotePM = dataContext.QuotePM;
@@ -84,7 +101,7 @@ export class AddEditLCLChargeComponent extends BaseComponent {
         this.BuildQueryFilters();
         this.BuildStepItemsSource();
         this.Clone();
-        
+        this.ListenPropertyChanged();
     }
 
     public IsAddBreaksEnabled: boolean = false;
@@ -335,9 +352,24 @@ export class AddEditLCLChargeComponent extends BaseComponent {
             }
         }
 
-        this.DataContext.BuildPriceBreaksTooltips();
-        this.DataContext.fatherComponent.ComputeTotals();
-        this.CurrentSession.CloseCurrentWindowEmit("OK");
+
+        if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNew) {
+            var property = this.propertiesChanges.filter(a => a == "CostUnitPrice" || a == "CostTotalAmount" || a == "CostCurrencyId")[0];
+            if (property) {
+                this.ShowTariffDisconnectionWindow();
+            }
+            else {
+                this.DataContext.BuildPriceBreaksTooltips();
+                this.DataContext.fatherComponent.ComputeTotals();
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+        }
+
+        else {
+            this.DataContext.BuildPriceBreaksTooltips();
+            this.DataContext.fatherComponent.ComputeTotals();
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
+        }
     }
 
     private myCloner: Cloner;
@@ -380,6 +412,7 @@ export class AddEditLCLChargeComponent extends BaseComponent {
         this.myCloner.AddField('CostMaxAmount');
         this.myCloner.AddField('SaleMinAmount');
         this.myCloner.AddField('SaleMaxAmount');
+        this.myCloner.AddField('TariffId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);
     }
@@ -492,6 +525,22 @@ export class AddEditLCLChargeComponent extends BaseComponent {
                 //});
             }
         }
+    }
+
+    ShowTariffDisconnectionWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Editing this line will unlink it from the tariff it was generated from.");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.DataContext.TariffId = null;
+                this.DataContext.TariffNumber = null;
+                //this.DataContext.SetUIProperties();
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+            if (confirmWindow.No) {
+                //nothing 
+            }
+        });
     }
 }
 export class QuoteStepItem extends BaseComponent {

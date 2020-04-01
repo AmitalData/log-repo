@@ -31,5 +31,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public string ExternalTAXItemId { get; set; }
         public bool IsMultiPercentage { get; set; }
+        public bool IsRegionalTax { get; set; }
+
     }
 }

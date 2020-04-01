@@ -37,9 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Interest Transactions&quot;"
-
   Code="&quot;4f86&quot;"
-
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -60,7 +58,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;d649e58f-de00-4bc3-8c2a-8beaf32282f6&quot;"
     FieldName="&quot;Id&quot;"
@@ -506,7 +506,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;InterestEntityType&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="1"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -541,11 +541,8 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;InterestEntityTypeCode&quot;"
-
     DefaultText="&quot;Entity Type &amp; Number&quot;"
     FullLocalDefaultText="&quot;סוג ישות &amp; מספר&quot;"
-
-
     ListFieldLable="&quot;InterestEntityTypeCodeListLable&quot;"
     ListLableDefaultText="&quot;Interest Entity Type Code&quot;"
     IsNullable="false"

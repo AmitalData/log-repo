@@ -41,6 +41,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotconnected", entityPM.Tenant, showLocals));
             }
+            interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId,entityPM.InterestCalculationDate, entityPM.Tenant);
+            if (interestReport != null)
+            {
+                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+            }
             entityPM.GLAccountId = card.GLAccountId;
             GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPM.Tenant);
             GLAccount gLAccount = gLAccountRepository.GetSingle(entityPM.GLAccountId, entityPM.Tenant);

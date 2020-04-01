@@ -38,7 +38,9 @@
   IsLookUp="true"
   IsEditable="true"
   HasCustomFilter="true"
-  ClientModuleName="&quot;Shipment&quot;">
+  ClientModuleName="&quot;Shipment&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;d3a30e1b-cb55-4671-95fe-2bc7c80cbf51&quot;"
     FieldName="&quot;Id&quot;"
@@ -59,7 +61,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;e9ffd89f-a2d6-4b8d-9f8b-b82989feb5a1&quot;"
     FieldName="&quot;Code&quot;"
@@ -192,7 +195,7 @@
     Id="&quot;467e429c-5c09-451f-b155-c79dde29a469&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;AWBSpecialHandlingCode&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"
@@ -254,7 +257,7 @@
     ObjectTableName="&quot;AWBSpecialHandlingCode&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -437,7 +440,10 @@
     NoMetaDataField="false"
     HasDataBaseField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="Card"
+    NavigationPropertyName="Airline" />
   <EventTypes />
   <AdditionalTextCodes></AdditionalTextCodes>
   <AdditionalFeatures />

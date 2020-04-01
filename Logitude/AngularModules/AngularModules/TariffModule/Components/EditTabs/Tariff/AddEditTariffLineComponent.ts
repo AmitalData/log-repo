@@ -21,9 +21,10 @@ export class AddEditTariffLineComponent  {
     public ValidationErrorsList: string[];
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
+    public IsAir: boolean = false;
 
     constructor() {
-
+        
     }
     
     SetWindowArgs(args) {
@@ -31,6 +32,7 @@ export class AddEditTariffLineComponent  {
         this.EntityPM = args['EntityPM'];
         this.TariffType = args['TariffType'];
         this.SetOriginDependencyFilterValue();
+        this.GetTariffType();
         this.Clone();
     }
 
@@ -39,6 +41,16 @@ export class AddEditTariffLineComponent  {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
         }
+    }
+    
+    GetTariffType() {
+        if (this.TariffType == "AFC" || this.TariffType == "ASC") {
+            this.IsAir = true;
+        }
+    }
+
+    GetDisplayMemberPath() {
+        return this.IsAir ? "Code" : "CombinedCode";
     }
 
     get OriginPortText() { return this.EntityPM.OriginPortText; }
@@ -135,9 +147,11 @@ export class AddEditTariffLineComponent  {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('OriginPortId');
         this.myCloner.AddField('OriginPortCode');
+        this.myCloner.AddField('OriginPortCombinedCode');
         this.myCloner.AddField('OriginPortName');
         this.myCloner.AddField('DestinationPortId');
         this.myCloner.AddField('DestinationPortCode');
+        this.myCloner.AddField('DestinationPortCombinedCode');
         this.myCloner.AddField('DestinationPortName');
         this.myCloner.AddField('StartDate');
         this.myCloner.AddField('ExpirationDate');

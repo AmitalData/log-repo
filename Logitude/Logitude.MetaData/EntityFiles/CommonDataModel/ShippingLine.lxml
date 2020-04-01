@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ShippingLine,ShippingLines,Simplog.FreightLib.NewShippingLineCommand,Id,&quot;">
+  SearchFields="&quot;ShippingLine,ShippingLines,Simplog.FreightLib.NewShippingLineCommand,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;0d839531-eed1-4e65-b304-26aaf371536c&quot;"
     FieldName="&quot;Id&quot;"
@@ -71,7 +73,7 @@
     ObjectTableName="&quot;ShippingLine&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -112,7 +114,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     ListLocalDefaultText="&quot;Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -133,7 +135,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Card" />
   <field
     Id="&quot;b630cfc2-14fa-4a08-81ca-1a90a5715624&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -1461,7 +1465,7 @@
     FullFieldLable="&quot;ShippingAgentId&quot;"
     DefaultText="&quot;Shipping Agent&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1483,7 +1487,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ShippingAgent"
+    NavigationPropertyName="ShippingAgent" />
   <field
     Id="&quot;27efe188-eda9-4fcd-bf4a-db75d6800f06&quot;"
     FieldName="&quot;AddedManually&quot;"
@@ -1494,7 +1500,7 @@
     ObjectTableName="&quot;ShippingLine&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -3471,7 +3477,7 @@
     IsNullable="false"
     IsForeignKey="false"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
@@ -4029,7 +4035,7 @@
     ObjectTableName="&quot;ShippingLine&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

@@ -97,6 +97,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.MetodoPagoCode = entityPM.MetodoPagoCode;
             entity.TipoCadenaPago = entityPM.TipoCadenaPago;
             entity.CadPago = entityPM.CadPago;
+
+            entity.CancelationNotes = entityPM.CancelationNotes;
+            entity.AccountingCancelationDate = entityPM.AccountingCancelationDate;
+
             entity.CertPago = entityPM.CertPago;
             entity.SelloPago = entityPM.SelloPago;
             entity.ApprovedDate = entityPM.ApprovedDate;

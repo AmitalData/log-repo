@@ -2,7 +2,8 @@
 <Table
   Name="QuoteCharges"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"
@@ -111,7 +112,7 @@
     Name="CostExchangeRate"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="CostIsFixedRate"
@@ -179,6 +180,32 @@
     Type="float">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCostAllIn"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TariffId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TariffNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TariffVersion"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="SaleCurrencyId"

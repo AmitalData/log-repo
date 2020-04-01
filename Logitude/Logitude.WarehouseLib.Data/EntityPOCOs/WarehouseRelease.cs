@@ -158,6 +158,13 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
         public virtual Country ToAddressCountry { get; set; }
         [Column("IsUsed")]
 	    public bool IsUsed { get; set; }
+        [ForeignKey("Trucker")]
+        [Column("TruckerId")]
+	    public string TruckerId { get; set; }
+	      
+        public virtual Card Trucker { get; set; }
+        [Column("TruckerReference")]
+	    public string TruckerReference { get; set; }
     }
 }
 	 

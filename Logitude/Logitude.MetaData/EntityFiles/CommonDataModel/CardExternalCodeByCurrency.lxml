@@ -57,7 +57,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;CardExternalCodeByCurrency,CardExternalCodeByCurrencies,,Id,&quot;">
+  SearchFields="&quot;CardExternalCodeByCurrency,CardExternalCodeByCurrencies,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;da021b61-535c-48b1-b83d-8b00718ce0bf&quot;"
     FieldName="&quot;Id&quot;"
@@ -68,7 +70,7 @@
     ObjectTableName="&quot;CardExternalCodeByCurrency&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -256,7 +258,7 @@
     FullFieldLable="&quot;CardId&quot;"
     DefaultText="&quot;Card&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -278,7 +280,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="Card" />
   <field
     Id="&quot;76ce6614-a356-46ce-923f-262524a4fb22&quot;"
     FieldName="&quot;CurrencyId&quot;"
@@ -291,7 +295,7 @@
     LookUpTableName="&quot;Currency&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -330,7 +334,7 @@
     FullFieldLable="&quot;CurrencyId&quot;"
     DefaultText="&quot;Currency&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -352,7 +356,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="Currency" />
   <field
     Id="&quot;a3d827ce-c872-47c3-a19a-0a99893bd521&quot;"
     FieldName="&quot;ExternalRecievableTableId&quot;"

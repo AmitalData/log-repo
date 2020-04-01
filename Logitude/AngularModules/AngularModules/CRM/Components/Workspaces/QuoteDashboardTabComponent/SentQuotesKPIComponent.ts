@@ -9,6 +9,9 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { FormatTool } from '../../../../Infrastructure/Tools';
+import { QuoteStageListService } from '../../../../Quote/Services/StandardLists/QuoteStageListService';
+import { QuoteStageList } from '../../../../Quote/EntityLists/QuoteStageList';
+
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
@@ -27,6 +30,7 @@ export class SentQuotesKPIComponent implements OnInit {
     private dashboardService: DashboardService;
     public SentQuotesKPIData: Array<ChartingDataClass>;
     public NoQuotesData = false;
+    private acceptedSatgeId: string;
 
     constructor(private _entityResourceService: EntityResourceService) {
         this.SetChartId();
@@ -62,6 +66,20 @@ export class SentQuotesKPIComponent implements OnInit {
             this.FillDashboardArgs();
             this.LoadDashboardData();
         });
+
+        //this.GetQuoteSatges();
+    }
+
+    GetQuoteSatges() {
+        var myQuoteStageListService = new QuoteStageListService();
+        myQuoteStageListService.getAllFromCache().subscribe((resp: any) => {
+            if (!resp.HasError) {
+                var stages : QuoteStageList[] = resp.Result;
+
+                this.acceptedSatgeId = stages.filter(d => d.Code == "QTAC")[0].Id;
+            }
+        });
+
     }
 
     FillDashboardArgs() {
@@ -103,39 +121,6 @@ export class SentQuotesKPIComponent implements OnInit {
         this.DrawSentQuotesKPIChart();
     }
 
-    DrawSentQuotesKPIChart11() {
-        var maximum = 0;
-        var Graphs = [];
-        var DataProvider = [];
-        var quoteKPIYAxis = [];
-        var quoteKPIXAxis = [];
-        var j = 0;
-        var StringArr: Array<string> = new Array<string>();
-        this.SentQuotesKPIData.forEach(element => {
-            if (!StringArr.includes(element.StringProperty)) {
-                StringArr.push(element.StringProperty);
-                quoteKPIYAxis[j] = { data: [], label: null, BindingElement: [] };
-                quoteKPIYAxis[j].data = [];
-                j++;
-            }
-        });
-
-
-        try {
-            if (quoteKPIXAxis.length != 0) {
-                maximum += 1;
-                while (maximum % 5 != 0) {
-                    maximum += 1;
-                }
-                makeAmBarChart(this.SentQuotesKPIDashboardId, Graphs, DataProvider, maximum);
-            }
-        }
-        catch (e) {
-
-        }
-        this.IsNoData = false;
-    }
-
     public QuotesKPIYAxis: any[] = [];
     DrawSentQuotesKPIChart() {
         var quotesKPIXAxis = [];
@@ -172,7 +157,7 @@ export class SentQuotesKPIComponent implements OnInit {
             }
             if (index == 0) {
                 Graphs[0] = {
-                    "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",
+                    "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + " %",
                     "fillAlphas": 1,
                     "lineAlpha": 0,
                     "id": "AmGraph-1",
@@ -194,11 +179,7 @@ export class SentQuotesKPIComponent implements OnInit {
 
         try {
             if (quotesKPIXAxis.length != 0) {
-                maximum += 1;
-                while (maximum % 5 != 0) {
-                    maximum += 1;
-                }
-                makeAmBarChart(this.SentQuotesKPIDashboardId, Graphs, DataProvider, maximum, null, null, 0);
+                makeAmBarChart(this.SentQuotesKPIDashboardId, Graphs, DataProvider, maximum, null, null, 0,0,null, "Percentage  (%)");
             }
         }
         catch (e) { }
@@ -237,8 +218,10 @@ export class SentQuotesKPIComponent implements OnInit {
       
         if (flag) {
             filterAgrs.addAdditionalFilter("SentQuotesKPIChartFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate) + ";" + item.dataContext.category + "",null , "Equals", true, false, false, "String");
-            filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", true, false, false, "Boolean");
-            filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
+            filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
+            //filterAgrs.addAdditionalFilter("IsClosed", true, null, null, "Equals", true, false, false, "Boolean");
+            //filterAgrs.addAdditionalFilter("StageId", this.acceptedSatgeId, null, null, "Equals", false, false, false, "String");
+
             var listArgs = new ListComponentArgs();
             listArgs.Filters = filterAgrs;
             listArgs.QueryCode = myQueryCode;

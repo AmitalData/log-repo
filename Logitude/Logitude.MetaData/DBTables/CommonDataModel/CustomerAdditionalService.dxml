@@ -2,7 +2,8 @@
 <Table
   Name="CustomerAdditionalServices"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="CustomerId"
     Type="varchar"

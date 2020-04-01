@@ -79,6 +79,11 @@ namespace Logitude.XSD
             {
                 summaryDetailsItem.NatureOfGoods = Context.DescriptionOfGoods;
 
+                if(!string.IsNullOrEmpty(Context.SLAC))
+                {
+                    summaryDetailsItem.NatureOfGoods += Environment.NewLine + "SLAC: " + Context.SLAC;
+                }
+
                 if (Context.DescriptionOfGoodsTextList.Count > 0)
                 {
                     summaryDetailsItem.FreeTextDescriptionOfGoods = new string[1] { Context.DescriptionOfGoodsTextList.FirstOrDefault() };
@@ -232,6 +237,11 @@ namespace Logitude.XSD
             if (!string.IsNullOrEmpty(Context.DescriptionOfGoods))
             {
                 summaryDetailsItem.NatureOfGoods = Context.DescriptionOfGoods;
+
+                if (!string.IsNullOrEmpty(Context.SLAC))
+                {
+                    summaryDetailsItem.NatureOfGoods += Environment.NewLine + "SLAC: " + Context.SLAC;
+                }
 
                 if (Context.DescriptionOfGoodsTextList.Count > 0)
                 {

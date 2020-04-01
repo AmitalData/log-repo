@@ -518,6 +518,9 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
 
     DuplicateEmailValidation(ccEmails, internalUsersEmails, errors) {
+
+        var errorText = "";
+
         if (!this.IsInternal) {
             if (ccEmails != null && internalUsersEmails != null) {
                 var duplicate_emails = ccEmails.filter(x => internalUsersEmails.includes(x));
@@ -526,13 +529,21 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
                     duplicate_emails.forEach(item => {
                         duplicateEmailsError += item + ", ";
                     });
-
-                    errors.push(duplicateEmailsError.replace(/, \s*$/, "") + " emails are duplicate.");
+                    errorText = errorText + duplicateEmailsError.replace(/, \s*$/, "");
                 }
             }
 
             if ((ccEmails != null && ccEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1) || (internalUsersEmails != null && internalUsersEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1)) {
-                errors.push(this.ContactEmail + " contact email is duplicate.");
+                if (!errorText.includes(this.ContactEmail.toLocaleLowerCase())) {
+                    if (!AppTool.IsNullOrEmpty(errorText)) {
+                        errorText += ", "
+                    }
+                    errorText = errorText + this.ContactEmail;
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(errorText)) {
+                errors.push(errorText + " can't be repeated in To \/ CC \/ Notify");
             }
         }
     }
@@ -736,10 +747,16 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
     private CreateAttachments() {
         var myList = [];
+        var isQuotationAttachment: boolean = false;
         this.AttachmentsList.forEach(item => {
             myList.push(item.DocumentFilingId);
+            if (item.IsQuotationAttachment) isQuotationAttachment = true;
         });
+
         this.EntityPM.Attachments = myList;
+        if (!this.IsInternal) {
+            this.EntityPM.IsContainsQuotationAttachment = isQuotationAttachment;
+        }
     }
     IsLoadUploader: boolean;
     CurrentDocument: DocumentsFilingPM;
@@ -824,6 +841,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
                             if (quoteDocumentVersion) {
                                 this.ShowQuotationAttachmentLink = true;
                                 var attachment: AttachmentsArgs = new AttachmentsArgs(quoteDocumentVersion);
+                                attachment.IsQuotationAttachment = true;
                                 this.QuotationAttachmentsLists.push(attachment);
                 
                             }
@@ -842,7 +860,7 @@ export class AttachmentsArgs {
         this.DocumentFilingPM = documentFilingPM;
     }
 
-
+    public IsQuotationAttachment: boolean = false;
 
     private fileName: string = null;
     get FileName() {

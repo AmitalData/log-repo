@@ -653,6 +653,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? gLAccountMinimumInterest ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? GLAccountMinimumInterest  
+	   {
+	    
+	     get
+		{
+		   return gLAccountMinimumInterest;
+		 }
+		 set
+		 {
+		   if(gLAccountMinimumInterest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountMinimumInterest",OldValue=gLAccountMinimumInterest,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   gLAccountMinimumInterest=value;
+		   }
+			
+		 }
+	   }
+	  private string customerLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerLocalName  
+	   {
+	    
+	     get
+		{
+		   return customerLocalName;
+		 }
+		 set
+		 {
+		   if(customerLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerLocalName",OldValue=customerLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerLocalName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

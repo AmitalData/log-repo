@@ -672,6 +672,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
+
         private ContactPM GetLoggedContact(int tenant)
         {
             if (OverrideGetLoggedContactFunc != null)

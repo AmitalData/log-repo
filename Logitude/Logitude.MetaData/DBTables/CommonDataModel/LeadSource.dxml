@@ -2,7 +2,8 @@
 <Table
   Name="LeadSources"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"

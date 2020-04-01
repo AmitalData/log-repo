@@ -102,7 +102,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				AccountingPartnerRepository  accountingPartnerRepository = new AccountingPartnerRepository(MyContext);
-				IQueryable<AccountingPartner> entityPocos = accountingPartnerRepository.GetAccountingPartner(authToken.Tenant);
+				IQueryable<AccountingPartner> entityPocos = accountingPartnerRepository.GetAccountingPartners(authToken.Tenant);
 
 				AccountingPartnerQuery accountingPartnerQuery = new AccountingPartnerQuery(accountingPartnerRepository);
 			    IQueryable<AccountingPartnerList> entityLists = accountingPartnerQuery.GetIQueryableEntityList(entityPocos);
@@ -136,7 +136,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     ObjectTableName = "AccountingPartner",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "AccountingPartner",
+                    QuerySection = "AccountingPartners",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -219,7 +219,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 AccountingPartnerRepository  accountingPartnerRepository = new AccountingPartnerRepository(MyContext);
-                IQueryable<AccountingPartner> entityPocos = accountingPartnerRepository.GetAccountingPartner(tenant);
+                IQueryable<AccountingPartner> entityPocos = accountingPartnerRepository.GetAccountingPartners(tenant);
 
                 AccountingPartnerQuery accountingPartnerQuery = new AccountingPartnerQuery(accountingPartnerRepository);
                 

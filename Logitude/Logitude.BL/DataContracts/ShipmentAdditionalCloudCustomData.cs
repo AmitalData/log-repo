@@ -102,5 +102,6 @@ namespace Logitude.BL.DataContracts
         public string DclickTK { get; set; }
         public string thtk { get; set; }
         public string TargetEnv { get; set; }
+        public string u71 { get; set; }
     }
 }

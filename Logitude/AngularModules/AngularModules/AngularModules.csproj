@@ -338,6 +338,7 @@
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\ChooseProcedureCodeComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\TaskSchedulerHistoryComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.html" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.html" />
@@ -623,7 +624,6 @@
     <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\QuotesConversionComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\SentQuotesKPIComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\TopFiveSalesmanProfitComponent.ts" />
-    <TypeScriptCompile Include="CRM\Components\Workspaces\QuoteDashboardTabComponent\TopFiveSalesmanProfitComponentOld.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionContactList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionInviteeList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionList.ts" />
@@ -973,6 +973,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\ChooseProcedureCodeComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\FTBSchedulerTemplateComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\SchedulerTemplates\TaskSchedulerTemplateComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\TaskSchedulerHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\EditTabs\BIReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\ListTemplates\BIReportListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBIReport\Components\NewEntity\AgGridColumnsOperations.ts" />
@@ -1040,6 +1041,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\LastRunDetailList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\LogitudeLeadList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\RuleUpdateHistoryList.ts" />
@@ -1058,6 +1060,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWSubQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\FeatureTogglePM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\LastRunDetailPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LogitudeLeadPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepPM.ts" />
@@ -1071,11 +1074,14 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\TogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\WebhookKeysPM.ts" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
+    <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\DWObjectTableExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\BIReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\LastRunDetailExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\ObjectFieldPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\SchedulerExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\WebhookKeysExtendedPMService.ts" />
@@ -1091,6 +1097,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\FeatureToggleListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\LastRunDetailListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\PriceStepListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\RuleUpdateHistoryListService.ts" />
@@ -1105,6 +1112,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWSubQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\FeatureTogglePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\LastRunDetailPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SchedulerLogsPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
@@ -1160,6 +1168,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.html" />
+    <Content Include="InvoiceModules\ARPayment\Components\Other\CancelARPaymentComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\ARInvoiceStockInputTemplate.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\EditTabs\ARInvoiceStockGeneralTabComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\ManageStocksComponent.html" />
@@ -2061,6 +2070,7 @@
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\ARPayment\Components\Other\CancelARPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleARPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARPayment\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InvoiceModules\InvoiceStocks\Components\ARInvoiceStockInputTemplate.ts" />
@@ -2319,8 +2329,11 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.html" />
     <Content Include="TariffModule\Components\Helpers\TariffHelperComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
+    <Content Include="TariffModule\Components\NewEntity\NewTariffProductsComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.html" />
+    <Content Include="TariffModule\Components\ShortTitles\TariffShortTitleComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
+    <Content Include="TariffModule\Components\Workspaces\ContainerDefaultsComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\SettingsWorkspaceComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffWorkspaceComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\CostWorkspaceComponent.html" />
@@ -6632,6 +6645,7 @@
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\AWBSpecialHandlingCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\FBLStockExtenedPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\ShipmentComputedFieldExtendedService.ts" />
     <TypeScriptCompile Include="Shipment\Services\INTRAWebService.ts" />
     <TypeScriptCompile Include="Shipment\Services\Others\LogBoxSignatureClientService.ts" />
     <TypeScriptCompile Include="Shipment\Services\Others\ShipmentAdditionalCloudDataService.ts" />
@@ -6656,6 +6670,8 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\CustomsTransferHeaderPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentCustomsTransmissionPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Validators\ShipmentDeliveryValidator.ts" />
+    <TypeScriptCompile Include="Shipment\Validators\ShipmentPickupValidator.ts" />
     <TypeScriptCompile Include="Social\Components\AddSocialMessageParticipantsComponent.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransmissionsStatusListService.ts" />
     <TypeScriptCompile Include="Social\Components\ConversationMessageComponent.ts" />
@@ -6737,8 +6753,11 @@
     <TypeScriptCompile Include="TariffModule\Components\Helpers\TariffHelperComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewTariffProductsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\ShortTitles\TariffShortTitleComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\Workspaces\ContainerDefaultsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\CostWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSearchAirFreightPricesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSettingComponent.ts" />
@@ -6746,6 +6765,7 @@
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\WizardDimensionsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffList.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityLists\TariffProductList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffSettingList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionList.ts" />
@@ -6754,6 +6774,7 @@
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinesContainersPricePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffPM.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMs\TariffProductPM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffSettingPM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffTypePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffVersionAllInChargePM.ts" />
@@ -6762,7 +6783,9 @@
     <TypeScriptCompile Include="TariffModule\ModuleProviders.ts" />
     <TypeScriptCompile Include="TariffModule\Module_Tariff.ts" />
     <TypeScriptCompile Include="TariffModule\Services\ExtendedPMs\TariffVersionExtendedPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffProductListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSettingListService.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffProductPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffSettingPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\TariffDomainService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffListService.ts" />

@@ -2,7 +2,8 @@
 <Table
   Name="CheckDigitControlAlgorithms"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Code"
     Type="varchar"

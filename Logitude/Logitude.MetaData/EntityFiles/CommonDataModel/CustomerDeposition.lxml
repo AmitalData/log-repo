@@ -57,7 +57,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="true"
-  SearchFields="&quot;CustomerDeposition,CustomerDepositions,,Tenant,Id&quot;">
+  SearchFields="&quot;CustomerDeposition,CustomerDepositions,,Tenant,Id&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;099f77b3-b637-447d-8567-ed7bc0ad10d8&quot;"
     FieldName="&quot;Id&quot;"
@@ -371,7 +373,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ValidityStartDate&quot;"
     DefaultText="&quot;Start Date&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -436,7 +438,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ValidityEndDate&quot;"
     DefaultText="&quot;End Date&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"

@@ -56,7 +56,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;SATInterfaceSetting,SATInterfaceSettings,,Tenant,&quot;">
+  SearchFields="&quot;SATInterfaceSetting,SATInterfaceSettings,,Tenant,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;44b70990-bd3b-4f96-b69c-1e0465bb3b93&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -212,8 +214,8 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;SATInterface&quot;"
     MinLength="0"
-    MaxLength="4"
-    IsRequired="false"
+    MaxLength="10"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -255,7 +257,7 @@
     ListFieldLable="&quot;SATInterfaceCodeListLable&quot;"
     ListLableDefaultText="&quot;Customs Interface&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -276,7 +278,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="SATInterface"
+    NavigationPropertyName="SATInterface" />
   <field
     Id="&quot;106d6c0c-996b-41de-ad71-cea118861c5e&quot;"
     FieldName="&quot;Token&quot;"
@@ -285,7 +289,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;SATInterfaceSetting&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="40"
     IsRequired="false"
@@ -551,7 +555,7 @@
     HelpTextCode="&quot;MetodoPagoCode&quot;"
     HelpTextDefaultText="&quot;Way to Pay:&#xA;-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice&#xA;-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -571,7 +575,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="MetodoPago"
+    NavigationPropertyName="MetodoPago" />
   <field
     Id="&quot;8750a175-fd5d-49bd-a0e8-093a7bdf85df&quot;"
     FieldName="&quot;CustomsInterfaceCode&quot;"

@@ -2,7 +2,8 @@
 <Table
   Name="CommunicationLogSteps"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="StepNumber"
     Type="int">

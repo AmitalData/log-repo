@@ -2,7 +2,8 @@
 <Table
   Name="ARInvoices"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Invoice">
   <Column
     Name="Id"
     Type="varchar"
@@ -35,13 +36,13 @@
     Name="InvoiceDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="DueDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="PrintDate"
@@ -53,25 +54,25 @@
     Name="SubTotalInLocalCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="SubTotalInInvoiceCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="AmountInLocalCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="AmountInInvoiceCurrency"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="IsAutoCredit"
@@ -110,13 +111,13 @@
     Name="InvoiceCurrencyExchangeRate"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="CreateDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="DraftNumber"
@@ -161,7 +162,7 @@
     Name="AmountDue"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="MainEntityId"
@@ -199,15 +200,17 @@
   </Column>
   <Column
     Name="AmountInProfitCurrency"
-    Type="float">
+    Type="float"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ProfitCurrencyExchangeRate"
-    Type="float">
+    Type="float"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="AmountDueInLocalCurrency"
@@ -225,7 +228,7 @@
     Name="UpdateDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="IsPrinted"
@@ -533,8 +536,8 @@
   </Column>
   <Column
     Name="UsoCFDICode"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -713,6 +716,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="RegionalTaxId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RegionalTaxPercentage"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CancelledByARInvoiceId"
     ReferencedTable="ARInvoices"
@@ -831,6 +847,11 @@
   <Relation
     ForeignKeyColumn="BankAccountLiteId"
     ReferencedTable="BankAccountLites"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RegionalTaxId"
+    ReferencedTable="VatTypes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

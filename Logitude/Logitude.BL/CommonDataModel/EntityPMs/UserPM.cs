@@ -264,5 +264,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public bool AdditionalPackagesOnly { get; set; }
+        [DataMember]
+        public string LayoutDirection { get; set; }
+
     }
 }

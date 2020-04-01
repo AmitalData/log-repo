@@ -300,7 +300,8 @@ export class VatTypeListService {
 					serviceResponse.CallTime = callTime;
                     
                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "VatType", "GetAllFromCache", ""); 
-
+                    console.log("Vat type was loaded from storage");
+                    console.log(VatTypeListService.CachedData);
                     
                 }
             }
@@ -328,6 +329,9 @@ export class VatTypeListService {
                         if (filters.GetAll) {
                             LocalStorageManager.SetItem(cacheKey, JSON.stringify(_mappedListsArray))
                             VatTypeListService.CachedData = _mappedListsArray;
+
+                            console.log("Vat type was loaded from server");
+                            console.log(VatTypeListService.CachedData);
                         }
                         else {
 							
@@ -338,6 +342,8 @@ export class VatTypeListService {
 						
                     var servertime = response.headers.get('ServerExecutionTime');
                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetAll", ""); 
+
+
 
                         return serviceResponse;
                     }).catch(ServiceHelper.HandleServiceError);
@@ -353,7 +359,10 @@ export class VatTypeListService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
             serviceResponse.Result = filteredData;
-			serviceResponse.CallTime = callTime;
+            serviceResponse.CallTime = callTime;
+
+            console.log("Vat type was loaded from memory");
+            console.log(VatTypeListService.CachedData);
 
             return Observable.of(serviceResponse);
         }

@@ -38,7 +38,7 @@ export class CustomFieldsComponent {
         this.ObjectTableId = args['ObjectTableId'];
         this.ObjectTableName = args['ObjectTableName'];
 
-        this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe(myResult => {
+        this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -93,7 +93,7 @@ export class CustomFieldsComponent {
         logWindow.Title = "Add New Custom Field"; 
         var windowArgs: any = {};
         this.myService = new GeneralDomainService();
-        this.myService.GetFieldDataTypes().subscribe(myResult => {
+        this.myService.GetFieldDataTypes().subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 windowArgs.IsNew = true;
@@ -109,7 +109,7 @@ export class CustomFieldsComponent {
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
                 logWindow.WindowClosed.subscribe((event: any) => {
-                    this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe(myResult => {
+                    this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
 
@@ -131,7 +131,7 @@ export class CustomFieldsComponent {
         logWindow.Title = "Add New Custom Field";
         var windowArgs: any = {};
         this.myService = new GeneralDomainService();
-        this.myService.GetFieldDataTypes().subscribe(myResult => {
+        this.myService.GetFieldDataTypes().subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this._ObjectFieldPMService.get(item.Id).subscribe(field => {
@@ -148,7 +148,7 @@ export class CustomFieldsComponent {
                     logWindow.WindowArgs = windowArgs;
                     logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditCustomFieldComponent');
                     logWindow.WindowClosed.subscribe((event: any) => {
-                        this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe(myResult => {
+                        this.myService.GetCustomFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
                             var myResponse: ServiceResponse = myResult;
                             if (!myResponse.HasError) {
 

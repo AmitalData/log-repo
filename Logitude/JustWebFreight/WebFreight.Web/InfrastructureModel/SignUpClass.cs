@@ -109,6 +109,7 @@ namespace WebFreight.Web.InfrastructureModel
         static AccountingPaymentMethodRepository PaymentMethodRepository;
         // Tariff 
         static PriceStepRepository priceStepRepository;
+        static TariffProductRepository tariffProductRepository;
 
         //Tickets 
         static TicketTypeRepository ticketTypeRepository;
@@ -255,6 +256,7 @@ namespace WebFreight.Web.InfrastructureModel
 
             //Tariff 
             priceStepRepository = new PriceStepRepository(theTenant);
+            tariffProductRepository = new TariffProductRepository(theTenant);
 
             //Tickets 
             ticketTypeRepository = new TicketTypeRepository(theTenant);
@@ -420,7 +422,7 @@ namespace WebFreight.Web.InfrastructureModel
                 InitializeRepositories(tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
                 AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
-
+                AddDefaultTariffProducts(tenant);
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
@@ -991,12 +993,42 @@ namespace WebFreight.Web.InfrastructureModel
                     Id = IdCounter.GetNumber("TariffSetting", theTenant).ToString(),
                     Tenant = theTenant,
                     DefaultPriceSteps = zeroEntity.DefaultPriceSteps,
+                    ContainerDefaults = "20GP, 40GP, 20HC",
                 };
 
                 iRepository.Add(settings);
                 iRepository.SubmitChanges();
                 AddPriceSteps(settings);
             }   
+        }
+
+        private static void AddDefaultTariffProducts(int tenant)
+        {
+            TariffProduct GENTariffProduct = new TariffProduct()
+            {
+                Id = IdCounter.GetNumber("TariffProduct", tenant).ToString(),
+                Tenant = tenant,
+                Code = "GEN",
+                Name = "General",
+                LocalName = "General",
+                Inactive = false,
+                SearchFields = "GEN, General"
+            };
+            
+            TariffProduct DNGTariffProduct = new TariffProduct()
+            {
+                Id = IdCounter.GetNumber("TariffProduct", tenant).ToString(),
+                Tenant = tenant,
+                Code = "DNG",
+                Name = "Dangerous Goods",
+                LocalName = "Dangerous Goods",
+                Inactive = false,
+                SearchFields = "DNG, Dangerous Goods"
+            };
+
+            tariffProductRepository.Add(GENTariffProduct);
+            tariffProductRepository.Add(DNGTariffProduct);
+            tariffProductRepository.SubmitChanges();
         }
 
         private static void AddDefaultAccountingSettings(int theTenant, AccountingSettingRepository theAccountingSettingsRepository, AccountingSetting tenantZeroAccoutingSettings)

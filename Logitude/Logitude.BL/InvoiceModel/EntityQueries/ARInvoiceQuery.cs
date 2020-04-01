@@ -1380,6 +1380,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ARInvoiceStockId = a.ARInvoiceStockId,
                             BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                             CreatedByPartner = a.CreatedByPartner,
+                            RegionalTaxId = a.RegionalTaxId,
+                            RegionalTaxPercentage = a.RegionalTaxPercentage,
                         };
 
             return query;
@@ -1517,6 +1519,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                              CreatedByPartner = entity.CreatedByPartner,
+                             RegionalTaxId = entity.RegionalTaxId,
+                             RegionalTaxPercentage = entity.RegionalTaxPercentage,
                          };
 
             return result;
@@ -1629,6 +1633,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               IsInvoiceNumberFromStock = a.IsInvoiceNumberFromStock,
                                               BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                               CreatedByPartner = a.CreatedByPartner,
+                                              RegionalTaxId = a.RegionalTaxId,
+                                              RegionalTaxPercentage = a.RegionalTaxPercentage,
                                           }).ToList();
             return invoices;
         }
@@ -1744,6 +1750,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     DocumentFilingId = entityPOCO.DocumentFilingId,
                     BranchName = entityPOCO.Branch == null ? null : entityPOCO.Branch.EnglishName,
                     CreatedByPartner = entityPOCO.CreatedByPartner,
+                    RegionalTaxId = entityPOCO.RegionalTaxId,
+                    RegionalTaxPercentage = entityPOCO.RegionalTaxPercentage,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2068,6 +2076,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                              CreatedByPartner = entity.CreatedByPartner,
                              SATXML = entity.SATXML,
+                             RegionalTaxId = entity.RegionalTaxId,
+                             RegionalTaxPercentage = entity.RegionalTaxPercentage,
                          };
 
             return result;

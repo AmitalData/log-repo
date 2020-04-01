@@ -2,7 +2,8 @@
 <Table
   Name="FailedTokenLogs"
   Schema="dbo"
-  DBType="SystemLogs">
+  DBType="SystemLogs"
+  Module="SystemLogs">
   <Column
     Name="Id"
     Type="varchar"

@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "APILogsData",
 			      				    IsNew =  false,
 			      				    DBTableName =  "APILogsData",
-			      				    OldDBTableName =  "APILogsData",
 			      				    ObjectTableSingular =  "API Logs Data",
 			      				    ObjectTablePlural =  "APILogsData",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "API Logs Data",
-			      				    Code =  "c4f3",
+			      				    Code =  "88b7",
 			      				    Name =  "APILogsData",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "DiagnosticLog",
-					  						OldFieldName =  "DiagnosticLog",
 					  						ObjectTableName =  "APILogsData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -203,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "BodyData",
-					  						OldFieldName =  "BodyData",
 					  						ObjectTableName =  "APILogsData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -265,7 +262,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ExceptionsMessage",
-					  						OldFieldName =  "ExceptionsMessage",
 					  						ObjectTableName =  "APILogsData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -327,7 +323,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "APILogsData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -389,7 +384,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "RequestData",
-					  						OldFieldName =  "RequestData",
 					  						ObjectTableName =  "APILogsData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -451,7 +445,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ResponseData",
-					  						OldFieldName =  "ResponseData",
 					  						ObjectTableName =  "APILogsData",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,

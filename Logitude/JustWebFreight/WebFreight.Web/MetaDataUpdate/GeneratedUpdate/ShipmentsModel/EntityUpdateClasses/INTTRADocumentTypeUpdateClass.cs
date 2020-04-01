@@ -269,7 +269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "INTTRADocumentType",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						FieldCode =  "INTTRADocumentType.SearchFields",
 					  						Code =  "SearchFields",
 					  						MaxLength =  1000,

@@ -18,7 +18,6 @@ namespace Logitude.IntegrationTest.Core
             await GetTenant();
             await GetBasicArgsFromUser();
         }
-
         private static async Task GetTenant()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("Tenants/GetSingle?id=" + IntegrationTestLoginParameters.Tenant);
@@ -26,9 +25,10 @@ namespace Logitude.IntegrationTest.Core
             TenantPM tenantPM = JsonConvert.DeserializeObject<TenantPM>(stringResult);
             IntegrationTestLoginParameters.TenantPM = tenantPM;
             CorePreparationVariables.TenantPM = tenantPM;
+            CorePreparationVariables.LocalCurrencyId = tenantPM.CurrencyId;
+            CorePreparationVariables.ProfitCurrencyId = tenantPM.ProfitCurrencyId;
+            CorePreparationVariables.ProfitCurrencyRate = tenantPM.ProfitCurrencyRate;
         }
-
-
         public static async Task GetBasicArgsFromUser()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("Userviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&Filter1Value=" + IntegrationTestLoginParameters.Email);
@@ -39,7 +39,5 @@ namespace Logitude.IntegrationTest.Core
             CorePreparationVariables.DepartmentId = user.DepartmentId;
             CorePreparationVariables.BusinessUnitId = user.BusinessUnitId;
         }
-    }
-
-   
+    } 
 }

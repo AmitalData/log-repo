@@ -75,10 +75,15 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get IsAccepted() { return this.isAccepted }
     public set IsAccepted(newValue: boolean) { this.isAccepted = newValue; }
 
+    private ScreenWidth: number;
+    private MaxScreenWidth: number = 600;
+
     IsAcceptedChanged($event) {
         this.IsAccepted = $event;
     }
     ngOnInit() {
+
+        this.ScreenWidth = window.innerWidth > this.MaxScreenWidth ? this.MaxScreenWidth : window.innerWidth;;
 
     }
     ngAfterViewInit() {
@@ -110,10 +115,11 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 }
             }
         }
+        this.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
             if (MyResult.Result) {
                 //this.EntityPm = MyResult.Result;
-                //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe(AdditionalResult => {
+                //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
 
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                 if (this.AdditionalData.IsPaymentRequired) {
@@ -139,6 +145,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
 
                     this.CompanyLogo = myLogoResult.Result;
+                    this.StopBusyIndicator();
 
                 });
                 //GetTenantEcommerceSupportEmail
@@ -150,7 +157,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 if (this.RefreshTimer) {
                     clearTimeout(this.RefreshTimer);
                 }
-
+                //this.StopBusyIndicator();
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
@@ -169,7 +176,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
                 if (MyResult.Result) {
                     //this.EntityPm = MyResult.Result;
-                    //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe(AdditionalResult => {
+                    //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
 
                     this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                     if (this.AdditionalData.IsPaymentRequired) {
@@ -274,6 +281,20 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
     public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
 
+    public get u71() { return this.AdditionalData.PaymentData.u71 }
+    public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
+
+    public BusyIndicatorText: string = null;
+    public ShowBusyIndicator: boolean = false;
+    public StartBusyIndicator(myText: string) {
+        this.BusyIndicatorText = myText;
+        this.ShowBusyIndicator = true;
+    }
+
+    public StopBusyIndicator() {
+        this.BusyIndicatorText = null;
+        this.ShowBusyIndicator = false;
+    }
 
 
     ShowPaymentDetailsScreen: boolean = false;
@@ -301,7 +322,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
 
     ViewAggreement() {
-        //this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+        //this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe((myResult:any) => {
 
         //if (myResult.Result) { 
         //var securityId = myResult.Result.SecurityId;

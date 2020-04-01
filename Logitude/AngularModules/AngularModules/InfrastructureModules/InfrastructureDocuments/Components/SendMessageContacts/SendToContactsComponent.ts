@@ -42,6 +42,7 @@ export class SendToContactsComponent implements OnInit {
     ComponentArgs: ComponentArgs;
     myPartnerId: string;
     public IsSearchIconVisible: boolean = true;
+    public IsSchedulerReport: boolean = false;
 
     @Output() SearchFieldchangeevent = new EventEmitter();
     ToEmailLists: string[];
@@ -95,6 +96,9 @@ export class SendToContactsComponent implements OnInit {
             this.CurrentSession.Sessionkey = Guid.newGuid();
         }
 
+        if (args.IsSchedulerReport) {
+            this.IsSchedulerReport = true;
+        }
 
         this.PartnersObslist = args.PartnersObslist;
         this.OnCloseSendToContactsEvent = args.OnCloseSendToContactsEvent;
@@ -111,7 +115,7 @@ export class SendToContactsComponent implements OnInit {
 
         if (this.PartnersObslist) {
 
-            if (!this.PartnersObslist.filter(d => d.PartnerType == "All")[0]) {
+            if (!this.PartnersObslist.filter(d => d.PartnerType == "All")[0] && !this.IsSchedulerReport) {
                 this.PartnersObslist.push(new EntityPartner("All", "", false));
             }
 

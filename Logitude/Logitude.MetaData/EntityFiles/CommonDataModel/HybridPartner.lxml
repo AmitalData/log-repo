@@ -62,7 +62,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;HybridPartner,HybridPartners,Simplog.Infrastructure.Views.HybridPartner.NewHybridPartnerCommand,Id,&quot;">
+  SearchFields="&quot;HybridPartner,HybridPartners,Simplog.Infrastructure.Views.HybridPartner.NewHybridPartnerCommand,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;44d32204-3580-4ca2-b9ad-14381cf526e9&quot;"
     FieldName="&quot;Id&quot;"
@@ -73,7 +75,7 @@
     ObjectTableName="&quot;HybridPartner&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -146,7 +148,7 @@
     ObjectTableName="&quot;HybridPartner&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -187,7 +189,7 @@
     ListLableDefaultText="&quot;LogoId&quot;"
     ListLocalDefaultText="&quot;LogoId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -208,7 +210,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ImageDetail"
+    NavigationPropertyName="ImageDetail" />
   <field
     Id="&quot;58367418-c6fc-441d-93ae-396c95631c96&quot;"
     FieldName="&quot;SmallLogoId&quot;"
@@ -219,7 +223,7 @@
     ObjectTableName="&quot;HybridPartner&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -260,7 +264,7 @@
     ListLableDefaultText="&quot;SmallLogoId&quot;"
     ListLocalDefaultText="&quot;SmallLogoId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -281,7 +285,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ImageDetail"
+    NavigationPropertyName="ImageDetail1" />
   <field
     Id="&quot;b4788b98-84d2-4818-a7d9-3f81127719e2&quot;"
     FieldName="&quot;SearchFields&quot;"
@@ -290,9 +296,9 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;HybridPartner&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="1000"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -587,7 +593,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;HybridPartner&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="25"
     IsRequired="false"

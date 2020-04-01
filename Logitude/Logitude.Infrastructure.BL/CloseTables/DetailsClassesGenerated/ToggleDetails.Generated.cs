@@ -90,6 +90,20 @@ namespace Logitude.Infrastructure.BL
                 Name = "Build Document Via WorkerRole", 
                 SearchFields = "BDW,Build Document Via WorkerRole", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RRS", 
+                Name = "Run Report on Secondary DB", 
+                SearchFields = "RRS,Run Report on Secondary DB", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Charges DWH", 
+                Code = "CWH", 
+                SearchFields = "CWH,Charges DWH", 
+			});
 			
             return all;
        }

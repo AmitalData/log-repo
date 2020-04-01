@@ -188,26 +188,25 @@ tenant);
 
 
 
-        public HttpResponseMessage PutDelsertDraftLedgerTransaction(List<LedgerTransactionList> OpenRecilationDrafts)
+        public HttpResponseMessage PutDelsertDraftLedgerTransaction(List<string> transactionsIds)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
-                //var accountingContext = AccountingContext.GetContext(tenant);
-                //LedgerTransactionListQueryService listService = new LedgerTransactionListQueryService(accountingContext);
-                if (OpenRecilationDrafts == null || OpenRecilationDrafts.Count == 0)
-                {
-                    throw new Exception("PutDelSertDraftLedgerTransaction expected a list !");
-                }
+
 
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
-                var qs = new LedgerTransactionListQueryService(accountingContext);
+                LedgerTransactionListQueryService transactionsQuery = new LedgerTransactionListQueryService(accountingContext);
+                List<LedgerTransactionList> transactions = transactionsQuery.GetTransactionsByIds(transactionsIds);
 
-                LedgerTransactionUpdateService us = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), OpenRecilationDrafts.First().Tenant);
-                us.DelSertOpenRecilationDrafts(OpenRecilationDrafts);
+
+                if (transactions == null || transactions.Count == 0)
+                    throw new Exception("PutDelSertDraftLedgerTransaction expected a list !");
+
+                LedgerTransactionUpdateService us = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                us.DelSertOpenRecilationDrafts(transactions);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { Ok = true });
             }
@@ -291,23 +290,23 @@ tenant);
 
 
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
+                List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenLedgerTransactions(queryOperations, gLAccountId, TransferGlAccountId, tenant);
+                int transactionsCount = transactionQuery.GetOpenLedgerTransactionsCount(queryOperations, gLAccountId, TransferGlAccountId, tenant);
 
-                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, false);
-                GenericCallBack callback_transfer = transactionQuery.GetExternalReconciliationFilterCallBack(queryOperations, TransferGlAccountId, tenant);
+                //GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, false);
+                //GenericCallBack callback_transfer = transactionQuery.GetExternalReconciliationFilterCallBack(queryOperations, TransferGlAccountId, tenant);
 
-                List<LedgerTransactionList> openReconciliation = transactionQuery.GetReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
-                List<LedgerTransactionList> openReconciliation_transfer = transactionQuery.GetReconciliationFilterListForTransferGLAccount(queryOperations, callback_transfer, TransferGlAccountId, tenant);
 
-                openReconciliation = openReconciliation.Concat(openReconciliation_transfer).ToList();
+                //List<LedgerTransactionList> openReconciliation = transactionQuery.GetReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+                //List<LedgerTransactionList> openReconciliation_transfer = transactionQuery.GetReconciliationFilterListForTransferGLAccount(queryOperations, callback_transfer, TransferGlAccountId, tenant);
+
+                //openReconciliation = openReconciliation.Concat(openReconciliation_transfer).ToList();
 
                 //openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
-                {
-                    int count = callback.TotalRecord + callback_transfer.TotalRecord;
-                    response.Count = count;
-                }
+                    response.Count = transactionsCount;
 
                 response.Result = openReconciliation;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

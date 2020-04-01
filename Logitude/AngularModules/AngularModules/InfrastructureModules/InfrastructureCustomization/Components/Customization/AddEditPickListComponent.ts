@@ -46,7 +46,7 @@ export class AddEditPickListComponent extends BaseComponent {
             this.PickListsList = new ObservableCollection([]);
         }
         else {
-            this.myService.GetCustomPickListsByCode(this.PickListCode).subscribe(myResult => {
+            this.myService.GetCustomPickListsByCode(this.PickListCode).subscribe((myResult: ServiceResponse) => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
 
@@ -194,7 +194,7 @@ export class AddEditPickListComponent extends BaseComponent {
                     this.GeneralEntitiesArgs.CustomPickListPMs.push(mappedEntity);
                 });
                 if (this.isNew) {
-                    this.myService.insertPickListGeneralEntities(this.GeneralEntitiesArgs).subscribe(myResult => {
+                    this.myService.insertPickListGeneralEntities(this.GeneralEntitiesArgs).subscribe((myResult: ServiceResponse) => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                         CachedDataManager.RefreshTableData("CustomPickList", true);
@@ -209,7 +209,7 @@ export class AddEditPickListComponent extends BaseComponent {
                     });
                 }
                 else {
-                    this.myService.updatePickListGeneralEntities(this.GeneralEntitiesArgs).subscribe(myResult => {
+                    this.myService.updatePickListGeneralEntities(this.GeneralEntitiesArgs).subscribe((myResult: ServiceResponse) => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                         CachedDataManager.RefreshTableData("CustomPickList", true);

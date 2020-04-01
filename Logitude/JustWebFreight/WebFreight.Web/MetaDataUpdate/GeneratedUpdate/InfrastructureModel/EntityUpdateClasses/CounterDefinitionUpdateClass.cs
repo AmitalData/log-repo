@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "CounterDefinition",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CounterDefinitions",
-			      				    OldDBTableName =  "CounterDefinitions",
 			      				    ObjectTableSingular =  "Counter Definition",
 			      				    ObjectTablePlural =  "CounterDefinitions",
 			      				    HasCustomFilter =  false,
@@ -116,9 +115,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Counter Definition",
-			      				    Code =  "b8fd",
+			      				    Code =  "63ef",
 			      				    Name =  "CounterDefinition",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "BusinessInfrastructure",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -126,6 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "CounterDefinition,CounterDefinitions,,Id,",
 			      				    HashString =  CounterDefinitionUpdateClass.HashString,
 			                    
@@ -139,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Prefix",
-					  						OldFieldName =  "Prefix",
 					  						ObjectTableName =  "CounterDefinition",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -190,6 +190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Prefix",
@@ -202,11 +203,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "StartNumber",
-					  						OldFieldName =  "StartNumber",
 					  						ObjectTableName =  "CounterDefinition",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -253,6 +253,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "StartNumber",
@@ -265,7 +266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "CounterSize",
-					  						OldFieldName =  "CounterSize",
 					  						ObjectTableName =  "CounterDefinition",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -312,6 +312,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -323,7 +324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Suffix",
-					  						OldFieldName =  "Suffix",
 					  						ObjectTableName =  "CounterDefinition",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -370,6 +370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -383,7 +384,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CounterDefinitionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CounterDefinition" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> CounterDefinitionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CounterDefinition").ToList();
+		       
+	      
+
+	         Screen CounterDefinitionCounterDefinitionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CounterDefinition.HeaderScreen", Name = "CounterDefinitionHeaderScreen", ObjectTableId = CounterDefinitionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CounterDefinitionObjectTable.HeaderScreenId = CounterDefinitionCounterDefinitionHeaderScreenScreen0.Id;
+		    CounterDefinitionObjectTable.HeaderScreenCode = CounterDefinitionCounterDefinitionHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

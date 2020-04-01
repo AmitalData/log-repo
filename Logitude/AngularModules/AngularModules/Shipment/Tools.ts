@@ -2,7 +2,8 @@ import {AppTool, DateTool, ArrayTool} from '../Infrastructure/Tools';
 import {Validator} from '../Infrastructure/Validators/Validator';
 import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../Infrastructure/Utilities/TextCodeTranslator';
+import { TextCodeTranslator } from '../Infrastructure/Utilities/TextCodeTranslator';
+import { PackageAmountCalculator } from '../Infrastructure/Utilities/PackageAmountCalculator';
 import {ShipmentPM} from './EntityPMs/ShipmentPM';
 import {ShipmentPayablePM} from './EntityPMs/ShipmentPayablePM';
 import {ShipmentReceivablePM} from './EntityPMs/ShipmentReceivablePM';
@@ -26,8 +27,6 @@ import {LastRate} from '../Common/Services/CurrencyRatesService';
 import {ServiceResponse} from '../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentPickUpPM} from './EntityPMs/ShipmentPickUpPM';
 import {ShipmentDeliveryPM} from './EntityPMs/ShipmentDeliveryPM';
-import {VatTypeList} from '../Common/EntityLists/VatTypeList';
-import { retry } from 'rxjs/operators';
 
 export class ShipmentTool {
     private static CurrentSession = SessionLocator.SelectedSession;
@@ -1660,12 +1659,12 @@ export class ShipmentTool {
                 shipmentPM.ShipmentPackages.forEach((item) => {
 
                     item.InsideShipmentPackages.forEach((insideItem) => {
-                        insideItem.Volume = AppTool.ComputePackageVolume(insideItem.Quantity, insideItem.Width, insideItem.Height, insideItem.Length, insideItem.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode);
-                        insideItem.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(insideItem.Quantity, insideItem.Width, insideItem.Height, insideItem.Length, insideItem.Volume, insideItem.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode, shipmentPM.ChargeableWeightUnitCode);
+                        insideItem.Volume = PackageAmountCalculator.ComputeVolume(insideItem.Volume, insideItem.Quantity, insideItem.Width, insideItem.Height, insideItem.Length, insideItem.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode);
+                        insideItem.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(insideItem.VolumetricWeight, insideItem.Volume, insideItem.Weight, shipmentPM.Ratio, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode, shipmentPM.ChargeableWeightUnitCode);
                     })
 
-                    item.Volume = AppTool.ComputePackageVolume(item.Quantity, item.Width, item.Height, item.Length, item.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode);
-                    item.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(item.Quantity, item.Width, item.Height, item.Length, item.Volume, item.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode, shipmentPM.ChargeableWeightUnitCode);
+                    item.Volume = PackageAmountCalculator.ComputeVolume(item.Volume, item.Quantity, item.Width, item.Height, item.Length, item.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode);
+                    item.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.Volume, item.Weight, shipmentPM.Ratio, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode, shipmentPM.ChargeableWeightUnitCode);
 
                     if (item.Quantity != null) {
                         myQuantity += item.Quantity;
@@ -1803,7 +1802,7 @@ export class ShipmentTool {
     public static OnShipmentQuantitiesChanged(entityPM: ShipmentPM) {
         if (entityPM) {
             var isLCL = this.IsLCL(entityPM);
-            if (isLCL) {
+            //if (isLCL) {
 
                 entityPM.ShipmentPayables.forEach(itemPayable => {
                     if (AppTool.IsNullOrEmpty(itemPayable.UnitPrice)) {
@@ -1874,11 +1873,11 @@ export class ShipmentTool {
                         }
                     }
                 });
-            }
+            //}
 
-            else {
+            //else {
 
-            }
+            //}
 
         }
     }

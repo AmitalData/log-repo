@@ -75,8 +75,7 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AccountingPeriodUpdateClass
-   {  		
-		public const string HashString = "5d639491052bdd9921e97c2ac8225007";
+   {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות תקופות חשבונאיות",
 			      				    DefaultText =  "Accounting Period",
-			      				    Code =  "3bc2",
+			      				    Code =  "d24c",
 			      				    Name =  "AccountingPeriod Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -133,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    HashString =  AccountingPeriodUpdateClass.HashString,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -196,6 +195,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -258,6 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -320,6 +321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -382,6 +384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -444,6 +447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -457,7 +461,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable AccountingPeriodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPeriod" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> AccountingPeriodObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingPeriod").ToList();
+		       
+	      
+
+	         Screen AccountingPeriodAccountingPeriodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingPeriod.HeaderScreen", Name = "AccountingPeriodHeaderScreen", ObjectTableId = AccountingPeriodObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    AccountingPeriodObjectTable.HeaderScreenId = AccountingPeriodAccountingPeriodHeaderScreenScreen0.Id;
+		    AccountingPeriodObjectTable.HeaderScreenCode = AccountingPeriodAccountingPeriodHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -667,6 +683,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantOpenInvoiceMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantOpenInvoiceMonth", DefaultText = "Invoice month cannot be opened, The accounting month must first be opened",LocalDefaultText = @"לא ניתן לפתוח חודש חשבונית , יש לפתוח ראשית את החודש החשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantCancelInvoiceClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantCancelInvoiceClosedMonth", DefaultText = "Cannot open an invoice's closed month which is less than accounting period's closed month.",LocalDefaultText = @"לא ניתן לפתוח חודש חשבונית לתקופה קודמת לחודש חשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantOpenInterestInvoiceMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantOpenInterestInvoiceMonth", DefaultText = "Interest Invoice month cannot be opened, The accounting month must first be opened",LocalDefaultText = @"לא ניתן לפתוח תקופה חשבונאית לחשבוניות ריבית , יש לפתוח תחילה את התקופה החשבונאית לרישום חשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingPeriodTextCode_AccountingPeriodOCantCancelInterestInvoiceClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriod.O.CantCancelInterestInvoiceClosedMonth", DefaultText = "Cannot open an invoice's closed month which is less than accounting period's closed month.",LocalDefaultText = @"לא ניתן לפתוח חודש חשבונית לתקופה קודמת לחודש חשבונאי", ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

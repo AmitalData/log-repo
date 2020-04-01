@@ -89,7 +89,7 @@ export class AddEditShipmentAssemblyComponent extends BaseComponent {
         }
 
         else {
-            this.myCardListService.getSingle(this.ShipperId).subscribe(myResult => {
+            this.myCardListService.getSingle(this.ShipperId).subscribe((myResult:any) => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -108,7 +108,7 @@ export class AddEditShipmentAssemblyComponent extends BaseComponent {
         }
     }
     private LoadShipperCard() {
-        this.myCardListService.getSingle(this.ShipperId).subscribe(myResult => {
+        this.myCardListService.getSingle(this.ShipperId).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {

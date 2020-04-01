@@ -76,7 +76,7 @@ export class BankAccountMenuButtonsHandler {
                             this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) => {
                                 if (serviceResponse.Result) {
                                     var result = serviceResponse.Result;
-                                    var transaction = result.Result; // get the data
+                                    var transaction = result; // get the data
                                     var openAmountCurrency = transaction ? transaction.OpenAmountCurrencySign : "";
                                     this.showReconcileWindow(openAmountCurrency);
 

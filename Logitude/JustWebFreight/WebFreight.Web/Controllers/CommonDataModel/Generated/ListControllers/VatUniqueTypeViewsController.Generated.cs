@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				VatUniqueTypeRepository  vatUniqueTypeRepository = new VatUniqueTypeRepository(MyContext);
-				IQueryable<VatUniqueType> entityPocos = vatUniqueTypeRepository.GetVatUniqueTypes();
+				IQueryable<VatUniqueType> entityPocos = vatUniqueTypeRepository.GetVatUniqueType();
 
 				VatUniqueTypeQuery vatUniqueTypeQuery = new VatUniqueTypeQuery(vatUniqueTypeRepository);
 			    IQueryable<VatUniqueTypeList> entityLists = vatUniqueTypeQuery.GetIQueryableEntityList(entityPocos);
@@ -130,7 +130,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     ObjectTableName = "VatUniqueType",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "VatUniqueTypes",
+                    QuerySection = "VatUniqueType",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -213,7 +213,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 VatUniqueTypeRepository  vatUniqueTypeRepository = new VatUniqueTypeRepository(MyContext);
-                IQueryable<VatUniqueType> entityPocos = vatUniqueTypeRepository.GetVatUniqueTypes();
+                IQueryable<VatUniqueType> entityPocos = vatUniqueTypeRepository.GetVatUniqueType();
 
                 VatUniqueTypeQuery vatUniqueTypeQuery = new VatUniqueTypeQuery(vatUniqueTypeRepository);
                 

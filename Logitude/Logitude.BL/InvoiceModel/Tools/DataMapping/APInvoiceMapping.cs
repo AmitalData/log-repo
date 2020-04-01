@@ -7,6 +7,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
@@ -100,7 +101,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.MasterNumber = entityPM.MasterNumber;
             entity.CreditAccount = entityPM.CreditAccount;
             entity.TransferTries = entityPM.TransferTries;
-            //entity.TransferError = entityPM.TransferError;
             entity.IsTransferStarted = entityPM.IsTransferStarted;
             entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.AccountingExternalCode = entityPM.AccountingExternalCode;
@@ -131,6 +131,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
             }
 
+            entityPM.TransferError = transferError;
             entity.TransferError = transferError;
 
             entityPM.SetVoided = false;
@@ -170,6 +171,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PrepaidCollectId = entityPM.PrepaidCollectId;
             entity.ContainerTypeId = entityPM.ContainerTypeId;
             entity.Quantity = entityPM.Quantity;
+            double? LocalAmountWithVatRecognized = (entityPM.VatRecognizedPercentage == null || entityPM.VatRecognizedPercentage ==0) ? entityPM.LocalCurrencyAmount : (MethodHelper.Round((entityPM.LocalCurrencyAmount + ((entityPM.VatPercentage / 100) * ((1 - entityPM.VatRecognizedPercentage) * entityPM.LocalCurrencyAmount))), 2));
+            entityPM.ForiegnAmountWithRecognizedVat = LocalAmountWithVatRecognized != null ? LocalAmountWithVatRecognized / entityPM.ForiegnExchangeRate: LocalAmountWithVatRecognized;
+
+            //ForeignCurrencyAmount = localCurrencyAmount/ForeignExchangeRate;
         }
 
         public static void MapInvoicePayment(APInvoicePaymentPM entityPM, APInvoicePayment entity, bool isNewState)

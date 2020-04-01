@@ -236,7 +236,7 @@ export class BanksPageComponent {
             listArgs.ObjectTableName = "BankDeposit";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -318,7 +318,7 @@ export class BanksPageComponent {
             listArgs.ObjectTableName = "CashBook";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -362,7 +362,7 @@ export class BanksPageComponent {
     LoadBankPagesFromFile() {
         var logWindow = new LogitudeWindow();
         logWindow.IsShowCloseButton = true;
-        logWindow.Width = 500;
+        logWindow.Width = 900;
         logWindow.Height = 400;
         logWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.BankPagesFromFile");
         logWindow.WindowArgs = {};
@@ -397,7 +397,7 @@ export class BanksPageComponent {
             listArgs.ObjectTableName = "BankAccount";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -437,7 +437,7 @@ export class BanksPageComponent {
             listArgs.ObjectTableName = "PaymentCheque";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -666,7 +666,7 @@ export class BanksPageComponent {
                 listArgs.ObjectTableName = "CashBook";
                 listArgs.DisplayTitle = TextCodeTranslator.Translate("Accounting.General.O.AllCashbook");
                 listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;

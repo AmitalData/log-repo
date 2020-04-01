@@ -160,6 +160,9 @@ namespace Simplog.Global.Data.GlobalModel
             modelBuilder.Configurations.Add(new InvalidEmailResetPasswordMap());
             modelBuilder.Configurations.Add(new WebhookKeysMap());
 
+            //Was Missing
+            modelBuilder.Configurations.Add(new BatchServicesDefinitionMap());
+
             base.OnModelCreating(modelBuilder);
         }
 

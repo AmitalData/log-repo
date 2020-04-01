@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	             				    ObjectTableName =  "TenantManagement",
 			      				    IsNew =  false,
 			      				    DBTableName =  "TenantManagements",
-			      				    OldDBTableName =  "TenantManagements",
 			      				    ObjectTableSingular =  "Tenant Management",
 			      				    ObjectTablePlural =  "Tenant Managements",
 			      				    HasCustomFilter =  true,
@@ -142,11 +141,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "EnableBranding",
-					  						OldFieldName =  "EnableBranding",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -208,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TrialStartDate",
-					  						OldFieldName =  "TrialStartDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -274,7 +271,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TrialEndDate",
-					  						OldFieldName =  "TrialEndDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -340,7 +336,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ProductionEndDate",
-					  						OldFieldName =  "ProductionEndDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -405,7 +400,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PaidUntilDate",
-					  						OldFieldName =  "PaidUntilDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -471,7 +465,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsTrial",
-					  						OldFieldName =  "IsTrial",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -536,7 +529,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "NumberOfUsers",
-					  						OldFieldName =  "NumberOfUsers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -601,9 +593,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -666,7 +657,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -731,7 +721,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TimeZone",
-					  						OldFieldName =  "TimeZone",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -794,7 +783,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsActive",
-					  						OldFieldName =  "IsActive",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -859,7 +847,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "GlobalDBId",
-					  						OldFieldName =  "GlobalDBId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -922,7 +909,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TTY",
-					  						OldFieldName =  "TTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  7,
@@ -987,7 +973,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "FreeUsers",
-					  						OldFieldName =  "FreeUsers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1051,8 +1036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapContractQTYs",
-					  						OldFieldName =  "BluesnapContractQTYs",
+					 						FieldName =  "BluesnapContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1071,8 +1055,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapContractQTYs",
-					  						ListPropertyPath =  "BluesnapContractQTYs",
+					  						PMPropertyPath =  "BluesnapContractQTY",
+					  						ListPropertyPath =  "BluesnapContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1083,7 +1067,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapContractQTYs",
+					  						Code =  "BluesnapContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1092,7 +1076,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapContractQTYs",
+					  						FullFieldLable =  "BluesnapContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1104,7 +1088,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapContractQTYs",
+					  						HelpTextCode =  "BluesnapContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1113,8 +1097,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapCRMContractQTYs",
-					  						OldFieldName =  "BluesnapCRMContractQTYs",
+					 						FieldName =  "BluesnapCRMContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1133,8 +1116,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapCRMContractQTYs",
-					  						ListPropertyPath =  "BluesnapCRMContractQTYs",
+					  						PMPropertyPath =  "BluesnapCRMContractQTY",
+					  						ListPropertyPath =  "BluesnapCRMContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1145,7 +1128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapCRMContractQTYs",
+					  						Code =  "BluesnapCRMContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1154,7 +1137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapCRMContractQTYs",
+					  						FullFieldLable =  "BluesnapCRMContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1166,7 +1149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapCRMContractQTYs",
+					  						HelpTextCode =  "BluesnapCRMContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1175,8 +1158,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapEAWBContractQTYs",
-					  						OldFieldName =  "BluesnapEAWBContractQTYs",
+					 						FieldName =  "BluesnapEAWBContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1195,8 +1177,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapEAWBContractQTYs",
-					  						ListPropertyPath =  "BluesnapEAWBContractQTYs",
+					  						PMPropertyPath =  "BluesnapEAWBContractQTY",
+					  						ListPropertyPath =  "BluesnapEAWBContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1207,7 +1189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapEAWBContractQTYs",
+					  						Code =  "BluesnapEAWBContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1216,7 +1198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapEAWBContractQTYs",
+					  						FullFieldLable =  "BluesnapEAWBContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1228,7 +1210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapEAWBContractQTYs",
+					  						HelpTextCode =  "BluesnapEAWBContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1237,8 +1219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapEAWBSContractQTYs",
-					  						OldFieldName =  "BluesnapEAWBSContractQTYs",
+					 						FieldName =  "BluesnapEAWBSContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1257,8 +1238,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapEAWBSContractQTYs",
-					  						ListPropertyPath =  "BluesnapEAWBSContractQTYs",
+					  						PMPropertyPath =  "BluesnapEAWBSContractQTY",
+					  						ListPropertyPath =  "BluesnapEAWBSContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1269,7 +1250,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapEAWBSContractQTYs",
+					  						Code =  "BluesnapEAWBSContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1278,7 +1259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapEAWBSContractQTYs",
+					  						FullFieldLable =  "BluesnapEAWBSContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1290,7 +1271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapEAWBSContractQTYs",
+					  						HelpTextCode =  "BluesnapEAWBSContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1299,8 +1280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapOneTimeContractQTYs",
-					  						OldFieldName =  "BluesnapOneTimeContractQTYs",
+					 						FieldName =  "BluesnapOneTimeContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1319,8 +1299,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapOneTimeContractQTYs",
-					  						ListPropertyPath =  "BluesnapOneTimeContractQTYs",
+					  						PMPropertyPath =  "BluesnapOneTimeContractQTY",
+					  						ListPropertyPath =  "BluesnapOneTimeContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1331,7 +1311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapOneTimeContractQTYs",
+					  						Code =  "BluesnapOneTimeContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1340,7 +1320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapOneTimeContractQTYs",
+					  						FullFieldLable =  "BluesnapOneTimeContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1352,7 +1332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapOneTimeContractQTYs",
+					  						HelpTextCode =  "BluesnapOneTimeContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1362,7 +1342,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsRecurring",
-					  						OldFieldName =  "IsRecurring",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1427,7 +1406,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "LicensePrice",
-					  						OldFieldName =  "LicensePrice",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1492,7 +1470,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ActiveTrail",
-					  						OldFieldName =  "ActiveTrail",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -1555,7 +1532,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PayingCustomers",
-					  						OldFieldName =  "PayingCustomers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -1618,9 +1594,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -1683,7 +1658,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "LastFWBSentDate",
-					  						OldFieldName =  "LastFWBSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1748,7 +1722,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "LastFHLSentDate",
-					  						OldFieldName =  "LastFHLSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1813,7 +1786,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "StatisticsUpdateDate",
-					  						OldFieldName =  "StatisticsUpdateDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1878,7 +1850,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ShipmentLastDate",
-					  						OldFieldName =  "ShipmentLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1943,7 +1914,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ShipmentTotalLastWeek",
-					  						OldFieldName =  "ShipmentTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2008,7 +1978,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ShipmentTotalLastMonth",
-					  						OldFieldName =  "ShipmentTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2073,7 +2042,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "QuoteLastDate",
-					  						OldFieldName =  "QuoteLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2138,7 +2106,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "QuoteTotalLastWeek",
-					  						OldFieldName =  "QuoteTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2203,7 +2170,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "QuoteTotalLastMonth",
-					  						OldFieldName =  "QuoteTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2268,7 +2234,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ARInvoiceLastDate",
-					  						OldFieldName =  "ARInvoiceLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2333,7 +2298,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ARInvoiceTotalLastWeek",
-					  						OldFieldName =  "ARInvoiceTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2398,7 +2362,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ARInvoiceTotalLastMonth",
-					  						OldFieldName =  "ARInvoiceTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2463,7 +2426,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "APInvoiceLastDate",
-					  						OldFieldName =  "APInvoiceLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2528,7 +2490,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "APInvoiceTotalLastWeek",
-					  						OldFieldName =  "APInvoiceTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2593,7 +2554,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "APInvoiceTotalLastMonth",
-					  						OldFieldName =  "APInvoiceTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2658,7 +2618,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CustomerLastDate",
-					  						OldFieldName =  "CustomerLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2723,7 +2682,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CustomerTotalLastWeek",
-					  						OldFieldName =  "CustomerTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2788,7 +2746,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CustomerTotalLastMonth",
-					  						OldFieldName =  "CustomerTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2853,7 +2810,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "NotRecuringTenants",
-					  						OldFieldName =  "NotRecuringTenants",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -2916,7 +2872,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "LastLoginDateTime",
-					  						OldFieldName =  "LastLoginDateTime",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2982,7 +2937,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3047,7 +3001,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3112,9 +3065,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "MainContract",
-					  						OldFieldName =  "MainContract",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  25,
 					  						IsRequired =  false,
@@ -3175,7 +3127,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TemporalStartDate",
-					  						OldFieldName =  "TemporalStartDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3239,7 +3190,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TemporalEndDate",
-					  						OldFieldName =  "TemporalEndDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3303,7 +3253,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "FirstPaymentDate",
-					  						OldFieldName =  "FirstPaymentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3369,7 +3318,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsAWBStockPrepaid",
-					  						OldFieldName =  "IsAWBStockPrepaid",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3432,7 +3380,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ManageLicencesPerUser",
-					  						OldFieldName =  "ManageLicencesPerUser",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3497,11 +3444,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsCargonautEnabled",
-					  						OldFieldName =  "IsCargonautEnabled",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3560,7 +3506,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsSystemSupportEnabled",
-					  						OldFieldName =  "IsSystemSupportEnabled",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3625,7 +3570,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsDistributorSupportEnabled",
-					  						OldFieldName =  "IsDistributorSupportEnabled",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3690,11 +3634,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsEAWBOnlyDemo",
-					  						OldFieldName =  "IsEAWBOnlyDemo",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3753,11 +3696,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsRestrictedByAirline",
-					  						OldFieldName =  "IsRestrictedByAirline",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3816,11 +3758,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ManagesRegisteredAgent",
-					  						OldFieldName =  "ManagesRegisteredAgent",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3879,7 +3820,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "LastFFRSentDate",
-					  						OldFieldName =  "LastFFRSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3944,7 +3884,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "OpportunityLastDate",
-					  						OldFieldName =  "OpportunityLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4009,7 +3948,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "OpportunityTotalLastWeek",
-					  						OldFieldName =  "OpportunityTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4074,7 +4012,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "OpportunityTotalLastMonth",
-					  						OldFieldName =  "OpportunityTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4139,7 +4076,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ActivityLastDate",
-					  						OldFieldName =  "ActivityLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4204,7 +4140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ActivityTotalLastWeek",
-					  						OldFieldName =  "ActivityTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4269,7 +4204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ActivityTotalLastMonth",
-					  						OldFieldName =  "ActivityTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4334,7 +4268,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "FSRLastSentDate",
-					  						OldFieldName =  "FSRLastSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4399,7 +4332,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "FSULastReceivedDate",
-					  						OldFieldName =  "FSULastReceivedDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4464,7 +4396,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "FSALastReceivedDate",
-					  						OldFieldName =  "FSALastReceivedDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4529,7 +4460,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ResellerCommission",
-					  						OldFieldName =  "ResellerCommission",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4594,7 +4524,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "BillingByLogitude",
-					  						OldFieldName =  "BillingByLogitude",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4659,11 +4588,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsDEXXConnectionEnabled",
-					  						OldFieldName =  "IsDEXXConnectionEnabled",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -4722,7 +4650,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "LastFHLCargonautSentDate",
-					  						OldFieldName =  "LastFHLCargonautSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4787,7 +4714,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "LastFWBCargonautSentDate",
-					  						OldFieldName =  "LastFWBCargonautSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4852,7 +4778,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PaymentFailure",
-					  						OldFieldName =  "PaymentFailure",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4917,7 +4842,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SuspendDate",
-					  						OldFieldName =  "SuspendDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4983,9 +4907,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "InternalNotes",
-					  						OldFieldName =  "InternalNotes",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -5046,9 +4969,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "BluesnapAccount",
-					  						OldFieldName =  "BluesnapAccount",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  25,
 					  						IsRequired =  false,
@@ -5109,7 +5031,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PIMA",
-					  						OldFieldName =  "PIMA",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5172,7 +5093,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SignupRequestRecipients",
-					  						OldFieldName =  "SignupRequestRecipients",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5235,7 +5155,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "LoginPageNotes",
-					  						OldFieldName =  "LoginPageNotes",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5298,7 +5217,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TenantConnectedToAirlineCode",
-					  						OldFieldName =  "TenantConnectedToAirlineCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  2,
@@ -5361,11 +5279,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SupportActivated",
-					  						OldFieldName =  "SupportActivated",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -5424,7 +5341,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SupportEmail",
-					  						OldFieldName =  "SupportEmail",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5487,11 +5403,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsMultiPackage",
-					  						OldFieldName =  "IsMultiPackage",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -5550,7 +5465,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -5615,9 +5529,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  true,
@@ -5680,7 +5593,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PackageCode",
-					  						OldFieldName =  "PackageCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Package",
@@ -5746,10 +5658,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TemporalPackageCode",
-					  						OldFieldName =  "TemporalPackageCode",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Package",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  5,
 					  						IsRequired =  false,
@@ -5810,10 +5720,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "RecurringPeriodCode",
-					  						OldFieldName =  "RecurringPeriodCode",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "RecurringPeriod",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  false,
@@ -5874,7 +5782,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PaymentMethodCode",
-					  						OldFieldName =  "PaymentMethodCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentMethod",
@@ -5938,7 +5845,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PaymentChannelCode",
-					  						OldFieldName =  "PaymentChannelCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentChannel",
@@ -6002,7 +5908,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PaymentCurrencyCode",
-					  						OldFieldName =  "PaymentCurrencyCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentCurrency",
@@ -6068,7 +5973,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "DistributorCode",
-					  						OldFieldName =  "DistributorCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Distributor",
@@ -6134,7 +6038,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Technology",
-					  						OldFieldName =  "Technology",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6199,12 +6102,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "BluesnapCRMContractId",
-					  						OldFieldName =  "BluesnapCRMContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6264,12 +6166,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "BluesnapEAWBContractId",
-					  						OldFieldName =  "BluesnapEAWBContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6329,12 +6230,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "BluesnapEAWBSContractId",
-					  						OldFieldName =  "BluesnapEAWBSContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6394,7 +6294,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "BluesnapOneTimeContract",
-					  						OldFieldName =  "BluesnapOneTimeContract",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6458,12 +6357,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "BluesnapContractId",
-					  						OldFieldName =  "BluesnapContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6523,13 +6421,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AWBMessagesCCSTypeCode",
-					  						OldFieldName =  "AWBMessagesCCSTypeCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBMessagesCCSType",
 					  						MinLength =  0,
 					  						MaxLength =  10,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -6587,7 +6484,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TenantTypeCode",
-					  						OldFieldName =  "TenantTypeCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TenantType",
@@ -6651,11 +6547,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "HideSharedlogistics",
-					  						OldFieldName =  "HideSharedlogistics",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6717,7 +6612,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ContactEmail",
-					  						OldFieldName =  "ContactEmail",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6789,7 +6683,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CustomerURL",
-					  						OldFieldName =  "CustomerURL",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6858,7 +6751,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SilverlightEndDate",
-					  						OldFieldName =  "SilverlightEndDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6923,7 +6815,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AgentSharedLogisticsStatisticsLastDate",
-					  						OldFieldName =  "AgentSharedLogisticsStatisticsLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6988,7 +6879,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AgentSharedLogisticsStatisticsLastWeek",
-					  						OldFieldName =  "AgentSharedLogisticsStatisticsLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7053,7 +6943,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AgentSharedLogisticsStatisticsLastMonth",
-					  						OldFieldName =  "AgentSharedLogisticsStatisticsLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7118,7 +7007,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PackageName",
-					  						OldFieldName =  "PackageName",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7183,7 +7071,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "MobileLastDate",
-					  						OldFieldName =  "MobileLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -7248,7 +7135,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "MobileTotalLastWeek",
-					  						OldFieldName =  "MobileTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7313,7 +7199,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "MobileTotalLastMonth",
-					  						OldFieldName =  "MobileTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7378,7 +7263,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ShardLogisticLastDate",
-					  						OldFieldName =  "ShardLogisticLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -7443,7 +7327,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ShardLogisticTotalLastWeek",
-					  						OldFieldName =  "ShardLogisticTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7508,7 +7391,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ShardLogisticTotalLastMonth",
-					  						OldFieldName =  "ShardLogisticTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7573,7 +7455,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "RequestedAirlines",
-					  						OldFieldName =  "RequestedAirlines",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7638,7 +7519,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "RegisteredAirlines",
-					  						OldFieldName =  "RegisteredAirlines",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7703,7 +7583,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PendingAirlines",
-					  						OldFieldName =  "PendingAirlines",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7768,7 +7647,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PrivateLabelId",
-					  						OldFieldName =  "PrivateLabelId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7831,7 +7709,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsParentTenant",
-					  						OldFieldName =  "IsParentTenant",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7896,7 +7773,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ParentTenantId",
-					  						OldFieldName =  "ParentTenantId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7959,7 +7835,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ChangeHeaderColor",
-					  						OldFieldName =  "ChangeHeaderColor",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8022,7 +7897,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsINTTRAStockPrepaid",
-					  						OldFieldName =  "IsINTTRAStockPrepaid",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8080,10 +7954,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "PackageCodeSearchField",
-					  						OldFieldName =  "PackageCodeSearchField",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Package",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -8142,7 +8014,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsINTTRAOnlyDemo",
-					  						OldFieldName =  "IsINTTRAOnlyDemo",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8201,7 +8072,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AutoArchiveOnInvoice",
-					  						OldFieldName =  "AutoArchiveOnInvoice",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8260,12 +8130,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "BluesnapInttraStockContractId",
-					  						OldFieldName =  "BluesnapInttraStockContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -8320,8 +8189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapInttraStockContractQTYs",
-					  						OldFieldName =  "BluesnapInttraStockContractQTYs",
+					 						FieldName =  "BluesnapInttraStockContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -8340,8 +8208,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapInttraStockContractQTYs",
-					  						ListPropertyPath =  "BluesnapInttraStockContractQTYs",
+					  						PMPropertyPath =  "BluesnapInttraStockContractQTY",
+					  						ListPropertyPath =  "BluesnapInttraStockContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -8358,7 +8226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapInttraStockContractQTYs",
+					  						FullFieldLable =  "BluesnapInttraStockContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -8379,7 +8247,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsTestTenant",
-					  						OldFieldName =  "IsTestTenant",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8439,7 +8306,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "MainAdditionalPackageApplied",
-					  						OldFieldName =  "MainAdditionalPackageApplied",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8498,7 +8364,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TotalPrice",
-					  						OldFieldName =  "TotalPrice",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -8561,7 +8426,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SupportDomain",
-					  						OldFieldName =  "SupportDomain",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8637,6 +8501,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalNumberOfUsers",
 					  						ListPropertyPath =  "TotalNumberOfUsers",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8695,6 +8560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalFreeUsers",
 					  						ListPropertyPath =  "TotalFreeUsers",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8751,6 +8617,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AveragePrice",
 					  						ListPropertyPath =  "AveragePrice",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8809,6 +8676,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TotalPaymentamount",
 					  						ListPropertyPath =  "TotalPaymentamount",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

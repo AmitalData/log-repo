@@ -279,6 +279,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         UnitPrice = myline.UnitPrice == null ? 0 : (decimal)myline.UnitPrice,
                         Quantity = myline.Quantity == null ? 0 : (decimal)myline.Quantity,
                         IsMultiTAX = myline.VatType == null ? false : myline.VatType.IsMultiPercentage,
+                        AppliesRegionalTax = myline.IsRegionalTax,
                     };
                     
                     if (string.IsNullOrEmpty(lineElement.OriginalCurrency))
@@ -1038,6 +1039,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         TaxCode = myline.VatType == null ? null : myline.VatType.Code,
                         TaxPercentage = myline.VatPercent == null ? 0 : (decimal)myline.VatPercent.Value,
                         TaxAmount = myline.InvoiceCurrencyVATAmount == null ? 0 : (decimal)myline.InvoiceCurrencyVATAmount.Value,
+                        IsRegionalTax = myline.IsRegionalTax,
                     };
 
                     invoiceElement.TaxTotalsInInvoiceCurrency.Add(invoiceTaxElement);

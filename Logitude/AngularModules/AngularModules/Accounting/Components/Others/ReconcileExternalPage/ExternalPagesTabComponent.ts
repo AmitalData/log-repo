@@ -403,9 +403,10 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
 
-        filters.PageSize = 50;
-        filters.PageIndex = 0;
         filters.GetCount = true;
+
+        filters.PageSize = take;
+        filters.PageIndex = skip;
 
         filters.SortBy = "PageNo"; //FromDate
         filters.SortDirection = "Descending";
@@ -627,7 +628,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         {
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
-                var transaction = result.Result;
+                var transaction = result;
                 var openAmountCurrency = transaction ? transaction.OpenAmountCurrencySign : "";
                 this.showReconcileWindow(openAmountCurrency);
 

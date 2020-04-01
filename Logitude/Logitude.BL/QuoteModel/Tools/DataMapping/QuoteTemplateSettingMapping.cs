@@ -265,6 +265,12 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.ShowIncludedChargesPackages = itemPM.ShowIncludedChargesPackages;
             itemPoco.ShowIncludedChargesContainers = itemPM.ShowIncludedChargesContainers;
 
+
+            itemPoco.ShowVATPercentageContainers = itemPM.ShowVATPercentageContainers;
+            itemPoco.ShowVATPercentagePackages = itemPM.ShowVATPercentagePackages;
+            itemPoco.ShowVATTypeContainers = itemPM.ShowVATTypeContainers;
+            itemPoco.ShowVATTypePackages = itemPM.ShowVATTypePackages;
+
         }
     }
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			
 	             				    ObjectTableName =  "HybridTenantState",
 			      				    IsNew =  false,
-			      				    DBTableName =  "HybridTenantState",
+			      				    DBTableName =  "HybridTenantStates",
 			      				    OldDBTableName =  "HybridTenantState",
 			      				    ObjectTableSingular =  "Hybrid Tenant State",
 			      				    ObjectTablePlural =  "Hybrid Tenant State",

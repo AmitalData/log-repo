@@ -2,7 +2,8 @@
 <Table
   Name="AccountingSettings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="int">
@@ -277,6 +278,12 @@
   </Column>
   <Column
     Name="AllowManualARPaymentNumber"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AllowRegionalTaxManagement"
     Type="bit">
     <Constraints
       Nullable="false" />

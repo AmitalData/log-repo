@@ -1495,7 +1495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "LastPageEndDate",
 					  						OldFieldName =  "LastPageEndDate",
 					  						ObjectTableName =  "BankAccount",
-					  						FieldsDataType =  "Date",
+					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,

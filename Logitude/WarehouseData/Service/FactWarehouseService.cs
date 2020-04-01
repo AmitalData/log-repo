@@ -62,15 +62,15 @@ namespace WarehouseData.Helper
             {
                 sourceConnection.Open();
                 SqlCommand commandSourceData = new SqlCommand(
-               "SELECT " + table.KeyName +
+               "SELECT " + table.DWTableKeyName +
                " FROM dbo." + table.Dw_TableName + " where AutomaticLastUpdateDate > ( select LastUpdateDate from dw_WaterMarks where TableName = " + "'" + table.TableName + "');", sourceConnection);
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 if (reader.HasRows)
                 {
                     var dataTable = new DataTable();
                     dataTable.Load(reader);
-                    var columns = dataTable.Rows.Cast<DataRow>().Select(r => (string)r[table.KeyName].ToString()).ToList();
-                    generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = "Fact_" + table.DBTableName, KeyName = table.KeyName, IdsList = columns, ConnectionString = connectionString });
+                    var columns = dataTable.Rows.Cast<DataRow>().Select(r => (string)r[table.DWTableKeyName].ToString()).ToList();
+                    generalDataWarehouseService.DeleteRowsFromDataWarehouse(new DeleteRowsArgs() { TableName = table.DWObjectTableCode, KeyName =table.KeyName, IdsList = columns, ConnectionString = connectionString });
                 }
                 reader.Close();
             }

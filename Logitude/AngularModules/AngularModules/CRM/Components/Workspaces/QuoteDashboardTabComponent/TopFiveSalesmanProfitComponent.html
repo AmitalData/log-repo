@@ -1,14 +1,14 @@
 <table>
     <tr>
         <td>
-            <div class="MediaFill" style="min-width: 450px;">
+            <div class="MediaFill">
                 <ScrollViewer [Small]="true">
                     <SectionBox>
                         <SectionHead>
                             <table>
                                 <tr class="SectionHeader" style="height:27px">
                                     <td>
-                                        <label>Top 5 Salesman (Profit)</label>
+                                        <label>Top 5 Salesmen (Profit)</label>
                                     </td>
                                     <td></td>
 
@@ -40,10 +40,12 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr style="height:60px">
+                                                <tr style="height:70px !important;">
                                                     <td>
                                                         <div class="MediaFill">
-                                                            <div [attr.id]="LegendDiv" class="MediaFill"></div>
+                                                            <ScrollViewer>
+                                                                <div [attr.id]="LegendDiv"></div>
+                                                            </ScrollViewer>                                                            
                                                         </div>                                                        
                                                     </td>
                                                 </tr>

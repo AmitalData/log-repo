@@ -58,7 +58,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;780ca602-33cd-44c4-8e6f-f3aa7404211b&quot;"
     FieldName="&quot;Code&quot;"

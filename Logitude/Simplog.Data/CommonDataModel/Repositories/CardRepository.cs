@@ -171,6 +171,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
            
         }
 
+        
+
         public List<string> GetGLAccountIdssByCardIds(List<string> Ids, int tenant)
         {
 
@@ -185,6 +187,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
 
+        }
+
+        public string GetGLAccountIdByCardId(string cardId, int tenant)
+        {
+            string cards = (from a in context.Cards
+                                  where a.Tenant == tenant
+                                  && a.Id== cardId
+                                  select a.GLAccountId).FirstOrDefault();
+            return cards;
         }
 
         public Card GetSingleCardByCode(string code, int tenant, bool getFromCache)
@@ -432,7 +443,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
 
-
+        public Card GetCardWithPrimaryContactById(string id , int tenant)
+        {
+          return   (from a in context.Cards.Include("PrimaryContact")
+                    where a.Id == id && a.Tenant == tenant
+                      select a).FirstOrDefault();
+        }
 
 
 

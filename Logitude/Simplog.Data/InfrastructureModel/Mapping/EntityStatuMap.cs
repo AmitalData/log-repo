@@ -54,6 +54,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.DisplayName).HasColumnName("DisplayName");
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.EntityStatus)

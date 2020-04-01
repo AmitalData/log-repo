@@ -2,7 +2,8 @@
 <Table
   Name="VatTypePercentages"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -34,7 +35,7 @@
     Name="Percentage"
     Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="VatTypeId"

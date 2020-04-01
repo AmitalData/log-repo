@@ -1,20 +1,21 @@
 
 <style>
-    .BlueTitle{
-        font-size:20px;
-        color:#1B90CB;
-        float:right;
-        font-family:sans-serif;
-        padding-right:10px;
-        margin-top:5px;
+    .BlueTitle {
+        font-size: 20px;
+        color: #1B90CB;
+        float: right;
+        font-family: sans-serif;
+        padding-right: 10px;
+        margin-top: 5px;
     }
+
     .BackButton {
-    float: left;
-    margin-left: 7px;
-    margin-right: 7px;
-    height:30px;
-    margin-top:3px;
-    width:50px;
+        float: left;
+        margin-left: 7px;
+        margin-right: 7px;
+        height: 30px;
+        margin-top: 3px;
+        width: 50px;
     }
 
     .LogitudeWindow {
@@ -23,7 +24,6 @@
         margin-left: auto;
         float: none;
         margin-right: auto;
-       
         /*top: 0;
         left: 0;
         right: 0;
@@ -55,56 +55,56 @@
         -webkit-box-sizing: border-box;
         overflow: hidden;
     }
+
     .Disable {
-       opacity:0.5;
-       pointer-events:none;
+        opacity: 0.5;
+        pointer-events: none;
     }
-   .tooltip {
-    position: relative;
-    display: inline-block;
-    
-}
 
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 350px;
-    background-color: #6A8299;
-    color: #fff;
-    text-align: left;
-    border-radius: 6px;
-    padding: 5px 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 0;
-    right: 110%;
-    margin-left: 5px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
 
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 80%;
-    left: 98%;
-    margin-left: 5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent transparent #6A8299;
-}
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 350px;
+            background-color: #6A8299;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 5px 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 0;
+            right: 110%;
+            margin-left: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
 
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 80%;
+                left: 98%;
+                margin-left: 5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: transparent transparent transparent #6A8299;
+            }
 
-.MyLabel{
-    font-size:17px;
-    padding-left:10px;
-    color: rgb(110, 113, 114);
-     font-family: sans-serif;
-}
-   
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    .MyLabel {
+        font-size: 17px;
+        padding-left: 10px;
+        color: rgb(110, 113, 114);
+        font-family: sans-serif;
+    }
 </style>
 <div class="MediaFillAbsolute" style="background:white;">
     <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false">
@@ -123,86 +123,115 @@
                                     <td>
                                         <table style="height:60px;border-bottom:1px solid #BCBEC0;">
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
+                                                <td [style.width]="(ScreenWidth-178).toString() + 'px'" style="height: 22px;">
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">תשלום דיגיטלי למשלוח</span>
+                                                                <span [style.width]="(ScreenWidth-178).toString() + 'px'" class="TextTrimming" style="font-size:20px;color:#1B90CB;float:left;font-family:sans-serif;padding-right:10px;">תשלום דיגיטלי למשלוח</span>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">{{Hawb}}</span>
+                                                                <span [style.width]="(ScreenWidth-178).toString() + 'px'" style="font-size:20px;color:#1B90CB;float:left;font-family:sans-serif;padding-right:10px;">{{Hawb}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
 
                                                 </td>
-                                                <td style="height: 55px;width:20px;">
-                                                    <!--<img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />-->
-                                                </td>
-                                                <td style="height: 55px;">
-                                                    <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />
+                                                <td style="height: 55px;width:10px;"></td>
+                                                <td style="height: 55px;width:150px">
+                                                    <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;width:150px" />
                                                 </td>
                                             </tr>
                                         </table>
+
+
                                         <table style="height:70px;margin-right:5px;">
+
+                                            <tr style="height:7px"><td colspan="3"></td></tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         לכבוד
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel">
+                                                <td style="width:10px;"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel" style="word-wrap: break-word;white-space:normal;line-height:25px" [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'">
                                                         {{CustomerName}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
+                                            <tr style="height:7px"><td colspan="3"></td></tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height:22px;">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         כתובת
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel">
+                                                <td style="width:10px"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel" style="word-wrap: break-word;white-space:normal;line-height:25px" [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'">
                                                         {{CustomerAddress}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
+
+
                                         </table>
+
+
+
+
                                         <table style="height:1px;margin-right:5px;">
                                             <tr>
                                                 <td colspan="2" style="font-size:20px;border-bottom:1px solid #BCBEC0;width:100%;float:left;font-family:sans-serif;padding-right:10px;"></td>
                                             </tr>
                                         </table>
+
+
+
+
                                         <table style="height:70px;margin-right:5px;">
+
+                                            <tr style="height:7px"><td colspan="3"></td></tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height: 22px">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         פרטי השולח
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel">
+                                                <td style="width:10px;"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel" style="word-wrap: break-word;white-space:normal;line-height:25px" [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'">
                                                         {{SenderDetails}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
+                                            <tr style="height:7px"><td colspan="3"></td></tr>
                                             <tr>
-                                                <td style="height: 22px;width:40%;">
-                                                    <label class="MyLabel">
+                                                <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height:22px;">
+                                                    <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
                                                         תיאור טובין
-                                                    </label>
+                                                    </div>
                                                 </td>
-                                                <td style="height: 22px;">
-                                                    <label class="MyLabel" style="word-wrap: break-word;white-space: normal;">
+                                                <td style="width:10px"><span></span></td>
+                                                <td [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'" style="height: 22px;">
+                                                    <div class="MyLabel" style="word-wrap: break-word;white-space:normal;line-height:25px" [style.width]="(((ScreenWidth/3) * 2)-10).toString() + 'px'">
                                                         {{GoodsDescritpion}}
-                                                    </label>
+                                                    </div>
                                                 </td>
                                             </tr>
+
+
                                         </table>
+
+
+
+
+
+
+
                                         <table style="height:1px;margin-right:5px;">
                                             <tr>
                                                 <td colspan="2" style="font-size:20px;border-bottom:1px solid #BCBEC0;width:100%;float:left;font-family:sans-serif;padding-right:10px;"></td>
@@ -269,80 +298,80 @@
                                                 </td>
                                             </tr>
                                             <!--<tr>
-            <td style="height: 22px;width:70%;">
-                <table>
-                    <tr>
-                        <td style="height: 22px;width:57%;">
-                            <label class="MyLabel">
-                                ערך משלוח בש"ח
-                            </label>
-                        </td>
-                        <td style="height: 22px;">
-                            <label class="MyLabel">
-                                {{ShipmentValueInNIS}}
-                            </label>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td style="height: 22px;">
-                <table>
-                    <tr>
+                                                <td style="height: 22px;width:70%;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="height: 22px;width:57%;">
+                                                                <label class="MyLabel">
+                                                                    ערך משלוח בש"ח
+                                                                </label>
+                                                            </td>
+                                                            <td style="height: 22px;">
+                                                                <label class="MyLabel">
+                                                                    {{ShipmentValueInNIS}}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="height: 22px;">
+                                                    <table>
+                                                        <tr>
 
-                        <td style="height: 22px;">
-                            <label class="MyLabel">
-                                כמות
-                            </label>
-                        </td>
-                        <td style="height: 22px;">
-                            <label class="MyLabel">
-                                {{Quantity}}
-                            </label>
-                        </td>
-                </table>
-            </td>
-        </tr>-->
+                                                            <td style="height: 22px;">
+                                                                <label class="MyLabel">
+                                                                    כמות
+                                                                </label>
+                                                            </td>
+                                                            <td style="height: 22px;">
+                                                                <label class="MyLabel">
+                                                                    {{Quantity}}
+                                                                </label>
+                                                            </td>
+                                                    </table>
+                                                </td>
+                                            </tr>-->
                                             <!--<tr>
-            <td style="height: 22px;width:70%;">
-                <table>
-                    <tr>
-                        <td style="height: 22px;width:57%;">
-                            <label class="MyLabel">
-                                סה"כ לתשלום בש"ח
-                            </label>
-                        </td>
-                        <td style="height: 22px;">
-                            <label style="text-decoration: underline;color: lightskyblue;" (click)="PaymentDetailsClick()">
-                                {{TotalChargesInNIS}}
-                            </label>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td style="height: 22px;">
-                <table>
-                    <tr>
+                                                <td style="height: 22px;width:70%;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="height: 22px;width:57%;">
+                                                                <label class="MyLabel">
+                                                                    סה"כ לתשלום בש"ח
+                                                                </label>
+                                                            </td>
+                                                            <td style="height: 22px;">
+                                                                <label style="text-decoration: underline;color: lightskyblue;" (click)="PaymentDetailsClick()">
+                                                                    {{TotalChargesInNIS}}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="height: 22px;">
+                                                    <table>
+                                                        <tr>
 
-                        <td style="height: 22px;">
-                            <label class="MyLabel">
-                                משקל
-                            </label>
-                        </td>
-                        <td style="height: 22px;">
-                            <label class="MyLabel">
-                                {{Weight}}
-                            </label>
-                        </td>
-                </table>
-            </td>
-        </tr>-->
+                                                            <td style="height: 22px;">
+                                                                <label class="MyLabel">
+                                                                    משקל
+                                                                </label>
+                                                            </td>
+                                                            <td style="height: 22px;">
+                                                                <label class="MyLabel">
+                                                                    {{Weight}}
+                                                                </label>
+                                                            </td>
+                                                    </table>
+                                                </td>
+                                            </tr>-->
                                         </table>
                                         <!--<table style="height:1px;margin-right:5px;">
-        <tr>
-            <td colspan="2" style="font-size:20px;border-bottom:1px solid #BCBEC0;width:100%;float:left;font-family:sans-serif;padding-right:10px;"></td>
-        </tr>
-    </table>-->
-                                        
+                                            <tr>
+                                                <td colspan="2" style="font-size:20px;border-bottom:1px solid #BCBEC0;width:100%;float:left;font-family:sans-serif;padding-right:10px;"></td>
+                                            </tr>
+                                        </table>-->
+
                                         <table style="height:60px;margin-right:5px;">
                                             <tr>
                                                 <td>
@@ -399,7 +428,7 @@
                             </table>
                         </td>
                     </tr>
-                   
+
                     <tr>
                         <td>
                             <div></div>
@@ -408,17 +437,15 @@
                 </table>
             </td>
         </tr>
-        
+
         <tr style="height:12px;">
             <td>
                 <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
             </td>
         </tr>
-         
+
         <tr style="height:3px;">
-            <td>
-              
-            </td>
+            <td></td>
         </tr>
     </table>
 </div>
@@ -436,9 +463,9 @@
             </table>
         </td>
     </tr>
-   
+
 </table>
- 
+
 <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == true" style="direction:rtl;">
     <tr>
         <td>
@@ -517,16 +544,16 @@
             </table>
         </td>
     </tr>
-   
+
 </table>
 
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
 <form name='form' method='post' style="width:0px;height:0px;">
     <input type='hidden' name='sum' [attr.value]="sum">
     <input type='hidden' name='currency' [attr.value]="currency">
+    <input type='hidden' name='u71' [attr.value]="u71">
     <input type='hidden' name='op' [attr.value]="op">
     <input type='hidden' name='DCdisable' [attr.value]="DCdisable">
     <input type='hidden' name='DclickTK' [attr.value]="DclickTK">
     <input type='hidden' name='thtk' [attr.value]="thtk">
 </form>
-
-

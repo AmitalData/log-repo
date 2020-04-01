@@ -132,9 +132,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     let me: any = SessionLocator.ExternalParams;
                     if (me.ForwarderShipmentNumber) {
                         this.SearchFilter = me.ForwarderShipmentNumber;
-                        this._ShipmentPMService.getSingleByForwarderShipmentNumber(me.ForwarderShipmentNumber).subscribe(myResult => {
+                        this._ShipmentPMService.getSingleByForwarderShipmentNumber(me.ForwarderShipmentNumber).subscribe((myResult:any) => {
                             if (!myResult.HasError) {
-                                this._ShipmentAdditionalCloudDataService.get(myResult.Result.Id).subscribe(AdditionalResult => {
+                                this._ShipmentAdditionalCloudDataService.get(myResult.Result.Id).subscribe((AdditionalResult:any) => {
                                     //this.CurrentSession.StopBusyIndicator();
                                     var newWindow = new LogitudeWindow();
                                     newWindow.Width = 665;
@@ -256,7 +256,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     SaveUserLastSettings(FilterName: string, FilterValue: string) {
        
-        this._UserLastSettingsExtendedPMService.getsingleByUserIdFilterName(SessionLocator.LoggedUserId, FilterName).subscribe(Result => {
+        this._UserLastSettingsExtendedPMService.getsingleByUserIdFilterName(SessionLocator.LoggedUserId, FilterName).subscribe((Result:any) => {
             if (!Result.HasError && Result.Result == null) {
                 var myFilterSettings = new UserLastSettingsPM();
                 myFilterSettings.FilterName = FilterName;
@@ -264,7 +264,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 myFilterSettings.ControlNameSpace = "ShipmentModules.ShipmentLogBox.LogBoxMainComponent";
                 myFilterSettings.Tenant = SessionLocator.Tenant;
                 myFilterSettings.UserId = SessionLocator.LoggedUserId;
-                this._UserLastSettingsPMService.insert(myFilterSettings).subscribe(myResult => {
+                this._UserLastSettingsPMService.insert(myFilterSettings).subscribe((myResult:any) => {
                 });
             }
             else if (!Result.HasError && Result.Result != null) {
@@ -274,7 +274,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 myUpdatedFilterSettings.ControlNameSpace = "ShipmentModules.ShipmentLogBox.LogBoxMainComponent";
                 myUpdatedFilterSettings.Tenant = SessionLocator.Tenant;
                 myUpdatedFilterSettings.UserId = SessionLocator.LoggedUserId;
-                this._UserLastSettingsPMService.update(myUpdatedFilterSettings).subscribe(myResult => {
+                this._UserLastSettingsPMService.update(myUpdatedFilterSettings).subscribe((myResult:any) => {
                 });
             }
         });
@@ -283,7 +283,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     setUserLastSettings() {
 
-        this._UserLastSettingsExtendedPMService.getallByUserIdNameSpace(SessionLocator.LoggedUserId, "ShipmentModules.ShipmentLogBox.LogBoxMainComponent").subscribe(Result => {
+        this._UserLastSettingsExtendedPMService.getallByUserIdNameSpace(SessionLocator.LoggedUserId, "ShipmentModules.ShipmentLogBox.LogBoxMainComponent").subscribe((Result:any) => {
             if (!Result.HasError && Result.Result != null) {
                 var myFiltersSettings = Result.Result;
            
@@ -311,7 +311,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public MyShipmentsCount: string;
     public RequestedCount: string;
     public AllShipmentsCount: string;
-    public searchFields: string;
+    public searchFields: string = null;
     public AgentShipmentsLabel: string = "Agent Shipments";
     public RequestedDocsLable: string = "Action Required";
     public isPrivateLabel: boolean = false;
@@ -803,14 +803,16 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         if (event) {
             temp = event.replace(/\s+$/, '');
         }
-        this.searchFields = temp;
-        this.SearchFilter = temp;
-        //if (this.searchFields != temp) {
+        if (this.searchFields != temp) {
+            this.searchFields = temp;
+            this.SearchFilter = temp;
+            //if (this.searchFields != temp) {
             this.LoadImporterShipments();
             ServiceLocator.SendTotangoUserActivity("LogBox", "SearchFields filter changed");
-        //}
-        //this.SearchFieldchangeevent.emit(this.searchFields);
-        //this.SelectedRow = null;
+            //}
+            //this.SearchFieldchangeevent.emit(this.searchFields);
+            //this.SelectedRow = null;
+        }
     }
 
     OnFirstRowSelected(event) {
@@ -843,7 +845,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         SessionLocator.LoggedUserPM.ShowLogBoxToolTip = true;
         var myPM = SessionLocator.LoggedUserPM;
         this.DontShowLogboxToolTip = true;
-        this.myUserPMService.update(myPM).subscribe(myResult => {
+        this.myUserPMService.update(myPM).subscribe((myResult:any) => {
 
         });
     }

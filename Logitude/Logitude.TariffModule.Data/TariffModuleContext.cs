@@ -74,6 +74,8 @@ namespace Logitude.TariffModule.Data
 	
             modelBuilder.Configurations.Add(new TariffLinesContainersPriceMap());
 	
+            modelBuilder.Configurations.Add(new TariffProductMap());
+	
             modelBuilder.Configurations.Add(new TariffSettingMap());
 	
             modelBuilder.Configurations.Add(new TariffSurchargesUpdateMap());
@@ -447,6 +449,12 @@ namespace Logitude.TariffModule.Data
 	 }
 	
 	 public IDbSet<TariffLinesContainersPrice> TariffLinesContainersPrices 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TariffProduct> TariffProducts 
 	 {
 	      get; set;
 	 

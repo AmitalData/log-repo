@@ -135,7 +135,7 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
         if (this.CustomerId && this.WarehouseId) {
 
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.warehouseReleasePMExtendedService.GetWarehouseReleaseByCstomerIdIdAndwarehouseId(this.customerId, this.WarehouseId).subscribe((myResponse: ServiceResponse) => {
+            this.warehouseReleasePMExtendedService.GetWarehouseReleaseByCustomerIdAndwarehouseId(this.customerId, this.WarehouseId).subscribe((myResponse: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     if (myResponse.Result && myResponse.Result.length > 0) {
@@ -303,6 +303,15 @@ class WarehouseReleaseGroup {
     constructor(warehouseReleasePMLists: WarehouseReleasePM[], title: string, viewModel: ChoosePackagesFromWarehousePackageReleasesComponent) {
         this.WarehouseReleasePMLists = warehouseReleasePMLists;
         this.Title = title;
+
+        this.WarehouseReleasePMLists.forEach((item) => {
+            if (item.WarehouseReleasePackages) {
+                item.WarehouseReleasePackages.forEach((warehouseReleasePackage) => {
+                    warehouseReleasePackage.ReleaseNumber = item.ReleaseNumber;
+                });
+            }
+        });
+
 
         if (viewModel.IsContainerShipment) {
             this.WarehouseReleasePMLists.forEach((item) => {

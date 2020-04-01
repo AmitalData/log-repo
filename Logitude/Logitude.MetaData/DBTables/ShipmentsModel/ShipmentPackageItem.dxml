@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentPackageItems"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="PackageId"
     Type="varchar"
@@ -35,7 +36,7 @@
     Name="Quantity"
     Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="GoodsValue"

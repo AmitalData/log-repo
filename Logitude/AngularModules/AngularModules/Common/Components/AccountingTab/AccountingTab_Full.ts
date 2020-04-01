@@ -198,14 +198,15 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         logWindow.Title = TextCodeTranslator.Translate("Accounting.O.GLAccounts");
 
         var args: any = {};
-
+       
         var chartOfAccountTypeCode
 
         if (this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'CC' || this.CardList.PartnerTypeId == 'CG' || this.CardList.PartnerTypeId == 'CH' || this.CardList.PartnerTypeId == 'CO')
             chartOfAccountTypeCode = '3';
-        else 
+        else if(this.CardList.PartnerTypeId != "AC"){
             chartOfAccountTypeCode = '4';
-
+          }
+        args.PartnerId = this.CardList.PartnerTypeId;
         args.AccountTypeCode = chartOfAccountTypeCode;
         args.CardId = this.CardList.Id;
 

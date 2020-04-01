@@ -12,6 +12,7 @@ import { AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 //import {CustomsSettingExtendedListService} from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { SessionInfo } from '../../Utilities/SessionInfo';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
@@ -80,7 +81,7 @@ export class MaintenanceComponent {
         }
 
         this.isTransmissionsPageVisible = false;
-        if (FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
+        if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
             this.isTransmissionsPageVisible = true;
         }
 
@@ -581,16 +582,26 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
-        if (FeatureLocator.HasFeaturePermession("General", "PRICESTEPS")) {
+        //if (FeatureLocator.HasFeaturePermession("General", "PRICESTEPS")) {
+        //    var item = new MenusTablePM();
+        //    item.CategoryTypeCode = "OTH";
+        //    item.Icon = "List"
+        //    //item.Code = "MTPS";
+        //    item.ObjectTableName = "PriceStep";
+        //    //item.TextCode = "General.MC.Others.PriceSteps";
+        //    item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "PriceStep")[0].Id
+        //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        //}
+
+        if (FeatureLocator.HasFeaturePermession("General", "TARIFFPRODUCTS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
             item.Icon = "List"
-            item.Code = "MTPS";
-            item.ObjectTableName = "Price Steps";
-            item.TextCode = "General.MC.Others.PriceSteps";
-            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "PriceStep")[0].Id
+            item.Code = "MTPR";
+            item.ObjectTableName = "TariffProduct";
+            item.TextCode = "General.MC.Others.TariffProducts";
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TariffProduct")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-
         }
 
         if (SessionLocator.Tenant == 0) {
@@ -643,7 +654,7 @@ export class MaintenanceComponent {
     private BuildTransmissionsMenus() {
         if (this.isTransmissionsPageVisible) {
 
-            if (FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
+            if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "TRANS";
                 item.Icon = "Settings"

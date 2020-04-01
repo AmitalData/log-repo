@@ -52,14 +52,16 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   CustomFieldsCount="0"
-  SearchFields="&quot;SATInvoiceStatus,SATInvoiceStatus,,Code,&quot;">
+  SearchFields="&quot;SATInvoiceStatus,SATInvoiceStatus,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;80b54eed-eb2a-4fa8-a8a4-ad23ef21aab7&quot;"
     FieldName="&quot;Code&quot;"
     ObjectTableName="&quot;SATInvoiceStatus&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="10"
+    MaxLength="2"
     IsRequired="true"
     DisplayOnLookUp="true"
     CanFilter="false"
@@ -193,7 +195,7 @@
     Id="&quot;48bad0be-a014-4f67-bd48-9a64f97d97a9&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;SATInvoiceStatus&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

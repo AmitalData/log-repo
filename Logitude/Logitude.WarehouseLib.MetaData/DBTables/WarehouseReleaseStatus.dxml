@@ -2,7 +2,8 @@
 <Table
   Name="WarehouseReleaseStatuses"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Warehouse">
   <Column
     Name="Code"
     Type="varchar"

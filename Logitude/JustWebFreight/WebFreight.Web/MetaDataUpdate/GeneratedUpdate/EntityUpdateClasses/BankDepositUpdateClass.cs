@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "BankDeposit",
 			      				    IsNew =  false,
 			      				    DBTableName =  "BankDeposits",
-			      				    OldDBTableName =  "BankDeposits",
 			      				    ObjectTableSingular =  "BankDeposit",
 			      				    ObjectTablePlural =  "BankDeposits",
 			      				    HasCustomFilter =  false,
@@ -146,7 +145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -208,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -271,7 +268,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -333,7 +329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -395,7 +390,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -457,7 +451,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DepositNumber",
-					  						OldFieldName =  "DepositNumber",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -520,7 +513,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DepositDate",
-					  						OldFieldName =  "DepositDate",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -583,12 +575,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DepositCurrencyId",
-					  						OldFieldName =  "DepositCurrencyId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  15,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -629,7 +620,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListLableDefaultText =  "Deposit Currency",
 					  						ListLocalDefaultText =  "מטבע הפקדה",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  true,
+					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
@@ -647,7 +638,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalDepositAmount",
-					  						OldFieldName =  "LocalDepositAmount",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -712,7 +702,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ForeignAmount",
-					  						OldFieldName =  "ForeignAmount",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -777,7 +766,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DepositBankAccountId",
-					  						OldFieldName =  "DepositBankAccountId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BankAccount",
@@ -841,7 +829,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CashBookId",
-					  						OldFieldName =  "CashBookId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CashBook",
@@ -905,9 +892,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AccountingDate",
-					  						OldFieldName =  "AccountingDate",
 					  						ObjectTableName =  "BankDeposit",
-					  						FieldsDataType =  "Date",
+					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
@@ -968,7 +954,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BankDepositLines",
-					  						OldFieldName =  "BankDepositLines",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1026,7 +1011,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CashBookGLAccountId",
-					  						OldFieldName =  "CashBookGLAccountId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1088,7 +1072,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCashDeposit",
-					  						OldFieldName =  "IsCashDeposit",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1150,7 +1133,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DeferredGLAccountId",
-					  						OldFieldName =  "DeferredGLAccountId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1210,7 +1192,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CashGLAccountId",
-					  						OldFieldName =  "CashGLAccountId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1270,7 +1251,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCanceled",
-					  						OldFieldName =  "IsCanceled",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1332,7 +1312,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DepositCurrencyCode",
-					  						OldFieldName =  "DepositCurrencyCode",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1394,7 +1373,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JournalNumber",
-					  						OldFieldName =  "JournalNumber",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1456,7 +1434,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JournalId",
-					  						OldFieldName =  "JournalId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1517,7 +1494,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CashBookName",
-					  						OldFieldName =  "CashBookName",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1579,7 +1555,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastActivityDate",
-					  						OldFieldName =  "LastActivityDate",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1641,7 +1616,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastActivityTypeName",
-					  						OldFieldName =  "LastActivityTypeName",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1703,7 +1677,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastActivityByUserName",
-					  						OldFieldName =  "LastActivityByUserName",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1765,7 +1738,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1827,7 +1799,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "BankAccountNumber",
-					  						OldFieldName =  "BankAccountNumber",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1890,7 +1861,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JournalQueueId",
-					  						OldFieldName =  "JournalQueueId",
 					  						ObjectTableName =  "BankDeposit",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

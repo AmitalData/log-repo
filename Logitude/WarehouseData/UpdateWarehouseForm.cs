@@ -91,45 +91,46 @@ namespace WarehouseData
                             {
                                 if (table.DispayInScreen)
                                 {
-                                    SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName);
-                                    SetControlPropertyValue("Text", "", table.DBTableName);
+                                    SetControlPropertyValue("ForeColor", Color.Black, table);
+                                    SetControlPropertyValue("Text", "", table);
 
-                                    SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Dim");
-                                    SetControlPropertyValue("Text", "", table.DBTableName, "Dim");
-                                    SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
-                                    SetControlPropertyValue("Text", "", table.DBTableName, "Fact");
+                                    SetControlPropertyValue("ForeColor", Color.Black, table, "Dim");
+                                    SetControlPropertyValue("Text", "", table, "Dim");
+                                    SetControlPropertyValue("ForeColor", Color.Black, table, "Fact");
+                                    SetControlPropertyValue("Text", "", table, "Fact");
                                 }
                             }
 
 
-                            foreach (TableClass table in tableNameLists)
+                            foreach (TableClass table in tableNameLists.Where(d=>!d.HasFactTable))
                             {
-
+                               
+                               
                                 Stopwatch stopWatchDWTable = null;
                                 if (table.DispayInScreen)
                                 {
                                     stopWatchDWTable = new Stopwatch();
                                     stopWatchDWTable.Start();
-                                    SetControlPropertyValue("Text", "Updating...", table.DBTableName);
+                                    SetControlPropertyValue("Text", "Updating...", table);
                                 }
 
                                 stepName = table.DBTableName;
                                 if (table.DBTableName != "WaterMarks")
                                 {
+                                    if(table.TableName == "Shipment")
+                                    {
+
+                                    }
+
                                     mainDataWarehouseService.UpdateDWDataBase(table, sourceConnectionString, destinationConnectionString);
                 
                                     if (table.DispayInScreen)
                                     {
-
-                                        if(table.TableName == "Tenant")
-                                        {
-
-                                        }
                                         string message = !table.IsUpdated ? "  No update available" : ("  Updated (" + table.UpdatedCount.ToString() + "Records )");
                                         stopWatchDWTable.Stop();
                                         TimeSpan stopWatchDWTableTs = stopWatchDWTable.Elapsed;
-                                        SetControlPropertyValue("ForeColor", !table.IsUpdated ? Color.Green : Color.Red, table.DBTableName);
-                                        SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " ) " + message, table.DBTableName);
+                                        SetControlPropertyValue("ForeColor", !table.IsUpdated ? Color.Green : Color.Red, table);
+                                        SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " ) " + message, table);
 
 
                                     }
@@ -148,16 +149,16 @@ namespace WarehouseData
                                 stepName = table.IncrementalScriptName;
                                 stopWatchDimensionsTable = new Stopwatch();
                                 stopWatchDimensionsTable.Start();
-                                SetControlPropertyValue("Text", "Updating ...", table.DBTableName, "Dim");
-                                SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Dim");
+                                SetControlPropertyValue("Text", "Updating ...", table, "Dim");
+                                SetControlPropertyValue("ForeColor", Color.Black, table, "Dim");
 
 
                                 mainDataWarehouseService.UpdateDimensionTable(destinationConnectionString, table);
 
                                 stopWatchDimensionsTable.Stop();
                                 TimeSpan stopWatchDimensionsTableTs = stopWatchDimensionsTable.Elapsed;
-                                SetControlPropertyValue("Text", "Done in ( " + stopWatchDimensionsTableTs.ToString(@"hh\:mm\:ss") + " )", table.DBTableName, "Dim");
-                                SetControlPropertyValue("ForeColor", Color.Green, table.DBTableName, "Dim");
+                                SetControlPropertyValue("Text", "Done in ( " + stopWatchDimensionsTableTs.ToString(@"hh\:mm\:ss") + " )", table, "Dim");
+                                SetControlPropertyValue("ForeColor", Color.Green, table, "Dim");
 
                             }
                             #endregion
@@ -168,24 +169,16 @@ namespace WarehouseData
                             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
                             {
                                 stepName = table.IncrementalScriptName;
-                                Stopwatch stopWatchDFactTable = null;
-                                if (table.TableName == "Shipment")
-                                {
-                                    stopWatchDFactTable = new Stopwatch();
-                                    stopWatchDFactTable.Start();
-                                    SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Fact");
-                                    SetControlPropertyValue("Text", "Updating...", table.DBTableName, "Fact");
-                                }
 
-
+                                Stopwatch stopWatchDFactTable = new Stopwatch();
+                                stopWatchDFactTable.Start();
+                                SetControlPropertyValue("ForeColor", Color.Black, table, "Fact");
+                                SetControlPropertyValue("Text", "Updating...", table, "Fact");
                                 mainDataWarehouseService.UpdateFactTable(destinationConnectionString, table);
-                                if (table.TableName == "Shipment")
-                                {
-                                    stopWatchDFactTable.Stop();
-                                    TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
-                                    SetControlPropertyValue("ForeColor", Color.Green, table.DBTableName, "Fact");
-                                    SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table.DBTableName, "Fact");
-                                }
+                                stopWatchDFactTable.Stop();
+                                TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
+                                SetControlPropertyValue("ForeColor", Color.Green, table, "Fact");
+                                SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table, "Fact");
                             }
 
 
@@ -220,13 +213,14 @@ namespace WarehouseData
         }
 
 
-        delegate void SetControlValueCallback(string propName, object propValue, string tableName = null, string typeTable = "DW");
-        private void SetControlPropertyValue(string propName, object propValue, string tableName = null, string typeTable = "DW")
+        delegate void SetControlValueCallback(string propName, object propValue, TableClass table = null, string typeTable = "DW");
+        private void SetControlPropertyValue(string propName, object propValue, TableClass table = null, string typeTable = "DW")
         {
             Control oControl = null;
-            if (!string.IsNullOrEmpty(tableName)) 
+            if (table!=null)
             {
-                oControl = this.Controls.OfType<Control>().Where(l => l.Name.ToLower().Contains((typeTable + tableName + "Label").ToLower())).FirstOrDefault();
+                string lableName = (table.HasFactTable ? table.DWObjectTableCode.Replace("_", "") : (typeTable + table.DBTableName)) + "Label";
+                oControl = this.Controls.OfType<Control>().Where(l => l.Name.ToLower().Contains((lableName).ToLower())).FirstOrDefault();
             }
             else oControl = BuildWarehouseData;
 
@@ -236,7 +230,7 @@ namespace WarehouseData
                 if (oControl.InvokeRequired)
                 {
                     SetControlValueCallback d = new SetControlValueCallback(SetControlPropertyValue);
-                    oControl.Invoke(d, new object[] { propName, propValue, tableName, typeTable });
+                    oControl.Invoke(d, new object[] { propName, propValue, table, typeTable });
                 }
                 else
                 {
