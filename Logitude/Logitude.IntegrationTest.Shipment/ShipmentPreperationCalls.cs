@@ -7,6 +7,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
+using Logitude.IntegrationTest.Shipment.DataVariablesContexts;
 using Logitude.IntegrationTest.Shipment.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -127,7 +128,7 @@ namespace Logitude.IntegrationTest.Shipment
             ShipmentVariables.Currencies = vars.Currencies;
             ShipmentVariables.Rates = vars.Rates;
 
-
+            ChargesTypesDataContext.Instance.SetData(vars.ChargesTypes);
         }
         //    public static async Task<string> GetCurrencyId(string currencyCode)
         //    {

@@ -55,6 +55,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataVariablesContexts\ChargesTypesDataContext.cs" />
     <Compile Include="EntitiesInitializer\IEntityInitializer.cs" />
     <Compile Include="EntitiesInitializer\ShipmentInitializer.cs" />
     <Compile Include="EntitiesInitializer\ShipmentPackageInitializer.cs" />
