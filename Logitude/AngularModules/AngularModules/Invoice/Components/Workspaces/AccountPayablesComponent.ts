@@ -69,7 +69,7 @@ export class AccountPayablesComponent {
     }
 
     LoadBarQueries(months: number, days: number, index: number, currency: number) {
-        this.myChartsService.GetMoneyOutStatusForTenant(months, days, this.TenantPM.Id, index, currency).subscribe(myResult => {
+        this.myChartsService.GetMoneyOutStatusForTenant(months, days, this.TenantPM.Id, index, currency).subscribe((myResult:any) => {
             this.FillBarsMoney(myResult);
         });
     }
@@ -302,7 +302,7 @@ export class AccountPayablesComponent {
             this.invoiceDomainService = new InvoiceDomainService();
         }
 
-        this.invoiceDomainService.GetAccountPayablesSummary().subscribe(myResult => {
+        this.invoiceDomainService.GetAccountPayablesSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.APInvoicesDraftsCount = myResult.APInvoicesDraftsCount > 1000 ? "1000+" : myResult.APInvoicesDraftsCount.toString();
                 this.APInvoicesUnpaidCount = myResult.APInvoicesUnpaidCount > 1000 ? "1000+" : myResult.APInvoicesUnpaidCount.toString();

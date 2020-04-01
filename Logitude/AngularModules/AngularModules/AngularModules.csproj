@@ -2083,6 +2083,9 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentTransferStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStockListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStocksStatusListService.ts" />
+    <TypeScriptCompile Include="Invoice\Services\StandardLists\SATInvoiceStatusListService.ts" />
+    <TypeScriptCompile Include="Invoice\Services\StandardLists\SATTransferStatusListService.ts" />
+    <TypeScriptCompile Include="Invoice\Services\StandardPMs\AccountingPaymentMethodPMService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardPMs\ARInvoiceStockPMService.ts" />
     <TypeScriptCompile Include="Invoice\Validators\ARInvoiceStockValidator.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditFCLChargeComponent.ts" />

@@ -399,7 +399,7 @@ export class APPaymentMenuButtonsHandler {
 
     public GetFullAccountingSettingsAndApprove() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult =>
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe((myResult:any) =>
         {
             var myResponse: ServiceResponse = myResult;
             this.CurrentSession.StopBusyIndicator();

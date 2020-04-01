@@ -1149,7 +1149,7 @@ export class ARInvoiceMenuButtonsHandler {
 
 
 
-        this.DocumentsFilingExtendedPMService.getDocumentsFilingsById(this.EntityPM.DocumentFilingId).subscribe(myResult => {
+        this.DocumentsFilingExtendedPMService.getDocumentsFilingsById(this.EntityPM.DocumentFilingId).subscribe((myResult:any) => {
            
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

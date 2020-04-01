@@ -636,7 +636,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
                 else {
                     var myService: AddressListService = new AddressListService();
-                    myService.getSingle(this.EntityPM.BillToId).subscribe(myResult => {
+                    myService.getSingle(this.EntityPM.BillToId).subscribe((myResult:any) => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
                             var billingAddress: AddressList = myResponse.Result;
