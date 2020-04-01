@@ -228,25 +228,26 @@
                 </tr>
                 <tr>
                   <td colspan="3">
-                    <div class="CellContent" style="">
+                    <div class="CellContent"  >
                       <logitude-edit-grid GridWidth="100%"
                                           GridHeight="100%"
                                           [ItemSource]="Lines">
 
                         <log-column [header]="'GLAccountWithholdingTax.F.LineNumber' | TextCodeTranslationPipe" [width]="'50'" [Editable]="false" [Alignment]="'right'">
-
-                          <log-cell-template template="let item" #logcelltemplate>
+                          <ng-template let-item>
+                          <log-cell-template   #logcelltemplate>
                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                               <span>{{item.Sequence}}</span>
                             </div>
 
                           </log-cell-template>
+                          </ng-template>
                         </log-column>
 
 
                         <log-column [header]="'GLAccountWithholdingTax.F.FromDate' | TextCodeTranslationPipe" [width]="'110'" [Editable]="false" [Alignment]="'center'">
-
-                          <log-cell-template template="let item" #logcelltemplate>
+                          <ng-template let-item>
+                          <log-cell-template   #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                               <span>{{item.FromDate | DateTimeToDatePipe}}</span>
                             </div>
@@ -257,14 +258,15 @@
 
                             </div>
                           </log-cell-template>
+                        </ng-template>
                         </log-column>
 
 
 
 
                         <log-column [header]="'GLAccountWithholdingTax.F.ToDate' | TextCodeTranslationPipe" [width]="'110'" [Editable]="false" [Alignment]="'center'">
-
-                          <log-cell-template template="let item" #logcelltemplate>
+                          <ng-template let-item>
+                          <log-cell-template   #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                               <span>{{item.ToDate |DateTimeToDatePipe}}</span>
                             </div>
@@ -275,11 +277,12 @@
 
                             </div>
                           </log-cell-template>
+                        </ng-template>
                         </log-column>
 
                         <log-column [header]="'GLAccountWithholdingTax.F.Percentage' | TextCodeTranslationPipe" [width]="'110'" [Editable]="false" [Alignment]="'center'">
-
-                          <log-cell-template template="let item" #logcelltemplate>
+                          <ng-template let-item>
+                          <log-cell-template   #logcelltemplate>
                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                               <span>{{item.Percentage}}</span>
                             </div>
@@ -290,10 +293,12 @@
 
                             </div>
                           </log-cell-template>
+                        </ng-template>
                         </log-column>
 
                         <log-column [Alignment]="'center'" [width]="'80'" [header]="'GLAccountWithholdingTax.F.Inactive' | TextCodeTranslationPipe" [Editable]="false" [visibility]="'visibile'">
-                          <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                          <ng-template let-item>
+                          <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
 
 
 
@@ -304,10 +309,12 @@
 
 
                           </log-cell-template>
+                        </ng-template>
                         </log-column>
 
                         <log-column [width]="'30'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'" [IgnoreColumn]="true">
-                          <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
+                          <ng-template let-item>
+                          <log-cell-template [IgnoreMods]="true"   #logcelltemplate [RIndex]="item.rowIndex" [TabIndex]="-1">
                             <div style="width: 20px; float: right; height:20px;padding-top:3px">
                               <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.EditItem(item)">
 
@@ -319,6 +326,7 @@
 
                             </div>
                           </log-cell-template>
+                        </ng-template>
                         </log-column>
                       </logitude-edit-grid>
                     </div>

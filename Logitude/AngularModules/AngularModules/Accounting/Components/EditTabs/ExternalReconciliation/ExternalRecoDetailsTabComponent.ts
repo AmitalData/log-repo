@@ -103,7 +103,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             });
         }
         else {
-            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult:any) => {
+            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult) => {
                 var currency = myResult.Result;
                 this.openAmountCurrency = currency ? currency.Code : "";
                 this.ledgerAmountHeader += " (" + this.openAmountCurrency + ")";
@@ -144,7 +144,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
     }
     GetBankLines(bankPageLinesIds, transactionsLinesIds) {
-        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult:any) => {
+        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult:ServiceResponse) => {
             var result = myResult.Result;
             var list = result.Result;
 

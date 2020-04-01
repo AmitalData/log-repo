@@ -292,7 +292,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe((myResult:any) => {
 
-
             if (!AppTool.IsNullOrEmpty(myResult)) {
 
                 this.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
@@ -389,7 +388,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         this._AccountingNotePMService.get(_noteList.Id)
             .subscribe((myResult:any) => {
-
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var _notePM = mm.Result;
@@ -408,7 +406,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
     ItemDeleteButton(item: AccountingNoteList){
         this._AccountingNoteExtendedListService.DeleteNote(item.Id)
             .subscribe((myResult:any) => {
-
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var res = mm.Result;

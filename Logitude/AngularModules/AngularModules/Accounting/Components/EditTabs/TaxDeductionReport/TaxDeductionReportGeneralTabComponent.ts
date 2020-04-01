@@ -56,7 +56,7 @@ export class TaxDeductionReportGeneralTabComponent extends BaseComponent {
                  
                     this.CurrentSession.StopBusyIndicator();
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.entityPM).subscribe((myResult:any) => {
+                    this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.entityPM).subscribe((myResult:ServiceResponse) => {
                         var mm: ServiceResponse = myResult;
                         var entity = mm.Result;
 

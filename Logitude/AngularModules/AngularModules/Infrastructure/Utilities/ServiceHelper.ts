@@ -1,7 +1,7 @@
 
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import { Http, Headers, Response } from '@angular/http';
-import { HttpClient, HttpHeaders, HttpResponse, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpEvent, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
 import {AppTool, DateTool} from '../Tools';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
@@ -98,7 +98,7 @@ export class ServiceHelper {
             }
         }
         else if (error instanceof HttpErrorResponse)  {
-            ServiceHelper.HttpClientHandleServiceError(error);
+            response = ServiceHelper.HttpClientHandleServiceError(error);
         }
         else {
 
@@ -191,7 +191,7 @@ export class ServiceHelper {
             ServiceHelper._LogitudeErrorHandler.handleError(error);
         }
 
-        return of(response);
+       return response;
     }
 
     public static HandleTimerServiceError(error: any) {
@@ -285,7 +285,7 @@ export class ServiceHelper {
                             if (exception) {
                                 if (exception.indexOf("Internet Connection Problem") > -1) {
                                     var loginService: LoginService = new LoginService();
-                                    loginService.GetDocumentDownloadToken().subscribe((myResult: any) => {
+                                    loginService.GetDocumentDownloadToken().subscribe(myResult => {
                                         if (myResult) {
                                             SessionInfo.DocumentDownloadToken = myResult;
                                         }
@@ -500,7 +500,6 @@ export class ServiceHelper {
 
         return httpOptions;
     }
-    
 }
 
 class ErrorLogPM {

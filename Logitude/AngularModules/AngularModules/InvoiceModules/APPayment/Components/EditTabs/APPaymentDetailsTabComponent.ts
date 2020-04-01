@@ -131,7 +131,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     entityId: string;
     ViewPaymentCheque() {
 
-        this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:any) => {
+        this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (myResponse != null) {
 
@@ -156,7 +156,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public  GetFullAccountingSettings() {
 
 
-        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe((myResult:any) => {
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (myResponse != null) {
 
@@ -208,7 +208,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private IsTaxUpdated = false;
     private LoadTaxPercentage() {
         if (this.IsFullAccounting) {
-            this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
+            this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
@@ -722,7 +722,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
         else {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.CardListService.getSingle(this.EntityPM.VendorId).subscribe((myResult:any) => {
+            this.CardListService.getSingle(this.EntityPM.VendorId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
@@ -782,7 +782,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.GLAccountId)
         {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this._GLAccountListService.getSingle(this.GLAccountId).subscribe((myResult:any) => {
+            this._GLAccountListService.getSingle(this.GLAccountId).subscribe(myResult => {
                 console.log("[_GLAccountListService.getSingle]", myResult);
                 this.CurrentSession.StopBusyIndicator();
 
