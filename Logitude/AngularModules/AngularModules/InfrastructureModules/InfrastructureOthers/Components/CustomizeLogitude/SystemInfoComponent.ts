@@ -61,7 +61,7 @@ export class SystemInfoComponent {
     }
 
     GetUsedSpaceFromServer() {
-        this._exportDocumentService.GetUsedSpaceForTenant(SessionLocator.Tenant).subscribe(res => {
+        this._exportDocumentService.GetUsedSpaceForTenant(SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

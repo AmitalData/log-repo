@@ -24,8 +24,8 @@ var DocumentTypeTemplatePMExtendedService = (function () {
         var _this = this;
         var authHeader = new http_1.Headers();
         authHeader.append('Token', ServiceHelper_1.ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getsingledocumenttypetemplate/?' + 'id=' + id + '&tenant=' + tenant, { headers: authHeader }).map(function (response) {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '/getsingledocumenttypetemplate/?' + 'id=' + id + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(function (response) {
+            var result :any = response;
             var entity;
             entity = _this.MapJsonToEntityPM(result);
             var pmresponse;
@@ -38,8 +38,8 @@ var DocumentTypeTemplatePMExtendedService = (function () {
         var _this = this;
         var authHeader = new http_1.Headers();
         authHeader.append('Token', ServiceHelper_1.ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '?documentTypeId=' + documentTypeId + '&templateType=' + templateType + '&tenant=' + tenant, { headers: authHeader }).map(function (response) {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '?documentTypeId=' + documentTypeId + '&templateType=' + templateType + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(function (response) {
+            var result :any = response;
             var entity;
             var DocumentTypeTemplatePMLists;
             DocumentTypeTemplatePMLists = new Array();
@@ -56,20 +56,20 @@ var DocumentTypeTemplatePMExtendedService = (function () {
     DocumentTypeTemplatePMExtendedService.prototype.GetTemplateBodyByDocumentTemplateId = function (documentTypeTemplateId, tenant) {
         var authHeader = new http_1.Headers();
         authHeader.append('Token', ServiceHelper_1.ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetTemplateBodyByDocumentTemplateId?documentTypeTemplateId=' + documentTypeTemplateId + "&tenant=" + tenant, { headers: authHeader }).map(function (response) {
+        return this._http.get(this._apiUrl + '/GetTemplateBodyByDocumentTemplateId?documentTypeTemplateId=' + documentTypeTemplateId + "&tenant=" + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(function (response) {
             var pmresponse;
             pmresponse = new ServiceResponse_1.ServiceResponse();
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
         }).catch(ServiceHelper_1.ServiceHelper.HandleServiceError);
     };
     DocumentTypeTemplatePMExtendedService.prototype.GetTemplateBodyhtmlOrJsonByDocumentTemplateId = function (documentTyptemplateId, tenant, isHtml, pageType) {
         var authHeader = new http_1.Headers();
         authHeader.append('Token', ServiceHelper_1.ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '?documentTyptemplateId=' + documentTyptemplateId + "&tenant=" + tenant + "&isHtml=" + isHtml + "&pagetype=" + pageType, { headers: authHeader }).map(function (response) {
+        return this._http.get(this._apiUrl + '?documentTyptemplateId=' + documentTyptemplateId + "&tenant=" + tenant + "&isHtml=" + isHtml + "&pagetype=" + pageType,ServiceHelper.GetHttpHeaders()).pipe(map(function (response) {
             var pmresponse;
             pmresponse = new ServiceResponse_1.ServiceResponse();
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
         }).catch(ServiceHelper_1.ServiceHelper.HandleServiceError);
     };
@@ -78,8 +78,8 @@ var DocumentTypeTemplatePMExtendedService = (function () {
         var _this = this;
         var authHeader = new http_1.Headers();
         authHeader.append('Token', ServiceHelper_1.ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getdocumenttypetemplatesbydocumenttypeidforautomations/?' + 'documentTypeId=' + documentTypeId + '&tenant=' + tenant, { headers: authHeader }).map(function (response) {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '/getdocumenttypetemplatesbydocumenttypeidforautomations/?' + 'documentTypeId=' + documentTypeId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(function (response) {
+            var result :any = response;
             var entity;
             var DocumentTypeTemplatePMLists;
             DocumentTypeTemplatePMLists = new Array();
@@ -99,10 +99,8 @@ var DocumentTypeTemplatePMExtendedService = (function () {
         authHeader.append('Token', ServiceHelper_1.ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return Rx_1.Observable.defer(function () {
-            return _this._http.put(_this._apiUrl + '/PutSaveDocumentTypeTemplate', JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(function (response) {
-                var result = response.json();
+            return _this._http.put(_this._apiUrl + '/PutSaveDocumentTypeTemplate', JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(function (response) {
+                var result :any = response;
                 var pmresponse;
                 pmresponse = new ServiceResponse_1.ServiceResponse();
                 pmresponse.Result = result;
@@ -116,10 +114,8 @@ var DocumentTypeTemplatePMExtendedService = (function () {
         authHeader.append('Token', ServiceHelper_1.ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return Rx_1.Observable.defer(function () {
-            return _this._http.put(_this._apiUrl + '/PutConvertXmalByteTojosnObject', JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(function (response) {
-                var result = response.json();
+            return _this._http.put(_this._apiUrl + '/PutConvertXmalByteTojosnObject', JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(function (response) {
+                var result :any = response;
                 var pmresponse;
                 pmresponse = new ServiceResponse_1.ServiceResponse();
                 pmresponse.Result = result;

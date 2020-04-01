@@ -312,7 +312,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
                             /*this.OldSearchInput = this.SearchTextNgModel;
                             this.IsDropDownVisible = true;
                             this.IsOpen = true; 
-                            this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel).subscribe(myResult => {
+                            this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel).subscribe((myResult:any) => {
                                 if (!myResult.HasError) {
                                     this.ItemsSource = myResult.Result;
                                 }
@@ -338,7 +338,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() { ////
         //this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-        //    res.subscribe(resp => {
+        //    res.subscribe((resp:any) => {
 
         //    });
 
@@ -870,7 +870,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnToggleClicked() {
-        /*this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel ? this.SearchTextNgModel : "").subscribe(myResult => {
+        /*this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel ? this.SearchTextNgModel : "").subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.ItemsSource = myResult.Result;
                 this.ToggleOpenDropDown();

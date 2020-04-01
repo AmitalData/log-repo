@@ -195,7 +195,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         {
 
             this.StartBusyIndicator('checkLedgerCreated');
-            this._JournalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id, '3').subscribe(myResult => // 3- ARPayment
+            this._JournalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id, '3').subscribe((myResult:any) => // 3- ARPayment
             {
                 console.log("_JournalExtendedPMService.GetByAccountingEntityId", myResult);
                 this.StopBusyIndicator('checkLedgerCreated');
@@ -357,7 +357,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             var _glaId = this.billtoCard.GLAccountId;
             this.StartBusyIndicator('fetchGLAccount');
             this._glaService.getSingle(_glaId)
-                .subscribe(response => {
+                .subscribe((response:any) => {
 
                     var res: ServiceResponse = response;
                     if (!res.HasError) {
@@ -459,7 +459,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.StartBusyIndicator('OpenReco');
 
             this._ReconciliationExtendedPMService.getByNumber(recoNumber)
-                .subscribe(myResult => {
+                .subscribe((myResult:any) => {
                     this.StopBusyIndicator('OpenReco');
 
                     var mm: ServiceResponse = myResult;
@@ -1089,7 +1089,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 }
                 else {
                     var myService: AddressListService = new AddressListService();
-                    myService.getSingle(this.EntityPM.BillToId).subscribe(myResult => {
+                    myService.getSingle(this.EntityPM.BillToId).subscribe((myResult:any) => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
                             var billingAddress: AddressList = myResponse.Result;

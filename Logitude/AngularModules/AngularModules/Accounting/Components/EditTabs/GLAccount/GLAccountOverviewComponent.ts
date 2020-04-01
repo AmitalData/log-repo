@@ -153,7 +153,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         // Get GLAccountMoreData
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe(myResult => {
+        this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
             console.log("_GLAccountMoreDataListService.getSingle", myResult);
 
@@ -168,7 +168,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
 
         // Get GLAccount Open Transactions Count
-        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(this.AccountPM.Id).subscribe(myResult => {
+        this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(this.AccountPM.Id).subscribe((myResult:any) => {
             console.log("GetAccountOpenTransactionsCount", myResult);
             var result: ServiceResponse = myResult;
             if (!result.HasError)
@@ -180,7 +180,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
 
         // Get connect card
-        this._CardListService.getSingle(this.AccountPM.CardId).subscribe(myResult => {
+        this._CardListService.getSingle(this.AccountPM.CardId).subscribe((myResult:any) => {
             console.log("_CardListService.getSingle", myResult);
             var result: ServiceResponse = myResult;
             if (!result.HasError)
@@ -234,7 +234,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             editWindow.Width = 1500;
             editWindow.IsHideHeader  = true;
             editWindow.ShowEditComponent(this.AccountPM.Id, "GLAccount", "GATR");
-            editWindow.WindowClosed.subscribe(res => {
+            editWindow.WindowClosed.subscribe((res:any) => {
                 this.LoadAllData();
             });
         }
@@ -290,7 +290,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     GetNonReconciledTransactionsCount() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
+        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe((myResult:any) => {
 
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
@@ -388,7 +388,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this._AccountingNotePMService.get(_noteList.Id)
-            .subscribe(myResult => {
+            .subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
@@ -407,7 +407,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     ItemDeleteButton(item: AccountingNoteList){
         this._AccountingNoteExtendedListService.DeleteNote(item.Id)
-            .subscribe(myResult => {
+            .subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

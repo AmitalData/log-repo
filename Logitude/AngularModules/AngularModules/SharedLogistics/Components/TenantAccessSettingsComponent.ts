@@ -52,7 +52,7 @@ export class TenantAccessSettingsComponent extends BaseComponent  {
         if (this.EntityPM.IsCustomerTenantShare && !AppTool.IsNullOrEmpty(this.EntityPM.LogBoxAdminUserId)) {
             this.CurrentSession.StartBusyIndicatorSaving();
             var service: TenantPMService = new TenantPMService();
-            service.update(this.EntityPM).subscribe(res => {
+            service.update(this.EntityPM).subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 SessionLocator.TenantPM = this.EntityPM;
                 this.CurrentSession.CloseCurrentWindow();

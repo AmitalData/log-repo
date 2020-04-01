@@ -62,8 +62,8 @@
 //            }
 
 //        }
-//        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-//            this.entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+//        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+//            this.entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
 //                this.BuildTabs();
 //                this.RunComponent();
 //            });
@@ -325,7 +325,7 @@
 
 //        if (this.IsNewEntity) {
 
-//            this.supplierInvoicePMService.insert(this.EntityPM).subscribe(myResult => {
+//            this.supplierInvoicePMService.insert(this.EntityPM).subscribe((myResult:any) => {
 
 //                var res: ServiceResponse = myResult;
 //                if (!res.HasError) {
@@ -344,7 +344,7 @@
 
 //        } else {
 
-//            this.supplierInvoicePMService.update(this.EntityPM).subscribe(myResult => {
+//            this.supplierInvoicePMService.update(this.EntityPM).subscribe((myResult:any) => {
 
 //                var res: ServiceResponse = myResult;
 //                if (!res.HasError) {
@@ -366,7 +366,7 @@
 //    SavingPromise(): Promise<boolean> {
 //        return new Promise((resolve) => {
 //            if (this.IsNewEntity) {
-//                this.supplierInvoicePMService.insert(this.EntityPM).subscribe(myResult => {
+//                this.supplierInvoicePMService.insert(this.EntityPM).subscribe((myResult:any) => {
 //                    var res: ServiceResponse = myResult;
 //                    if (!res.HasError) {
 //                        var entity = res.Result;
@@ -385,7 +385,7 @@
 //                });
 
 //            } else {
-//                this.supplierInvoicePMService.update(this.EntityPM).subscribe(myResult => {
+//                this.supplierInvoicePMService.update(this.EntityPM).subscribe((myResult:any) => {
 
 //                    var res: ServiceResponse = myResult;
 //                    if (!res.HasError) {
@@ -447,7 +447,7 @@
 
 //            //        if (saveInsurance == "Save1stSupplierInvoice") {
 //            //            let supplierInvoice = this.declarationPM.SupplierInvoices[0];
-//            //            this.supplierInvoicePMService.update(supplierInvoice).subscribe(myResult => {
+//            //            this.supplierInvoicePMService.update(supplierInvoice).subscribe((myResult:any) => {
 
 //            //                var res: ServiceResponse = myResult;
 //            //                if (!res.HasError) {

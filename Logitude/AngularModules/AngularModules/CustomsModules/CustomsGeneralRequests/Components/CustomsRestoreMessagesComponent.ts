@@ -45,8 +45,8 @@ export class CustomsRestoreMessagesComponent
     constructor() {
         super();
 
-        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate", 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
                 this._isVisible = true;
                 this._TodayDate = DateTool.GetCurrentDateTimeAsUtc();
             });

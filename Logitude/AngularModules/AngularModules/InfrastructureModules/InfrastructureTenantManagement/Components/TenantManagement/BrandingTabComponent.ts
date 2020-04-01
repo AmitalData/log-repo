@@ -43,7 +43,7 @@ export class BrandingTabComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {

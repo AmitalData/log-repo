@@ -101,7 +101,7 @@ export class NotificationListTemplate {
     ClosedByAssignee: string = null;
     ClosedByAssigneeClicked() {
         this.CurrentSession.FireEvent({ Name: 'ClosedByAssigneeClicked', rowIndex: this.AdditionalData.rowIndex, gridId: this.AdditionalData.gridId });
-        this.notificationExtendedListService.PutNotificationsStatus(this.rowData).subscribe(response => {
+        this.notificationExtendedListService.PutNotificationsStatus(this.rowData).subscribe((response:any) => {
             if (response) {
                 if (!response.HasError) {
                     this.IsClosed = true;

@@ -123,7 +123,7 @@ export class LicensesManagementComponent implements OnDestroy {
         this.DataLoaded = false;
 
         var userExtendedPMService: UserExtendedPMService = new UserExtendedPMService();
-        userExtendedPMService.GetUserLicenses().subscribe(myResult => {
+        userExtendedPMService.GetUserLicenses().subscribe((myResult:any) => {
             if (myResult == null) {
                 this.LicensesManagmentsList = [];
             }

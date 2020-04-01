@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, OnInit, EventEmitter, Output}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -88,7 +88,7 @@ export class TermsOfUseStartupComponent implements OnInit {
 
 
 
-        this.termsofUseSignaturePMService.insert(termsofUseSignaturePM).subscribe(res=> {
+        this.termsofUseSignaturePMService.insert(termsofUseSignaturePM).subscribe((res:any)=> {
 
             var pmResponse: EntityPMServiceResponse = res;
             if (!pmResponse.HasError) {

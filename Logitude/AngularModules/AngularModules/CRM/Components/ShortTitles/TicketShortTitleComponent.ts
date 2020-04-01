@@ -128,7 +128,7 @@ export class TicketShortTitleComponent {
                 objectTable = "Customer";
             }
 
-            //this._entityResourceService.getEntityResourceByTableName(objectTable, 0).subscribe(response => {
+            //this._entityResourceService.getEntityResourceByTableName(objectTable, 0).subscribe((response:any) => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;

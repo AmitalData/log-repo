@@ -285,7 +285,7 @@ export class QuickSearchTextBox implements OnInit {
 
                     var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.Filters);
                     loadPromise.then((res: any) => {
-                        res.subscribe(resp => {
+                        res.subscribe((resp:any) => {
                             this.OnDataLoaded(resp.Result);
                         })
                     });
@@ -324,7 +324,7 @@ export class QuickSearchTextBox implements OnInit {
                     else {
                         var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.Filters);
                         loadPromise.then((res: any) => {
-                            res.subscribe(resp => {
+                            res.subscribe((resp:any) => {
                                 this.OnDataLoaded(resp.Result);
                             })
                         });
@@ -365,7 +365,7 @@ export class QuickSearchTextBox implements OnInit {
         var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.Filters);
 
         loadPromise.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 this.OnDataLoaded(resp.Result);
             })
         });

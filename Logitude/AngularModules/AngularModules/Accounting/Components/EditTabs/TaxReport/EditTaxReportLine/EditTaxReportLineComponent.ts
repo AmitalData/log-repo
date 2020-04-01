@@ -153,16 +153,16 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
         // save(reprot)
         this.CurrentSession.StartBusyIndicatorSaving();
-        this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
+        this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 // this.CurrentSession.CloseCurrentWindowEmit("ok");
-                this._TaxReportPMService.update(this.TaxReportPM).subscribe(myResult => {
+                this._TaxReportPMService.update(this.TaxReportPM).subscribe((myResult:any) => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
-                        // this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
+                        // this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe((myResult:any) => {
 
                         //     var mm: ServiceResponse = myResult;
                         //     if (!mm.HasError) {

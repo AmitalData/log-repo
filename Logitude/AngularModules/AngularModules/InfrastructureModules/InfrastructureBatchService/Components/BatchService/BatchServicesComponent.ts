@@ -82,7 +82,7 @@ export class BatchServicesComponent {
 
         this.IsLogsGridVsisible = false;
         
-        this.globalDomainService.GetAllBatchServicesDefinitionsPMs(this.SelectedBatchFilter.Code).subscribe(myResult => {
+        this.globalDomainService.GetAllBatchServicesDefinitionsPMs(this.SelectedBatchFilter.Code).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.ItemsSource = [];
             }

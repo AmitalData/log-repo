@@ -112,7 +112,7 @@ export class CourierConnectedDeclarationListTemplate {
        
     //    this.CD.detach();
     //    editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-    //    editWindow.WindowClosed.subscribe(res => {
+    //    editWindow.WindowClosed.subscribe((res:any) => {
     //        this.CD.reattach();
            
            

@@ -43,7 +43,7 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
                 filters.ComputingPartnerName = res.Value.ComputingPartnerName;
                 var domainService: CommonDomainService = new CommonDomainService();
                 var items: any[] = [];
-                    domainService.getNoneZeroTenantTranslation(res.Value.ComputingPartnerId, res.Value.ObjectTableId, res.Value.OurCode).subscribe(p => {
+                    domainService.getNoneZeroTenantTranslation(res.Value.ComputingPartnerId, res.Value.ObjectTableId, res.Value.OurCode).subscribe((p:any) => {
                         var item: any = {};
                         item.ComputingPartnerId = p.Result.ComputingPartnerId != null ? p.Result.ComputingPartnerId : res.Value.ComputingPartnerId;
                         item.OurCode = p.Result.OurCode != null ? p.Result.OurCode : res.Value.OurCode;
@@ -196,7 +196,7 @@ export class ComputingPartnerTranslateComponent extends BaseComponent {
             var service: CommonDomainService = new CommonDomainService();
             return new Promise((resolve, reject) => {
                 resolve(service.getByFilters(filters))
-            }).then(result => {
+            }).then((result:any) => {
                 return result;
             });
 

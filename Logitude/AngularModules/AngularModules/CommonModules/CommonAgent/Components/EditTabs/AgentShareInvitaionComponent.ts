@@ -44,7 +44,7 @@ export class AgentShareInvitaionComponent extends BaseComponent {
          if (!AppTool.IsNullOrEmpty(this.Email)) {
              this.CurrentSession.StartBusyIndicator("Sending...");
 
-             this._agentSharedLogisticsKeyPMService.SendAgentInvitaion(this.EntityPM.Id, this.Email, SessionLocator.Tenant).subscribe(response => {
+             this._agentSharedLogisticsKeyPMService.SendAgentInvitaion(this.EntityPM.Id, this.Email, SessionLocator.Tenant).subscribe((response:any) => {
 
                  this.CurrentSession.StopBusyIndicator();
                  if (!response.HasError) {

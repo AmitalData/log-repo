@@ -57,7 +57,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     private GetBCNTMeasurementId() {
         if (this.EntityPM.TypeCode == "OFS") {
             var commonDomainService: CommonDomainService = new CommonDomainService();
-            commonDomainService.GetMeasurementIdByCode("BCNT").subscribe(res => {
+            commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.BCNTmeasurementId = res.Result;
@@ -136,7 +136,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     SetDefaultUOM(index: number) {
         if (this.EntityPM.TypeCode != "OFS") {
-            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe(res => {
+            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         var ChargesType: ChargesTypeList = res.Result;
@@ -464,7 +464,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                 var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
                 if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
                     DuplicatedChargesIds.push(this[chargresType + ""]);
-                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
+                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe((res:any) => {
                         if (!res.HasError) {
                             var chargesTypeList: ChargesTypeList = res.Result;
                             if (res) {

@@ -49,7 +49,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.CustomPickListsList = [];
         this.LookUpTables = window.ObjectTables.filter(o => o.IsLookUp && !AppTool.IsNullOrEmpty(o.LookUp1));
         var picklistslist = [];
-        this._customPickListListService.getAll().subscribe(response => {
+        this._customPickListListService.getAll().subscribe((response:any) => {
             var temp = response.Result.filter(p => p.Tenant == SessionLocator.Tenant);
             var list = new GroupByPipe().transform(temp, "Code");
             list.forEach((value, key) => {
@@ -213,7 +213,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     //public get PickListItem() {
     //    if (this.objectField.DataTypeCode == "PickList") {
     //        if (!AppTool.IsNullOrEmpty(this.objectField.CustomPickListCode)) {
-    //            this._customPickListListService.getAll().subscribe(response => {
+    //            this._customPickListListService.getAll().subscribe((response:any) => {
     //                var temp = response.Result.filter(p => p.Code == this.objectField.CustomPickListCode);
     //                if (temp.length > 0) {
     //                    this.pickListItem = temp[0].Code;
@@ -244,7 +244,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     PickListSelectionMethod(item) {
         if (this.objectField.DataTypeCode == "PickList") {
             if (!AppTool.IsNullOrEmpty(this.objectField.CustomPickListCode)) {
-                this._customPickListListService.getAll().subscribe(response => {
+                this._customPickListListService.getAll().subscribe((response:any) => {
                     var temp = response.Result.filter(p => p.Code == this.objectField.CustomPickListCode);
                     if (temp.length > 0) {
                         this.PickListItem = temp[0].Code;
@@ -442,7 +442,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                         this.ValidationErrorsList = Fieldresponse.ErrorsArray;
                     }
                     else {
-                        CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                        CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                             var item = Fieldresponse.Result;
                             var oldItem = window.ObjectFields.filter(t => t.Id == item.Id)[0];
                             if (oldItem) {
@@ -452,7 +452,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                             window.ObjectFields.push(item);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             this.CurrentSession.CloseCurrentWindow();
-                            //    this.loginService.GetObjectFields().subscribe(myResult => {
+                            //    this.loginService.GetObjectFields().subscribe((myResult:any) => {
                             //        if (myResult != null) { 
                             //            window.ObjectFields = myResult;
                             //            this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -471,7 +471,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                         this.ValidationErrorsList = Fieldresponse.ErrorsArray;
                     }
                     else {
-                        CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                        CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                             var item = Fieldresponse.Result;
                             var oldItem = window.ObjectFields.filter(t => t.Id == item.Id)[0];
                             if (oldItem) {
@@ -481,7 +481,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                             window.ObjectFields.push(item);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
                             this.CurrentSession.CloseCurrentWindow();
-                            //this.loginService.GetObjectFields().subscribe(myResult => {
+                            //this.loginService.GetObjectFields().subscribe((myResult:any) => {
                             //    if (myResult != null) {
                             //        window.ObjectFields = myResult;
                             //        this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -512,7 +512,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditPickListComponent');
         logWindow.WindowClosed.subscribe((event: any) => {
-            this._customPickListListService.getAll().subscribe(response => {
+            this._customPickListListService.getAll().subscribe((response:any) => {
                 var temp = response.Result.filter(p => p.Tenant == SessionLocator.Tenant);
                 var list = new GroupByPipe().transform(temp, "Code");
                 this.CustomPickListsList = [];
@@ -532,7 +532,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditPickListComponent');
         logWindow.WindowClosed.subscribe((event: any) => {
-            this._customPickListListService.getAll().subscribe(response => {
+            this._customPickListListService.getAll().subscribe((response:any) => {
                 var temp = response.Result.filter(p => p.Tenant == SessionLocator.Tenant);
                 var list = new GroupByPipe().transform(temp, "Code");
                 this.CustomPickListsList = [];

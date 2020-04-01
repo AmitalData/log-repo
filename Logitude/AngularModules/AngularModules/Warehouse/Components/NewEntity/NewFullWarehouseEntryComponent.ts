@@ -118,7 +118,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
 
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe((response:any) => {
             this.Start(args);
         });
     }

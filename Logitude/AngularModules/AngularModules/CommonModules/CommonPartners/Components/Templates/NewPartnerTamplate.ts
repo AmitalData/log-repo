@@ -150,7 +150,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     }
 
     LoadChildComponent() {
-        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe((response:any) => {
             this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response2 => {
                 this.BuildAdditionalFields();
                 this.SimilaryCardsHeader = "Similar " + this.CardTableName + " in the system";
@@ -387,7 +387,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
             if (code.length <= 4) {
 
                 if (this.PartnerTypeId == "TR") {
-                    this.DomainService.GetTruckerByCode(code, SessionLocator.Tenant).subscribe(myResult => {
+                    this.DomainService.GetTruckerByCode(code, SessionLocator.Tenant).subscribe((myResult:any) => {
                         if (myResult != null) {
                             this.CodeMessage = "This trucker already exists";
                             this.IsCodeAlreadyExists = true;
@@ -405,7 +405,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
                 }
 
                 else if (this.PartnerTypeId == "WH") {
-                    this.DomainService.GetWarehouseByCode(code, SessionLocator.Tenant).subscribe(myResult => {
+                    this.DomainService.GetWarehouseByCode(code, SessionLocator.Tenant).subscribe((myResult:any) => {
                         if (myResult != null) {
                             this.CodeMessage = "This Warehouse already exists";
                             this.IsCodeAlreadyExists = true;
@@ -776,7 +776,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
         }
 
         else {
-            this.DomainService.GetContactsByEmail(email).subscribe(myResult => {
+            this.DomainService.GetContactsByEmail(email).subscribe((myResult:any) => {
                 if (myResult != null) {
                     this.loadedContact = myResult[0];
                     this.SetUIProperties_Contact();

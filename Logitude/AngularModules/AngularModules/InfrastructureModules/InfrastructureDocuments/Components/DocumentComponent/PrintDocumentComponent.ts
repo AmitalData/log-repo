@@ -167,7 +167,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         if (!this.IsSystemAdditionalPrintingFields) {
 
-            this._documentTypeCustomFieldService.getDocumentTypeCustomFieldsByDocument(this.CurrentDocumentOut.Tenant, this.DocumentCustomFieldsArgs.DocumentTypeId).subscribe(res => {
+            this._documentTypeCustomFieldService.getDocumentTypeCustomFieldsByDocument(this.CurrentDocumentOut.Tenant, this.DocumentCustomFieldsArgs.DocumentTypeId).subscribe((res:any) => {
 
 
                 var pmResponse: ServiceResponse = res;
@@ -470,7 +470,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     GetTemplates() {
 
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.DataContext.DocumentTypePM.Id, this.DataContext.DocumentTypePM.Tenant).subscribe(res => {
+        this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.DataContext.DocumentTypePM.Id, this.DataContext.DocumentTypePM.Tenant).subscribe((res:any) => {
             this.DocumentTypeTemplateLists = new Array<DocumentTypeTemplateViewModel>();
 
             var pmResponse: ServiceResponse = res;
@@ -538,7 +538,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     this.CurrentDocumentOut.DocumentTemplateEditorTool = this.CurrentDocumentTypeTemplateList.EditorTool;
 
 
-                    this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe(res => {
+                    this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe((res:any) => {
 
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
@@ -575,7 +575,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
                 this.CurrentDocumentOut.DocumentTemplateId = this.CurrentDocumentTypeTemplateList.Id;
                 this.DataContext.CurrentDocument = this.CurrentDocumentOut;
-                this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe(res => {
+                this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe((res:any) => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -631,7 +631,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         this.ItemsSource = new Array<DocumentCopiesViewModel>();
 
-        this._documentTypePMService.getSingleDocumentType(this.DataContext.DocumentTypePM.Id, this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant).subscribe(res => {
+        this._documentTypePMService.getSingleDocumentType(this.DataContext.DocumentTypePM.Id, this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -786,7 +786,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         }
         else {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this._htmlEditorService.getEditorHtmlData(this.CurrentDocumentOut.Id, shipmentId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, this.CurrentDocumentOut.DocumentTemplateId, "", "Edit").subscribe(res => {
+            this._htmlEditorService.getEditorHtmlData(this.CurrentDocumentOut.Id, shipmentId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, this.CurrentDocumentOut.DocumentTemplateId, "", "Edit").subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -825,7 +825,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         filter.ChildEntityId = this.ChildEntityId;
         filter.DocumentTypeId = this.DataContext.DocumentTypePM.Id;
 
-        this._htmlEditorService.saveEditedReportToServer(filter).subscribe(res => {
+        this._htmlEditorService.saveEditedReportToServer(filter).subscribe((res:any) => {
 
             this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
@@ -956,7 +956,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected).forEach((copy) => {
                 if (!this.IsBuildDocumentViaWorkerRole) {
 
-                    this._exportDocumentService.getDocumentPdfFile(this.DataContext.DocumentTypePM.Id, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant, copy.CurrentDocumentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe(res => {
+                    this._exportDocumentService.getDocumentPdfFile(this.DataContext.DocumentTypePM.Id, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant, copy.CurrentDocumentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe((res:any) => {
                         count += 1;
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
@@ -1039,12 +1039,12 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     SaveContext() {
 
 
-        this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe(res => {
+        this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var myResult = pmResponse.Result;
-                this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id, this.DataContext.CurrentDocument.Tenant).subscribe(res => {
+                this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id, this.DataContext.CurrentDocument.Tenant).subscribe((res:any) => {
                     this.StopBusyIndicator();
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -1157,7 +1157,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 }
 
 
-                this.documentsExecutionLogListExtendedService.GetDocumentsExecutionLogList(documentExecutionLogId).subscribe(res => {
+                this.documentsExecutionLogListExtendedService.GetDocumentsExecutionLogList(documentExecutionLogId).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     var documentsExecutionLogList: DocumentsExecutionLogList = res.Result;
 
@@ -1252,11 +1252,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     public setArguments(item: DocsOutDataViewModel) {
 
-        this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe((response:any) => {
 
             if (!item.DocumentTypePM) {
                 this.CurrentSession.StartBusyIndicator("Loading...");
-                this._documentTypePMService.GetSinglePMWithOutInclude(item.Id, SessionLocator.Tenant).subscribe(res => {
+                this._documentTypePMService.GetSinglePMWithOutInclude(item.Id, SessionLocator.Tenant).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         item.DocumentTypePM = pmResponse.Result;
@@ -1336,7 +1336,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
         if (this.DataContext.DocumentTypePM.IsDocumentOneTimePrintLimited) {
-            this._documentOutPMService.getSingleDocumentOutPM(this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant).subscribe(res => {
+            this._documentOutPMService.getSingleDocumentOutPM(this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -1424,7 +1424,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
 
-        this._documentTypePMService.putDocumentType(this.DataContext.DocumentTypePM).subscribe(res => {
+        this._documentTypePMService.putDocumentType(this.DataContext.DocumentTypePM).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

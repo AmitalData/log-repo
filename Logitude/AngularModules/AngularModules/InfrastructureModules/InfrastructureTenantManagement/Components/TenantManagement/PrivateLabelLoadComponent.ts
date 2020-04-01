@@ -40,7 +40,7 @@ export class PrivateLabelLoadComponent implements AfterViewInit {
 
             var myService: TenantManagmentPrivateLabelsPMService = new TenantManagmentPrivateLabelsPMService();
 
-            myService.get(this.EntityId).subscribe(myResult => {
+            myService.get(this.EntityId).subscribe((myResult:any) => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -56,7 +56,7 @@ export class PrivateLabelLoadComponent implements AfterViewInit {
 
     private ImportWizard() {
         var Args = { Entity: this.EntityPM };
-        this._entityResourceService.getEntityResourceByTableName("TenantManagmentPrivateLabels", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TenantManagmentPrivateLabels", 0).subscribe((response:any) => {
             SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/AddEditPrivateLabelsComponent', this.target)
                 .then(cmpRef => {
                     cmpRef.instance.SetWindowArgs(Args);

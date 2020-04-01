@@ -63,7 +63,7 @@ export class SignStationsComponent
     }
     Loaded: boolean = false;
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
 
 
             this._TranslationLoaded = true;

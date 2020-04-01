@@ -334,7 +334,7 @@ export class RootComponent_Cust implements OnInit {
   SignOutCompleted() {
 
     var loginService = new LoginService();
-    loginService.GetSignOut().subscribe(res => {
+    loginService.GetSignOut().subscribe((res:any) => {
 
     });
 

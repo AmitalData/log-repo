@@ -103,7 +103,7 @@ export class NewOpenFormatReportComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("");
-            this.OpenFormatReportPMService.insert(this.entityPM).subscribe(myResult => {
+            this.OpenFormatReportPMService.insert(this.entityPM).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

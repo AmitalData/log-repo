@@ -77,7 +77,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy");
         this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
-        this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe(myResult => {
+        this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.DWQueryData = myResult.Result;
                 if (this.DWQueryData.Filters) {
@@ -133,7 +133,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                     // this.BuildColumns(result);
                     if (IsBIReportUpdated) {
-                        this._BIReportPMService.update(this.EntityPM).subscribe(response => {
+                        this._BIReportPMService.update(this.EntityPM).subscribe((response:any) => {
                             this.BuildRows(result);
                         });
                     }
@@ -373,7 +373,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
+        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 var Id = myResult.Result;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)

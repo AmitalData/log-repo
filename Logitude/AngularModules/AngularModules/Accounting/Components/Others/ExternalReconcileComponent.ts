@@ -1011,7 +1011,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             var serviceArgs = this.CreateExternalAutoReconcileServiceArgs(filters);
 
             this._ExternalReconciliationExtendedListService.getExternalAutomaticReconcilationsByFilter(serviceArgs)
-                .subscribe(myResult => {
+                .subscribe((myResult:any) => {
 
                     var mm: ServiceResponse = myResult;
                     var result = mm.Result;
@@ -1337,7 +1337,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     SubmitChanges(entity) {
 
         this.CurrentSession.StartBusyIndicatorSaving();
-        this._ExternalReconciliationOpService.insert(entity).subscribe(myResult => {
+        this._ExternalReconciliationOpService.insert(entity).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
@@ -1537,7 +1537,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     IsGeneratePasswordVisible: boolean = false;
     GenerateTestLines(txt: string) {
         this.CurrentSession.StartBusyIndicator("Generate test lines... " + "(" + this.reapeatCount + "/" + 100 + ")");
-        this._ExternalReconciliationExtendedListService.getGenerateTestRecordsForExternalReco(this.BankAccountPM.Id, this.BankAccountPM.GLAccountId, txt).subscribe(myResult => {
+        this._ExternalReconciliationExtendedListService.getGenerateTestRecordsForExternalReco(this.BankAccountPM.Id, this.BankAccountPM.GLAccountId, txt).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             var result = mm.Result;

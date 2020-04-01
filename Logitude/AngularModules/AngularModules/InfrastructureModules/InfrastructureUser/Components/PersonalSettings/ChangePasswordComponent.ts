@@ -149,7 +149,7 @@ export class ChangePasswordComponent implements OnInit {
                 changePasswordParameter.CurrentPassword = this.CurrentPassword;
                 changePasswordParameter.Email = SessionInfo.LoggedUserPM.Email;
 
-                this._passwordChangeService.CheckUserPassword(changePasswordParameter).subscribe(res => {
+                this._passwordChangeService.CheckUserPassword(changePasswordParameter).subscribe((res:any) => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -257,7 +257,7 @@ export class ChangePasswordComponent implements OnInit {
         changePasswordParameter.CurrentPassword = this.CurrentPassword;
 
 
-        this._passwordChangeService.ChangeUserPassword(changePasswordParameter).subscribe(res => {
+        this._passwordChangeService.ChangeUserPassword(changePasswordParameter).subscribe((res:any) => {
 
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 

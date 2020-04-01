@@ -118,7 +118,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
   EditButtonClicked(item: CustomsCollateralPM) {
     if (!AppTool.IsNullOrEmpty(item)) {
-      this._CustomsCollateralPMService.get(item.Id).subscribe(response => {
+      this._CustomsCollateralPMService.get(item.Id).subscribe((response:any) => {
         var windowArgs: any = {};
         windowArgs.CurrentEntity = response.Result;
         windowArgs.declarationPM = this.EntityPM;

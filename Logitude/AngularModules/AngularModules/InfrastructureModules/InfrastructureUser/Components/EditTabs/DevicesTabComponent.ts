@@ -33,7 +33,7 @@ export class DevicesTabComponent extends BaseComponent {
         this.twoFactorAuthenticationDeviceExtendedPMService = new TwoFactorAuthenticationDeviceExtendedPMService();
         this.twoFactorAuthenticationDevicePMService = new TwoFactorAuthenticationDevicePMService();
 
-        this.twoFactorAuthenticationDeviceExtendedPMService.GetDevicesByUser(this.EntityPM.Id).subscribe(response => {
+        this.twoFactorAuthenticationDeviceExtendedPMService.GetDevicesByUser(this.EntityPM.Id).subscribe((response:any) => {
             if (!response.HasError) {
                 this.ItemsSource = response.Result;
             }
@@ -44,7 +44,7 @@ export class DevicesTabComponent extends BaseComponent {
     DeviceActivation(device: TwoFactorAuthenticationDevicePM, isActive: boolean) {
         device.InActive = !isActive;
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.twoFactorAuthenticationDevicePMService.update(device).subscribe(response => {
+        this.twoFactorAuthenticationDevicePMService.update(device).subscribe((response:any) => {
             this.CurrentSession.StopBusyIndicator();
             if (response.HasError) {
             }

@@ -28,7 +28,7 @@ export class OperationsComponent implements OnInit {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(res1 => {
                     this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(res2 => {
                         this.IsResourcesReady = true;

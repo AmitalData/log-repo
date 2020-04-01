@@ -34,7 +34,7 @@ export class AddEditMamanStickerComponent
         super();
 
         this.CurrentSession.StartBusyIndicator("");
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             this.CurrentSession.StopBusyIndicator();
             this.IsLoaded = true;
         });
@@ -87,8 +87,8 @@ export class AddEditMamanStickerComponent
 
     OkButtonClicked() {
         this.CurrentSession.StartBusyIndicatorCreating();
-        this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(res => {
-            this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe(myResult => {
+        this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe((res:any) => {
+            this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe((myResult:any) => {
                 if (myResult.HasError) {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(myResult.ErrorsArray[0]);

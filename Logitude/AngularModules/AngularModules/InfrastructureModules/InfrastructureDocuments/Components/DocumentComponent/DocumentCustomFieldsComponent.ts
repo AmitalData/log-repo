@@ -56,7 +56,7 @@ export class DocumentCustomFieldsComponent extends BaseComponent implements OnIn
             this.DocumentTypeCustomFieldLists.push(new DocumentTypeCustomFieldPMViewModel(item,this));
         });
 
-        this._documentTypeCustomFieldService.getFormCustomFieldsByDocument(SessionInfo.LoggedUserTenant, this.DocumentCustomArgs.DocumentTypeId, this.DocumentCustomArgs.EntityId, this.DocumentCustomArgs.ObjectTableId).subscribe(res=> {
+        this._documentTypeCustomFieldService.getFormCustomFieldsByDocument(SessionInfo.LoggedUserTenant, this.DocumentCustomArgs.DocumentTypeId, this.DocumentCustomArgs.EntityId, this.DocumentCustomArgs.ObjectTableId).subscribe((res:any) => {
          
 
             var pmResponse: ServiceResponse = res;
@@ -204,7 +204,7 @@ export class DocumentCustomFieldsComponent extends BaseComponent implements OnIn
             this.DocumentCustomArgs.editDocumentComponent.ValidationErrorsList = [];
         }
 
-        this._documentTypeCustomFieldService.UpdateFormCustomField(item).subscribe(res=> {
+        this._documentTypeCustomFieldService.UpdateFormCustomField(item).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
             if (res.HasError) {
                 if (this.DocumentCustomArgs.editDocumentComponent != null) {

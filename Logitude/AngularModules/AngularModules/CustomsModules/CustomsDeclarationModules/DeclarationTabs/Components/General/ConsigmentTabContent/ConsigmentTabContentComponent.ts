@@ -612,7 +612,7 @@ export class ConsigmentTabContentComponent
     private SaveChangesAndSendRequest() {
         this.CurrentSession.StartBusyIndicatorSaving();
         var sub=
-            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(myResult => {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((myResult:any) => {
                 sub.unsubscribe();
             var res: ServiceResponse = myResult;
             if (!res.HasError) {

@@ -546,7 +546,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             tariffSearchArgs.Quantity4 = this.Quantity4;
             tariffSearchArgs.Quantity5 = this.Quantity5;
 
-            this.myDomainService.GetAvailableAirlineFreightTariffs(tariffSearchArgs).subscribe(res => {
+            this.myDomainService.GetAvailableAirlineFreightTariffs(tariffSearchArgs).subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;
@@ -564,7 +564,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 var comparedContainer = "ContainerType" + firstIndex + "Id";
                 var targetContainer = "ContainerType" + secondIndex + "Id";
                 if (this[comparedContainer] != null && this[comparedContainer] == this[targetContainer]) {
-                    this.packageTypeListService.getSingleFromCache(this[targetContainer + ""]).subscribe(res => {
+                    this.packageTypeListService.getSingleFromCache(this[targetContainer + ""]).subscribe((res:any) => {
                         if (!res.HasError) {
                             var packageTypeList: PackageTypeList = res.Result;
                             if (res) {

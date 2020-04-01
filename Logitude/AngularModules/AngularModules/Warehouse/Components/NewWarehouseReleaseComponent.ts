@@ -121,7 +121,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
 
     IsLoadPage: boolean = false;
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease").subscribe((response:any) => {
             this.Start(args);
 
         });

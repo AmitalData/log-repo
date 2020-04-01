@@ -46,7 +46,7 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
 
     LoadCurrentTenant() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -74,7 +74,7 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
             if (this.ExportQuotationsToIntegratedSystem != this.myTenantPM.ExportQuotationsToIntegratedSystem) {
                 this.myTenantPM.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;
                 this.CurrentSession.StartBusyIndicatorSaving();
-                this.tenantPMService.update(this.myTenantPM).subscribe(res => {
+                this.tenantPMService.update(this.myTenantPM).subscribe((res:any) => {
                     this.CurrentSession.StopBusyIndicator();
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {

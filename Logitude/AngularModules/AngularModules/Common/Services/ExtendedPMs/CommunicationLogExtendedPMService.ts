@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 
 import {Observable} from 'rxjs/Rx';
@@ -12,12 +13,12 @@ import {CommunicationLogPM} from '../../EntityPMs/CommunicationLogPM';
 @Injectable()
 export class CommunicationLogExtendedPMService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() { 
 
 
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommunicationLogExtended';
     }
 
@@ -28,8 +29,8 @@ export class CommunicationLogExtendedPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
 
-        return this._http.get(this._apiUrl + '/getcommunicationlogpmsbyentityId/?' + 'entityId=' + entityId + '&tenant=' + tenant , { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '/getcommunicationlogpmsbyentityId/?' + 'entityId=' + entityId + '&tenant=' + tenant ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
             var entity: CommunicationLogPM;
             var communicationLogPMLists: CommunicationLogPM[];
             communicationLogPMLists = new Array<CommunicationLogPM>();
@@ -48,7 +49,7 @@ export class CommunicationLogExtendedPMService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -56,8 +57,8 @@ export class CommunicationLogExtendedPMService {
    getCommunicationLogPMsByEntityIdAndDocumentOutId(entityId: string, documentOutId: string,  tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getcommunicationlogpmsbyentityidanddocumentoutid/?' + 'entityId=' + entityId + '&documentOutId=' + documentOutId +'&tenant=' + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(this._apiUrl + '/getcommunicationlogpmsbyentityidanddocumentoutid/?' + 'entityId=' + entityId + '&documentOutId=' + documentOutId +'&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
             var entity: CommunicationLogPM;
             var communicationLogPMLists: CommunicationLogPM[];
             communicationLogPMLists = new Array<CommunicationLogPM>();
@@ -76,7 +77,7 @@ export class CommunicationLogExtendedPMService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -86,8 +87,8 @@ export class CommunicationLogExtendedPMService {
        var authHeader = new Headers();
        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
      
-       return this._http.get(this._apiUrl + '/getsendcommunicationlogtoqueue/?' + 'communicationLogId=' + communicationLogId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-           var result = response.json();
+       return this._http.get(this._apiUrl + '/getsendcommunicationlogtoqueue/?' + 'communicationLogId=' + communicationLogId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+           var result :any = response;
 
            var pmresponse: ServiceResponse;
            pmresponse = new ServiceResponse();
@@ -96,7 +97,7 @@ export class CommunicationLogExtendedPMService {
            return pmresponse;
 
 
-       }).catch(ServiceHelper.HandleServiceError);
+       }),catchError(ServiceHelper.HandleServiceError));
    }
 
 

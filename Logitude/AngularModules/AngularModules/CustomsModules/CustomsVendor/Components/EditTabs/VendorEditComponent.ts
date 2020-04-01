@@ -114,7 +114,7 @@ export class VendorEditComponent extends BaseComponent {
                     case "COMMUNICATION": {
                         if (this.COMMUNICATION == null) {
 
-                            this.entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe(response => {
+                            this.entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response:any) => {
                                 SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationsTabComponent", myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.COMMUNICATION = cmpRef.instance;

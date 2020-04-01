@@ -103,7 +103,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     LoadCurrentTenant() {
-        this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -144,7 +144,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     LoadCardData() {
-        this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -199,7 +199,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     LoadSharedLogisticsSummary() {
-        this._sharedLogisticsService.getSharedLogisticsSummaryData(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._sharedLogisticsService.getSharedLogisticsSummaryData(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.sharedLogisticsSummary = pmResponse.Result;
@@ -238,7 +238,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     LoadLastLoginPartners() {
-        this._sharedLogisticsService.getLastLoginPartners(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._sharedLogisticsService.getLastLoginPartners(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.LastPartnersList = pmResponse.Result;
@@ -347,7 +347,7 @@ export class SharedLogisticsMainComponent implements OnInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
             //listArgs.ShowViews = false;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -511,7 +511,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     ShowDetailsButtonclick(item: LastLoginPartners) {
         if (item.PartnerTypeName == "Customer") {
             item.IsEnabledShowDetailsButton = false;
-            this._customerPMService.get(item.CardId).subscribe(res => {
+            this._customerPMService.get(item.CardId).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 item.IsEnabledShowDetailsButton = true;
                 if (!pmResponse.HasError) {
@@ -554,7 +554,7 @@ export class SharedLogisticsMainComponent implements OnInit {
 
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

@@ -88,7 +88,7 @@ export class TaxReportListTemplate {
 
             var windowTitle = TextCodeTranslator.Translate("Accounting.O.EditLine") + " " + lineEntity.Line;
 
-            this._TaxReportPMService.get(lineEntity.TaxReportId).subscribe(myResult => {
+            this._TaxReportPMService.get(lineEntity.TaxReportId).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
@@ -97,7 +97,7 @@ export class TaxReportListTemplate {
 
 
 
-                    this._TaxReportLinePMService.get(report.Id, lineEntity.Line).subscribe(myResult => {
+                    this._TaxReportLinePMService.get(report.Id, lineEntity.Line).subscribe((myResult:any) => {
 
                         var mm: ServiceResponse = myResult;
                         if (!mm.HasError) {

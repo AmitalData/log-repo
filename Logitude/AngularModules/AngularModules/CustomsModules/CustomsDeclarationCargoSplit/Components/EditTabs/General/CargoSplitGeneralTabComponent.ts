@@ -112,13 +112,13 @@ public CargoIdentifiersList: ObservableCollection;
       this.ItemsList = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         //this.entityArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCargoIdentifier").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCon").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsItem").subscribe(response => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsPackDet").subscribe(response => {
-                                this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCargoIdentifier").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCon").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsItem").subscribe((response:any) => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsPackDet").subscribe((response:any) => {
+                                this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
                                 //this.Init();
                                 //this.EntityPM = this.entityArgs.EntityPM;
                                     //this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -763,8 +763,8 @@ public CargoIdentifiersList: ObservableCollection;
         }
 
       if (errors.length == 0) {
-        //           this.declarationCargoSplitPMService.update(this.EntityPM).subscribe(response => {
-        //this.entityPMService.update(this.ObjectTableName, this.EntityPM).subscribe(response => {
+        //           this.declarationCargoSplitPMService.update(this.EntityPM).subscribe((response:any) => {
+        //this.entityPMService.update(this.ObjectTableName, this.EntityPM).subscribe((response:any) => {
         this.CurrentSession.StartBusyIndicator("");
         this.OnMassageDisplayMethod();
         var LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0].Id;

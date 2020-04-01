@@ -453,7 +453,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     public MyOpenCount: number;
     public AllOpenCount: number;
     private LoadDataCounts() {
-        this.myDomainService.GetActivitiesSummary(this.SelectedActivityFilter, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myDomainService.GetActivitiesSummary(this.SelectedActivityFilter, this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -470,7 +470,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     public UpcomingActivitiesCount: number = 0;
     public UpcomingActivitiesList: UpcomingActivityItem[];
     public LoadUpcomingEntities() {
-        this.myDomainService.GetUpcomigActivities(this.OwnerId, this.BusinessUnitId, this.selectedActivityFilter, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myDomainService.GetUpcomigActivities(this.OwnerId, this.BusinessUnitId, this.selectedActivityFilter, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.UpcomingActivitiesList = [];
                 this.UpcomingActivitiesCount = 0;
@@ -502,7 +502,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
 
     // Chart
     LoadChartData() {
-        this.myDomainService.GetActivitiesDashBoard(this.OwnerId, this.BusinessUnitId, this.selectedActivityFilter, this.RecordsTypeFilterCode).subscribe(result => {
+        this.myDomainService.GetActivitiesDashBoard(this.OwnerId, this.BusinessUnitId, this.selectedActivityFilter, this.RecordsTypeFilterCode).subscribe((result:any) => {
             this.InProgressBookingDashboard = result.Result;
             this.FillInProgressBookingDashboardData();
         });

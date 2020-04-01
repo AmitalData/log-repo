@@ -31,7 +31,7 @@ export class SystemDefaultsComponent extends BaseComponent{
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
             this.LoadTenantPMMethod();
         });
     }

@@ -129,7 +129,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveGLAccountCount = myResult.ActiveGLAccountCount > 1000 ? "1000+" : myResult.ActiveGLAccountCount.toString();
                 this.glAccountSummary.InactiveGLAccountCount = myResult.InactiveGLAccountCount > 1000 ? "1000+" : myResult.InactiveGLAccountCount.toString();
@@ -141,7 +141,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
                 this.glAccountSummary.AllJobsCount = myResult.AllJobsCount > 1000 ? "1000+" : myResult.AllJobsCount.toString();
             }
         });
-        this._JournalExtendedListService.GetJournalsSummary().subscribe(myResult => {
+        this._JournalExtendedListService.GetJournalsSummary().subscribe((myResult:any) => {
             if (myResult != null) {
 
                 this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();
