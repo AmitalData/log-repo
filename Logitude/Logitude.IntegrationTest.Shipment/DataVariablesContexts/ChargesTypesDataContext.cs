@@ -14,7 +14,7 @@ namespace Logitude.IntegrationTest.Shipment.DataVariablesContexts
         private List<PreparationShortClass> items;
         private ChargesTypesDataContext()
         {
-            this.items = new List<PreparationShortClass>();
+            this.items = null;
         }
 
         private static readonly Lazy<ChargesTypesDataContext> lazy = new Lazy<ChargesTypesDataContext>(() => new ChargesTypesDataContext());
@@ -28,7 +28,10 @@ namespace Logitude.IntegrationTest.Shipment.DataVariablesContexts
 
         public void SetData(List<PreparationShortClass> items)
         {
-            this.items = items;
+            if (this.items == null)
+            {
+                this.items = items;
+            }
         }
 
         public string GetId(string code)
