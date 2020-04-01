@@ -22,6 +22,7 @@ using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.Security;
 using Simplog.Data.ShipmentsModel.Repositories;
+using System.Data.Entity;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -82,95 +83,99 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             vars.QuoteStageQTDRId = GetQuoteStage("QTDR");
             vars.VendorId = GetVendor("TestVendor");
             vars.AgentId = GetAgent("IntegrationAgent");
-            vars.ShipperExport1= GetCustomer("ShipperExport1");
+            vars.ShipperExport1 = GetCustomer("ShipperExport1");
             vars.CustomAgentId = GetCustomsAgent("InegrationCustomsAgent");
             vars.ShippingAgentId = GetShippingAgent("IntegrationShippingAgent");
-            vars.WarehouseId =  GetWarehouse("IntegrationWarehouse", "WR9");
+            vars.WarehouseId = GetWarehouse("IntegrationWarehouse", "WR9");
             vars.CustomerId = GetCustomer("IntegrationCustomer");
             //vars.AWBShipmentId = CreateAWBShipment();
             //vars.ShipmentNumber = shipment.ShipmentNumber;
+            vars.ChargesTypes = this.FillChargesTypes();
+            vars.VatTypes = this.FillVatTayes();
+            vars.Currencies = this.FillCurrencies();
+            vars.Rates = this.FillRates();
             return vars;
         }
 
-     /*   private string CreateAWBShipment()
-        {
-            GetUserPM();
-            GetTenantPM();
-            CreatShipmentPM();
-            InsertShipment();
-           // GetShipment();
-            return shipment.Id;
-        }
+        /*   private string CreateAWBShipment()
+           {
+               GetUserPM();
+               GetTenantPM();
+               CreatShipmentPM();
+               InsertShipment();
+              // GetShipment();
+               return shipment.Id;
+           }
 
-        private void GetShipment()
-        {
-            ShipmentRepository updatedEntityRepository = new ShipmentRepository(shipmentContext);
-            ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
-            shipment = updatedShipmentQuery.GetSingleShipmentPMByNumber(shipment.ShipmentNumber, tenant);
-        }
+           private void GetShipment()
+           {
+               ShipmentRepository updatedEntityRepository = new ShipmentRepository(shipmentContext);
+               ShipmentQuery updatedShipmentQuery = new ShipmentQuery(updatedEntityRepository);
+               shipment = updatedShipmentQuery.GetSingleShipmentPMByNumber(shipment.ShipmentNumber, tenant);
+           }
 
-        private void InsertShipment()
-        {
-            ShipmentService service = new ShipmentService(shipmentContext, shipment, SecurityUtility.GetAuthenticatedUser());
-            service.Create();
-        }
+           private void InsertShipment()
+           {
+               ShipmentService service = new ShipmentService(shipmentContext, shipment, SecurityUtility.GetAuthenticatedUser());
+               service.Create();
+           }
 
-        private void GetUserPM()
-        {
-            UserRepository userRepository = new UserRepository(commonDataContext);
-            UserQuery userQuery = new UserQuery(userRepository);
-            string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
-            loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, tenant, true);
-        }
+           private void GetUserPM()
+           {
+               UserRepository userRepository = new UserRepository(commonDataContext);
+               UserQuery userQuery = new UserQuery(userRepository);
+               string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+               loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, tenant, true);
+           }
 
-        private void GetTenantPM()
-        {
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            tenantPM = tenantQuery.GetTenantFromDB(tenant);
-        }
+           private void GetTenantPM()
+           {
+               TenantQuery tenantQuery = new TenantQuery(tenant);
+               tenantPM = tenantQuery.GetTenantFromDB(tenant);
+           }
 
-        private void CreatShipmentPM()
-        {
-            shipment = new ShipmentPM();
-            shipment.Tenant = tenant;
-            shipment.ShipmentNumber = "AWBShipmentIntgTest";
-            shipment.CreatedByUserId = loggedUser.Id;
-            shipment.BranchId = loggedUser.BranchId;
-            shipment.DepartmentId = loggedUser.DepartmentId;
-            shipment.ProfitCurrencyId = tenantPM.ProfitCurrencyId;
-            shipment.VolumeUnitCode = tenantPM.VolumeUnitCode;
-            shipment.DimensionsUnitCode = tenantPM.DimensionsUnitCode;
-            shipment.GrossWeightUnitCode = tenantPM.GrossWeightUnitCode;
-            shipment.ChargeableWeightUnitCode = tenantPM.ChargeableWeightUnitCode;
-            shipment.ShipmentLevelCode = "D";
-            shipment.DirectionId = "E";
-            shipment.TransportModeId = "A";
-            shipment.FreightPrepaidCollectId = "C";
-            shipment.OtherPrepaidCollectId = "C";
-            shipment.CreatedByUserId = loggedUser.Id;
-            shipment.UpdatedByUserId = loggedUser.Id;
-            shipment.CustomerId = vars.CustomerId;
-            shipment.ShipperId = vars.AgentId;
-            shipment.IssuingCarrierAgentId = vars.AgentId;
-            shipment.AgentId = vars.AgentId;
-            shipment.FromPortId = vars.PortLHRId;
-            shipment.ToPortId = vars.PortJFKId;
-            shipment.MainCarriageFromPortId = vars.PortLHRId;
-            shipment.MainCarriageToPortId = vars.PortJFKId;
-            shipment.OriginMainCarriageFromPortId = vars.PortLHRId;
-            shipment.AWBCurrencyId = vars.CurrencyEURId;
-            shipment.ValueOfGoodsCurrencyId = vars.CurrencyEURId;
-            shipment.AccountManagerUserId = loggedUser.Id;
-            vars.ConcurrencyGUID = shipment.NewConcurrencyGUID = Guid.NewGuid().ToString();
-        }*/
+           private void CreatShipmentPM()
+           {
+               shipment = new ShipmentPM();
+               shipment.Tenant = tenant;
+               shipment.ShipmentNumber = "AWBShipmentIntgTest";
+               shipment.CreatedByUserId = loggedUser.Id;
+               shipment.BranchId = loggedUser.BranchId;
+               shipment.DepartmentId = loggedUser.DepartmentId;
+               shipment.ProfitCurrencyId = tenantPM.ProfitCurrencyId;
+               shipment.VolumeUnitCode = tenantPM.VolumeUnitCode;
+               shipment.DimensionsUnitCode = tenantPM.DimensionsUnitCode;
+               shipment.GrossWeightUnitCode = tenantPM.GrossWeightUnitCode;
+               shipment.ChargeableWeightUnitCode = tenantPM.ChargeableWeightUnitCode;
+               shipment.ShipmentLevelCode = "D";
+               shipment.DirectionId = "E";
+               shipment.TransportModeId = "A";
+               shipment.FreightPrepaidCollectId = "C";
+               shipment.OtherPrepaidCollectId = "C";
+               shipment.CreatedByUserId = loggedUser.Id;
+               shipment.UpdatedByUserId = loggedUser.Id;
+               shipment.CustomerId = vars.CustomerId;
+               shipment.ShipperId = vars.AgentId;
+               shipment.IssuingCarrierAgentId = vars.AgentId;
+               shipment.AgentId = vars.AgentId;
+               shipment.FromPortId = vars.PortLHRId;
+               shipment.ToPortId = vars.PortJFKId;
+               shipment.MainCarriageFromPortId = vars.PortLHRId;
+               shipment.MainCarriageToPortId = vars.PortJFKId;
+               shipment.OriginMainCarriageFromPortId = vars.PortLHRId;
+               shipment.AWBCurrencyId = vars.CurrencyEURId;
+               shipment.ValueOfGoodsCurrencyId = vars.CurrencyEURId;
+               shipment.AccountManagerUserId = loggedUser.Id;
+               vars.ConcurrencyGUID = shipment.NewConcurrencyGUID = Guid.NewGuid().ToString();
+           }*/
 
-        private string GetWarehouse(string warehouseName,string code)
+        private string GetWarehouse(string warehouseName, string code)
         {
             WarehouseRepository warehouseRepository = new WarehouseRepository(commonDataContext);
             Warehouse warehouse = warehouseRepository.GetFirstSingleByCode(code, tenant);
             if (warehouse == null)
             {
-                InsertNewWarehouse(warehouseName,code);
+                InsertNewWarehouse(warehouseName, code);
                 warehouse = warehouseRepository.GetFirstSingleByCode(code, tenant);
             }
             return warehouse.Id;
@@ -224,7 +229,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private string GetCustomsAgent(string customAgentName)
         {
             CustomAgentRepository customAgentRepository = new CustomAgentRepository(commonDataContext);
-            CustomAgent customAgent = customAgentRepository.GetFirstSingleByName(customAgentName,tenant);
+            CustomAgent customAgent = customAgentRepository.GetFirstSingleByName(customAgentName, tenant);
             if (customAgent == null)
             {
                 InsertNewCustomAgent(customAgentName);
@@ -266,7 +271,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             customerService.Create();
         }
 
-       
+
         public CustomerPM CreateCustomertPM(string agentName)
         {
             CustomerPM customerPM = new CustomerPM();
@@ -794,5 +799,72 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             incotermPM.OtherCharges = "P";
             return incotermPM;
         }
+
+        private List<PreparationShortClass> FillChargesTypes()
+        {
+            List<PreparationShortClass> charges = (from a in commonDataContext.ChargesTypes
+                                                   where a.Tenant == tenant
+                                                   select new PreparationShortClass
+                                                   {
+                                                       Id = a.Id,
+                                                       Code = a.Code
+                                                   }).ToList();
+
+            return charges;
+        }
+
+        private List<PreparationShortClass> FillVatTayes()
+        {
+            List<PreparationShortClass> vatTypes = (from a in commonDataContext.VatTypes
+                                                   where a.Tenant == tenant
+                                                   select new PreparationShortClass
+                                                   {
+                                                       Id = a.Id,
+                                                       Code = a.Code
+                                                   }).ToList();
+
+            return vatTypes;
+        }
+
+        private List<PreparationShortClass> FillCurrencies()
+        {
+            List<PreparationShortClass> currencies = (from a in commonDataContext.Currencies
+                                                   where a.Tenant == tenant
+                                                   select new PreparationShortClass
+                                                   {
+                                                       Id = a.Id,
+                                                       Code = a.Code
+                                                   }).ToList();
+
+            return currencies;
+        }
+
+        public List<PreparationShortClass> FillRates()
+        {
+            List<PreparationShortClass> rates = (from a in webFreightContext.RatesTable.Include("ForeignCurrency")
+                                                 where a.Tenant == tenant
+                                                 select new PreparationShortClass()
+                                                 {
+                                                     Id = a.Id,                                                     
+                                                     Rate = a.Rate,
+                                                     ForeignCurrencyId = a.ForeignCurrencyId,
+                                                     ForeignCurrencyCode = a.ForeignCurrency.Code,
+                                                     BaseCurrencyId = a.BaseCurrencyId,
+                                                     ValueDate = a.ValueDate,
+                                                 }).ToList();
+            return rates;
+        }
+
+    }
+
+    public class PreparationShortClass
+    {
+        public string Id { get; set; }
+        public string Code { get; set; }
+        public double? Rate { get; set; }
+        public string ForeignCurrencyId { get; set; }
+        public string ForeignCurrencyCode { get; set; }
+        public string BaseCurrencyId { get; set; }
+        public DateTime? ValueDate { get; set; }
     }
 }

@@ -122,6 +122,11 @@ namespace Logitude.IntegrationTest.Shipment
             ShipmentVariables.ShippingAgentId = vars.ShippingAgentId;
             ShipmentVariables.WarehouseId = vars.WarehouseId;
             ShipmentVariables.ShipperExport1 = vars.ShipperExport1;
+            ShipmentVariables.ChargesTypes = vars.ChargesTypes;
+            ShipmentVariables.VatTypes = vars.VatTypes;
+            ShipmentVariables.Currencies = vars.Currencies;
+            ShipmentVariables.Rates = vars.Rates;
+
 
         }
         //    public static async Task<string> GetCurrencyId(string currencyCode)
