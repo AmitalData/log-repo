@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AutomaticReconcileMethodUpdateClass
    {  		
-		public const string HashString = "bcff620e85186e9e7e4ceaf25d29cd63";
+		public const string HashString = "5c82bf8a7c1a6eabeb96a4af84a22f39";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

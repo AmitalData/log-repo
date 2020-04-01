@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class ApiCredintialsUpdateClass
    {  		
-		public const string HashString = "30f309d27821e7eafe362a8a5d6b9094";
+		public const string HashString = "5250a1176991ed756a9560699b0d9081";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

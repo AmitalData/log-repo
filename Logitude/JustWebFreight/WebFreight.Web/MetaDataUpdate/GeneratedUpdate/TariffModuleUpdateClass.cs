@@ -235,6 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
  			TablesHashStrings.Add("Tariff",  TariffUpdateClass.HashString);
 			TablesHashStrings.Add("TariffLine",  TariffLineUpdateClass.HashString);
 			TablesHashStrings.Add("TariffLinesContainersPrice",  TariffLinesContainersPriceUpdateClass.HashString);
+			TablesHashStrings.Add("TariffProduct",  TariffProductUpdateClass.HashString);
 			TablesHashStrings.Add("TariffSetting",  TariffSettingUpdateClass.HashString);
 			TablesHashStrings.Add("TariffSurchargesUpdate",  TariffSurchargesUpdateUpdateClass.HashString);
 			TablesHashStrings.Add("TariffSurchargesUpdateMethod",  TariffSurchargesUpdateMethodUpdateClass.HashString);
@@ -312,6 +313,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				TariffLinesContainersPriceUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
 				this.ObjectContext.SaveChanges();
 				TariffLinesContainersPriceUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffProduct", ObjectTables, TariffProductUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffProduct");
+				TariffProductUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
 			}
 
@@ -700,6 +724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllClosedTablesByHash()
 		{
    
+	   
 	   
 	   
 	   

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class RatesTableUpdateClass
    {  		
-		public const string HashString = "0c6d866a30a041937e895f44d39a334d";
+		public const string HashString = "9c0ce9ff1fe9f25d6aa38a81091841aa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

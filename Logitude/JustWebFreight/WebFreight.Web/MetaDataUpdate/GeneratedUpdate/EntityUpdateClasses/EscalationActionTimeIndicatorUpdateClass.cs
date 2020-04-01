@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class EscalationActionTimeIndicatorUpdateClass
    {  		
-		public const string HashString = "67613cf09b59a6de1358d0581c2b8fdf";
+		public const string HashString = "18efb85f8e01d8f09e2598facf03d126";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

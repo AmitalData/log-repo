@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountTotalDateTypeUpdateClass
    {  		
-		public const string HashString = "b3f27b68a123ff80b33051823b5c499e";
+		public const string HashString = "1b70d6dbfc6d7f51d475a4d1cbd2a3bb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

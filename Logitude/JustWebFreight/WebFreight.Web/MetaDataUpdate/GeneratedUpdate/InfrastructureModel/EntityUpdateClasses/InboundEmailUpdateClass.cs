@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class InboundEmailUpdateClass
    {  		
-		public const string HashString = "791e1376423a2e841ab2b2a693ae0831";
+		public const string HashString = "50f6ea348f5e785b21786e4bb4614a94";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

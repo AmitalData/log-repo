@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantManagementLicenseUpdateClass
    {  		
-		public const string HashString = "67ddc05c6b8bd8c89ae845c921e14044";
+		public const string HashString = "9c35a4ce86bb2e5f323ad5458d453a67";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

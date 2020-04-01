@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class FTPDetailUpdateClass
    {  		
-		public const string HashString = "59361844b2eb637e7f84b3e00824fbff";
+		public const string HashString = "451dd4d799e2b7fdeeb81aeffdf37d05";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

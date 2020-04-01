@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class IATACodeUpdateClass
    {  		
-		public const string HashString = "a62dbf0d94aa2acb08f499133bf5b6ba";
+		public const string HashString = "b19eecff7cf646a34c2270efb63a5c4d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

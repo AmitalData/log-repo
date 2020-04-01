@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class RuleUpdateHistoryUpdateClass
    {  		
-		public const string HashString = "4ad429a2f31e27289a44d02a0f1651db";
+		public const string HashString = "d38350cfd663edbf271224b88c420321";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

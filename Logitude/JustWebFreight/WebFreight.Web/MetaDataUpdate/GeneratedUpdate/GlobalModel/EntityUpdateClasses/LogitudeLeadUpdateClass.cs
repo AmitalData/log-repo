@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class LogitudeLeadUpdateClass
    {  		
-		public const string HashString = "556b6fbfa5e7846ff0ac60a0544e78e0";
+		public const string HashString = "e66969fe7e205fb101751166c25e167e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

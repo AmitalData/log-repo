@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TarrifHeaderUpdateClass
    {  		
-		public const string HashString = "f149a30078ca5566be06be4c1cbd562d";
+		public const string HashString = "4e910e617567b7441d4349eb2bad462d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

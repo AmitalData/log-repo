@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class AWBSpecialHandlingCodeUpdateClass
    {  		
-		public const string HashString = "078031144e5737f0c3bde4978a262bf9";
+		public const string HashString = "3b9433dedfa0a1edc9ca35a78a127526";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

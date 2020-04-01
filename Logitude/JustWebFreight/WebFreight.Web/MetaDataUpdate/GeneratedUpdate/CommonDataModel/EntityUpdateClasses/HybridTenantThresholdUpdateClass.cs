@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HybridTenantThresholdUpdateClass
    {  		
-		public const string HashString = "df7d5791e9494d646e0f01f041362a91";
+		public const string HashString = "2a85bb48bf86322ec2c91a5de23c6a74";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

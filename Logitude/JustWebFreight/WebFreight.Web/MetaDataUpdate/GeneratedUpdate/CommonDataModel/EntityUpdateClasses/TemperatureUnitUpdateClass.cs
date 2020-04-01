@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TemperatureUnitUpdateClass
    {  		
-		public const string HashString = "4a9abf7b29ef69b387acacec072befe7";
+		public const string HashString = "f0ae113e304f64d893f49a2af72a2a6b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

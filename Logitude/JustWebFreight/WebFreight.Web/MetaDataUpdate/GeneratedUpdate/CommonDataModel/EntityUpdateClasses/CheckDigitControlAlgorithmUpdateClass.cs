@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CheckDigitControlAlgorithmUpdateClass
    {  		
-		public const string HashString = "1d1750ba69ea07cc638fb99efcaf582a";
+		public const string HashString = "6758c9706d2772165ea65557844e6854";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

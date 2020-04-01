@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceTypeUpdateClass
    {  		
-		public const string HashString = "c060f928f5a8570196a5c5214749d3b6";
+		public const string HashString = "4e96ec9ea486af3ac789b281d7edd9ac";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

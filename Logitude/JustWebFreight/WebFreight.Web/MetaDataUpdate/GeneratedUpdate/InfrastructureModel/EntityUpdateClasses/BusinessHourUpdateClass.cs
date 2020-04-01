@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class BusinessHourUpdateClass
    {  		
-		public const string HashString = "b7715f50f6601a81fff7742d5ca4e337";
+		public const string HashString = "ff0a42f0081518f0928d44e3d44ab232";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

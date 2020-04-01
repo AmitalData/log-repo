@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class APILogsUpdateClass
    {  		
-		public const string HashString = "08b80955c399bd5a6d6faec19b668126";
+		public const string HashString = "dffa847219e5e95bca821da0a2bd9b27";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

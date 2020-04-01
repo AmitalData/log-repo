@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class FilingInboxAttachmentLogUpdateClass
    {  		
-		public const string HashString = "e42154b7f7fc682bb859755516656f4b";
+		public const string HashString = "5fe6e0c74e4cca9b89e5f546b4ddb322";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

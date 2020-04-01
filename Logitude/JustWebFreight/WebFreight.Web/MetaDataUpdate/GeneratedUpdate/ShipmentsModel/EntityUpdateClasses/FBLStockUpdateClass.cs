@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class FBLStockUpdateClass
    {  		
-		public const string HashString = "91684afca5ac63b19aee31d9b9a28919";
+		public const string HashString = "17ead9692dc992c2fef82cf48e793407";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

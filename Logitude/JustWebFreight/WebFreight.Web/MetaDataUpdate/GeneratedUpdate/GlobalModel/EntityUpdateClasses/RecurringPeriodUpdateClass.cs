@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class RecurringPeriodUpdateClass
    {  		
-		public const string HashString = "12d6244f46a968a8569428641bf14231";
+		public const string HashString = "8ded2d30a26e7aaa5431578bba1330be";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

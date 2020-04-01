@@ -8,7 +8,7 @@ namespace Logitude.DatabaseMigration.Migrations
         public override void Up()
         {
  
-            AddColumn("dbo.Users", "LayoutDirection", c => c.String(maxLength: 3, unicode: false));
+            //AddColumn("dbo.Users", "LayoutDirection", c => c.String(maxLength: 3, unicode: false));
              
         }
         

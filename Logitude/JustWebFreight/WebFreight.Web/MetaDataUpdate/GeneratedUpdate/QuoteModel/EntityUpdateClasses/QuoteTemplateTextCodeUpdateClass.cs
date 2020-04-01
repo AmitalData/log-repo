@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateTextCodeUpdateClass
    {  		
-		public const string HashString = "9bf849fad7801049d81e0c8bea6f1cd4";
+		public const string HashString = "332e1a4a4c0a45c058758a144cf8bc76";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

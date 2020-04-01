@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantAddOnUpdateClass
    {  		
-		public const string HashString = "b75275ebededebbaa4055f0b78a57aa5";
+		public const string HashString = "1dc9a41d7d9bd9ac8d26fb3bd4c1d47e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

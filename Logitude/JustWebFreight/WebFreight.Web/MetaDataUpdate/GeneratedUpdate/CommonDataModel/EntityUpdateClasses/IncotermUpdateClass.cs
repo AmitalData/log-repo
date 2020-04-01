@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class IncotermUpdateClass
    {  		
-		public const string HashString = "db10a74737dc260a5924f2061b18b472";
+		public const string HashString = "a2db777f18a9709fb8ffc09f464d7225";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

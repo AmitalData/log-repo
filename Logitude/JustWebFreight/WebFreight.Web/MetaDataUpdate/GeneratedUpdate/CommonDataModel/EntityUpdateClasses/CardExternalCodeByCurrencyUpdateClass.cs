@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardExternalCodeByCurrencyUpdateClass
    {  		
-		public const string HashString = "2d5f103ca38a81bb6f0681c2a46b3bfe";
+		public const string HashString = "66933f7b668cc4378bb5dc2935945607";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

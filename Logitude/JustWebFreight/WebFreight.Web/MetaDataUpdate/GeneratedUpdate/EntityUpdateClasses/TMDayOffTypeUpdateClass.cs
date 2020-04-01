@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TMDayOffTypeUpdateClass
    {  		
-		public const string HashString = "dfccdb8b6e577e716c7e04681713f472";
+		public const string HashString = "eb52dc0facab3f52b0514927a70087d6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
