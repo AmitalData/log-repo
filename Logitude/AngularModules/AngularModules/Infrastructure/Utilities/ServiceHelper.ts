@@ -98,7 +98,7 @@ export class ServiceHelper {
             }
         }
         else if (error instanceof HttpErrorResponse)  {
-            ServiceHelper.HttpClientHandleServiceError(error);
+            response = ServiceHelper.HttpClientHandleServiceError(error);
         }
         else {
 
@@ -191,7 +191,7 @@ export class ServiceHelper {
             ServiceHelper._LogitudeErrorHandler.handleError(error);
         }
 
-        return of(response);
+       return response;
     }
 
     public static HandleTimerServiceError(error: any) {
