@@ -211,7 +211,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
         if (this.ObjectTableName == "TaxReport") {
 
 
-            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.reportPM.Id, objectTable.Id).subscribe(myResult => {
+            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.reportPM.Id, objectTable.Id).subscribe((myResult:any) => {
                 console.log("[GetLastDocumentsFilingPM]", myResult);
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
@@ -229,7 +229,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
             });
         }
         else if (this.ObjectTableName == "TaxDeductionReport") {
-            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.taxDeductionPM.Id, objectTable.Id).subscribe(myResult => {
+            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.taxDeductionPM.Id, objectTable.Id).subscribe((myResult:any) => {
                 console.log("[GetLastDocumentsFilingPM]", myResult);
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
