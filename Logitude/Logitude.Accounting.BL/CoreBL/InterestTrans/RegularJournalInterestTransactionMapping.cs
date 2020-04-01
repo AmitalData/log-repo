@@ -25,7 +25,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
             {
                 return;
             }
-            if (!string.IsNullOrWhiteSpace(regularJournal.ExternalNo))//Task 62801: ריבית - מיפוי תנועות - למפות רק פקודות שאינן חיצוניות - R5
+            if (regularJournal.ExternalSystem == "AMITAL" && !string.IsNullOrWhiteSpace(regularJournal.ExternalNo))//Task 62801: ריבית - מיפוי תנועות - למפות רק פקודות שאינן חיצוניות - R5
             {
                 return;
             }
