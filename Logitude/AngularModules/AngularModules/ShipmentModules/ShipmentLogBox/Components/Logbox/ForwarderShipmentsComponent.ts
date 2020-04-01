@@ -23,6 +23,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ShipmentPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     moduleId: module.id,
@@ -616,8 +617,8 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
                     this.SourceEntity.ShipmentPackages[0].Quantity = this.SourceEntity.PackagesQuantity;
                 }
             }
-           
-            this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
+
+            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
                 this.SourceEntity.StatusId = Status.Result.Id;
                 this._ShipmentPMService.update(this.SourceEntity).subscribe((myResult:any) => {
                     if (!myResult.HasError) {

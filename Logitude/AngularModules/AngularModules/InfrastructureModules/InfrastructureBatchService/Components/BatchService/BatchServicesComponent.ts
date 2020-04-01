@@ -124,8 +124,8 @@ export class BatchServicesComponent {
 
     private LoadBatchServicesLogs() {  
         this.CurrentSession.StartBusyIndicatorLoading();
-              
-        this.infraDomainService.GetBatchServicesLogs(this.SelectedRow.Code, this.SelectedBatchFilter.Code).subscribe(myResult => {
+
+        this.infraDomainService.GetBatchServicesLogs(this.SelectedRow.Code, this.SelectedBatchFilter.Code).subscribe((myResult: ServiceResponse) => {
             if (myResult == null) {
                 this.LogsItemsSource = [];
             }

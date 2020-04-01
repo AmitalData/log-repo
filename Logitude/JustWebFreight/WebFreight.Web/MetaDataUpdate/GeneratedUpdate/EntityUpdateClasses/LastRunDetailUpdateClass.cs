@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "LastRunDetail",
 			      				    IsNew =  true,
 			      				    DBTableName =  "LastRunDetails",
-			      				    OldDBTableName =  "LastRunDetails",
 			      				    ObjectTableSingular =  "Last Run Detail",
 			      				    ObjectTablePlural =  "Last Run Details",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Last Run Detail",
-			      				    Code =  "1366",
+			      				    Code =  "6bfd",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -139,7 +138,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastRunDate",
-					  						OldFieldName =  "LastRunDate",
 					  						ObjectTableName =  "LastRunDetail",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -199,7 +197,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastRunByUserId",
-					  						OldFieldName =  "LastRunByUserId",
 					  						ObjectTableName =  "LastRunDetail",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -257,7 +254,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastRunByUserName",
-					  						OldFieldName =  "LastRunByUserName",
 					  						ObjectTableName =  "LastRunDetail",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

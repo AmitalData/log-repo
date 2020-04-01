@@ -127,7 +127,7 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         var control: string = "";
         var windowTitle = "Edit Product";
         var proeductTypeListService: ProductTypeListService = new ProductTypeListService();
-        this._entityResourceService.getEntityResourceByTableName("CustomerProductLocation", 0).subscribe(p => {
+        this._entityResourceService.getEntityResourceByTableName("CustomerProductLocation", 0).subscribe((response: any) => {
             this.Clone(item);
             proeductTypeListService.getAllFromCache().subscribe(result => {
                 var list = result.Result.filter(d => d.Code == item.ProductTypeCode)[0];
@@ -203,7 +203,7 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         listArgs.DisplayTitle = "Customer Actual Data";
         listArgs.BackButtonTitle = "Back";
         listArgs.ShowViews = false;
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response: any) => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;

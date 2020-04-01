@@ -1,6 +1,6 @@
 ﻿  
 SELECT [Id] as [Key]
-      ,[Value]
+      ,[Value] 
 	  ,[Code]
       ,[Is Multiple Choice]
       ,[Source Tenant] as [Tenant]

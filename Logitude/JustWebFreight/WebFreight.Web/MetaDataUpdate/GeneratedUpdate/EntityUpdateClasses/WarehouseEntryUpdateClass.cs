@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "WarehouseEntry",
 			      				    IsNew =  false,
 			      				    DBTableName =  "WarehouseEntries",
-			      				    OldDBTableName =  "WarehouseEntries",
 			      				    ObjectTableSingular =  "WarehouseEntry",
 			      				    ObjectTablePlural =  "WarehouseEntries",
 			      				    HasCustomFilter =  true,
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -201,7 +199,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -259,7 +256,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -319,7 +315,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -377,7 +372,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntryNumber",
-					  						OldFieldName =  "EntryNumber",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -438,7 +432,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -498,7 +491,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentId",
-					  						OldFieldName =  "ShipmentId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -555,7 +547,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentNumber",
-					  						OldFieldName =  "ShipmentNumber",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -615,7 +606,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "WarehouseId",
-					  						OldFieldName =  "WarehouseId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Warehouse",
@@ -675,7 +665,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExpectedEntryDate",
-					  						OldFieldName =  "ExpectedEntryDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -735,7 +724,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActualEntryDate",
-					  						OldFieldName =  "ActualEntryDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -796,7 +784,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ReceivedBy",
-					  						OldFieldName =  "ReceivedBy",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -857,7 +844,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SpecialInstruction",
-					  						OldFieldName =  "SpecialInstruction",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -918,7 +904,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusCode",
-					  						OldFieldName =  "StatusCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "WarehouseEntryStatus",
@@ -978,7 +963,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalPieces",
-					  						OldFieldName =  "TotalPieces",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1038,7 +1022,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalGrossWeight",
-					  						OldFieldName =  "TotalGrossWeight",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1100,7 +1083,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "GrossWeightUnitCode",
-					  						OldFieldName =  "GrossWeightUnitCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1160,7 +1142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalVolume",
-					  						OldFieldName =  "TotalVolume",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1222,7 +1203,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "VolumeUnitCode",
-					  						OldFieldName =  "VolumeUnitCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1282,7 +1262,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1343,7 +1322,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerRef1",
-					  						OldFieldName =  "CustomerRef1",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1400,7 +1378,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerRef2",
-					  						OldFieldName =  "CustomerRef2",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1457,7 +1434,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "HouseNumber",
-					  						OldFieldName =  "HouseNumber",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1518,7 +1494,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MasterNumber",
-					  						OldFieldName =  "MasterNumber",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1579,7 +1554,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "WarehouseEntryPackages",
-					  						OldFieldName =  "WarehouseEntryPackages",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -1637,7 +1611,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "WarehouseName",
-					  						OldFieldName =  "WarehouseName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1698,7 +1671,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1759,7 +1731,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "References",
-					  						OldFieldName =  "References",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1816,7 +1787,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1877,7 +1847,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DimensionsUnitCode",
-					  						OldFieldName =  "DimensionsUnitCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1934,7 +1903,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentNumberWithType",
-					  						OldFieldName =  "ShipmentNumberWithType",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1991,7 +1959,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentLevelCode",
-					  						OldFieldName =  "ShipmentLevelCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentLevel",
@@ -2049,7 +2016,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransportModeId",
-					  						OldFieldName =  "TransportModeId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TransportMode",
@@ -2094,7 +2060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TransportModeIdListLable",
 					  						ListLableDefaultText =  "Transport Mode",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
+					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
@@ -2112,7 +2078,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FromPortId",
-					  						OldFieldName =  "FromPortId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -2172,7 +2137,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToPortId",
-					  						OldFieldName =  "ToPortId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -2232,7 +2196,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TruckerId",
-					  						OldFieldName =  "TruckerId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -2290,7 +2253,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TruckerReference",
-					  						OldFieldName =  "TruckerReference",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2347,7 +2309,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipperId",
-					  						OldFieldName =  "ShipperId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -2405,7 +2366,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DirectionId",
-					  						OldFieldName =  "DirectionId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Direction",
@@ -2450,7 +2410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "DirectionIdListLable",
 					  						ListLableDefaultText =  "Direction",
 					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
+					  						IsFixedLength =  true,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
@@ -2468,7 +2428,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipmentTypeId",
-					  						OldFieldName =  "ShipmentTypeId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentType",
@@ -2526,7 +2485,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntryReference",
-					  						OldFieldName =  "EntryReference",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2587,7 +2545,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2647,7 +2604,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Origin",
-					  						OldFieldName =  "Origin",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2708,7 +2664,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Destination",
-					  						OldFieldName =  "Destination",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2769,7 +2724,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MainCarriageCarrierName",
-					  						OldFieldName =  "MainCarriageCarrierName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2826,7 +2780,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Routing",
-					  						OldFieldName =  "Routing",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2883,7 +2836,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityDate",
-					  						OldFieldName =  "ActivityDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2940,7 +2892,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityTypeName",
-					  						OldFieldName =  "ActivityTypeName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2997,7 +2948,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ActivityByUserName",
-					  						OldFieldName =  "ActivityByUserName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3054,7 +3004,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DirectionName",
-					  						OldFieldName =  "DirectionName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3111,7 +3060,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TransportModeName",
-					  						OldFieldName =  "TransportModeName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3168,7 +3116,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConnectedToShipment",
-					  						OldFieldName =  "ConnectedToShipment",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3225,7 +3172,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FromAddressId",
-					  						OldFieldName =  "FromAddressId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3282,7 +3228,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToAddressId",
-					  						OldFieldName =  "ToAddressId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3339,7 +3284,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConsigneeId",
-					  						OldFieldName =  "ConsigneeId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -3397,7 +3341,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipperReference1",
-					  						OldFieldName =  "ShipperReference1",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3454,7 +3397,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConsigneeReference1",
-					  						OldFieldName =  "ConsigneeReference1",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3511,7 +3453,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConsigneeReference2",
-					  						OldFieldName =  "ConsigneeReference2",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3568,7 +3509,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipperReference2",
-					  						OldFieldName =  "ShipperReference2",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3625,7 +3565,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ShipperName",
-					  						OldFieldName =  "ShipperName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3684,7 +3623,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConsigneeName",
-					  						OldFieldName =  "ConsigneeName",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3743,7 +3681,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedEntries",
-					  						OldFieldName =  "CreatedEntries",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3800,7 +3737,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnterredEntries",
-					  						OldFieldName =  "EnterredEntries",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3857,7 +3793,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Manufacturer",
-					  						OldFieldName =  "Manufacturer",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3917,7 +3852,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FromPartnerId",
-					  						OldFieldName =  "FromPartnerId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3974,7 +3908,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToPartnerId",
-					  						OldFieldName =  "ToPartnerId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4031,7 +3964,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ChargeableWeightUnitCode",
-					  						OldFieldName =  "VolumetricWeightUnitCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4088,7 +4020,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TotalVolumetricWeight",
-					  						OldFieldName =  "TotalVolumetricWeight",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4150,7 +4081,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LastStatusUpdateDate",
-					  						OldFieldName =  "LastStatusUpdateDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4207,7 +4137,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MasterHouse",
-					  						OldFieldName =  "MasterHouse",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4264,7 +4193,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EntryReferencesAndDate",
-					  						OldFieldName =  "EntryReferencesAndDate",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4321,7 +4249,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ConnectedTo",
-					  						OldFieldName =  "ConnectedTo",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4378,7 +4305,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Ratio",
-					  						OldFieldName =  "Ratio",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -4437,7 +4363,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToTypeCode",
-					  						OldFieldName =  "ToTypeCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4494,7 +4419,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FromTypeCode",
-					  						OldFieldName =  "FromTypeCode",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4551,7 +4475,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "FromCountryId",
-					  						OldFieldName =  "FromCountryId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -4609,7 +4532,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ToCountryId",
-					  						OldFieldName =  "ToCountryId",
 					  						ObjectTableName =  "WarehouseEntry",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",

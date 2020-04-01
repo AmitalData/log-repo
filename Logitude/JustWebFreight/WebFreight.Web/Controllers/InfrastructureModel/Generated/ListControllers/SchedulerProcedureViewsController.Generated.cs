@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				SchedulerProcedureRepository  schedulerProcedureRepository = new SchedulerProcedureRepository(MyContext);
-				IQueryable<SchedulerProcedure> entityPocos = schedulerProcedureRepository.GetSchedulerProcedures();
+				IQueryable<SchedulerProcedure> entityPocos = schedulerProcedureRepository.GetSchedulerProcedure();
 
 				SchedulerProcedureQuery schedulerProcedureQuery = new SchedulerProcedureQuery(schedulerProcedureRepository);
 			    IQueryable<SchedulerProcedureList> entityLists = schedulerProcedureQuery.GetIQueryableEntityList(entityPocos);
@@ -130,7 +130,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                     ObjectTableName = "SchedulerProcedure",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "SchedulerProcedures",
+                    QuerySection = "SchedulerProcedure",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -213,7 +213,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 SchedulerProcedureRepository  schedulerProcedureRepository = new SchedulerProcedureRepository(MyContext);
-                IQueryable<SchedulerProcedure> entityPocos = schedulerProcedureRepository.GetSchedulerProcedures();
+                IQueryable<SchedulerProcedure> entityPocos = schedulerProcedureRepository.GetSchedulerProcedure();
 
                 SchedulerProcedureQuery schedulerProcedureQuery = new SchedulerProcedureQuery(schedulerProcedureRepository);
                 

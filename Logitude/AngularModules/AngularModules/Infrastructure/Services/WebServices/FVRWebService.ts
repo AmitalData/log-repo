@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
@@ -8,19 +9,14 @@ import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 
 export class FVRWebService {
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FVRWebService';
     }
 
     SendFVR(myAirlineId: string, myFromPortId: string, myToPortId: string, myETD: Date, myETA: Date, myVolume: number, myGrossWeight: number, myVolumeUnitCode: string, myGrossWeightUnitCode: string, myShipmentId: string, myBookingId: string, myRecipient: string) {
         return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
             var args = new FVRServiceArgs();
             args.AirlineId = myAirlineId;
             args.ShipmentId = myShipmentId;
@@ -37,27 +33,22 @@ export class FVRWebService {
 
             var mappedEntity: FVRServiceArgs = this.MapJsonToFVRServiceArgs(args, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                { headers: authHeader }).map((res) => {
-                    var myJsonResult = res.json();
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var myJsonResult = response;
 
-                    var serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = myJsonResult;
-                    return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     SimulateXML(xmlString: string, myShipmentId: string, myBookingId, isFNA: boolean) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetSimulateXML?xmlString=' + xmlString + '&myShipmentId=' + myShipmentId + '&myBookingId=' + myBookingId + '&isFNA=' + isFNA;
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSimulateXML?xmlString=' + xmlString + '&myShipmentId=' + myShipmentId + '&myBookingId=' + myBookingId + '&isFNA=' + isFNA, {
-                headers: authHeader
-            }).map(response => {
-
-                var myJsonResult = response.json();
-
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var mappedResult: FVASimulatorResult = new FVASimulatorResult();
 
                 if (myJsonResult) {
@@ -71,19 +62,15 @@ export class FVRWebService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     GetCopyFlightsSchedulesPorts(myResponseIds: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
+        var url = this._apiUrl + '/GetCopyFlightsSchedulesPorts?myResponseIds=' + myResponseIds;
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCopyFlightsSchedulesPorts?myResponseIds=' + myResponseIds, {
-                headers: authHeader
-            }).map(response => {
-
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
                 var listMapped: Array<FlightSchedulePort> = [];
 
                 for (var itemJeson in listJason) {
@@ -94,7 +81,7 @@ export class FVRWebService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -102,7 +89,6 @@ export class FVRWebService {
         if (!entity) {
             entity = new FVRServiceArgs();
         }
-
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
@@ -119,6 +105,7 @@ export class FVRWebService {
 
         return entity;
     }
+
     private MapFlightSchedulePort(jsonList: any) {
         var entityPM: FlightSchedulePort = new FlightSchedulePort();
 
@@ -149,6 +136,7 @@ export class FVRServiceArgs {
     public GrossWeightUnitCode: string;
     public Recipient: string;
 }
+
 export class FVRResultClass {
     public Id: number;
     public Tenant: number;
@@ -156,6 +144,7 @@ export class FVRResultClass {
     public RequestId: string;
     public Errors: string[];
 }
+
 export class FVASimulatorResult {
     public RequestId: string;
     public FromPortId: string;
@@ -166,6 +155,7 @@ export class FVASimulatorResult {
     public IsValidXML: boolean;
     public Errors: string[];
 }
+
 export class FlightSchedulePort {
     public PortId: string;
     public PortCode: string;
@@ -173,4 +163,3 @@ export class FlightSchedulePort {
     public PortCountryCode: string;
     public PortCountryName: string;
 }
-

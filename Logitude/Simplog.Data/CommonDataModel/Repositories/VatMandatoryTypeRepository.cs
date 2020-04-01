@@ -35,6 +35,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return context.VatMandatoryTypes;
         }
+        public IQueryable<VatMandatoryType> GetVatMandatoryType()
+        {
+            return context.VatMandatoryTypes;
+        }
+        
         public IQueryable<VatMandatoryType> GetAll()
         {
             return context.VatMandatoryTypes;

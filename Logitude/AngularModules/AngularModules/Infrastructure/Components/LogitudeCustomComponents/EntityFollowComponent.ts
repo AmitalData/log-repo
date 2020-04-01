@@ -44,8 +44,8 @@ export class EntityFollowComponent implements OnInit {
     LoadEntityFollowers() {
         this.FollowEntityLists = [];
         this.ToolTipMessage = "";
-       // this.CurrentSession.StartBusyIndicatorSaving();
-        this.myModulesService.GetUserFollowEntityLists(this.EntityId, this.ObjectTableId).subscribe(res => {
+        // this.CurrentSession.StartBusyIndicatorSaving();
+        this.myModulesService.GetUserFollowEntityLists(this.EntityId, this.ObjectTableId).subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;
             //this.CurrentSession.StopBusyIndicator();
 
@@ -71,7 +71,7 @@ export class EntityFollowComponent implements OnInit {
     AddFollowEntity(user: any) {
  
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.myModulesService.AddFollowEntity(this.EntityId, this.ObjectTableId, SessionLocator.LoggedUserId).subscribe(res => {
+        this.myModulesService.AddFollowEntity(this.EntityId, this.ObjectTableId, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
 
@@ -86,7 +86,7 @@ export class EntityFollowComponent implements OnInit {
  
     DeleteFollowEntity(user: any) {
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.myModulesService.DeleteFollowEntity(SessionLocator.LoggedUserId).subscribe(res => {
+        this.myModulesService.DeleteFollowEntity(SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
 

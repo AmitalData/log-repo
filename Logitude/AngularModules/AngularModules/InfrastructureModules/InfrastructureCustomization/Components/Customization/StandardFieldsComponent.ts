@@ -120,7 +120,7 @@ export class TabItem {
     private loadedFields: ObjectFieldPM[];
     public LoadStandardFields() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.myService.GetStandardFieldsByTableId(this.ObjectTableId).subscribe(myResult => {
+        this.myService.GetStandardFieldsByTableId(this.ObjectTableId).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -133,7 +133,7 @@ export class TabItem {
     }
 
     private LoadTranslationsForMultiEntity() {
-        this.myService.GetTranslationsByParam(null, this.ObjectTableId, SessionLocator.TenantPM.Language).subscribe(myResult => {
+        this.myService.GetTranslationsByParam(null, this.ObjectTableId, SessionLocator.TenantPM.Language).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityTranslations = myResponse.Result;

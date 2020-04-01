@@ -23,13 +23,10 @@ namespace WarehouseDataViews.Service
             return result;
         }
 
-        public string GetViewName(string fieldCode)
+        public string GetViewName(string fieldName ,string viewType)
         {
-            string viewName = fieldCode;
-            viewName = viewName.Replace("[", "");
-            viewName = viewName.Replace("]", "");
-            viewName = viewName.Replace(" ", "");
-            viewName += "View";
+            string viewName = viewType == "Dim" ? "dim" : viewType == "Fact" ? "fact" : viewType == "Custom" ? "c_dim" : "";
+            viewName += fieldName;
             return viewName;
         }
 
@@ -71,7 +68,7 @@ namespace WarehouseDataViews.Service
             {
                 if (!string.IsNullOrEmpty(fieldName))
                 {
-                    if (!fieldName.Contains("Key") && !fieldName.Contains("Id_Number") && !fieldName.Contains("@CustomFields"))
+                    if (!fieldName.Contains("Key") && !fieldName.Contains("as")  && !fieldName.Contains("@CustomFields"))
                     {
                         string fieldNameCamelCase = fieldName + "as " + ConvertStringToCamelCase(fieldName);
                         result = result.Replace(fieldName, fieldNameCamelCase);
@@ -86,10 +83,24 @@ namespace WarehouseDataViews.Service
             string result = string.Empty;
             if (!string.IsNullOrEmpty(value))
             {
-                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-                result = textInfo.ToTitleCase(value.ToLower());
-                result = result.Replace(" ","" );
+                //TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+               // result = textInfo.ToTitleCase(value.ToLower());
+                result = value.Replace(" ","" );
             }
+            return result;
+        }
+
+
+        public string GetFieldNameFromCode(string fieldCode)
+        {
+            string result = string.Empty;
+            if (!string.IsNullOrEmpty(fieldCode))
+            {
+                result = fieldCode.Replace("[", "");
+                result = result.Replace("]", "");
+                result = result.Replace(" ", "");
+            }
+
             return result;
         }
 

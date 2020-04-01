@@ -13,60 +13,36 @@ import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
 export class SchedulerExtendedPMService {
     private httpClient: HttpClient;
     private apiUrl: string;
-
     constructor() {
         this.httpClient = ServiceHelper.HttpClient;
         this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SchedulerExtended';
     }
 
-    GetSchedulerHistoryLogs(HistoryId: string): Observable<ServiceResponse> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
-
+    GetSchedulerHistoryLogs(HistoryId: string)  {
         var url = this.apiUrl + '/GetSchedulerHistoryLogs?' + 'historyId=' + HistoryId;
 
-        return this.httpClient.get(url, httpOptions).pipe(
-            map(response => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = response;
 
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
+            return serviceResponse;
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 
-    GetSchedulerDetailsById(schedulerId: string): Observable<ServiceResponse> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
-
+    GetSchedulerDetailsById(schedulerId: string)  {
         var url = this.apiUrl + '/GetSchedulerDetailsById?' + 'schedulerId=' + schedulerId;
 
-        return this.httpClient.get(url, httpOptions).pipe(
-            map(response => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = response;
 
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
+            return serviceResponse;
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 
-    insert(entityPM: TasksSchedulerPM): Observable<ServiceResponse> {
-        const headers: HttpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Token': ServiceHelper.GetLoggedUserToken()
-        });
-
+    insert(entityPM: TasksSchedulerPM)  {
         var callTime = new Date();
         var url = this.apiUrl;
         var validator: ClassLevelValidator;
@@ -76,19 +52,15 @@ export class SchedulerExtendedPMService {
         serviceResponse = new ServiceResponse();
 
         if (errorsArray.length == 0) {
-            return this.httpClient.post(url, entityPM, { headers, observe: 'response' }).pipe(
-                tap((event: HttpEvent<any>) => {
-                    if (event instanceof HttpResponse) {
-                        var servertime = event.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TasksScheduler", "SaveChanges", "");
-                    }
-                }),
-                map(response => {
+            return this.httpClient.post(url, entityPM, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                if (response instanceof HttpResponse) {
                     serviceResponse.Result = response;
+                    var servertime = response.headers.get('ServerExecutionTime');
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TasksScheduler", "SaveChanges", "");
 
                     return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError));
+                }
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         else {
             serviceResponse.HasError = true;
@@ -98,12 +70,7 @@ export class SchedulerExtendedPMService {
         }
     }
 
-    update(entityPM: TasksSchedulerPM): Observable<ServiceResponse> {
-        const headers: HttpHeaders = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Token': ServiceHelper.GetLoggedUserToken()
-        });
-
+    update(entityPM: TasksSchedulerPM)  {
         var callTime = new Date();
         var url = this.apiUrl;
         var validator: ClassLevelValidator;
@@ -113,18 +80,15 @@ export class SchedulerExtendedPMService {
         serviceResponse = new ServiceResponse();
 
         if (errorsArray.length == 0) {
-            return this.httpClient.put(url, entityPM, { headers, observe: 'response'}).pipe(
-                tap((event: HttpEvent<any>) => {
-                    if (event instanceof HttpResponse) {
-                        var servertime = event.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TasksScheduler", "SaveChanges", "");
-                    }
-                }),
-                map(response => {
+            return this.httpClient.put(url, entityPM, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                if (response instanceof HttpResponse) {
                     serviceResponse.Result = response;
+                    var servertime = response.headers.get('ServerExecutionTime');
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TasksScheduler", "SaveChanges", "");
+
                     return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError));
+                }
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         else {
             serviceResponse.HasError = true;

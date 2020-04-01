@@ -5,52 +5,53 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
-import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
-import { LocalStorageManager } from '../../../Infrastructure/Utilities/LocalStorageManager';
-import { VatTypeList } from '../../EntityLists/VatTypeList';
+import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
+import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
+import {VatTypeList} from '../../EntityLists/VatTypeList';
 
 @Injectable()
 
 export class VatTypeListService {
-    private _http: Http;
-    private _apiUrl: string;
-    public static CachedData: Array<VatTypeList> = [];
+	private _http: Http;
+    private _apiUrl: string;   
+	public static CachedData: Array<VatTypeList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/vattypeviews';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/vattypeviews';  
     }
 
     getSingle(id: string) {
-
+	   
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, { headers: authHeader }).map(response => {
 
                 var list = response.json();
-
+                    
                 var entity: VatTypeList;
-                if (list) {
-                    entity = this.MapJsonToEntityList(list);
-                }
+				if(list)
+				{
+                   entity = this.MapJsonToEntityList(list);
+                }   
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-                serviceResponse.CallTime = callTime;
+                serviceResponse = new ServiceResponse(); 
+                serviceResponse.Result = entity;  
+				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetSingleList", 'id=' + id);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -58,39 +59,40 @@ export class VatTypeListService {
     }
 
     getAll() {
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        
+	   var authHeader = new Headers();
+       authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getall', { headers: authHeader }).map(response => {
+       return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
-                var allLists = response.json();
-                var _mappedListsArray: Array<VatTypeList> = [];
-                if (allLists) {
-                    for (var key in allLists) {
-                        var entity: VatTypeList;
-                        entity = this.MapJsonToEntityList(allLists[key]);
-                        _mappedListsArray.push(entity);
-                    }
-                }
+              var allLists = response.json();
+              var _mappedListsArray: Array< VatTypeList> = [];
+		      if(allLists)
+			  {
+				for (var key in  allLists) {				
+				   var entity: VatTypeList;
+                   entity = this.MapJsonToEntityList(allLists[key]);
+				   _mappedListsArray.push(entity);
+				 }
+               }
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
+                serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = _mappedListsArray;
-                serviceResponse.CallTime = callTime;
+				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetAllLists", "");
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetAllLists", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
+	
     getByFilters(filters: ApiQueryFilters) {
 
         var callTime = new Date();
-
+		                        
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -103,10 +105,11 @@ export class VatTypeListService {
             if (urlparameters != "?") {
                 urlparameters = urlparameters.concat('&');
             }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
+            if (!ignoreFilter)
+                {
+					propValue = encodeURIComponent(propValue);
+					urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+				}
 
             if (propName == "AdditionalFilters" && propValue.length > 0)
                 addtionalFiltersValues = JSON.stringify(propValue);
@@ -120,53 +123,54 @@ export class VatTypeListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-
-
-        return Observable.defer(() => {
+        
+		
+	   return Observable.defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array<VatTypeList> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
+                var _mappedListsArray: Array< VatTypeList> = [];
+				if(serviceResponse.Result)
+				{
+                for (var key in serviceResponse.Result) {
+				
+				   var entity: VatTypeList;
+                   entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+				   _mappedListsArray.push(entity);
 
-                        var entity: VatTypeList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
+				 }
+                }   
 
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
-                serviceResponse.CallTime = callTime;
+                serviceResponse.Result = _mappedListsArray;       
+				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
-
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+				           
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });
+        });        
     }
 
     getSingleFromCache(id: string) {
 
-        var callTime = new Date();
-        if (!SessionLocator.UseCachedData) {
+	        var callTime = new Date();
+		 if (!SessionLocator.UseCachedData) {
             return this.getSingle(id);
         }
-
+	    
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        var exists = VatTypeListService.CachedData.filter(a => a.Id === id).length;
+		var exists = VatTypeListService.CachedData.filter(a => a.Id === id).length;
 
         var serviceResponse: ServiceResponse;
-        serviceResponse = new ServiceResponse();
+        serviceResponse = new ServiceResponse(); 
         if (exists === 0) {
-            return Observable.defer(() => {
-                var cacheKey = "VatType_CachedData_" + SessionLocator.Tenant;
-                var _mappedListsArray: Array<VatTypeList> = [];
+        return Observable.defer(() => {
+            var cacheKey = "VatType_CachedData_" + SessionLocator.Tenant;
+            var _mappedListsArray: Array<VatTypeList> = [];
                 var cachedString = LocalStorageManager.GetItem(cacheKey);
                 if (cachedString) {
                     var cachedJson = JSON.parse(cachedString);
@@ -179,59 +183,62 @@ export class VatTypeListService {
 
                     VatTypeListService.CachedData = _mappedListsArray;
                     serviceResponse = new ServiceResponse();
-
+                    
                     var filteredData = VatTypeListService.CachedData.filter(a => a.Id === id)[0];
                     serviceResponse.Result = filteredData;
-                    serviceResponse.CallTime = callTime;
-
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "VatType", "GetSingleListFromCache", 'id=' + id);
+					serviceResponse.CallTime = callTime;
+ 
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "VatType", "GetSingleListFromCache", 'id=' + id); 
 
 
                     return Observable.of(serviceResponse);
 
-
+                    
                 }
-                else {
+				else
+				{
 
-                    return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, {
-                        headers: authHeader
-                    }).map(response => {
-                        var list = response.json();
+					return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, {
+						headers: authHeader
+					}).map(response => {
+						var list = response.json();
+                    
+						var entity: VatTypeList;
+						if(list)
+						{
+						 entity = this.MapJsonToEntityList(list);
+						}   
 
-                        var entity: VatTypeList;
-                        if (list) {
-                            entity = this.MapJsonToEntityList(list);
-                        }
-
-                        serviceResponse.Result = entity;
-                        serviceResponse.CallTime = callTime;
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetSingleList", 'id=' + id);
-
-                        return serviceResponse;
-                    }).catch(ServiceHelper.HandleServiceError);
-                }
-            }
-
-            );
+					 serviceResponse.Result = entity;
+				     serviceResponse.CallTime = callTime;
+                     var servertime = response.headers.get('ServerExecutionTime');
+                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetSingleList", 'id=' + id); 
+                                      
+						return serviceResponse;
+					}).catch(ServiceHelper.HandleServiceError);
+			}
         }
-        else {
-            var filteredData = VatTypeListService.CachedData.filter(a => a.Id === id)[0];
-            serviceResponse.Result = filteredData;
-            serviceResponse.CallTime = callTime;
-            return Observable.of(serviceResponse);
-        }
+
+        );
+		}
+		else
+		{
+		   var filteredData = VatTypeListService.CachedData.filter(a => a.Id === id)[0];
+		    serviceResponse.Result = filteredData;
+			serviceResponse.CallTime = callTime;
+		   return Observable.of(serviceResponse);
+		}
     }
 
     getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
 
-        var callTime = new Date();
-        if (!SessionLocator.UseCachedData) {
+		        var callTime = new Date();
+		 if (!SessionLocator.UseCachedData) {
             return this.getByFilters(filters);
         }
 
-        var exists = VatTypeListService.CachedData.length;
-        var urlparameters = '/getbyfilters?';
+  var exists = VatTypeListService.CachedData.length;
+   var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
         for (var i in mykeys) {
@@ -243,13 +250,14 @@ export class VatTypeListService {
             if (urlparameters != "?") {
                 urlparameters = urlparameters.concat('&');
             }
-            if (!ignoreFilter) {
-                if (exists === 0 || filters.ForceCacheRefresh) {
-                    propValue = encodeURIComponent(propValue);
-                }
+            if (!ignoreFilter)
+			{
+				if (exists === 0 || filters.ForceCacheRefresh) {
+					propValue = encodeURIComponent(propValue);
+				}
 
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
+			}
 
             if (propName == "AdditionalFilters" && propValue.length > 0)
                 addtionalFiltersValues = JSON.stringify(propValue);
@@ -265,8 +273,8 @@ export class VatTypeListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-
-
+        
+       
         if (exists === 0 || filters.ForceCacheRefresh) {
             var cacheKey = "VatType_CachedData_" + filters.Tenant;
             var _mappedListsArray: Array<VatTypeList> = [];
@@ -285,7 +293,7 @@ export class VatTypeListService {
 
                     VatTypeListService.CachedData = _mappedListsArray;
                     serviceResponse = new ServiceResponse();
-                    if (!filters.GetAll) {
+                     if (!filters.GetAll) {
                         _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
                     }
                     serviceResponse.Result = _mappedListsArray;
@@ -308,7 +316,7 @@ export class VatTypeListService {
 
                         var serviceResponse: ServiceResponse;
                         serviceResponse = response.json();
-
+                        
                         if (serviceResponse.Result) {
                             for (var key in serviceResponse.Result) {
 
@@ -326,14 +334,15 @@ export class VatTypeListService {
                             console.log(VatTypeListService.CachedData);
                         }
                         else {
-
+							
                             _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
                         }
                         serviceResponse.Result = _mappedListsArray;
-                        serviceResponse.CallTime = callTime;
+						serviceResponse.CallTime = callTime;
+						
+                    var servertime = response.headers.get('ServerExecutionTime');
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetAll", ""); 
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "VatType", "GetAll", "");
 
 
                         return serviceResponse;
@@ -344,7 +353,7 @@ export class VatTypeListService {
         else {
             var filteredData = VatTypeListService.CachedData;
             if (!filters.GetAll) {
-
+	
                 filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
             }
             var serviceResponse: ServiceResponse;
@@ -358,18 +367,18 @@ export class VatTypeListService {
             return Observable.of(serviceResponse);
         }
     }
+	
+	    MapJsonToEntityList(jsonList: any) {
+       
+            var entityList: VatTypeList;
+            entityList = new VatTypeList();
+            var jsonListKeys = Object.keys(jsonList);
 
-    MapJsonToEntityList(jsonList: any) {
-
-        var entityList: VatTypeList;
-        entityList = new VatTypeList();
-        var jsonListKeys = Object.keys(jsonList);
-
-        for (var key in jsonListKeys) {
-            var property = jsonListKeys[key];
-            entityList[property] = jsonList[property];
-        }
-
+            for (var key in jsonListKeys) {
+                var property = jsonListKeys[key];
+                entityList[property] = jsonList[property];
+            }
+			
 
         return entityList;
     }

@@ -23,7 +23,7 @@
 
 ----Features
 --delete from Features where tenant = 0 and (NameTextCodeCode not like 'customs.%' or NameTextCodeCode is null)
-----delete from MenusTables where tenant = 0 and (FeatureUniqeCode not like 'customs.%' or FeatureUniqeCode is null)
 
+----Others
 --delete from Screens where code='Customs.AccountingPartner.HeaderScreen'
--------------
+------------

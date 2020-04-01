@@ -2239,9 +2239,28 @@
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.cs" />
+    <Compile Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.Designer.cs">
+      <DependentUpon>202003281703184_GLAccountInternalNumberConstraintMigration.cs</DependentUpon>
+    </Compile>
+
+
     <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.cs" />
     <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.Designer.cs">
       <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.cs" />
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.Designer.cs">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003311226006_test.cs" />
+    <Compile Include="Migrations\202003311226006_test.Designer.cs">
+      <DependentUpon>202003311226006_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003311235295_clearthingsup.cs" />
+    <Compile Include="Migrations\202003311235295_clearthingsup.Designer.cs">
+      <DependentUpon>202003311235295_clearthingsup.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
@@ -3670,6 +3689,9 @@
     <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221319308_AddSupportMailboxTable.resx">
+      <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
       <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -4046,8 +4068,20 @@
     <EmbeddedResource Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.resx">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.resx">
+      <DependentUpon>202003281703184_GLAccountInternalNumberConstraintMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.resx">
       <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003290823147_UsersLayoutDirectionMigration.resx">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003311226006_test.resx">
+      <DependentUpon>202003311226006_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003311235295_clearthingsup.resx">
+      <DependentUpon>202003311235295_clearthingsup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

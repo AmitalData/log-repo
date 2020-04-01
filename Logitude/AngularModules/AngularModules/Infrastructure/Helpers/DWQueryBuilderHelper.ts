@@ -5,6 +5,7 @@ import {AppTool, DateTool} from '../Tools';
 import { SessionLocator } from '../Utilities/SessionLocator';
 import { BaseComponent } from '../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DWObjectFieldExtendedPMService } from '../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
 
 export class DWQueryBuilderHelper   {
 
@@ -31,7 +32,7 @@ export class DWQueryBuilderHelper   {
     public FillAllFactFields(FactTableCode: string) {
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
         if (window.FactFields.length == 0)
-            this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(FactTableCode).subscribe(Result => {
+            this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(FactTableCode).subscribe((Result: ServiceResponse) => {
             if (!Result.HasError) {
                 Result.Result.forEach((field) => {
                     if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) { 

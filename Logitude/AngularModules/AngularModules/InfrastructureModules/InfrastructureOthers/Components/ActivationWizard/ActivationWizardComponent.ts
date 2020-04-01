@@ -10,6 +10,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {CustomerPMService} from '../../../../Common/Services/StandardPMs/CustomerPMService';
 import {CustomerTenantAccessRequestPM} from '../../../../Common/EntityPMs/CustomerTenantAccessRequestPM';
 import {CustomerTenantAccessRequestExtendedPMService} from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService'
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
     selector: 'ActivationWizard',
     moduleId: module.id,
@@ -166,7 +167,7 @@ export class HybridPartnerData {
         this.ParentComponent = Parent;
         this.hybridPartnerList = passedhybridPartnerList;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.getHypridPartnerLogo(this.hybridPartnerList.LogoId).subscribe(myResult => {
+        myService.getHypridPartnerLogo(this.hybridPartnerList.LogoId).subscribe((myResult: ServiceResponse) => {
             if (myResult) {
                 this.Source = "data:image/JPEG;base64," + myResult;
                 //Parent.CD.detectChanges();

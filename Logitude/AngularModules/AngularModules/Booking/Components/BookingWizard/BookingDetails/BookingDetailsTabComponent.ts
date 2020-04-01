@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
@@ -1511,7 +1511,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
         logWindow.Height = 530;
         logWindow.WindowArgs = args;
         logWindow.Title = "Flights Schedules";
-        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe(response=> {
+        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe((response: any) => {
             logWindow.Show('./CommonModules/CommonFlightsSchedules/Components/FlightsSchedules/FlightsSchedulesComponent');
             logWindow.ComponentLoaded.subscribe(comp => {
                 logWindow.WindowClosed.subscribe((event: any) => {

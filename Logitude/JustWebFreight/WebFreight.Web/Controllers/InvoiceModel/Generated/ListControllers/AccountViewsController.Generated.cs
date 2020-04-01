@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 				IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
 				AccountRepository  accountRepository = new AccountRepository(MyContext);
-				IQueryable<Account> entityPocos = accountRepository.GetAccounts(authToken.Tenant);
+				IQueryable<Account> entityPocos = accountRepository.GetAccounts1(authToken.Tenant);
 
 				AccountQuery accountQuery = new AccountQuery(accountRepository);
 			    IQueryable<AccountList> entityLists = accountQuery.GetIQueryableEntityList(entityPocos);
@@ -130,7 +130,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                     ObjectTableName = "Account",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Accounts",
+                    QuerySection = "Accounts1",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -213,7 +213,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                 AccountRepository  accountRepository = new AccountRepository(MyContext);
-                IQueryable<Account> entityPocos = accountRepository.GetAccounts(tenant);
+                IQueryable<Account> entityPocos = accountRepository.GetAccounts1(tenant);
 
                 AccountQuery accountQuery = new AccountQuery(accountRepository);
                 

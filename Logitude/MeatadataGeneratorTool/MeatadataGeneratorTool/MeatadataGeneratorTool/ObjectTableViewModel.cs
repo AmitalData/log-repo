@@ -2553,14 +2553,14 @@ namespace MeatadataGeneratorTool
             //    return false;
             //}
 
-            if (string.IsNullOrEmpty(DxmlDatabaseTypeCode))
+            if (string.IsNullOrEmpty(DxmlDatabaseTypeCode) && ObsList.Where(f => f.IsDBField).Any())
             {
                 ErrorMessages = "Database Type is Required";
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
 
-            if (string.IsNullOrEmpty(DxmlDatabaseSchemaCode))
+            if (string.IsNullOrEmpty(DxmlDatabaseSchemaCode) && ObsList.Where(f => f.IsDBField).Any())
             {
                 ErrorMessages = "Database Schema is Required";
                 ErrorsVisibility = Visibility.Visible;
@@ -2709,11 +2709,7 @@ namespace MeatadataGeneratorTool
 
                     XmlGeneratorClass.GenerateXmlFileFromTool(this);
 
-                    string lxmlFileName = Path.GetFileName(App.DirectOpenPath);
-                    if(lxmlFileName != "General.lxml")
-                    {
-                        XmlGeneratorClass.GenerateDXMLFileFromTool(this);
-                    }
+                    XmlGeneratorClass.GenerateDXMLFileFromTool(this);
 
                     // App.CurrentControl.Close();
                     Environment.Exit(0);

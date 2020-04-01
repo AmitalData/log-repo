@@ -47,7 +47,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
 
             this.entityPM = args.EntityPM;
             this.Parent = args.Parent;
