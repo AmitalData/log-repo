@@ -284,7 +284,7 @@ namespace Logitude.DeploymentAgentService
         protected void UpdateCurrentVersion(string packageVersion)
         {
             CurrentVersion = packageVersion;
-            WriteToLogsFile("The Deployment Process For Version " + packageVersion + " Completed Successfully");
+            WriteToLogsFile("Deployment Process For Version " + packageVersion + " Completed Successfully");
         }
 
         protected void Copy(string sourceDirectory, string targetDirectory)
@@ -301,10 +301,10 @@ namespace Logitude.DeploymentAgentService
                 fileInfo.CopyTo(Path.Combine(targetDirectoryInfo.FullName, fileInfo.Name), true);
             }
 
-            foreach (DirectoryInfo directoryInfo in sourceDirectoryinfo.GetDirectories())
+            foreach (DirectoryInfo sourceSubDirectoryinfo in sourceDirectoryinfo.GetDirectories())
             {
-                DirectoryInfo nextTargetSubDir = targetDirectoryInfo.CreateSubdirectory(directoryInfo.Name);
-                CopyAll(directoryInfo, nextTargetSubDir);
+                DirectoryInfo targetSubDirectoryinfo = targetDirectoryInfo.CreateSubdirectory(sourceSubDirectoryinfo.Name);
+                CopyAll(sourceSubDirectoryinfo, targetSubDirectoryinfo);
             }
         }
 
