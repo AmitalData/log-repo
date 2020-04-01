@@ -2038,32 +2038,38 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    #region
-                    double? invoicepaymentstotalamount = (from a in objectContext.APInvoicePayments
-                                                          where a.APPaymentId == itemPM.APPaymentId
-                                                          && a.Tenant == tenant
-                                                          select a).Sum(s => s.PaymentAmount);
+                    double? Amount = MethodHelper.Roundd(payment.AmountInPaymentCurrency, 2);
+                    double? ExternalAmount = MethodHelper.Roundd(payment.ExternalPaymentAmount, 2);
+                    double? PaidAmount = (from a in objectContext.APInvoicePayments where a.APPaymentId == itemPM.APPaymentId && a.Tenant == tenant select a).Sum(s => s.PaymentAmount);
 
-                    if (invoicepaymentstotalamount == null)
+                    if (PaidAmount == null)
                     {
-                        invoicepaymentstotalamount = 0;
+                        PaidAmount = 0;
                     }
-
-                    invoicepaymentstotalamount = MethodHelper.Round(invoicepaymentstotalamount, 2);
 
                     if (isDelete)
                     {
-                        invoicepaymentstotalamount = MethodHelper.Round((invoicepaymentstotalamount - itemPM.PaymentAmount), 2);
+                        PaidAmount -= itemPM.PaymentAmount;
                     }
 
-                    if (invoicepaymentstotalamount <= payment.AmountInPaymentCurrency)
+                    PaidAmount = MethodHelper.Round(PaidAmount, 2);
+                    double? AllPaidAmount = MethodHelper.Roundd(PaidAmount + ExternalAmount, 2);
+
+                    if (AllPaidAmount > Amount)
                     {
-                        if (invoicepaymentstotalamount < 0)
+                        throw new Exception("The amount paid is not suitable to the total payment amount!!");
+                    }
+
+                    else
+                    {
+                        if (PaidAmount < 0)
                         {
-                            invoicepaymentstotalamount = invoicepaymentstotalamount * -1;
+                            PaidAmount = PaidAmount * -1;
                         }
 
-                        payment.OpenAmount = MethodHelper.Round((payment.AmountInPaymentCurrency - invoicepaymentstotalamount), 2);
+                        double? OpenAmount = MethodHelper.Round((Amount - PaidAmount - ExternalAmount), 2);
+
+                        payment.OpenAmount = OpenAmount;
 
                         if (payment.OpenAmount == 0)
                         {
@@ -2087,13 +2093,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                     }
 
-                    else
-                    {
-                        throw new Exception("The amount paid is not suitable to the total payment amount!!");
-                    }
-
                     paymentRepository.Update(payment);
-                    #endregion
                 }
             }
         }
