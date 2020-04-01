@@ -69,6 +69,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         catch (System.Exception e)
                         {
                             mess.AppendLine(e.Message);
+                            scopeNewCRS.Complete();
+                            continue;
                         }
 
 
@@ -82,7 +84,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({request.Id}) : {ee1.Message}");
                     mess.AppendLine($"Exception!!!CreateSheetSBQMessage({request.Id}) : {ee1.Message}");
-                    return;
+                    
+                    continue;
                 }
 
            

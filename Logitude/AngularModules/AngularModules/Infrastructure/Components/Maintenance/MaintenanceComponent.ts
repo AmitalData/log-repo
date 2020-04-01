@@ -477,16 +477,17 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.CustomsSetting")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
+         if  
+            (SessionLocator.LoggedUserPM.Email.includes("amital")
+        ) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "CSM";
+            item.Icon = "Settings"
+            item.Code = "CSRA";
+            item.ObjectTableName = "Re-request Analysis";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-       
-        var item = new MenusTablePM();
-        item.CategoryTypeCode = "CSM";
-        item.Icon = "Settings"
-        item.Code = "CSRA";
-        item.ObjectTableName = "Re-request Analysis";
-        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-             
-
+        }
 
     }
     private BuildAccountingMenus() {
