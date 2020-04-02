@@ -172,7 +172,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         let confirmWindow = new ConfirmWindow();
         if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
-            confirmWindow.ShowWarningImage = true;
+           
         } else {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.CancelingInvoicedReportMessage");
         }
