@@ -99,12 +99,43 @@ namespace Logitude.Accounting.BL.InterestService
         }
 
 
-        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
+        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext,string ARInvoiceId=null,string InvoiceNumber=null, double? AmountInLocalCurrency = null, string InvoiceEntitiId = null)
         {
             if (MainContext == null)
             {
                 MainContext = AccountingContext.GetContext(Tenant);
             }
+
+            if (interestReportPM==null)
+            {
+                InterestReportRepository interestReportRepository = new InterestReportRepository(MainContext);
+                InterestReport interestReport = interestReportRepository.GetSingle(InvoiceEntitiId, Tenant);
+                interestReportPM = new InterestReportPM()
+                {
+                    Id = interestReport.Id,
+                    InterestReportStatusCode = "2",
+                    ARinvoiceId = ARInvoiceId,
+                    ARInvoiceNumber = InvoiceNumber,
+                    OpenBalance = interestReport.OpenBalance,
+                    CloseBalance = interestReport.CloseBalance,
+                    TotalAmount = interestReport.TotalAmount,
+                    UpdatedByUserId = interestReport.UpdatedByUserId,
+                    UpdateDateTime = interestReport.UpdateDateTime,
+                    Tenant = interestReport.Tenant,
+                    CreateDateTime = interestReport.CreateDateTime,
+                    CreatedByUserId = interestReport.CreatedByUserId,
+                    CustomerId = interestReport.CustomerId,
+                    GLAccountId = interestReport.GLAccountId,
+                    GLAccountInterestCreditLimit = interestReport.GLAccountInterestCreditLimit,
+                    ReportNumber = interestReport.ReportNumber,
+                    InterestCalculationDate = interestReport.InterestCalculationDate,
+                    SearchFields = interestReport.SearchFields,
+                    InvoiceAmount = (decimal?)AmountInLocalCurrency,
+
+                };
+            }
+
+          
 
             ContactQuery contactQuery = new ContactQuery(Tenant);
             ContactPM contact = GetLoggedContact(Tenant) ?? new ContactPM();
