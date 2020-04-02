@@ -166,6 +166,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("xmlESBResponseXmlClass  " + xmlESBResponseXmlClass);
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)

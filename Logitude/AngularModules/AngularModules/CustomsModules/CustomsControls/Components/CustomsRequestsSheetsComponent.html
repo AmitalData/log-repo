@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .tbl1Label{
         width:130px;
     }
@@ -425,7 +425,8 @@
 
                                     <td style="width: 150px; padding-right: 15px;"></td>
 
-                                    <td><div></div></td>
+                                    <td><div>
+                                        </div></td>
 
                                 </tr>
 
@@ -466,9 +467,22 @@
                                         </button>
                                     </td>
 
-                                    <td style="width: 150px; padding-right: 15px;"></td>
+                                    <td style="width: 150px; padding-right: 15px;">
+                                        <button class="GreenButton" *ngIf="isReAnAnalysis"
+                                                style="width:90px;"
+                                               
+                                                (click)="ReAnalysisByFilters()">
+                                           נתח מחדש
+                                        </button>
+                                    </td>
 
-                                    <td><div></div></td>
+                                    <td><div>
+    <button class="GreenButton"
+            style="width:90px;"
+ *ngIf="isReAnAnalysis"
+            (click)="CancelByFilters()">
+ביטול    </button>
+</div></td>
 
                                 </tr>
                             </table>

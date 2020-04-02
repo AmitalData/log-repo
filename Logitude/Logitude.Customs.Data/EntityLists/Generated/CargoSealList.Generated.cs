@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string Id  { get; set; }
+       [DataMember]
+       public bool CanToAdd  { get; set; }
    }
 
 }
