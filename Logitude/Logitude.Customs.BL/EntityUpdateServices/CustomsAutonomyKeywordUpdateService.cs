@@ -28,17 +28,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(CustomsAutonomyKeywordPM entityPM, EntityPM entityParentPM)
         {
-            CustomsAutonomyKeywordDetails customsAutonomyKeywordDetails = new CustomsAutonomyKeywordDetails();
-            if (customsAutonomyKeywordDetails.GetAllCustomsAutonomyKeywords().FirstOrDefault(x=> x.Code== entityPM.KeywordtypeCode)==null)
-            {
-                throw new Exception($"Insert {entityPM.KeywordtypeCode} not allowed !! Code is not exist (ID:{entityPM.Id})");
-
-            }
-            var poco = (this.Repository as CustomsAutonomyKeywordRepository).GetByKeywordtypeCode(entityPM.KeywordtypeCode, entityPM.Tenant);
-            if (poco!=null)
-            {
-                throw new Exception($"Insert {entityPM.KeywordtypeCode} not allowed !! Due already exist (ID:{entityPM.Id})");
-            }
             entityPM.Id= IdCounter.GetNumber("Customs.CustomsAutonomyKeyword", entityPM.Tenant);
             base.OnCreating(entityPM, entityParentPM);
         }

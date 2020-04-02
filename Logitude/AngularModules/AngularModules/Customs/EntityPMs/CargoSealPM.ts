@@ -92,6 +92,11 @@ export class CargoSealPM {
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
+    private canToAdd: boolean;
+    public get CanToAdd() { return this.canToAdd; }
+    public set CanToAdd(newValue: boolean) { if (this.canToAdd != newValue) { this.canToAdd = newValue; this.MarkAsDirty("CanToAdd"); } }
+       
+	 
 
     public OldEntityPM: CargoSealPM;
 	

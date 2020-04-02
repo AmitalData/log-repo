@@ -127,9 +127,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-
-
-
         public List<CustomsRequestsSheetPM> GetRequestInProgress(
             int Tenant,
             string InterfaceTypeCode,
@@ -254,8 +251,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "1171", // - מסר תשובה מצהר
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
-       "UCB8212"
-                ,"2892"};
+ "UCB8212"
+ ,"2892" ,
+"UCB9999"};
+
             return intrefaceTypeListDisplayOnly;
         }
 

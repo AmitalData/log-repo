@@ -34,6 +34,7 @@ import { element } from 'protractor';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     moduleId: module.id,
@@ -107,6 +108,7 @@ export class CourierWorksheetComponent extends BaseComponent
     IsInit: boolean = false;
     IsFiltered: boolean = false;
     IsMamanEnabled: boolean = false;
+    isAllowAccounting: boolean = false;
     IsILOVLEnabled: boolean = false;
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
@@ -139,7 +141,7 @@ export class CourierWorksheetComponent extends BaseComponent
         //        });
         //);
         this.GetMamanPUR();
-
+         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -1823,7 +1825,7 @@ export class CourierWorksheetComponent extends BaseComponent
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Show("לם ניתן לבצע גייטפס העברות ללם מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
 
@@ -1899,7 +1901,7 @@ export class CourierWorksheetComponent extends BaseComponent
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי אתר אחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.Title = "שינוי םתר םחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -1911,7 +1913,7 @@ export class CourierWorksheetComponent extends BaseComponent
 
 
         if (this.entityPM.IsReadyForInvoice) {
-            let text = "האם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
+            let text = "הםם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Show(text);
             confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -1967,7 +1969,7 @@ export class CourierWorksheetComponent extends BaseComponent
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי םתר םיחסון ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }

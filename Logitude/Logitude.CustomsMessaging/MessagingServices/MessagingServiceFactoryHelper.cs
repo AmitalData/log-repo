@@ -472,6 +472,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SE_6001_SealUpdateMessagingService>
                 ((new SE_6001_SealUpdateMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+              DCAInUCB9999ReAnAnalysis_MsgMessagingService>
+              ((new DCAInUCB9999ReAnAnalysis_MsgMessagingService()).MainInterfaceCode);
+
         }
         public static void InitContainer()
         {
