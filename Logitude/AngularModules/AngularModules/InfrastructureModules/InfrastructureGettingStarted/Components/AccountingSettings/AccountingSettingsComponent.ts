@@ -120,7 +120,10 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("NotifyPastDateOnInvoiceEdit", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("RegistryDateTypeCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("AllowRegionalTaxManagement", this.ObjectTableName, false);        }
+            this.UIProperties.SetEnabled("AllowRegionalTaxManagement", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("APPaymentExternalPayment", this.ObjectTableName, false);
+            
+        }
 
         else {
             this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
@@ -399,6 +402,13 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
+    get EnableAPPaymentExternalPayment() { return this.EntityPM.EnableAPPaymentExternalPayment; }
+    set EnableAPPaymentExternalPayment(value: boolean) {
+        if (this.EntityPM.EnableAPPaymentExternalPayment != value) {
+            this.EntityPM.EnableAPPaymentExternalPayment = value;
+        }
+    }
+
     //Commands 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -455,7 +465,7 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
-    ViewAdvancedSettings() {
+    ViewAdvancedARSettings() {
         var windowTitle = "Advanced Accounting Settings ";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
@@ -463,6 +473,16 @@ export class AccountingSettingsComponent extends BaseComponent {
         logWindow.Title = windowTitle;
         logWindow.DataContext = this;
         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedSettingsComponent');
+    }
+
+    ViewAdvancedAPSettings() {
+        var windowTitle = "Advanced Accounting Settings ";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 350;
+        logWindow.Title = windowTitle;
+        logWindow.DataContext = this;
+        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedAPSettingsComponent');
     }
 
     ManageStocksClicked() {

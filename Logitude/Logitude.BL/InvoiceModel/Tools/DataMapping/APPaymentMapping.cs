@@ -120,6 +120,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field9 = entityPM.Field9 != null ? entityPM.Field9.Value : null;
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
 
+            entity.ExternalPaymentAmount = entityPM.ExternalPaymentAmount;
+            entity.ExternalPaymentDate = entityPM.ExternalPaymentDate;
+            entity.ExternalPaymentNotes = entityPM.ExternalPaymentNotes;
+
             entityPM.SetVoided = false;
             entityPM.SetApproved = false;
             entityPM.SetCancelApproval = false;

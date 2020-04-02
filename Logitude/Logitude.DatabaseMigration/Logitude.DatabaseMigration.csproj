@@ -2263,6 +2263,10 @@
     <Compile Include="Migrations\202004020720465_WesamIncreaseScreenNameLength.Designer.cs">
       <DependentUpon>202004020720465_WesamIncreaseScreenNameLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003271035053_AddAPPaymentExternalAmount.cs" />
+    <Compile Include="Migrations\202003271035053_AddAPPaymentExternalAmount.Designer.cs">
+      <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -4086,6 +4090,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004020720465_WesamIncreaseScreenNameLength.resx">
       <DependentUpon>202004020720465_WesamIncreaseScreenNameLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003271035053_AddAPPaymentExternalAmount.resx">
+      <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

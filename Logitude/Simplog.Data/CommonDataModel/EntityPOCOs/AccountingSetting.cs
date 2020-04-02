@@ -66,5 +66,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool EnableInvoiceStocksManagement { get; set; }
         public bool AllowManualARPaymentNumber { get; set; }
         public bool AllowRegionalTaxManagement { get; set; }
+
+        public bool EnableAPPaymentExternalPayment { get; set; }
+
     }
 }
