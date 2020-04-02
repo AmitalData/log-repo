@@ -60,7 +60,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
 
                 if (balanceFilter == "debtors" && customerBalance > 0
-                    || balanceFilter == "debt" && customerBalance >= balanceFilterValue
+                    || balanceFilter == "debt" && customerBalance > balanceFilterValue
                     || balanceFilter == "all" || balanceFilter == null)
                 {
                     CustomerStatus customerStatus = CreateNewCustomerStatus(customer, periodsByDate);
