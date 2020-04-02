@@ -258,7 +258,12 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
         filters.SortDirection = "Descending";
         var glaccountId = this.getGLAccountId();
 
-        filters.addAdditionalFilter("GLAccountId", glaccountId, null, null, "Equals", false, false, false, "string");
+        var bankTransferGLAccountId = "";
+        if (this.entityArgs.ObjectTableName == "BankAccount")
+            bankTransferGLAccountId = this.EntityPM.TransferGLAcccountId;
+
+        filters.addAdditionalFilter("GLAccountId", glaccountId + "," + bankTransferGLAccountId, null, null, "InListExact", false, false, false, "string");
+        // filters.addAdditionalFilter("GLAccountId", glaccountId, null, null, "Equals", false, false, false, "string");
         //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
         //#endregion
