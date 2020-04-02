@@ -70,7 +70,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         MarksAndNumbers, 
 	         PackageQuantity, 
-	         Weight,
+	         Weight, 
+	         OcrHeight, 
+	         OcrTop, 
+	         OcrPageNumber,
 	      }
 
 
@@ -135,7 +138,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         MarksAndNumbers, 
 	         PackageQuantity, 
-	         Weight,
+	         Weight, 
+	         OcrHeight, 
+	         OcrTop, 
+	         OcrPageNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -372,6 +378,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Weight))
             {
 				entityPOCO.Weight = entityPM.Weight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrHeight))
+            {
+				entityPOCO.OcrHeight = entityPM.OcrHeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrTop))
+            {
+				entityPOCO.OcrTop = entityPM.OcrTop;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrPageNumber))
+            {
+				entityPOCO.OcrPageNumber = entityPM.OcrPageNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -625,6 +646,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Weight = entityPOCO.Weight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrHeight))
+            {
+					entityPM.OcrHeight = entityPOCO.OcrHeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrTop))
+            {
+					entityPM.OcrTop = entityPOCO.OcrTop;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrPageNumber))
+            {
+					entityPM.OcrPageNumber = entityPOCO.OcrPageNumber;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoiceItemPM entityPM, SupplierInvoiceItemPM oldEntityPM)
@@ -859,6 +895,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Weight))
             {
                 oldEntityPM.Weight = entityPM.Weight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrHeight))
+            {
+                oldEntityPM.OcrHeight = entityPM.OcrHeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrTop))
+            {
+                oldEntityPM.OcrTop = entityPM.OcrTop;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrPageNumber))
+            {
+                oldEntityPM.OcrPageNumber = entityPM.OcrPageNumber;
             }
 			
 		}

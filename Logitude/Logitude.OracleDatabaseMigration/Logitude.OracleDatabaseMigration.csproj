@@ -540,6 +540,10 @@
     <Compile Include="Migrations\202003221244107_ExceptionReasonAddSearchFields.Designer.cs">
       <DependentUpon>202003221244107_ExceptionReasonAddSearchFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.cs" />
+    <Compile Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.Designer.cs">
+      <DependentUpon>202004020908214_AddOcrToSupplierInvoiceItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -935,6 +939,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003221244107_ExceptionReasonAddSearchFields.resx">
       <DependentUpon>202003221244107_ExceptionReasonAddSearchFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.resx">
+      <DependentUpon>202004020908214_AddOcrToSupplierInvoiceItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

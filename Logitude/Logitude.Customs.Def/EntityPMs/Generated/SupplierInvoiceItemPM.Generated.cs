@@ -1766,6 +1766,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal ocrHeight ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal OcrHeight  
+	   {
+	    
+	     get
+		{
+		   return ocrHeight;
+		 }
+		 set
+		 {
+		   if(ocrHeight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrHeight",OldValue=ocrHeight,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   ocrHeight=value;
+		   }
+			
+		 }
+	   }
+	  private decimal ocrTop ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal OcrTop  
+	   {
+	    
+	     get
+		{
+		   return ocrTop;
+		 }
+		 set
+		 {
+		   if(ocrTop != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrTop",OldValue=ocrTop,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   ocrTop=value;
+		   }
+			
+		 }
+	   }
+	  private decimal ocrPageNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal OcrPageNumber  
+	   {
+	    
+	     get
+		{
+		   return ocrPageNumber;
+		 }
+		 set
+		 {
+		   if(ocrPageNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrPageNumber",OldValue=ocrPageNumber,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   ocrPageNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

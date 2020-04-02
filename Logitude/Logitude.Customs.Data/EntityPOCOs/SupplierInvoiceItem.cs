@@ -159,6 +159,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? PackageQuantity { get; set; }
         [Column("Weight")]
 	    public decimal? Weight { get; set; }
+        [Column("OcrHeight")]
+	    public decimal OcrHeight { get; set; }
+        [Column("OcrTop")]
+	    public decimal OcrTop { get; set; }
+        [Column("OcrPageNumber")]
+	    public decimal OcrPageNumber { get; set; }
     }
 }
 	 
