@@ -537,6 +537,11 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="QuoteId"
+    ReferencedTable="Quotes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="EntityType"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"
@@ -544,11 +549,6 @@
   <Relation
     ForeignKeyColumn="SupportMailboxId"
     ReferencedTable="SupportMailboxes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="QuoteId"
-    ReferencedTable="Quotes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>
