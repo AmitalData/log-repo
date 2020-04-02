@@ -710,7 +710,7 @@
     IsForeignKey="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
-    HasPMField="false"
+    HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="true"
