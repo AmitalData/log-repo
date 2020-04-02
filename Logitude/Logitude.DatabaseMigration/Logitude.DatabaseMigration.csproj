@@ -2267,6 +2267,10 @@
     <Compile Include="Migrations\202003271035053_AddAPPaymentExternalAmount.Designer.cs">
       <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.cs" />
+    <Compile Include="Migrations\202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.Designer.cs">
+      <DependentUpon>202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -4093,6 +4097,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003271035053_AddAPPaymentExternalAmount.resx">
       <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.resx">
+      <DependentUpon>202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
