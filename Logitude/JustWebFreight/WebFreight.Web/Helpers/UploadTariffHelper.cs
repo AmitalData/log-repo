@@ -59,30 +59,6 @@ namespace WebFreight.Web.Helpers
 
             return tariffLinesResult;
         }
-
-        public void UploadWithSave()
-        {
-            byte[] fileDataArray = Convert.FromBase64String(fileData);
-
-            System.IO.MemoryStream stream = new System.IO.MemoryStream(fileDataArray);
-            ExcelEngine excelEngine = new ExcelEngine();
-            IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
-            IWorksheet sheet = workbook.Worksheets[0];
-
-            List<ExcelTariffLines> tariffLinesResult = new List<ExcelTariffLines>();
-            if (tariffType == "AFC" || tariffType == "OLC")
-            {
-                tariffLinesResult = this.BuildOceanAirFreightCostExcelLines(sheet);
-            }
-
-            else if (tariffType == "OFC")
-            {
-                tariffLinesResult = this.BuildOceanFCLFreightCostExcelLines(sheet);
-            }
-
-            List<TariffLinePM> tariffLines = this.MapToTariffLines(tariffLinesResult);
-        }
         
         public List<ExcelTariffLines> BuildOceanAirFreightCostExcelLines(IWorksheet sheet)
         {
@@ -1238,11 +1214,7 @@ namespace WebFreight.Web.Helpers
         private Port GetPortDetails(string code, int tenant)
         {
             Port myPort = null;
-            if (this.portRepository == null)
-            {
-                this.portRepository = new PortRepository(tenant);
-            }
-
+            
             if (!string.IsNullOrEmpty(code))
             {
                 code = code.Trim();
@@ -1250,6 +1222,7 @@ namespace WebFreight.Web.Helpers
                 {
                     myPort = this.portRepository.GetAirlinePortByCode(tenant, code, true);
                 }
+
                 else if (tariffType == "OLC" || tariffType == "OFC")
                 {
                     myPort = this.portRepository.GetOceanPortByCombinedCode(code, tenant);
@@ -1262,10 +1235,12 @@ namespace WebFreight.Web.Helpers
                     {
                         portZero = this.portRepository.GetAirlinePortByCode(0, code, true);
                     }
+
                     else if (tariffType == "OLC" || tariffType == "OFC")
                     {
                         portZero = this.portRepository.GetOceanPortByCombinedCode(code, 0);
                     }
+
                     if (portZero != null)
                     {
                         myPort = this.GetPortCopyToCurrentTenant(portZero, tenant);
@@ -1392,15 +1367,6 @@ namespace WebFreight.Web.Helpers
             }
 
             return isDateTime;
-        }
-
-        private List<TariffLinePM> MapToTariffLines(List<ExcelTariffLines> tariffLinesResult)
-        {
-            List<TariffLinePM> myResult = new List<TariffLinePM>();
-
-
-
-            return myResult;
         }
     }
 

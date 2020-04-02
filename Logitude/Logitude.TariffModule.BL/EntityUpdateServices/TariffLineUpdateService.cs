@@ -27,8 +27,15 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
+                if(string.IsNullOrEmpty(entityPOCO.OriginPortId) && !string.IsNullOrEmpty(entityPM.OriginPortId))
+                {
 
+                }
 
+                if (string.IsNullOrEmpty(entityPOCO.DestinationPortId) && !string.IsNullOrEmpty(entityPM.DestinationPortId))
+                {
+
+                }
             }
         }
 
