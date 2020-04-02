@@ -78,7 +78,7 @@ export class SharedDocumentComponent implements OnInit {
     LoadData() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ShipmentShareDocumentsDataLists = [];
-        this._documentTypePMExtendedService.GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.ShipmentNumber, this.ObjectTableId, this.EntityPM.ShipmentLevelCode, SessionLocator.Tenant).subscribe(res => {
+        this._documentTypePMExtendedService.GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.ShipmentNumber, this.ObjectTableId, this.EntityPM.ShipmentLevelCode, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var myList = pmResponse.Result;
@@ -248,7 +248,7 @@ export class SharedDocumentComponent implements OnInit {
                 if (this.SelectedShipmentShareDocumentsDataLists.length > 0) {
 
                     this.CurrentSession.StartBusyIndicator("Sharing Documnents...");
-                    this._agentSharedDocumentExtendedService.PostSharedDocuments(this.SelectedShipmentShareDocumentsDataLists, this.EntityPM.Id).subscribe(res => {
+                    this._agentSharedDocumentExtendedService.PostSharedDocuments(this.SelectedShipmentShareDocumentsDataLists, this.EntityPM.Id).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         var messageWindow: MessageWindow = new MessageWindow();
                         messageWindow.Title = "Share Document";

@@ -371,7 +371,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.FilterLines();
     }
     GetLinesWithErrorsCount(){
-        this._TaxReportExtendedPMService.getErrorsCount(this.EntityPM.Id).subscribe((myResult) => {
+        this._TaxReportExtendedPMService.getErrorsCount(this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
             var __errorsCount = myResult.Result;
             this.ShowErrorMsg = __errorsCount >= 1;
             this.errorsCount = __errorsCount;
@@ -548,7 +548,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     }
     reportCounters: TaxReportLinesCounter;
     GetReportCounter(){
-        this._TaxReportExtendedPMService.GetReportLinesCounter(this.EntityPM.Id).subscribe(myResult => {
+        this._TaxReportExtendedPMService.GetReportLinesCounter(this.EntityPM.Id).subscribe((myResult:ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError)

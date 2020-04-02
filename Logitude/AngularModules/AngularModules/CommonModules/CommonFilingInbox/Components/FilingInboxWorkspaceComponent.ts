@@ -208,7 +208,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             this.dontShowAgain = value;
             SessionLocator.LoggedUserPM.ShowInboxToolTip = value;
             var myPM = SessionLocator.LoggedUserPM;
-            this.UserPMService.update(myPM).subscribe(myResult => {
+            this.UserPMService.update(myPM).subscribe((myResult:any) => {
             });
         }
     }
@@ -298,7 +298,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     TopTypes: any[];
     public DocumentTypeList = [];
     FillDocumentFiling() {
-        this._DocumentTypeListService.getTop5DocumentTypesPMsByObjectTableAndTenant(SessionLocator.Tenant, this.ObjectTableId).subscribe(res => {
+        this._DocumentTypeListService.getTop5DocumentTypesPMsByObjectTableAndTenant(SessionLocator.Tenant, this.ObjectTableId).subscribe((res:any) => {
             var MyType = "";
             res.Result.forEach((item) => {
                 MyType = item.Name.trim();
@@ -1427,11 +1427,11 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             // open dsv window
             var hasSharedDocs;
             this._ShipmentPMService = new ShipmentPMService();
-            this._ShipmentPMService.get(this.EntityId).subscribe(myResult => {
+            this._ShipmentPMService.get(this.EntityId).subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     if (SessionLocator.PrivateLableSettings) {
                         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
-                        this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.EntityId, SessionLocator.Tenant).subscribe(res => {
+                        this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.EntityId, SessionLocator.Tenant).subscribe((res:any) => {
                             if (res.Result == false && summary.Attaches.filter(a => a.IsSharedWithAgent == true).length == 0) {
                                 hasSharedDocs = false;
                             }
@@ -1468,7 +1468,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     // New Shipment
     private entityResourceService: EntityResourceService;
     NewShipmentClicked() {
-        this.entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe((response:any) => {
             var newWindow = new LogitudeWindow();
             newWindow.Width = 600;
             newWindow.Height = 350;

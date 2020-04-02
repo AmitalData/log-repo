@@ -14,12 +14,12 @@ export class btnComponentComputingPartner   {
     MoreDetails() {
         var ServiceContact: ContactListService = new ContactListService();
         this.CurrentSession.StartBusyIndicatorLoading();
-        ServiceContact.getSingle(this.rowData.CreatedByUserId).subscribe(res => {
+        ServiceContact.getSingle(this.rowData.CreatedByUserId).subscribe((res:any) => {
             if (!res.HasError) {
                 if (res.Result != null)
                     this.rowData.CreatedByUserName = res.Result.EnglishName;
             }
-            ServiceContact.getSingle(this.rowData.UpdatedByUserId).subscribe(res => {
+            ServiceContact.getSingle(this.rowData.UpdatedByUserId).subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result != null)
                         this.rowData.UpdatedByUserName = res.Result.EnglishName;

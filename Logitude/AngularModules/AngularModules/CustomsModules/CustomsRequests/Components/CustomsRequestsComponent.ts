@@ -42,7 +42,7 @@ export class CustomsRequestsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
             this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response2 => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((resp => {
                     this._CustomsRequestMenuService = new CustomsRequestMenuService();
@@ -84,8 +84,8 @@ export class CustomsRequestsComponent implements OnInit {
                 }
                 case 'SearchVendor': {
 
-                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
-                        this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
                             var vendor = new CustomsVendorPM();
                             vendor.Tenant = SessionLocator.Tenant;
                             vendor.VendorTypeCode = "1";
@@ -114,8 +114,8 @@ export class CustomsRequestsComponent implements OnInit {
                 }
                 case 'NewVendor': {
 
-                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
-                        this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
                             var vendor = new CustomsVendorPM();
                             vendor.Tenant = SessionLocator.Tenant;
                             vendor.VendorTypeCode = "1";
@@ -173,7 +173,7 @@ export class CustomsRequestsComponent implements OnInit {
         listArgs.ObjectTableName = objectTablePM.Name;
        
         listArgs.BackButtonTitle = TextCodeTranslator.Translate("Customs.General.O.Customs"); // Customs Request--> General.MH.Customs | Customs-->Customs.General.O.Customs
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
             listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
@@ -206,7 +206,7 @@ export class CustomsRequestsComponent implements OnInit {
         listArgs.ObjectTableName = objectTablePM.Name;
 
         listArgs.BackButtonTitle = TextCodeTranslator.Translate("General.MH.Customs"); // Customs Request
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
             listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {

@@ -379,10 +379,10 @@ export class AddEditRuleComponent extends BaseComponent {
         var table = window.ObjectTables.filter(d => d.Id == tableId)[0];
         if (table) tableName = table.Name;
 
-        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe((response:any) => {
 
             if (table) {
-                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
                     this.ViewDataField(tableId);
                 });
             }
@@ -504,7 +504,7 @@ export class AddEditRuleComponent extends BaseComponent {
             }
         });
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        this._objectTableRulePMService.update(this.DataContext).subscribe(resp => {
+        this._objectTableRulePMService.update(this.DataContext).subscribe((resp:any) => {
             if (!resp.HasError) {
                 var ruleFields: ObjectTableRuleFieldPM[] = [];
                 this.RuleFields.forEach(r => {
@@ -552,7 +552,7 @@ export class AddEditRuleComponent extends BaseComponent {
             }
         });
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        this._objectTableRulePMService.insert(this.DataContext).subscribe(resp => {
+        this._objectTableRulePMService.insert(this.DataContext).subscribe((resp:any) => {
             if (!resp.HasError && resp.Result) {
                 var ruleFields: ObjectTableRuleFieldPM[] = [];
                 this.RuleFields.forEach(r => {
@@ -748,7 +748,7 @@ export class AddEditRuleComponent extends BaseComponent {
         //    var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
         //var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
         //myService.setServiceArgs(this.serviceArgs);
-        //myService.delete(advanceFilter).subscribe(myResult => {
+        //myService.delete(advanceFilter).subscribe((myResult:any) => {
         if (this.SelectedConditionObjectFields != null) {
             var filter: ConditionFilterField = this.SelectedConditionObjectFields.filter(a => a.ObjectField.Id == field.ObjectField.Id)[0];
             if (filter) {

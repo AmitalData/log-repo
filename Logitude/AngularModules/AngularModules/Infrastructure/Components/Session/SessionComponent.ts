@@ -103,7 +103,7 @@ export class SessionComponent {
                 this.SessionInitialize.emit(true);
                 
                 if (!SessionLocator.IsNewSignupTenant) {
-                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load("./Infrastructure/Components/MainMenu/MainMenuComponent", this.SessionLocation.viewContainerRef).then(cmpRef => {
                         this.MainMenuComponent = cmpRef.instance;
                         cmpRef.instance.RunComponent();

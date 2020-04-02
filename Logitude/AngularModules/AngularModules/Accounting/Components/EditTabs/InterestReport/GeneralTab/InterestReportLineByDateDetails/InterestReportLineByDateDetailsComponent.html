@@ -51,52 +51,64 @@
 
                     <!-- InterestEntityTypeCode -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="InterestEntityTypeCodeHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span title="{{item.InterestEntityType}}" *ngIf="item.InterestEntityIconCode" (click)="OpenSource(item.EntityId,item.AccountEntityCode)"
                                       [class]="'SourceTypeIcon color-' + item.AccountEntityCode">{{item.InterestEntityIconCode}}</span>
                                 <a href="javascript:;" (click)="OpenSource(item.EntityId,item.AccountEntityCode)">{{item.InterestEntityNumber}}</a>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!--InterestValueDate -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="InterestValueDateHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestValueDate | DateTimeToDatePipe}} </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!--LocalAmount-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="LocalAmountHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="'right'"> {{item.LocalAmount | NumbersPipe:'N2'}} </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!--CurrencyCode-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="CurrencyCodeHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+                        <log-cell-template t  #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.CurrencyCode}} </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!--ForiegnAmount-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'130'" [header]="ForiegnAmountHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="'right'"> {{item.ForeignAmount | NumbersPipe:'N2'}} </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!--JournalNumber-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="JournalNumberHeader">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
                             <div [style.text-align]="isRTL ? 'right' : 'left'">
                                 <a style="cursor:pointer" (click)="OpenJournal(item.JournalId)" href="javascript:;">
                                     {{item.JournalNumber}}
                                 </a>
                             </div>
                         </log-cell-template>
+                        </ng-template>
                     </log-column>
 
                 </logitude-edit-grid>

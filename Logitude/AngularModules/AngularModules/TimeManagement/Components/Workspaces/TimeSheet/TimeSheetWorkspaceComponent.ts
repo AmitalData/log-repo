@@ -80,8 +80,8 @@ export class TimeSheetWorkspaceComponent {
                     switch (this.SelectedTabCode) {
                         case "Daily": {
                             if (this.PageChild_Daily == null) {
-                                this._entityResourceService.getEntityResourceByTableName("TMEmployeeTime", 0).subscribe(response => {
-                                    this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("TMEmployeeTime", 0).subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe((response:any) => {
                                 SessionLocator.DynamicLoader.Load('./TimeManagement/Components/Workspaces/TimeSheet/DailyTimeSheetComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.PageChild_Daily = cmpRef.instance;
@@ -99,8 +99,8 @@ export class TimeSheetWorkspaceComponent {
 
                         case "Weekly": {
                             if (this.PageChild_Weekly == null) {
-                                this._entityResourceService.getEntityResourceByTableName("TMEmployeeTime", 0).subscribe(response => {
-                                    this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("TMEmployeeTime", 0).subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe((response:any) => {
                                 SessionLocator.DynamicLoader.Load('./TimeManagement/Components/Workspaces/TimeSheet/WeeklyTimeSheetComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.PageChild_Weekly = cmpRef.instance;

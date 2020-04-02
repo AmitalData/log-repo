@@ -98,7 +98,7 @@ export class CommunicationStepsComponent
     LoadCommunicationLogSteps() {
 
         
-        this._communicationLogStepListService.getCommunicationLogStepsListsByLogId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe(res => {
+        this._communicationLogStepListService.getCommunicationLogStepsListsByLogId(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

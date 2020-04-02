@@ -91,7 +91,7 @@ export class ExportBI2ExcelControl {
             this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
         }
         this.IsStartTimerWaitingFirstStimulReportBuildRunning = true;
-        this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe(res => {
+        this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe((res:any) => {
             if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
                 this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
                 this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
@@ -171,7 +171,7 @@ export class ExportBI2ExcelControl {
         }
 
         this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = true;
-        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe(res => {
+        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe((res:any) => {
             if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
                 this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
                 this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;

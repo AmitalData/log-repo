@@ -37,7 +37,7 @@ export class NewPaymentOrderComponent
     constructor(private EntityResourceService: EntityResourceService) {
         super();
 
-        EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => { });
+        EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => { });
     }
 
     @ViewChild(CustomMessageWrapperComponent)

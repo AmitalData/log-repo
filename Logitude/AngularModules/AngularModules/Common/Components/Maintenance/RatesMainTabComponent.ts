@@ -96,7 +96,7 @@ export class RatesMainTabComponent extends BaseComponent {
                 //loadingDate = Date.SpecifyKind(loadingDate, Date.UTC);
             }
 
-            myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate).subscribe(resp => {
+            myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate).subscribe((resp:any) => {
                 var result: ServiceResponse = resp;
                 if (!result.HasError) {
                     result.Result.forEach(item => {

@@ -475,7 +475,7 @@ export class LoginComponent implements OnInit {
     }
     LoadClosedTablesToWindow(CurrentTenant: number) {
 
-        this.IndexedDbService.InitializeIndexedDB().subscribe(response => {
+        this.IndexedDbService.InitializeIndexedDB().subscribe((response:any) => {
 
             InfraSettings.IndexedDbService = IndexedDbService;
 
@@ -485,7 +485,7 @@ export class LoginComponent implements OnInit {
             this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
 
             // UserPM
-            this.loginService.GetLoggedUser().subscribe(myResult => {
+            this.loginService.GetLoggedUser().subscribe((myResult:any) => {
                 var myUserPMService = new UserPMService();
                 SessionInfo.LoggedUserPM = myUserPMService.MapJsonToEntityPM(myResult);
 
@@ -498,15 +498,15 @@ export class LoginComponent implements OnInit {
                 //1
 
                 // TenantPM
-                this.loginService.GetLoggedTenant().subscribe(myResult => {
+                this.loginService.GetLoggedTenant().subscribe((myResult:any) => {
                     var myTenantPMService = new TenantPMService();
                     InfraSettings.TenantPM = myTenantPMService.MapJsonToEntityPM(myResult);
                     this.IncreaseProgressBar();
                     //2
                 });
 
-                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
-                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response:any) => {
+                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
                         this.IncreaseProgressBar("General Resources");
                         //26
                     });
@@ -523,7 +523,7 @@ export class LoginComponent implements OnInit {
                 });
 
                 // LastFilters
-                this.loginService.GetLastFilters().subscribe(myResult => {
+                this.loginService.GetLastFilters().subscribe((myResult:any) => {
                     LastFilterClass.MapJSON(myResult);
                     this.IncreaseProgressBar();
                     //3
@@ -536,7 +536,7 @@ export class LoginComponent implements OnInit {
                     this.IncreaseProgressBar();
                     //4
 
-                    this.loginService.GetPrivateLableById(SessionLocator.TenantManagementJS.PrivateLabelId).subscribe(Result => {
+                    this.loginService.GetPrivateLableById(SessionLocator.TenantManagementJS.PrivateLabelId).subscribe((Result:any) => {
                         ObjectsLocator.UpdatePrivateLableSettings(Result);
                         SessionLocator.PrivateLableSettings = Result;
                         this.IncreaseProgressBar();
@@ -545,7 +545,7 @@ export class LoginComponent implements OnInit {
                     });
                 });
 
-                //this.loginService.GetTenantManagement().subscribe(myResult => {
+                //this.loginService.GetTenantManagement().subscribe((myResult:any) => {
 
                 //});
 
@@ -569,73 +569,73 @@ export class LoginComponent implements OnInit {
                     }
                 });
 
-                this.loginService.GetQueries().subscribe(myResult => {
+                this.loginService.GetQueries().subscribe((myResult:any) => {
                     window.Queries = myResult;
                     this.IncreaseProgressBar();
                     //7
                 });
 
-                this.loginService.GetStatuses().subscribe(myResult => {
+                this.loginService.GetStatuses().subscribe((myResult:any) => {
                     window.Statuses = myResult;
                     this.IncreaseProgressBar();
                     //8
                 });
 
-                this.loginService.GetPreDefinedFilters().subscribe(myResult => {
+                this.loginService.GetPreDefinedFilters().subscribe((myResult:any) => {
                     window.PreDefinedFilters = myResult;
                     this.IncreaseProgressBar();
                     //9
                 });
 
-                this.loginService.GetTenantTranslations().subscribe(myResult => {
+                this.loginService.GetTenantTranslations().subscribe((myResult:any) => {
                     window.TenantTranslations = myResult;
                     this.IncreaseProgressBar();
                     //10
                 });
 
-                this.loginService.GetTransportModes().subscribe(myResult => {
+                this.loginService.GetTransportModes().subscribe((myResult:any) => {
                     window.TransportModes = myResult;
                     this.IncreaseProgressBar();
                     //11
                 });
 
-                this.loginService.GetDirections().subscribe(myResult => {
+                this.loginService.GetDirections().subscribe((myResult:any) => {
                     window.Directions = myResult;
                     this.IncreaseProgressBar();
                     //12
                 });
 
-                this.loginService.GetMenusTables().subscribe(myResult => {
+                this.loginService.GetMenusTables().subscribe((myResult:any) => {
                     window.MenusTables = myResult;
                     this.IncreaseProgressBar();
                     //13
                 });
 
-                this.loginService.GetObjectTables().subscribe(myResult => {
+                this.loginService.GetObjectTables().subscribe((myResult:any) => {
                     window.ObjectTables = myResult;
                     this.IncreaseProgressBar();
                     //14
                 });
 
-                this.loginService.GetScreens().subscribe(myResult => {
+                this.loginService.GetScreens().subscribe((myResult:any) => {
                     window.Screens = myResult;
                     this.IncreaseProgressBar();
                     //15
                 });
 
-                this.loginService.GetScreenFields().subscribe(myResult => {
+                this.loginService.GetScreenFields().subscribe((myResult:any) => {
                     window.ScreenFields = myResult;
                     this.IncreaseProgressBar();
                     //16
                 });
 
-                this.loginService.GetObjectTableTabs().subscribe(myResult => {
+                this.loginService.GetObjectTableTabs().subscribe((myResult:any) => {
                     window.ObjectTableTabs = myResult;
                     this.IncreaseProgressBar();
                     //17
                 });
 
-                this.loginService.GetAccountingSetting().subscribe(myResult => {
+                this.loginService.GetAccountingSetting().subscribe((myResult:any) => {
                     var myAccountingSettingPM: any = null;
 
                     if (myResult) {
@@ -669,7 +669,7 @@ export class LoginComponent implements OnInit {
                     });
                 });
 
-                this.loginService.GetCustomsInterfaceSetting().subscribe(myResult => {
+                this.loginService.GetCustomsInterfaceSetting().subscribe((myResult:any) => {
                     if (myResult) {
                         var myCustomsInterfaceSettingPMService = new CustomsInterfaceSettingPMService();
                         ObjectsUpdater.UpdateCustomsInterfaceSettingPM(myCustomsInterfaceSettingPMService.MapJsonToEntityPM(myResult));
@@ -678,7 +678,7 @@ export class LoginComponent implements OnInit {
                     this.IncreaseProgressBar();
                 });
 
-                this.loginService.GetSharedLogisticsSetting().subscribe(myResult => {
+                this.loginService.GetSharedLogisticsSetting().subscribe((myResult:any) => {
                     if (myResult) {
                         var mySharedLogisticsSettingPMService = new SharedLogisticsSettingPMService();
                         ObjectsUpdater.UpdateSharedLogisticsSettingPM(mySharedLogisticsSettingPMService.MapJsonToEntityPM(myResult));
@@ -711,13 +711,13 @@ export class LoginComponent implements OnInit {
                     //21
                 });
 
-                this.loginService.GetTips().subscribe(myResult => {
+                this.loginService.GetTips().subscribe((myResult:any) => {
                     window.Tips = myResult;
                     this.IncreaseProgressBar();
                     //22
                 });
 
-                this.loginService.GetTipsVisibilities().subscribe(myResult => {
+                this.loginService.GetTipsVisibilities().subscribe((myResult:any) => {
                     window.TipsVisibilities = myResult;
                     this.IncreaseProgressBar();
                     //23
@@ -725,7 +725,7 @@ export class LoginComponent implements OnInit {
 
                 if (!SessionLocator.UseCachedData) {
 
-                    this.loginService.GetObjectFields().subscribe(myResult => {
+                    this.loginService.GetObjectFields().subscribe((myResult:any) => {
 
                         if (!SessionLocator.UseCachedData) {
                             window.ObjectFields = myResult;
@@ -734,7 +734,7 @@ export class LoginComponent implements OnInit {
                         this.IncreaseProgressBar();
                     });
 
-                    this.loginService.GetTextCodesTranslations().subscribe(myResult => {
+                    this.loginService.GetTextCodesTranslations().subscribe((myResult:any) => {
 
                         if (!SessionLocator.UseCachedData) {
                             window.TextCodesTranslations = myResult;
@@ -746,7 +746,7 @@ export class LoginComponent implements OnInit {
                 }
 
                 else {
-                    this.loginService.GetTenantTextCode().subscribe(myResult => {
+                    this.loginService.GetTenantTextCode().subscribe((myResult:any) => {
                         if (myResult) {
                             window.TextCodes = window.TextCodes.concat(myResult);
                             this.IncreaseProgressBar();
@@ -755,8 +755,8 @@ export class LoginComponent implements OnInit {
                     });
                 }
 
-                //CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
-                //    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                //CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response:any) => {
+                //    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
                 //        this.IncreaseProgressBar();
                 //        //26
                 //    });
@@ -765,7 +765,7 @@ export class LoginComponent implements OnInit {
         });
 
 
-        this._objectTableRulePMService.getAllByTenant(CurrentTenant).subscribe(response => {
+        this._objectTableRulePMService.getAllByTenant(CurrentTenant).subscribe((response:any) => {
             if (response) {
                 window.ObjectTableRules = response.Result;
             }
@@ -774,7 +774,7 @@ export class LoginComponent implements OnInit {
             //27
         });
 
-        this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(response => {
+        this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe((response:any) => {
             if (response) {
                 window.ObjectTableRuleFields = response.Result;
             }
@@ -783,7 +783,7 @@ export class LoginComponent implements OnInit {
             //28
         });
 
-        this._userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserId, CurrentTenant).subscribe(response => {
+        this._userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserId, CurrentTenant).subscribe((response:any) => {
             if (!response.HasError && response.Result) {
 
                 var lastloginPM: UserLastLoginPM = response.Result;
@@ -795,7 +795,7 @@ export class LoginComponent implements OnInit {
                 }
 
                 lastloginPM.ComputerId = computerId;
-                this._userLastLoginPMService.update(lastloginPM).subscribe(response => {
+                this._userLastLoginPMService.update(lastloginPM).subscribe((response:any) => {
                     this.IncreaseProgressBar();
                     //29
                 });
@@ -807,7 +807,7 @@ export class LoginComponent implements OnInit {
             }
         });
 
-        this.loginService.GeLoggedTenantObjectFields().subscribe(response => {
+        this.loginService.GeLoggedTenantObjectFields().subscribe((response:any) => {
             if (response) {
                 window.ObjectFields = window.ObjectFields.concat(response);
             }
@@ -817,13 +817,13 @@ export class LoginComponent implements OnInit {
         });
 
 
-        this.loginService.GetTenantLanguageTranslations().subscribe(myResult => {
+        this.loginService.GetTenantLanguageTranslations().subscribe((myResult:any) => {
             window.TenantLanguageTranslations = myResult;
             this.IncreaseProgressBar();
             //31
         });
 
-        this.sATInterfaceSettingPMService.get(CurrentTenant).subscribe(myResult => {
+        this.sATInterfaceSettingPMService.get(CurrentTenant).subscribe((myResult:any) => {
             SessionLocator.SATInterfaceSettings = myResult.Result;
             this.IncreaseProgressBar();
             //32
@@ -866,7 +866,7 @@ export class LoginComponent implements OnInit {
                 this.IncreaseProgressBar();
             }
         });
-                //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe(myResult => {
+                //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe((myResult:any) => {
                 //    window.ObjectTableRulePMs = myResult;
                 //    this.IncreaseProgressBar();
                 //    //11

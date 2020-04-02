@@ -447,7 +447,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
         //turn loading flag on
         this.isLoading = true;
         this.entityListService.getByFilters(this.LookUpTableName, filters).then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 if (resp.Result) {
 
                     this.ItemsSource = resp.Result;

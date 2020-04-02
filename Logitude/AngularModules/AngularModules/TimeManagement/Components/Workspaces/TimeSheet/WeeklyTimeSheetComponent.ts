@@ -209,7 +209,7 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
 
     }
     AddLineClicked() {
-        //this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe(response => {
+        //this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Title = "New Line";
             var args: any = {};
@@ -232,7 +232,7 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
         //});
     }
     CopyLineClicked(item: ItemSourceItem) {
-        //this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe(response => {
+        //this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Title = "Copy Line";
             var args: any = {};

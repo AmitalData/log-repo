@@ -40,7 +40,7 @@ export class DocumentFilingBackupBatchesComponent extends BaseComponent implemen
     LoadData() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.BatchObsList = [];
-        this.documentFilingBackupBatchPMExtendedService.GetDocumentFilingBackupBatchPMs().subscribe(res => {
+        this.documentFilingBackupBatchPMExtendedService.GetDocumentFilingBackupBatchPMs().subscribe((res:any) => {
             if (!res.HasError) {
                 var documentFilingBackupBatchPMs: Array<DocumentFilingBackupBatchPM> = res.Result;
                 documentFilingBackupBatchPMs.forEach(item => {

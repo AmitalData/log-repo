@@ -80,7 +80,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe((response:any) => {
             this.LoadData();
         });
     }
@@ -95,7 +95,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
 
     LoadCurrentTenant() {
-        this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -108,7 +108,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     }
 
     LoadLastCustomerRequest() {
-        this._sharedLogisticsService.GetLastCustomerRequest(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._sharedLogisticsService.GetLastCustomerRequest(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.LastCustomerRequestList = pmResponse.Result;
@@ -147,7 +147,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
 
     loadCustomerRequestStatusData() {
-        this._sharedLogisticsService.getCustomerTenantAccessRequestStatusCount(SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._sharedLogisticsService.getCustomerTenantAccessRequestStatusCount(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -233,7 +233,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
             //listArgs.ShowViews = false;
-            //this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            //this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -429,7 +429,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
         if (item.PartnerTypeName == "Customer") {
             item.IsEnabledShowDetailsButton = false;
-            this._customerPMService.get(item.CardId).subscribe(res => {
+            this._customerPMService.get(item.CardId).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 item.IsEnabledShowDetailsButton = true;
                 if (!pmResponse.HasError) {

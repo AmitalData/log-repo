@@ -77,7 +77,7 @@ export class GeneralLOVComponent
         this.Code =this.LogitudeEntityNumber = arg.LogitudeEntityNumber;
         this.LOVText = arg.LOVText;
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             this.CurrentSession.StopBusyIndicator();
             this.EntityResource = true;
             this.Loaded = true;

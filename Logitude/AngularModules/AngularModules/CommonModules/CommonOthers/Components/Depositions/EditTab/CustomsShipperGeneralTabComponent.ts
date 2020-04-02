@@ -29,7 +29,7 @@ export class CustomsShipperGeneralTabComponent implements OnInit {
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.customerDepositionListExtendedService  = new CustomerDepositionListExtendedService();
 
-        this._entityResourceService.getEntityResourceByTableName("CustomerDeposition").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("CustomerDeposition").subscribe((response:any) => {
             this.IsReady = true;
             this.LoadData();
         });

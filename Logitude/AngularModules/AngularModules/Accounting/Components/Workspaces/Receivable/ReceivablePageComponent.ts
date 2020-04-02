@@ -177,7 +177,7 @@ export class ReceivablePageComponent {
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Receivables");
             listArgs.Perspective = "GLAccountRecievable";
             listArgs.IgnoreSelectedPerspective = true;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -254,7 +254,7 @@ export class ReceivablePageComponent {
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Receivables");
             //listArgs.DisplayTitle = displayTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -336,7 +336,7 @@ export class ReceivablePageComponent {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveCustomersCount = myResult.ActiveCustomersCount > 1000 ? "1000+" : myResult.ActiveCustomersCount.toString();
                 this.glAccountSummary.InactiveCustomersCount = myResult.InactiveCustomersCount > 1000 ? "1000+" : myResult.InactiveCustomersCount.toString();

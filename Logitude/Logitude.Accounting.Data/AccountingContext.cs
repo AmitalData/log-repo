@@ -347,6 +347,12 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<PaymentCheque>().Property(x => x.ExchangeRate).HasPrecision(5, 3);
 				
+			modelBuilder.Entity<PaymentChequeLine>().Property(x => x.Amount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<ReconcileExternalPage>().Property(x => x.StartBalance).HasPrecision(18, 2);
+				
+			modelBuilder.Entity<ReconcileExternalPage>().Property(x => x.CloseBalance).HasPrecision(18, 2);
+				
 			modelBuilder.Entity<ReconcileExternalPageLine>().Property(x => x.DebitAmount).HasPrecision(15, 2);
 				
 			modelBuilder.Entity<ReconcileExternalPageLine>().Property(x => x.CreditAmount).HasPrecision(15, 2);

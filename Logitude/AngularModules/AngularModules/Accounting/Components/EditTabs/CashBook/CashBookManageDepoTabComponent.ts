@@ -83,7 +83,7 @@ export class CashBookManageDepoTabComponent extends BaseComponent {
         filters.SortDirection = "Descending";
         filters.addAdditionalFilter("CashBookId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
 
-        this._BankDepositListService.getByFilters(filters).subscribe(myResult => {
+        this._BankDepositListService.getByFilters(filters).subscribe((myResult:any) => {
             console.log("Response: ", myResult);
             if (myResult == null) {
                 this.ItemsSource = [];

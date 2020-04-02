@@ -41,7 +41,7 @@ export class NewDeclarationComponent extends BaseComponent implements OnInit {
 
         this.EntityPM = new DeclarationPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsTransportMode").subscribe(response => { });
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsTransportMode").subscribe((response:any) => { });
 
     }
 
@@ -144,7 +144,7 @@ export class NewDeclarationComponent extends BaseComponent implements OnInit {
     }
 
     SubmitChanges() {
-        this.declarationPMService.insert(this.EntityPM).subscribe(myResult => {
+        this.declarationPMService.insert(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

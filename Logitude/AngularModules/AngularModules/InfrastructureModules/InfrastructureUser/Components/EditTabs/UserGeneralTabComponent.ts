@@ -125,7 +125,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     CheckSecurityPolicySettingToShowPhone() {
 
 
-        this.TenantLoginPolicyListService.getSingle(SessionLocator.Tenant).subscribe(res => {
+        this.TenantLoginPolicyListService.getSingle(SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var result: TenantLoginPolicyList = pmResponse.Result;
@@ -293,7 +293,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
 
             if (SessionLocator.TenantManagementJS.IsMultiPackage || SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
                 var service: UserExtendedListService = new UserExtendedListService();
-                service.GetUserLicensesCountForUser(this.EntityPM.Id).subscribe(myResult => {
+                service.GetUserLicensesCountForUser(this.EntityPM.Id).subscribe((myResult:any) => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         var count: number = myResponse.Result;

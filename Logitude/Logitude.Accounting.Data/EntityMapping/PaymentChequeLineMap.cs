@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(250).IsUnicode(true);
 
-            this.Property(t => t.Amount).HasColumnName("Amount");
+            this.Property(t => t.Amount).HasColumnName("Amount").HasPrecision(16, 2);
 
             this.Property(t => t.SequenceNumeric).HasColumnName("SequenceNumeric");
         }

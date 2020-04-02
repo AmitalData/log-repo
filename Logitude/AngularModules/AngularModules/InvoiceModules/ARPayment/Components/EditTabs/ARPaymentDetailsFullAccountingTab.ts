@@ -195,7 +195,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         {
 
             this.StartBusyIndicator('checkLedgerCreated');
-            this._JournalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id, '3').subscribe(myResult => // 3- ARPayment
+            this._JournalExtendedPMService.GetByAccountingEntityId(this.EntityPM.Id, '3').subscribe((myResult:ServiceResponse) => // 3- ARPayment
             {
                 console.log("_JournalExtendedPMService.GetByAccountingEntityId", myResult);
                 this.StopBusyIndicator('checkLedgerCreated');
@@ -459,7 +459,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.StartBusyIndicator('OpenReco');
 
             this._ReconciliationExtendedPMService.getByNumber(recoNumber)
-                .subscribe(myResult => {
+                .subscribe((myResult:ServiceResponse) => {
                     this.StopBusyIndicator('OpenReco');
 
                     var mm: ServiceResponse = myResult;

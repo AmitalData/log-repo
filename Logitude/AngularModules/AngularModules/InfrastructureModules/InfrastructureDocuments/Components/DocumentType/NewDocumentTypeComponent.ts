@@ -174,7 +174,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
         if (code && this.ExsitCode != code) {
             this.ExsitCode = code;
-            this._documentTypePMExtendedService.GetDoesDocumentTypeCodeExist(code, SessionLocator.Tenant).subscribe(res => {
+            this._documentTypePMExtendedService.GetDoesDocumentTypeCodeExist(code, SessionLocator.Tenant).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -253,7 +253,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
                  this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-                 this.documentTypePMService.insert(this.NewDocumentTypePM).subscribe(res=> {
+                 this.documentTypePMService.insert(this.NewDocumentTypePM).subscribe((res:any) => {
                      this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                      var pmResponse: ServiceResponse = res;
@@ -308,7 +308,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
             var table = window.ObjectTables.filter(d => d.Id == this.NewDocumentTypePM.ObjectTableId)[0];
             if (table) tableId = table.Id;
 
-            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe((response:any) => {
                 var windowArgs: any = {};
                 windowArgs.ObjectTypeField = "DocuemntFileName";
                 windowArgs.HideSystemDataTab = true;

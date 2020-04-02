@@ -129,7 +129,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveGLAccountCount = myResult.ActiveGLAccountCount > 1000 ? "1000+" : myResult.ActiveGLAccountCount.toString();
                 this.glAccountSummary.InactiveGLAccountCount = myResult.InactiveGLAccountCount > 1000 ? "1000+" : myResult.InactiveGLAccountCount.toString();
@@ -141,7 +141,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
                 this.glAccountSummary.AllJobsCount = myResult.AllJobsCount > 1000 ? "1000+" : myResult.AllJobsCount.toString();
             }
         });
-        this._JournalExtendedListService.GetJournalsSummary().subscribe(myResult => {
+        this._JournalExtendedListService.GetJournalsSummary().subscribe((myResult:JournalSummary) => {
             if (myResult != null) {
 
                 this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();
@@ -270,7 +270,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
             listArgs.Perspective = "GLAccountMain";
             listArgs.IgnoreSelectedPerspective = true;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -355,7 +355,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
             listArgs.ObjectTableName = "Journal";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

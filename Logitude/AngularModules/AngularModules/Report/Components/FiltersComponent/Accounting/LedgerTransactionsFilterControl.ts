@@ -34,8 +34,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
 
         // get requierd resources
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response:any) => {
                 this.isReady = true;
                 if (this.IsSchedulerReport) {
                     this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");

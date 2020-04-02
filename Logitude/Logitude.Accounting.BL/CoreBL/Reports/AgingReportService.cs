@@ -400,6 +400,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     DBAndDummies = DBAndDummies.Where(r => !_AccountListRelatedCurrenciesAccount_List2Discard.Contains(r.AccountId));
                     
                 }
+                if (_Param.AggregateByGLAccountCurrencies)
+                {
+                    DBAndDummies = DBAndDummies.Where(r => !string.IsNullOrEmpty(r.CurrencyId));
+                }
                 var reportList = (from rec in /*dummiesPeriodsList.Union(dbList)*/ DBAndDummies
                                   group rec by new { rec.OrderDate, rec.OrderDateB4, rec.AccountId, rec.CurrencyId }
                                       into groupby
@@ -463,7 +467,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          cust != null ? (cust.CreditLimitAmount != null ? (double)cust.CreditLimitAmount : 0) : 0,
 
                          CreditStatusAmount_AsIs = cust != null ? (cust.CreditLimitAmount!=null ?(double)cust.CreditLimitAmount:0):0,
-                         BalanceInLocalCurrency= moredata!=null ?(decimal)moredata.BalanceInLocalCurrency:0,
+                         BalanceInLocalCurrency= moredata!=null ?(decimal)moredata.BalanceInLocalCurrency:0.00m,
                          //CreditStatusAmount= 
                          //((decimal)(cust.CreditLimitAmount.GetValueOrDefault())
                          //- (
@@ -568,7 +572,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 DataTable _PivotTable = namedPeriods.ToPivotTable(
                     rec => rec.PeriodName,
                     rec => rec.AccountAndCurr, //new { rec.AccountId, rec.CurrencyId }, //rec.AccountId, //
-                    recs => recs.Any() ? recs.Sum(rec => rec.Total) : 0);
+                    recs => recs.Any() ? recs.Sum(rec => rec.Total) : 0.00m);
                 var xml = _PivotTable.ToJsonString();
                 _PivotTable.TableName = "sss";
                 xml = _PivotTable.ToXml();

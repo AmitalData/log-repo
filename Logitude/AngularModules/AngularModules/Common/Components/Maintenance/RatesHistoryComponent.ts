@@ -55,7 +55,7 @@ export class RatesHistoryComponent extends BaseComponent {
         //this.ItemsSource = [];
         this.filters.PageIndex = this.QueryPageIndex;
         this.filters.PageSize = this.PageSize;
-        this.RatesTableListService.getByFilters(this.filters).subscribe(myResult => {
+        this.RatesTableListService.getByFilters(this.filters).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.ItemsSource = [];
             }

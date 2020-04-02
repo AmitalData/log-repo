@@ -134,7 +134,7 @@ export class SaveAsTemplateComponent implements OnInit {
                     newTemplatePM.TemplateBodyHtml = StringToBase64(this.DataContext.froalaEditorSetting.froalaEditorComponent.getHtml());
                 }
 
-                this.documentTypeTemplatePMService.insert(newTemplatePM).subscribe(myResult => {
+                this.documentTypeTemplatePMService.insert(newTemplatePM).subscribe((myResult:any) => {
 
 
 

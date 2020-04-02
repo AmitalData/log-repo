@@ -202,7 +202,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
     //DownloadButtonClicked() {
-    //    this._GLAccountExtendedListService.CalculateFututreCheques().subscribe(myResult => {
+    //    this._GLAccountExtendedListService.CalculateFututreCheques().subscribe((myResult:any) => {
 
 
 

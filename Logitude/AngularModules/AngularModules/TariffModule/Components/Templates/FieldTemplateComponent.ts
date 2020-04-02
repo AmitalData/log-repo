@@ -25,7 +25,7 @@ export class FieldTemplateComponent {
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
             if (this.FieldValue != null) {
-                this.CurrencyListService.getSingleFromCache(this.FieldValue).subscribe(res => {
+                this.CurrencyListService.getSingleFromCache(this.FieldValue).subscribe((res:any) => {
                     if (!res.HasError) {
                         var Currency: CurrencyList = res.Result;
                         if (Currency) {

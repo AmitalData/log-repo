@@ -402,7 +402,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         if (this.QuoteTemplateSettingPM.IsDirty) {
             this.IsChangeSetting = true;
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
+            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
                 this.QuoteTemplateSettingPM.IsDirty = false;
                 this.CurrentSession.StopBusyIndicator();
                 this.RefreshQuoteTemplateSectionBodyHtml();
@@ -413,7 +413,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
     RefreshQuoteTemplateSectionBodyHtml() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, this.QuoteTemplateSectionViewModel.Id, this.QuoteTemplateSectionViewModel.EntityPM.QuoteTemplateId, this.QuoteTemplateSettingPM.Id, this.QuoteId, this.QuoteTemplatePM.CreatedByUserId, SessionLocator.Tenant).subscribe(res => {
+        this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, this.QuoteTemplateSectionViewModel.Id, this.QuoteTemplateSectionViewModel.EntityPM.QuoteTemplateId, this.QuoteTemplateSettingPM.Id, this.QuoteId, this.QuoteTemplatePM.CreatedByUserId, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
  
@@ -481,7 +481,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
            if (this.QuoteTemplateSettingPM.IsDirty) {
 
                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-               this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
+               this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
                    this.QuoteTemplateSettingPM.IsDirty = false;
                    this.CurrentSession.StopBusyIndicator();
                    this.CurrentSession.CurrentWindow.Close("Refresh");

@@ -88,7 +88,7 @@ export class AdvanceDocumentTypeTemplateComponent extends BaseComponent implemen
 
     SaveButtonClicked() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-        this.documentTypeTemplatePMService.update(this.EntityPM).subscribe(res => {
+        this.documentTypeTemplatePMService.update(this.EntityPM).subscribe((res:any) => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.CloseButtonClicked();
         });

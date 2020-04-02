@@ -143,7 +143,7 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
+                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
                     this.QuoteTemplateSettingPM.IsDirty = false;
                     this.CurrentSession.StopBusyIndicator();
                     

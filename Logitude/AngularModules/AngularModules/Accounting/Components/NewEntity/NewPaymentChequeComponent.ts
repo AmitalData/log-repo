@@ -296,7 +296,7 @@ export class NewPaymentChequeComponent extends BaseComponent
 
         this.entityPM.BankAccountGLAccountId = this.BankAccount.DeferredGLAccountId;
         this.entityPM.PaymentChequeStatusCode = "1";
-        this.PaymentChequePMService.insert(this.entityPM).subscribe(myResult => {
+        this.PaymentChequePMService.insert(this.entityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

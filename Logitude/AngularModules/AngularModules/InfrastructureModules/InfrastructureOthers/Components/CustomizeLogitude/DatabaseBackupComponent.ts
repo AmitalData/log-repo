@@ -59,7 +59,7 @@ export class DatabaseBackupComponent implements OnInit {
   
     StartBackUpTimer() {
 
-        this.Backupsub = this.BackUpTimer().subscribe(res => {
+        this.Backupsub = this.BackUpTimer().subscribe((res:any) => {
 
             if (!this.IsStopTimer) {
                 this._backUpService.CheckIfDatabaseBackupIsBuilt(SessionInfo.LoggedUserTenant).subscribe((res: ServiceResponse) => {

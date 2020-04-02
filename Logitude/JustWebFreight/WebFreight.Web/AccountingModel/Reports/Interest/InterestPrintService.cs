@@ -32,7 +32,7 @@ using WebFreight.Web.Helpers;
             InterestDataProvider InterestReportDP = new InterestDataProvider();
             InterestReportQueryService InterestReportQuery = new InterestReportQueryService(tenant);
             InterestReportPM InteerstReportPM = InterestReportQuery.GetSingle(entityId, true, false);
-            InterestService interestTransactionQuery = new InterestService();
+            InterestReportService interestTransactionQuery = new InterestReportService();
             List<InterestReportLinesByDateProvider> InterestReportLines = InteerstReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
             {
                 FromDate = d.FromDate,

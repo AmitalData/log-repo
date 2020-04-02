@@ -91,7 +91,7 @@ export class BookingsComponent {
     public CancelledBookingsCount: string;
     public ErrorsQueryColor: string = "#282E30";
     LoadQueriesCounts() {
-        this.myBookingDomainService.GetBookingsCounts().subscribe(myResult => {
+        this.myBookingDomainService.GetBookingsCounts().subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -116,7 +116,7 @@ export class BookingsComponent {
     public RecentBookingsCount: number = 0;
     public RecentBookingsList: BookingList[] = [];
     LoadRecentBookings() {
-        this.myBookingDomainService.GetRecentBookings().subscribe(myResult => {
+        this.myBookingDomainService.GetRecentBookings().subscribe((myResult:any) => {
             if (myResult == null) {
                 this.RecentBookingsList = [];
                 this.RecentBookingsCount = 0;
@@ -229,7 +229,7 @@ export class BookingsComponent {
     }
 
     LoadInProgressBookingsDashboard() {
-        this.myBookingDomainService.GetBookingsDashBoard(SessionLocator.TenantPM.Id).subscribe(myResult => {
+        this.myBookingDomainService.GetBookingsDashBoard(SessionLocator.TenantPM.Id).subscribe((myResult:any) => {
             this.InProgressBookingDashboard = new Array<ChartingDataClass>();
             var myResponse: ServiceResponse = myResult;
             this.InProgressBookingDashboard = myResponse.Result;

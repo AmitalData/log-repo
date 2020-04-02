@@ -399,7 +399,7 @@ export class APPaymentMenuButtonsHandler {
 
     public GetFullAccountingSettingsAndApprove() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult =>
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe((myResult:any) =>
         {
             var myResponse: ServiceResponse = myResult;
             this.CurrentSession.StopBusyIndicator();
@@ -611,7 +611,7 @@ export class APPaymentMenuButtonsHandler {
         {
 
             var service = new GLAccountPMService();
-            service.get(id).subscribe(response =>
+            service.get(id).subscribe((response:any) =>
             {
                 console.log("[GLAccountPMService.Get", response);
 

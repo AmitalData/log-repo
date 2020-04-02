@@ -59,7 +59,7 @@ export class ConnectButtonsListTemplate {
     ChooseButtonClicked() {
 
         this.CurrentSession.StartBusyIndicator("Loading ..");
-        this._ShipmentPMService.get(this.SourceId).subscribe(myResult => {
+        this._ShipmentPMService.get(this.SourceId).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.SourceEntity = myResult.Result;
                 this._ShipmentPMService.get(this.rowData['Id']).subscribe(myResult1 => {
@@ -90,7 +90,7 @@ export class ConnectButtonsListTemplate {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Loading ..")
                 var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
-                this._documentsFilingExtendedPMService.GetLogBoxConnectedDocs(this.SourceEntity.Id, this.rowData['Id'],ObjectTable.Id,SessionLocator.Tenant).subscribe(res => {
+                this._documentsFilingExtendedPMService.GetLogBoxConnectedDocs(this.SourceEntity.Id, this.rowData['Id'],ObjectTable.Id,SessionLocator.Tenant).subscribe((res:any) => {
                     if (AppTool.IsNullOrEmpty(this.CurrentPM.ShipperName)) {
                         this.CurrentPM.ShipperName = this.SourceEntity.ShipperName;
                     }
@@ -104,11 +104,11 @@ export class ConnectButtonsListTemplate {
                         this.CurrentPM.ShipperReference2 = this.SourceEntity.CustomerReference2;
                     }
 
-                    this._ShipmentPMService.update(this.CurrentPM).subscribe(myResult => {
-                        this._ShipmentPMService.get(this.SourceEntity.Id).subscribe(myResult => {
+                    this._ShipmentPMService.update(this.CurrentPM).subscribe((myResult:any) => {
+                        this._ShipmentPMService.get(this.SourceEntity.Id).subscribe((myResult:any) => {
                             if (!myResult.HasError) {
                                 myResult.Result.IsCancelled = true;
-                                this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
+                                this._ShipmentPMService.update(myResult.Result).subscribe((myResult:any) => {
                                     this.CurrentSession.StopBusyIndicator();
                                     this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
                                     this.CurrentSession.CloseCurrentWindow();
@@ -120,7 +120,7 @@ export class ConnectButtonsListTemplate {
                     //res.Result.forEach((docin) => {
                     //    count++;
                     //    docin.EntityId = this.rowData['Id'];
-                    //    this._documentsFilingPMService.update(docin).subscribe(myResult => {
+                    //    this._documentsFilingPMService.update(docin).subscribe((myResult:any) => {
                     //        if (count == res.Result.length) {
                     //            if (AppTool.IsNullOrEmpty(this.CurrentPM.ShipperName)) {
                     //                this.CurrentPM.ShipperName = this.SourceEntity.ShipperName;
@@ -135,11 +135,11 @@ export class ConnectButtonsListTemplate {
                     //                this.CurrentPM.ShipperReference2 = this.SourceEntity.CustomerReference2;
                     //            }
 
-                    //            this._ShipmentPMService.update(this.CurrentPM).subscribe(myResult => {
-                    //                this._ShipmentPMService.get(this.SourceEntity.Id).subscribe(myResult => {
+                    //            this._ShipmentPMService.update(this.CurrentPM).subscribe((myResult:any) => {
+                    //                this._ShipmentPMService.get(this.SourceEntity.Id).subscribe((myResult:any) => {
                     //                    if (!myResult.HasError) {
                     //                        myResult.Result.IsCancelled = true;
-                    //                        this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
+                    //                        this._ShipmentPMService.update(myResult.Result).subscribe((myResult:any) => {
                     //                            this.CurrentSession.StopBusyIndicator();
                     //                            this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
                     //                            this.CurrentSession.CloseCurrentWindow();
@@ -161,11 +161,11 @@ export class ConnectButtonsListTemplate {
                     //        this.CurrentPM.CustomerReference2 = this.SourceEntity.CustomerReference2;
                     //    }
 
-                    //    this._ShipmentPMService.update(this.CurrentPM).subscribe(myResult => {
-                    //        this._ShipmentPMService.get(this.SourceEntity.Id).subscribe(myResult => {
+                    //    this._ShipmentPMService.update(this.CurrentPM).subscribe((myResult:any) => {
+                    //        this._ShipmentPMService.get(this.SourceEntity.Id).subscribe((myResult:any) => {
                     //            if (!myResult.HasError) {
                     //                myResult.Result.IsCancelled = true;
-                    //                this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
+                    //                this._ShipmentPMService.update(myResult.Result).subscribe((myResult:any) => {
                     //                    this.CurrentSession.StopBusyIndicator();
                     //                    this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
                     //                    this.CurrentSession.CloseCurrentWindow();

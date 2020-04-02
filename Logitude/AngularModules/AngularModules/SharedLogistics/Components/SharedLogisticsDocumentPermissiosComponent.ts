@@ -59,7 +59,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
 
         this.myTenantZeroList = [];
 
-        this._documentTypePMExtendedService.GetDocumentTypesByObjectTableAndTenant(this.ObjectTableId, 0).subscribe(res => {
+        this._documentTypePMExtendedService.GetDocumentTypesByObjectTableAndTenant(this.ObjectTableId, 0).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myTenantZeroList = pmResponse.Result;
@@ -76,7 +76,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
     LoadTenantData() {
         this.myTenantList = [];
 
-        this._documentTypePMExtendedService.GetDocumentTypesByObjectTableAndTenant(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
+        this._documentTypePMExtendedService.GetDocumentTypesByObjectTableAndTenant(this.ObjectTableId, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myTenantList = pmResponse.Result;
@@ -154,7 +154,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
 
         if (this.myTenantList.length > 0) {
 
-            this._documentTypePMExtendedService.update(this.myTenantList).subscribe(res => {
+            this._documentTypePMExtendedService.update(this.myTenantList).subscribe((res:any) => {
                 this.CloseButtonClicked();
             });
         }

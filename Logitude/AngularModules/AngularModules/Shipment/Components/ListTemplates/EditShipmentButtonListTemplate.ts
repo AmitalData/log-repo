@@ -53,7 +53,7 @@ export class EditShipmentButtonListTemplate {
         if (SessionLocator.PrivateLableSettings) {
             this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
             if (SessionLocator.PrivateLableSettings) {
-                this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
+                this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res:any) => {
                     if (res.Result == false) {
                         this.HasSharedDocs = false;
                     }
@@ -66,7 +66,7 @@ export class EditShipmentButtonListTemplate {
         }
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
-        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
+        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
         //        this.Source = "data:image/JPEG;base64," + myResult;
         //        this.CD.detectChanges(); 
         //    });
@@ -76,7 +76,7 @@ export class EditShipmentButtonListTemplate {
     EditButtonClicked() {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();

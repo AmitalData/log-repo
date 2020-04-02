@@ -225,28 +225,28 @@ export class StandardFieldItem {
     //private LoadObjects() {
     //    var generalService: GeneralDomainService = new GeneralDomainService();
 
-    //    generalService.(this.ObjectField.FullNameTextCodeId).subscribe(myResult => {
+    //    generalService.(this.ObjectField.FullNameTextCodeId).subscribe((myResult:any) => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.fullLabelObject = myResponse.Result;
     //        }
     //    });
 
-    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ShortNameTextCodeId).subscribe(myResult => {
+    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ShortNameTextCodeId).subscribe((myResult:any) => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.shortLabelObject = myResponse.Result;
     //        }
     //    });
 
-    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ListTextCodeId).subscribe(myResult => {
+    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.ListTextCodeId).subscribe((myResult:any) => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.listLabelObject = myResponse.Result;
     //        }
     //    });
 
-    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.HelpTextCodeId).subscribe(myResult => {
+    //    generalService.GetSingleObjectFieldFromZeroTenant(this.ObjectField.HelpTextCodeId).subscribe((myResult:any) => {
     //        var myResponse: ServiceResponse = myResult;
     //        if (!myResponse.HasError) {
     //            this.helpLabelObject = myResponse.Result;

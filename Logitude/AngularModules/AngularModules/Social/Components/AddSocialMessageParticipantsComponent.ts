@@ -83,7 +83,7 @@ export class AddSocialMessageParticipantsComponent implements OnInit {
                 this.ConversationHeaderParticipantPMLists.push(this.GetNewConversationHeaderParticipantPM(userid, name));
             });
 
-            this.conversationHeaderParticipantExtendedPMService.SaveConversationHeaderParticipantPMLists(this.ConversationHeaderParticipantPMLists).subscribe(res => {
+            this.conversationHeaderParticipantExtendedPMService.SaveConversationHeaderParticipantPMLists(this.ConversationHeaderParticipantPMLists).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!pmResponse.HasError && pmResponse.Result) {

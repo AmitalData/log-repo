@@ -35,7 +35,7 @@ export class SATInterfaceSettingsComponent {
     }
 
     private LoadData() {
-        this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe(response => {
+        this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe((response:any) => {
             if (!response.HasError) {
                 this.EntityPM = response.Result;
                
@@ -66,14 +66,14 @@ export class SATInterfaceSettingsComponent {
         }
         else {
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-            this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe(response => {
+            this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe((response:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (response.HasError) {
                     this.ValidationErrorsList = response.ErrorsArray;
                 }
                 else {
 
-                    this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe(response => {
+                    this.sATInterfaceSettingPMService.get(SessionLocator.Tenant).subscribe((response:any) => {
                         if (!response.HasError) {
                             SessionLocator.SATInterfaceSettings  = response.Result;
 
@@ -101,12 +101,12 @@ export class SATInterfaceSettingsComponent {
     CheckDropBoxAndSave() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetDropBoxAccessTocken(SessionLocator.Tenant).subscribe((myResult) => {
+        myService.GetDropBoxAccessTocken(SessionLocator.Tenant).subscribe((myResult:any) => {
             if (myResult.HasError == false && !AppTool.IsNullOrEmpty(myResult.Result.DropBoxAccessToken)) {
                 this.IsDropboxConnected = true;
             }
             if (this.IsDropboxConnected) {
-                this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe(response => {
+                this.sATInterfaceSettingPMService.update(this.EntityPM).subscribe((response:any) => {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (response.HasError) {
                         this.ValidationErrorsList = response.ErrorsArray;

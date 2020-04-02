@@ -69,7 +69,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 this.ScreenIsReady = true;
         this.BuildFiltersLists();
         this.OnFiltersChanged();
@@ -678,7 +678,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            this.myCardListService.getSingle(this.ShipperId).subscribe(myResult => {
+            this.myCardListService.getSingle(this.ShipperId).subscribe((myResult:any) => {
 
                 var myCardList: CardList = myResult.Result;
                 if (myCardList) {
@@ -799,7 +799,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            this.myCardListService.getSingle(this.ConsigneeId).subscribe(myResult => {
+            this.myCardListService.getSingle(this.ConsigneeId).subscribe((myResult:any) => {
 
                 var myCardList: CardList = myResult.Result;
                 if (myCardList) {
