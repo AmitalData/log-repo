@@ -6,6 +6,7 @@ import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 import {AppTool} from '../../Tools';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { EntityResourceService } from '../../Services/EntityResourceService';
 
 @Component({
     selector: 'LogLabel',
@@ -65,8 +66,11 @@ export class LogLabelComponent implements OnInit {
     @Input() NoObjectField: boolean = false; 
     LayoutDirection: string = 'ltr';
 
-    constructor() {
+    constructor(private _entityResourceService: EntityResourceService) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+        this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((response: any) => {
+        
+            });
     }
 
     private isFieldValid: boolean = true;
