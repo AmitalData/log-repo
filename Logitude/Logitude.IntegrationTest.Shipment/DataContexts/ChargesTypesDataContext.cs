@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.IntegrationTest.Shipment.DataVariablesContexts
+namespace Logitude.IntegrationTest.Shipment.DataContexts
 {
     // https://www.c-sharpcorner.com/UploadFile/8911c4/singleton-design-pattern-in-C-Sharp/
 

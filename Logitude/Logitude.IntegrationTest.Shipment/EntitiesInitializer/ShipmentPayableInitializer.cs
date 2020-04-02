@@ -17,6 +17,10 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
             {
                 Quantity = args.PayableQuantity,
                 UnitPrice = args.PayableUnitPrice,
+                CurrencyId = args.CurrencyId,
+                Rate = args.CurrencyRate,
+                ProfitCurrencyExchangeRate = args.ProfitCurrencyRate,
+
                 Tenant = IntegrationTestLoginParameters.Tenant,
                 CreatedByUserId = IntegrationTestLoginParameters.LoginUserId,
                 UpdateByUserId = IntegrationTestLoginParameters.LoginUserId,
@@ -26,9 +30,6 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
                 ChargesTypeId = ShipmentVariables.ChargeTypeAFTId,
                 MeasurementId = ShipmentVariables.MeasurmentGRWTId,
                 VatTypeId = ShipmentVariables.VATTypeZeroId,
-                CurrencyId = CorePreparationVariables.ProfitCurrencyId,
-                Rate = CorePreparationVariables.ProfitCurrencyRate,
-                ProfitCurrencyExchangeRate = CorePreparationVariables.ProfitCurrencyRate,
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
             };
 
@@ -44,18 +45,16 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
 
         private void InitializeAmounts(ShipmentPayablePM entityPM)
         {
-            // Old
-            //ShipmentPayable.OpenAmount = ShipmentPayable.Quantity * ShipmentPayable.UnitPrice;
-            //ShipmentPayable.OpenAmountInLocalCurrency = ShipmentPayable.OpenAmount * CorePreparationVariables.ProfitCurrencyRate;
-            //ShipmentPayable.OpenAmountInProfitCurrency = ShipmentPayable.OpenAmountInLocalCurrency / CorePreparationVariables.ProfitCurrencyRate;
-
-
             if (entityPM.Quantity != null && entityPM.UnitPrice != null)
             {
                 entityPM.ShipmentPayableLineStatusCode = "OAMT";
                 entityPM.ExpectedAmount = entityPM.Quantity * entityPM.UnitPrice;
                 entityPM.ExpectedAmountLocal = entityPM.ExpectedAmount * entityPM.Rate;
                 entityPM.ExpectedAmountInProfitCurrency = entityPM.ExpectedAmountLocal / entityPM.ProfitCurrencyExchangeRate;
+
+                entityPM.OpenAmount = entityPM.ExpectedAmount;
+                entityPM.OpenAmountInLocalCurrency = entityPM.ExpectedAmountLocal;
+                entityPM.OpenAmountInProfitCurrency = entityPM.ExpectedAmountInProfitCurrency;
             }
         }
     }

@@ -804,6 +804,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             List<PreparationShortClass> charges = (from a in commonDataContext.ChargesTypes
                                                    where a.Tenant == tenant
+                                                   && a.IsAutoDisplayInShipment == true
                                                    select new PreparationShortClass
                                                    {
                                                        Id = a.Id,

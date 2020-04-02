@@ -17,6 +17,10 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
             {
                 Quantity = args.ReceivableQuantity,
                 UnitPrice = args.ReceivableUnitPrice,
+                CurrencyId = args.CurrencyId,
+                Rate = args.CurrencyRate,
+                ProfitCurrencyExchangeRate = args.ProfitCurrencyRate,
+
                 Tenant = IntegrationTestLoginParameters.Tenant,
                 CreatedByUserId = IntegrationTestLoginParameters.LoginUserId,
                 UpdateByUserId = IntegrationTestLoginParameters.LoginUserId,
@@ -24,9 +28,6 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
                 ChargesTypeId = ShipmentVariables.ChargeTypeAFTId,
                 MeasurementId = ShipmentVariables.MeasurmentGRWTId,
                 VatTypeId = ShipmentVariables.VATTypeZeroId,
-                CurrencyId = CorePreparationVariables.ProfitCurrencyId,
-                Rate = CorePreparationVariables.ProfitCurrencyRate,
-                ProfitCurrencyExchangeRate = CorePreparationVariables.ProfitCurrencyRate,
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
             };
 

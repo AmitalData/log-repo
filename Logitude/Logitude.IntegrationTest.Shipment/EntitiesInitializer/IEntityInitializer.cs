@@ -11,17 +11,6 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
         object Create(EntityInitializerArguments args);
     }
 
-    public class EntityInitializerArguments
-    {
-        public string DirectionId { get; set; }
-        public string TransportModeId { get; set; }
-        public string ShipmentLevelCode { get; set; }
-        public double? PayableQuantity { get; set; }
-        public double? PayableUnitPrice { get; set; }
-        public double? ReceivableQuantity { get; set; }
-        public double? ReceivableUnitPrice { get; set; }
-    }
-
     public class EntityInitializerFactory
     {
         public IEntityInitializer GetInitializer(string entity)
@@ -33,6 +22,11 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
                         return new ShipmentInitializer();
                     }
 
+                case "ShipmentPayable":
+                    {
+                        return new ShipmentPayableInitializer();
+                    }
+
                 case "ShipmentReceivable":
                     {
                         return new ShipmentReceivableInitializer();
@@ -41,5 +35,20 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
 
             return null;
         }
+    }
+
+    public class EntityInitializerArguments
+    {
+        public string DirectionId { get; set; }
+        public string TransportModeId { get; set; }
+        public string ShipmentLevelCode { get; set; }
+
+        public string CurrencyId { get; set; }
+        public double? CurrencyRate { get; set; }
+        public double? ProfitCurrencyRate { get; set; }
+        public double? PayableQuantity { get; set; }
+        public double? PayableUnitPrice { get; set; }
+        public double? ReceivableQuantity { get; set; }
+        public double? ReceivableUnitPrice { get; set; }
     }
 }
