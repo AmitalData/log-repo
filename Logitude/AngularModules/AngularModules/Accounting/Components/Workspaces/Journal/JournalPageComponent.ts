@@ -99,7 +99,7 @@ export class JournalPageComponent implements AfterViewInit {
     journalSummary: JournalSummary = new JournalSummary();
     LoadQueriesCounts() {
 
-        this._JournalExtendedListService.GetJournalsSummary().subscribe((myResult:any) => {
+        this._JournalExtendedListService.GetJournalsSummary().subscribe((myResult:JournalSummary) => {
             if (myResult != null) {
 
                 this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();
@@ -200,7 +200,7 @@ export class JournalPageComponent implements AfterViewInit {
             listArgs.ObjectTableName = "Journal";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = "Full Accounting";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -225,7 +225,7 @@ export class JournalPageComponent implements AfterViewInit {
         listArgs.ObjectTableName = "Revaluation";
         listArgs.DisplayTitle = displayTitle;
         // listArgs.BackButtonTitle = "Full Accounting";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -326,7 +326,7 @@ export class JournalPageComponent implements AfterViewInit {
             listArgs.ObjectTableName = "Journal";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

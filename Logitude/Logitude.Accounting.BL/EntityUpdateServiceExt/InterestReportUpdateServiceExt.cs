@@ -22,5 +22,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
             InterestReportService interestReportService = new InterestReportService();
             interestReportService.PutConfirmCreateInvoice(interestReportPM, Tenant, MainContext);
         }
+
+        public void CancelledInterestTransactionsByARPayment(string EntityId, int Tenant)
+        {
+            InterestReportService interestReportService = new InterestReportService();
+            interestReportService.CancelledInterestTransactionsByARPayment(EntityId, Tenant);
+        }
     }
 }

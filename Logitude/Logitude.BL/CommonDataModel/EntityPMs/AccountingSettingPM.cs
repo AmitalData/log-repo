@@ -57,5 +57,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public int QBOOAuth { get; set; }
         public bool AllowManualARPaymentNumber { get; set; }
         public bool AllowRegionalTaxManagement { get; set; }
+        public bool EnableAPPaymentExternalPayment { get; set; }
+
     }
 }

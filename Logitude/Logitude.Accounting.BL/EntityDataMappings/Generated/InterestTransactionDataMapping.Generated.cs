@@ -36,7 +36,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CurrencyId, 
 	         InterestValueDate, 
 	         InterestReportId, 
-	         IsClosed,
+	         IsClosed, 
+	         IsCancelled,
 	      }
 
 
@@ -64,7 +65,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestEntityType, 
 	         InterestEntityIconCode, 
 	         JournalId, 
-	         AccountEntityCode,
+	         AccountEntityCode, 
+	         IsCancelled,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -141,6 +143,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClosed))
             {
 				entityPOCO.IsClosed = entityPM.IsClosed;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCancelled))
+            {
+				entityPOCO.IsCancelled = entityPM.IsCancelled;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -224,6 +231,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.IsClosed = entityPOCO.IsClosed;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCancelled))
+            {
+					entityPM.IsCancelled = entityPOCO.IsCancelled;
+            }
+
 		}
 
 		public void PMToOldPM(InterestTransactionPM entityPM, InterestTransactionPM oldEntityPM)
@@ -298,6 +310,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClosed))
             {
                 oldEntityPM.IsClosed = entityPM.IsClosed;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCancelled))
+            {
+                oldEntityPM.IsCancelled = entityPM.IsCancelled;
             }
 			
 		}

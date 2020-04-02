@@ -19,6 +19,8 @@ import { FullAccountingSettingPM } from '../../../Accounting/EntityPMs/FullAccou
 import { FullAccountingSettingPMService } from '../../../Accounting/Services/StandardPMs/FullAccountingSettingPMService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { GLAccountPM } from '../../../Accounting/EntityPMs/GLAccountPM';
+import { InvoiceTool } from '../../Tools';
+
 import { reject } from 'q';
 
 export class APPaymentMenuButtonsHandler {
@@ -42,8 +44,6 @@ export class APPaymentMenuButtonsHandler {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
-
-
     }
 
     private ResetAllFlags() {
@@ -102,6 +102,7 @@ export class APPaymentMenuButtonsHandler {
         if (this.EntityPM != null) {
             if (this.entityArgs.EditComponent != null) {
                 var table = window.ObjectTables.filter(d => d.Name === 'APPayment')[0];
+                var isEditingAnabled = InvoiceTool.IsEditingAPPaymentEnabled(this.EntityPM);
 
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
@@ -186,6 +187,19 @@ export class APPaymentMenuButtonsHandler {
 
                                 break;
                             }
+
+                        case "EnterExternalPayment": {
+                            var isHidden = true;
+
+                            if (SessionLocator.AccountingSettingPM.EnableAPPaymentExternalPayment == true) {
+                                isHidden = false;
+                            }
+
+                            button.IsHidden = isHidden;
+                            button.IsDisabled = !isEditingAnabled;
+
+                            break;
+                        }
                     }
                 }
             }
@@ -224,6 +238,11 @@ export class APPaymentMenuButtonsHandler {
                     this.SendToQBO();
                     break;
                 }
+
+            case "EnterExternalPayment": {
+                this.EnterExternalPaymentClicked();
+                break;
+            }
         }
     }
 
@@ -653,5 +672,12 @@ export class APPaymentMenuButtonsHandler {
 
     }
 
-
+    EnterExternalPaymentClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { EntityPM: this.EntityPM};        
+        logWindow.Title = "External Payment";
+        logWindow.Width = 650;
+        logWindow.Height = 450;
+        logWindow.Show('./InvoiceModules/APPayment/Components/Other/ExternalPaymentComponent');
+    }
 }

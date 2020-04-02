@@ -32,7 +32,7 @@ namespace Logitude.Accounting.BL.InterestService
             InterestTransactionsWithTotal interestTransactionsWithTotal = new InterestTransactionsWithTotal();
             decimal TotalLocalAmount=0; 
             List<InterestTransactionList> interestTransactionLists = (from a in MyContext.InterestReportLines
-                                                                      where a.Tenant == Tenant && a.InterestReportId == ReportId && DbFunctions.TruncateTime(a.InterestTransaction.InterestValueDate) == InterestCalculationDate.Date
+                                                                      where a.Tenant == Tenant && a.InterestReportId == ReportId && DbFunctions.TruncateTime(a.InterestTransaction.InterestValueDate) == InterestCalculationDate.Date && a.InterestTransaction.IsCancelled==false
                                                                       select new InterestTransactionList()
                                                                       {
                                                                           Tenant = a.Tenant,
@@ -200,6 +200,18 @@ namespace Logitude.Accounting.BL.InterestService
             return loggedcontact;
         }
 
+        public void CancelledInterestTransactionsByARPayment(string EntityId,int Tenant)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(MyContext);
+            List<InterestTransaction> AllEntities = interestTransactionRepository.GetAll(Tenant).Where(s=>s.InterestEntityTypeCode=="2" && s.EntityId== EntityId).ToList();
+            for (int i=0; i< AllEntities.Count;i++)
+            {
+                AllEntities[i].IsCancelled = true;
+                interestTransactionRepository.Update(AllEntities[i]);
+            }
+            MyContext.SaveChanges();
+        }
 
     }
 

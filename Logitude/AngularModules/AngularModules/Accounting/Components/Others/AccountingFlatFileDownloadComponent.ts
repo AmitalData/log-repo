@@ -105,7 +105,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
             case "TaxReport":
                 {
                     if (byButton || this.reportPM.NeedsRebulid) {
-                        this._TaxReportExtendedPMService.DownloadPNC874FileInBatch(this.reportPM).subscribe((myResult:any) => {
+                        this._TaxReportExtendedPMService.DownloadPNC874FileInBatch(this.reportPM).subscribe((myResult:ServiceResponse) => {
                             var mm: ServiceResponse = myResult;
                             if (!myResult.HasError) {
                                 var entity = mm.Result;
@@ -139,7 +139,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
             case "TaxDeductionReport":
                 {
                     //if (byButton || this.reportPM.NeedsRebulid) {
-                        //this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.taxDeductionPM).subscribe((myResult:any) => {
+                        //this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.taxDeductionPM).subscribe(myResult => {
                         //    var mm: ServiceResponse = myResult;
                         //    var entity = mm.Result;
                         //    this.btePM = entity;
@@ -169,7 +169,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
         }
     }
     GetBTE() {
-        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe((myResult:any) => {
+        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe(myResult => {
             console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

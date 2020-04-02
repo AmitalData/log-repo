@@ -60,8 +60,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
         this._entityResourceService.getEntityResourceByTableName("ChartOfAccount").subscribe((response1: any) => {
-            this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
-                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => { });
             });
 
             });
@@ -96,7 +96,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.EntityPM = new FullAccountingSettingPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.Id = SessionLocator.Tenant.toString();
-        this.fullAccountingSettingPMService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this.fullAccountingSettingPMService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) { // Success
@@ -483,16 +483,16 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     }
 
-    SubmitChanges(ControlAccountId:string) {
-        //console.log("EntityPM: ", this.EntityPM);
-        this.fullAccountingSettingPMService.update(this.EntityPM).subscribe((myResult:any) => {
+SubmitChanges(ControlAccountId:string) {
+    //console.log("EntityPM: ", this.EntityPM);
+    this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
 
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) { // Success
-                this.CurrentSession.CloseCurrentWindow();
-                this.CurrentSession.StopBusyIndicator();
-                if (!AppTool.IsNullOrEmpty(ControlAccountId)) {
-                    this.FullAccountingAddControl(ControlAccountId);
+        var mm: ServiceResponse = myResult;
+        if (!mm.HasError) { // Success
+            this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.StopBusyIndicator();
+            if (!AppTool.IsNullOrEmpty(ControlAccountId)) {
+                this.FullAccountingAddControl(ControlAccountId);
                 }
             }
 

@@ -45,7 +45,7 @@ export class APPaymentValidator {
             }
         }
 
-        if ( entityPm.PaymentMethodCode == "CH" && !entityPm.AutomaticPaymentCheque) {
+        if (entityPm.PaymentMethodCode == "CH" && !entityPm.AutomaticPaymentCheque) {
             if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
                 validationResults.push(msg.replace("%FieldName", "Cheque Ref"));
             }
@@ -58,41 +58,49 @@ export class APPaymentValidator {
         //    }
         //}
 
-        if ((entityPm.PaymentMethodCode == "CH" || entityPm.PaymentMethodCode == "BT" || entityPm.PaymentMethodCode == "CC" )&& entityPm.ValueDate == null) {
-                validationResults.push(msg.replace("%FieldName", "Value Date"));
-            
+        if ((entityPm.PaymentMethodCode == "CH" || entityPm.PaymentMethodCode == "BT" || entityPm.PaymentMethodCode == "CC") && entityPm.ValueDate == null) {
+            validationResults.push(msg.replace("%FieldName", "Value Date"));
+
         }
         if (entityPm.HasInvoicesErrors) {
             validationResults.push(TextCodeTranslator.Translate("APPayment.M.PaymentInvoicesHaveErrors"));
         }
 
-        var result = 0;
+        var AmountPaid = 0;
+        var ExternalAmount: number = 0;
         var isNoPaidAmount: boolean;
         entityPm.PaymentInvoices.forEach(item => {
-            result += item.PaymentAmount;
+
+            if (!AppTool.IsNullOrZero(item.PaymentAmount)) {
+                AmountPaid += item.PaymentAmount;
+            }
 
             if (AppTool.IsNullOrZero(item.ForeignAmount)) {
                 isNoPaidAmount = true;
             }
         });
 
+        AmountPaid = AppTool.Round(AmountPaid, 2);
+
+        if (entityPm.ExternalPaymentAmount) {
+            ExternalAmount = AppTool.Round(entityPm.ExternalPaymentAmount, 2);
+        }
+
         if (isNoPaidAmount == true) {
             validationResults.push("Can't connect lines with zero Amount to Pay");
         }
-
-        var paymentAmountPaid = AppTool.Round(result, 2);
 
         if (isNegativeAmountEnabled == false) {
             if (entityPm.AmountInPaymentCurrency < 0) {
                 validationResults.push(TextCodeTranslator.Translate("APPayment.M.CantSetMinusAmount"));
             }
 
-            if (paymentAmountPaid < 0) {
+            if (AmountPaid < 0) {
                 validationResults.push(TextCodeTranslator.Translate("APPayment.M.PaymentAmountPaidCantBeMinus"));
             }
         }
 
-        if (paymentAmountPaid > entityPm.AmountInPaymentCurrency) {
+        if ((AmountPaid + ExternalAmount) > entityPm.AmountInPaymentCurrency) {
             validationResults.push(TextCodeTranslator.Translate("APPayment.M.PaymentAmountPaidCantBeBigger"));
         }
 

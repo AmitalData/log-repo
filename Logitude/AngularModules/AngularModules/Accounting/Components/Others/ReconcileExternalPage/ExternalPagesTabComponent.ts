@@ -525,7 +525,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
 
     CheckRestorePossibility(id: string, entityPM: any) {
 
-        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response) => {
+        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response:ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
 
             if (!response.HasError) {
@@ -624,7 +624,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         if(this.ObjectTableName != 'GLAccount')
             console.error("[ExternalAdjustButtonClicked] table is not glaccount !!!!!!!");
 
-        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) =>
+        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) =>
         {
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;

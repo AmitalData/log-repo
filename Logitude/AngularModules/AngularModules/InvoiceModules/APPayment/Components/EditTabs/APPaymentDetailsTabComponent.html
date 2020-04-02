@@ -858,19 +858,30 @@
                                 <tr style="width:100%;">
                                     <td style="vertical-align: middle">
 
+                                        <!-- Payment Amount -->
                                         <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'">
                                             <div style="font-size: 24px; text-align: center;color:#282E30">{{Summary_Amount | NumbersPipe:'N2'}}</div>
                                             <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'APPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe}}</div>
                                         </div>
 
+                                        <!-- Invoices Paid Amount -->
                                         <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'">
                                             <div style="font-size: 24px; text-align: center;color:#282E30;margin-left:15px;margin-right:15px;margin-left:15px;">  -  </div>
                                             <div></div>
                                         </div>
-
                                         <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'">
                                             <div style="font-size: 24px; text-align: center;" [ngStyle]="{color: Summary_AmountPaidColor}">{{Summary_AmountPaid | NumbersPipe:'N2'}}</div>
                                             <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'APPayment.S.Details.AmountToPay' | TextCodeTranslationPipe}}</div>
+                                        </div>
+
+                                        <!-- External Amount -->
+                                        <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'" *ngIf="IsExternalPaymentVisible">
+                                            <div style="font-size: 24px; text-align: center;color:#282E30;margin-left:15px;margin-right:15px;margin-left:15px;">  -  </div>
+                                            <div></div>
+                                        </div>
+                                        <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'" *ngIf="IsExternalPaymentVisible">
+                                            <div style="font-size: 24px; text-align: center; cursor: pointer; text-decoration: underline;" [ngStyle]="{color: Summary_ExternalAmountColor}" (click)="EnterExternalPaymentClicked()">{{Summary_ExternalAmount | NumbersPipe:'N2'}}</div>
+                                            <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">External Amount</div>
                                         </div>
 
                                         <div style="display:block; text-align:center;" [style.float]="isRTL ? 'right' : 'left'">
