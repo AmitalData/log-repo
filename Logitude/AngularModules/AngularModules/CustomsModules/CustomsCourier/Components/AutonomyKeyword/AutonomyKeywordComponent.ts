@@ -20,6 +20,7 @@ import { KeyValuePair } from '../CourierWorkSheet/CourierWorksheetComponent';
 import { CustomsAutonomyKeywordExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/CustomsAutonomyKeywordExtendedPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { I18NHtmlParser } from '@angular/compiler';
+import { ControlsIdCounter } from '../../../../Infrastructure/Utilities/ControlsIdCounter';
 
 
 @Component({
@@ -29,7 +30,25 @@ import { I18NHtmlParser } from '@angular/compiler';
 
 export class AutonomyKeywordComponent
     extends BaseComponent
-    implements OnInit{
+    implements OnInit {
+    ngOnInit(): void {
+        if (this.entityArgs.EntityPM != null) {
+            this._CustomsAutonomyKeywordPMService.get(this.entityArgs.EntityPM.Id)
+                .subscribe((serviceResponse: ServiceResponse) => {
+                    this.EntityPM = serviceResponse.Result;
+                    if (this.EntityPM.KeywordtypeCode == "1") {
+                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[0];
+                    } else {
+                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[1];
+                    }
+
+                });
+        } else {
+            this.isNewRecord = true;
+            this.EntityPM = new CustomsAutonomyKeywordPM();
+            this.EntityPM.Tenant = SessionLocator.Tenant;
+            this.EntityPM.MarkAsDirty();
+        }    }
 
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.CustomsAutonomyKeyword";
@@ -40,7 +59,6 @@ export class AutonomyKeywordComponent
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
 
     _CustomsAutonomyKeywordPMService: CustomsAutonomyKeywordPMService = new CustomsAutonomyKeywordPMService();
-    _CustomsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
     private _CustomsAutonomyKeywordListService: CustomsAutonomyKeywordListService = new CustomsAutonomyKeywordListService();
     _KeywordtypeCodes: KeyValuePair[] = [];
     _SelectKeywordtypeCode_Key: string;
@@ -51,14 +69,6 @@ export class AutonomyKeywordComponent
         super();
         this._KeywordtypeCodes.push(new KeyValuePair("1", "עיר"));
         this._KeywordtypeCodes.push(new KeyValuePair("2", "טלפון"));
-        this.UIProperties.SetEnabled("KeywordsList", this.ObjectTableName, false);
-        if (entityArgs != null && entityArgs.EntityPM != null) {
-            this.EntityPM = entityArgs.EntityPM;
-            this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes.filter(r => r.Key == this.EntityPM.KeywordtypeCode)[0];
-            this.FromList = true;
-            this.UIProperties.SetEnabled("KeywordsList", this.ObjectTableName, true);
-        }
-
         SessionLocator.SelectedSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.Loaded = true;
@@ -67,23 +77,7 @@ export class AutonomyKeywordComponent
         });
     }
 
-    
-    ngOnInit() {
-        //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        //this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-        //    SessionLocator.SelectedSession.StopBusyIndicator();
-        //    this.Loaded = true;
-        //});
-    }
-
     SetWindowArgs(args: any) {
-        //if (!AppTool.IsNullOrEmpty(args)) {
-        //    this.isWindowMode = true;
-        //    this.isNewRecord = true;
-        //    //this.EntityPM = new CustomsAutonomyKeywordPM();
-        //    //this.EntityPM.Tenant = SessionLocator.Tenant;
-
-        //}
     }
 
 
@@ -93,8 +87,6 @@ export class AutonomyKeywordComponent
     public set WarningMessage(newValue: string) {
         this._WarningMessage = newValue;
     }
-
-
 
     public get KeywordsList() {
         if (this.EntityPM == null) {
@@ -106,38 +98,14 @@ export class AutonomyKeywordComponent
         this.EntityPM.KeywordsList = newValue;
     }
 
-
     _SelectedKeywordtypeCode: String;
+
     KeywordtypeCodeClicked(SelectKeywordtypeCode_Key) {
         this._SelectKeywordtypeCode_Key = SelectKeywordtypeCode_Key;
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-        this._CustomsAutonomyKeywordExtendedPMService.getByKeywordtypeCode(SelectKeywordtypeCode_Key, SessionLocator.Tenant)
-            .subscribe((serviceResponse: ServiceResponse) => {
-
-                SessionLocator.SelectedSession.StopBusyIndicator();
-                this.EntityPM = serviceResponse.Result as CustomsAutonomyKeywordPM;
-                if (this.EntityPM == null) {
-                    this.isNewRecord = true;
-                    this.EntityPM = new CustomsAutonomyKeywordPM();
-                    this.EntityPM.Id = "new";
-                    this.EntityPM.Tenant = SessionLocator.Tenant;
-                    this.EntityPM.MarkAsDirty();
-                } else {
-                    this.isNewRecord = false;
-                }
-                
-                this.EntityPM.KeywordtypeCode = this._SelectKeywordtypeCode_Key;
-                this.UIProperties.SetEnabled("KeywordsList", this.ObjectTableName, true);
-
-
-            });
+        this.EntityPM.KeywordtypeCode = this._SelectKeywordtypeCode_Key;
     }
 
-
-    //#endregion\
-
     OkButtonClicked() {
-
         var errors = [];
         if (this.EntityPM == null) {
             errors.push("אנא בחר קוד מילות מפתח");
