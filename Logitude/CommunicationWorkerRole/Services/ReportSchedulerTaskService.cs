@@ -32,18 +32,40 @@ namespace CommunicationWorkerRole.Services
 {
     public class ReportSchedulerTaskService
     {
+        int trackerCounter = 0;
+        string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
+        {
+            {"Prepare report scheduler details", null},
+            {"Get report filters", null},
+            {"Build Report Data Provider and get stimul report", null},
+            {"Export pdf report", null},
+            {"Stored pdf report in Blob", null},
+            {"Send email to reciepents", null},
+        };
         public ReportSchedulerTaskService()
         {
         }
 
         public void SendPdfReportToReceipent(TasksSchedulerPM reportTask)
         {
-            SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
-            reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
-            ReportFliter reportFilter = GetReportFilters(reportTask, schedulerDetails);
-            StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
-            string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-            SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+            try
+            {
+                SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
+                reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
+                ReportFliter reportFilter = GetReportFilters(reportTask, schedulerDetails);
+                StiReport stiReport = GetStimulReportByReportFilter(reportFilter);
+                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
+                SendHtmlDocument(documentId, schedulerDetails.ReportDetails.Recepients, reportTask);
+            }
+            catch (Exception ex)
+            {
+                string logsMessage = this.GetAllTaskLogs();
+                string errorMessage = new StringBuilder().Append(logsMessage).AppendLine().ToString();
+                errorMessage += new StringBuilder().Append("Exception Message: ").AppendLine().Append(ex.Message).AppendLine().ToString();
+                errorMessage += new StringBuilder().Append("Stack Trace:").AppendLine().Append(ex.StackTrace).AppendLine().ToString();
+
+                throw new Exception(errorMessage);
+            }
         }
 
         private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
@@ -51,16 +73,19 @@ namespace CommunicationWorkerRole.Services
             SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(reportTask.SchedulerDetailsXML);
             schedulerDetails.Tenant = reportTask.Tenant;
             schedulerDetails = ModifyNullFilters(schedulerDetails);
+
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
             return schedulerDetails;
         }
 
         private SchedulerDetails ModifyNullFilters(SchedulerDetails schedulerDetails)
         {
-            schedulerDetails.ReportDetails.ReportFilterItems.ForEach(filterItem=> {
-                if(filterItem.FieldValue.GetType().Name == "XmlNode[]")
+            schedulerDetails.ReportDetails.ReportFilterItems.ForEach(filterItem => {
+                if (filterItem.FieldValue.GetType().Name == "XmlNode[]")
                     filterItem.FieldValue = null;
             });
-           
+
             return schedulerDetails;
         }
 
@@ -79,6 +104,9 @@ namespace CommunicationWorkerRole.Services
                 tenant = schedulerDetails.Tenant,
                 ReportCode = reportCode
             };
+
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
             return reportFilter;
         }
 
@@ -90,6 +118,9 @@ namespace CommunicationWorkerRole.Services
                 ReportHelper reportHelper = new ReportHelper();
                 stiReport = reportHelper.GetStimulReportByReportFilter(reportFilter);
             }
+
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
             return stiReport;
         }
 
@@ -98,6 +129,9 @@ namespace CommunicationWorkerRole.Services
             string documentId = String.Empty;
             MemoryStream memoryStream = new MemoryStream();
             stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
+
             if (memoryStream != null)
             {
                 documentId = CreateDocument(reportName, tenant, memoryStream);
@@ -125,6 +159,8 @@ namespace CommunicationWorkerRole.Services
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
             StoredDocumentInBlob(document, tenant, ByteData);
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
 
             return document.Id;
         }
@@ -144,7 +180,6 @@ namespace CommunicationWorkerRole.Services
             storageservice.Write(ByteData, fileInfo);
         }
 
-
         private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
         {
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
@@ -152,6 +187,8 @@ namespace CommunicationWorkerRole.Services
             Byte[] htmlData = enc.GetBytes("");
             string reportTableId = GetReportTableId(reportTask.Tenant);
             htmlEditorHelper.SendHtmlDocument(htmlData, null, null, reportTask.Tenant, recepients.To, reportTask.Name, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
+            this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+            this.trackerCounter += 1;
         }
 
         private string GetReportTableId(int tenant)
@@ -159,6 +196,32 @@ namespace CommunicationWorkerRole.Services
             ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
             string reportId = objectTableQuery.GetObjectTableIdByName("Report");
             return reportId;
+        }
+
+        private string GetAllTaskLogs()
+        {
+            string logsMessage = "";
+            int trackerLogsCount;
+
+            for (trackerLogsCount = 0; trackerLogsCount < this.trackerLogs.Length / 2; trackerLogsCount++)
+            {
+                if (this.trackerLogs[trackerLogsCount, 1] != null)
+                {
+                    logsMessage += new StringBuilder().Append(this.trackerLogs[trackerLogsCount, 1]).Append(" : ").Append(this.trackerLogs[trackerLogsCount, 0]).Append(" ... Done ").AppendLine().ToString();
+                }
+                else
+                {
+                    logsMessage += new StringBuilder().Append(DateTime.Now.ToString()).Append(" : ").Append(this.trackerLogs[trackerLogsCount, 0]).Append(" ... Failed ").AppendLine().ToString();
+                    break;
+                }
+            }
+
+            for (int i = trackerLogsCount + 1; i < this.trackerLogs.Length / 2; i++)
+            {
+                logsMessage += new StringBuilder().Append("    \t...\t    : ").Append(this.trackerLogs[i, 0]).Append(" ... Stopped").AppendLine().ToString();
+            }
+
+            return logsMessage;
         }
     }
 }
