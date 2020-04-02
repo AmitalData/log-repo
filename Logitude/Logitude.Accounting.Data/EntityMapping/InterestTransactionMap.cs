@@ -52,6 +52,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.InterestReportId).HasColumnName("InterestReportId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
+
+            this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
         }
     }
 }

@@ -58,6 +58,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string JournalId  { get; set; }
        [DataMember]
        public string AccountEntityCode  { get; set; }
+       [DataMember]
+       public bool IsCancelled  { get; set; }
    }
 
 }

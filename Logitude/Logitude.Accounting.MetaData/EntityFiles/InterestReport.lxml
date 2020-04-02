@@ -60,9 +60,7 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false"
-  DxmlDatabaseTypeCode="Main"
-  DxmlDatabaseSchemaCode="dbo">
+  IsTabsHidden="false">
   <field
     Id="&quot;53b0cb37-5b0d-49f8-afd7-5f50ee955545&quot;"
     FieldName="&quot;Id&quot;"
@@ -2345,12 +2343,6 @@
       Code="&quot;InterestReport.O.Customerisnotdefined&quot;"
       DefaultText="&quot;Customer is not defined to interest&quot;"
       LocalDefaultText="&quot;לקוח לא מוגדר לריבית&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.O.NewInterestBases&quot;"
-      DefaultText="&quot;New Interest Bases&quot;"
-      LocalDefaultText="&quot;חדש  בסיס ריבית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

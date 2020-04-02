@@ -134,6 +134,11 @@ export class InterestTransactionPM {
     public set AccountEntityCode(newValue: string) { if (this.accountEntityCode != newValue) { this.accountEntityCode = newValue; this.MarkAsDirty("AccountEntityCode"); } }
        
 	 
+    private isCancelled: boolean;
+    public get IsCancelled() { return this.isCancelled; }
+    public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
+       
+	 
 
     public OldEntityPM: InterestTransactionPM;
 		
