@@ -136,7 +136,7 @@ export class CustomerActivationComponent extends BaseComponent {
         }
         else {
             var countryListService: CountryListService = new CountryListService();
-            countryListService.getSingleFromCache(this.CountryId_Potential).subscribe(myResult => {
+            countryListService.getSingleFromCache(this.CountryId_Potential).subscribe((myResult:any) => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: CountryList = myResponse.Result;
@@ -513,7 +513,7 @@ export class CustomerActivationComponent extends BaseComponent {
             this.CurrentSession.StartBusyIndicatorSaving();
         }
 
-        this.customerService.update(this.EntityPM).subscribe(myResult => {
+        this.customerService.update(this.EntityPM).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 if (msg == "Activated") {

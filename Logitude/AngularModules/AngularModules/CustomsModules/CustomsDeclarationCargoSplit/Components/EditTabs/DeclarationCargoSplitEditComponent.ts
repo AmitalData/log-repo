@@ -39,7 +39,7 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
         this.BuildTabs();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
            // this._IsLoaded = true;
             /// alert("this._IsLoaded");
         });

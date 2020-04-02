@@ -32,7 +32,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
 
         this.entityPMService = new TenantPMService();
 
-        entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(res => {
+        entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((res:any) => {
             this.GetDemoMessageVisibility();
 
             this.entityPMService.get(SessionLocator.TenantPM.Id).subscribe((myResponse: ServiceResponse) => {

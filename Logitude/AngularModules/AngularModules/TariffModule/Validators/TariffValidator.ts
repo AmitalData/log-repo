@@ -97,7 +97,7 @@ export class TariffValidator {
                 var chargresType = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0];
                 if (!DuplicatedChargesIds.includes(this.entityPM[chargresType + ""])) {
                     DuplicatedChargesIds.push(this.entityPM[chargresType + ""]);
-                    this.chargesTypePMService.getSingleFromCache(this.entityPM[chargresType + ""]).subscribe(res => {
+                    this.chargesTypePMService.getSingleFromCache(this.entityPM[chargresType + ""]).subscribe((res:any) => {
                         if (!res.HasError) {
                             var chargesTypeList: ChargesTypeList = res.Result;
                             if (res) {
@@ -184,7 +184,7 @@ export class TariffValidator {
                 var packageType = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0];
                 if (!DuplicatedContainersIds.includes(this.entityPM[packageType + ""])) {
                     DuplicatedContainersIds.push(this.entityPM[packageType + ""]);
-                    this.packageTypeListService.getSingleFromCache(this.entityPM[packageType + ""]).subscribe(res => {
+                    this.packageTypeListService.getSingleFromCache(this.entityPM[packageType + ""]).subscribe((res:any) => {
                         if (!res.HasError) {
                             var packageTypeList: PackageTypeList = res.Result;
                             if (packageTypeList) {

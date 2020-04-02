@@ -67,7 +67,7 @@ export class RemoveTasksButtonListTemplate {
         //if (SessionLocator.PrivateLableSettings) {
         //    this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
         //    if (SessionLocator.PrivateLableSettings) {
-        //        this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
+        //        this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res:any) => {
         //            if (res.Result == false) {
         //                this.HasSharedDocs = false;
         //            }
@@ -77,7 +77,7 @@ export class RemoveTasksButtonListTemplate {
         //this.fieldName = fieldName;
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
-        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
+        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
         //        this.Source = "data:image/JPEG;base64," + myResult;
         //        this.CD.detectChanges(); 
         //    });
@@ -92,7 +92,7 @@ export class RemoveTasksButtonListTemplate {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Loading ..")
-                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe(myResult => {
+                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         this.CurrentSession.StopBusyIndicator();
                         this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
@@ -112,7 +112,7 @@ export class RemoveTasksButtonListTemplate {
     EditButtonClicked() {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();
@@ -176,7 +176,7 @@ export class RemoveTasksButtonListTemplate {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         //this.CurrentSession.SessionEvent.emit("DisableBusyIndicator");
         //this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe((AdditionalResult:any) => {
                     //this.CurrentSession.StopBusyIndicator();

@@ -155,7 +155,7 @@ export class NewTaskComponent extends BaseComponent implements OnInit {
     }
 
     AddCustomerClicked() {
-        this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
             this.entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response1 => {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "New Potential Customer";

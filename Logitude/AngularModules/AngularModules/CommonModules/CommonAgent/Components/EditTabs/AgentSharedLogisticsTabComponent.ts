@@ -41,7 +41,7 @@ export class AgentSharedLogisticsTabComponent extends BaseComponent {
     StatusName: string = "";
     LoadAgentSharedLogisticsKey() {
         this.CurrentSession.StartBusyIndicator("Loading...");
-        this._agentSharedLogisticsKeyPMService.GetSingle(this.EntityPM.AgentSharedLogisticsKey).subscribe(res => {
+        this._agentSharedLogisticsKeyPMService.GetSingle(this.EntityPM.AgentSharedLogisticsKey).subscribe((res:any) => {
 
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
@@ -113,7 +113,7 @@ export class AgentSharedLogisticsTabComponent extends BaseComponent {
         this.agentSharedLogisticsKey.InactiveByUserEmail = SessionLocator.LoggedUserPM.Email;
         this.agentSharedLogisticsKey.InactiveDate = DateTool.GetCurrentDateTimeAsUtc();
         this.CurrentSession.StartBusyIndicator("Saving...");
-        this._agentSharedLogisticsKeyPMService.update(this.agentSharedLogisticsKey, this.EntityPM.Id, false).subscribe(res => {
+        this._agentSharedLogisticsKeyPMService.update(this.agentSharedLogisticsKey, this.EntityPM.Id, false).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
             if (!res.HasError) {
                 this.agentSharedLogisticsKey = res.Result;

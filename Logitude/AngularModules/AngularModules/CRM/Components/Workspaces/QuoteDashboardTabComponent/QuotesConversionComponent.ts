@@ -36,7 +36,7 @@ export class QuotesConversionComponent implements OnInit {
         this.dashboardArgs = new QuoteDashboardArguments();
         this.dashboardService = new DashboardService();
 
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             this.FillDashboardArgs();
             this.LoadDashboardData();
         });

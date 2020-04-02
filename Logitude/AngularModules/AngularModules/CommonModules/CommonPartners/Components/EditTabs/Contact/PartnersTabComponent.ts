@@ -69,7 +69,7 @@ export class PartnersTabComponent {
                         this.CardService = new CardPMService();
                     }
 
-                    this.CardService.update(item).subscribe(myResult => {
+                    this.CardService.update(item).subscribe((myResult:any) => {
 
                     });
                 }

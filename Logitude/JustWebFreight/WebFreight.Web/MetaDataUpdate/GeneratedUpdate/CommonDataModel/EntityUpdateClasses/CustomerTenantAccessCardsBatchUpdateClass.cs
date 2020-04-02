@@ -836,17 +836,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable CustomerTenantAccessCardsBatchObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerTenantAccessCardsBatch" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomerTenantAccessCardsBatchObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerTenantAccessCardsBatch").ToList();
-		       
-	      
-
-	         Screen CustomerTenantAccessCardsBatchCustomerTenantAccessCardsBatchHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerTenantAccessCardsBatch.HeaderScreen", Name = "CustomerTenantAccessCardsBatchHeaderScreen", ObjectTableId = CustomerTenantAccessCardsBatchObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    CustomerTenantAccessCardsBatchObjectTable.HeaderScreenId = CustomerTenantAccessCardsBatchCustomerTenantAccessCardsBatchHeaderScreenScreen0.Id;
-		    CustomerTenantAccessCardsBatchObjectTable.HeaderScreenCode = CustomerTenantAccessCardsBatchCustomerTenantAccessCardsBatchHeaderScreenScreen0.Code;
-
-	   		  
 
 	    }
 

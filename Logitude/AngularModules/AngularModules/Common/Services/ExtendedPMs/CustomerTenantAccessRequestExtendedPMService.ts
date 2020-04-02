@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -20,10 +21,10 @@ import {CustomerTenantAccessRequestPM} from '../../EntityPMs/CustomerTenantAcces
 @Injectable()
 
 export class CustomerTenantAccessRequestExtendedPMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomerTenantAccessRequestExtended';      
     }
 
@@ -34,10 +35,8 @@ export class CustomerTenantAccessRequestExtendedPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 		
 		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response.json();
+                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var pm = response;
                     
 					
                     var entity: CustomerTenantAccessRequestPM;
@@ -51,7 +50,7 @@ export class CustomerTenantAccessRequestExtendedPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 
@@ -76,9 +75,8 @@ export class CustomerTenantAccessRequestExtendedPMService {
                     var mappedEntity: CustomerTenantAccessRequestPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((res) => {
-                            var pm = res.json();
+				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                            var pm = res;
 							if(pm)
 							{
                                var mappedResult:  CustomerTenantAccessRequestPM;
@@ -90,7 +88,7 @@ export class CustomerTenantAccessRequestExtendedPMService {
                             
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
@@ -127,9 +125,8 @@ export class CustomerTenantAccessRequestExtendedPMService {
                     var mappedEntity: CustomerTenantAccessRequestPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((res) => {
-                            var pm = res.json();
+				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                            var pm = res;
 							if(pm)
 							{
                                var mappedResult:  CustomerTenantAccessRequestPM;
@@ -140,7 +137,7 @@ export class CustomerTenantAccessRequestExtendedPMService {
                            
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 

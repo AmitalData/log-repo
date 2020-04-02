@@ -115,7 +115,7 @@ export class EditAccountingPeriodComponent extends BaseComponent {
     }
 
     SubmitChanges() {
-        this.accountingPeriodPMService.update(this.EntityPM).subscribe(myResult => {
+        this.accountingPeriodPMService.update(this.EntityPM).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.CurrentSession.CloseCurrentWindowEmit("ok");

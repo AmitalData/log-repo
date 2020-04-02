@@ -474,4 +474,6 @@
     Columns="DisplayNumber" />
   <UniqueConstraint
     Columns="DisplayNumber,Tenant" />
+  <UniqueConstraint
+    Columns="Tenant,InternalNumber" />
 </Table>

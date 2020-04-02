@@ -175,7 +175,7 @@ export class DetectUserInActivity {
     IsStopTimer: boolean = false;
     StartWarningTimeTimer(viewModeil:any) {
 
-        this.WarningTimesub = this.WarningTimeTimer().subscribe(res => {
+        this.WarningTimesub = this.WarningTimeTimer().subscribe((res:any) => {
 
             if (!this.IsStopTimer) {
                 if (viewModeil.messageWindow) {

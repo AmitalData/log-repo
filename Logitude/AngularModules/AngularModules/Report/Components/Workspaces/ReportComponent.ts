@@ -214,7 +214,7 @@ export class ReportComponent {
     //LoadReportsRunUsingWR(groupList: ReportGroupList, reportList: ReportList) {
        
     //    var myService = new ReportService();
-    //      myService.GetCheckIfReportsRunUsingWR().subscribe(res => {
+    //      myService.GetCheckIfReportsRunUsingWR().subscribe((res:any) => {
     //        var pmResponse: ServiceResponse = res;
     //        if (!pmResponse.HasError) {
     //            this.ReportsRunUsingWR = pmResponse.Result;
@@ -248,7 +248,7 @@ export class ReportComponent {
     }
 
     onReportSchedulerClick(groupList: ReportGroupList, reportList: ReportList) {
-        this.entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe((response:any) => {
 
             var windowArgs: any = {};
             windowArgs.ReportGroupList = groupList;

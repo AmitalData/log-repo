@@ -49,7 +49,7 @@ export class InviteCustomersComponent implements OnInit {
     LoadData() {
 
         this.SharedLogisticCustomerLineList = [];
-        this._sharedLogisticContactService.getSharedLogisticContactsbyCardId(this.CurrentEntity.Id,SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._sharedLogisticContactService.getSharedLogisticContactsbyCardId(this.CurrentEntity.Id,SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
 
@@ -72,7 +72,7 @@ export class InviteCustomersComponent implements OnInit {
     SaveChanges(item: SharedLogisticContactPM) {
         this.sharedLogisticContact = item;
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-        this._sharedLogisticContactService.ContactInternetAccessInvitation(this.sharedLogisticContact).subscribe(res => {
+        this._sharedLogisticContactService.ContactInternetAccessInvitation(this.sharedLogisticContact).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -160,7 +160,7 @@ export class InviteCustomersComponent implements OnInit {
 
 
     ShowAddEditContactWindow(itemComponent: ContactItemClass, title: string) {
-        this._entityResourceService.getEntityResourceByTableName("Contact").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Contact").subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;

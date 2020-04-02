@@ -1,5 +1,6 @@
-﻿import {Injectable, } from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable, } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -11,10 +12,10 @@ export class CommunicationLogStepListService {
 
 
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommunicationLogStep';
     }
 
@@ -24,13 +25,13 @@ export class CommunicationLogStepListService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '?logId=' + logId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '?logId=' + logId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     
@@ -41,15 +42,13 @@ export class CommunicationLogStepListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
         return this._http.get(
-            this._apiUrl + '/GetCommunicationLogStepsRequestParamResponseData/' + '?mainInterfaceCode=' + mainInterfaceCode + '&logId=' + logId + '&tenant=' + tenant,
-            { headers: authHeader }
-        ).map(response => {
+            this._apiUrl + '/GetCommunicationLogStepsRequestParamResponseData/' + '?mainInterfaceCode=' + mainInterfaceCode + '&logId=' + logId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     GetExportExcelByLogId(mainInterfaceCode: string, logId: string, tenant: number) {
@@ -57,30 +56,26 @@ export class CommunicationLogStepListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
         return this._http.get(
-            this._apiUrl + '/GetExportExcelByLogId/' + '?mainInterfaceCode=' + mainInterfaceCode + '&logId=' + logId + '&tenant=' + tenant,
-            { headers: authHeader }
-        ).map(response => {
+            this._apiUrl + '/GetExportExcelByLogId/' + '?mainInterfaceCode=' + mainInterfaceCode + '&logId=' + logId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
     GetExportExcelByRequestId(mainInterfaceCode: string, requestId: string, tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
         return this._http.get(
-            this._apiUrl + '/GetExportExcelByRequestId/' + '?mainInterfaceCode=' + mainInterfaceCode + '&requestId=' + requestId + '&tenant=' + tenant,
-            { headers: authHeader }
-        ).map(response => {
+            this._apiUrl + '/GetExportExcelByRequestId/' + '?mainInterfaceCode=' + mainInterfaceCode + '&requestId=' + requestId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
     GetCommunicationLogStepsDocumentDataBystringStepFilter(mainInterfaceCode: string, communicationLogId: string, tenant: number, stepFilter: Array<number>, suppressHugeData?: boolean) {
         var authHeader = new Headers();
@@ -100,14 +95,13 @@ export class CommunicationLogStepListService {
             //GetCommunicationLogStepsDocumentDataBystringStepFilter(string mainInterfaceCode, string communicationLogId, int tenant, string stringStepFilter)
             this._apiUrl + '/GetCommunicationLogStepsDocumentDataBystringStepFilter/' + '?mainInterfaceCode=' + mainInterfaceCode + '&communicationLogId=' + communicationLogId + '&tenant=' + tenant + '&stringStepFilter=' + $stepFilter + "&suppressHugeData=" + suppressHugeDataValue,
 
-            { headers: authHeader }
-        ).map(response => {
+             ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -127,14 +121,13 @@ export class CommunicationLogStepListService {
             //tenant: number,                 InterfaceTypeCode: string,                  RequestStatusCode: string,                  ObjectTableId2: string,               EntityId2: string
             '?tenant=' + tenant.toString() + '&InterfaceTypeCode=' + InterfaceTypeCode + '&RequestStatusCode=' + RequestStatusCode + '&ObjectTableId2=' + ObjectTableId2 + '&EntityId2=' + encodeURIComponent(EntityId2),
 
-            { headers: authHeader }
-        ).map(response => {
+             ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 

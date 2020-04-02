@@ -519,7 +519,7 @@ export class OpportunityWorkspaceComponent extends BaseComponent {
     public MyOpenCount: number;
     public OpenByStageCount: number;
     private LoadQueriesCounts() {
-        this.myDomainService.GetOpportunitiesSummary(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myDomainService.GetOpportunitiesSummary(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: CRMSummary = myResponse.Result;
@@ -536,7 +536,7 @@ export class OpportunityWorkspaceComponent extends BaseComponent {
     public RecentOpportunitiesCount: number = 0;
     public RecentOpportuntiesList: OpportunityList[] = [];
     private LoadRecentOpportunities() {
-        this.myDomainService.GetRecentOpportunities(null, null).subscribe(myResult => {
+        this.myDomainService.GetRecentOpportunities(null, null).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.RecentOpportuntiesList = [];
                 this.RecentOpportunitiesCount = 0;
@@ -635,7 +635,7 @@ export class OpportunityWorkspaceComponent extends BaseComponent {
         }
 
         var myService: OpportunityListService = new OpportunityListService();
-        myService.getByFilters(filters).subscribe(myResult => {
+        myService.getByFilters(filters).subscribe((myResult:any) => {
             if (myResult != null) {
 
                 var myResponse: ServiceResponse = myResult;

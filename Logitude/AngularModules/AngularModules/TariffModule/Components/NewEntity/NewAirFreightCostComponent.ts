@@ -63,7 +63,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     private GetBCNTMeasurementId() {
         if (this.EntityPM.TypeCode == "OFS") {
             var commonDomainService: CommonDomainService = new CommonDomainService();
-            commonDomainService.GetMeasurementIdByCode("BCNT").subscribe(res => {
+            commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.BCNTmeasurementId = res.Result;
@@ -594,7 +594,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
     SetDefaultUOM(index: number) {
         if (this.EntityPM.TypeCode != "OFS") {
-            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe(res => {
+            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         var ChargesType: ChargesTypeList = res.Result;
@@ -640,7 +640,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                 var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
                 if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
                     DuplicatedChargesIds.push(this[chargresType + ""]);
-                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
+                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe((res:any) => {
                         if (!res.HasError) {
                             var chargesTypeList: ChargesTypeList = res.Result;
                             if (res) {
@@ -727,7 +727,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                 var comparedContainer = "ContainerType" + firstIndex + "Id";
                 var targetContainer = "ContainerType" + secondIndex + "Id";
                 if (this[comparedContainer] != null && this[comparedContainer] == this[targetContainer]) {
-                    this.packageTypeListService.getSingleFromCache(this[targetContainer + ""]).subscribe(res => {
+                    this.packageTypeListService.getSingleFromCache(this[targetContainer + ""]).subscribe((res:any) => {
                         if (!res.HasError) {
                             var packageTypeList: PackageTypeList = res.Result;
                             if (res) {

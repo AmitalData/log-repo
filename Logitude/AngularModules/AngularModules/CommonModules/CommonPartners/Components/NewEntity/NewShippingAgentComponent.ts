@@ -56,7 +56,7 @@ export class NewShippingAgentComponent {
     }
 
     LoadChildComponent() {
-        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe((response:any) => {
             this._entityResourceService.getEntityResourceByTableName("Customer").subscribe(response2 => {
                 SessionLocator.DynamicLoader.Load("./CommonModules/CommonPartners/Components/Templates/NewPartnerTamplate", this.viewContainerRef)
                     .then(cmpRef => {

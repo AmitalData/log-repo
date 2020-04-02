@@ -146,7 +146,7 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
                    
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                  
-                    this.AccountingEntegrityCheckExtendedPMService.PostFixEntegrityCheckErrorInBatch(this.entityPM).subscribe(myResult => {
+                    this.AccountingEntegrityCheckExtendedPMService.PostFixEntegrityCheckErrorInBatch(this.entityPM).subscribe((myResult:any) => {
                    
                         this.CurrentSession.StopBusyIndicator();
                         

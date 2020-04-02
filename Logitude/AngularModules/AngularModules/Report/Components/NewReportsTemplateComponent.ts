@@ -157,7 +157,7 @@ export class NewReportsTemplateComponent implements OnInit {
           
             if (this.NewReportTypeRadioChoice == "FromFile" && this.TemplateType == "M") {
 
-                this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.TemplateData).subscribe(res => {
+                this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.TemplateData).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;

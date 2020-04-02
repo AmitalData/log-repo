@@ -70,7 +70,7 @@ export class NewHybridPartnerComponent extends BaseComponent {
        
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
-            this._HybridPartnerPMService.insert(this.myentityPM).subscribe(myResult => {
+            this._HybridPartnerPMService.insert(this.myentityPM).subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     this.CurrentSession.CloseCurrentWindow();

@@ -55,7 +55,7 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
     Shipment: any;
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseReleasePackage").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseReleasePackage").subscribe((response:any) => {
             this.Initialize(args);
         });
 

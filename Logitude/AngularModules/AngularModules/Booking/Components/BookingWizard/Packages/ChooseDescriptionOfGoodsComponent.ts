@@ -62,7 +62,7 @@ export class ChooseDescriptionOfGoodsComponent extends BaseComponent {
         }
 
         var myService: AWBDescriptionOfGoodsListService = new AWBDescriptionOfGoodsListService();
-        myService.getByFilters(filters).subscribe(myResult => {            
+        myService.getByFilters(filters).subscribe((myResult:any) => {            
             if (myResult == null) {
                 this.ItemsSource = [];
             }

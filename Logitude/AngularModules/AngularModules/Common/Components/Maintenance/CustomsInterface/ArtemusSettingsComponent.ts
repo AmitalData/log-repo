@@ -46,7 +46,7 @@ export class ArtemusSettingsComponent extends BaseComponent {
         }
     }
     private Load(id: string, code: string) {
-        this.myFTPService.get(id).subscribe(myResult => {
+        this.myFTPService.get(id).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {

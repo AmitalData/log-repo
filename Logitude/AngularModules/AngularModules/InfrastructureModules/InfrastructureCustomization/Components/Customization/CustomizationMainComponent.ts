@@ -98,7 +98,7 @@ export class CustomizationMainComponent {
     StandardFieldsClicked() {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
         if (table != null) {          
-        this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response:any) => {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Standard Fields: " + this.selectedRow.DefaultText;
         logWindow.IsFillScreen_115 = true;
@@ -112,7 +112,7 @@ export class CustomizationMainComponent {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
 
         if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response:any) => {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Object Labels: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen = true;
@@ -126,7 +126,7 @@ export class CustomizationMainComponent {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
 
         if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response:any) => {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Screens Layout: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen = true;
@@ -140,7 +140,7 @@ export class CustomizationMainComponent {
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
 
         if (table != null) {
-            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName(table.Name, 0).subscribe((response:any) => {
                 var logWindow = new LogitudeWindow();
                 logWindow.Title = "Custom Fields: " + this.selectedRow.DefaultText;
                 logWindow.IsFillScreen_115 = true;

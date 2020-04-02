@@ -80,7 +80,7 @@ export class ResetUserPasswordComponent extends BaseComponent implements OnInit 
   
 
     SendResetRequist() {
-        this._passwordChangeService.ResetUserPassword(this.UserId,  SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._passwordChangeService.ResetUserPassword(this.UserId,  SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
 
 

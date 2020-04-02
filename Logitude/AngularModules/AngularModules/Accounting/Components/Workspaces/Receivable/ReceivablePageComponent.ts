@@ -336,7 +336,7 @@ export class ReceivablePageComponent {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveCustomersCount = myResult.ActiveCustomersCount > 1000 ? "1000+" : myResult.ActiveCustomersCount.toString();
                 this.glAccountSummary.InactiveCustomersCount = myResult.InactiveCustomersCount > 1000 ? "1000+" : myResult.InactiveCustomersCount.toString();
@@ -349,7 +349,7 @@ export class ReceivablePageComponent {
         // ARPayments
 
         var myService = new ModulesService();
-        myService.GetAccountingReceivablesSummary().subscribe(myResult => {
+        myService.GetAccountingReceivablesSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.ARInvoicesDraftsCount = myResult.ARInvoicesDraftsCount > 1000 ? "1000+" : myResult.ARInvoicesDraftsCount.toString();
                 this.ARInvoicesUnpaidCount = myResult.ARInvoicesUnpaidCount > 1000 ? "1000+" : myResult.ARInvoicesUnpaidCount.toString();

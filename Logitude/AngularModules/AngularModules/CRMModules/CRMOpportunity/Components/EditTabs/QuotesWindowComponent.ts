@@ -51,7 +51,7 @@ export class QuotesWindowComponent extends BaseComponent {
             filters.addAdditionalFilter("NotConnectedOpportunity", true, null, null, "Equals", true, true, false, "string");
             filters.addAdditionalFilter("SearchFields", SearchedValue, null, null, "Contains", false, false, false, "string");
 
-            this.quoteListService.getByFilters(filters).subscribe(result => {
+            this.quoteListService.getByFilters(filters).subscribe((result:any) => {
                 var QuoteList: Array<QuoteList> = result.Result.reverse();
                 if (QuoteList.length == 0)
                     this.NoConnectedQuotes = true;

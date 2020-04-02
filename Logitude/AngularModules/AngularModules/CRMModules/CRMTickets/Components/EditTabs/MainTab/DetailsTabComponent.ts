@@ -380,7 +380,7 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
     set SeverityId(newValue: string) {
         if (this.Trigger.EntityPM.SeverityId != newValue) {
             this.Trigger.EntityPM.SeverityId = newValue;
-            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe(result => {
+            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe((result:any) => {
                 var severity: TicketSeverityList = result.Result;
                 if (severity != null)
                     this.Trigger.EntityPM.SeverityName = severity.Name;
@@ -594,7 +594,7 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
     AddButtonClicked() {
         var path = './Quote/ComponentsNewEntity/NewQuoteComponent';
         var windowTitle = "New Quote";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             var args = new NewQuoteComponentArgs();
             args.IsCreatedFromTicket = true;

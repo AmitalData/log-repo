@@ -71,7 +71,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
     ) {
 
-        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease", 0).subscribe((response:any) => {
 
             if (this.entityArgs.EntityPM) {
                 this.InitializeEditWarehouseRelease();
@@ -145,7 +145,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
             else if (!AppTool.IsNullOrEmpty(this.warehouseReleasePM.ShipmentId)) {
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe(res => {
+                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe((res:any) => {
                     var shipResponse: ServiceResponse = res;
                     this.CurrentSession.StopBusyIndicator();
                     if (!shipResponse.HasError) {

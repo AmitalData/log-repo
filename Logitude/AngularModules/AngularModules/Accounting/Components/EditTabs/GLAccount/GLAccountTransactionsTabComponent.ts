@@ -474,7 +474,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
         filters.PageSize = 10000;
         filters.addAdditionalFilter("AccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        this.ledgerTransactionListService.getByFilters(filters).subscribe(myResult => {
+        this.ledgerTransactionListService.getByFilters(filters).subscribe((myResult:any) => {
             console.log("Response: ", myResult);
             if (myResult == null) {
                 this.ItemsSource = [];
@@ -617,7 +617,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     reconciliationCount: number = 0;
     GetNonReconciledTransactionsCount() {
-        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe(myResult => {
+        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe((myResult:any) => {
             this.reconciliationCount = 0;
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
@@ -918,7 +918,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
 
-        this._CurrencyListService.getAll().subscribe(myResult => {
+        this._CurrencyListService.getAll().subscribe((myResult:any) => {
             console.log("Currencies: ", myResult);
             if (myResult == null) {
                 this.Currencies = [];
