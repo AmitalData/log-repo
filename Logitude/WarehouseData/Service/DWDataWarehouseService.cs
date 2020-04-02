@@ -213,6 +213,17 @@ namespace WarehouseData.Service
 
                     break;
 
+                case "ARInvoices":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "BillToId DEFAULT -1 FOR BillToId";
+
+                    break;
+
+                case "ShipmentPayables":
+
+                    cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "VendorId DEFAULT -1 FOR VendorId";
+
+                    break;
 
                 default:
                     cmd = string.Empty;
