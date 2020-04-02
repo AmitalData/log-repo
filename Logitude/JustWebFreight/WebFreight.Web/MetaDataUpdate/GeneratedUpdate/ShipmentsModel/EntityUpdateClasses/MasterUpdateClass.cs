@@ -25564,6 +25564,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton MasterMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -25581,6 +25583,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MasterFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25599,6 +25603,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MasterFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25617,6 +25623,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB02.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MasterFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25635,6 +25643,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB03.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MasterFeature_MB03.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25653,6 +25663,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25671,6 +25683,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB04.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MasterFeature_MB04.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25689,6 +25703,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25707,6 +25723,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25725,6 +25743,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB05.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MasterFeature_MB05.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25743,6 +25763,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB06.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MasterFeature_MB06.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25761,6 +25783,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB07.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MasterFeature_MB07.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -25779,6 +25803,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						FeatureId=  MasterFeature_MB08.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  MasterFeature_MB08.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

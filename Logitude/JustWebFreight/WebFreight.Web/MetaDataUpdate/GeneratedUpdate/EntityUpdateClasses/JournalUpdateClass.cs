@@ -3042,6 +3042,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = JournalFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3060,6 +3062,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = JournalFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3078,13 +3082,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = null,
 						FeatureUniqeCode = JournalFeature_MB2.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
 			   MenuButton JournalMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 3, 
 						IsActive = false,
 						LabelTextCodeCode = "Journal.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -3096,6 +3102,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton JournalMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3113,6 +3121,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  JournalFeature_MB30.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  JournalFeature_MB30.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -3131,6 +3141,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  JournalFeature_MB31.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  JournalFeature_MB31.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

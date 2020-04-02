@@ -421,50 +421,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Id",
-					  						ObjectTableName =  "Customs.CustomsBranch",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  6,
-					  						IsRequired =  false,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  6,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Id",
-					  						ListPropertyPath =  "Id",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DisplayInEntityVariables =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Id",
-					  						DefaultText =  "Id",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)

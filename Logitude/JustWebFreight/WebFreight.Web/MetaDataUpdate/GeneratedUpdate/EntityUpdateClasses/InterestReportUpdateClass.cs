@@ -1952,7 +1952,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton InterestReportMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "InterestReport.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -1964,6 +1964,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton InterestReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1981,6 +1983,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  InterestReportFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הדפסה",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  InterestReportFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -1994,8 +1998,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable InterestReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReport" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode InterestReportTextCode_InterestReportOCustomerisnotdefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customerisnotdefined", DefaultText = "Customer is not defined to interest",LocalDefaultText = @"לקוח לא מוגדר לריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode InterestReportTextCode_AccountingGeneralONewInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBases", DefaultText = "New Interest Bases",LocalDefaultText = @"חדש  בסיס ריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InterestReportTextCode_InterestReportOCustomerisnotconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.Customerisnotconnected", DefaultText = "Customer is not connected to GLAccount",LocalDefaultText = "הלקוח לא מחובר לכרטיס הנה''ח", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

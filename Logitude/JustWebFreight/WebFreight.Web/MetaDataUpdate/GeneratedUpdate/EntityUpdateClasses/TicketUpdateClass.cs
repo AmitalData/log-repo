@@ -7991,7 +7991,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton TicketMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "Ticket.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -8003,6 +8003,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TicketMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -8020,6 +8022,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TicketFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TicketFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -8038,6 +8042,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TicketFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TicketFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -8056,6 +8062,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TicketFeature_MB02.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TicketFeature_MB02.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -8074,6 +8082,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TicketFeature_MB03.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TicketFeature_MB03.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

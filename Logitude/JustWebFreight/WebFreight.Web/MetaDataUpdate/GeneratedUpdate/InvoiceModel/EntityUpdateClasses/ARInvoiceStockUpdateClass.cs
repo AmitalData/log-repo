@@ -1401,7 +1401,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceStockMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "ARInvoiceStock.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -1413,6 +1413,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ARInvoiceStockMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1430,6 +1432,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceStockFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceStockFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -1448,6 +1452,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceStockFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceStockFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

@@ -6280,6 +6280,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
 						FeatureUniqeCode = ARPaymentFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -6298,6 +6300,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "הדפסה",
 						FeatureUniqeCode = ARPaymentFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -6316,6 +6320,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = ARPaymentFeature_MB2.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -6334,6 +6340,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ARPaymentMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -6351,6 +6359,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB30.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARPaymentFeature_MB30.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -6369,6 +6379,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB31.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARPaymentFeature_MB31.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -6387,6 +6399,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -6405,6 +6419,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB32.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARPaymentFeature_MB32.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -6423,6 +6439,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB33.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARPaymentFeature_MB33.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -6441,6 +6459,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARPaymentFeature_MB34.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARPaymentFeature_MB34.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

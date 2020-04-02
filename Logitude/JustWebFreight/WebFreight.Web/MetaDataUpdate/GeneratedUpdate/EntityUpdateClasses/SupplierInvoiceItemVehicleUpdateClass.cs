@@ -566,52 +566,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Tenant",
-					  						ObjectTableName =  "Customs.SupplierInvoiceItemVehicle",
-					  						FieldsDataType =  "Integer",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  true,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Tenant",
-					  						ListPropertyPath =  "Tenant",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DisplayInEntityVariables =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Tenant",
-					  						DefaultText =  "Tenant",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "RichbitFileStatus",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemVehicle",
 					  						FieldsDataType =  "nText",

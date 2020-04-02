@@ -2175,6 +2175,10 @@
     <Compile Include="Migrations\202003301401495_missingMigrations30032020.Designer.cs">
       <DependentUpon>202003301401495_missingMigrations30032020.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004011019348_missingmigrations01042020.cs" />
+    <Compile Include="Migrations\202004011019348_missingmigrations01042020.Designer.cs">
+      <DependentUpon>202004011019348_missingmigrations01042020.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
@@ -3946,6 +3950,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003301401495_missingMigrations30032020.resx">
       <DependentUpon>202003301401495_missingMigrations30032020.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004011019348_missingmigrations01042020.resx">
+      <DependentUpon>202004011019348_missingmigrations01042020.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

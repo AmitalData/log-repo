@@ -488,9 +488,10 @@ namespace MetaDataGenerator
 			string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
 			DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
 			string solutionDirectory = solutionDir.FullName;
+            string dir = solutionDirectory + @"\Logitude.Customs.MetaData\EntityFiles\"; //@"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\";
+            DirectoryInfo d = new DirectoryInfo(dir);
 
-			 
-			string dxmlFilesPath = Path.Combine(solutionDirectory);
+            string dxmlFilesPath = Path.Combine(dir);
 			string[] allFiles = Directory.GetFiles(dxmlFilesPath, "*.lxml", SearchOption.AllDirectories);
 			return allFiles;
 		}

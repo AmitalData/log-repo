@@ -901,6 +901,8 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 	   var StyleAttr = MButtonAtt.Attributes().Where(a => a.Name == "Style").FirstOrDefault(); 
 	   var IndexOrder = MButtonAtt.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault() != null ?MButtonAtt.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault().Value:""; 
 	   var FeatureCodeAtt = MButtonAtt.Attributes().Where(a => a.Name == "FeatureCode").FirstOrDefault();
+	   var HtmlComponentPath = MButtonAtt.Attributes().Where(a => a.Name == "HtmlComponentPath").FirstOrDefault() != null ?MButtonAtt.Attributes().Where(a => a.Name == "HtmlComponentPath").FirstOrDefault().Value:"null"; 
+       var Width = MButtonAtt.Attributes().Where(a => a.Name == "Width").FirstOrDefault() != null ?MButtonAtt.Attributes().Where(a => a.Name == "Width").FirstOrDefault().Value:"0"; 
 
 	   	   var LocalDefaultTextAttr = MButtonAtt.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault(); 
 		    string LocalDefaultText  = "null";
@@ -940,8 +942,8 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
                         featureCodeClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".FeatureUniqeCode";
 
         }
-        else
-            IndexOrder = "100";
+        //else
+            //IndexOrder = "100";
  
 #>       
    
@@ -960,6 +962,8 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
 						FeatureUniqeCode = <#=featureCodeClassName #>,
+						HtmlComponentPath = <#=HtmlComponentPath #>,
+						Width = <#=Width.Trim('"') #>,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 <#+
 	   var MenuItems = MButtonAtt.Elements("MenuItem");
@@ -974,6 +978,8 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 	         StyleAttr = item.Attributes().Where(a => a.Name == "Style").FirstOrDefault(); 
 	         IndexOrder = item.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault()!=null?item.Attributes().Where(a => a.Name == "IndexOrder").FirstOrDefault().Value:""; 
 			 var ItemFeatureCodeAtt = item.Attributes().Where(a => a.Name == "FeatureCode").FirstOrDefault();
+	   var itemhtmlComponentPath = item.Attributes().Where(a => a.Name == "HtmlComponentPath").FirstOrDefault() != null ?item.Attributes().Where(a => a.Name == "HtmlComponentPath").FirstOrDefault().Value:"null"; 
+       var ItemWidth = item.Attributes().Where(a => a.Name == "Width").FirstOrDefault() != null ?item.Attributes().Where(a => a.Name == "Width").FirstOrDefault().Value:"0"; 
 
 		    LocalDefaultTextAttr = item.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault(); 
 		    LocalDefaultText  = "null";
@@ -1024,6 +1030,8 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						<#= itemfeatureClassName #>
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
+                        HtmlComponentPath=<#=itemhtmlComponentPath #>,
+                        Width=<#=ItemWidth.Trim('"') #>,
 						<#=itemfeatureCodeClassName#>
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   <#+

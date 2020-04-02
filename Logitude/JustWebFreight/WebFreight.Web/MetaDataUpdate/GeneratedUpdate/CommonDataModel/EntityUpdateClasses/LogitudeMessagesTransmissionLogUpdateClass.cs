@@ -851,7 +851,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "LogitudeMessagesTransmissionLog",
 					  						FieldsDataType =  "Text",
 					  						DataTypeCode =  "Text",
-					  						MaxLength =  60,
+					  						MaxLength =  70,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,

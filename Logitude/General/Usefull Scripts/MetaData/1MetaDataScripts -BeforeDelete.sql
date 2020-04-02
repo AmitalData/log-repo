@@ -48,8 +48,8 @@ update ObjectFields set ListTextCodeCode = (select Code from TextCodes where Id=
 ----Features
 update MenusTables set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=MenusTables.FeatureId) where tenant!=0
 update Queries set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=Queries.FeatureId) where tenant!=0
-update PackageFeatures set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=PackageFeatures.FeatureId) where tenant!=0
-update RoleFeatures set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=RoleFeatures.FeatureId) where tenant!=0
+update PackageFeatures set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=PackageFeatures.FeatureId)
+update RoleFeatures set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=RoleFeatures.FeatureId) 
 update Reports set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=Reports.FeatureId) where tenant!=0
 update ObjectTableTabs set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=ObjectTableTabs.FeatureId) where tenant!=0
 update ObjectTableHelperControls set FeatureUniqeCode = (select FeatureUniqeCode from features where Id=ObjectTableHelperControls.FeatureId) where tenant!=0

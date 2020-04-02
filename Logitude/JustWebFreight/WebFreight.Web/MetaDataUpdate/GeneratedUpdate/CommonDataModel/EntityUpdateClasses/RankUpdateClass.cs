@@ -333,6 +333,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
+		   ObjectTable RankObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Rank" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> RankObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Rank").ToList();
+		       
+	      
+
+	         Screen RankRankHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Rank.HeaderScreen", Name = "RankHeaderScreen", ObjectTableId = RankObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    RankObjectTable.HeaderScreenId = RankRankHeaderScreenScreen0.Id;
+		    RankObjectTable.HeaderScreenCode = RankRankHeaderScreenScreen0.Code;
+
+	   		  
+
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)

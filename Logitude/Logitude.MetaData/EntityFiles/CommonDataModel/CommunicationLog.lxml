@@ -4300,6 +4300,18 @@
       LocalDefaultText="&quot;שגיאה&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CommunicationLogSteps.O.Log&quot;"
+      DefaultText="&quot;Log&quot;"
+      LocalDefaultText="&quot;לוג&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CommunicationLogSteps.O.ShowResponse&quot;"
+      DefaultText="&quot;Response&quot;"
+      LocalDefaultText="&quot;תשובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

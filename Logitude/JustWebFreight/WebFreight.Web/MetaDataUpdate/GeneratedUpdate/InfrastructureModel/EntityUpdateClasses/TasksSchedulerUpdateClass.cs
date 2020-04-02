@@ -2340,6 +2340,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
+		   ObjectTable TasksSchedulerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TasksScheduler" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> TasksSchedulerObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TasksScheduler").ToList();
+		       
+	      
+
+	         Screen TasksSchedulerTasksSchedulerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TasksScheduler.HeaderScreen", Name = "TasksSchedulerHeaderScreen", ObjectTableId = TasksSchedulerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    TasksSchedulerObjectTable.HeaderScreenId = TasksSchedulerTasksSchedulerHeaderScreenScreen0.Id;
+		    TasksSchedulerObjectTable.HeaderScreenCode = TasksSchedulerTasksSchedulerHeaderScreenScreen0.Code;
+
+	   		  
+
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)

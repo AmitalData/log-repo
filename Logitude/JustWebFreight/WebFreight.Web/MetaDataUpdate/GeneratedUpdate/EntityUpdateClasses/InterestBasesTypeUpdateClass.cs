@@ -1012,7 +1012,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton InterestBasesTypeMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "InterestBasesType.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -1024,6 +1024,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton InterestBasesTypeMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -1041,6 +1043,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  InterestBasesTypeFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "חסימה",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  InterestBasesTypeFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

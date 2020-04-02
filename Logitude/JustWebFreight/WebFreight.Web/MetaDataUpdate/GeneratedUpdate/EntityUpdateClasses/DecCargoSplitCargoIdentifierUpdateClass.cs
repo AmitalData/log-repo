@@ -182,58 +182,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Tenant",
-					  						ObjectTableName =  "Customs.DecCargoSplitCargoIdentifier",
-					  						FieldsDataType =  "Integer",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Tenant",
-					  						ListPropertyPath =  "Tenant",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.DecCargoSplitCargoIdentifier",
-					  						DisplayInEntityVariables =  false,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Tenant",
-					  						DefaultText =  "Tenant",
-					  						FullLocalDefaultText =  "Tenant",
-					  						ListFieldLable =  "TenantListLable",
-					  						ListLableDefaultText =  "Tenant",
-					  						ListLocalDefaultText =  "Tenant",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "LineNumber",
 					  						ObjectTableName =  "Customs.DecCargoSplitCargoIdentifier",
 					  						FieldsDataType =  "Integer",

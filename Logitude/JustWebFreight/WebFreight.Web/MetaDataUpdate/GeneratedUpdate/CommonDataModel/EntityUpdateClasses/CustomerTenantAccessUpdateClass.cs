@@ -1637,6 +1637,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = CustomerTenantAccessFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

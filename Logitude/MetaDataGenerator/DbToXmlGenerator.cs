@@ -1361,6 +1361,8 @@ namespace MetaDataGenerator
                             SetAttribute("FeatureDefaultText", GetStringValue(featureTextCode.DefaultText), mBXElement);
                         }
                     }
+                    if (!string.IsNullOrEmpty(mb.HtmlComponentPath))
+                        SetAttribute("HtmlComponentPath", GetStringValue(mb.HtmlComponentPath), mBXElement);
 
                     List<MenuButton> menuButtonItems = this.allMenuButtons.Where(m => m.MenuButtonGroupId == group.Id && m.ParentMenuButtonId == mb.Id).OrderBy(q => q.Index).ToList();
                     int itemIndex = 0;
@@ -1389,6 +1391,8 @@ namespace MetaDataGenerator
                                 SetAttribute("FeatureDefaultText", GetStringValue(featureTextCode.DefaultText), MenuItemElement);
                             }
                         }
+                        if (!string.IsNullOrEmpty(item.HtmlComponentPath))
+                            SetAttribute("HtmlComponentPath", GetStringValue(item.HtmlComponentPath), mBXElement);
 
                         itemIndex++;
                     }

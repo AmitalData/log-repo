@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ShipmentComputedField",
-			      				    Code =  "ad51",
+			      				    Code =  "5cc4",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",

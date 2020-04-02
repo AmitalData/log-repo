@@ -331,6 +331,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
+		   ObjectTable ShipmentLevelObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentLevel" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> ShipmentLevelObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ShipmentLevel").ToList();
+		       
+	      
+
+	         Screen ShipmentLevelShipmentLevelHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentLevel.HeaderScreen", Name = "ShipmentLevelHeaderScreen", ObjectTableId = ShipmentLevelObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ShipmentLevelObjectTable.HeaderScreenId = ShipmentLevelShipmentLevelHeaderScreenScreen0.Id;
+		    ShipmentLevelObjectTable.HeaderScreenCode = ShipmentLevelShipmentLevelHeaderScreenScreen0.Code;
+
+	   		  
+
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
@@ -345,6 +357,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable ShipmentLevelObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentLevel" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentLevelObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentLevelObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)

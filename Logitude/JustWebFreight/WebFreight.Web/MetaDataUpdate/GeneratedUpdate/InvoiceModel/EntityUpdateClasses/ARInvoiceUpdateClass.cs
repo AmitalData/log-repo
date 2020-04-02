@@ -9094,6 +9094,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "שמור כטיוטה",
 						FeatureUniqeCode = ARInvoiceFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -9112,6 +9114,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
 						FeatureUniqeCode = ARInvoiceFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -9130,6 +9134,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "הדפסה",
 						FeatureUniqeCode = ARInvoiceFeature_MB2.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -9148,6 +9154,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = ARInvoiceFeature_MB3.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -9166,6 +9174,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton ARInvoiceMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -9183,6 +9193,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceFeature_MB40.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceFeature_MB40.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -9201,6 +9213,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceFeature_MB41.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceFeature_MB41.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -9219,6 +9233,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -9237,6 +9253,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceFeature_MB42.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceFeature_MB42.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -9255,6 +9273,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceFeature_MB43.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceFeature_MB43.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -9273,6 +9293,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -9291,6 +9313,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceFeature_MB44.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceFeature_MB44.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -9309,6 +9333,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						FeatureId=  ARInvoiceFeature_MB45.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  ARInvoiceFeature_MB45.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

@@ -2220,7 +2220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton TaxReportMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "TRMR",
-						Index = 100, 
+						Index = 0, 
 						IsActive = false,
 						LabelTextCodeCode = "TaxReport.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -2232,6 +2232,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton TaxReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2249,6 +2251,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxReportFeature_MB00.Id,
 						Style = null,
 						LocalDefaultText = "הורדה",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TaxReportFeature_MB00.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -2267,6 +2271,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  TaxReportFeature_MB01.Id,
 						Style = null,
 						LocalDefaultText = "ביטול",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  TaxReportFeature_MB01.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

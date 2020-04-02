@@ -3150,6 +3150,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "שמור כטיוטה",
 						FeatureUniqeCode = PaymentChequeFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -3168,13 +3170,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
 						FeatureUniqeCode = PaymentChequeFeature_MB1.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
 			   MenuButton PaymentChequeMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 2, 
 						IsActive = false,
 						LabelTextCodeCode = "PaymentCheque.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -3186,6 +3190,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton PaymentChequeMenuButton20 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -3203,6 +3209,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB20.Id,
 						Style = null,
 						LocalDefaultText = "הדפסת המחאה",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  PaymentChequeFeature_MB20.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -3221,6 +3229,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  PaymentChequeFeature_MB21.Id,
 						Style = null,
 						LocalDefaultText = "ביטול המחאה",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  PaymentChequeFeature_MB21.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

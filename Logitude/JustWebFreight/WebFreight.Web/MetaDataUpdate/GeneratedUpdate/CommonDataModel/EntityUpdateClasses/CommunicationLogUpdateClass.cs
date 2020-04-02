@@ -2708,6 +2708,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = CommunicationLogFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
@@ -2726,6 +2728,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						Style = null,
 						LocalDefaultText = null,
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton CommunicationLogMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2743,6 +2747,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CommunicationLogFeature_MB10.Id,
 						Style = null,
 						LocalDefaultText = null,
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  CommunicationLogFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -2772,6 +2778,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode CommunicationLogTextCode_CommunicationLogOUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.User", DefaultText = "User",LocalDefaultText = @"משתמש", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Error", DefaultText = "Error",LocalDefaultText = @"שגיאה", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogStepsOLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogSteps.O.Log", DefaultText = "Log",LocalDefaultText = @"לוג", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogStepsOShowResponse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogSteps.O.ShowResponse", DefaultText = "Response",LocalDefaultText = @"תשובה", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

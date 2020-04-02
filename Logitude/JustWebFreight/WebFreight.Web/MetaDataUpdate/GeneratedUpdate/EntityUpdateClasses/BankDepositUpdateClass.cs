@@ -2249,13 +2249,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = "ApproveButtonStyle",
 						LocalDefaultText = "אישור",
 						FeatureUniqeCode = BankDepositFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
    
 			   MenuButton BankDepositMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 100, 
+						Index = 1, 
 						IsActive = false,
 						LabelTextCodeCode = "BankDeposit.B.More",
 						LabelTextCodeDefaultText = "More",
@@ -2267,6 +2269,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "נוספים",
 						FeatureUniqeCode = null,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton BankDepositMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -2284,6 +2288,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  BankDepositFeature_MB10.Id,
 						Style = "Ordinary",
 						LocalDefaultText = "הדפס",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  BankDepositFeature_MB10.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
@@ -2302,6 +2308,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureId=  BankDepositFeature_MB11.Id,
 						Style = null,
 						LocalDefaultText = "ביטול הפקדה",
+                        HtmlComponentPath=null,
+                        Width=0,
 						FeatureUniqeCode=  BankDepositFeature_MB11.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   

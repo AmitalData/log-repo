@@ -1695,6 +1695,14 @@ namespace MeatadataGeneratorTool
                     {
                         SetAttribute("FeatureDefaultText", GetStringValue(f.FeatureDefaultText), MenuButtonElement, null);
                     }
+                    if (!string.IsNullOrEmpty(f.HtmlComponentPath))
+                    {
+                        SetAttribute("HtmlComponentPath", GetStringValue(f.HtmlComponentPath), MenuButtonElement, null);
+                    }
+                    if (f.Width != 0)
+                    {
+                        SetAttribute("Width", f.Width.ToString(), MenuButtonElement, null);
+                    }
                     if (f.MenuButtonItems != null)
                     {
                         foreach (var item in f.MenuButtonItems)
@@ -1729,6 +1737,14 @@ namespace MeatadataGeneratorTool
                             if (!string.IsNullOrEmpty(item.FeatureDefaultText))
                             {
                                 SetAttribute("FeatureDefaultText", GetStringValue(item.FeatureDefaultText), MenuItemElement, null);
+                            }
+                            if (!string.IsNullOrEmpty(item.HtmlComponentPath))
+                            {
+                                SetAttribute("HtmlComponentPath", GetStringValue(item.HtmlComponentPath), MenuItemElement, null);
+                            }
+                            if (item.Width != 0)
+                            {
+                                SetAttribute("Width", item.Width.ToString(), MenuItemElement, null);
                             }
                         }
                     }

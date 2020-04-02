@@ -126,55 +126,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Id",
-					  						ObjectTableName =  "Customs.CustomsClosedTable",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  5,
-					  						IsRequired =  true,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  5,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Id",
-					  						ListPropertyPath =  "Id",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomsClosedTable",
-					  						DisplayInEntityVariables =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Id",
-					  						DefaultText =  "Id",
-					  						FullLocalDefaultText =  "Id",
-					  						ListFieldLable =  "IdListLable",
-					  						ListLableDefaultText =  "Id",
-					  						ListLocalDefaultText =  "Id",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "CustomsName",
 					  						ObjectTableName =  "Customs.CustomsClosedTable",
 					  						FieldsDataType =  "Text",
