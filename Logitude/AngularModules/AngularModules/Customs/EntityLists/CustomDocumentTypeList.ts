@@ -18,7 +18,5 @@ export class CustomDocumentTypeList {
 	PointerLevelName: string;
 	IsCourierManadatory: boolean;
 	IsDiamondManadatory: boolean;
-	IsCourierManadatory: boolean;
-	
+ 	
 }
- 

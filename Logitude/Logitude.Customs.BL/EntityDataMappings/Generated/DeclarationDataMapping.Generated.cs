@@ -336,8 +336,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmendmentNumber, 
 	         CourierPendingReasonName, 
 	         AutomaticPayment,
-	         CourierManifestStatusCode, 
-	         CourierPaymentStatusCode,
+	       
 
 	      }
 
