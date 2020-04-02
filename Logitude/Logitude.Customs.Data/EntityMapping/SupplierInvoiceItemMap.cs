@@ -120,6 +120,12 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity");
 
             this.Property(t => t.Weight).HasColumnName("Weight").HasPrecision(15, 3);
+
+            this.Property(t => t.OcrHeight).HasColumnName("OcrHeight").HasPrecision(5, 0);
+
+            this.Property(t => t.OcrTop).HasColumnName("OcrTop").HasPrecision(5, 0);
+
+            this.Property(t => t.OcrPageNumber).HasColumnName("OcrPageNumber").HasPrecision(3, 0);
         }
     }
 }

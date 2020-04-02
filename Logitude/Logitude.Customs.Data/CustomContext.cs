@@ -825,6 +825,12 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.Weight).HasPrecision(15, 3);
 				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrHeight).HasPrecision(5, 0);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrTop).HasPrecision(5, 0);
+				
+			modelBuilder.Entity<SupplierInvoiceItem>().Property(x => x.OcrPageNumber).HasPrecision(3, 0);
+				
 			modelBuilder.Entity<SupplierInvoiceItemModVehicle>().Property(x => x.DeductAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<SupplierInvoiceItemsConDeclar>().Property(x => x.Quantity).HasPrecision(14, 3);
