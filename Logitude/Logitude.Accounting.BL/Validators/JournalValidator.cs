@@ -13,10 +13,12 @@ using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -107,7 +109,12 @@ namespace Logitude.Accounting.BL.Validators
             decimal creditTotal = 0;
             decimal debitTotal = 0;
 
-
+            bool debugit = false;
+            if (debugit)
+            {
+                var serializedObject = ProxyUtil.JsonConvertSerialize(myJournalPM);
+                Debug.WriteLine(serializedObject);
+            }
             List<string> errorsList = new List<string>();
 
             bool valid = true;
