@@ -32,7 +32,7 @@ namespace Logitude.Accounting.BL.InterestService
             InterestTransactionsWithTotal interestTransactionsWithTotal = new InterestTransactionsWithTotal();
             decimal TotalLocalAmount=0; 
             List<InterestTransactionList> interestTransactionLists = (from a in MyContext.InterestReportLines
-                                                                      where a.Tenant == Tenant && a.InterestReportId == ReportId && DbFunctions.TruncateTime(a.InterestTransaction.InterestValueDate) == InterestCalculationDate.Date
+                                                                      where a.Tenant == Tenant && a.InterestReportId == ReportId && DbFunctions.TruncateTime(a.InterestTransaction.InterestValueDate) == InterestCalculationDate.Date && a.InterestTransaction.IsCancelled==false
                                                                       select new InterestTransactionList()
                                                                       {
                                                                           Tenant = a.Tenant,
