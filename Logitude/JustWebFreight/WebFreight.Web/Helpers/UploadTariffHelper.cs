@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.BL.EntityQueryServices;
+using Logitude.TariffModule.Data.Repositories;
 
 namespace WebFreight.Web.Helpers
 {
@@ -22,6 +23,8 @@ namespace WebFreight.Web.Helpers
         private string tariffType;
         private string fileData;
         private string tariffId;
+        private string carrierId;
+        private TariffCarrierTranslationRepository tariffCarrierTranslationRepository;
         private PortRepository portRepository;
         private ICommonDataContext commonContext;
         public UploadTariffHelper(TariffFilterParameter filterParameter)
@@ -34,6 +37,19 @@ namespace WebFreight.Web.Helpers
 
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.portRepository = new PortRepository(commonContext);
+            this.tariffCarrierTranslationRepository = new TariffCarrierTranslationRepository(commonContext);
+
+            this.SetCarrierId();
+        }
+
+        private void SetCarrierId()
+        {
+            TariffRepository tariffRepository = new TariffRepository(tenant);
+            Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
+            if(tariff != null)
+            {
+                carrierId = tariff.SellerId;
+            }
         }
 
         public List<ExcelTariffLines> Upload()
@@ -1226,6 +1242,16 @@ namespace WebFreight.Web.Helpers
                 else if (tariffType == "OLC" || tariffType == "OFC")
                 {
                     myPort = this.portRepository.GetOceanPortByCombinedCode(code, tenant);
+                }
+
+                //Search in translations
+                if(myPort == null)
+                {
+                    TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetCarrierTranslationByPartnerCodeAndCarrier(code, carrierId, tenant);
+                    if (carrierTranslation != null)
+                    {
+                        myPort = this.portRepository.GetSinglePort(tenant, carrierTranslation.PortId);
+                    }
                 }
 
                 if (myPort == null)

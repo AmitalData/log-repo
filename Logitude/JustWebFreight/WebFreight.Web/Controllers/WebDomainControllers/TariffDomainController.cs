@@ -49,6 +49,7 @@ using Logitude.BL.Helpers;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityLists;
 using Logitude.TariffModule.Data.EntityListQueryServices;
+using Logitude.TariffModule.BL.Helpers;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -3383,6 +3384,88 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        public HttpResponseMessage GetRefreshPortsFromTranslations(string tariffId, int version)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ITariffModuleContext tariffModuleContext = TariffModuleContext.GetContext(tenant);
+                TariffRepository tariffRepository = new TariffRepository(tariffModuleContext);
+                Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
+
+                if (tariff != null)
+                {
+                    TariffLineRepository tariffLineRepository = new TariffLineRepository(tariffModuleContext);
+                    List<TariffLine> iDraftVersionLines = tariffLineRepository.GetTariffLinesByTariffAndVersion(tariffId, version, tenant);
+
+                    if (iDraftVersionLines.Count > 0)
+                    {
+                        iDraftVersionLines = iDraftVersionLines.Where(d => d.HasErrors && (string.IsNullOrEmpty(d.OriginPortId) || string.IsNullOrEmpty(d.DestinationPortId))).ToList();
+
+                        TariffCarrierTranslationRepository tariffCarrierTranslationRepository = new TariffCarrierTranslationRepository(tenant);
+
+                        foreach (TariffLine tariffLine in iDraftVersionLines)
+                        {
+                            bool tariffLineUpdated = false;
+
+                            if (string.IsNullOrEmpty(tariffLine.OriginPortId) && !string.IsNullOrEmpty(tariffLine.OriginPortText))
+                            {
+                                TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetCarrierTranslationByPartnerCodeAndCarrier(tariffLine.OriginPortText, tariff.SellerId, tenant);
+                                if (carrierTranslation != null)
+                                {
+                                    tariffLine.OriginPortId = carrierTranslation.PortId;
+                                    tariffLine.OriginPortText = null;
+                                    tariffLineUpdated = true;
+                                }
+                            }
+
+                            if (string.IsNullOrEmpty(tariffLine.DestinationPortId) && !string.IsNullOrEmpty(tariffLine.DestinationPortText))
+                            {
+                                TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetCarrierTranslationByPartnerCodeAndCarrier(tariffLine.DestinationPortText, tariff.SellerId, tenant);
+                                if (carrierTranslation != null)
+                                {
+                                    tariffLine.DestinationPortId = carrierTranslation.PortId;
+                                    tariffLine.DestinationPortText = null;
+                                    tariffLineUpdated = true;
+                                }
+                            }
+
+                            if (tariffLineUpdated)
+                            {
+                                tariffLine.ErrorText = TariffLineHelper.ComputeTariffLineErrorText(tariffLine);
+
+                                if (string.IsNullOrEmpty(tariffLine.ErrorText))
+                                {
+                                    tariffLine.HasErrors = false;
+                                }
+                                else
+                                {
+                                    tariffLine.HasErrors = true;
+                                }
+
+                                tariffLineRepository.Update(tariffLine);
+                            }
+                        }
+
+                        tariffLineRepository.SubmitChanges();
+                    }
+                }
+                
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 

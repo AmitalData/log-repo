@@ -80,6 +80,14 @@
                             <div></div>
                         </td>
 
+                        <td style="width: 20px;">
+                            <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Refresh'" [IsSmall]="true" (click)="RefreshPortsFromTranslations()"></IconButton>
+                        </td>
+
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+
                         <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
                             <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
                         </td>
