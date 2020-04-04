@@ -24,7 +24,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class APPaymentValidator
     {
-        public static void Validate(APPaymentPM entityPM)
+        public static void Validate(APPaymentPM entityPM, APPayment entityPOCO = null, bool isNew = false)
         {
             int tenant = entityPM.Tenant;
 
@@ -143,6 +143,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             ValidateAirlineRestriction(entityPM.VendorId, tenant);
             ValidateFullAccounting(entityPM);
+            ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
+
+        }
+
+        private static void ValidateUnUpdateFields(APPaymentPM entityPM, APPayment entityPOCO, bool isNew)
+        {
+            if (!isNew)
+            {
+                bool isEditingEnabled = IsEditingARPaymentEnabled(entityPM);
+                if (!isEditingEnabled)
+                {
+                    if (entityPM.AmountInPaymentCurrency != entityPOCO.AmountInPaymentCurrency)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("APPayment.F.AmountInPaymentCurrency", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+                }
+            }
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -296,6 +314,19 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
             return loggedContact;
+        }
+
+        private static bool IsEditingARPaymentEnabled(APPaymentPM entityPM)
+        {
+            bool myResult = false;
+            if (entityPM != null)
+            {
+                if (string.IsNullOrEmpty(entityPM.StatusCode) || entityPM.StatusCode == "DR")
+                {
+                    myResult = true;
+                }
+            }
+            return myResult;
         }
     }
 }

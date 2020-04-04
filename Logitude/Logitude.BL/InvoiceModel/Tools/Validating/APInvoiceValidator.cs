@@ -41,7 +41,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class APInvoiceValidator
     {
-        public static void Validate(APInvoicePM entityPM, IInvoiceContext myContext, string MainShipmentConcurrencyGUID = null)
+        public static void Validate(APInvoicePM entityPM, IInvoiceContext myContext, string MainShipmentConcurrencyGUID = null, APInvoice entityPOCO = null, bool isNew = false)
         {
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
 
@@ -195,8 +195,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
             ValidateFullAccounting(entityPM);
             ValidateExternalAPI(entityPM, myCommonContext);
-        }  
+            ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
+        }
 
+        private static void ValidateUnUpdateFields(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew)
+        {
+            if (!isNew)
+            {
+                bool isEditingEnabled = IsEditingARPaymentEnabled(entityPM);
+                if (!isEditingEnabled)
+                {
+                    if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+                }
+            }
+        }
 
         public static void CheckInvoiceNumberFormat(string invoiceNumber, int tenant)
         {
@@ -742,6 +758,29 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                 }
             }
+        }
+
+        private static bool IsEditingARPaymentEnabled(APInvoicePM entityPM)
+        {
+            bool myResult = false;
+            if (entityPM != null)
+            {
+                if (string.IsNullOrEmpty(entityPM.Id))
+                {
+                    myResult = true;
+                }
+
+                else if (string.IsNullOrEmpty(entityPM.StatusCode))
+                {
+                    myResult = true;
+                }
+
+                else if (entityPM.StatusCode == "WA")
+                {
+                    myResult = true;
+                }
+            }
+            return myResult;
         }
     }
 }
