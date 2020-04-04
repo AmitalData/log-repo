@@ -1,4 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.FTP;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -111,6 +113,88 @@ namespace Logitude.Server.Tools.Helpers
             }
 
             return myResult;
+        }
+
+        public void Test(CommunicationLog log, int tenant)
+        {
+            ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+            DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(commoncontext);
+
+            Document document = documentRepository.GetSingleDocument(tenant, log.DocumentId);
+            Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = tenant,
+                FileSize = document.FileSize,
+            };
+
+            Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+            byte[] filedata = storageservice.Read(fileInfo);
+
+            if (filedata != null)
+            {
+                if (!string.IsNullOrEmpty(log.LogSettings))
+                {
+                    LogSettings settingsData = JsonConvert.DeserializeObject<LogSettings>(log.LogSettings);
+                    if (settingsData != null)
+                    {
+                        string ftpHostIP = @"ftp://" + settingsData.Host;
+                        string ftpUserName = settingsData.Username;
+                        string ftpPassword = settingsData.Password;
+                        string ftpFolderName = settingsData.Folder;
+                        string fileName = (!string.IsNullOrEmpty(settingsData.Filename) ? settingsData.Filename : document.Id) + "." + document.Extension;
+                        string p_message = "";
+                        if (!settingsData.UseSFTP)
+                        {
+
+                            ////ftp://192.116.221.106/temp1
+                            //string hostIP = @"ftp://" + settingsData.host;
+
+                            FTPService ftpService = new FTPService(ftpHostIP, settingsData.Username, settingsData.Password);
+
+                            ftpService.Upload(fileName, settingsData.Folder, filedata, out p_message);
+                            log.Logs += Environment.NewLine + DateTime.Now.ToString() + " : " + p_message;
+                        }
+                        else
+                        {
+                            ftpHostIP = settingsData.Host;
+                            string p_status = "";
+
+                            SFTPService sftpService = new SFTPService();
+                            sftpService.Logon(ftpHostIP, ftpUserName, ftpPassword, "22", ftpFolderName, out p_status, out p_message);
+                            log.Logs += p_message;
+                            if (p_status == "0")
+                            {
+
+                                sftpService.Upload(fileName, filedata, true, true, out p_status, out p_message);
+
+                                if (p_status == "-1")
+                                    throw new FTPServiceException("SFTP upload file failed: " + p_message);
+                            }
+                            else
+                                throw new FTPServiceException("SFTP Login failed: " + p_message);
+
+                            log.Logs += p_message;
+                        }
+                    }
+                }
+
+                log.CommunicationStatusTypeCode = "D";
+                log.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                log.DoneDateUTC = DateTime.UtcNow;
+                log.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                log.LastStatusDateUTC = DateTime.UtcNow;
+                communicationLogRep.Update(log);
+                communicationLogRep.SubmitChanges();
+
+            }
+            else
+            {
+                throw new Exception("The file data was not found!");
+            }
         }
     }
 

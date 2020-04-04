@@ -5,6 +5,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.FTP;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
@@ -2025,6 +2026,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
             try
             {
+                //helper.Test(commLog, tenant);
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(commLog.QueueName, 0);
                 queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
@@ -2129,5 +2131,5 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }
             }
         }
-    }    
+    } 
 }
