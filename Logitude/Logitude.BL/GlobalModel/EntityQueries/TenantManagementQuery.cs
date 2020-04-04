@@ -1003,11 +1003,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                select new TenantManagementDW()
                                                {
                                                    TenantNumber = a.Id,
-                                                   FreeUsers = a.MainAdditionalPackageApplied ? a.TotalFreeUsers : a.FreeUsers,
+                                                   FreeUsers = a.TotalFreeUsers,
                                                    IsRecurring = a.IsRecurring,
-                                                   LicensePrice = a.MainAdditionalPackageApplied ? a.AveragePrice : a.LicensePrice,
+                                                   LicensePrice = a.AveragePrice,
                                                    Notes = a.Notes,
-                                                   NumberOfUsers = a.MainAdditionalPackageApplied ? (a.TotalNumberOfUsers == null ? 0 : a.TotalNumberOfUsers.Value) : a.NumberOfUsers,
+                                                   NumberOfUsers = a.TotalNumberOfUsers == null ? 0 : a.TotalNumberOfUsers.Value,
                                                    PaidUntilDate = a.PaidUntilDate,
                                                    PaymentChannel = a.PaymentChannel != null ? a.PaymentChannel.Name : "",
                                                    PaymentCurrency = a.PaymentCurrency != null ? a.PaymentCurrency.Name : "",
