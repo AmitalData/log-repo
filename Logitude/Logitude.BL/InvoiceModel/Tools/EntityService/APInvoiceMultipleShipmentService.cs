@@ -732,7 +732,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         Tenant = entityPM.Tenant,
                                         APInvoiceId = entityPM.Id,
                                         VatTypeId = itemTotal.Id,
-                                        VatPercent = MethodHelper.Roundd(itemTotal.VatTypePercentage, 2),
+                                        VatPercent = MethodHelper.Roundd(itemTotal.VatTypePercentage, 3),
                                         LocalVatableAmount = MethodHelper.Roundd(itemTotal.LocalCurrencyAmount, 2),
                                         InvoiceCurrencyVatableAmount = MethodHelper.Roundd(itemTotal.InvoiceCurrencyAmount, 2),
                                         ProfitVatableAmount = MethodHelper.Roundd(itemTotal.ProfitCurrencyAmount, 2),
