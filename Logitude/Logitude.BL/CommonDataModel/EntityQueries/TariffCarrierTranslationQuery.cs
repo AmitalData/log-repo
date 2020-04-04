@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -74,92 +76,26 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return myResult;
         }
+        
+        public IQueryable<TariffCarrierTranslationList> GetIQueryableEntityList(IQueryable<TariffCarrierTranslation> entityPocos)
+        {
+            IQueryable<TariffCarrierTranslationList> myList =
+                (from a in entityPocos
+                 select new TariffCarrierTranslationList()
+                 {
+                     Id = a.Id,
+                     Tenant = a.Tenant,
+                     PartnerCode = a.PartnerCode,
+                     CreateDate = a.CreateDate,
+                     UpdateDate = a.UpdateDate,
+                     CreatedByUserId = a.CreatedByUserId,
+                     UpdatedByUserId = a.UpdatedByUserId,
+                     PortId = a.PortId,
+                     CarrierId = a.CarrierId,                     
+                     SearchFields = a.SearchFields,
+                 });
 
-
-        //public IQueryable<TariffCarrierTranslationPM> GetTranslationsByPartnerAndTableIdAndCode(string computingPartnerId, string objectTableId, string Code, int tenant)
-        //{
-        //    IQueryable<TariffCarrierTranslationPM> myResult =
-        //        (from a in repository.Context.TariffCarrierTranslations.Include("ObjectTable").Include("ComputingPartner").Include("CreatedByUser").Include("UpdatedByUser")
-        //         where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == tenant && a.OurCode == Code
-        //         select new TariffCarrierTranslationPM()
-        //         {
-        //             Id = a.Id,
-        //             Tenant = a.Tenant,
-        //             OurCode = a.OurCode,
-        //             PartnerCode = a.PartnerCode,
-        //             CreateDate = a.CreateDate,
-        //             UpdateDate = a.UpdateDate,
-        //             CreatedByUserId = a.CreatedByUserId,
-        //             UpdatedByUserId = a.UpdatedByUserId,
-        //             ObjectTableId = a.ObjectTableId,
-        //             ComputingPartnerId = a.ComputingPartnerId,
-        //             ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
-        //             ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
-        //             CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
-        //             UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
-        //         });
-
-        //    return myResult;
-        //}
-
-        //public string GetPartnerCodeTranslation(string logitudeCode, string computingPartnerId, string objectTableId, int tenant)
-        //{
-        //    string partnerCode = (from a in repository.Context.TariffCarrierTranslations
-        //                          where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == tenant
-        //                          && a.OurCode == logitudeCode
-        //                          select a.PartnerCode).FirstOrDefault();
-        //    if (string.IsNullOrEmpty(partnerCode) || string.IsNullOrWhiteSpace(partnerCode))
-        //    {
-        //        partnerCode = (from a in repository.Context.TariffCarrierTranslations
-        //                       where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == 0
-        //                       && a.OurCode == logitudeCode
-        //                       select a.PartnerCode).FirstOrDefault();
-        //    }
-
-        //    return partnerCode;
-        //}
-
-        //public string GetLogitudeCodeTranslation(string PartnerCode, string computingPartnerId, string objectTableId, int tenant)
-        //{
-        //    string LogitudeCode = (from a in repository.Context.TariffCarrierTranslations
-        //                           where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == tenant
-        //                           && a.PartnerCode == PartnerCode
-        //                           select a.OurCode).FirstOrDefault();
-        //    if (LogitudeCode == null)
-        //    {
-        //        LogitudeCode = (from a in repository.Context.TariffCarrierTranslations
-        //                        where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == 0
-        //                        && a.PartnerCode == PartnerCode
-        //                        select a.OurCode).FirstOrDefault();
-        //    }
-
-        //    return LogitudeCode;
-        //}
-
-        //public List<TariffCarrierTranslationPM> GetAllByComputingPartner(string computingPartner, int tenant)
-        //{
-        //    List<TariffCarrierTranslationPM> entityPMs =
-        //        (from a in repository.Context.TariffCarrierTranslations.Include("ObjectTable").Include("ComputingPartner").Include("CreatedByUser").Include("UpdatedByUser")
-        //         where a.Tenant == tenant && a.ComputingPartnerId == computingPartner
-        //         select new TariffCarrierTranslationPM()
-        //         {
-        //             Id = a.Id,
-        //             Tenant = a.Tenant,
-        //             OurCode = a.OurCode,
-        //             PartnerCode = a.PartnerCode,
-        //             CreateDate = a.CreateDate,
-        //             UpdateDate = a.UpdateDate,
-        //             CreatedByUserId = a.CreatedByUserId,
-        //             UpdatedByUserId = a.UpdatedByUserId,
-        //             ObjectTableId = a.ObjectTableId,
-        //             ComputingPartnerId = a.ComputingPartnerId,
-        //             ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
-        //             ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
-        //             CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
-        //             UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
-        //         }).ToList();
-
-        //    return entityPMs;
-        //}
+            return myList;
+        }
     }
 }
