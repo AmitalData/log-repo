@@ -1818,9 +1818,9 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetAllTariffTranslationsByCarrierId?carrierId=' + carrierId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<TariffCarrierTranslationPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -1832,7 +1832,7 @@ export class PartnersDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     MapTariffTranslationPM(jsonList: any, mapParent: boolean = true) {
@@ -1873,14 +1873,14 @@ export class PartnersDomainService {
         var url = this._apiUrl + '/GetRemoveTranslationFromCarrier?id=' + id;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var done: string = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+                var done: string = response.body;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 }
