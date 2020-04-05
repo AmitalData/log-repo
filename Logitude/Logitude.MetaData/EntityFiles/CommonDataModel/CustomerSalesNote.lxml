@@ -139,7 +139,8 @@
     HasPMField="true"
     IsForeignKey="true"
     ForeignEntity="Card"
-    NavigationPropertyName="Customer" />
+    NavigationPropertyName="Customer"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;331288ad-2553-4763-8be3-9fc98f1956ca&quot;"
     FieldName="&quot;CreatedByUserId&quot;"
@@ -204,7 +205,8 @@
     HasPMField="true"
     IsForeignKey="true"
     ForeignEntity="User"
-    NavigationPropertyName="CreatedByUser" />
+    NavigationPropertyName="CreatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;abc242d5-ccec-44b2-b382-e213103c4ca1&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -269,7 +271,8 @@
     HasPMField="true"
     IsForeignKey="true"
     ForeignEntity="User"
-    NavigationPropertyName="UpdatedByUser" />
+    NavigationPropertyName="UpdatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;f85ffe09-981b-45b4-b6cc-df3025737f95&quot;"
     FieldName="&quot;CreateDate&quot;"
