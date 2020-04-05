@@ -57,8 +57,12 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
+    public NumbersPipe: NumbersPipe;
     constructor(private entityArgs: EntityArgs) {
-        super();      
+        super();
+
+        this.NumbersPipe = new NumbersPipe();
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
         this.EntityPM = entityArgs.EntityPM;
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
@@ -202,12 +206,11 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     SetGridColumnsWidth() {
         var myRateColumnWidth = 100;
         var myVATColumnWidth = 100;
-        var pipe = new NumbersPipe();
 
         this.ItemsSource.forEach(item => {
 
             // Rate
-            var myRate: string = pipe.transform(item.ForiegnExchangeRate, 'N5');
+            var myRate: string = this.NumbersPipe.transform(item.ForiegnExchangeRate, 'N5');
             var myRelativeRateDate = item.RelativeRateDate;
 
             if (AppTool.IsNullOrEmpty(myRate)) {
@@ -1368,27 +1371,26 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 itemTotalVAT.VatTypeName = itemVatType ? itemVatType.EnglishName : "";
                 itemTotalVAT.ExternalVATCard = item.ExternalVatCard;
                 itemTotalVAT.ExternalTAXItemId = item.ExternalTAXItemId;
-                itemTotalVAT.VATPercent = AppTool.Round(item.VatTypePercentage, 2);
+                itemTotalVAT.VATPercent = AppTool.Round(item.VatTypePercentage, 3);
                 itemTotalVAT.LocalVatableAmount = AppTool.Round(item.LocalCurrencyAmount, 2);
                 itemTotalVAT.InvoiceCurrencyVatableAmount = AppTool.Round(item.InvoiceCurrencyAmount, 2);
                 itemTotalVAT.ProfitVatableAmount = AppTool.Round(item.ProfitCurrencyAmount, 2);
                 itemTotalVAT.LocalVATAmount = AppTool.Round((itemTotalVAT.LocalVatableAmount * itemTotalVAT.VATPercent / 100), 2);
                 itemTotalVAT.InvoiceCurrencyVATAmount = AppTool.Round((itemTotalVAT.InvoiceCurrencyVatableAmount * itemTotalVAT.VATPercent / 100), 2);
                 itemTotalVAT.ProfitCurrencyVATAmount = AppTool.Round((itemTotalVAT.ProfitVatableAmount * itemTotalVAT.VATPercent / 100), 2);
-                itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + itemTotalVAT.VATPercent + "%)";
+                itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + this.NumbersPipe.transform(itemTotalVAT.VATPercent, "N3") + "%)";
                 this.EntityPM.AddARInvoiceTotalVATPM(itemTotalVAT);
             });
         }
     }
     BuildSummary() {
         this.SummaryItems = [];
-        var pipe = new NumbersPipe();
         var selectedCurrencyCode = this.IsTotalInLocalCurrency ? "(" + this.LocalCurrencyCode + ")" : "(" + this.InvoiceCurrencyCode + ")";
 
         if (this.EntityPM.InvoiceLines.length > 0) {
             var mySummaryItem_Sub = new SummaryItem();
             mySummaryItem_Sub.Label = TextCodeTranslator.Translate("ARInvoice.S.Details.Subtotal");
-            mySummaryItem_Sub.Value = this.IsTotalInLocalCurrency ? pipe.transform(this.EntityPM.SubTotalInLocalCurrency, "N2") : pipe.transform(this.EntityPM.SubTotalInInvoiceCurrency, "N2");
+            mySummaryItem_Sub.Value = this.IsTotalInLocalCurrency ? this.NumbersPipe.transform(this.EntityPM.SubTotalInLocalCurrency, "N2") : this.NumbersPipe.transform(this.EntityPM.SubTotalInInvoiceCurrency, "N2");
             this.SummaryItems.push(mySummaryItem_Sub);
 
             this.EntityPM.TotalVATs.forEach(item => {
@@ -1397,8 +1399,9 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 this.SummaryItems.push(myOperatorItem);
 
                 var mySummaryItem = new SummaryItem();
-                mySummaryItem.Label = item.VatTypeCell;
-                mySummaryItem.Value = this.IsTotalInLocalCurrency ? pipe.transform(item.LocalVATAmount, "N2") : pipe.transform(item.InvoiceCurrencyVATAmount, "N2");
+                //mySummaryItem.Label = item.VatTypeCell;
+                mySummaryItem.Label = item.VatTypeName + " (" + this.NumbersPipe.transform(item.VATPercent, "N3") + "%)";
+                mySummaryItem.Value = this.IsTotalInLocalCurrency ? this.NumbersPipe.transform(item.LocalVATAmount, "N2") : this.NumbersPipe.transform(item.InvoiceCurrencyVATAmount, "N2");
                 this.SummaryItems.push(mySummaryItem);
             });
 
@@ -1409,7 +1412,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         var mySummaryItem_All = new SummaryItem();
         mySummaryItem_All.Label = TextCodeTranslator.Translate("ARInvoice.F.AmountInInvoiceCurrency") + " " + selectedCurrencyCode;
-        mySummaryItem_All.Value = this.IsTotalInLocalCurrency ? pipe.transform(this.EntityPM.AmountInLocalCurrency, "N2") : pipe.transform(this.EntityPM.AmountInInvoiceCurrency, "N2");
+        mySummaryItem_All.Value = this.IsTotalInLocalCurrency ? this.NumbersPipe.transform(this.EntityPM.AmountInLocalCurrency, "N2") : this.NumbersPipe.transform(this.EntityPM.AmountInInvoiceCurrency, "N2");
         this.SummaryItems.push(mySummaryItem_All);
     }
 
@@ -2115,7 +2118,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     get VatPercentage() { return this.EntityPM.VatPercentage; }
     set VatPercentage(newValue: number) {
         if (this.EntityPM.VatPercentage != newValue) {
-            this.EntityPM.VatPercentage = AppTool.Round(newValue, 2);
+            this.EntityPM.VatPercentage = AppTool.Round(newValue, 3);
             this.ReadVatTypeData();
             this.ReCalculateTotals();
             this.SetUIProperties_VAT();
@@ -2152,7 +2155,7 @@ export class ARInvoiceLineItem extends BaseComponent {
             }
 
             else if (this.VatPercentage != null) {
-                myValue = this.VatTypeName + " (" + this.VatPercentage + "%)";
+                myValue = this.VatTypeName + " (" + this.fatherComponent.NumbersPipe.transform(this.VatPercentage, "N3") + "%)";
                 myColor = FontTool.Black;
             }
 

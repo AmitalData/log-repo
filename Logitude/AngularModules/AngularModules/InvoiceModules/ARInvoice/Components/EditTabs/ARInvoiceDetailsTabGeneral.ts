@@ -1659,7 +1659,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     get VatPercentage() { return this.EntityPM.VatPercentage; }
     set VatPercentage(newValue: number) {
         if (this.EntityPM.VatPercentage != newValue) {
-            this.EntityPM.VatPercentage = AppTool.Round(newValue, 2);
+            this.EntityPM.VatPercentage = AppTool.Round(newValue, 3);
             this.ReadVatTypeData();
             this.ReCalculateTotals();
         }
@@ -1673,9 +1673,11 @@ export class ARInvoiceLineItem extends BaseComponent {
         var myColor: string = "#282E30";
         var isUpdateVisible = false;
 
+        var pipe: NumbersPipe = new NumbersPipe();
+
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
             if (this.VatPercentage != null) {
-                myValue = this.VatTypeName + " (" + this.VatPercentage + "%)";
+                myValue = this.VatTypeName + " (" + pipe.transform(this.VatPercentage, "N3") + "%)";
                 myColor = "#282E30";
                 isUpdateVisible = false;
             }
