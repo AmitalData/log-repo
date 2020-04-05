@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerTenantAccessCardUpdateClass
-   {  
+   {  		
+		public const string HashString = "4f540cfe253e07e169b24f0c47c1e667";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "CustomerTenantAccessCard,CustomerTenantAccessCards,,Id,",
+			      				    HashString =  CustomerTenantAccessCardUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -975,19 +977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
-
-		   ObjectTable CustomerTenantAccessCardObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerTenantAccessCard" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> CustomerTenantAccessCardObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerTenantAccessCard").ToList();
-		       
-	      
-
-	         Screen CustomerTenantAccessCardCustomerTenantAccessCardHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerTenantAccessCard.HeaderScreen", Name = "CustomerTenantAccessCardHeaderScreen", ObjectTableId = CustomerTenantAccessCardObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    CustomerTenantAccessCardObjectTable.HeaderScreenId = CustomerTenantAccessCardCustomerTenantAccessCardHeaderScreenScreen0.Id;
-		    CustomerTenantAccessCardObjectTable.HeaderScreenCode = CustomerTenantAccessCardCustomerTenantAccessCardHeaderScreenScreen0.Code;
-
-	   		  
+	    {    
 
 	    }
 

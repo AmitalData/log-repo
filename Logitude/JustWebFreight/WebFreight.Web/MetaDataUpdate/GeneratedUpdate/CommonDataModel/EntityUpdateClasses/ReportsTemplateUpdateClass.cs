@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ReportsTemplateUpdateClass
-   {  
+   {  		
+		public const string HashString = "7dd6e8aa5dad3433098fe304bab6ca4c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,6 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasMenuButtons =  false,
 			      				    CustomFieldsCount =  0,
 			      				    SearchFields =  "ReportsTemplate,ReportsTemplates,,Tenant,",
+			      				    HashString =  ReportsTemplateUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

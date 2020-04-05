@@ -1222,15 +1222,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Screen
-    Name="&quot;CustomerTenantAccessCardHeaderScreen&quot;"
-    ObjectTableName="&quot;CustomerTenantAccessCard&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
+
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

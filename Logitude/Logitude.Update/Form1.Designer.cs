@@ -159,6 +159,7 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnCallOldUpdate = new System.Windows.Forms.Button();
             this.UpdateRulesLabel = new System.Windows.Forms.Label();
             this.button48 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -190,7 +191,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.btnCallOldUpdate = new System.Windows.Forms.Button();
+            this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -399,7 +400,6 @@
             // 
             // toolStripTextBoxFilePath
             // 
-            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -528,7 +528,6 @@
             // 
             // tenantTxtBox
             // 
-            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -1427,6 +1426,7 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.cbxOldUpdateCode);
             this.tabPage1.Controls.Add(this.btnCallOldUpdate);
             this.tabPage1.Controls.Add(this.UpdateRulesLabel);
             this.tabPage1.Controls.Add(this.button48);
@@ -1488,6 +1488,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // btnCallOldUpdate
+            // 
+            this.btnCallOldUpdate.Location = new System.Drawing.Point(257, 263);
+            this.btnCallOldUpdate.Name = "btnCallOldUpdate";
+            this.btnCallOldUpdate.Size = new System.Drawing.Size(170, 23);
+            this.btnCallOldUpdate.TabIndex = 98;
+            this.btnCallOldUpdate.Text = "Update Old Code";
+            this.btnCallOldUpdate.UseVisualStyleBackColor = true;
+            this.btnCallOldUpdate.Click += new System.EventHandler(this.btnCallOldUpdate_Click);
             // 
             // UpdateRulesLabel
             // 
@@ -1850,15 +1860,15 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
-            // btnCallOldUpdate
+            // cbxOldUpdateCode
             // 
-            this.btnCallOldUpdate.Location = new System.Drawing.Point(257, 263);
-            this.btnCallOldUpdate.Name = "btnCallOldUpdate";
-            this.btnCallOldUpdate.Size = new System.Drawing.Size(170, 23);
-            this.btnCallOldUpdate.TabIndex = 98;
-            this.btnCallOldUpdate.Text = "Update Old Code";
-            this.btnCallOldUpdate.UseVisualStyleBackColor = true;
-            this.btnCallOldUpdate.Click += new System.EventHandler(this.btnCallOldUpdate_Click);
+            this.cbxOldUpdateCode.AutoSize = true;
+            this.cbxOldUpdateCode.Location = new System.Drawing.Point(543, 310);
+            this.cbxOldUpdateCode.Name = "cbxOldUpdateCode";
+            this.cbxOldUpdateCode.Size = new System.Drawing.Size(103, 17);
+            this.cbxOldUpdateCode.TabIndex = 99;
+            this.cbxOldUpdateCode.Text = "Run Old Update";
+            this.cbxOldUpdateCode.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -2070,6 +2080,7 @@
         private System.Windows.Forms.Label UpdateRulesLabel;
         private System.Windows.Forms.Button button47;
         private System.Windows.Forms.Button btnCallOldUpdate;
+        private System.Windows.Forms.CheckBox cbxOldUpdateCode;
     }
 }
 
