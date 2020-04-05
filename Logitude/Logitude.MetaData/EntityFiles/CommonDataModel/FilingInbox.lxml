@@ -521,7 +521,8 @@
     GenerateInList="true"
     IsForeignKey="true"
     ForeignEntity="Document"
-    NavigationPropertyName="BodyDocument" />
+    NavigationPropertyName="BodyDocument"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;3e2e9e0d-d800-438a-809d-a448a6925ba2&quot;"
     FieldName="&quot;FileName&quot;"

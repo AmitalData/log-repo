@@ -154,7 +154,8 @@
     HasDataBaseField="true"
     HasPMField="false"
     NoMetaDataField="false"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;a2f1f360-37d3-4961-8073-772b9c123f59&quot;"
     FieldName="&quot;SearchFields&quot;"

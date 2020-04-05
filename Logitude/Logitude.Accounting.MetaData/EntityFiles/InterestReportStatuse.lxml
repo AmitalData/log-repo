@@ -299,7 +299,7 @@
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"

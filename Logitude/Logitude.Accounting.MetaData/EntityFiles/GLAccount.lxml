@@ -7399,7 +7399,7 @@
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
