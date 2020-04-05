@@ -10,7 +10,6 @@ namespace Logitude.DatabaseMigration.Migrations
             AlterColumn("dbo.AccountingSettings", "QBOAccessToken", c => c.String());
             AlterColumn("dbo.AccountingSettings", "QBOAccessTokenSecret", c => c.String());
         }
-    }   
 
         public override void Down()
         {
