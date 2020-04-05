@@ -143,7 +143,8 @@
     GenerateInList="true"
     IsForeignKey="true"
     ForeignEntity="VatType"
-    NavigationPropertyName="VatType" />
+    NavigationPropertyName="VatType"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;786e9a66-ecde-4853-8264-eb617f11beff&quot;"
     FieldName="&quot;ChargeTypeId&quot;"
@@ -208,7 +209,8 @@
     GenerateInList="true"
     IsForeignKey="true"
     ForeignEntity="ChargesType"
-    NavigationPropertyName="ChargeType" />
+    NavigationPropertyName="ChargeType"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;efb9cf6b-8fa3-41a3-8ac2-029ca6b4f9d9&quot;"
     FieldName="&quot;PayableDebitAccount&quot;"

@@ -599,7 +599,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -658,7 +658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
