@@ -1,4 +1,6 @@
-﻿using Logitude.Server.Tools.Counters;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.Data.EntityPOCOs;
@@ -40,16 +42,9 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Tariff tariff = tariffRepository.GetSingle(entityPM.TariffId, entityPM.Tenant);
 
                     ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
-                    string loggedContactId = null;
-                    ContactRepository contactRepository = new ContactRepository(commonContext);
-                    Contact contact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
+                    TariffCarrierTranslationService myService = new TariffCarrierTranslationService(commonContext, entityPM.Tenant);                    
 
-                    if (contact != null)
-                    {
-                        loggedContactId = contact.Id;
-                    }
-
-                    if (tariff != null && !string.IsNullOrEmpty(loggedContactId))
+                    if (tariff != null)
                     {
                         TariffCarrierTranslationRepository tariffCarrierTranslationRepository = new TariffCarrierTranslationRepository(commonContext);
 
@@ -58,7 +53,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetTranslationByPortAndCarrierAndPartnerCode(entityPM.OriginPortText, entityPM.OriginPortId, tariff.SellerId, entityPM.Tenant);
                             if (carrierTranslation == null)
                             {
-                                this.CreateCarrierTranslation(loggedContactId, entityPM.OriginPortText, entityPM.OriginPortId, tariff.SellerId, entityPM.Tenant, tariffCarrierTranslationRepository);                                
+                                this.CreateCarrierTranslation(entityPM.OriginPortText, entityPM.OriginPortId, tariff.SellerId, entityPM.Tenant, myService);                                
                             }
                         }
 
@@ -67,33 +62,25 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetTranslationByPortAndCarrierAndPartnerCode(entityPM.DestinationPortText, entityPM.DestinationPortId, tariff.SellerId, entityPM.Tenant);
                             if (carrierTranslation == null)
                             {
-                                this.CreateCarrierTranslation(loggedContactId, entityPM.DestinationPortText, entityPM.DestinationPortId, tariff.SellerId, entityPM.Tenant, tariffCarrierTranslationRepository);
+                                this.CreateCarrierTranslation(entityPM.DestinationPortText, entityPM.DestinationPortId, tariff.SellerId, entityPM.Tenant, myService);
                             }
                         }
-
-                        commonContext.SaveChanges();
                     }
                 }
             }
         }
 
-        private void CreateCarrierTranslation(string loggedContactId, string code, string portId, string carrierId, int tenant, TariffCarrierTranslationRepository tariffCarrierTranslationRepository)
+        private void CreateCarrierTranslation(string code, string portId, string carrierId, int tenant, TariffCarrierTranslationService myService)
         {
-            TariffCarrierTranslation carrierTranslation = new TariffCarrierTranslation()
+            TariffCarrierTranslationPM carrierTranslation = new TariffCarrierTranslationPM()
             {
-                Id = IdCounter.GetNumber("TariffCarrierTranslation", tenant),
                 Tenant = tenant,
                 PortId = portId,
                 CarrierId = carrierId,
                 PartnerCode = code,
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                CreatedByUserId = loggedContactId,
-                UpdatedByUserId = loggedContactId,
-                SearchFields = code,
             };
 
-            tariffCarrierTranslationRepository.Add(carrierTranslation);
+            myService.Create(carrierTranslation);
         }
 
         protected override void UpdateComposition(TariffLinePM entityPM)

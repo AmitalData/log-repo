@@ -99,6 +99,10 @@ export class TariffTranslationsTabComponent implements OnDestroy {
         });
     }
 
+    Refresh() {
+        this.LoadData();
+    }
+
     AddTranslationClicked() {
         var item = new TariffCarrierTranslationPM();
         item.Tenant = this.EntityPM.Tenant;

@@ -10,6 +10,15 @@
                         <td style="width: 1px;">
                             <button id="{{'addTranslation' | IdGeneratorPipe}}" class="Button" (click)="AddTranslationClicked()">{{'TariffCarrierTranslation.B.NewTranslation' | TextCodeTranslationPipe}}</button>
                         </td>
+
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 20px;">
+                            <IconButton [Name]="'Refresh'" (click)="Refresh()"></IconButton>
+                        </td>
+
                     </tr>
                 </table>
             </td>

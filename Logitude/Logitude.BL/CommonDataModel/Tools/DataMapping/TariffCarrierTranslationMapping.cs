@@ -17,11 +17,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.CreateDate = entityPM.CreateDate;
-                entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
-                entityPOCO.PortId = entityPM.PortId;
+                entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;                
                 entityPOCO.CarrierId = entityPM.CarrierId;
             }
 
+            entityPOCO.PortId = entityPM.PortId;
             entityPOCO.UpdateDate = entityPM.UpdateDate;
             entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
             entityPOCO.PartnerCode = entityPM.PartnerCode;
