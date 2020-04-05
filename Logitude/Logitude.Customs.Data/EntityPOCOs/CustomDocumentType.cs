@@ -13,33 +13,33 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.EntityPOCOs
 {
-
+   
     public class CustomDocumentType
     {
-        string dbms;
+	 string dbms;
 
         [Key]
         [Column("Code")]
-        public string Code { get; set; }
+	    public string Code { get; set; }
         [Column("EnglishName")]
-        public string EnglishName { get; set; }
+	    public string EnglishName { get; set; }
         [Column("LocalName")]
-        public string LocalName { get; set; }
+	    public string LocalName { get; set; }
         [Column("SearchFields")]
-        public string SearchFields { get; set; }
+	    public string SearchFields { get; set; }
         [Column("Inactive")]
-        public bool Inactive { get; set; }
+	    public bool Inactive { get; set; }
         [ForeignKey("Pointer")]
         [Column("PointerLevel")]
-        public string PointerLevel { get; set; }
-
+	    public string PointerLevel { get; set; }
+	      
         public virtual PointerLevel Pointer { get; set; }
         [Column("AutoSetOriginalDocumentTrue")]
-        public bool AutoSetOriginalDocumentTrue { get; set; }
+	    public bool AutoSetOriginalDocumentTrue { get; set; }
         [Column("IsCourierManadatory")]
-        public bool IsCourierManadatory { get; set; }
+	    public bool IsCourierManadatory { get; set; }
         [Column("IsDiamondManadatory")]
-        public bool IsDiamondManadatory { get; set; }
+	    public bool IsDiamondManadatory { get; set; }
     }
 }
 	 
