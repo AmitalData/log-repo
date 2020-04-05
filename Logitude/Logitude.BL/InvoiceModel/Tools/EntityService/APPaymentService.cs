@@ -350,7 +350,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APPaymentValidator.Validate(theEntityPm);
+            APPaymentValidator.Validate(theEntityPm,payment, isNewEntity);
             APPaymentTracing.Trace(theEntityPm, payment, isNewEntity);
           
             foreach (APPaymentInvoicePM item in changedList)

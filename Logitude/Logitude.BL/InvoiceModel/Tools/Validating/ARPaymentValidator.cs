@@ -35,7 +35,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class ARPaymentValidator
     {
-        public static void Validate(ARPaymentPM entityPM, IInvoiceContext objectContext, CashBookPM cashBook = null)
+        public static void Validate(ARPaymentPM entityPM, IInvoiceContext objectContext, CashBookPM cashBook = null, ARPayment entityPOCO = null, bool isNew = false)
         {
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
 
@@ -199,6 +199,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             ValidateAccountingSetting(entityPM);
             ValidateFullAccounting(entityPM.ARPaymentChequeReplicas, entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank );
+
+            ValidateUnUpdateFields(entityPM,entityPOCO, isNew);
+        }
+
+        private static void ValidateUnUpdateFields(ARPaymentPM entityPM, ARPayment entityPOCO, bool isNew)
+        {
+            if (!isNew)
+            {
+                bool isEditingEnabled = IsEditingARPaymentEnabled(entityPM);
+                if (!isEditingEnabled)
+                {
+                    if (entityPM.AmountInPaymentCurrency != entityPOCO.AmountInPaymentCurrency)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARPayment.F.AmountInPaymentCurrency", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+                }
+            }
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -536,6 +554,19 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
             return loggedContact;
+        }
+
+        private static bool IsEditingARPaymentEnabled(ARPaymentPM entityPM)
+        {
+            bool myResult = false;
+            if (entityPM != null)
+            {
+                if (string.IsNullOrEmpty(entityPM.StatusCode) || entityPM.StatusCode == "DR")
+                {
+                    myResult = true;
+                }
+            }
+            return myResult;
         }
     }
 }
