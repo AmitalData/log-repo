@@ -61,11 +61,10 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
 
         private void InitializePorts(ShipmentPM entityPM)
         {
-            entityPM.FromPortId = ShipmentVariables.PortLHRId;
-            entityPM.ToPortId = ShipmentVariables.PortJFKId;
-            entityPM.MainCarriageFromPortId = ShipmentVariables.PortLHRId;
-            entityPM.MainCarriageToPortId = ShipmentVariables.PortJFKId;
-            entityPM.OriginMainCarriageFromPortId = ShipmentVariables.PortLHRId;
+            entityPM.FromPortId = entityPM.MainCarriageFromPortId = ShipmentVariables.PortLHRId;
+            entityPM.ToPortId = entityPM.MainCarriageToPortId = ShipmentVariables.PortJFKId;
+            entityPM.OriginMainCarriageFromPortId = entityPM.FromPortId;
+            entityPM.MainCarriageFinalDestinationPortId = entityPM.ToPortId;
         }
         private void InitializeUnits(ShipmentPM entityPM)
         {
