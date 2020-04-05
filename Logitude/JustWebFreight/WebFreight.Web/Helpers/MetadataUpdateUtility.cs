@@ -14,7 +14,7 @@ namespace WebFreight.Web.Helpers
 
         public static bool IsChangedMetadataTable(string tableName, Dictionary<string, ObjectTable> ObjectTables, string generatedHashString)
         {
-            return (!ObjectTables.ContainsKey(tableName) || ((ObjectTables.ContainsKey(tableName) && generatedHashString != ObjectTables[tableName].HashString)) || ObjectTables[tableName].HashString == null);
+            return (!ObjectTables.ContainsKey(tableName) || ((ObjectTables.ContainsKey(tableName) && generatedHashString != ObjectTables[tableName].HashString)) || (ObjectTables.ContainsKey(tableName) && ObjectTables[tableName].HashString == null));
         }
         public static void DeleteAllTableMetadata(string tableName)
         {
