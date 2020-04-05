@@ -222,7 +222,7 @@ export class CustomsRequestsSheetsComponent
             messageWindow.Width = 400;
             messageWindow.Height = 150;
             messageWindow.ShowErrorIcon = true;
-            messageWindow.Show("You cannot cancel a request other than status 15.");
+             messageWindow.Show("You cannot cancel a request other than status Sending failed(15).");
             return;
         }
         this.CurrentSession.StartBusyIndicator("");
@@ -503,7 +503,7 @@ export class CustomsRequestsSheetsComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
-            
+            AdditionalDataCustom: this.isReAnAnalysis
         });
         
         
@@ -534,6 +534,8 @@ export class CustomsRequestsSheetsComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
+            AdditionalDataCustom: this.isReAnAnalysis
+
         });
     }
     OnFirstRowSelected($event) {
