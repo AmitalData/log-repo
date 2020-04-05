@@ -97,7 +97,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
                 }
             }
         }
-        this._ShipmentPMService.getSingleByForwarderShipmentNumber(ForwarderShipmentNumber).subscribe(MyResult => {
+        this._ShipmentPMService.getSingleByForwarderShipmentNumber(ForwarderShipmentNumber).subscribe((MyResult:any) => {
             if (MyResult.Result) {
                 this.EntityPm = MyResult.Result;
                 this._ShipmentAdditionalCloudDataService.get(this.EntityPm.Id).subscribe((AdditionalResult:any) => {

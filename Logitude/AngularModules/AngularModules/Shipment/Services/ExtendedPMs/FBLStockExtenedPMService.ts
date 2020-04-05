@@ -25,8 +25,6 @@ export class FBLStockExtenedPMService {
     }
 
     GetAllFBLStockPMsByTenant(tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAllFBLStockPMsByTenant?tenant=' + tenant ;
 
@@ -52,8 +50,6 @@ export class FBLStockExtenedPMService {
 
 
     GetAllFBLStockPMsCountByTenant(tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAllFBLStockPMsCountByTenant?tenant=' + tenant;
 
@@ -71,8 +67,6 @@ export class FBLStockExtenedPMService {
     }
 
     GetFBLStockPMsByTenant(tenant: number, pageSize: number, pageIndex: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetFBLStockPMsByTenant?tenant=' + tenant + '&pageSize=' + pageSize + '&pageIndex=' + pageIndex;
 
@@ -98,8 +92,6 @@ export class FBLStockExtenedPMService {
 
 
     CreateFBLStocksOperation( myStartNumber: number, myEndNumber: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetCreateFBLStocksOperation?myStartNumber=' + myStartNumber + '&myEndNumber=' + myEndNumber;
 
@@ -117,8 +109,6 @@ export class FBLStockExtenedPMService {
 
 
     DeleteFBLStocksOperation(myStackId: string, isDeletingSeries: boolean) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetDeleteFBLStocksOperation?myStackId=' + myStackId  + '&isDeletingSeries=' + isDeletingSeries;
 
@@ -135,8 +125,6 @@ export class FBLStockExtenedPMService {
     }
 
     GetAllAvailableStockSeries() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAllAvailableStockSeries';
 

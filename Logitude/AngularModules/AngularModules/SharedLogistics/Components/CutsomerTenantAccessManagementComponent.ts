@@ -108,7 +108,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     }
 
     LoadLastCustomerRequest() {
-        this._sharedLogisticsService.GetLastCustomerRequest(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._sharedLogisticsService.GetLastCustomerRequest(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.LastCustomerRequestList = pmResponse.Result;
@@ -147,7 +147,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
 
     loadCustomerRequestStatusData() {
-        this._sharedLogisticsService.getCustomerTenantAccessRequestStatusCount(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._sharedLogisticsService.getCustomerTenantAccessRequestStatusCount(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

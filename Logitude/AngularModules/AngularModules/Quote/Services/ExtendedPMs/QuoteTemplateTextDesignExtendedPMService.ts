@@ -1,6 +1,7 @@
-﻿
+
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -18,27 +19,24 @@ import {QuoteTemplateTextDesignPM} from '../../EntityPMs/QuoteTemplateTextDesign
 @Injectable()
 
 export class QuoteTemplateTextDesignExtendedPMService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuoteTemplateTextDesignExtended';
     }
 
 
     updateQuoteTemplateTextDesignPMs(quoteTemplateTextDesignPMs: any) {
         return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
+
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.put(this._apiUrl + '/PutQuoteTemplateTextDesignPMs', JSON.stringify(quoteTemplateTextDesignPMs),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
-                    return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+            return this._http.put(this._apiUrl + '/PutQuoteTemplateTextDesignPMs', JSON.stringify(quoteTemplateTextDesignPMs), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var pm = res;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         );
 
@@ -47,11 +45,10 @@ export class QuoteTemplateTextDesignExtendedPMService {
   
     GetQuoteTemplateTextDesignPMListByIds(ids: string, tenant: number) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetQuoteTemplateTextDesignPMListByIds/?' + 'ids=' + ids + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result = response.json();
+        return this._http.get(this._apiUrl + '/GetQuoteTemplateTextDesignPMListByIds/?' + 'ids=' + ids + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+            var result: any = response;
             var entity: QuoteTemplateTextDesignPM;
 
            var quoteTemplateTextDesignPMLists = new Array<QuoteTemplateTextDesignPM>();
@@ -66,7 +63,7 @@ export class QuoteTemplateTextDesignExtendedPMService {
 
             pmresponse.Result = quoteTemplateTextDesignPMLists;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 
 

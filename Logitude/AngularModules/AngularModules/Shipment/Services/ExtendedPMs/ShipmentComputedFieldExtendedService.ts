@@ -24,8 +24,6 @@ export class ShipmentComputedFieldExtendedService {
 
  
     GetMarkCompleteDepositionRequest(id: string, directionId: string, forwardershipmentNumber: string, forwarderPartnerId:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetMarkCompleteDepositionRequest?id=' + id + "&directionId=" + directionId  + "&forwardershipmentNumber=" + forwardershipmentNumber + "&forwarderPartnerId=" + forwarderPartnerId ;
 
