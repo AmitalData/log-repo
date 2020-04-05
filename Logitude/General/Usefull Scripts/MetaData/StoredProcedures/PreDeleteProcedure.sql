@@ -1,4 +1,6 @@
-
+IF OBJECT_ID('[dbo].[usp_PreDeleteMetadata]', 'P') IS NOT NULL
+drop PROCEDURE [dbo].[usp_PreDeleteMetadata]
+GO
 create PROCEDURE [dbo].[usp_PreDeleteMetadata]
 (
     @pTableName    varchar(50)

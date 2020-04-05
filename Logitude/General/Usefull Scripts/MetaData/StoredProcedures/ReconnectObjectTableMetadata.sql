@@ -1,4 +1,6 @@
-
+IF OBJECT_ID('[dbo].[usp_ReconnectObjectTableMetadata]', 'P') IS NOT NULL
+drop PROCEDURE [dbo].[usp_ReconnectObjectTableMetadata]
+GO
 create PROCEDURE [dbo].[usp_ReconnectObjectTableMetadata]
 (
     @pTableName    varchar(50)

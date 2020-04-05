@@ -1,6 +1,9 @@
---MetaData All Scripts: Never Apply these scripts
---drop procedure [dbo].[usp_ObjectTableMetadata]
-alter PROCEDURE [dbo].[usp_DeleteObjectTableMetadata]
+
+IF OBJECT_ID('[dbo].[usp_DeleteObjectTableMetadata]', 'P') IS NOT NULL
+drop PROCEDURE [dbo].[usp_DeleteObjectTableMetadata]
+GO
+
+create PROCEDURE [dbo].[usp_DeleteObjectTableMetadata]
 (
     @pTableName    varchar(50)
 )

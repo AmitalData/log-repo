@@ -2239,7 +2239,6 @@
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.cs" />
     <Compile Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.Designer.cs">
       <DependentUpon>202003281703184_GLAccountInternalNumberConstraintMigration.cs</DependentUpon>
@@ -2272,16 +2271,17 @@
     <Compile Include="Migrations\202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.Designer.cs">
       <DependentUpon>202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202004011108190_Mutaz_AddIsCancelToInterestTransaction.cs" />
     <Compile Include="Migrations\202004011108190_Mutaz_AddIsCancelToInterestTransaction.Designer.cs">
       <DependentUpon>202004011108190_Mutaz_AddIsCancelToInterestTransaction.cs</DependentUpon>
     </Compile>
-
-
     <Compile Include="Migrations\202002260601502_objecttable_hashstring.cs" />
     <Compile Include="Migrations\202002260601502_objecttable_hashstring.Designer.cs">
       <DependentUpon>202002260601502_objecttable_hashstring.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004050837450_adding_Metadata_StoredProcedures.cs" />
+    <Compile Include="Migrations\202004050837450_adding_Metadata_StoredProcedures.Designer.cs">
+      <DependentUpon>202004050837450_adding_Metadata_StoredProcedures.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
@@ -4089,7 +4089,6 @@
     <EmbeddedResource Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.resx">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.resx">
       <DependentUpon>202003281703184_GLAccountInternalNumberConstraintMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -4105,7 +4104,6 @@
     <EmbeddedResource Include="Migrations\202003311235295_clearthingsup.resx">
       <DependentUpon>202003311235295_clearthingsup.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202004020720465_WesamIncreaseScreenNameLength.resx">
       <DependentUpon>202004020720465_WesamIncreaseScreenNameLength.cs</DependentUpon>
     </EmbeddedResource>
@@ -4115,14 +4113,14 @@
     <EmbeddedResource Include="Migrations\202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.resx">
       <DependentUpon>202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202004011108190_Mutaz_AddIsCancelToInterestTransaction.resx">
       <DependentUpon>202004011108190_Mutaz_AddIsCancelToInterestTransaction.cs</DependentUpon>
     </EmbeddedResource>
-
-
     <EmbeddedResource Include="Migrations\202002260601502_objecttable_hashstring.resx">
       <DependentUpon>202002260601502_objecttable_hashstring.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004050837450_adding_Metadata_StoredProcedures.resx">
+      <DependentUpon>202004050837450_adding_Metadata_StoredProcedures.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
