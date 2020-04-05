@@ -270,13 +270,13 @@ export class FieldTemplateComponent {
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowCFIUFILEFromDeclarationReferantDataList",
                 "CFIHMAIN.LogitudeTask",
-                "ShowCFIUFILEFromDeclarationReferantData",
+                "ShowCustomFileOPCFromDeclaration",
                 unifreightMessageM,
                 " הצגת מסך :הזנת תיק כללי עמילות מכס");
 
         }
         else {
-            alert("ShowCFIUFILEFromDeclarationReferantData");
+            alert("ShowCustomFileOPCFromDeclaration");
         }
 
     }
