@@ -2247,9 +2247,9 @@
     <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.Designer.cs">
       <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202003311053018_UpdateQBOOAuth2TkensLengths_Maheera.cs" />
-    <Compile Include="Migrations\202003311053018_UpdateQBOOAuth2TkensLengths_Maheera.Designer.cs">
-      <DependentUpon>202003311053018_UpdateQBOOAuth2TkensLengths_Maheera.cs</DependentUpon>
+    <Compile Include="Migrations\202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.cs" />
+    <Compile Include="Migrations\202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.Designer.cs">
+      <DependentUpon>202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
@@ -4060,8 +4060,8 @@
     <EmbeddedResource Include="Migrations\202003290823147_UsersLayoutDirectionMigration.resx">
       <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202003311053018_UpdateQBOOAuth2TkensLengths_Maheera.resx">
-      <DependentUpon>202003311053018_UpdateQBOOAuth2TkensLengths_Maheera.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.resx">
+      <DependentUpon>202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
