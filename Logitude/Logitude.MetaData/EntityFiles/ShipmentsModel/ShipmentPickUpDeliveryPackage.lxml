@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment PickUp Delivery Package&quot;"
-  Code="&quot;fe2e&quot;"
+  Code="&quot;3827&quot;"
   Name="&quot;ShipmentPickUpDeliveryPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -1997,15 +1997,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Screen
-    Name="&quot;ShipmentPickUpDeliveryPackageHeaderScreen&quot;"
-    ObjectTableName="&quot;ShipmentPickUpDeliveryPackage&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
