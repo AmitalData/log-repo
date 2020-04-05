@@ -16,8 +16,6 @@ export class INTRAWebService {
     }
 
     Send(myShipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetMessageResult?myShipmentId=' + myShipmentId;
 
@@ -43,8 +41,6 @@ export class INTRAWebService {
         });
     }
     Validate(myShipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetMessageResultValidate?myShipmentId=' + myShipmentId;
 
@@ -70,8 +66,6 @@ export class INTRAWebService {
         });
     }
     GetContainerStatuses(ShipmentId: string, ContainerId:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetContainerStatuses?ShipmentId=' + ShipmentId + '&ContainerId=' + ContainerId;
 
@@ -88,8 +82,6 @@ export class INTRAWebService {
     }
 
     ReadFTP() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetReadFTPFolder';
 
@@ -112,10 +104,6 @@ export class INTRAWebService {
     Simulate(entity: INTTRASimulator) {
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
             var mappedEntity: INTTRASimulator = this.MapJsonToINTTRASimulator(entity, false);
 
             return this._httpClient.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
@@ -132,8 +120,6 @@ export class INTRAWebService {
     }
 
     SendEBooking(myShipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetSendEBooking?myShipmentId=' + myShipmentId;
 
@@ -159,8 +145,6 @@ export class INTRAWebService {
         });
     }
     ValidateBooking(myShipmentId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetBookingMessageResultValidate?myShipmentId=' + myShipmentId;
 

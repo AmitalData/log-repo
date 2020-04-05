@@ -159,7 +159,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public  GetFullAccountingSettings() {
 
 
-        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe((myResult:any) => {
                 var myResponse: ServiceResponse = myResult;
                 if (myResponse != null) {
 
@@ -220,7 +220,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private IsTaxUpdated = false;
     private LoadTaxPercentage() {
         if (this.IsFullAccounting) {
-            this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe(myResult => {
+            this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
@@ -734,7 +734,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
         else {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.CardListService.getSingle(this.EntityPM.VendorId).subscribe(myResult => {
+            this.CardListService.getSingle(this.EntityPM.VendorId).subscribe((myResult:any) => {
                 var myResponse: ServiceResponse = myResult;
                 this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
@@ -794,7 +794,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.GLAccountId)
         {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this._GLAccountListService.getSingle(this.GLAccountId).subscribe(myResult => {
+            this._GLAccountListService.getSingle(this.GLAccountId).subscribe((myResult:any) => {
                 console.log("[_GLAccountListService.getSingle]", myResult);
                 this.CurrentSession.StopBusyIndicator();
 

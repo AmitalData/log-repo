@@ -21,14 +21,14 @@
   <Column
     Name="QBOAccessToken"
     Type="nvarchar"
-    Size="200">
+    Size="4096">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="QBOAccessTokenSecret"
     Type="nvarchar"
-    Size="200">
+    Size="4096">
     <Constraints
       Nullable="true" />
   </Column>
@@ -284,12 +284,6 @@
   </Column>
   <Column
     Name="AllowRegionalTaxManagement"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="EnableAPPaymentExternalPayment"
     Type="bit">
     <Constraints
       Nullable="false" />

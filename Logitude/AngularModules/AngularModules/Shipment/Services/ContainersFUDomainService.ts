@@ -17,8 +17,6 @@ export class ContainersFUDomainService {
     }
 
     GetQueriesCounts() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetQueriesCounts';
 
