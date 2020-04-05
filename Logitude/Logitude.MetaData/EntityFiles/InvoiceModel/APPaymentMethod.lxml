@@ -42,7 +42,9 @@
   HasShortTitle="false"
   HasMenuButtons="false"
   HasFiltersMenu="false"
-  Code="&quot;PPYM&quot;">
+  Code="&quot;PPYM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;b346b56e-a903-441b-a98a-d837da562417&quot;"
     FieldName="&quot;Id&quot;"
@@ -63,7 +65,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;7c228f16-304f-445c-9f95-e4dbf1f87da9&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -154,7 +157,7 @@
     FieldsDataType="&quot;Text&quot;"
     Code="&quot;Name&quot;"
     DataTypeCode="&quot;Text&quot;"
-    MaxLength="20"
+    MaxLength="40"
     IsRequiered="true"
     IsCustom="false"
     MinLength="0"
@@ -215,7 +218,7 @@
     Id="&quot;7bbe690c-3ed8-484e-b5f9-97b3b7066bc2&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;APPaymentMethod&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     Code="&quot;SearchFields&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
@@ -278,7 +281,7 @@
     FieldsDataType="&quot;Boolean&quot;"
     Code="&quot;AddedManually&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="2"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -341,7 +344,7 @@
     FieldsDataType="&quot;Boolean&quot;"
     Code="&quot;Inactive&quot;"
     DataTypeCode="&quot;Text&quot;"
-    MaxLength="2"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -416,7 +419,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <Query
     Code="&quot;All AP Payment Methods&quot;"
     ObjectTableName="&quot;APPaymentMethod&quot;"

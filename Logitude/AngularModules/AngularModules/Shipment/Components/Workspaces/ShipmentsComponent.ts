@@ -569,7 +569,7 @@ export class ShipmentsComponent {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = "Operations";
             listArgs.MethodName = MethodName;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
 
@@ -663,7 +663,7 @@ export class ShipmentsComponent {
             listArgs.DisplayTitle = displayName;
             listArgs.BackButtonTitle = "Operations";
             listArgs.ShowViews = false;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
 

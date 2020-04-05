@@ -5,92 +5,101 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
-import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
-import { LocalStorageManager } from '../../../Infrastructure/Utilities/LocalStorageManager';
-import { NumberFormatList } from '../../EntityLists/NumberFormatList';
+import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
+import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
+import {NumberFormatList} from '../../EntityLists/NumberFormatList';
 
 @Injectable()
 
 export class NumberFormatListService {
-    private _http: Http;
-    private _apiUrl: string;
-    public static CachedData: Array<NumberFormatList> = [];
+	private _http: Http;
+    private _apiUrl: string;   
+	public static CachedData: Array<NumberFormatList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/NumberFormatviews';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/numberformatviews';  
     }
 
     getSingle(code: string) {
-
+	    var callTime = new Date();
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
+
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, { headers: authHeader }).map(response => {
-
+            return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
+                headers: authHeader
+            }).map(response => {
                 var list = response.json();
-
+                    
                 var entity: NumberFormatList;
-                if (list) {
-                    entity = this.MapJsonToEntityList(list);
-                }
-
+				if(list)
+				{
+                   entity = this.MapJsonToEntityList(list);
+                }   
                 var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-                serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetSingleList", 'code=' + code);
+                serviceResponse = new ServiceResponse(); 
+                serviceResponse.Result = entity;  
+				serviceResponse.CallTime = callTime;
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetSingleList", 'code=' + code); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });
+        }
+
+        );
     }
 
     getAll() {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getall', { headers: authHeader }).map(response => {
+	   var callTime = new Date();
+	   var authHeader = new Headers();
+       authHeader.append('Token', SessionInfo.Token);
+       return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getall', {
+                headers: authHeader
+            }).map(response => {
 
-                var allLists = response.json();
-                var _mappedListsArray: Array<NumberFormatList> = [];
-                if (allLists) {
-                    for (var key in allLists) {
-                        var entity: NumberFormatList;
-                        entity = this.MapJsonToEntityList(allLists[key]);
-                        _mappedListsArray.push(entity);
-                    }
-                }
+              var allLists = response.json();
+              var _mappedListsArray: Array< NumberFormatList> = [];
+		      if(allLists)
+			  {
+				for (var key in  allLists) {
+				
+				   var entity: NumberFormatList;
+                   entity = this.MapJsonToEntityList(allLists[key]);
+				   _mappedListsArray.push(entity);
 
+				 }
+               }
                 var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = _mappedListsArray;
-                serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetAllLists", "");
+                serviceResponse = new ServiceResponse(); 
+                serviceResponse.Result = _mappedListsArray;  
+				serviceResponse.CallTime = callTime;
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetAll", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });
+        }
+
+        );
     }
 
+	
     getByFilters(filters: ApiQueryFilters) {
 
-        var callTime = new Date();
-
+	   var callTime = new Date();       
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -103,10 +112,11 @@ export class NumberFormatListService {
             if (urlparameters != "?") {
                 urlparameters = urlparameters.concat('&');
             }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
+            if (!ignoreFilter)
+                {
+					propValue = encodeURIComponent(propValue);
+					urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+				}
 
             if (propName == "AdditionalFilters" && propValue.length > 0)
                 addtionalFiltersValues = JSON.stringify(propValue);
@@ -120,248 +130,178 @@ export class NumberFormatListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-
-
-        return Observable.defer(() => {
+        
+		
+	   return Observable.defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array<NumberFormatList> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
+                var _mappedListsArray: Array< NumberFormatList> = [];
+				if(serviceResponse.Result)
+				{
+                for (var key in serviceResponse.Result) {
+				
+				   var entity: NumberFormatList;
+                   entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+				   _mappedListsArray.push(entity);
 
-                        var entity: NumberFormatList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
+				 }
+                }   
 
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
-                serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
-
+                serviceResponse.Result = _mappedListsArray;      
+		        serviceResponse.CallTime = callTime;
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 				
+				            
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });
+        });        
     }
 
     getSingleFromCache(code: string) {
 
-        var callTime = new Date();
-        if (!SessionLocator.UseCachedData) {
+	   var callTime = new Date(); 	    
+		 if (!SessionLocator.UseCachedData) {
             return this.getSingle(code);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var exists = NumberFormatListService.CachedData.filter(a => a.Code === code).length;
-
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-        if (exists === 0) {
+
+        if (NumberFormatListService.CachedData.length > 0) {
+
             return Observable.defer(() => {
-                var cacheKey = "NumberFormat_CachedData_" + SessionLocator.Tenant;
+
+                var filteredData = NumberFormatListService.CachedData.filter(a => a.Code === code)[0];
+				serviceResponse.CallTime = callTime;
+				serviceResponse.Result = filteredData; 
+                return Observable.of(serviceResponse);
+
+            });
+        }
+        else {
+
+            return CachedDataManager.GetClosedTableData("NumberFormat").map(cachedJson=> {
+
                 var _mappedListsArray: Array<NumberFormatList> = [];
-                var cachedString = LocalStorageManager.GetItem(cacheKey);
-                if (cachedString) {
-                    var cachedJson = JSON.parse(cachedString);
+                if (cachedJson) {
                     for (var key in cachedJson) {
 
                         var entity: NumberFormatList;
                         entity = this.MapJsonToEntityList(cachedJson[key]);
                         _mappedListsArray.push(entity);
+
                     }
-
-                    NumberFormatListService.CachedData = _mappedListsArray;
-                    serviceResponse = new ServiceResponse();
-
-                    var filteredData = NumberFormatListService.CachedData.filter(a => a.Code === code)[0];
-                    serviceResponse.Result = filteredData;
-                    serviceResponse.CallTime = callTime;
-
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "NumberFormat", "GetSingleListFromCache", 'code=' + code);
-
-
-                    return Observable.of(serviceResponse);
-
-
                 }
-                else {
 
-                    return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, {
-                        headers: authHeader
-                    }).map(response => {
-                        var list = response.json();
+                NumberFormatListService.CachedData = _mappedListsArray;
 
-                        var entity: NumberFormatList;
-                        if (list) {
-                            entity = this.MapJsonToEntityList(list);
-                        }
+                var filteredData = NumberFormatListService.CachedData.filter(a => a.Code === code)[0];
+				serviceResponse.Result = filteredData; 
+				serviceResponse.CallTime = callTime;
+			     
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "NumberFormat", "GetSingleListFromCache", 'code=' + code); 
 
-                        serviceResponse.Result = entity;
-                        serviceResponse.CallTime = callTime;
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetSingleList", 'code=' + code);
+                return serviceResponse;
 
-                        return serviceResponse;
-                    }).catch(ServiceHelper.HandleServiceError);
-                }
-            }
+            }).catch(ServiceHelper.HandleServiceError);
 
-            );
         }
-        else {
-            var filteredData = NumberFormatListService.CachedData.filter(a => a.Code === code)[0];
-            serviceResponse.Result = filteredData;
-            serviceResponse.CallTime = callTime;
-            return Observable.of(serviceResponse);
-        }
+
     }
 
-    getAllFromCache(filters: ApiQueryFilters = new ApiQueryFilters(true)) {
+    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
 
-        var callTime = new Date();
-        if (!SessionLocator.UseCachedData) {
+	     var callTime = new Date(); 	           
+		 if (!SessionLocator.UseCachedData) {
             return this.getByFilters(filters);
         }
 
-        var exists = NumberFormatListService.CachedData.length;
-        var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
         for (var i in mykeys) {
             var propName = mykeys[i];
             var propValue = filters[propName];
-
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter) {
-                if (exists === 0 || filters.ForceCacheRefresh) {
-                    propValue = encodeURIComponent(propValue);
-                }
-
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
-
             if (propName == "AdditionalFilters" && propValue.length > 0)
                 addtionalFiltersValues = JSON.stringify(propValue);
-
-
-        }
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
 
+        if (NumberFormatListService.CachedData.length > 0) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callUrl = this._apiUrl.concat(urlparameters);//
+            return Observable.defer(() => {
+                if(filters.GetAll)
+				{
+					serviceResponse.Result = NumberFormatListService.CachedData; 
+				}
+				else
+				{
+					var filteredData = InfraGenericFilter.GetFilteredArray(NumberFormatListService.CachedData, filters);
+					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
+				}
+                return Observable.of(serviceResponse);
 
+            });
+        }
+        else {
 
-        if (exists === 0 || filters.ForceCacheRefresh) {
-            var cacheKey = "NumberFormat_CachedData_" + filters.Tenant;
-            var _mappedListsArray: Array<NumberFormatList> = [];
-            var serviceResponse: ServiceResponse;
+            return CachedDataManager.GetClosedTableData("NumberFormat").map(cachedJson=> {
 
-            if (!filters.ForceCacheRefresh) {
-                var cachedString = LocalStorageManager.GetItem(cacheKey);
-                if (cachedString) {
-                    var cachedJson = JSON.parse(cachedString);
+                var _mappedListsArray: Array<NumberFormatList> = [];
+                if (cachedJson) {
                     for (var key in cachedJson) {
 
                         var entity: NumberFormatList;
                         entity = this.MapJsonToEntityList(cachedJson[key]);
                         _mappedListsArray.push(entity);
+
                     }
-
-                    NumberFormatListService.CachedData = _mappedListsArray;
-                    serviceResponse = new ServiceResponse();
-                    if (!filters.GetAll) {
-                        _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-                    }
-                    serviceResponse.Result = _mappedListsArray;
-                    serviceResponse.CallTime = callTime;
-
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "NumberFormat", "GetAllFromCache", "");
-
-
                 }
-            }
-            if (serviceResponse) {
-                return Observable.of(serviceResponse);
-            }
-            else {
-                return Observable.defer(() => {
-                    return this._http.get(callUrl, {
-                        headers: authHeader
-                    }).map(response => {
 
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = response.json();
 
-                        if (serviceResponse.Result) {
-                            for (var key in serviceResponse.Result) {
 
-                                var entity: NumberFormatList;
-                                entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                                _mappedListsArray.push(entity);
+                NumberFormatListService.CachedData = _mappedListsArray;
+                if(filters.GetAll)
+				{
+					serviceResponse.Result = _mappedListsArray; 
+				}
+				else
+				{
+							
+					_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-                            }
-                        }
-                        if (filters.GetAll) {
-                            LocalStorageManager.SetItem(cacheKey, JSON.stringify(_mappedListsArray))
-                            NumberFormatListService.CachedData = _mappedListsArray;
-                        }
-                        else {
+							      
+			   
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "NumberFormat", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 	
+					serviceResponse.Result = _mappedListsArray; 
+					serviceResponse.CallTime = callTime;
+				}
+                return serviceResponse;
 
-                            _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-                        }
-                        serviceResponse.Result = _mappedListsArray;
-                        serviceResponse.CallTime = callTime;
+            }).catch(ServiceHelper.HandleServiceError);
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "NumberFormat", "GetAll", "");
-
-                        return serviceResponse;
-                    }).catch(ServiceHelper.HandleServiceError);
-                });
-            }
-        }
-        else {
-            var filteredData = NumberFormatListService.CachedData;
-            if (!filters.GetAll) {
-
-                filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
-            }
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            serviceResponse.Result = filteredData;
-            serviceResponse.CallTime = callTime;
-
-            return Observable.of(serviceResponse);
-        }
+        }		 
     }
+	
+	    MapJsonToEntityList(jsonList: any) {
+       
+            var entityList: NumberFormatList;
+            entityList = new NumberFormatList();
+            var jsonListKeys = Object.keys(jsonList);
 
-    MapJsonToEntityList(jsonList: any) {
-
-        var entityList: NumberFormatList;
-        entityList = new NumberFormatList();
-        var jsonListKeys = Object.keys(jsonList);
-
-        for (var key in jsonListKeys) {
-            var property = jsonListKeys[key];
-            entityList[property] = jsonList[property];
-        }
-
+            for (var key in jsonListKeys) {
+                var property = jsonListKeys[key];
+                entityList[property] = jsonList[property];
+            }
+			
 
         return entityList;
     }

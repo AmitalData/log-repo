@@ -22,7 +22,7 @@
 
                                 <div class="ToggleButtonMenu">
                                     <button *ngIf="IsDownloadExcelTemplateVisible" (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
-                                    <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
+                                    <button *ngIf="IsDownloadExcelTemplateVisible" (click)="DownloadExcelClicked('Data')">Download Excel</button>
                                     <button (click)="CopyVersionClicked()">Copy into new Version</button>
                                     <button *ngIf="IsAllInChargesVisible" (click)="AllInChargesClicked()">All-In Charges</button>
                                 </div>
@@ -49,120 +49,149 @@
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource">
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.OriginPortCode}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span *ngIf="EntityPM.TypeCode == 'AFC'">{{item.OriginPortCode}}</span>
+                                                    <span *ngIf="EntityPM.TypeCode == 'OLC'">{{item.OriginPortCombinedCode}}</span>
+
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.DestinationPortCode}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span *ngIf="EntityPM.TypeCode == 'AFC'">{{item.DestinationPortCode}}</span>
+                                                    <span *ngIf="EntityPM.TypeCode == 'OLC'">{{item.DestinationPortCombinedCode}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- ExpirationDate -->
                                     <log-column [header]="'TariffLine.F.ExpirationDate' | TextCodeTranslationPipe" [width]="'120'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- MinPrice -->
                                     <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Step1Price -->
                                     <log-column *ngIf="Step1PriceVisibility" [header]="Step1PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Step1Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Step1Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Step2Price -->
                                     <log-column *ngIf="Step2PriceVisibility" [header]="Step2PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Step2Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Step2Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Step3Price -->
                                     <log-column *ngIf="Step3PriceVisibility" [header]="Step3PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Step3Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Step3Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Step4Price -->
                                     <log-column *ngIf="Step4PriceVisibility" [header]="Step4PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Step4Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Step4Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Step5Price -->
                                     <log-column *ngIf="Step5PriceVisibility" [header]="Step5PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Step5Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Step5Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Step6Price -->
                                     <log-column *ngIf="Step6PriceVisibility" [header]="Step6PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Step6Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Step6Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Step7Price -->
                                     <log-column *ngIf="Step7PriceVisibility" [header]="Step7PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Step7Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Step7Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Step8Price -->
                                     <log-column *ngIf="Step8PriceVisibility" [header]="Step8PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Step8Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Step8Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Notes -->
                                     <log-column [width]="'40'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div style="height: 100%; width: 100%; left:5px;">
-                                                <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
-                                                <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div style="height: 100%; width: 100%; left:5px;">
+                                                    <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
+                                                    <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
                                 </logitude-edit-grid>
                             </div>
@@ -172,243 +201,297 @@
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource">
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.OriginPortCode}}</span>
-                                                <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
-                                                    <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Ports" />
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span *ngIf="EntityPM.TypeCode == 'ASC'">{{item.OriginPortCode}}</span>
+                                                    <span *ngIf="EntityPM.TypeCode == 'OSC'">{{item.OriginPortCombinedCode}}</span>
+                                                    <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
+                                                        <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Ports" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.DestinationPortCode}}</span>
-                                                <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
-                                                    <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span *ngIf="EntityPM.TypeCode == 'ASC'">{{item.DestinationPortCode}}</span>
+                                                    <span *ngIf="EntityPM.TypeCode == 'OSC'">{{item.DestinationPortCombinedCode}}</span>
+                                                    <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
+                                                        <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Currency -->
                                     <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.CurrencyCode}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.CurrencyCode}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- StartDate -->
                                     <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.StartDate | DateTimePipe:'SD'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.StartDate | DateTimePipe:'SD'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- ExpirationDate -->
                                     <log-column [header]="'TariffLine.F.ExpirationDate' | TextCodeTranslationPipe" [width]="'120'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge1MinPrice -->
                                     <log-column *ngIf="Surcharge1MinPriceVisibility" [header]="Surcharge1MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge1MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge1MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge1Price -->
                                     <log-column *ngIf="Surcharge1PriceVisibility" [header]="Surcharge1PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge1Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge1Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge2MinPrice -->
                                     <log-column *ngIf="Surcharge2MinPriceVisibility" [header]="Surcharge2MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge2MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge2MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge2Price -->
                                     <log-column *ngIf="Surcharge2PriceVisibility" [header]="Surcharge2PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge2Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge2Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge3MinPrice -->
                                     <log-column *ngIf="Surcharge3MinPriceVisibility" [header]="Surcharge3MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge3MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge3MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge3Price -->
                                     <log-column *ngIf="Surcharge3PriceVisibility" [header]="Surcharge3PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge3Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge3Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge4MinPrice -->
                                     <log-column *ngIf="Surcharge4MinPriceVisibility" [header]="Surcharge4MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge4MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge4MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge4Price -->
                                     <log-column *ngIf="Surcharge4PriceVisibility" [header]="Surcharge4PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge4Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge4Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge5MinPrice -->
                                     <log-column *ngIf="Surcharge5MinPriceVisibility" [header]="Surcharge5MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge5MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge5MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge5Price -->
                                     <log-column *ngIf="Surcharge5PriceVisibility" [header]="Surcharge5PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge5Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge5Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge6MinPrice -->
                                     <log-column *ngIf="Surcharge6MinPriceVisibility" [header]="Surcharge6MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge6MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge6MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge6Price -->
                                     <log-column *ngIf="Surcharge6PriceVisibility" [header]="Surcharge6PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge6Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge6Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge7MinPrice -->
                                     <log-column *ngIf="Surcharge7MinPriceVisibility" [header]="Surcharge7MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge7MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge7MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge7Price -->
                                     <log-column *ngIf="Surcharge7PriceVisibility" [header]="Surcharge7PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge7Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge7Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge8MinPrice -->
                                     <log-column *ngIf="Surcharge8MinPriceVisibility" [header]="Surcharge8MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge8MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge8MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge8Price -->
                                     <log-column *ngIf="Surcharge8PriceVisibility" [header]="Surcharge8PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge8Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge8Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge9MinPrice -->
                                     <log-column *ngIf="Surcharge9MinPriceVisibility" [header]="Surcharge9MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge9MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge9MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge9Price -->
                                     <log-column *ngIf="Surcharge9PriceVisibility" [header]="Surcharge9PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge9Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge9Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge10MinPrice -->
                                     <log-column *ngIf="Surcharge10MinPriceVisibility" [header]="Surcharge10MinPriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge10MinPrice | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge10MinPrice | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge10Price -->
                                     <log-column *ngIf="Surcharge10PriceVisibility" [header]="Surcharge10PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge10Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge10Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Notes -->
                                     <log-column [width]="'40'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div style="height: 100%; width: 100%; left:5px;">
-                                                <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
-                                                <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div style="height: 100%; width: 100%; left:5px;">
+                                                    <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
+                                                    <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -419,84 +502,102 @@
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource">
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.OriginPortCode}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.OriginPortCombinedCode}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.DestinationPortCode}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.DestinationPortCombinedCode}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- ExpirationDate -->
                                     <log-column [header]="'TariffLine.F.ExpirationDate' | TextCodeTranslationPipe" [width]="'120'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Container1Price -->
                                     <log-column *ngIf="Container1PriceVisibility" [header]="Container1PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge1Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge1Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Container2Price -->
                                     <log-column *ngIf="Container2PriceVisibility" [header]="Container2PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge2Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge2Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Container3Price -->
                                     <log-column *ngIf="Container3PriceVisibility" [header]="Container3PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge3Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge3Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Container4Price -->
                                     <log-column *ngIf="Container4PriceVisibility" [header]="Container4PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge4Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge4Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Container5Price -->
                                     <log-column *ngIf="Container5PriceVisibility" [header]="Container5PriceLabel" [width]="'100'" [Alignment]="'center'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span>{{item.Surcharge5Price | NumbersPipe:'N3'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    <span>{{item.Surcharge5Price | NumbersPipe:'N3'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Notes -->
                                     <log-column [width]="'40'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div style="height: 100%; width: 100%; left:5px;">
-                                                <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
-                                                <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div style="height: 100%; width: 100%; left:5px;">
+                                                    <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
+                                                    <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
                                 </logitude-edit-grid>
                             </div>
@@ -507,174 +608,208 @@
 
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.OriginPortCode}}</span>
-                                                <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
-                                                    <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Ports" />
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.OriginPortCombinedCode}}</span>
+                                                    <div style="height: 100%; width: 100%;" *ngIf="item.IsFromAllOtherPorts">
+                                                        <img src="./Images/Icons/A-icon.png" width="16" height="16" title="From All Other Ports" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.DestinationPortCode}}</span>
-                                                <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
-                                                    <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.DestinationPortCombinedCode}}</span>
+                                                    <div style="height: 100%; width: 100%;" *ngIf="item.IsToAllOtherPorts">
+                                                        <img src="./Images/Icons/A-icon.png" width="16" height="16" title="To All Other Ports" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Currency -->
                                     <log-column [header]="'TariffLine.F.CurrencyId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.CurrencyCode}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.CurrencyCode}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- StartDate -->
                                     <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.StartDate | DateTimePipe:'SD'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.StartDate | DateTimePipe:'SD'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- ExpirationDate -->
                                     <log-column [header]="'TariffLine.F.ExpirationDate' | TextCodeTranslationPipe" [width]="'120'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                    <span>{{item.ExpirationDate | DateTimePipe:'SD'}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge1Price -->
                                     <log-column *ngIf="Surcharge1PriceVisibility" [Alignment]="'center'" [header]="Surcharge1PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge1PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge1PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge2Price -->
                                     <log-column *ngIf="Surcharge2PriceVisibility" [Alignment]="'center'" [header]="Surcharge2PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge2PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge2PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge3Price -->
                                     <log-column *ngIf="Surcharge3PriceVisibility" [Alignment]="'center'" [header]="Surcharge3PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge3PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge3PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge4Price -->
                                     <log-column *ngIf="Surcharge4PriceVisibility" [Alignment]="'center'" [header]="Surcharge4PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge4PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge4PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge5Price -->
                                     <log-column *ngIf="Surcharge5PriceVisibility" [Alignment]="'center'" [header]="Surcharge5PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge5PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge5PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge6Price -->
                                     <log-column *ngIf="Surcharge6PriceVisibility" [Alignment]="'center'" [header]="Surcharge6PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge6PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge6PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge7Price -->
                                     <log-column *ngIf="Surcharge7PriceVisibility" [Alignment]="'center'" [header]="Surcharge7PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge7PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge7PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge8Price -->
                                     <log-column *ngIf="Surcharge8PriceVisibility" [Alignment]="'center'" [header]="Surcharge8PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge8PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge8PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge9Price -->
                                     <log-column *ngIf="Surcharge9PriceVisibility" [Alignment]="'center'" [header]="Surcharge9PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge9PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge9PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Surcharge10Price -->
                                     <log-column *ngIf="Surcharge10PriceVisibility" [Alignment]="'center'" [header]="Surcharge10PriceLabel_FCL" [width]="'180'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                {{item.Surcharge10PriceValue}}
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                    {{item.Surcharge10PriceValue}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Notes -->
                                     <log-column [width]="'40'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                                            <div style="height: 100%; width: 100%; left:5px;">
-                                                <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
-                                                <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
-                                            </div>
-                                        </log-cell-template>
+                                        <ng-template let-item>
+                                            <log-cell-template    #logcelltemplate [IsEnabled]="false">
+                                                <div style="height: 100%; width: 100%; left:5px;">
+                                                    <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
+                                                    <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Tools Button -->
                                     <log-column [width]="'80'" [Editable]="true" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <div style="width: 100%; height: 100%; position: relative;">
-                                                <div class="LeftCenter" style="height: 20px;">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width: 4px;">
-                                                                <span class="CellSeparator"></span>
-                                                            </td>
-                                                            <td>
-                                                                <IconButton [IsEnabled]="IsDraftVersion" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditTariffButtonClicked(item)"></IconButton>
-                                                                <IconButton [IsEnabled]="IsDraftVersion" [Left]="3" [Name]="'delete'" [IsSmall]="true" (click)="DeleteTariffButtonClicked(item)"></IconButton>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true"    #logcelltemplate>
+                                                <div style="width: 100%; height: 100%; position: relative;">
+                                                    <div class="LeftCenter" style="height: 20px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 4px;">
+                                                                    <span class="CellSeparator"></span>
+                                                                </td>
+                                                                <td>
+                                                                    <IconButton [IsEnabled]="IsDraftVersion" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditTariffButtonClicked(item)"></IconButton>
+                                                                    <IconButton [IsEnabled]="IsDraftVersion" [Left]="3" [Name]="'delete'" [IsSmall]="true" (click)="DeleteTariffButtonClicked(item)"></IconButton>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </log-cell-template>
+                                            </log-cell-template>
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

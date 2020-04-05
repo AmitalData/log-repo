@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityLists;
+using Logitude.Infrastructure.Data.EntityMapping;
+using Logitude.Infrastructure.Data.Repsitories;
 
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
 {
@@ -19,7 +21,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
     {
         private IQueryable<BIReportList> GetIqueryableList(IQueryable<BIReport> iQueryable)
         {
-            IQueryable<BIReportList> query = (from a in iQueryable.Include("UpdatedByUser").Include("UpdatedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact")
+            IQueryable<BIReportList> query = (from a in iQueryable.Include("UpdatedByUser").Include("UpdatedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("LastRunDetail")
                                               select new BIReportList()
                                               {
                                                   Id = a.Id,
@@ -38,8 +40,8 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                   BIReportFolderId = a.BIReportFolderId,
                                                   UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
                                                   CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
-                                                  LastRunDate = a.LastRunDate,
-                                                  LastRunByUserName = a.LastRunByUser == null ? null : (a.LastRunByUser.Contact == null ? null : a.LastRunByUser.Contact.EnglishName),
+                                                  LastRunDate = a.LastRunDetail == null ? null : (DateTime?)a.LastRunDetail.LastRunDate,
+                                                  LastRunByUserName = a.LastRunDetail == null ? null : (a.LastRunDetail.LastRunByUser == null ? null : (a.LastRunDetail.LastRunByUser.Contact == null ? null : a.LastRunDetail.LastRunByUser.Contact.EnglishName)),
                                               });
             return query;
         }
@@ -182,6 +184,7 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             int count = query2.Count();
             return count;
         }
+
     }
 }
 	

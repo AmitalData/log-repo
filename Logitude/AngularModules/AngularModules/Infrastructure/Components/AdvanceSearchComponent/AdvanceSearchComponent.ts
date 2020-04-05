@@ -218,7 +218,7 @@ export class AdvanceSearchComponent implements OnInit {
             this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
         }
 
-        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe(myResult => {
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.AdvancedQueryFilterPMs = [];
             }
@@ -579,7 +579,7 @@ export class AdvanceSearchComponent implements OnInit {
 
             var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
             myService.setServiceArgs(this.serviceArgs);
-            myService.insert(advanceFilter).subscribe(myResult => {
+            myService.insert(advanceFilter).subscribe((myResult:any) => {
                 this.AdvancedQueryFilterPMs.push(myResult.Result);
             });
 
@@ -627,7 +627,7 @@ export class AdvanceSearchComponent implements OnInit {
             if (filter) {
                 var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
                 myService.setServiceArgs(this.serviceArgs);
-                myService.delete(filter).subscribe(myResult => {
+                myService.delete(filter).subscribe((myResult:any) => {
                     if (this.SelectedObjectFields != null) {
                         this.SelectedObjectFields = this.SelectedObjectFields.filter(a => a.ObjectField.Id != field.ObjectField.Id);
                     }

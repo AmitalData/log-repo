@@ -2,7 +2,8 @@
 <Table
   Name="QuestionnaireQuestions"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="CRM">
   <Column
     Name="QuestioneerId"
     Type="varchar"

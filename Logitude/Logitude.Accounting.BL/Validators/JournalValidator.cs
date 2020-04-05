@@ -13,10 +13,12 @@ using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -107,7 +109,12 @@ namespace Logitude.Accounting.BL.Validators
             decimal creditTotal = 0;
             decimal debitTotal = 0;
 
-
+            bool debugit = false;
+            if (debugit)
+            {
+                var serializedObject = ProxyUtil.JsonConvertSerialize(myJournalPM);
+                Debug.WriteLine(serializedObject);
+            }
             List<string> errorsList = new List<string>();
 
             bool valid = true;
@@ -422,13 +429,20 @@ namespace Logitude.Accounting.BL.Validators
 
 
                         bool? SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
-                        if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640))
+                        if (true)
                         {
-                            SuppressCheckGLAccountIsMultiCurrencyWI40640 = accountingValidationContextServiceProvider.Items[JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640] as bool?;
+                            SuppressCheckGLAccountIsMultiCurrencyWI40640 = true;//im+yaron - all the time !!
                         }
                         else
                         {
-                            throw new Exception("Dear Programmer U must initialize in context SuppressCheckGLAccountIsMultiCurrencyWI40640");
+                            if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640))
+                            {
+                                SuppressCheckGLAccountIsMultiCurrencyWI40640 = accountingValidationContextServiceProvider.Items[JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640] as bool?;
+                            }
+                            else
+                            {
+                                throw new Exception("Dear Programmer U must initialize in context SuppressCheckGLAccountIsMultiCurrencyWI40640");
+                            }
                         }
 
 

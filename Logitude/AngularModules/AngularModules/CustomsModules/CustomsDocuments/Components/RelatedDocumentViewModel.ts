@@ -128,7 +128,7 @@ export class RelatedDocumentViewModel {
         var customDocumentTypeMetaDataListService: CustomDocumentTypeMetaDataListService = new CustomDocumentTypeMetaDataListService();
         customDocumentTypeMetaDataListService.getAllFromCache().subscribe((res: ServiceResponse) => {
             this.customDocumentTypeMetaDataLists = res.Result;
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomDocumentTypeMetaData").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomDocumentTypeMetaData").subscribe((response:any) => {
 
                 this.customDocumentTypeMetaDataLists = this.customDocumentTypeMetaDataLists.filter(d => d.DocumentTypeCode === this.documentsFilingPM.CustomsDocumentTypeCode);
                 this.DocumentTypeName = this.documentsFilingPM.Description;

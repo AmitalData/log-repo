@@ -15,6 +15,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BookingLib.Data.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -132,6 +133,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 SecuredMapping.GetMappedPM(airline, securedPm, "Airline", tenant);
                 return securedPm;
             }
+
             else
             {
                 return airline;

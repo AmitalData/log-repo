@@ -22,8 +22,8 @@ export class ARInvoiceStockSelectionComponent {
     public StocksLineCount:number;
 
     constructor() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("ARInvoiceStockLine", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("ARInvoiceStockLine", 0).subscribe((response:any) => {
                 this.InitializeServices();
                 this.LoadData();
             });

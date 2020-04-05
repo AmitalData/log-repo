@@ -4,6 +4,7 @@ using Simplog.Server.Infrastructure.Helpers;
 
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using System;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -94,6 +95,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Vendor GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
+        }
+
+        public Vendor GetFirstSingleByName(string name, int tenant)
+        {
+            return (from record in context.Vendors.Include("Card")
+                    where record.Card.EnglishName == name && record.Tenant == tenant
+                    select record).FirstOrDefault();
         }
     }
 }

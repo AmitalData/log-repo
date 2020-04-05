@@ -70,6 +70,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.QBOOAuth).HasColumnName("QBOOAuth");
             this.Property(t => t.RefreshToken).HasColumnName("RefreshToken");
             this.Property(t => t.AllowManualARPaymentNumber).HasColumnName("AllowManualARPaymentNumber");
+            this.Property(t => t.AllowRegionalTaxManagement).HasColumnName("AllowRegionalTaxManagement");
+            this.Property(t => t.EnableAPPaymentExternalPayment).HasColumnName("EnableAPPaymentExternalPayment");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

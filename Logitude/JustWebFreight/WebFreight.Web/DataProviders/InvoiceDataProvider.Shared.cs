@@ -421,7 +421,9 @@ namespace WebFreight.Web.DataProviders
         public string Transshipment1MasterNumber { get; set; }
         public string Transshipment1FromPortName { get; set; }
         public string Transshipment1CarrierName { get; set; }
-
+        public string CustomsClearancePointName { get; set; }
+        public double? ValueOfGoods { get; set; }
+        public string ValueOfGoodsCurrency { get; set; }
         public class InvoicesReport
         {
             public string InvoiceType { get; set; }
@@ -660,6 +662,9 @@ namespace WebFreight.Web.DataProviders
         public double? LocalAmountWithVAT { get; set; }
         public string VATDescription { get; set; }
         public string VATLocalDescription { get; set; }
+        public bool IsRegionalTax { get; set; }
+
+ 
     }
 
     public class TotalVat

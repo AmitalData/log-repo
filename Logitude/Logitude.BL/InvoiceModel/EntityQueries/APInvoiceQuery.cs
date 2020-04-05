@@ -472,6 +472,21 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 if (securedPM != null)
                 {
+                    APInvoice entityPOCO = (from a in repository.context.APInvoices
+                                            where a.Id == entityPM.Id && a.Tenant == tenant
+                                            select a).FirstOrDefault();
+
+                    securedPM.Field1 = new CustomFieldClass("Field1", "APInvoice", entityPOCO.Field1);
+                    securedPM.Field2 = new CustomFieldClass("Field2", "APInvoice", entityPOCO.Field2);
+                    securedPM.Field3 = new CustomFieldClass("Field3", "APInvoice", entityPOCO.Field3);
+                    securedPM.Field4 = new CustomFieldClass("Field4", "APInvoice", entityPOCO.Field4);
+                    securedPM.Field5 = new CustomFieldClass("Field5", "APInvoice", entityPOCO.Field5);
+                    securedPM.Field6 = new CustomFieldClass("Field6", "APInvoice", entityPOCO.Field6);
+                    securedPM.Field7 = new CustomFieldClass("Field7", "APInvoice", entityPOCO.Field7);
+                    securedPM.Field8 = new CustomFieldClass("Field8", "APInvoice", entityPOCO.Field8);
+                    securedPM.Field9 = new CustomFieldClass("Field9", "APInvoice", entityPOCO.Field9);
+                    securedPM.Field10 = new CustomFieldClass("Field10", "APInvoice", entityPOCO.Field10);
+
                     securedPM = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
 
                     if (securedPM == null)
@@ -1047,6 +1062,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              FirstApproveDate = a.FirstApproveDate,
                              BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                              CreatedByPartner = a.CreatedByPartner,
+                             Field1 = a.Field1,
+                             Field2 = a.Field2,
+                             Field3 = a.Field3,
+                             Field4 = a.Field4,
+                             Field5 = a.Field5,
+                             Field6 = a.Field6,
+                             Field7 = a.Field7,
+                             Field8 = a.Field8,
+                             Field9 = a.Field9,
+                             Field10 = a.Field10,
                          };
 
             return result;
@@ -1233,6 +1258,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              FirstApproveDate = a.FirstApproveDate,
                              BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                              CreatedByPartner = a.CreatedByPartner,
+                             Field1 = a.Field1,
+                             Field2 = a.Field2,
+                             Field3 = a.Field3,
+                             Field4 = a.Field4,
+                             Field5 = a.Field5,
+                             Field6 = a.Field6,
+                             Field7 = a.Field7,
+                             Field8 = a.Field8,
+                             Field9 = a.Field9,
+                             Field10 = a.Field10,
                          };
 
             return result;

@@ -26,6 +26,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? AmountInLocalCurrency { get; set; }
         public double? ProfitCurrencyExchangeRate { get; set; }
         public double? AmountInProfitCurrency { get; set; }
+        public DateTime? AccountingCancelationDate { get; set; }
+        public string CancelationNotes { get; set; }
+        public string VoidedByJournalNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
@@ -202,6 +205,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsPaymentNumberManuallySet { get; set; }
 
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field1 { get; set; }
 
@@ -240,6 +244,10 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field10 { get; set; }
+
+
+        public string GLAccountCurrencyCode { get; set; }
+        public string PaymentCurrencySign { get; set; }
 
     }
 }

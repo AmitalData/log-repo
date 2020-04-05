@@ -29,6 +29,18 @@ namespace Logitude.WarehouseLib.Data.Repositories
         }
 
 
+
+        public WarehouseRelease GetWarehouseReleasesByReleaseNumberAndShipmentId(string releaseNumber,string shipmentId, int tenant)
+        {
+            WarehouseRelease myResult = (from a in context.WarehouseReleases
+                                                     where a.ReleaseNumber == releaseNumber && a.Tenant == tenant && a.ShipmentId == shipmentId
+                                         select a).FirstOrDefault();
+            return myResult;
+        }
+
+
+
+
         public List<WarehouseRelease> GetWarehouseReleasesFromIdList(List<string> ids, int tenant)
         {
 

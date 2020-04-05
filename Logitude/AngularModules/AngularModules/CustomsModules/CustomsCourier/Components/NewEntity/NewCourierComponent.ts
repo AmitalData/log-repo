@@ -84,7 +84,7 @@ export class NewCourierComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
 
-            this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.AirlineId, this.HAWB, this.MAWB).subscribe(Result => {
+            this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.AirlineId, this.HAWB, this.MAWB).subscribe((Result:any) => {
                 var mm: ServiceResponse = Result;
                 if (!mm.HasError) {
                     if (!mm.Result) {
@@ -112,7 +112,7 @@ export class NewCourierComponent extends BaseComponent {
 
     SubmitChanges() {
         this.CurrentSession.StartBusyIndicator("");
-        this.CourierMasterPMService.insert(this.EntityPM).subscribe(Result => {
+        this.CourierMasterPMService.insert(this.EntityPM).subscribe((Result:any) => {
 
             var mm: ServiceResponse = Result;
             if (!mm.HasError) {

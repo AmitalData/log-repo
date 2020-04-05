@@ -83,7 +83,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "VatMandatoryType",
-			      				    DBTableName =  "VatMandatoryTypes",
+			      				    DBTableName =  "VatMandatoryType",
 			      				    ObjectTableSingular =  "VAT Mandatory Type",
 			      				    ObjectTablePlural =  "VAT Mandatory Types",
 			      				    DefaultText =  "VAT Mandatory Type",

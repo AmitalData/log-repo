@@ -269,6 +269,12 @@
 
                                             <td style="width: 205px;">
                                                 <table>
+                                                    <tr style="height: 9px;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
                                                     <tr style="height: 20px;">
                                                         <td>
                                                             <LogLabel [ObjectFieldName]="'DescriptionOfGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowWarning]="ShowWarning_DescriptionOfGoods"></LogLabel>
@@ -280,6 +286,22 @@
                                                             <div style="height: 100%;">
                                                                 <LogTextBox [HideColumns]="true" [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                                             </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:50px;">
+                                                                        <LogLabel [ObjectFieldName]="'SLAC'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'SLAC'" [Text]="SLAC" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
                                                     </tr>
 

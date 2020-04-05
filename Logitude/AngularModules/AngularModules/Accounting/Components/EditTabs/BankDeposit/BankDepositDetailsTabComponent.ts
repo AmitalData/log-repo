@@ -1,3 +1,9 @@
+import { BankDepositLineListService } from './../../../Services/StandardLists/BankDepositLineListService';
+import { CashBookExtendedPMService } from './../../../Services/ExtendedPMs/CashBookExtendedPMService';
+import { filter } from 'rxjs/operators';
+import { CashBookLineListService } from './../../../Services/StandardLists/CashBookLineListService';
+import { CashBookListService } from './../../../Services/StandardLists/CashBookListService';
+import { ObservableCollection } from './../../../../Infrastructure/Utilities/ObservableCollection';
 import { ARPaymentChequeList } from './../../../EntityLists/ARPaymentChequeList';
 import { ARPaymentChequeListService } from './../../../Services/StandardLists/ARPaymentChequeListService';
 import {Component}  from '@angular/core';
@@ -22,6 +28,7 @@ import {BankDepositExtendedPMService } from '../../../Services/ExtendedPMs/BankD
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { BankDepositPMService } from '../../../Services/StandardPMs/BankDepositPMService';
+import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 
 @Component({
     moduleId: module.id,
@@ -39,58 +46,100 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     searchText: string = "";
 
     CashBookPM: CashBookPM;
-    BankDepositLines: BankDepositLinePM[];
-    CashBookLines: CashBookLinePM[];
-    BankDepositPMService: BankDepositPMService = new BankDepositPMService();
-    _CashBookPMService: CashBookPMService = new CashBookPMService();
-    ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
-    currencyListService: CurrencyListService = new CurrencyListService();
-    _BankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
-    _ARPaymentChequeListService: ARPaymentChequeListService = new ARPaymentChequeListService();
+    // BankDepositLines: BankDepositLinePM[];
+    CashbookLines: ObservableCollection = new ObservableCollection([]);
+    BankDepositLines: ObservableCollection = new ObservableCollection([]);
 
     public isRTL: boolean = false;
     public IsReturnChequeEnabled: boolean = false;
-
     txt_NewDeposit: string = TextCodeTranslator.Translate("Accounting.General.O.NewDeposit");
     txt_DepositDetails: string = TextCodeTranslator.Translate("Accounting.General.O.DepositDetails");
     private CurrentSession = SessionLocator.SelectedSession;
+
+
+    public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+
+
+    BankDepositPMService: BankDepositPMService = new BankDepositPMService();
+    cashBookPMService: CashBookPMService = new CashBookPMService();
+    cashBookListService: CashBookListService = new CashBookListService();
+    cashBookLineListService: CashBookLineListService = new CashBookLineListService();
+    bankDepositLineListService: BankDepositLineListService = new BankDepositLineListService();
+    ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
+    currencyListService: CurrencyListService = new CurrencyListService();
+    bankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
+    arPaymentChequeListService: ARPaymentChequeListService = new ARPaymentChequeListService();
+    cashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
+
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
         this.EntityPM = entityArgs.EntityPM;
-        if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // selection mode
-            this.IsLinesSelection = true;
-            this.GetCashBook();
-            this.BankDepositLines = this.EntityPM.BankDepositLines;
-            this.BankDepositLines = [];
 
+        if (AppTool.IsNullOrEmpty(this.EntityPM.Id))
+            this.SetSelectionMode();
+        else
+            this.SetViewMode();
 
-        } else { // view mode
-            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
-            this.BankDepositLines = this.EntityPM.BankDepositLines;
-            this.SetUIProperty();
-
-
-            this.CalculateDepositLinesTotal();
-
-            console.log("Deposit: ", this.EntityPM);
-
-        }
 
         this.Listen();
-
-
-        // Dim fields
-        //this.SetUIProperty(); // do it after getting cashbook (isCashDeposit)
-
-
-        // Get Default Value
         this.GetDefaultValues();
+    }
+
+    private SetViewMode()
+    {
+        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
+        this.GetDepositLines();
+        // this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
+        this.SetUIProperty();
+        this.CalculateDepositLinesTotal();
+        console.log("Deposit: ", this.EntityPM);
+    }
+
+    private SetSelectionMode()
+    {
+        this.IsLinesSelection = true;
+        this.GetCashBook();
+        this.GetChequesCounter();
+
+
+        this.BankDepositLines = new ObservableCollection([]);
+    }
+
+    GetDepositLines(){
+
+        this.CurrentSession.StartBusyIndicator("Load Deposit Lines ...");
+        this.bankDepositLineListService.getByFilters(this.GetDeposiutAPIFilters()).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            console.log("[bankDepositLineListService]", response);
+
+            if (!response.HasError) {
+                this.BankDepositLines = new ObservableCollection(response.Result);
+
+            }
+            else {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+            }
+        });
+    }
+
+    private GetDeposiutAPIFilters()
+    {
+        var depositAPIFilters = new ApiQueryFilters();
+        depositAPIFilters.GetAll = true;
+        depositAPIFilters.addAdditionalFilter("DepositId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+
+        if(this.searchText)
+            depositAPIFilters.addAdditionalFilter("SearchFields", this.searchText, null, null, "Contains", false, false, false, "string");
+
+
+        return depositAPIFilters;
     }
 
     private CalculateDepositLinesTotal()
     {
-        for (let line2 of this.BankDepositLines) {
+        for (let line2 of this.BankDepositLines.Collection) {
             this.SelectedTotal += line2.ForeignAmount == null ? 0 : line2.ForeignAmount;
         }
     }
@@ -100,8 +149,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
             if (isSaveSuccess) {
                 console.log("Deposited Success", this.EntityPM);
-                this.RedrawScreen();
-                this.ShowAlert();
+                this.RefreshEntity();
             }
         });
 
@@ -132,11 +180,16 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         // Redraw UI
         this.IsLinesSelection = false;
         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-        this.CashBookLines = [];
-        this.BankDepositLines = this.EntityPM.BankDepositLines;
+
+        this.GetDepositLines();
+
+        this.CashbookLines = new ObservableCollection([]);
+        // this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
+
         this.CalculateTotals();
 
         this.GetCashBook();
+        this.GetChequesCounter();
         this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
         this.SetUIProperty();
     }
@@ -319,60 +372,24 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             this.UIProperties.SetEnabled("DepositCurrencyId", this.ObjectTableName, false);
         }
     }
-
+    GetAmountHeader(){
+        var msg = TextCodeTranslator.Translate("CashBookLine.F.LocalAmount");
+        return msg + " (" + this.tenantCurrencyCode + ")";
+    }
     //#region Filter Methods
     public FilterSelectedValue: string = 'cash';
     FilterItemClicked(itemValue: string) {
         if (this.FilterSelectedValue != itemValue) {
             this.FilterSelectedValue = itemValue;
-            this.FilterLines();
+            // this.FilterLines();
+
+            this.GetCashbookLines();
+
             this.IsAllSelected = false;
+
         }
     }
-    FilterLines() {
 
-        this.BankDepositLines = [];
-        this.EntityPM.BankDepositLines = [];
-
-        var todayDate = DateTool.GetCurrentDateTimeAsUtc();
-
-        var lines = this.CashBookPM.CashBookLines;
-
-        // Filtering
-        if (!AppTool.IsNullOrEmpty(this.FilterSelectedValue)) {
-            lines = lines.filter((el) => {
-
-                if (el.DueDate != null) {
-                    var date = new Date(el.DueDate.toString());
-                    if (this.FilterSelectedValue == 'postdated') {
-                        if (date > todayDate) {
-                            return true; //postdated
-                        }
-                    } else if (this.FilterSelectedValue == 'cash') {
-                        if (date <= todayDate) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            });
-        }
-
-        this.CashBookLines = lines;
-
-        // remove deposited lines
-        this.RemoveDepositedLines();
-
-
-        if (this.CashBookLines.length > 0) {
-            this.NoCashBookRows = false;
-        } else {
-            this.NoCashBookRows = true;
-        }
-
-        this.CalculateTotals();
-
-    }
     private timerToken: any;
     TextChanged(searchtext) {
 
@@ -386,83 +403,138 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     }
     FilterChequeDeposits() {
-        if (AppTool.IsNullOrEmpty(this.searchText)) {
-            this.BankDepositLines = this.EntityPM.BankDepositLines;
+        this.GetDepositLines();
 
-        } else {
-            var filteredDepositedCheques = [];
-            //filteredDepositedCheques = this.EntityPM.BankDepositLines.filter(d => d.ChequeNumber.toLowerCase().includes(this.searchText.toLowerCase()));
-            filteredDepositedCheques = this.EntityPM.BankDepositLines.filter(d => d.SearchFields.toLowerCase().includes(this.searchText.toLowerCase()));
-            this.BankDepositLines = filteredDepositedCheques;
-        }
+        // if (AppTool.IsNullOrEmpty(this.searchText)) {
+        //     this.BankDepositLines = new ObservableCollection(this.EntityPM.BankDepositLines);
+
+
+        // } else {
+        //     var filteredDepositedCheques = [];
+        //     filteredDepositedCheques = this.EntityPM.BankDepositLines.filter(d => d.SearchFields.toLowerCase().includes(this.searchText.toLowerCase()));
+        //     // this.BankDepositLines = filteredDepositedCheques;
+
+        //     this.BankDepositLines.Clear();
+        //     this.BankDepositLines = new ObservableCollection(filteredDepositedCheques);
+
+        // }
 
 
     }
     //#endregion
 
     //#region Get Methods
-    GetCashBook() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this._CashBookPMService.get(this.EntityPM.CashBookId).subscribe(myResult => {
-            this.CurrentSession.StopBusyIndicator();
+    GetCashBook()
+    {
+        this.CurrentSession.StartBusyIndicator("Loading Cashbook Data ...");
 
-            var myResponse: ServiceResponse = myResult;
+        //this._CashBookPMService.get(this.EntityPM.CashBookId)
+        this.cashBookListService.getSingle(this.EntityPM.CashBookId)
+            .subscribe(myResult =>
+            {
+                this.CurrentSession.StopBusyIndicator();
 
-            if (!myResponse.HasError) {
-                this.CashBookPM = myResponse.Result;
-                console.log("Cashbook: ", this.CashBookPM);
+                var myResponse: ServiceResponse = myResult;
 
-                if (this.IsLinesSelection)
-                {
-                    if (this.CashBookPM.CashBookTypeCode == "1") // 1- Cash
-                    {
-                        this.SetUIProperty();
-                        this.EntityPM.IsCashDeposit = true;
+                if (!myResponse.HasError) {
+                    this.CashBookPM = myResponse.Result;
+                    console.log("Cashbook: ", this.CashBookPM);
 
-                        this._CashbookTotal = this.CashBookPM.TotalAmount;
+                    if (this.IsLinesSelection) {
+                        this.EntityPM.IsCashDeposit = this.CashBookPM.CashBookTypeCode == "1";
 
-                        //copy amount
-                        //this.EntityPM.LocalDepositAmount = this.CashBookPM.TotalAmount;
-                        this.EntityPM.ForeignAmount = this.CashBookPM.TotalAmount;
 
-                        if (this.isCurrencyRateLoaded)
-                            this.CalculateLocal(this.ForeignAmount);
+                        if (this.CashBookPM.CashBookTypeCode == "1") // 1- Cash
+                        {
+                            this.SetUIProperty();
 
-                        this.UIProperties.SetValidity("LocalDepositAmount", this.ObjectTableName, true, "");
-                        this.UIProperties.SetValidity("ForeignAmount", this.ObjectTableName, true, "");
-                    }
-                    else
-                    {  // Cheque
+                            this.CalculateTotals();
 
-                        this.CashBookLines = this.CashBookPM.CashBookLines;
-                        this.ComputeTotals();
+                            if (this.isCurrencyRateLoaded)
+                                this.CalculateLocal(this.ForeignAmount);
 
-                        this.RemoveDepositedLines();
-                        this.CalculateTotals();
-                        this.FilterLines();
-                        if (this.CashBookLines.length > 0) {
-                            this.NoCashBookRows = false;
-                        } else {
-                            this.NoCashBookRows = true;
+                            this.UIProperties.SetValidity("LocalDepositAmount", this.ObjectTableName, true, "");
+                            this.UIProperties.SetValidity("ForeignAmount", this.ObjectTableName, true, "");
+                        }
+                        else {  // Cheque
+
+                            this.GetCashbookLines();
+
+                            this.SetUIProperty();
                         }
 
-                        this.SetUIProperty();
-                        this.EntityPM.IsCashDeposit = false;
+
+                    } else {
+                        this._CashbookTotal = this.CashBookPM.TotalAmount;
+                        this.CalculateTotals();
+
                     }
-
-
-                } else {
-                    this._CashbookTotal = this.CashBookPM.TotalAmount;
-                    this.CalculateTotals();
-
                 }
             }
-        }
-            , error => {
-            });
+                , error =>
+                {
+                });
+
+
     }
 
     tenantCurrencyCode: string = "";
+    private GetCashbookLines()
+    {
+
+        this.BankDepositLines.Clear();
+        this.EntityPM.BankDepositLines = [];
+
+
+        this.cashBookLineListService.getByFilters(this.GetCashbookLinesAPIFilters()).subscribe((response: ServiceResponse) =>
+        {
+            var result = response.Result;
+            console.log("CashBookLineListService", result);
+
+
+            // this.CashBookLines = result;
+            this.CashbookLines.InsertCollection(result);
+
+            // this.UpdateFiltersCounts();
+
+            if (this.CashbookLines.Length > 0) {
+                this.NoCashBookRows = false;
+            } else {
+                this.NoCashBookRows = true;
+            }
+
+            this.CalculateTotals();
+
+
+        });
+    }
+
+    private GetCashbookLinesAPIFilters()
+    {
+        var linesQueryFilters = new ApiQueryFilters();
+        linesQueryFilters.GetAll = true;
+        linesQueryFilters.addAdditionalFilter("CashBookId", this.EntityPM.CashBookId, null, null, "Equals", false, false, false, "string");
+        linesQueryFilters.addAdditionalFilter("IsDeposited", false, null, null, "Equals", true, false, false, "boolean");
+        linesQueryFilters.addAdditionalFilter("ARPChequeStatusCode", "5", null, null, "NotEqual",false , false, false, "string");
+
+
+        linesQueryFilters.AdditionalFilters.push(this.GetDueDateFilter());
+
+
+        return linesQueryFilters;
+    }
+
+    private GetDueDateFilter()
+    {
+        var todayDate = DateTool.GetCurrentDateTimeAsUtc();
+
+        if (this.FilterSelectedValue == 'postdated')
+            var filter: FilterItem = new FilterItem("DueDate", todayDate, null, null, "LargerThan", false, false, false, "date", false);
+        else if (this.FilterSelectedValue == 'cash')
+            var filter: FilterItem = new FilterItem("DueDate", todayDate, null, null, "LessThanOrEqual", false, false, false, "date", false);
+        return filter;
+    }
+
     GetDefaultValues() {
         // Tenant currency
         var defaultCurrencyId: string = SessionLocator.TenantPM.CurrencyId;
@@ -545,12 +617,16 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         if (this.CashBookPM.CashBookTypeCode == "1")
         {
             this.CashBookTotal = this.CashBookPM.TotalAmount;
+            this._CashbookTotal = this.CashBookPM.TotalAmount;
+            // this.EntityPM.ForeignAmount = this.CashBookPM.TotalAmount;
+
+
         }
         else
         {
-            if (!AppTool.IsNullOrEmpty(this.CashBookLines))
+            if (!AppTool.IsNullOrEmpty(this.CashbookLines.Collection))
             {
-                for (let line of this.CashBookLines) {
+                for (let line of this.CashbookLines.Collection) {
                     this.CashBookTotal += line.ForeignAmount == null ? 0 : line.ForeignAmount;
                 }
             }
@@ -560,8 +636,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         this.SelectedTotal = 0;
         var localSum = 0.0;
-        if (!AppTool.IsNullOrEmpty(this.BankDepositLines)) {
-            for (let line2 of this.BankDepositLines) {
+        if (!AppTool.IsNullOrEmpty(this.BankDepositLines.Collection)) {
+            for (let line2 of this.BankDepositLines.Collection) {
                 localSum += line2.LocalAmount;
                 this.SelectedTotal += line2.ForeignAmount == null ? 0 : line2.ForeignAmount;
             }
@@ -585,40 +661,43 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         return number < 0 ? number * -1 : number;
     }
 
-    RemoveDepositedLines() { // remove deposited lines from cashbook lines
-        if (!AppTool.IsNullOrEmpty(this.CashBookLines)) {
+    // RemoveDepositedLines() { // remove deposited lines from cashbook lines
+    //     if (!AppTool.IsNullOrEmpty(this.CashBookLines)) {
 
 
-            var nonDepositedlines = [];
-            for (var i = 0; i < this.CashBookLines.length; i++) {
+    //         var nonDepositedlines = [];
+    //         for (var i = 0; i < this.CashBookLines.length; i++) {
 
-                if (this.CashBookLines[i].IsDeposited == false) {
-                    nonDepositedlines.push(this.CashBookLines[i]);
-                }
+    //             if (this.CashBookLines[i].IsDeposited == false) {
+    //                 nonDepositedlines.push(this.CashBookLines[i]);
+    //             }
 
-            }
+    //         }
 
-            // Filtering
-            nonDepositedlines = nonDepositedlines.filter((el) => {
-                if (el.ARPChequeStatusCode == "5")
-                    return false;
-                else
-                    return true;
-            }); //// 5- Returned to Customer
+    //         // Filtering
+    //         nonDepositedlines = nonDepositedlines.filter((el) => {
+    //             if (el.ARPChequeStatusCode == "5")
+    //                 return false;
+    //             else
+    //                 return true;
+    //         }); //// 5- Returned to Customer
 
-            this.CashBookLines = nonDepositedlines;
-        }
+    //         this.CashBookLines = nonDepositedlines;
+    //         this.CashBookLines2.InsertCollection(this.CashBookLines);
+    //     }
 
-    }
+    // }
 
     SelectAll(event) {
 
         this.IsAllSelected = event;
 
-        this.BankDepositLines = [];
+        this.BankDepositLines.Clear();
         this.EntityPM.BankDepositLines = [];
+
+        // this.BankDepositLines = [];
         if (event == true) {
-            for (let line of this.CashBookLines) {
+            for (let line of this.CashbookLines.Collection) {
                 this.PushBankDeposit(line);
             }
         }
@@ -626,6 +705,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
 
     LineSelection(cashbookLine, event) {
+        this.CashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
         if (event == true) {
             this.PushBankDeposit(cashbookLine);
         } else if (event == false) {
@@ -638,9 +718,10 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(cashbookLine)) {
 
             // Get Counter
-            var lastRow = this.BankDepositLines[this.BankDepositLines.length - 1];
+            var lastRow = this.BankDepositLines.Collection[this.BankDepositLines.Length - 1];
+            // var lastRow = this.BankDepositLines[this.BankDepositLines.length - 1];
             if (!AppTool.IsNullOrEmpty(lastRow)) {
-                var lineCounter = this.BankDepositLines[this.BankDepositLines.length - 1].Line + 1;
+                var lineCounter = Number(this.BankDepositLines.Collection[this.BankDepositLines.Length - 1].Line + 1);
             } else {
                 var lineCounter = 1;
             }
@@ -667,7 +748,9 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             depositLine.Currency = cashbookLine.Currency;
             depositLine.ARPaymentId = cashbookLine.ARPaymentId;
             this.EntityPM.AddBankDepositLine(depositLine);
-            this.BankDepositLines.push(depositLine);
+
+            this.BankDepositLines.Insert(depositLine);
+            // this.BankDepositLines.push(depositLine);
         }
     }
 
@@ -676,9 +759,11 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
             var id = cashbookLine.CashBookId + ',' + cashbookLine.ARPChequeId;
 
-            var item = this.BankDepositLines.find(d => d.CompositId == id);
-            var index = this.BankDepositLines.findIndex(d => d.CompositId == id);
-            this.BankDepositLines.splice(index, 1)
+            var item = this.BankDepositLines.Collection.find(d => d.CompositId == id);
+            var index = this.BankDepositLines.Collection.findIndex(d => d.CompositId == id);
+            this.BankDepositLines.RemoveFromIndex(index);
+            // this.BankDepositLines.splice(index, 1)
+
             this.EntityPM.RemoveBankDepositLine(item);
         }
     }
@@ -727,7 +812,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
     ReturnCheque(chequeId:string ,returnType:string, notes: string) {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this._BankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe(myResult => {
+        this.bankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe((myResult:ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -756,35 +841,51 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     CashCount: number = 0;
     PostdatesCount: number = 0;
-    ComputeTotals() {
 
-        this.RemoveDepositedLines();
 
-        var todayDate = DateTool.GetCurrentDateTimeAsUtc();
-        this.CashCount = this.CashBookLines.filter((el) => {
+    public ChequesCounter: CashbookChequesCounter = new CashbookChequesCounter();
+    GetChequesCounter(){
+        this.ChequesCounter = new CashbookChequesCounter();
+        this.cashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.CashBookId)
+            .subscribe((response: ServiceResponse) =>
+            {
+                console.log("[GetCashbookChequesCounter]", response);
 
-            if (el.DueDate != null) {
-                var date = new Date(el.DueDate.toString());
-                if (date <= todayDate) {
-                    return true;
+                if (!response.HasError) {
+                    this.ChequesCounter = response.Result;
                 }
-                return false;
-
-            }
-            return false;
-        }).length;
-        this.PostdatesCount = this.CashBookLines.filter((el) => {
-
-            if (el.DueDate != null) {
-                var date = new Date(el.DueDate.toString());
-                if (date > todayDate) {
-                    return true;
+                else {
+                    console.error(response.ErrorsArray);
                 }
-                return false;
+            });
 
-            }
-            return false;
-        }).length;
     }
 
+    // private UpdateFiltersCounts()
+    // {
+    //     var todayDate = DateTool.GetCurrentDateTimeAsUtc();
+
+    //     this.CashCount = this.CashbookLines.Collection.filter((el) =>
+    //     {
+    //         if (el.DueDate != null) {
+    //             var date = new Date(el.DueDate.toString());
+    //             if (date <= todayDate) {
+    //                 return true;
+    //             }
+    //             return false;
+    //         }
+    //         return false;
+    //     }).length;
+    //     this.PostdatesCount = this.CashbookLines.Collection.filter((el) =>
+    //     {
+    //         if (el.DueDate != null) {
+    //             var date = new Date(el.DueDate.toString());
+    //             if (date > todayDate) {
+    //                 return true;
+    //             }
+    //             return false;
+    //         }
+    //         return false;
+    //     }).length;
+    // }
 }

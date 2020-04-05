@@ -54,7 +54,7 @@ export class ApplicationTimersManager {
         //this.signalRChannelService = new SignalRChannelService();
         //SessionLocator.SignalRChannelService = this.signalRChannelService;
         SessionLocator.TimersSubscribtions.push(
-            this.getTimer(30000).subscribe(res => {
+            this.getTimer(30000).subscribe((res:any) => {
                 this.AddErrorLogs();
                 //console.log('The response is received.');
             })
@@ -62,30 +62,30 @@ export class ApplicationTimersManager {
         if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
             console.log("WorkEnvironment is customs! Suppress this.AddPeformanceLogs();");
         } else {
-            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
+            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {
                 this.AddPeformanceLogs();
             }));
         }
 
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(60000).subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(60000).subscribe((res:any) => {
             this.CheckIsupgradingSystem();
         }));
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {
             this.CheckApplicationLocalStorage();
         }));
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {
             this.CheckUserLastLogin();
         }));
 
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(120000).subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(120000).subscribe((res:any) => {
             this.CheckUserValidity();
         }));
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(60000).subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(60000).subscribe((res:any) => {
             CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(reponse => {
                 console.log("------------- SystemMetadataLastUpdate has been checked by timer! ---------------");
             });
@@ -93,7 +93,7 @@ export class ApplicationTimersManager {
         }));
 
         if (SessionLocator.UseCachedData) {
-            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
+            SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {
                 CachedDataManager.CheckCachedTableLastUpdateDate().subscribe(reponse => {
 
                     console.log("cached tables checked by timer!");
@@ -164,7 +164,7 @@ export class ApplicationTimersManager {
     IsUserUnlock: boolean = false;
 
     private CheckUserLastLogin() {
-        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant).subscribe(response => {
+        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant).subscribe((response:any) => {
             if (!response.HasError && response.Result) {
 
                 var lastloginPM: UserLastLoginPM = response.Result;
@@ -217,7 +217,7 @@ export class ApplicationTimersManager {
 
             if (!this.IsUpgradingEnd) {
 
-                this.logitudeApplicationService.GetCheckIsupgradingSystem().subscribe(res => {
+                this.logitudeApplicationService.GetCheckIsupgradingSystem().subscribe((res: ServiceResponse) => {
 
                     var pmResponse: ServiceResponse = res;
 
@@ -256,7 +256,7 @@ export class ApplicationTimersManager {
         try {
 
 
-            this.logitudeApplicationService.GetCurrenctUserValidity().subscribe(res => {
+            this.logitudeApplicationService.GetCurrenctUserValidity().subscribe((res: ServiceResponse) => {
 
                 var response: ServiceResponse = res;
                  
@@ -325,7 +325,7 @@ export class ApplicationTimersManager {
                     var logJson = window.sessionStorage.getItem(key)
                     var errorLog: ErrorLogPM = JSON.parse(logJson);
 
-                    this.logService.insert(errorLog).subscribe(response => {
+                    this.logService.insert(errorLog).subscribe((response: ServiceResponse) => {
                       
                         window.sessionStorage.removeItem(["ErrorLogs", response.Result.Id]);
 
@@ -353,7 +353,7 @@ export class ApplicationTimersManager {
                     //PerformanceLogs,5d816163-030d-4d76-a5ef-c19a43951e0b
 
 
-                    //this.performanceLogService.insert(performanceLog).subscribe(response => {
+                    //this.performanceLogService.insert(performanceLog).subscribe((response:any) => {
 
                     //    window.sessionStorage.removeItem(["PerformanceLogs", response.Result.Id]);
 
@@ -375,7 +375,7 @@ export class ApplicationTimersManager {
                     break;
             }
             if (tobeAddedLogsList.length > 0) {
-                this.performanceLogService.insertLogsList(tobeAddedLogsList).subscribe(response => {
+                this.performanceLogService.insertLogsList(tobeAddedLogsList).subscribe((response: ServiceResponse) => {
                 }, error => {
                     console.error("Adding Performance Log Timer: ", error);
                 });

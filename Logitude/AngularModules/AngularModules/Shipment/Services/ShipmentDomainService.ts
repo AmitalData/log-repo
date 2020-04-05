@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
@@ -10,67 +9,27 @@ import {ShipmentPMService} from './StandardPMs/ShipmentPMService';
 import {ShipmentList} from '../EntityLists/ShipmentList';
 import { MessagingStockUsageHistoryList } from '../EntityLists/MessagingStockUsageHistoryList';
 import { AppTool } from '../../Infrastructure/Tools';
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-//import { defer } from 'rxjs';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+//import { defer } from 'rxjs';
 
 @Injectable()
 
 export class ShipmentDomainService {
-    private _http: Http
-    private _httpClient: HttpClient
+    private _httpClient: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
         this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain';
     }
 
-    GetShipmentsCounts_Old(myDirectionId: string, myTransportModeId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        
-        var url = this._apiUrl + '/GetShipmentsCounts?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-
-                var myJsonResult = response.json();
-
-                var myResult = new ShipmentsSummary();
-
-                if (myJsonResult) {
-                    var jsonListKeys = Object.keys(myJsonResult);
-                    for (var key in jsonListKeys) {
-                        var property = jsonListKeys[key];
-                        myResult[property] = myJsonResult[property];
-                    }
-                }
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myResult;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
     GetShipmentsCounts(myDirectionId: string, myTransportModeId: string) {
 
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
-
         var url = this._apiUrl + '/GetShipmentsCounts?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
 
         return Observable.defer(() => {
-            return this._httpClient.get(url, httpOptions).pipe(
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
 
-                // map operator inside pipe
                 map(response => {
                     var myJsonResult = response;
 
@@ -101,13 +60,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/CheckHousesOpenAmounts?masterId=' + masterId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetRecentShipments() {
@@ -117,13 +76,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetRecentShipments';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetDeparturesArrivals(myDirectionId: string, myTransportModeId: string) {
@@ -133,9 +92,9 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetDeparturesArrivals?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var myResult: FlightSummary[] = [];
 
@@ -149,7 +108,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -161,9 +120,9 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetShipmentCarrierStatuses?entityId=' + entityId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<ShipmentCarrierStatusList> = [];
 
                 for (var itemJeson in listJason) {
@@ -176,7 +135,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetLoggedTenantMessagingStockLists() {
@@ -186,9 +145,9 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetLoggedTenantMessagingStockLists';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<MessagingStockList> = [];
 
                 for (var itemJeson in listJason) {
@@ -199,7 +158,7 @@ export class ShipmentDomainService {
                 }
 
                 return listMapped;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetLoggedTenantMessagingStockUsageHistoryLists(stockId: string) {
@@ -209,9 +168,9 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetLoggedTenantMessagingStockUsageHistoryLists?stockId=' + stockId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<MessagingStockUsageHistoryList> = [];
 
                 for (var itemJeson in listJason) {
@@ -222,7 +181,7 @@ export class ShipmentDomainService {
                 }
 
                 return listMapped;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     ValidateShipmentMasterFieldExistance(entityId: string, myBookingId: string, myMasterField: string, myAirlinePrefixField: string, myDirectionId: string, myTransportModeId: string, myShipmentLevelCode: string, isCancelled: boolean) {
@@ -244,29 +203,28 @@ export class ShipmentDomainService {
 
             var mappedEntity: ValidateShipmentMasterArgs = this.MapJsonToValidateShipmentMasterArgs(args, false);
 
-            return this._http.post(this._apiUrl + "/PostValidateShipmentMasterArgs", JSON.stringify(mappedEntity),
-                { headers: authHeader }).map((res) => {
-                    var myJsonResult = res.json();
+            return this._httpClient.post(this._apiUrl + "/PostValidateShipmentMasterArgs", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var myJsonResult = res;
                     return myJsonResult;
 
-                }).catch(ServiceHelper.HandleServiceError);
-        });
+                }),catchError(ServiceHelper.HandleServiceError));
+    });
     }
     GetMasterReceivables(entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
+       
         var url = this._apiUrl + '/GetMasterReceivables?entityId=' + entityId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+                map(response => {
 
-                var myJsonResult = response.json();
+                    var myJsonResult = response;
 
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myJsonResult;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = myJsonResult;
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetInvoiceOpenAmountReceivables(invoiceTypeCode: string, entityId: string) {
@@ -276,14 +234,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetInvoiceOpenAmountReceivables?invoiceTypeCode=' + invoiceTypeCode + '&entityId=' + entityId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentsQuotesCount( ) {
@@ -293,13 +251,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetShipmentsQuotesCount?';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentConsolidationPackages(masterId: string) {
@@ -309,13 +267,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetShipmentConsolidationPackages?masterId=' + masterId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentConnectedEntities(shipmentId: string) {
@@ -325,8 +283,8 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetShipmentConnectedEntities?shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
                 var listMapped: Array<ShipmentConnectedEntity> = [];
 
                 for (var itemJeson in listJason) {
@@ -337,7 +295,7 @@ export class ShipmentDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentsQueriesCounts(tenant: number, transportModeId: string, directionId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
@@ -345,11 +303,9 @@ export class ShipmentDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&directionId=' + directionId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, {
-                headers: authHeader
-            }).map(response => {
+            return this._httpClient.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&directionId=' + directionId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var myResult = new ImporterQueriesDataCounts();
 
@@ -362,7 +318,7 @@ export class ShipmentDomainService {
                 }
 
                 return myResult;
-            });
+            }));
         });
     }
     GetAllMasterHousesPayables(allHousesIdsString: string) {
@@ -372,14 +328,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetAllMasterHousesPayables?allHousesIdsString=' + allHousesIdsString;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetAllMasterHousesReceivables(allHousesIdsString: string) {
@@ -389,14 +345,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetAllMasterHousesReceivables?allHousesIdsString=' + allHousesIdsString;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetConnectedShipmentsByMasterIdAndTenant(masterId: string,tenant: number) {
@@ -406,9 +362,9 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetConnectedShipmentsByMasterIdAndTenant?masterId=' + masterId + '&currentTenant=' + tenant;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<ShipmentPM> = [];
 
                 var service: ShipmentPMService = new ShipmentPMService();
@@ -424,7 +380,7 @@ export class ShipmentDomainService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentsCountByQuoteId(quoteId: string) {
@@ -434,13 +390,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetShipmentsCountByQuoteId?quoteId=' + quoteId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentLevelCode(myShipmentId: string) {
@@ -450,14 +406,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetShipmentLevelCode?myShipmentId=' + myShipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult: string = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult: any = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetInvoiceOpenAmountPayables(entityId: string) {
@@ -467,14 +423,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetInvoiceOpenAmountPayables?entityId=' +  entityId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetPayableInvoices(PayableId: string, PayableParentId:string) {
@@ -484,12 +440,12 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetPayableInvoices?PayableId=' + PayableId + '&PayableParentId=' + PayableParentId ;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentsByQuoteId(quoteId: string) {
@@ -499,13 +455,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetShipmentsByQuoteId?quoteId=' + quoteId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetSingleShipmentPMByNumber(shipmentNumber: string) {
@@ -515,13 +471,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetSingleShipmentPMByNumber?shipmentNumber=' + shipmentNumber;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetSingleShipmentPMWithoutComposition(id: string) {
@@ -531,14 +487,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetSingleShipmentPMWithoutComposition?id=' + id;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var service: ShipmentPMService = new ShipmentPMService();
                 var shipment = service.MapJsonToEntityPM(myResult);
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = shipment;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     BlockNewARInvoice(shipmentId: string) {
@@ -548,13 +504,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetBlockNewARInvoice?shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetShipmentFullTextSearch(filters: ApiQueryFilters) {
@@ -585,12 +541,12 @@ export class ShipmentDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(urlparameters, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(urlparameters, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetMessagingStockListForTenantManagmentTab(tenantManagementId: number) {
@@ -600,13 +556,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetMessagingStockListForTenantManagmentTab?tenantManagementId=' + tenantManagementId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -615,12 +571,12 @@ export class ShipmentDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetShipmentCustomsTransmissionByShipmnetId?shipmentId=' + shipmentId;
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myJsonResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -631,13 +587,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetDisconnectQuote?shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -732,13 +688,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetSendToAESCustoms?shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetArtemusStatus(shipmentNumber:string) {
@@ -746,12 +702,12 @@ export class ShipmentDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetArtemusStatus?shipmentNumber=' + shipmentNumber;
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     MapShipmentConnectedEntity(jsonList: any) {
@@ -774,13 +730,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetDownloadShipmentPackages?shipmentNumber=' + shipmentNumber + '&shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -791,14 +747,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetCreateMissingMasterData';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult: string = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult: any = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -809,13 +765,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetIfConnectedEntryOrRelease?shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -824,15 +780,13 @@ export class ShipmentDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return Observable.defer(() => {
-            return this._http.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(response => {
-                var result = response.json();
+            return this._httpClient.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -844,13 +798,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetIfHouseConnectedToMaster?houseId=' + houseId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -862,14 +816,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetSetAMANACStartDate?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetOnStartDateEntitiesIds(entityCode: string, myStartDate: Date) {
@@ -880,14 +834,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetOnStartDateEntitiesIds?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     BlockTransferEntities(ids: string[], entityCode: string) {
@@ -897,14 +851,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetBlockForTransfer?allIdsString=' + AppTool.GetIdsArrayText(ids) + "&entityCode=" + entityCode;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     SendToAMANAC(shipmentId: string) {
@@ -914,13 +868,13 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetSendToAMANAC?shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -931,14 +885,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetMarkShipmentAsBlocked?shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -949,14 +903,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetUnblockedShipment?shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -965,17 +919,15 @@ export class ShipmentDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetShipmentsTransferSummary', {
-                headers: authHeader
-            }).map(response => {
+            return this._httpClient.get(this._apiUrl + '/GetShipmentsTransferSummary', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = allLists;
                 return myResponse;
-            });
+            }));
         });
     }
 
@@ -986,14 +938,14 @@ export class ShipmentDomainService {
         var url = this._apiUrl + '/GetRebuildTransferFile?entityId=' + entityId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 }

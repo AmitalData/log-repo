@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             shipmentDeliveryItem.ToPortId = ToPortId;
             shipmentDeliveryItem.ToPartnerCardId = ToPartnerCardId;
             shipmentDeliveryItem.CarrierId = CarrierId;
+            shipmentDeliveryItem.ChangeSetOp = ChangeSetOperation.Insert;
             shipmentDeliveryItem.ShipmentPickUpDeliveryPackages = IntegrationShipmentPickUpDeliveriesPackages.ShipmentPickUpDeliveryPackage();
 
 

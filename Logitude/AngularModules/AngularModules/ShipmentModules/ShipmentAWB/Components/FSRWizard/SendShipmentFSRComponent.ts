@@ -171,7 +171,7 @@ export class SendShipmentFSRComponent extends BaseComponent implements OnInit {
 
             var myService: CardListService = new CardListService();
 
-            myService.getSingle(this.EntityPM.IssuingCarrierAgentId).subscribe(myResult => {
+            myService.getSingle(this.EntityPM.IssuingCarrierAgentId).subscribe((myResult:any) => {
                 var myCard: any = myResult;
 
                 if (myCard != null) {

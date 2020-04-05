@@ -1086,7 +1086,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
 
         var myService: CardListService = new CardListService();
-        myService.getSingle(this.VendorId).subscribe(myResult => {
+        myService.getSingle(this.VendorId).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var card: CardList = myResponse.Result;
@@ -1121,7 +1121,6 @@ export class APInvoiceLineItem extends BaseComponent {
     public CorrectionByUserName = "";
     public LocalCurrencyId: string;
     private CurrentSession = SessionLocator.SelectedSession;
-  
     constructor(line: APInvoiceLinePM, public fatherComponent: APInvoiceDetailsTabGeneral, public AddNewLineMode) {
         super();
         this.invoiceLinePM = line;
@@ -1132,7 +1131,6 @@ export class APInvoiceLineItem extends BaseComponent {
         this.GetUserName();
         this.setColors();
         this.ReadVatTypeData();
-       
     }
 
     private GetUserName() {
@@ -1521,8 +1519,12 @@ export class APInvoiceLineItem extends BaseComponent {
                         this.ChargesTypeName = this.chargesTypeList.EnglishName;
                         this.VatTypeId = this.chargesTypeList.VatTypeId;
                         this.Description = this.chargesTypeList.EnglishName;
+                        if (SessionLocator.TenantPM.AccountingActivated) {
+                            this.Description = this.chargesTypeList.Description != null ? this.chargesTypeList.Description : this.chargesTypeList.EnglishName;
+                        }
+                       
                         this.LocalDescription = this.chargesTypeList.LocalName;
-
+                        
                         if (!AppTool.IsNullOrEmpty(this.chargesTypeList.PayableDebitGLAcountId)) {
                             this.fatherComponent.myGLAccountPMService.get(this.chargesTypeList.PayableDebitGLAcountId).subscribe((myResponse: ServiceResponse) => {
                                 if (!myResponse.HasError) {

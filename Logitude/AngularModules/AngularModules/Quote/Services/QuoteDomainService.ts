@@ -9,42 +9,55 @@ import {QuotePM} from '../EntityPMs/QuotePM';
 import {QuoteSettingPM} from '../EntityPMs/QuoteSettingPM';
 import {QuoteStageList} from '../EntityLists/QuoteStageList';
 import { QuotePMService } from './StandardPMs/QuotePMService';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+//import { defer } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 export class QuoteDomainService {
     private _http: Http;
     private _apiUrl: string;
+    private _httpClient: HttpClient
     constructor() {
         this._http = ServiceHelper.Http;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuoteDomain';
     }
-
+    
     GetQuotesCounts(ownerId: string, businessUnitId: string, directionId: string, transportModeId: string, RecordsTypeCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
+
         var url = this._apiUrl + '/GetQuotesCounts?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&directionId=' + directionId + '&transportModeId=' + transportModeId + '&RecordsTypeCode=' + RecordsTypeCode;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, httpOptions).pipe(
+                
+                map(response => {
+                    var myJsonResult = response;
 
-                var myJsonResult = response.json();
-                var myResult = new CRMSummary();
+                    var myResult = new CRMSummary();
 
-                if (myJsonResult) {
-                    var jsonListKeys = Object.keys(myJsonResult);
-                    for (var key in jsonListKeys) {
-                        var property = jsonListKeys[key];
-                        myResult[property] = myJsonResult[property];
+                    if (myJsonResult) {
+                        var jsonListKeys = Object.keys(myJsonResult);
+                        for (var key in jsonListKeys) {
+                            var property = jsonListKeys[key];
+                            myResult[property] = myJsonResult[property];
+                        }
                     }
-                }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myResult;
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = myResult;
+                    return serviceResponse;
+                }),
+                
+                catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     GetQuotesByOpportunityId(oportunityId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -85,21 +98,28 @@ export class QuoteDomainService {
 
     }
     GetRecentQuotes(ownerId: string, businessUnitId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
 
         var url = this._apiUrl + '/GetRecentQuotes?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._httpClient.get(url, httpOptions).pipe(
+                
+                map(response => {
+                    var allLists = response;
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = allLists;
+                    return serviceResponse;
+                }),
+                
+                catchError(ServiceHelper.HandleServiceError));
         });
     }  
     GetDataCountsForCRM(tenant: number, customerid: string) {

@@ -107,6 +107,37 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+        public HttpResponseMessage GetSingleWithoutLines(string id)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Cashbook", "READ", authToken.Tenant);
+
+                BankDepositPM bankDepositPM = GetBankDepositWithoutLines(id, authToken.Tenant);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, bankDepositPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private BankDepositPM GetBankDepositWithoutLines(string id, int tenant)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            BankDepositQueryService query = new BankDepositQueryService(MyContext);
+            query.InitializeSettings();
+            BankDepositPM bankDepositPM = query.GetSingle(id, false, false);
+            return bankDepositPM;
+        }
     }
 }
 	 

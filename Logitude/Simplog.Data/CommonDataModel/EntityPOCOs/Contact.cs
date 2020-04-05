@@ -39,10 +39,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool DontShowLocalLabels { get; set; }
         public string ComputedKey { get; set; }
         public string CompanyName { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         public virtual ContactLastLogin ContactLastLogin { get; set; }
 
-        public virtual SharedLogisticsContactLastLogin SharedLogisticsContactLastLogin { get; set; }
+        //public virtual SharedLogisticsContactLastLogin SharedLogisticsContactLastLogin { get; set; }
 
         [ForeignKey("ImageDetailId")]
         public ImageDetail ImageDetail { get; set; }

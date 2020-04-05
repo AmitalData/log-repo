@@ -54,7 +54,7 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
     SetWindowArgs(args: any) {
 
 
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe((response:any) => {
 
             this.DataViewModel = args.DataViewModel;
             this.ObjectTableId = args.ObjectTableId;
@@ -97,7 +97,7 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
     Load() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         //var isfilter = FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPE") ?true:false;
-        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibrary(this.ObjectTableId, SessionInfo.LoggedUserTenant, true, this.TransportModeId, this.ShipmentlevelCode).subscribe(res => {
+        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibrary(this.ObjectTableId, SessionInfo.LoggedUserTenant, true, this.TransportModeId, this.ShipmentlevelCode).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -142,11 +142,11 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
 
     CopyDocumentTypeAndTemplate() {
 
-        this._documentTypeTemplateListExtendedService.CopyDocumentTypeAndDocumentTypTemplate(this.DocumentTypeTemplateViewModelSelected.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._documentTypeTemplateListExtendedService.CopyDocumentTypeAndDocumentTypTemplate(this.DocumentTypeTemplateViewModelSelected.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var documenttypecode = pmResponse.Result;
-                this._documentTypeListExtendedService.getDocumentTypeListByCode(documenttypecode, SessionInfo.LoggedUserTenant).subscribe(res => {
+                this._documentTypeListExtendedService.getDocumentTypeListByCode(documenttypecode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;

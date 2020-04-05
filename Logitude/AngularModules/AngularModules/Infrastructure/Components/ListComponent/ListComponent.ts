@@ -262,7 +262,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                     else if (value1 == "NoDate" || value1 == "No Date") {
                         value1 = "NoDate";
-                        filterOperator = "Equals";
+                        filterOperator = "NoDate";
                     }
                 }
               var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -511,7 +511,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "Equals", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, null, null, null, "NoDate", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
         }
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
@@ -902,7 +902,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
     ViewInitCompleted(event) {
         //this.afterViewGridInitCompleted.emit(event);
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             this.BackBtnTitle = this.listArgs.BackButtonTitle;
             //this.Title = this.listArgs.DisplayTitle;
             this.ResourcesLoaded = true;
@@ -1004,7 +1004,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 }
             }
             //console.log("dataSource", this.dataSource);
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
                 this.ResourcesLoaded = true;
                 this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
             });
@@ -1211,7 +1211,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "NoDate" || value1 == "No Date") {
                             value1 = "NoDate";
-                            filterOperator = "Equals";
+                            filterOperator = "NoDate";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -1427,7 +1427,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                         else if (value1 == "NoDate" || value1 == "No Date") {
                             value1 = "NoDate";
-                            filterOperator = "Equals";
+                            filterOperator = "NoDate";
                         }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -1708,9 +1708,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                         else if (myObjectTableName == "Customs.CourierMaster") {
                             var windowArgs: any = {};
-                            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
-                                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
 
                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
@@ -1800,7 +1800,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 case 'Customs.Client': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
 
                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
@@ -1834,8 +1834,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 }
                                 case 'Customs.CustomsVendor': {
                                     if (!AppTool.IsNullOrEmpty(selectedEntityId)) {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
-                                            this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
                                                 this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                     res.subscribe((myResponse: any) => {
 
@@ -1889,11 +1889,11 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 case 'Customs.CustomsCollateral': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
-                                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                                                this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe(response => {
-                                                    this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response:any) => {
+                                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                                                this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
+                                                    this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
 
 
                                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
@@ -1934,7 +1934,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 }
                                 case 'Customs.ProceduralFault': {
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.ProceduralFault").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.ProceduralFault").subscribe((response:any) => {
 
                                         this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
@@ -2009,8 +2009,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 case 'Customs.DeclarationCargoSplit': {
 
                                     var windowArgs: any = {};
-                                    this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
-                                        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
+                                        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
                                             this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                 res.subscribe((myResponse: any) => {
 
@@ -2420,7 +2420,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             }
             else {
                 var isNewWizard = this.SelectedQuery.ObjectTableIsNewWizard;
-                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
                     this.ResourcesLoaded = true;
                     if (isNewWizard) {
                         var IsOriginalMaster: boolean = false;
@@ -2986,7 +2986,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         //    this.myQueryColumnsPMService = new QueryColumnsPMService();
         //    this.myQueryColumnsPMService.setServiceArgs(this.serviceArgs);
         //}
-        //this.myQueryColumnsPMService.update(QColumn).subscribe(myResult => {
+        //this.myQueryColumnsPMService.update(QColumn).subscribe((myResult:any) => {
         //});
         this.SaveColNewChanges(Param);
         //console.log("Oh Yea !!");
@@ -3019,7 +3019,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
                         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
                         myGeneralService.setServiceArgs(this.serviceArgs);
-                        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+                        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                         });
                     }
                     else {
@@ -3038,7 +3038,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
                         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
                         myGeneralService.setServiceArgs(this.serviceArgs);
-                        myGeneralService.insert(this.GeneralEntitiesArgs).subscribe(myResult => {
+                        myGeneralService.insert(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                         });
                         // });
                     }

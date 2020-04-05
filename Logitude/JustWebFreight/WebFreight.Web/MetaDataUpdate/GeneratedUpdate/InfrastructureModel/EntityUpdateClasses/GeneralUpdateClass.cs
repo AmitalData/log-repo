@@ -115,9 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-
-			      				    Code =  "919a",
-
+			      				    Code =  "51cb",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -144,7 +142,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> GeneralObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "General").ToList();
+		       
+	      
+
+	         Screen GeneralGeneralHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "General.HeaderScreen", Name = "GeneralHeaderScreen", ObjectTableId = GeneralObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    GeneralObjectTable.HeaderScreenId = GeneralGeneralHeaderScreenScreen0.Id;
+		    GeneralObjectTable.HeaderScreenCode = GeneralGeneralHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
@@ -566,6 +576,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_JOURNALACTIONTYPESMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JOURNALACTIONTYPESMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.JOURNALACTIONTYPESMENU", NameTextCodeDefaultText = @"Journal Action Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_QPDB = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QPDB", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.QPDB", NameTextCodeDefaultText = @"Quotes Performance Dashboard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_REGIONALTAX = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REGIONALTAX", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.REGIONALTAX", NameTextCodeDefaultText = @"Regional Tax" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_TARIFFPRODUCTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TARIFFPRODUCTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TARIFFPRODUCTS", NameTextCodeDefaultText = @"Tariff Products" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_APPaymentExternalPayment = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentExternalPayment", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.APPaymentExternalPayment", NameTextCodeDefaultText = @"APPayment External Payment" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -2167,9 +2183,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMHContainersFU = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ContainersFU", DefaultText = "ContainersFU",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralFromDateMustBeLTT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.FromDateMustBeLTT", DefaultText = " ''From date'' field must be less than or equal to ''To date'' field  ",LocalDefaultText = "מ-תאריך חייב להיות קטן או שווה לשדה עד תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralFromDateMustBeLTT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.FromDateMustBeLTT", DefaultText = "From date'' field must be less than or equal to ''To date'' field  ",LocalDefaultText = @"מ-תאריך חייב להיות קטן או שווה לשדה  עד תאריך ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOToDateMustBeGTF = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ToDateMustBeGTF", DefaultText = " ''To date'' field must be greater than or equal to ''From date'' field ", LocalDefaultText = @"עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOToDateMustBeGTF = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ToDateMustBeGTF", DefaultText = "To date''  field must be greater than or equal to ''From date'' field",LocalDefaultText = @"עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCOthersTariffProducts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.TariffProducts", DefaultText = "Tariff Products",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -71,7 +71,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 this.ScreenIsReady = true;
 
                 this.BuildFiltersLists();
@@ -454,7 +454,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         var myDimensionsUnitCode = this.TenantPM.DimensionsUnitCode;
         var myVolumeUnitCode = this.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = this.TenantPM.GrossWeightUnitCode;
-        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId, this.ShipmentTypeId);
+        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
 
         if (this.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(this.TenantPM.CountryCode)) {
@@ -480,9 +480,9 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                 this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
             }
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
-                this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
-            }
+            
+            this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            
 
             if (this.EntityPM.Ratio == null) {
                 this.EntityPM.Ratio = AppTool.GetRatio(this.DirectionId, this.TransportModeId, this.ShipmentTypeId, this.TenantPM.CountryCode);

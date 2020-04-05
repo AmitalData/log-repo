@@ -68,7 +68,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ContainerType2Id, 
 	         ContainerType3Id, 
 	         ContainerType4Id, 
-	         ContainerType5Id,
+	         ContainerType5Id, 
+	         TariffProductId,
 	      }
 
 
@@ -96,6 +97,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LastStartDate, 
 	         LastVersion, 
 	         ContractNumber, 
+	         SellerName, 
 	         SetAsInActive, 
 	         SetAsReActive, 
 	         TariffNumber, 
@@ -136,7 +138,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ContainerType4Id, 
 	         ContainerType5Id, 
 	         TransportModeCode, 
-	         TransportModeName,
+	         TransportModeName, 
+	         TariffProductId,
+	         SellerPartnerTypeId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -373,6 +377,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType5Id))
             {
 				entityPOCO.ContainerType5Id = entityPM.ContainerType5Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffProductId))
+            {
+				entityPOCO.TariffProductId = entityPM.TariffProductId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -616,6 +625,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ContainerType5Id = entityPOCO.ContainerType5Id;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffProductId))
+            {
+					entityPM.TariffProductId = entityPOCO.TariffProductId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -850,6 +864,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType5Id))
             {
                 oldEntityPM.ContainerType5Id = entityPM.ContainerType5Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffProductId))
+            {
+                oldEntityPM.TariffProductId = entityPM.TariffProductId;
             }
 			
 		}

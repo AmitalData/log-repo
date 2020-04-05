@@ -29,6 +29,7 @@ import {VatTypePercentagePM} from '../../../Common/EntityPMs/VatTypePercentagePM
 import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     selector: 'LCLChargesComponent',
@@ -50,6 +51,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public IsEditExchangeRateVisible: boolean = false;
     public CurrentSession = SessionLocator.SelectedSession;
     IsRouteRate: boolean = false;
+    public IsPriceCheckVisible: boolean = false;
+    private entityResourceService: EntityResourceService = new EntityResourceService();;
+    public ComponentRef: any;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -69,6 +73,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.DisplayTariffs = true;
         }
 
+        this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
+        
         this.InitializeServices();
         this.LoadRequiredData();
         this.SetLabels();
@@ -97,6 +103,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.LoadRequiredData();
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
@@ -106,6 +113,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.LoadRequiredData();
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
@@ -338,7 +346,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.RunAddEditCharge(itemComponent, title);
     }
     DeleteChargeClicked(itemComponent: QuoteChargeItem) {
-        if (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+        if ((itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) ||
+            (itemComponent.EntityPM.ChargesGroupCode == "FRT" && this.EntityPM.QuoteCharges.filter(d => d.IsCostAllIn).length > 0)) {
             var window = new MessageWindow();
             window.Show("Can't delete this charge because it's connected to other All In charges");            
         }
@@ -436,6 +445,65 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         }
 
         return myResult;
+    }
+    PriceCheck() {
+        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
+
+            if (this.EntityPM.DirectionId == "I") {
+                betweenDate = this.EntityPM.ETA;
+            }
+            else  {
+                betweenDate = this.EntityPM.ETD;
+            }
+
+            var tariffType = "";
+            if (this.EntityPM.TransportModeId == "A") {
+                tariffType = "AFC";
+            }
+            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
+                tariffType = "OLC";
+            }
+
+            var WindowArgs: any =
+            {
+                BetweenDate: betweenDate,
+                FromPort: this.EntityPM.FromPortId,
+                ToPort: this.EntityPM.ToPortId,
+                GrossWeight: this.EntityPM.GrossWeight,
+                ChargeableWeight: this.EntityPM.ChargeableWeight,
+                Volume: this.EntityPM.Volume,
+                ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
+                GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
+                VolumeUnit: this.EntityPM.VolumeUnitCode,
+                QuotePM: this.EntityPM,
+                FatherComponent: this,
+                TariffType: tariffType
+            };
+            var logWindow = new LogitudeWindow();
+            logWindow.IsFillScreenHeight = true;
+            logWindow.Width = 1200;
+            logWindow.Title = "Price Check";
+            logWindow.ComponentLoaded.subscribe(cmpRef => {
+                this.ComponentRef = cmpRef;
+                if (WindowArgs != null) {
+                    if (this.ComponentRef['SetWindowArgs']) {
+                        this.ComponentRef.SetWindowArgs(WindowArgs);
+                    }
+                }
+            });
+            logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
+        });
+    }
+    EditTariffClicked(item: QuoteChargeItem) {
+        if (item != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(item.TariffId, "Tariff", item.TariffVersion + "");
+        }
     }
 
     // Profit
@@ -1179,7 +1247,7 @@ export class QuoteChargeItem extends BaseComponent {
     }
 
     public IsAllInCheckBoxVisible: boolean = false;
-    SetUIProperties_AllIn() {
+    public SetUIProperties_AllIn() {
         var isAllInCheckBoxVisible = false;
 
         if (this.ChargesGroupCode != "FRT" && this.IsAdhoc) {
@@ -1218,6 +1286,21 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
+       
+    }
+
+    SetUIProperties_AllInCost() {
+        if (this.IsEditingEnabled) {
+            var isFromTariff = this.EntityPM != null && this.EntityPM.TariffId != null;
+            var isEnabled_CostCurrencyId = true;
+            if (this.IsCostAllIn) {
+                isEnabled_CostCurrencyId = false;
+            }
+            this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+            this.UIProperties.SetEnabled("CostTotalAmount", this.ObjectTableName, isEnabled_CostCurrencyId || isFromTariff);
+            this.UIProperties.SetEnabled("CostUnitPrice", this.ObjectTableName, isEnabled_CostCurrencyId);
+            this.IsEnabled_CostUnitPrice = isEnabled_CostCurrencyId;
+        }
     }
 
     public IsEnabled_CostQuantity: boolean = false;
@@ -1286,6 +1369,7 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("CostMinAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.UIProperties.SetEnabled("CostMaxAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.SetUIProperties_CostRate();
+        this.SetUIProperties_AllInCost();
     }
     SetUIProperties_CostRate() {
         var isEnabled = false;
@@ -1975,6 +2059,34 @@ export class QuoteChargeItem extends BaseComponent {
     set CostIsFixedRate(value: boolean) {
         if (this.EntityPM.CostIsFixedRate != value) {
             this.EntityPM.CostIsFixedRate = value;
+        }
+    }
+
+    get IsCostAllIn() { return this.EntityPM.IsCostAllIn; }
+    set IsCostAllIn(value: boolean) {
+        if (this.EntityPM.IsCostAllIn != value) {
+            this.EntityPM.IsCostAllIn = value;
+        }
+    }
+
+    get TariffNumber() { return this.EntityPM.TariffNumber; }
+    set TariffNumber(value: string) {
+        if (value != this.EntityPM.TariffNumber) {
+            this.EntityPM.TariffNumber = value;
+        }
+    }
+    get TariffId() {
+        return this.EntityPM.TariffId;
+    }
+    set TariffId(value: string) {
+        if (value != this.EntityPM.TariffId) {
+            this.EntityPM.TariffId = value;
+        }
+    }
+    get TariffVersion() { return this.EntityPM.TariffVersion; }
+    set TariffVersion(value: number) {
+        if (value != this.EntityPM.TariffVersion) {
+            this.EntityPM.TariffVersion = value;
         }
     }
 

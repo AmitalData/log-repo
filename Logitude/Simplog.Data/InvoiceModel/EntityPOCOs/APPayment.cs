@@ -21,7 +21,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string VendorId { get; set; }
         public string StatusCode { get; set; }
         public bool IsClosed { get; set; }
-        public string PaymentMethodId { get; set; }
         public string AccountingPaymentMethodId { get; set; }
         public string PrintNotes { get; set; }
         public string InternalNotes { get; set; }
@@ -67,8 +66,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public User UpdatedByUser { get; set; }
         [ForeignKey("BranchId")]
         public Branch Branch { get; set; }
-        [ForeignKey("PaymentMethodId")]
-        public virtual APPaymentMethod PaymentMethod { get; set; }
+      
         [ForeignKey("AccountingPaymentMethodId")]
         public virtual AccountingPaymentMethod AccountingPaymentMethod { get; set; }
         [ForeignKey("StatusCode")]
@@ -110,6 +108,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string Field9 { get; set; }
         public string Field10 { get; set; }
 
-
+        public double? ExternalPaymentAmount { get; set; }
+        public DateTime? ExternalPaymentDate { get; set; }
+        public string ExternalPaymentNotes { get; set; }
     }
 }

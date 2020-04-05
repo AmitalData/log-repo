@@ -168,7 +168,7 @@ export class CustomsDocumentTicketViewModel {
             }
 
         }
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
             CustomsDocumentTicketViewModel.Customs_Claim_TH_CustomAnswer = TextCodeTranslator.Translate("Customs.Claim.TH.CustomAnswer");
         });
     }
@@ -197,7 +197,7 @@ export class CustomsDocumentTicketViewModel {
 
     public SetCustomDocumentMetaData(metaData: { [Code: string]: any; } = {} = null) {
         var customDocumentTypeMetaDataListService: CustomDocumentTypeMetaDataListService = new CustomDocumentTypeMetaDataListService();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomDocumentTypeMetaData").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomDocumentTypeMetaData").subscribe((response:any) => {
 
             customDocumentTypeMetaDataListService.getAllFromCache().subscribe((res: ServiceResponse) => {
                 this.customDocumentTypeMetaDataLists = res.Result;

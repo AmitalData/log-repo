@@ -28,9 +28,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPOCOToPM(InterestReportLinesByDatePM entityPM, InterestReportLinesByDate entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPMProperties.Add(PMPropertyNames.TotalInterest);
+            entityPM.TotalInterest = entityPOCO.CalculatedCreditInterestAmount + entityPOCO.CalculatedExcepInterestAmount + entityPOCO.CalculatedStandInterestAmount;
+
         }
-   }
+    }
 
 
 }

@@ -44,7 +44,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 { 
 
     
-    public partial class AccountingPartnerController : ApiController
+    public partial class AccountingPartnersController : ApiController
     {
 	  
        

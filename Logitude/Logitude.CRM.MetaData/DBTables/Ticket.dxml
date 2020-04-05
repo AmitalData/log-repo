@@ -2,7 +2,8 @@
 <Table
   Name="Tickets"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="CRM">
   <Column
     Name="Id"
     Type="varchar"
@@ -443,6 +444,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LastCorrespondence"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByContactId"
     ReferencedTable="Contacts"
@@ -536,6 +544,11 @@
   <Relation
     ForeignKeyColumn="SupportMailboxId"
     ReferencedTable="SupportMailboxes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteId"
+    ReferencedTable="Quotes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

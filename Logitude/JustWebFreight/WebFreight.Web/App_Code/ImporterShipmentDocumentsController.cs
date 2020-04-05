@@ -233,7 +233,7 @@ namespace WebFreight.Web.App_Code
                             {
                                 documentsFilingService.Create(EntityPM, null, null, true);// EntityPM.FileData);
                             }
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Insert Document To Importer Tenant Done Successfully " + DateTime.Now, null, null, null, "");
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Insert Document To Importer Tenant Done Successfully " + DateTime.Now, null, EntityPM.Id, null, "");
 
                             return Request.CreateResponse(HttpStatusCode.OK, EntityPM.Id != null ? EntityPM.Id : DocumentFilingPM.Id);
                         }
@@ -393,6 +393,11 @@ namespace WebFreight.Web.App_Code
                 {
                     if (EntityAM.FileInfo != null)
                     {
+                        if (string.IsNullOrEmpty(EntityAM.FileInfo.DocumentId))
+                        {
+                            EntityAM.FileInfo.DocumentId = ImporterDocumentFilingPM.DocumentId;
+                        }
+                       
                         var DocId = UploadDocumentByte(EntityAM.FileInfo, ImporterDocumentFilingPM);
                         if (DocId == "Error")
                         {
@@ -514,7 +519,7 @@ namespace WebFreight.Web.App_Code
                             }
                           
 
-                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Updating Document To Importer Tenant Done Successfully " + DateTime.Now, null, null, null, "");
+                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, "Updating Document To Importer Tenant Done Successfully " + DateTime.Now, null, ImporterDocumentFilingPM.Id, null, "");
 
                             return Request.CreateResponse(HttpStatusCode.OK, ImporterDocumentFilingPM.Id);
                         }

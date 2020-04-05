@@ -103,7 +103,7 @@ export class SessionComponent {
                 this.SessionInitialize.emit(true);
                 
                 if (!SessionLocator.IsNewSignupTenant) {
-                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
+                    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load("./Infrastructure/Components/MainMenu/MainMenuComponent", this.SessionLocation.viewContainerRef).then(cmpRef => {
                         this.MainMenuComponent = cmpRef.instance;
                         cmpRef.instance.RunComponent();
@@ -372,6 +372,11 @@ export class SessionComponent {
     public CloseCurrentWindow() {
         if (this.CurrentWindow != null) {
             this.CurrentWindow.Close(null);
+        }
+    }
+    public ResizeCurrentWindow(width: number) {
+        if (this.CurrentWindow != null) {
+            this.CurrentWindow.Resize(width);
         }
     }
     public CloseCurrentWindowEmit(emit: string) {

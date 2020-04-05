@@ -379,14 +379,17 @@ export class TariffSearchSummary {
     VersionId: string;
     TotalSurcharge: string;
     WholePrice: string;
-    Surcharges: Array<SurchargeSummary>;
+    SurchargesWithoutAllIn: Array<SurchargeSummary>;
+    AllInSurcharges: Array<SurchargeSummary>;
     AllIn: string;
+    AllInIds: string;
     IsShown: boolean = false;
     UnitOfMesurmentCode: string;
     UnitOfMesurmentId: string;
     SellerId: string;
     MinPrice: number;
     IsMinIconVisible: boolean;
+    LineId: string;
 }
 
 
@@ -406,14 +409,18 @@ export class SurchargeSummary {
     SellerName: string;
     MinPrice: number;
     IsMinIconVisible: boolean;
+    LineId: string;
+    IsAllIn: boolean;
 }
 
 export class ExcelTariffLines {
     FromPortId: string;
     FromPortCode: string;
+    FromPortCombinedCode: string;
     FromPortName: string;
     ToPortId: string;
     ToPortCode: string;
+    ToPortCombinedCode: string;
     ToPortName: string;
     MinPrice: number;
     Step1Price: number;
@@ -494,4 +501,9 @@ export class TariffSearchArgs {
     ContainerType3Id: string;
     ContainerType4Id: string;
     ContainerType5Id: string;
+    Quantity1: number;
+    Quantity2: number;
+    Quantity3: number;
+    Quantity4: number;
+    Quantity5: number;
 }

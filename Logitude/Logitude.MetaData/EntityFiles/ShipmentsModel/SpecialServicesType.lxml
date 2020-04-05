@@ -58,7 +58,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;SpecialServicesType,SpecialServicesTypes,,Id,&quot;">
+  SearchFields="&quot;SpecialServicesType,SpecialServicesTypes,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8a06e1af-54d3-4c66-9def-3d1fe9c71e8f&quot;"
     FieldName="&quot;Id&quot;"
@@ -69,7 +71,7 @@
     ObjectTableName="&quot;SpecialServicesType&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -516,7 +518,7 @@
     ObjectTableName="&quot;SpecialServicesType&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

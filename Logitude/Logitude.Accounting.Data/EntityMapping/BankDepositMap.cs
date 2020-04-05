@@ -41,7 +41,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.DepositDate).HasColumnName("DepositDate").IsRequired();
 
-            this.Property(t => t.DepositCurrencyId).HasColumnName("DepositCurrencyId").IsRequired().HasMaxLength(2).IsFixedLength();
+            this.Property(t => t.DepositCurrencyId).HasColumnName("DepositCurrencyId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LocalDepositAmount).HasColumnName("LocalDepositAmount").IsRequired().HasPrecision(16, 2);
 

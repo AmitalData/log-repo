@@ -91,7 +91,7 @@ export class ExportBI2ExcelControl {
             this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
         }
         this.IsStartTimerWaitingFirstStimulReportBuildRunning = true;
-        this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe(res => {
+        this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe((res:any) => {
             if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
                 this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
                 this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
@@ -126,26 +126,23 @@ export class ExportBI2ExcelControl {
                     this.WebFreightDomainService = new WebFreightDomainService();
                 }
 
-                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe(res => {
+                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe((res: ServiceResponse) => {
                     var pmResponse: ServiceResponse = res;
                     if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
-                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.ExceptionMessage) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
                             this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
                             this.IsStartCheckBIReportBliudViaWorkerRoleTimer = false;
                             this.StopBusyIndicator();
+                            this.btnRetryVisibile = false;
+                            this.busyExportingVisibile = false;
+                            this.btnSaveToFileVisibile = true;
                         }
                         if (!pmResponse.HasError) {
                             var result = pmResponse.Result;
                             if (result) {
-                                if (result.HasError) {
+                                if (result.ExceptionMessage) {
                                     var messageWindow = new MessageWindow();
                                     messageWindow.Show(result.ExceptionMessage);
-                                }
-                                else if (result.StatusCode == "D") {
-                                    // Work
-                                    this.btnRetryVisibile = false;
-                                    this.busyExportingVisibile = false;
-                                    this.btnSaveToFileVisibile = true;
                                 }
                             }
                         }
@@ -174,7 +171,7 @@ export class ExportBI2ExcelControl {
         }
 
         this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = true;
-        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe(res => {
+        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe((res:any) => {
             if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
                 this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
                 this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;

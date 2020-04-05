@@ -112,7 +112,7 @@ export class TariffTabsContentComponent implements OnDestroy {
         });
 
 
-        this.CurrentSessionSaveEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe(result => {
+        this.CurrentSessionSaveEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((result:any) => {
             this.ComputeDraftHeader();
 
         });
@@ -267,6 +267,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
     private Retries: number = 0;
     private timerToken: any;
+    private lineIdFromPriceCheck: string;
     RunComponent(IsNext: boolean = true) {
         var index = 0;
         if (!IsNext) {
@@ -280,7 +281,17 @@ export class TariffTabsContentComponent implements OnDestroy {
 
             else {
                 if (!AppTool.IsNullOrEmpty(this.entityArgs.EditComponent.PreSelectedTabCode)) {
-                    var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.VersionPM != null ? (p.VersionPM.Version == + this.entityArgs.EditComponent.PreSelectedTabCode) : 0)[0];
+
+                    var versionId = null;
+
+                    if (this.entityArgs.EditComponent.PreSelectedTabCode.indexOf(',') > -1) {
+                        var codeArray: string[] = this.entityArgs.EditComponent.PreSelectedTabCode.split(',');
+
+                        versionId = codeArray[0];
+                        this.lineIdFromPriceCheck = codeArray[1];
+                    }
+                    
+                    var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.VersionPM != null ? (p.VersionPM.Version == + versionId) : 0)[0];
 
                     if (SelectedTab) {
                         this.SelectionChanged(SelectedTab);
@@ -356,7 +367,11 @@ export class TariffTabsContentComponent implements OnDestroy {
                                 this.Tabs.filter(p => p.Index == this.SelectedTabItem.Index)[0].IsTabLoaded = true;
                             }
                             if (this.SelectedTabItem.VersionPM) {
-                                cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.VersionPM, SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version });
+                                cmpRef.instance.Intialize({
+                                    CurrentVersion: this.SelectedTabItem.VersionPM,
+                                    SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version,
+                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck
+                                });
                             }
                         });
                     }

@@ -23,7 +23,7 @@
         margin-left: auto;
         float: none;
         margin-right: auto;
-       
+
         /*top: 0;
         left: 0;
         right: 0;
@@ -44,16 +44,17 @@
         margin: auto;*/
     }
 
-    .WarningSummary {
+    .ValidationSummary {
         height: 100%;
         width: 100%;
-        border: 1px solid Orange;
+        border: 1px solid #DA6F6F;
         border-radius: 5px;
-        background: #FFFBDA;
+        background: rgba(247, 227, 227, 1);
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         overflow: hidden;
+        padding: 5px;
     }
     .Disable {
        opacity:0.5;
@@ -108,11 +109,6 @@
 </style>
 <div class="MediaFillAbsolute" style="background:transparent;">
     <table class="LogitudeWindow" *ngIf="ShowFinalMessage == false">
-        <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
-            <td>
-                <div class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
-            </td>
-        </tr>
         <tr>
             <td>
                 <table style="direction:rtl; border: 1px solid #BCBEC0;">
@@ -143,6 +139,13 @@
                                                 </td>
                                                 <td style="height: 55px;">
                                                     <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table *ngIf="ValidationList != null && ValidationList.length != 0" style="height:1px;">
+                                            <tr >
+                                                <td>
+                                                    <div class="ValidationSummary" style="margin-bottom: 3px;font-size: 16px;">{{ValidationList}}</div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -271,8 +274,8 @@
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <div style="vertical-align:middle;text-align:center;">
-                                                        <div style="width:260px;height:35px;display:inline-block;font-size:13px;padding-top:5px;">
-                                                            <input type="text" [(ngModel)]="UserIdNumber" style="direction:ltr;" />
+                                                        <div style="width:260px;height:40px;display:inline-block;font-size:13px;padding-top:5px;">
+                                                            <input type="number" [(ngModel)]="UserIdNumber" style="direction:ltr;max-height:30px;height:30px;" />
                                                         </div>
                                                     </div>
                                                 </td>

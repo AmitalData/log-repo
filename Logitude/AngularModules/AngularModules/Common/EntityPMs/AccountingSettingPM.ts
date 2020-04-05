@@ -265,6 +265,16 @@ export class AccountingSettingPM {
     public set AllowManualARPaymentNumber(newValue: boolean) { if (this.allowManualARPaymentNumber != newValue) { this.allowManualARPaymentNumber = newValue; this.MarkAsDirty("AllowManualARPaymentNumber"); } }
        
 	 
+    private allowRegionalTaxManagement: boolean;
+    public get AllowRegionalTaxManagement() { return this.allowRegionalTaxManagement; }
+    public set AllowRegionalTaxManagement(newValue: boolean) { if (this.allowRegionalTaxManagement != newValue) { this.allowRegionalTaxManagement = newValue; this.MarkAsDirty("AllowRegionalTaxManagement"); } }
+       
+	 
+    private enableAPPaymentExternalPayment: boolean;
+    public get EnableAPPaymentExternalPayment() { return this.enableAPPaymentExternalPayment; }
+    public set EnableAPPaymentExternalPayment(newValue: boolean) { if (this.enableAPPaymentExternalPayment != newValue) { this.enableAPPaymentExternalPayment = newValue; this.MarkAsDirty("EnableAPPaymentExternalPayment"); } }
+       
+	 
 
     public OldEntityPM: AccountingSettingPM;
 		

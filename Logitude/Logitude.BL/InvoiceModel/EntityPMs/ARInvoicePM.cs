@@ -112,15 +112,44 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsPrinted { get; set; }
         public string ConnectedEntityReferences { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field1 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field2 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field3 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field4 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field5 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field6 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field7 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field8 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field9 { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field10 { get; set; }
 
         public string DebitAccount { get; set; }       
@@ -362,6 +391,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BillToCountry { get; set; }
         public string CreatedByPartner { get; set; }
         public string BillToGLAccountId { get; set; }
-        
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string RegionalTaxId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? RegionalTaxPercentage { get; set; }
     }
 }

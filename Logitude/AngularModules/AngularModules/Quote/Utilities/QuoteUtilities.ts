@@ -16,6 +16,8 @@ import {ShipmentOrderPackagePM} from '../../Shipment/EntityPMs/ShipmentOrderPack
 import {VatTypeList} from '../../Common/EntityLists/VatTypeList';
 import {VatTypeListService} from '../../Common/Services/StandardLists/VatTypeListService';
 import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
+import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
+import { PackageAmountCalculator } from '../../Infrastructure/Utilities/PackageAmountCalculator';
 
 export class QuoteUtilities {
     public static IsQuoteEditEnabled(entityPM: QuotePM) {
@@ -97,32 +99,34 @@ export class QuoteUtilities {
                 entityPM.Ratio = AppTool.GetRatio(entityPM.DirectionId, entityPM.TransportModeId, entityPM.ShipmentTypeId, InfraSettings.TenantPM.CountryCode);
             }
 
-            entityPM.QuotePackages.forEach((item) => {
-                item.Volume = AppTool.ComputePackageVolume(item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
-                item.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(item.Quantity, item.Width, item.Height, item.Length, item.Volume, item.GrossWeight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
-            });
-            
             if (entityPM.QuotePackages.length == 0) {
                 entityPM.NumberOfPackages = null;
                 entityPM.GrossWeight = null;
                 entityPM.Volume = null;
                 entityPM.VolumetricWeight = null;
                 entityPM.ChargeableWeight = null;
-            }
+            }           
 
             else {                
                 var myVolume: number = 0;
                 var myQuantity: number = 0;
                 var myVolumetricWeight: number = 0;
                 var myGrossWeight: number = 0;
-                
+
                 entityPM.QuotePackages.forEach((item) => {
-                    if (item.Volume != null) {
-                        myVolume += item.Volume;
-                    }
+
+                });
+
+                entityPM.QuotePackages.forEach((item) => {
+                    item.Volume = PackageAmountCalculator.ComputeVolume(item.Volume, item.Quantity, item.Width, item.Height, item.Length, item.GrossWeight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
+                    item.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.Volume, item.GrossWeight, entityPM.Ratio, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
 
                     if (item.Quantity != null) {
                         myQuantity += item.Quantity;
+                    }
+
+                    if (item.Volume != null) {
+                        myVolume += item.Volume;
                     }
                     
                     if (item.VolumetricWeight != null) {
@@ -637,4 +641,14 @@ export class QuoteUtilities {
 
         return shipmentPM;
     }
+
+    public static IsPriceCheckVisible(entityPM: QuotePM) {
+        var myResult = false;
+
+        if (FeatureLocator.HasFeaturePermession("Quote", "QuotePriceCheck") && (entityPM.TransportModeId.toUpperCase() == "A") && (entityPM.QuoteTypeCode != null && entityPM.QuoteTypeCode.toUpperCase() == "A")) {
+            myResult = true;
+        }
+        return myResult;
+    }
+
 }

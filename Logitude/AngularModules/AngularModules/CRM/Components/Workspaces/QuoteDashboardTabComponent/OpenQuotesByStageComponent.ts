@@ -30,7 +30,7 @@ export class OpenQuotesByStageComponent implements OnInit {
     ngOnInit() {
         this.funnelArgs = new QuoteDashboardArguments();
         this.dashboardService = new DashboardService();
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             this.FillFunnelArgs();
             this.LoadFunnelData();
         });
@@ -102,7 +102,7 @@ export class OpenQuotesByStageComponent implements OnInit {
             listArgs.ObjectTableName = objectTableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

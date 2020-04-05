@@ -75,7 +75,7 @@ export class btnComponent implements OnInit {
 
             case "Warehouse":
                 {
-                    this.GetInUseCarrier("WH", this.rowData.Code);
+                    this.GetInUseWarehouse(this.rowData.Code);
                     break;
                 }
         }
@@ -118,7 +118,7 @@ export class btnComponent implements OnInit {
 
     GetPortCopyToCurrentTenant() {
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetPortCopyToCurrentTenant(this.entityId).subscribe(myResult => {
+        myService.GetPortCopyToCurrentTenant(this.entityId).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
 
@@ -134,7 +134,7 @@ export class btnComponent implements OnInit {
     private IsCompleted: boolean = false;
     GetCarrierCopyToCurrentTenant() {
         var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetCarrierCopyToCurrentTenant(this.entityId).subscribe(myResult => {
+        myService.GetCarrierCopyToCurrentTenant(this.entityId).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
 
@@ -150,7 +150,7 @@ export class btnComponent implements OnInit {
     
     GetInUseCarrier( type: string, code: string) {
         var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetInUseCarrier(type, code).subscribe(myResult => {
+        myService.GetInUseCarrier(type, code).subscribe((myResult:any) => {
             this.InUseVisibile = myResult.Result;
         });   
     }
@@ -169,5 +169,12 @@ export class btnComponent implements OnInit {
 
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
+    }
+
+    GetInUseWarehouse(code: string) {
+        var myService: PartnersDomainService = new PartnersDomainService();
+        myService.GetInUseWarehouse(code).subscribe((myResult:any) => {
+            this.InUseVisibile = myResult.Result;
+        });
     }
 }

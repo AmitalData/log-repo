@@ -1297,6 +1297,52 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string truckerId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckerId  
+	   {
+	    
+	     get
+		{
+		   return truckerId;
+		 }
+		 set
+		 {
+		   if(truckerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckerId",OldValue=truckerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckerId=value;
+		   }
+			
+		 }
+	   }
+	  private string truckerReference ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TruckerReference  
+	   {
+	    
+	     get
+		{
+		   return truckerReference;
+		 }
+		 set
+		 {
+		   if(truckerReference != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TruckerReference",OldValue=truckerReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   truckerReference=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

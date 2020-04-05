@@ -73,6 +73,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     
     public string BankAccountNumber { get; set; }
 
+    public string CancelationNotes { get; set; }
+    
+    public DateTime? AccountingCancelationDate { get; set; }
+
+    public ARPaymentStatus Status { get; set; }
+
     public  string  ComputingPartnerCode { get; set; }
 
     }

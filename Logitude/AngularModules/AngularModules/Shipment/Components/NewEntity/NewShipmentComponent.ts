@@ -79,7 +79,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 this.BuildFiltersLists();
 
                 if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {
@@ -567,14 +567,14 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
     SetUnits() {
         var myDimensionsUnitCode = this.TenantPM.DimensionsUnitCode;
         var myVolumeUnitCode = this.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = this.TenantPM.GrossWeightUnitCode;
-        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId, this.ShipmentTypeId);
+        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
 
         if (this.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(this.TenantPM.CountryCode)) {
@@ -626,9 +626,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
                 this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
             }
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
-                this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
-            }
+
+            this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            
             //this.EntityPM.VolumeUnitCode = myVolumeUnitCode;
             //this.EntityPM.DimensionsUnitCode = myDimensionsUnitCode;
             //this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;

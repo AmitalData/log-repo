@@ -634,7 +634,7 @@ export class BookingWizardComponent implements AfterViewInit {
         }
 
         else {
-            this.myPartnersDomainService.GetAirlineRules(myAirlineCode, "FFR").subscribe(myResult => {
+            this.myPartnersDomainService.GetAirlineRules(myAirlineCode, "FFR").subscribe((myResult:any) => {
                 if (myResult == null) {
                     this.AirlineRulesList = [];
                     this.ValidateAllTabs();
@@ -1321,7 +1321,7 @@ export class BookingWizardComponent implements AfterViewInit {
 
     private SubmitCreatingBooking() {
         var myService: BookingPMService = new BookingPMService();
-        myService.insert(this.EntityPM).subscribe(myResult => {
+        myService.insert(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -1345,7 +1345,7 @@ export class BookingWizardComponent implements AfterViewInit {
 
         var myService: BookingPMService = new BookingPMService();
 
-        myService.update(this.EntityPM).subscribe(myResult => {
+        myService.update(this.EntityPM).subscribe((myResult:any) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -1708,13 +1708,13 @@ export class BookingWizardComponent implements AfterViewInit {
         else {
             var myService: CardListService = new CardListService();
 
-            myService.getSingle(this.EntityPM.ShipperId).subscribe(myResult => {
+            myService.getSingle(this.EntityPM.ShipperId).subscribe((myResult:any) => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
                     var shipper: CardList = myResponse.Result;
 
-                    myService.getSingle(this.EntityPM.ConsigneeId).subscribe(myResult => {
+                    myService.getSingle(this.EntityPM.ConsigneeId).subscribe((myResult:any) => {
                         var myResponse: ServiceResponse = myResult;
 
                         if (!myResponse.HasError) {
@@ -1828,7 +1828,7 @@ export class BookingWizardComponent implements AfterViewInit {
 
         var myService: BookingPMService = new BookingPMService();
 
-        myService.get(this.EntityPM.Id).subscribe(myResult => {
+        myService.get(this.EntityPM.Id).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
 
             if (!mm.HasError) {
@@ -1935,22 +1935,30 @@ export class BookingWizardComponent implements AfterViewInit {
         }
     }
     CancelBookingClicked() {
-        var confirmMsg = "Are you sure you want to cancel this Booking?";
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Title = "Cancelling Shipment";
+            messageWindow.Show("Can't cancel bookings that have a MAWB number, please remove it");
+        }
 
-        var confirmWindow = new ConfirmWindow();
+        else {
+            var confirmMsg = "Are you sure you want to cancel this Booking?";
 
-        confirmWindow.Show(confirmMsg);
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                var isValid: boolean = this.ValidateBooking();
+            var confirmWindow = new ConfirmWindow();
 
-                if (isValid) {
-                    this.InitFlags();
-                    this.isCancelBookingButtonClicked = true;
-                    this.Save();  
+            confirmWindow.Show(confirmMsg);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    var isValid: boolean = this.ValidateBooking();
+
+                    if (isValid) {
+                        this.InitFlags();
+                        this.isCancelBookingButtonClicked = true;
+                        this.Save();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     ReactivateBookingClicked() {
         this.InitFlags();

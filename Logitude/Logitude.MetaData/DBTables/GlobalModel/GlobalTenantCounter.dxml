@@ -2,7 +2,8 @@
 <Table
   Name="GlobalTenantCounters"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Global">
   <Column
     Name="Id"
     Type="int">

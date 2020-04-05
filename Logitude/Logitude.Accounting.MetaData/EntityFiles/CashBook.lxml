@@ -62,7 +62,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;5baa6857-1bf8-437c-a538-bdb23565003f&quot;"
     FieldName="&quot;Id&quot;"
@@ -1173,7 +1175,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;CashBookType&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="15"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

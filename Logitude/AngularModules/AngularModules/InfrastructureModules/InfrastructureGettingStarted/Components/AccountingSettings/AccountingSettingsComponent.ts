@@ -119,7 +119,10 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("EnableMultiPercentageVATTypes", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("NotifyPastDateOnInvoiceEdit", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("RegistryDateTypeCode", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);            
+            this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AllowRegionalTaxManagement", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("APPaymentExternalPayment", this.ObjectTableName, false);
+            
         }
 
         else {
@@ -231,6 +234,13 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
+    get AllowRegionalTaxManagement() { return this.EntityPM.AllowRegionalTaxManagement; }
+    set AllowRegionalTaxManagement(value: boolean) {
+        if (this.EntityPM.AllowRegionalTaxManagement != value) {
+            this.EntityPM.AllowRegionalTaxManagement = value;
+        }
+    }
+    
     get IsARInvoiceChronologicalDates() { return this.EntityPM.IsARInvoiceChronologicalDates; }
     set IsARInvoiceChronologicalDates(value: boolean) {
         if (this.EntityPM.IsARInvoiceChronologicalDates != value) {
@@ -392,6 +402,13 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
+    get EnableAPPaymentExternalPayment() { return this.EntityPM.EnableAPPaymentExternalPayment; }
+    set EnableAPPaymentExternalPayment(value: boolean) {
+        if (this.EntityPM.EnableAPPaymentExternalPayment != value) {
+            this.EntityPM.EnableAPPaymentExternalPayment = value;
+        }
+    }
+
     //Commands 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -448,7 +465,7 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
-    ViewAdvancedSettings() {
+    ViewAdvancedARSettings() {
         var windowTitle = "Advanced Accounting Settings ";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
@@ -456,6 +473,16 @@ export class AccountingSettingsComponent extends BaseComponent {
         logWindow.Title = windowTitle;
         logWindow.DataContext = this;
         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedSettingsComponent');
+    }
+
+    ViewAdvancedAPSettings() {
+        var windowTitle = "Advanced Accounting Settings ";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 350;
+        logWindow.Title = windowTitle;
+        logWindow.DataContext = this;
+        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedAPSettingsComponent');
     }
 
     ManageStocksClicked() {

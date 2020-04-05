@@ -58,7 +58,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;da61c748-a2b4-48a4-8e48-f7fe6c5ce6c5&quot;"
     FieldName="&quot;ReconcileExternalPageId&quot;"
@@ -579,7 +581,7 @@
     ObjectTableName="&quot;ReconcileExternalPageLine&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

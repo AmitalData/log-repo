@@ -2,7 +2,8 @@
 <Table
   Name="DocumentOutCopies"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"

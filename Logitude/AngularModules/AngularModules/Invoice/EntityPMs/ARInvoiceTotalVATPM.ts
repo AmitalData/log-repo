@@ -102,7 +102,9 @@ export class ARInvoiceTotalVATPM {
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
-	 
+    private isRegionalTax: boolean;
+    public get IsRegionalTax() { return this.isRegionalTax; }
+    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
 
     public OldEntityPM: ARInvoiceTotalVATPM;
 	    

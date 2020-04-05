@@ -17,8 +17,10 @@ import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 
 export class LedgerTransactionsFilterControl extends BaseComponent implements OnInit {
     ObjectTableName: string = "LedgerTransaction";
+    public RunReportTitle: string;
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
+    public IsSchedulerReport: boolean = false;
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
     entityResourceService: EntityResourceService = new EntityResourceService();
@@ -32,8 +34,16 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
 
         // get requierd resources
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe(response => { this.isReady = true; });
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response:any) => {
+                this.isReady = true;
+                if (this.IsSchedulerReport) {
+                    this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+                }
+                else {
+                    this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+                }
+            });
         });
 
 
@@ -242,30 +252,179 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
     //#endregion
 
+    SetFilterSelectedValue() {
+        switch (this._dateTypeCode) {
+            case '1':
+                this.filterSelectedValue = 'filter_accounting';
+                break;
+            case '2':
+                this.filterSelectedValue = 'filter_due';
+                break;
+            case '3':
+                this.filterSelectedValue = 'filter_reference';
+                break;
+            default:
+                break;
+        }
+    }
+
+    GetQueryFilterItems() {
+        var queryFilterItems = new Array<QueryFilterItem>();
+        var queryFilterItem: QueryFilterItem;
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "FromDate";
+        queryFilterItem.FieldValue = this.FromDate ? this.FromDate : null;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "ToDate";
+        queryFilterItem.FieldValue = this.ToDate ? this.ToDate : null;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "GLAccountId";
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.GLAccountId);
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "ChartOfAccountId";
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.ChartOfAccountId);
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "CurrencyId";
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.CurrencyId);
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "IncludeChildAccounts";
+        queryFilterItem.FieldValue = this.IncludeChildAccounts ? true : false;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        //queryFilterItem = new QueryFilterItem();
+        //queryFilterItem.FieldName = "SearchFields";
+        //queryFilterItem.FieldValue = this.SearchFields ? this.SearchFields : null;
+        //queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "DateTypeCode";
+        queryFilterItem.FieldValue = this._dateTypeCode;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "IncludeRelatedCurrenciesAccount";
+        queryFilterItem.FieldValue = this.IncludeRelatedCurrenciesAccount ? true : false;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem)
+
+        queryFilterItem = new QueryFilterItem();
+        this.IsReconciled = !this.AttachedGLAccountCheckBox ? false : true;
+        queryFilterItem.FieldName = "IsReconciled";
+        queryFilterItem.Operator = "Equals";
+        queryFilterItem.FieldValue = this.IsReconciled;
+
+        return queryFilterItems;
+    }
+
+    GetLookUpFieldValue(field) {
+        if (field) {
+            if (field[0]["@nil"] != "true")
+                return field;
+        }
+        return null
+    }
+
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
+        this.IsSchedulerReport = true;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            if (queryFilterItem.FieldName == "FromDate") {
+                this.FromDate = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "ToDate") {
+                this.ToDate = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "GLAccountId") {
+                this.GLAccountId = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "ChartOfAccountId") {
+                this.ChartOfAccountId = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "CurrencyId") {
+                this.CurrencyId = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "IncludeChildAccounts") {
+                this.IncludeChildAccounts = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "SearchFields") {
+                this.SearchFields = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "DateTypeCode") {
+                this._dateTypeCode = queryFilterItem.FieldValue;
+                this.SetFilterSelectedValue();
+            }
+            else if (queryFilterItem.FieldName == "IncludeRelatedCurrenciesAccount") {
+                this.IncludeRelatedCurrenciesAccount = queryFilterItem.FieldValue;
+            }
+            else if (queryFilterItem.FieldName == "IsReconciled") {
+                this.IsReconciled = queryFilterItem.FieldValue;
+            }
+        }
+    }
+
+    ValidateSelectedFilters() {
+        this.ValidationErrorsList = [];
+        var isValid: boolean = true;
+
+        if (!this.GLAccountId && !this.ChartOfAccountId) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields"));
+            isValid = false;
+        }
+
+        if (!this.FromDate) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLAccounts.O.fromfieldrequired"));
+            isValid = false;
+        }
+        if (!this.ToDate) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLAccounts.O.tofieldrequired"));
+            isValid = false;
+        }
+
+        if (this.FromDate > this.ToDate) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    PrepareContactList() {
+        //for report scheduler
+    }
+
     RunButtonClicked() {
         this.SetUIProperties();
 
         var errors: string[] = [];
         var categoryValue = null;
         var categoryIndex = null;
-        this.ValidationErrorsList = [];
 
-        //#region requierd fields
-        if (!this.GLAccountId  && !this.ChartOfAccountId) { errors.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields")); }
-        //#endregion
-
-        //#region Date validation
-        if(!this.FromDate)
-            errors.push(TextCodeTranslator.Translate("GLAccounts.O.fromfieldrequired"));
-        if(!this.ToDate)
-            errors.push(TextCodeTranslator.Translate("GLAccounts.O.tofieldrequired"));
-
-        if (this.FromDate > this.ToDate) {
-            errors.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
-        }
-        //#endregion
-
-        if (errors.length == 0) {
+        if (this.ValidateSelectedFilters()) {
 
 
             // // Selecting category
@@ -275,41 +434,16 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             //     if (categoryIndex)
             //         categoryValue = this.DataContext[categoryIndex]; // select the value from the context
             // }
-
-            var myFilterItems: QueryFilterItem[] = [];
-            myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate ? this.FromDate : null));
-            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate ? this.ToDate : null));
-            myFilterItems.push(new QueryFilterItem("GLAccountId", this.GLAccountId ? this.GLAccountId : null));
-            myFilterItems.push(new QueryFilterItem("ChartOfAccountId", this.ChartOfAccountId ? this.ChartOfAccountId : null));
-            myFilterItems.push(new QueryFilterItem("CurrencyId", this.CurrencyId ? this.CurrencyId : null));
-            if (!this.AttachedGLAccountCheckBox) {
-                this.IsReconciled = false;
-
-            }
-            else {
-                this.IsReconciled = true;
-            }
-
-            myFilterItems.push(new QueryFilterItem("IsReconciled", this.IsReconciled));
-            myFilterItems.push(new QueryFilterItem("IncludeChildAccounts", this.IncludeChildAccounts ? this.IncludeChildAccounts : null));
-            myFilterItems.push(new QueryFilterItem("SearchFields", this.SearchFields ? this.SearchFields : null));
-            myFilterItems.push(new QueryFilterItem("DateTypeCode", this._dateTypeCode ? this._dateTypeCode : null));
-            myFilterItems.push(new QueryFilterItem("IncludeChildAccounts", this.IncludeChildAccounts));
-            myFilterItems.push(new QueryFilterItem("IncludeRelatedCurrenciesAccount", this.IncludeRelatedCurrenciesAccount));
-
-
             // myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             // myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = myFilterItems;
+            myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
 
             this.RunReportEvent.emit(myReportFliter);
 
-        } else {
-            this.ValidationErrorsList = errors;
         }
     }
 

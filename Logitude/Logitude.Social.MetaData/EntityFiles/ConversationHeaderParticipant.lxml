@@ -38,7 +38,9 @@
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
-  ApplyOnPropertyChangedCode="false">
+  ApplyOnPropertyChangedCode="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;91a3c7c5-d901-43fd-92a9-cf0d8edb9169&quot;"
     FieldName="&quot;Id&quot;"

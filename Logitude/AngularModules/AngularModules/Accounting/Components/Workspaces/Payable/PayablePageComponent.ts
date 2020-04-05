@@ -293,7 +293,7 @@ export class PayablePageComponent {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveVendorsCount = myResult.ActiveVendorsCount > 1000 ? "1000+" : myResult.ActiveVendorsCount.toString();
                 this.glAccountSummary.InactiveVendorsCount = myResult.InactiveVendorsCount > 1000 ? "1000+" : myResult.InactiveVendorsCount.toString();

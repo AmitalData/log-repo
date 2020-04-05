@@ -89,7 +89,7 @@ export class AMANACComponent implements OnInit {
         listArgs.ObjectTableName = "CustomsTransferHeader";
         listArgs.BackButtonTitle = "Operations";
 
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     this.CurrentSession.AddMenuReference(cmpRef);

@@ -483,16 +483,16 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     }
 
-    SubmitChanges(ControlAccountId:string) {
-        //console.log("EntityPM: ", this.EntityPM);
-        this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
+SubmitChanges(ControlAccountId:string) {
+    //console.log("EntityPM: ", this.EntityPM);
+    this.fullAccountingSettingPMService.update(this.EntityPM).subscribe(myResult => {
 
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) { // Success
-                this.CurrentSession.CloseCurrentWindow();
-                this.CurrentSession.StopBusyIndicator();
-                if (!AppTool.IsNullOrEmpty(ControlAccountId)) {
-                    this.FullAccountingAddControl(ControlAccountId);
+        var mm: ServiceResponse = myResult;
+        if (!mm.HasError) { // Success
+            this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.StopBusyIndicator();
+            if (!AppTool.IsNullOrEmpty(ControlAccountId)) {
+                this.FullAccountingAddControl(ControlAccountId);
                 }
             }
 

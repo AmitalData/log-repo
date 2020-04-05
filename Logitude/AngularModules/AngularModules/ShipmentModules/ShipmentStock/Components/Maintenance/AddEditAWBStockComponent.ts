@@ -198,7 +198,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
             var myService: MessagingStockPMService = new MessagingStockPMService();
 
             if (this.DataContext.EntityPM.Id == null) {
-                myService.insert(this.DataContext.EntityPM).subscribe(myResult => {
+                myService.insert(this.DataContext.EntityPM).subscribe((myResult:any) => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
@@ -219,7 +219,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
             }
 
             else {
-                myService.update(this.DataContext.EntityPM).subscribe(myResult => {
+                myService.update(this.DataContext.EntityPM).subscribe((myResult:any) => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {

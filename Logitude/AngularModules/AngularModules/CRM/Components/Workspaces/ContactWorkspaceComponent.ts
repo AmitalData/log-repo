@@ -113,7 +113,7 @@ export class ContactWorkspaceComponent {
     //Load Data Counts
     public WithoutRemindersCount: number;
     private LoadQueriesCounts() {
-        this.myCommonDomainService.GetContactsCounts().subscribe(myResult => {
+        this.myCommonDomainService.GetContactsCounts().subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -140,7 +140,7 @@ export class ContactWorkspaceComponent {
         filters.SortBy = "EnglishName";
         filters.GetCount = true;
         filters.GetAll = true;
-        this.ContactListService.getByFilters(filters).subscribe(myResult => {
+        this.ContactListService.getByFilters(filters).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.UpcomingBirthdaysList = [];
                 this.UpcomingBirthdaysListCount = 0;

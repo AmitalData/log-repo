@@ -100,7 +100,7 @@ export class AccountingNoteComponent extends BaseComponent {
         if(this.isEditForm)
         {
             this.CurrentSession.StartBusyIndicatorSaving();
-            this._AccountingNotePMService.update(this.entityPM).subscribe(myResult => {
+            this._AccountingNotePMService.update(this.entityPM).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
@@ -117,7 +117,7 @@ export class AccountingNoteComponent extends BaseComponent {
         else
         {
             this.CurrentSession.StartBusyIndicatorSaving();
-            this._AccountingNotePMService.insert(this.entityPM).subscribe(myResult => {
+            this._AccountingNotePMService.insert(this.entityPM).subscribe((myResult:any) => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

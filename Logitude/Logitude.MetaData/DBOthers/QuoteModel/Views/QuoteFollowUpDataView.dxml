@@ -1,4 +1,4 @@
-<View DBType="Main" Name="QuoteFollowUpDataView" Schema="dbo">
+<View DBType="Main" Name="QuoteFollowUpDataView" Schema="dbo" Module="Quote">
   <SqlScript>
     <![CDATA[
 CREATE VIEW [dbo].[QuoteFollowUpDataView]

@@ -131,7 +131,7 @@ export class StimulsoftDesignerComponent implements OnInit {
           
             if (this.documentTypeTemplateViewModel != null && this.documentTypeTemplateViewModel != undefined && this.documentTypeTemplateViewModel.IsHaveJsonString) {
               
-                this._documentTypeTemplatePMExtendedService.GetTemplateBodyhtmlOrJsonByDocumentTemplateId(this.TemplateId, SessionLocator.Tenant,false,"stmual").subscribe(res=> {
+                this._documentTypeTemplatePMExtendedService.GetTemplateBodyhtmlOrJsonByDocumentTemplateId(this.TemplateId, SessionLocator.Tenant,false,"stmual").subscribe((res:any)=> {
                             report.load(res.Result);
                             this.designer.report = report;
                             this.designer.renderHtml("designerContent");
@@ -143,7 +143,7 @@ export class StimulsoftDesignerComponent implements OnInit {
                     //console.log(this.DocumenttypetemplateId);
                     //console.log(this.Tenant);
           
-                    this._documentTypeTemplatePMExtendedService.GetTemplateBodyByDocumentTemplateId(this.TemplateId, SessionLocator.Tenant).subscribe(res=> {
+                    this._documentTypeTemplatePMExtendedService.GetTemplateBodyByDocumentTemplateId(this.TemplateId, SessionLocator.Tenant).subscribe((res:any)=> {
                         report.load(res.Result);
                         this.designer.report = report;
                         this.designer.renderHtml("designerContent");
@@ -173,7 +173,7 @@ export class StimulsoftDesignerComponent implements OnInit {
         filter.Body = jsonStr;
         filter.TemplateType = "Stimul";
 
-        this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res=> {
+        this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res:any)=> {
             this.CloseButtonClicked();
             //if (this.stimulsoftArgData.EditDocumentComponent.IsShowTemplateList) {
 

@@ -399,7 +399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Description",
 					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "Report",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -464,7 +464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Report",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -532,7 +532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  4,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -1002,6 +1002,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature ReportFeature_BLUESNAPPAYMENTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BLUESNAPPAYMENTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.BLUESNAPPAYMENTREPORT", NameTextCodeDefaultText = @"Bluesnap Payments Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ReportFeature_INTERESTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERESTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.INTERESTREPORT", NameTextCodeDefaultText = @"Interest Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
 		   Feature ReportFeature_REPORTSSCHEDULER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REPORTSSCHEDULER", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.REPORTSSCHEDULER", NameTextCodeDefaultText = @"Reports Scheduler" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    

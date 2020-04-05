@@ -124,6 +124,7 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.FreightPC = master.FreightPrepaidCollectId;
                 manifestDataProvider.DescriptionOfGoods = BuildDescriptionOfGoods();
                 manifestDataProvider.ChargeableWeight = master.ChargeableWeight != null ? master.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", master.ChargeableWeight) + " " + (master.ChargeableWeightUnitCode != null ? master.ChargeableWeightUnitCode : "")) : "" : "";
+                manifestDataProvider.TrailerNumber = master.TrailerNumber;
 
                 if (master.BranchId != null)
                 {
@@ -336,6 +337,7 @@ namespace WebFreight.Web.ReportsWebServices
                             if(contact != null)
                             {
                                 manifestDataProvider.AgentContactName = contact.EnglishName;
+                                manifestDataProvider.AgentContactEmail = contact.Email;
                             }
                         }
                         manifestDataProvider.AgentVATNumber = agent.VatNumber != null ? agent.VatNumber : "";
@@ -371,6 +373,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (contact != null)
                                 {
                                     manifestDataProvider.AgentContactName = contact.EnglishName;
+                                    manifestDataProvider.AgentContactEmail = contact.Email;
                                 }
                             }
                         }
@@ -402,6 +405,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (contact != null)
                                 {
                                     manifestDataProvider.AgentContactName = contact.EnglishName;
+                                    manifestDataProvider.AgentContactEmail = contact.Email;
                                 }
                             }
                         }
@@ -684,6 +688,47 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                     #endregion
 
+
+                    #region PlaceOfReceipt
+                    ShipmentPickUpDelivery myFirstPickup =
+                        (from d in shipmentsContext.ShipmentPickUpDeliveries
+                         where d.ShipmentId == shipmentView.Id && d.PickUpDeliveryTypeCode == "PICK"
+                         select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                    if (myFirstPickup != null)
+                    {
+                        PlaceOfReceiptData data = myServiceHelper.GetPlaceOfReceiptData(myFirstPickup);
+
+                        if (data != null)
+                        {
+                            detail.PlaceOfReceipt = newDetail.PlaceOfReceipt = data.City;
+                        }
+                    }
+
+                    else
+                    {
+                        Port preCarriageFromPort = null;
+                        if (shipmentView.PreCarriageFromPortId != null)
+                        {
+                            preCarriageFromPort = (from a in commonContext.Ports where a.Id == shipmentView.PreCarriageFromPortId select a).FirstOrDefault();
+                        }
+
+                        if (preCarriageFromPort != null)
+                        {
+                            detail.PlaceOfReceipt = newDetail.PlaceOfReceipt = preCarriageFromPort.EnglishName;
+                        }
+
+                        else if (!string.IsNullOrEmpty(shipmentView.ShipperAddressId))
+                        {
+                            Address myPartnerAddress = addressRepository.GetSingleAddress(shipmentView.ShipperAddressId, tenant);
+                            if (myPartnerAddress != null)
+                            {
+                                detail.PlaceOfReceipt = newDetail.PlaceOfReceipt = myPartnerAddress.City;
+                            }
+                        }
+                    }
+                    #endregion
+
                     ShipmentPickUpDelivery myLineFirstDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
                                                                   where d.ShipmentId == shipmentView.Id && d.PickUpDeliveryTypeCode == "DELV"
                                                                   select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
@@ -705,6 +750,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     detail.DestinationPortCode = newDetail.DestinationPortCode = shipmentView.MainCarriageFinalDestinationPortCode != null ? shipmentView.MainCarriageFinalDestinationPortCode : "";
                     detail.DestinationPortName = newDetail.DestinationPortName = shipmentView.MainCarriageFinalDestinationPortName != null ? shipmentView.MainCarriageFinalDestinationPortName : "";
+                    detail.AMSBL = newDetail.AMSBL = shipmentView.AMSBL;
 
                     if (shipmentView.TransportModeId == "A")
                     {
@@ -810,6 +856,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                        select pa).FirstOrDefault();
 
                             packageDetail.DescriptionOfGoods = !string.IsNullOrEmpty(package.Description) ? package.Description : "";
+                            
                             if (!string.IsNullOrEmpty(package.Harmonize))
                             {
                                 if (!string.IsNullOrEmpty(packageDetail.DescriptionOfGoods))
@@ -909,6 +956,7 @@ namespace WebFreight.Web.ReportsWebServices
                             packageDetail.CommodityNumber = package.CommodityNumber;
                             packageDetail.Notes = package.Notes;
                             packageDetail.Harmonize = package.Harmonize;
+                            packageDetail.Tare = package.Tare;
                             newDetail.PackageDetails.Add(packageDetail);
 
                             #region commented Code
@@ -1057,6 +1105,16 @@ namespace WebFreight.Web.ReportsWebServices
                     List<ShipmentPackagePM> shipmentPackagesList = packagesQuery.GetShipmentPackages(shipmentView.Id, shipmentView.ShipmentNumber, tenant);
                     strGoods.Append(shipmentView.DescriptionOfGoods != null ? shipmentView.DescriptionOfGoods : "");
 
+                    if (!string.IsNullOrEmpty(shipmentView.SLAC))
+                    {
+                        if (!string.IsNullOrEmpty(strGoods.ToString()))
+                        {
+                            strGoods.Append(Environment.NewLine);
+                        }
+
+                        strGoods.Append("SLAC: " + shipmentView.SLAC);
+                    }
+
                     if (shipmentView.ShipmentTypeName == "FCL" || shipmentView.ShipmentTypeName == "LCL")
                     {
                         strGoods.Append(Environment.NewLine);
@@ -1119,6 +1177,7 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.TotalVolume = totalVolume != 0 ? (String.Format("{0:#,0.00}", totalVolume) + " " + (manifestDataProvider.VolumeUnit)) : ""; //CBM
                 manifestDataProvider.TotalWeight = totalWeight != 0 ? (String.Format("{0:#,0.00}", totalWeight) + " " + (manifestDataProvider.WeightUnit)) : ""; //KGS 
                 #endregion
+
 
                 #region NEW DESIGN
 
@@ -1305,6 +1364,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #endregion
 
+
                 manifestDataProvider.PortOfDischargeName = master.MainCarriageToPortName != null ? master.MainCarriageToPortName : "";
 
                 if (master.Transshipment3ToPortCountryCode != null)
@@ -1418,12 +1478,22 @@ namespace WebFreight.Web.ReportsWebServices
             StringBuilder strGoods = new StringBuilder();
             strGoods.Append(master.DescriptionOfGoods != null ? master.DescriptionOfGoods : "");
 
+            if (!string.IsNullOrEmpty(master.SLAC))
+            {
+                if (!string.IsNullOrEmpty(strGoods.ToString()))
+                {
+                    strGoods.Append(Environment.NewLine);
+                }
+
+                strGoods.Append("SLAC: " + master.SLAC);
+            }
+
             if (master.ShipmentTypeName == "FCL" || master.ShipmentTypeName == "LCL")
             {
                 strGoods.Append(Environment.NewLine);
                 strGoods.Append(master.ShipmentTypeName);
                 strGoods.Append(Environment.NewLine);
-
+                
                 for (int i = 0; i < shipmentPackagesList.Count; i++)
                 {
                     strGoods.Append(shipmentPackagesList[i].ContainerNumber != null ? "CNT " + shipmentPackagesList[i].ContainerNumber : "");

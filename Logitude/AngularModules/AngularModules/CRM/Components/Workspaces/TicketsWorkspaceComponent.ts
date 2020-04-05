@@ -82,7 +82,7 @@ export class TicketsWorkspaceComponent implements OnInit{
 
                         case "TIW": {
                             if (this.Page_TW == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe((response:any) => {
                                     this._entityResourceService.getEntityResourceByTableName("Opportunity", 0).subscribe(response2 => {
                                         SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketsComponent', myLocation.viewContainerRef)
                                             .then(cmpRef => {
@@ -101,7 +101,7 @@ export class TicketsWorkspaceComponent implements OnInit{
 
                         case "DBW": {
                             if (this.Page_DW == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe((response:any) => {
                                     SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketDashboardComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_DW = cmpRef.instance;

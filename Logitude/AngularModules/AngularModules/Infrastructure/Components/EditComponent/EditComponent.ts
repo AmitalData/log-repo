@@ -1,3 +1,4 @@
+import { BankDepositExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/BankDepositExtendedPMService';
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { Settings } from './../../Settings';
@@ -267,7 +268,7 @@ export class EditComponent implements OnDestroy {
         if (this.EntityPM) {
             this.IsEntityLoaded = true;
 
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
                 this.GetControllerByTableName(this.ObjectTableName).then(EditComponentController => {
                     //this.EditComponentController = EditComponentController as IEditComponentController;
                     this.CurrentSession.AddEditComponent(this);
@@ -409,7 +410,7 @@ export class EditComponent implements OnDestroy {
 
         if (this.ObjectTableName == "Shipment") {
             if (this.EntityPM.ShipmentLevelCode == "C") {
-                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response:any) => {
                     var myObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
                     var myObjectTableId = myObjectTable.Id;
 
@@ -497,7 +498,7 @@ export class EditComponent implements OnDestroy {
 
         //else if (this.ObjectTableName == "Customs.Declaration") {
         //    if (this.EntityPM.IsCourierDeclaration == true) {
-        //        this._entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration", 0).subscribe(response => {
+        //        this._entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration", 0).subscribe((response:any) => {
         //            var myObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.CourierDeclaration")[0];
         //            var myObjectTableId = myObjectTable.Id;
 
@@ -1412,9 +1413,39 @@ export class EditComponent implements OnDestroy {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
-                        var reconciliation = response.Result;
+                        var cashbook = response.Result;
 
-                        this.EntityPM = reconciliation;
+                        this.EntityPM = cashbook;
+                        this.entityArgs.EntityPM = this.EntityPM;
+
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
+                        {
+                            this.StopBusyIndicator();
+                            this.UpdateComponentMembers();
+                            this.LoadCompleted.emit(true);
+                        });
+
+                    }
+                    else {
+                        this.StopBusyIndicator();
+                        this.ValidationErrorsList = response.ErrorsArray;
+                        this.LoadCompleted.emit(false);
+                    }
+                });
+
+
+            }
+            else if (this.ObjectTableName == "BankDeposit")
+            {
+                let service = new BankDepositExtendedPMService();
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
+                {
+                    console.log("[GetSingleWithoutLines] ", response);
+
+                    if (!response.HasError) {
+                        var bankdeposit = response.Result;
+
+                        this.EntityPM = bankdeposit;
                         this.entityArgs.EntityPM = this.EntityPM;
 
                         this.EditComponentController.OnReloadEntityPM().then((isLock) =>

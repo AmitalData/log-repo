@@ -56,7 +56,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;81114641-2266-4ca0-bf62-c8cd99d2fe36&quot;"
     FieldName="&quot;Tenant&quot;"

@@ -19,31 +19,51 @@ import {ARPaymentInvoicePM} from '../EntityPMs/ARPaymentInvoicePM';
 import {APInvoiceMultipleShortPM} from '../EntityPMs/APInvoiceMultipleShortPM';
 import {APInvoiceLinePM} from '../EntityPMs/APInvoiceLinePM';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 
 export class InvoiceDomainService {
     private _http: Http;
+    private _httpClient: HttpClient
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.Http;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
     }
 
     GetAccountingReceivablesSummary() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
+        var url = this._apiUrl + '/GetAccountingReceivablesSummary';
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAccountingReceivablesSummary', {
-                headers: authHeader
-            }).map(response => {
-
-                var allLists = response.json();
-                return allLists;
-            });
+            return this._httpClient.get(url, httpOptions).pipe(
+                // map operator inside pipe
+                map(response => {
+                    var myJsonResult = response;
+                    var myResult = new AccountReceivablesSummary();
+                    if (myJsonResult) {
+                        var jsonListKeys = Object.keys(myJsonResult);
+                        for (var key in jsonListKeys) {
+                            var property = jsonListKeys[key];
+                            myResult[property] = myJsonResult[property];
+                        }
+                    }
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = myResult;
+                    return serviceResponse;
+                }),
+                // catchErrro operator inside pipe
+                catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     GetAccountPayablesSummary() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1451,4 +1471,16 @@ class APInvoiceNumberDuplicationCheckArgs {
     public VendorId: string;
     public EntityId: string;
     public InvoiceNumber: string;
+}
+export class AccountReceivablesSummary {
+    public  ARInvoicesDraftsCount: number;
+    public  ARInvoicesUnpaidCount: number;
+    public  ARInvoicesOpenConstituentCount: number;
+    public  ARPaymentsDraftsCount: number;
+    public  ARPaymentsOpenedCount: number;
+    public  ARGeneralInvoiceDraftCount: number;
+    public  ARPaymentsSATFailedCount: number;
+    public  ARInvoicesSATFailedCount: number;
+    public  ARInvoicesFailedCount: number;
+    public  ARPaymentFailedCount: number;
 }

@@ -2,7 +2,8 @@
 <Table
   Name="TaxReportLineTransmitStatuses"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Accounting">
   <Column
     Name="Code"
     Type="varchar"

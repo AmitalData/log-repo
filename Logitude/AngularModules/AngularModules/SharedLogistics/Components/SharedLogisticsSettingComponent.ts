@@ -217,7 +217,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
         if (this.TenantPM.IsDirty) {
             this.CurrentSession.StartBusyIndicatorSaving();
-            this.tenantPMService.update(this.TenantPM).subscribe(res=> {
+            this.tenantPMService.update(this.TenantPM).subscribe((res:any)=> {
 
                 this.CloseButtonClicked();
             });

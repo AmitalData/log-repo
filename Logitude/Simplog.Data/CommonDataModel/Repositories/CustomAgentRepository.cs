@@ -95,5 +95,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+        public CustomAgent GetFirstSingleByName(string name, int tenant)
+        {
+            return (from record in context.CustomAgents.Include("Card")
+                    where record.Card.EnglishName == name && record.Tenant == tenant
+                    select record).FirstOrDefault();
+        }
     }
 }

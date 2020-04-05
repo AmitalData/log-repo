@@ -173,6 +173,11 @@ export class UserPM {
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
+    private dontShowLocalLabels: boolean;
+    public get DontShowLocalLabels() { return this.dontShowLocalLabels; }
+    public set DontShowLocalLabels(newValue: boolean) { if (this.dontShowLocalLabels != newValue) { this.dontShowLocalLabels = newValue; this.MarkAsDirty("DontShowLocalLabels"); } }
+       
+	 
     private setAngularAsDefault: boolean;
     public get SetAngularAsDefault() { return this.setAngularAsDefault; }
     public set SetAngularAsDefault(newValue: boolean) { if (this.setAngularAsDefault != newValue) { this.setAngularAsDefault = newValue; this.MarkAsDirty("SetAngularAsDefault"); } }
@@ -474,6 +479,11 @@ export class UserPM {
     private additionalPackagesOnly: boolean;
     public get AdditionalPackagesOnly() { return this.additionalPackagesOnly; }
     public set AdditionalPackagesOnly(newValue: boolean) { if (this.additionalPackagesOnly != newValue) { this.additionalPackagesOnly = newValue; this.MarkAsDirty("AdditionalPackagesOnly"); } }
+       
+	 
+    private layoutDirection: string;
+    public get LayoutDirection() { return this.layoutDirection; }
+    public set LayoutDirection(newValue: string) { if (this.layoutDirection != newValue) { this.layoutDirection = newValue; this.MarkAsDirty("LayoutDirection"); } }
        
 	 
 

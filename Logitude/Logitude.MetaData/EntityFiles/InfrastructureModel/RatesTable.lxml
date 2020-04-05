@@ -57,7 +57,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;RatesTable,RatesTables,,Id,&quot;">
+  SearchFields="&quot;RatesTable,RatesTables,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;84f7004e-2c63-4c17-bb2b-3125b0c6b358&quot;"
     FieldName="&quot;Id&quot;"
@@ -68,7 +70,7 @@
     ObjectTableName="&quot;RatesTable&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -336,7 +338,7 @@
     ShortFieldLableDefaultText="&quot;Currency&quot;"
     ShortLocalDefaultText="&quot;מטבע זר&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -358,7 +360,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="true"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="ForeignCurrency" />
   <field
     Id="&quot;cff9a3ed-ce22-4d57-80d3-81eba0dd2747&quot;"
     FieldName="&quot;ForeignCurrencyCode&quot;"
@@ -491,7 +495,7 @@
     ListFieldLable="&quot;BaseCurrencyIdListLable&quot;"
     ListLableDefaultText="&quot;Base Currency&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -513,7 +517,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="true"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="BaseCurrency" />
   <field
     Id="&quot;a81af5a9-1cbb-48db-a23c-7b86e01fe31f&quot;"
     FieldName="&quot;Rate&quot;"
@@ -524,8 +530,8 @@
     ObjectTableName="&quot;RatesTable&quot;"
     FieldsDataType="&quot;Double&quot;"
     MinLength="0"
-    MaxLength="15"
-    IsRequired="true"
+    MaxLength="0"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -603,8 +609,8 @@
     ObjectTableName="&quot;RatesTable&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
-    MaxLength="15"
-    IsRequired="true"
+    MaxLength="0"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"

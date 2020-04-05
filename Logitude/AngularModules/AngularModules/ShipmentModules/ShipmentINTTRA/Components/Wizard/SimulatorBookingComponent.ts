@@ -154,7 +154,7 @@ export class SimulatorBookingComponent extends BaseComponent {
                 if (this.CommunicationsPage == null) {
                     let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedTabCode)[0];
                     if (myLocation != null) {
-                        this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe(response => {
+                        this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationsTabComponent", myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.CommunicationsPage = cmpRef.instance;

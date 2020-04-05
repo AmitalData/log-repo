@@ -4,7 +4,7 @@
   ObjectTableName="&quot;General&quot;"
   IsNew="false"
   DBTableName="&quot;Generals&quot;"
-  OldDBTableName="&quot;Generals&quot;"
+  DBTableOldNames="Generals"
   ObjectTableSingular="&quot;General&quot;"
   ObjectTablePlural="&quot;Generals&quot;"
   HasCustomFilter="false"
@@ -35,9 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-
-  Code="&quot;2da9&quot;"
-
+  Code="&quot;0763&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -59,7 +57,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;General,Generals,,Id,&quot;">
+  SearchFields="&quot;General,Generals,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <Screen
     Name="&quot;GeneralHeaderScreen&quot;"
     ObjectTableName="&quot;General&quot;"
@@ -4473,6 +4473,11 @@
       LocalDefaultText="&quot;עד תאריך חייב להיות גדול או שווה לשדה מ-תאריך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Others.TariffProducts&quot;"
+      DefaultText="&quot;Tariff Products&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -6289,6 +6294,33 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.QPDB&quot;"
       FeatureDefaultText="&quot;Quotes Performance Dashboard&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;REGIONALTAX&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.REGIONALTAX&quot;"
+      FeatureDefaultText="&quot;Regional Tax&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TARIFFPRODUCTS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TARIFFPRODUCTS&quot;"
+      FeatureDefaultText="&quot;Tariff Products&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;APPaymentExternalPayment&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.APPaymentExternalPayment&quot;"
+      FeatureDefaultText="&quot;APPayment External Payment&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

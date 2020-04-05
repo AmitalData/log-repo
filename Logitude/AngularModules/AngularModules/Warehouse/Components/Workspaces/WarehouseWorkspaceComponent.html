@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .SectionHeader sc td, .SectionHeader sc label {
         font-size: 13px;
@@ -339,12 +339,6 @@
                                                                         <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
                                                                     </td>
 
-                                                                    <td style="width:20px; height: 100%;">
-                                                                        <div *ngIf="item.DirectionName" title="{{item.DirectionName}}" style="width: 100%; height: 100%; position:relative;">
-                                                                            <img class="CenterCenter" style="top: 2px;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
-                                                                        </div>
-                                                                    </td>
-
                                                                     <td>
                                                                         <div></div>
                                                                     </td>
@@ -372,12 +366,6 @@
 
 
                                                                     <td style="color: #1B90CB">{{item.ReleaseNumber}}</td>
-
-                                                                    <td style="width:20px; height: 100%;">
-                                                                        <div *ngIf="item.TransportModeName" title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
-                                                                            <img  class="CenterCenter" style="top: -2px;" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
-                                                                        </div>
-                                                                    </td>
 
                                                                     <td>
                                                                         <div></div>

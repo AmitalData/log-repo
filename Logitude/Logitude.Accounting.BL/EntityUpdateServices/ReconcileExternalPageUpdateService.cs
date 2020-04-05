@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             additionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
 
             SetLastPageFieldsForAdditionalData(lastPagePM, additionalDataPM);
-            SubmitAdditionalData(additionalDataPM, lastPagePM.Tenant);
+            SubmitAdditionalData(additionalDataPM, additionalDataPM.Tenant);
         }
 
         private ExternalPageAdditionalDataPM GetOrCreateEntityAdditionalData(ReconcileExternalPagePM pagePM)

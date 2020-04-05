@@ -144,7 +144,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  200,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -400,7 +400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ObjectTableName =  "WebhookKeys",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1000,
+					  						MaxLength =  0,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -596,7 +596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  200,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -750,6 +750,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
+
+		   ObjectTable WebhookKeysObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WebhookKeys" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> WebhookKeysObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WebhookKeys").ToList();
+		       
+	      
+
+	         Screen WebhookKeysWebhookKeysHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WebhookKeys.HeaderScreen", Name = "WebhookKeysHeaderScreen", ObjectTableId = WebhookKeysObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    WebhookKeysObjectTable.HeaderScreenId = WebhookKeysWebhookKeysHeaderScreenScreen0.Id;
+		    WebhookKeysObjectTable.HeaderScreenCode = WebhookKeysWebhookKeysHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

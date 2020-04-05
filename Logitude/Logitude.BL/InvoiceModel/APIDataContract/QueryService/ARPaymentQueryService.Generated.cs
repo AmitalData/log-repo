@@ -138,7 +138,21 @@ using Simplog.Data.InvoiceModel;
 				}
 
 							 
-				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;					
+
+
+				   temp.BankAccountNumber = MyEntityPM.BankAccountNumber;			  
+
+				   temp.CancelationNotes = MyEntityPM.CancelationNotes;
+				   temp.AccountingCancelationDate = MyEntityPM.AccountingCancelationDate;					
+
+				   if(MyEntityPM.StatusCode != null)
+				   {
+					   ARPaymentStatusQueryService ARPaymentStatusService6 = new ARPaymentStatusQueryService(Tenant);
+					   					   temp.Status = ARPaymentStatusService6.GetARPaymentStatusByCode(MyEntityPM.StatusCode,Tenant); 
+			       
+					   				   }
+				   					
+
 				   return temp;
 			}
             catch (Exception ex)
@@ -267,20 +281,37 @@ using Simplog.Data.InvoiceModel;
 
 					if(MyEntity.PaymentInvoices != null && MyEntity.PaymentInvoices.Count > 0)
 					{
-						ARPaymentInvoiceQueryService ARPaymentInvoiceService6 = new ARPaymentInvoiceQueryService(Tenant);
-						temp.PaymentInvoices = ARPaymentInvoiceService6.ARPaymentInvoiceDataMappingAndValidatin(MyEntity.PaymentInvoices,Tenant,ComputingPartnerName);
+						ARPaymentInvoiceQueryService ARPaymentInvoiceService7 = new ARPaymentInvoiceQueryService(Tenant);
+						temp.PaymentInvoices = ARPaymentInvoiceService7.ARPaymentInvoiceDataMappingAndValidatin(MyEntity.PaymentInvoices,Tenant,ComputingPartnerName);
 					}
 
 								  
 
 					if(MyEntity.ARPaymentCheques != null && MyEntity.ARPaymentCheques.Count > 0)
 					{
-						ARPaymentChequeQueryService ARPaymentChequeService6 = new ARPaymentChequeQueryService(Tenant);
-						temp.ARPaymentChequeReplicas = ARPaymentChequeService6.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName);
+						ARPaymentChequeQueryService ARPaymentChequeService7 = new ARPaymentChequeQueryService(Tenant);
+						temp.ARPaymentChequeReplicas = ARPaymentChequeService7.ARPaymentChequeDataMappingAndValidatin(MyEntity.ARPaymentCheques,Tenant,ComputingPartnerName);
 					}
 
 								 
-					temp.BankAccountNumber = MyEntity.BankAccountNumber;					   
+					temp.BankAccountNumber = MyEntity.BankAccountNumber;
+
+					temp.CancelationNotes = MyEntity.CancelationNotes;
+					temp.AccountingCancelationDate = MyEntity.AccountingCancelationDate;					   
+
+					ARPaymentStatusQueryService StatusARPaymentStatusService = new ARPaymentStatusQueryService(Tenant);
+					if(MyEntity.Status != null)
+					{
+						var myStatusPM = StatusARPaymentStatusService.ARPaymentStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName);
+												if(myStatusPM != null)
+						{
+							temp.StatusCode = myStatusPM.Code;
+						}
+						 
+					}
+			
+										   
+
 					   return temp;
 		    }
             catch (Exception ex)
@@ -291,4 +322,4 @@ using Simplog.Data.InvoiceModel;
         }
 		 
    }
-}
+}

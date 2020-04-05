@@ -27,7 +27,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
         public IQueryable<QueueMessageMoreDetails> GetQueueMessageMoreDetails()
         {
-            return context.QueueMessageMoreDetails;
+            return context.QueueMessageMoreDetails.Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue" || a.QueueDefinitionCode == "ImportersShipmentDocumentsBatchQueue");
         }
         public IQueryable<QueueMessageMoreDetails> GetQueueMessageMoreDetails(DateTime BeforeDate)
         {

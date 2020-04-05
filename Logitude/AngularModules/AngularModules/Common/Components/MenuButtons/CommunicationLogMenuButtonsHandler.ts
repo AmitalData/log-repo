@@ -75,7 +75,7 @@ export class CommunicationLogMenuButtonsHandler {
     ResendButtonClcik() {
 
         this.CurrentSession.StartBusyIndicator("Resending...");
-        this.communicationLogExtendedPMService.SendCommunicationLogToQueue(this.EntityPM.Id, this.EntityPM.Tenant).subscribe(res => {
+        this.communicationLogExtendedPMService.SendCommunicationLogToQueue(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
         });
     }

@@ -41,7 +41,7 @@ export class CustomsClosedTablesListTemplate {
 
         if (AppTool.IsNullOrEmpty(CustomsClosedTablesListTemplate.translate_CommunicationLogBView)) {
             this._entityResourceService.getEntityResourceByTableName("CommunicationLog")
-                .subscribe(response => {
+                .subscribe((response:any) => {
                     CustomsClosedTablesListTemplate.translate_CommunicationLogBView = TextCodeTranslator.Translate("CommunicationLog.B.View");// itzik : Translate +_entityResourceService - its bad :due that i done this- 
                 });
         }
@@ -161,7 +161,7 @@ export class CustomsClosedTablesListTemplate {
             
 
                 listArgs.BackButtonTitle = "Maintenance";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                     listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
@@ -179,7 +179,7 @@ export class CustomsClosedTablesListTemplate {
 
         var myClosedTableStatusListService = new ClosedTableStatusListService();
         //this.CurrentSession.StartBusyIndicator("");
-        myClosedTableStatusListService.getSingleFromCache("2").subscribe(result => {
+        myClosedTableStatusListService.getSingleFromCache("2").subscribe((result:any) => {
             let status: ClosedTableStatusList = result.Result as ClosedTableStatusList;
             this._CustomsClosedTable.StatusName = status.LocalName
             this._CustomsClosedTable.LastUpdateDate = DateTool.AddDays(DateTool.GetCurrentDateAsUtc(), 0);

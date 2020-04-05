@@ -75,8 +75,8 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
                 (accountingContext as DbContextBase)
     .DeleteWhere<BankDepositLine>(rec => rec.Tenant == tenant);
-                (accountingContext as DbContextBase)
-    .DeleteWhere<BankDeposit>(rec => rec.Tenant == tenant);
+    //            (accountingContext as DbContextBase)
+    //.DeleteWhere<BankDeposit>(rec => rec.Tenant == tenant);
 
 
 

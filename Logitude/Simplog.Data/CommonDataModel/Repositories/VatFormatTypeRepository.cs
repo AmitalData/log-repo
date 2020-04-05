@@ -35,7 +35,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return context.VatFormatTypes;
         }
-
+        public IQueryable<VatFormatType> GetVatFormatType()
+        {
+            return context.VatFormatTypes;
+        }
         public IQueryable<VatFormatType> GetAll()
         {
             return context.VatFormatTypes;

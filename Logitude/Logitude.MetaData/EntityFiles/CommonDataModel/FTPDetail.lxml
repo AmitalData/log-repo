@@ -55,7 +55,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;FTPDetail,FTPDetails,,Id,&quot;">
+  SearchFields="&quot;FTPDetail,FTPDetails,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;179c76bb-7e09-47e2-8cf0-3e829d175914&quot;"
     FieldName="&quot;Id&quot;"
@@ -66,7 +68,7 @@
     ObjectTableName="&quot;FTPDetail&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -350,7 +352,7 @@
     ObjectTableName="&quot;FTPDetail&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="100"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -426,7 +428,7 @@
     ObjectTableName="&quot;FTPDetail&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -466,7 +468,7 @@
     ListLableDefaultText="&quot;CreatedByUserId&quot;"
     ListLocalDefaultText="&quot;CreatedByUserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -486,7 +488,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser" />
   <field
     Id="&quot;3a62880b-6246-40bb-8b1f-a96c51ac4658&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -497,7 +501,7 @@
     ObjectTableName="&quot;FTPDetail&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -537,7 +541,7 @@
     ListLableDefaultText="&quot;UpdatedByUserId&quot;"
     ListLocalDefaultText="&quot;UpdatedByUserId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -557,7 +561,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser" />
   <field
     Id="&quot;62250158-184f-49e0-a652-302e4f99bb3d&quot;"
     FieldName="&quot;UserName&quot;"
@@ -852,7 +858,7 @@
     ObjectTableName="&quot;FTPDetail&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="100"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

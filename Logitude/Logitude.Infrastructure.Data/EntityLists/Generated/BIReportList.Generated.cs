@@ -47,11 +47,13 @@ namespace Logitude.Infrastructure.Data.EntityLists
        [DataMember]
        public string UpdatedByUserName  { get; set; }
        [DataMember]
-       public DateTime LastRunDate  { get; set; }
-       [DataMember]
-       public string LastRunByUserId  { get; set; }
+       public DateTime? LastRunDate  { get; set; }
        [DataMember]
        public string LastRunByUserName  { get; set; }
+       [DataMember]
+       public string FactTableName  { get; set; }
+       [DataMember]
+       public string LastRunId  { get; set; }
    }
 
 }

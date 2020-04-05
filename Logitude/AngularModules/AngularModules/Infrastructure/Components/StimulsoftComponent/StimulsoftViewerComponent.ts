@@ -75,7 +75,7 @@ export class StimulsoftViewerComponent implements OnInit {
     HeightImg: number = 1;
     MaxScreenwidth: string;
     IsEditingEnabled: boolean;
-    IsSchedulerReport: boolean;
+    IsSchedulerReport: boolean = false;
     IsShowShiftToolbar: boolean = false;
     ShowReportsTemlatesLists: boolean = false;
     PreviewStimualDivId: string;
@@ -153,8 +153,12 @@ export class StimulsoftViewerComponent implements OnInit {
         this.IsShowExportMicrosoftExcel = this.StimulsoftArgData.IsShowExportMicrosoftExcel;
         this.IsShowExportPrinttoPDF = this.StimulsoftArgData.IsShowExportPrinttoPDF;
         this.IsShowSendButton = this.StimulsoftArgData.IsShowSendButton;
-        this.IsSchedulerReport = this.StimulsoftArgData.IsSchedulerReport;
-
+        if (this.StimulsoftArgData.IsSchedulerReport) {
+            this.IsSchedulerReport = true;
+            this.IsShowExportPrinttoPDF = false;
+            this.IsShowSendButton = false;
+            this.IsShowExportMicrosoftExcel = false;
+        }
    
 
 
@@ -598,7 +602,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         //  var fileName: string = this.StimulsoftArgData.ReportKey + "@" + (this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Name:"");
         var fileName: string = this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription;
-        this.reportService.GetPrepareSendReport(type, fileName , SessionLocator.Tenant).subscribe(res => {
+        this.reportService.GetPrepareSendReport(type, fileName , SessionLocator.Tenant).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
@@ -682,7 +686,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
                 this.CurrentSession.StartBusyIndicatorSaving();
 
-                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
+                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     this.CurrentSession.StopBusyIndicator();
 
@@ -906,7 +910,7 @@ export class StimulsoftViewerComponent implements OnInit {
     }
     UpdateDocumentTypeTemplate(item: any, isCloseEditWindow: boolean) {
 
-        this.documentTypeTemplatePMService.update(item).subscribe(myResult=> {
+        this.documentTypeTemplatePMService.update(item).subscribe((myResult:any)=> {
 
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
@@ -940,7 +944,7 @@ export class StimulsoftViewerComponent implements OnInit {
     }
 
     GetDocumentTypeTemplate(Id: any, mode: string, isCloseEditWindow: boolean) {
-        this.documentTypeTemplatePMService.get(Id).subscribe(res=> {
+        this.documentTypeTemplatePMService.get(Id).subscribe((res:any)=> {
             var pmResponse: ServiceResponse = res;
 
             if (!pmResponse.HasError) {
@@ -1011,7 +1015,7 @@ export class StimulsoftViewerComponent implements OnInit {
                     item.HorizontalShift = this.HorizontalShift;
                     item.VerticalShift = this.VerticalShift;
                     if (isChange) {
-                        this.documentTypeTemplatePMService.update(item).subscribe(myResult => {
+                        this.documentTypeTemplatePMService.update(item).subscribe((myResult:any) => {
                             if (this.StimulsoftArgData.EditDocumentComponent && this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {
                                 this.StimulsoftArgData.EditDocumentComponent.DataViewModel.IsRefreshPrintConrol = true;
                             }
@@ -1094,7 +1098,7 @@ export class StimulsoftViewerComponent implements OnInit {
             if (editableFieldLists.length > 0 || this.StimulsoftArgData.IsReset) {
                 if (this.StimulsoftArgData.IsReset) {
 
-                    this.StimulsoftArgData.EditDocumentComponent._exportDocumentService.GetResetEditableFields(this.StimulsoftArgData.EditDocumentComponent.CurrentDocumentOutId).subscribe(res => {
+                    this.StimulsoftArgData.EditDocumentComponent._exportDocumentService.GetResetEditableFields(this.StimulsoftArgData.EditDocumentComponent.CurrentDocumentOutId).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             if (this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {
@@ -1141,7 +1145,7 @@ export class StimulsoftViewerComponent implements OnInit {
             }
 
             if (filter.EditableFieldLists && filter.EditableFieldLists.length > 0) {
-                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
+                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         this.EditableField.filter(d => d.Status == "Change").forEach((field) => {

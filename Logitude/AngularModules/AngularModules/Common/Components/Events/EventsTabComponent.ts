@@ -37,7 +37,7 @@ export class EventsTabComponent implements OnDestroy {
     constructor(public entityArgs: EntityArgs) {
         this.TabHeaderTextCode = entityArgs.ObjectTableName + ".TH.Events";
 
-        this._entityResourceService.getEntityResourceByTableName("TraceEvent", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TraceEvent", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.myDomainService = new WebFreightDomainService();
             this.ItemsSource = [];

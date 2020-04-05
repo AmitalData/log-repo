@@ -60,7 +60,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;77528d40-4bd1-4794-b523-f4388796c274&quot;"
     FieldName="&quot;Id&quot;"
@@ -1154,7 +1156,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;OccasionStatus&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="3"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

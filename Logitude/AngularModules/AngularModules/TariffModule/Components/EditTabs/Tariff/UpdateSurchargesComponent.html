@@ -1,3 +1,4 @@
+
 <style type="text/css">
     .Box {
         position: absolute;
@@ -409,7 +410,7 @@
                                                                                     <div class="SimpleGridViewBody">
                                                                                         <table>
                                                                                             <tr class="SimpleGridViewRow" *ngFor="let item of ContainerPricesItemsSource">
-                                                                                                <td  class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                                                <td class="GridViewCell" style="width: 25px; min-width: 25px; max-width: 25px;">
                                                                                                     <CheckBox [IsChecked]="item.IsChargeChecked" (Checked)="item.IsChargeChecked = $event"></CheckBox>
                                                                                                 </td>
 
@@ -510,70 +511,86 @@
 
                                             <tr>
                                                 <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
-                                                    <div class="MediaFill"> 
+                                                    <div class="MediaFill">
                                                         <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="Logs">
                                                             <log-column [width]="'20'" [header]="'#'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div style="width: 100%; text-align: center;">
-                                                                        {{item.Index}}
-                                                                    </div>
-                                                                </log-cell-template>
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: center;">
+                                                                            {{item.Index}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
                                                             </log-column>
 
                                                             <log-column [width]="'90'" [header]="'From'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div style="width: 100%; text-align: left;">
-                                                                        {{item.From}}
-                                                                    </div>
-                                                                </log-cell-template>
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.From}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
                                                             </log-column>
 
                                                             <log-column [width]="'90'" [header]="'To'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div style="width: 100%; text-align: left;">
-                                                                        {{item.To}}
-                                                                    </div>
-                                                                </log-cell-template>
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.To}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
                                                             </log-column>
 
                                                             <log-column [width]="'100'" [header]="'Start Date'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div style="width: 100%; text-align: left;">
-                                                                        {{item.StartDate| DateTimeToDatePipe}}
-                                                                    </div>
-                                                                </log-cell-template>
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.StartDate| DateTimeToDatePipe}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
                                                             </log-column>
 
                                                             <log-column [width]="'150'" [header]="'Surcharges'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div style="width: 100%; text-align: left;">
-                                                                        {{item.Surcharges}}
-                                                                    </div>
-                                                                </log-cell-template>
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.Surcharges}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
                                                             </log-column>
 
                                                             <log-column [width]="'100'" [header]="'Lines Updated'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div style="width: 100%; text-align: center;">
-                                                                        {{item.LinesUpdated}}
-                                                                    </div>
-                                                                </log-cell-template>
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: center;">
+                                                                            {{item.LinesUpdated}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
                                                             </log-column>
 
                                                             <log-column [width]="'60'" [header]="'Manual'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div style="width: 100%; text-align: center;">
-                                                                        <img *ngIf="item.UpdateMethodCode == 'MA'" class="CenterCenter" src="./Images/CheckBoxIcon.png" style="width:15px;height:12px;" />
-                                                                    </div>
-                                                                </log-cell-template>
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: center;">
+                                                                            <img *ngIf="item.UpdateMethodCode == 'MA'" class="CenterCenter" src="./Images/CheckBoxIcon.png" style="width:15px;height:12px;" />
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
                                                             </log-column>
 
                                                             <log-column [width]="'100'" [header]="'Create Date'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
-                                                                    <div style="width: 100%; text-align: left;">
-                                                                        {{item.CreateDate| DateTimePipe: 'DT'}}
-                                                                    </div>
-                                                                </log-cell-template>
+                                                                <ng-template let-item>
+                                                                    <log-cell-template    #logcelltemplate>
+                                                                        <div style="width: 100%; text-align: left;">
+                                                                            {{item.CreateDate| DateTimePipe: 'DT'}}
+                                                                        </div>
+                                                                    </log-cell-template>
+                                                                </ng-template>
                                                             </log-column>
                                                         </logitude-edit-grid>
                                                     </div>

@@ -58,6 +58,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string InterestReportId { get; set; }
         [Column("IsClosed")]
 	    public bool IsClosed { get; set; }
+        [Column("IsCancelled")]
+	    public bool IsCancelled { get; set; }
     }
 }
 	 

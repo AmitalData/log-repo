@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.AccountTypeCode).HasColumnName("AccountTypeCode").HasMaxLength(1).IsUnicode(false);
 
-            this.Property(t => t.DisplayNumber).HasColumnName("DisplayNumber").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.DisplayNumber).HasColumnName("DisplayNumber").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(105).IsUnicode(true);
 
@@ -54,7 +54,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.RevenueExpenseType).HasColumnName("RevenueExpenseType").IsRequired().HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.RevenueExpenseType).HasColumnName("RevenueExpenseType").IsRequired().HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.IsControlAccount).HasColumnName("IsControlAccount");
 
@@ -135,7 +135,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
 
             this.Property(t => t.AllowEditChequePayToName).HasColumnName("AllowEditChequePayToName");
 

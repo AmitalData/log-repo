@@ -2,7 +2,8 @@
 <Table
   Name="BookingSpaceAllocations"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Booking">
   <Column
     Name="Code"
     Type="varchar"

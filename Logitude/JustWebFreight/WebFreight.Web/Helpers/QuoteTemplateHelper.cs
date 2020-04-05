@@ -439,6 +439,11 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEMINMAXCONTAINERS", "Min/Max", "Min/Max", "Containers"));
 
 
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATPERCENTAGEPACKAGES", "VAT Percentage", "VAT Percentage", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATPERCENTAGECONTAINERS", "VAT Percentage", "VAT Percentage", "Containers"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATTYPEPACKAGES", "VAT Type", "VAT Type", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATTYPECONTAINERS", "VAT Type", "VAT Type", "Containers"));
+
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("QUOTEDATE", "Quote Date", "Quote Date", "QuoteHeader"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("EXPIRATIONDATE", "Expiration Date", "Expiration Date", "QuoteHeader"));
@@ -805,8 +810,10 @@ namespace WebFreight.Web.Helpers
                     SpaceLinesBeforePerContainers = setting.SpaceLinesBeforePerContainers,
                     QuoteTemplatePDFMarginTop = setting.QuoteTemplatePDFMarginTop,
                     QuoteTemplatePDFMarginBottom = setting.QuoteTemplatePDFMarginBottom,
-                    
-
+                    ShowVATPercentageContainers = setting.ShowVATPercentageContainers,
+                    ShowVATPercentagePackages = setting.ShowVATPercentagePackages,
+                    ShowVATTypeContainers = setting.ShowVATTypeContainers,
+                    ShowVATTypePackages = setting.ShowVATTypePackages,
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))

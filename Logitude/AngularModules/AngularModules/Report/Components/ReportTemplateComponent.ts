@@ -78,7 +78,7 @@ export class ReportTemplateComponent implements OnInit {
         }
 
   
-        this._entityResourceService.getEntityResourceByTableName("ReportsTemplate", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("ReportsTemplate", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
@@ -168,7 +168,7 @@ export class ReportTemplateComponent implements OnInit {
     UpdateReportsTemplatePM(item: ReportsTemplatePM) {
         this.CurrentSession.StartBusyIndicatorSaving();
         this.IsChange = true;
-        this.reportsTemplatePMService.update(item).subscribe(res => {
+        this.reportsTemplatePMService.update(item).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {

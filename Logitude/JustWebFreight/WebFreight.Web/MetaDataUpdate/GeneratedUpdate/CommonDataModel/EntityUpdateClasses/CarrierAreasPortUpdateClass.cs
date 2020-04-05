@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CarrierAreasPort",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CarrierAreasPorts",
-			      				    OldDBTableName =  "Carriers",
 			      				    ObjectTableSingular =  "Carrier Areas Port",
 			      				    ObjectTablePlural =  "Carrier Areas Ports",
 			      				    HasCustomFilter =  true,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
 			      				    DefaultText =  "Carrier Areas Port",
-			      				    Code =  "e9d3",
+			      				    Code =  "6bf2",
 			      				    Name =  "Carriers",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -141,12 +140,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "CarrierAreasPort",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -190,6 +188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalName",
@@ -202,13 +201,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CarrierAreaId",
-					  						OldFieldName =  "CarrierAreaId",
 					  						ObjectTableName =  "CarrierAreasPort",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CarrierArea",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -248,6 +246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -259,7 +258,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PortId",
-					  						OldFieldName =  "PortId",
 					  						ObjectTableName =  "CarrierAreasPort",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -305,6 +303,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -318,7 +317,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CarrierAreasPortObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CarrierAreasPort" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> CarrierAreasPortObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CarrierAreasPort").ToList();
+		       
+	      
+
+	         Screen CarrierAreasPortCarrierAreasPortHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CarrierAreasPort.HeaderScreen", Name = "CarrierAreasPortHeaderScreen", ObjectTableId = CarrierAreasPortObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CarrierAreasPortObjectTable.HeaderScreenId = CarrierAreasPortCarrierAreasPortHeaderScreenScreen0.Id;
+		    CarrierAreasPortObjectTable.HeaderScreenCode = CarrierAreasPortCarrierAreasPortHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

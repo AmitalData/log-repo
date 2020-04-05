@@ -26,7 +26,9 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;CRM Filter Setting&quot;">
+  DefaultText="&quot;CRM Filter Setting&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;6fed6175-f02c-491a-870f-6fe4cbe02c7f&quot;"
     FieldName="&quot;Id&quot;"

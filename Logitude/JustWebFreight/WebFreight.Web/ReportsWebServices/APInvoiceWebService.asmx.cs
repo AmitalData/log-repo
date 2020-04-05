@@ -25,6 +25,7 @@ using System.Reflection;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -69,6 +70,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         public APInvoiceDataProvider GetAPInvoiceDataProvider(string invoiceId, int tenant)
         {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             APInvoiceDataProvider invoiceDataProvider = new APInvoiceDataProvider();
 
             currentTenant = tenant;
@@ -102,6 +104,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            customFieldResolver.SetDataProviderCustomFieldsValues("APInvoice", tenant, myAPInvoice, invoiceDataProvider);
             return invoiceDataProvider;
         }
 
@@ -580,6 +583,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
                 #endregion
+
             }
 
             return invoiceDataProvider;

@@ -62,7 +62,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChassisNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.RegistrationNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.WarehouseReleaseNumber).HasMaxLength(15).IsUnicode(false);
 
+
+    
             // Table & Column Mappings
             this.ToTable("ShipmentPackages");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -71,7 +74,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PackageTypeId).HasColumnName("PackageTypeId");
             this.Property(t => t.ContainerNumber).HasColumnName("ContainerNumber");
             this.Property(t => t.ShipperSeal).HasColumnName("ShipperSeal");
-            this.Property(t => t.Quantity).HasColumnName("Quantity");
+            this.Property(t => t.Quantity).HasColumnName("Quantity").IsRequired();
             this.Property(t => t.Weight).HasColumnName("Weight");
             this.Property(t => t.Volume).HasColumnName("Volume");
             this.Property(t => t.Tare).HasColumnName("Tare");
@@ -151,6 +154,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChassisNumber).HasColumnName("ChassisNumber");
             this.Property(t => t.RegistrationNumber).HasColumnName("RegistrationNumber");
             this.Property(t => t.CountryId).HasColumnName("CountryId");
+            this.Property(t => t.WarehouseReleaseNumber).HasColumnName("WarehouseReleaseNumber");
+
+            
 
             this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeId);

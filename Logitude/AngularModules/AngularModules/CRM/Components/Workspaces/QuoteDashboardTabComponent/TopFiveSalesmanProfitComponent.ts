@@ -32,7 +32,7 @@ export class TopFiveSalesmanProfitComponent implements OnInit {
     }
 
     ngOnInit() {                
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             this.FillChartArgs();
             this.LoadChartData();
         });

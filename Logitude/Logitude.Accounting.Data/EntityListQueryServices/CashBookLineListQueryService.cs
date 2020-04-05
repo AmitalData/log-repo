@@ -39,7 +39,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                               ARPaymentNumber = a.Cheque.Payment.PaymentNo,
                                               ARPaymentId = a.Cheque.PaymentId,
                                               ARPChequeStatusCode = a.Cheque.StatusCode,
-                                              ARPChequeStatusName = a.Cheque.ARPaymentChequeStatus.LocalName,
+                                              ARPChequeStatusName = a.Cheque.ARPaymentChequeStatus.EnglishName,
+                                              ARPChequeStatusLocalName = a.Cheque.ARPaymentChequeStatus.LocalName,
                                               SearchFields = a.SearchFields,
                                               
 		                    	            });

@@ -147,7 +147,7 @@ export class QuickBooksComponent implements OnInit {
             if (this.searchText == null)
                 this.searchText = "";
             this.CurrentSession.StartBusyIndicator("Searching ..");           
-            this.GlobalDomainService.GetQuickBooksQueries(this.args, this.SearchText).subscribe(myResult => {
+            this.GlobalDomainService.GetQuickBooksQueries(this.args, this.SearchText).subscribe((myResult:any) => {
                 this.TempList = [];
                 this.CustomersListFilterd = [];
                 var list: Array<any> = myResult.Result;

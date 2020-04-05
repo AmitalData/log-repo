@@ -680,12 +680,12 @@ export class ByCreateDateComponent extends BaseComponent {
 
     LoadQuotesData(days: number) {
         if (this.SelectedDateFilter.Code == "-2") {
-            this.crmDomainService.GetQuotesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
+            this.crmDomainService.GetQuotesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
                 this.FillQuotesData(result);
             });
         }
         else {
-            this.crmDomainService.GetQuotesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
+            this.crmDomainService.GetQuotesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
                 this.FillQuotesData(result);
             });
         }
@@ -735,13 +735,13 @@ export class ByCreateDateComponent extends BaseComponent {
 
     LoadCustomersData(days: number) {
         if (this.SelectedDateFilter.Code == "-2") {
-            this.crmDomainService.GetCustomersGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
+            this.crmDomainService.GetCustomersGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
                 this.FillCustomerData(result);
             });
         }
 
         else {
-            this.crmDomainService.GetCustomersGroupBySalesman(days, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
+            this.crmDomainService.GetCustomersGroupBySalesman(days, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
                 this.FillCustomerData(result);
             });
         }
@@ -875,12 +875,12 @@ export class ByCreateDateComponent extends BaseComponent {
     }
     LoadActivitiesData(days: number) {
         if (this.SelectedDateFilter.Code == "-2") {
-            this.crmDomainService.GetActivitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
+            this.crmDomainService.GetActivitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
                 this.FillActivitiesData(result);
             });
         }
         else {
-            this.crmDomainService.GetActivitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
+            this.crmDomainService.GetActivitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
                 this.FillActivitiesData(result);
             });
         }
@@ -1049,12 +1049,12 @@ export class ByCreateDateComponent extends BaseComponent {
     }
     LoadOpportunitiesData(days: number) {
         if (this.SelectedDateFilter.Code == "-2") {
-            this.crmDomainService.GetOpportunitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
+            this.crmDomainService.GetOpportunitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
                 this.FillOpportunitiesData(result);
             });
         }
         else {
-            this.crmDomainService.GetOpportunitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
+            this.crmDomainService.GetOpportunitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
                 this.FillOpportunitiesData(result);
             });
         }

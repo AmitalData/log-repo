@@ -128,7 +128,7 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
     
     GetBTE() {
         var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe(myResult => {
+        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var bteList: BatchTaskExecutionList = myResponse.Result;

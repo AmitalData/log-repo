@@ -37,7 +37,9 @@
   IsLookUp="true"
   IsEditable="true"
   HasCustomFilter="true"
-  ClientModuleName="&quot;Infrastructure&quot;">
+  ClientModuleName="&quot;Infrastructure&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;552ddf7b-4e48-498d-8d38-b72b2aa62a9b&quot;"
     FieldName="&quot;Id&quot;"
@@ -59,7 +61,8 @@
     ValidForQuerySection1="&quot;IATACode&quot;"
     ValidForQuerySection2="&quot;IATACodeFollowUp&quot;"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;2c0c8947-9a70-472c-a961-a45fb9f9729c&quot;"
     FieldName="&quot;Code&quot;"
@@ -301,14 +304,17 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="DueType"
+    NavigationPropertyName="DueType" />
   <field
     Id="&quot;cec38146-49cc-42e7-9d90-492001c8335c&quot;"
     FieldName="&quot;IsIATA&quot;"
     ObjectTableName="&quot;IATACode&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -491,12 +497,15 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="Card"
+    NavigationPropertyName="Airline" />
   <field
     Id="&quot;e7f4efe0-5655-47e8-a7c3-ab8d9b78e2d8&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;IATACode&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

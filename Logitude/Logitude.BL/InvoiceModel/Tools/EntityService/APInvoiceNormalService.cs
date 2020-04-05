@@ -1705,9 +1705,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             ExternalTAXItemId = item.ExternalTAXItemId,
                             // VatRecognizedPercentage = item.VatRecognizedPercentage,
                         };
-
-                        record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
-                        record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                        //InvoiceCurrencyVatableAmount= LocalVatableAmount/InvoiceCurrencyExchangeRate
+                      
+                       record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
+                       record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                        
                         record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
                         invoiceTotalVatRepository.Add(record);
 
@@ -2036,32 +2038,38 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    #region
-                    double? invoicepaymentstotalamount = (from a in objectContext.APInvoicePayments
-                                                          where a.APPaymentId == itemPM.APPaymentId
-                                                          && a.Tenant == tenant
-                                                          select a).Sum(s => s.PaymentAmount);
+                    double? Amount = MethodHelper.Roundd(payment.AmountInPaymentCurrency, 2);
+                    double? ExternalAmount = MethodHelper.Roundd(payment.ExternalPaymentAmount, 2);
+                    double? PaidAmount = (from a in objectContext.APInvoicePayments where a.APPaymentId == itemPM.APPaymentId && a.Tenant == tenant select a).Sum(s => s.PaymentAmount);
 
-                    if (invoicepaymentstotalamount == null)
+                    if (PaidAmount == null)
                     {
-                        invoicepaymentstotalamount = 0;
+                        PaidAmount = 0;
                     }
-
-                    invoicepaymentstotalamount = MethodHelper.Round(invoicepaymentstotalamount, 2);
 
                     if (isDelete)
                     {
-                        invoicepaymentstotalamount = MethodHelper.Round((invoicepaymentstotalamount - itemPM.PaymentAmount), 2);
+                        PaidAmount -= itemPM.PaymentAmount;
                     }
 
-                    if (invoicepaymentstotalamount <= payment.AmountInPaymentCurrency)
+                    PaidAmount = MethodHelper.Round(PaidAmount, 2);
+                    double? AllPaidAmount = MethodHelper.Roundd(PaidAmount + ExternalAmount, 2);
+
+                    if (AllPaidAmount > Amount)
                     {
-                        if (invoicepaymentstotalamount < 0)
+                        throw new Exception("The amount paid is not suitable to the total payment amount!!");
+                    }
+
+                    else
+                    {
+                        if (PaidAmount < 0)
                         {
-                            invoicepaymentstotalamount = invoicepaymentstotalamount * -1;
+                            PaidAmount = PaidAmount * -1;
                         }
 
-                        payment.OpenAmount = MethodHelper.Round((payment.AmountInPaymentCurrency - invoicepaymentstotalamount), 2);
+                        double? OpenAmount = MethodHelper.Round((Amount - PaidAmount - ExternalAmount), 2);
+
+                        payment.OpenAmount = OpenAmount;
 
                         if (payment.OpenAmount == 0)
                         {
@@ -2083,15 +2091,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 payment.StatusCode = "AD";
                             }
                         }
-                    }
 
-                    else
-                    {
-                        throw new Exception("The amount paid is not suitable to the total payment amount!!");
+                        paymentRepository.Update(payment);
                     }
-
-                    paymentRepository.Update(payment);
-                    #endregion
                 }
             }
         }
@@ -2287,10 +2289,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                    
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                     journal.JournalLines.Add(journalLine);
-
+                    var total = entityPM.InvoiceLines.Sum(s => s.LocalCurrencyAmount);
                     // [Debit]
                     journalLine = new JournalLinePM();
                     int counter = 1;
+               
                     List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
                                                         group d by new { d.ChargeTypeGLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
                                                         select new JournalLinePM()
@@ -2306,12 +2309,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
 
-                                                            LocalAmount = ((decimal)g.Sum(a => 
-                                                            a.VatRecognizedPercentage == null ? a.LocalCurrencyAmount :
-                                                                (MethodHelper.Round( (a.LocalCurrencyAmount + ((a.VatPercentage / 100) * ((1 - a.VatRecognizedPercentage) * a.LocalCurrencyAmount))), 2)))),
+                                                            LocalAmount = (decimal)g.Sum(a => 
+                                                            (a.VatRecognizedPercentage == null || a.VatRecognizedPercentage==0) ? a.LocalCurrencyAmount :
+                                                                 (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)))),
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
-                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
+                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),
                                                             ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
@@ -2320,7 +2323,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                         }).ToList();
 
                     journal.JournalLines.AddRange(journalLines);
-
+                    var total2 = journal.JournalLines.Sum(d => d.LocalAmount);
                     // [Vats]
                     //List<APInvoiceTotalVAT> APInvoiceTotalVATs = new List<APInvoiceTotalVAT>();
 
@@ -2334,6 +2337,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
+                        vat.LocalVatAmountWithVatRecognized =Math.Round( (vat.VatRecognizedPercentage != null && vat.VatRecognizedPercentage != 0) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,2);
+                          
                         journalLine = new JournalLinePM()
                         {
                             Tenant = tenant,
@@ -2345,9 +2350,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             DocumentDate = theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
-                            LocalAmount = vat.VatRecognizedPercentage != null ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,
+                            LocalAmount = vat.LocalVatAmountWithVatRecognized,// vat.VatRecognizedPercentage != null ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,
                             CurrencyId = theEntityPm.InvoiceCurrencyId,
-                            ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
+                            ForeignAmount = (vat.LocalVatAmountWithVatRecognized/(decimal)entityPM.InvoiceCurrencyExchangeRate),
                             ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
@@ -2355,7 +2360,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                             CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
-
+                        total2 = total2 + journalLine.LocalAmount;
                         journal.JournalLines.Add(journalLine);
                     }
 

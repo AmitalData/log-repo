@@ -62,7 +62,7 @@ export class ViewAutomationHistoryComponent extends BaseComponent implements OnI
     LoadAutomatedDataBackup() {
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-        this._automationHistoryExtendedPMService.getAutomationBackupDataByAutomationId(this.CurrentEntityPM.AutomationsId, this.CurrentEntityPM.Version, SessionLocator.Tenant).subscribe(res => {
+        this._automationHistoryExtendedPMService.getAutomationBackupDataByAutomationId(this.CurrentEntityPM.AutomationsId, this.CurrentEntityPM.Version, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {

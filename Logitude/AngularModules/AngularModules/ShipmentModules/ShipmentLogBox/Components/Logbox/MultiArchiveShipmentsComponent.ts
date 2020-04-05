@@ -386,7 +386,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         this.isAllRecordSelected = value;
         if (value == true) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("loading ..");
-            this._ShipmentPMService.GetTop100ShipmentIds(this.filterAgrs).subscribe(myResult => {
+            this._ShipmentPMService.GetTop100ShipmentIds(this.filterAgrs).subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     this.SelectedRecordsCount = myResult.Result.length;
                     this.SelectedRecords = myResult.Result;
@@ -452,7 +452,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         this.ArchivedRecordNumber = 0;
         if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) { 
             //if (this.IsAllRecordSelected == true) {
-            //    this._ShipmentPMService.ArchiveAllShipments(this.filterAgrs).subscribe(myResult => {
+            //    this._ShipmentPMService.ArchiveAllShipments(this.filterAgrs).subscribe((myResult:any) => {
             //        if (!myResult.HasError) {
             //            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             //            this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
@@ -469,7 +469,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
                 var nextStart = (i * 10);
                 var TenSelectedRecords = this.SelectedRecords.slice(nextStart, nextStart + 10)
                 this.StartBusyIndicator("Archiving " + TenSelectedRecords.length + "/" + this.SelectedRecords.length  + " ...");
-                this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe(myResult => {
+                this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         if ((this.ArchivedRecordNumber + 10) > this.SelectedRecords.length) {
                             this.ArchivedRecordNumber = this.SelectedRecords.length;

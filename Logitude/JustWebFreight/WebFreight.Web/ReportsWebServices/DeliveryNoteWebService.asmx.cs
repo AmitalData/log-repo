@@ -193,8 +193,10 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.AMSBL = shipment.AMSBL;
             dataProvider.DescriptionOfGoods = DataProviders.General.GetFieldString(shipment.DescriptionOfGoods);
             dataProvider.IncotermName = shipment.IncotermName;
+            dataProvider.DeclarationNumber = shipment.DeclarationNumber;
+            dataProvider.CustomsClearancePointName = shipment.CustomClearancePointName;
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
-
+            
             if (shipment.ValueOfGoodsCurrencyId != null)
             {
                 Currency currency = commonContext.Currencies.Where(d => d.Id == shipment.ValueOfGoodsCurrencyId).FirstOrDefault();
@@ -202,7 +204,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     dataProvider.ValueOfGoodsCurrency = currency.Code;
                 }
-            }       
+            }
 
             this.MapShipmentFrom();
             this.MapShipmentTo();
@@ -227,6 +229,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(shipment.MainCarriageFromPortId))
             {
                 dataProvider.LoadingPortName = shipment.MainCarriageFromPortName;
+                dataProvider.LoadingPortCode = shipment.MainCarriageFromPortCode;
                 dataProvider.OriginCountry = shipment.MainCarriageFromPortCountryName;
             }
         }
@@ -235,21 +238,27 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(shipment.Transshipment3ToPortId))
             {
                 dataProvider.DischargePortName = shipment.Transshipment3ToPortName;
+                dataProvider.DischargePortCode = shipment.Transshipment3ToPortCode;
             }
 
             else if (!string.IsNullOrEmpty(shipment.Transshipment2ToPortId))
             {
                 dataProvider.DischargePortName = shipment.Transshipment2ToPortName;
+                dataProvider.DischargePortCode = shipment.Transshipment2ToPortCode;
+
             }
 
             else if (!string.IsNullOrEmpty(shipment.Transshipment1ToPortId))
             {
                 dataProvider.DischargePortName = shipment.Transshipment1ToPortName;
+                dataProvider.DischargePortCode = shipment.Transshipment1ToPortCode;
+
             }
 
             else if (!string.IsNullOrEmpty(shipment.MainCarriageToPortId))
             {
                 dataProvider.DischargePortName = shipment.MainCarriageToPortName;
+                dataProvider.DischargePortCode = shipment.MainCarriageToPortCode;
             }
         }
         private void MapShipmentDates()

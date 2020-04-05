@@ -31,7 +31,10 @@ namespace Logitude.Accounting.Data.Repositories
         public IQueryable<InterestTransaction> GetInterestTransactionsForGlAccountAndInterestValueDate(string glAccountId, DateTime InterestReportCalculationDate, int tenant)
         {
             return this.GetAll(tenant)
-                .Where(d =>d.Tenant==tenant && d.GLAccountId == glAccountId && !d.IsClosed && d.InterestValueDate <= InterestReportCalculationDate);
+                .Where(d =>d.Tenant==tenant 
+                && d.GLAccountId == glAccountId 
+                && !d.IsClosed
+                && d.InterestValueDate <= InterestReportCalculationDate);
 
         }
    }

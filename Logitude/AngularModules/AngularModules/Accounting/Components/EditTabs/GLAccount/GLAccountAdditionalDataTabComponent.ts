@@ -264,7 +264,7 @@ export class SplittedByCurrencyAccount extends BaseComponent {
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
 
 
             this.parent.BuildChildrenGLAccountsList();
@@ -315,7 +315,7 @@ export class GLAccountChild extends BaseComponent {
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
 
 
             this.parent.BuildChildrenGLAccountsList();

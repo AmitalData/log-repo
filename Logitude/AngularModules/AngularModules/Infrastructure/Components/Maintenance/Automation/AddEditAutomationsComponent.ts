@@ -85,7 +85,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     DelayTime: number;
     IsEnableAddTemplate: boolean = false;
     IsEnableEditTemplate: boolean = false;    
-    DelaytimeIndicator: string;
     CountDocumentSelection: string;
 
     AutomationCondationOrList: AutomationConditionViewModel[] = [];
@@ -160,7 +159,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     IsMasterShipment: boolean = false;
     SetWindowArgs(args: any) {
-        this.entityResourceService.getEntityResourceByTableName("Automation", 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Automation", 0).subscribe((response:any) => {
         this.ObjectTableId = args.ObjectTableId;
         this.DataViewModel = args.DataViewModel;
         this.PageType = args.PageType;
@@ -238,7 +237,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     LoadAutomationDataBackup() {
         if (this.CurrentEntityPM && this.CurrentEntityPM.Id) {
-            this._automationExtendedPMService.getAutomationBackupDataById(this.CurrentEntityPM.Id, this.CurrentEntityPM.Tenant).subscribe(res => {
+            this._automationExtendedPMService.getAutomationBackupDataById(this.CurrentEntityPM.Id, this.CurrentEntityPM.Tenant).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -260,7 +259,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         apiQueryFilters.Tenant = SessionLocator.Tenant;
         apiQueryFilters.ObjectTableName = this.ObjectTableName;
 
-        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.AllDocumentTypeLists = pmResponse.Result.filter(a => a.ObjectTableId == this.ObjectTableId && !a.InActive);
@@ -312,7 +311,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     LoadDocumentTypeTemplate(documentTypeList: DocumentTypeList) {
         this.DocumentTypeTemplateLists = [];
 
-        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, SessionLocator.Tenant).subscribe(res => {
+        this._documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeList.Id, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -485,7 +484,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     LoadAutomationHistory() {
         if (this.CurrentEntityPM && !AppTool.IsNullOrEmpty(this.CurrentEntityPM.Id)) {
 
-            this._automationHistoryExtendedPMService.getAutomationHistoryesByAutomationId(this.CurrentEntityPM.Id, SessionLocator.Tenant).subscribe(res => {
+            this._automationHistoryExtendedPMService.getAutomationHistoryesByAutomationId(this.CurrentEntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -651,29 +650,30 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
 
+    private delaytimeIndicator: string;
+    get DelaytimeIndicator() {
+        return this.delaytimeIndicator;
+    }
+    set DelaytimeIndicator(value:string) {
 
-    DelaytimeIndicatorChange(value) {
+        if (value != this.delaytimeIndicator) {
 
-        if (value != null && value.Code != this.DelaytimeIndicator) {
-            var delayTime = this.DelayTime;
-            var delaytimeIndicator = this.DelaytimeIndicator;
-
-            var numOfMinutes = 1 * 60;
-            if (this.DelaytimeIndicator != "OO" && value.Code == "OO" && this.DelayTime >= 60) {
-                delayTime = this.DelayTime / numOfMinutes;
-          
+            if (!this.delaytimeIndicator) {
+                this.delaytimeIndicator = value;
             }
-            else if (this.DelaytimeIndicator != "II" && value.Code == "II") {
-                delayTime = this.DelayTime * numOfMinutes;
+            else {
+                var delayTime = this.DelayTime;
+                var numOfMinutes = 1 * 60;
+                if (this.delaytimeIndicator != "OO" && value == "OO" && this.DelayTime >= 60) delayTime = (this.DelayTime / numOfMinutes);
+                else if (this.delaytimeIndicator != "II" && value == "II") delayTime = (this.DelayTime * numOfMinutes);
+                this.DelayTime = delayTime;
+                this.delaytimeIndicator = value;
+                this.IsChangeAutomation = true;
             }
-
-
-            this.DelaytimeIndicator = value.Code;
-            this.DelayTime = delayTime;
-            this.IsChangeAutomation = true;
-
         }
     }
+
+
     
     SelectDocumentTypes() {
         var logWindow = new LogitudeWindow();
@@ -824,7 +824,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         this.EntityContactVariable = [];
         this.UserIds = "";
         
-        this._automationResultEmailRecipientExtendedService.getAutomationResultEmailRecipientByAutomationId(this.CurrentEntityPM.Id, SessionLocator.Tenant).subscribe(res => {
+        this._automationResultEmailRecipientExtendedService.getAutomationResultEmailRecipientByAutomationId(this.CurrentEntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -955,7 +955,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     AutomationCodeValueChange(value) {
         if (this.Code && this.ExsitCode != this.Code) {
             this.ExsitCode = this.Code;
-            this._automationExtendedPMService.GetDoesAutomationCodeExist(this.Code).subscribe(res => {
+            this._automationExtendedPMService.GetDoesAutomationCodeExist(this.Code).subscribe((res:any) => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -1125,7 +1125,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
             if (this.IsNewEntity) {
-                this._automationExtendedPMService.insert(this.CurrentEntityPM).subscribe(res => {
+                this._automationExtendedPMService.insert(this.CurrentEntityPM).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         ServiceLocator.SendTotangoUserActivity("Automation", "New Automation");
@@ -1146,7 +1146,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
                     this.CurrentEntityPM.Version += 1;
                     this.CurrentEntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-                    this._automationExtendedPMService.update(this.CurrentEntityPM).subscribe(res => {
+                    this._automationExtendedPMService.update(this.CurrentEntityPM).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             ServiceLocator.SendTotangoUserActivity("Automation", "Edit Automation");

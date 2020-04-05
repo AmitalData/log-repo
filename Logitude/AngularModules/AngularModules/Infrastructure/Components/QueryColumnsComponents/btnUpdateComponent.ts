@@ -115,7 +115,7 @@ export class btnUpdateComponent implements OnInit {
     private IsCompleted: boolean = false;
     GetCarrierUpdate() {
         var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetCarrierUpdate(this.entityId).subscribe(myResult => {
+        myService.GetCarrierUpdate(this.entityId).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             this.StopBusyIndicator();
             if (!mm.HasError) {
@@ -130,7 +130,7 @@ export class btnUpdateComponent implements OnInit {
 
     GetInUseCarrier(type: string, code: string) {
         var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetInUseCarrier(type, code).subscribe(myResult => {
+        myService.GetInUseCarrier(type, code).subscribe((myResult:any) => {
             this.InUseVisibile = myResult.Result;
 
         });

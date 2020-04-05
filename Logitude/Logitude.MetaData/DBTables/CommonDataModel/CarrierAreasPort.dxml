@@ -2,11 +2,12 @@
 <Table
   Name="CarrierAreasPorts"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
