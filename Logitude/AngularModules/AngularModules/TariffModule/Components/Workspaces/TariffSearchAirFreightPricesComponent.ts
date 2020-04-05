@@ -839,21 +839,34 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.MeasurementId = newRecord.UnitOfMesurmentId;
                 shipmentPayable.MeasurementCode = newRecord.UnitOfMesurmentCode;
 
-                var nweQuantity = this.TariffType == "OFC" ? quantity : this.GetQuantity(newRecord.UnitOfMesurmentCode);
-
+                var newQuantity = 1; 
+                var expectedAmount;
                 if (packageId != null) {
                     this.CreateNewPayableFromTariffCharge_FCL(packageId, shipmentPayable);
+                    var containerPrice = 0;
+                    if (newRecord.ContainersPrices) {
+                        var container = newRecord.ContainersPrices.filter(d => d.TariffId == newRecord.TariffId && d.ContainerId == packageId)[0];
+                        if (container) {
+                            containerPrice = container.Price;
+                            newQuantity = container.Quantity;
+                        }
+                    }
+                    expectedAmount = containerPrice;
                 }
-                var expectedAmount = newRecord.ActualPrice;
+                else {
+                    expectedAmount = newRecord.ActualPrice;
+                    newQuantity = this.GetQuantity(newRecord.UnitOfMesurmentCode)
+                }
+               
                 var rate = this.Generator.GetCurrencyRate(newRecord.CurrencyId);
                 var expectedAmountLocal = expectedAmount * rate;
 
                 var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate( this.FatherComponent.EntityPM.ProfitCurrencyId);
                 var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
 
-                if (nweQuantity != null) {
-                    shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3) : null;
-                    shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
+                if (newQuantity != null) {
+                    shipmentPayable.UnitPrice = expectedAmount != null ? AppTool.Round(expectedAmount/ newQuantity, 3) : null;
+                    shipmentPayable.Quantity = AppTool.Round(newQuantity, 3);
                 }
 
                 shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
