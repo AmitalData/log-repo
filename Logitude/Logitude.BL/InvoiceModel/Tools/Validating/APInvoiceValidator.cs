@@ -202,9 +202,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             if (!isNew)
             {
-                bool isEditingEnabled = IsEditingARPaymentEnabled(entityPM);
+                bool isEditingEnabled = IsEditingEntityEnabled(entityPOCO);
+
                 if (!isEditingEnabled)
                 {
+                    if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("APInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+
                     if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
@@ -760,26 +767,28 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
-        private static bool IsEditingARPaymentEnabled(APInvoicePM entityPM)
+        private static bool IsEditingEntityEnabled(APInvoice entityPOCO)
         {
             bool myResult = false;
-            if (entityPM != null)
+
+            if (entityPOCO != null)
             {
-                if (string.IsNullOrEmpty(entityPM.Id))
+                if (string.IsNullOrEmpty(entityPOCO.Id))
                 {
                     myResult = true;
                 }
 
-                else if (string.IsNullOrEmpty(entityPM.StatusCode))
+                else if (string.IsNullOrEmpty(entityPOCO.StatusCode))
                 {
                     myResult = true;
                 }
 
-                else if (entityPM.StatusCode == "WA")
+                else if (entityPOCO.StatusCode == "WA")
                 {
                     myResult = true;
                 }
             }
+
             return myResult;
         }
     }

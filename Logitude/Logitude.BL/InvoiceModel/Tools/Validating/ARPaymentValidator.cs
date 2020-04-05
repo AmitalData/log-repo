@@ -207,9 +207,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             if (!isNew)
             {
-                bool isEditingEnabled = IsEditingARPaymentEnabled(entityPM);
+                bool isEditingEnabled = IsEditingEntityEnabled(entityPOCO);
+
                 if (!isEditingEnabled)
                 {
+                    if (entityPM.PaymentCurrencyExchangeRate != entityPOCO.PaymentCurrencyExchangeRate)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARPayment.F.PaymentCurrencyExchangeRate", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+
                     if (entityPM.AmountInPaymentCurrency != entityPOCO.AmountInPaymentCurrency)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("ARPayment.F.AmountInPaymentCurrency", entityPM.Tenant);
@@ -556,16 +563,18 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             return loggedContact;
         }
 
-        private static bool IsEditingARPaymentEnabled(ARPaymentPM entityPM)
+        private static bool IsEditingEntityEnabled(ARPayment entityPOCO)
         {
             bool myResult = false;
-            if (entityPM != null)
+
+            if (entityPOCO != null)
             {
-                if (string.IsNullOrEmpty(entityPM.StatusCode) || entityPM.StatusCode == "DR")
+                if (string.IsNullOrEmpty(entityPOCO.StatusCode) || entityPOCO.StatusCode == "DR")
                 {
                     myResult = true;
                 }
             }
+
             return myResult;
         }
     }
