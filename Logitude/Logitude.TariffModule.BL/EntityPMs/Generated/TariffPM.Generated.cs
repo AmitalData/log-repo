@@ -1613,6 +1613,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isRefreshTranslations ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRefreshTranslations  
+	   {
+	    
+	     get
+		{
+		   return isRefreshTranslations;
+		 }
+		 set
+		 {
+		   if(isRefreshTranslations != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRefreshTranslations",OldValue=isRefreshTranslations,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isRefreshTranslations=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
