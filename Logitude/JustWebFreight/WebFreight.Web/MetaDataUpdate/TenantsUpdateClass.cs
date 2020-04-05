@@ -56,10 +56,11 @@ namespace WebFreight.Web.MetaDataUpdate
 {
     public class TenantsUpdateClass
     {
-        public static void UpdateDataForTenant(int tenant, string message)
+        private static bool runOldUpdateCode = false;
+        public static void UpdateDataForTenant(int tenant, string message, bool runOldCode = false)
         {
-            
-          
+
+            runOldUpdateCode = runOldCode;
 
             if (tenant == 0)
             {
@@ -699,38 +700,56 @@ namespace WebFreight.Web.MetaDataUpdate
         private static void UpdateBusinessInfrastrutureModule(IWebFreightContext context)
         {
             InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
-            modelUpdateClass.LoadObjectTablesMetadata(context);
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
         }
 
         private static void UpdateInfrasturtureAndLogModules(IWebFreightContext context)
         {
             InfrastructureModelUpdateClass modelUpdateClass = new InfrastructureModelUpdateClass();
-            modelUpdateClass.LoadObjectTablesMetadata(context);
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
             UpdateSystemLogsModule(context);
         }
 
         private static void UpdateSystemLogsModule(IWebFreightContext context)
         {
             SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
-            systemLogsModelUpdateClass.LoadObjectTablesMetadata(context);
+            if (runOldUpdateCode)
+                systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context);
         }
 
         private static void UpdateCommonModule(IWebFreightContext context)
         {
             CommonDataModelUpdateClass modelUpdateClass = new CommonDataModelUpdateClass();
-            modelUpdateClass.LoadObjectTablesMetadata(context);
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
         }
 
         private static void UpdateInvoiceModule(IWebFreightContext context)
         {
             InvoiceModelUpdateClass modelUpdateClass = new InvoiceModelUpdateClass();
-            modelUpdateClass.LoadObjectTablesMetadata(context);
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
         }
 
         private static void UpdateQuoteModule(IWebFreightContext context)
         {
             QuoteModelUpdateClass modelUpdateClass = new QuoteModelUpdateClass();
-            modelUpdateClass.LoadObjectTablesMetadata(context);
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
         }
 
         private static void UpdateShipmentAndMasterModules(IWebFreightContext context)
@@ -739,13 +758,19 @@ namespace WebFreight.Web.MetaDataUpdate
             //updateClass.LoadObjectTablesMetadata(context);
 
             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
-            shipmentModelUpdateClass.LoadObjectTablesMetadata(context);
+            if (runOldUpdateCode)
+                shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                shipmentModelUpdateClass.LoadObjectTablesMetadata(context);
 
            
             updateClass.LoadObjectTableRulesANDFieldsValidations();
 
             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
-            masterModelUpdateClass.LoadObjectTablesMetadata(context);
+            if (runOldUpdateCode)
+                masterModelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                masterModelUpdateClass.LoadObjectTablesMetadata(context);
 
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
@@ -757,7 +782,10 @@ namespace WebFreight.Web.MetaDataUpdate
         private static void UpdateAccountingModule(IWebFreightContext context)
         {
             AccountingUpdateClass accountingUpdateClass = new AccountingUpdateClass();
-            accountingUpdateClass.LoadObjectTablesMetadata(context);
+            if (runOldUpdateCode)
+                accountingUpdateClass.LoadObjectsTenantZero(context);
+            else
+                accountingUpdateClass.LoadObjectTablesMetadata(context);
 
             AccountingUpdate updateClass = new AccountingUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
@@ -777,8 +805,11 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateTariffModule(IWebFreightContext context)
         {
-            TariffModuleUpdateClass tariffModuleUpdateClass = new TariffModuleUpdateClass();
-            tariffModuleUpdateClass.LoadObjectTablesMetadata(context);
+            TariffModuleUpdateClass modelUpdateClass = new TariffModuleUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
 
             TariffModuleUpdate updateClass = new TariffModuleUpdate();
             //updateClass.loadScreens();
@@ -786,8 +817,11 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateTimeManagementModule(IWebFreightContext context)
         {
-            TimeManagementUpdateClass timeManagementUpdateClass = new TimeManagementUpdateClass();
-            timeManagementUpdateClass.LoadObjectTablesMetadata(context);
+            TimeManagementUpdateClass modelUpdateClass = new TimeManagementUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
 
             TimeManagementUpdate updateClass = new TimeManagementUpdate();
             //updateClass.loadScreens();
@@ -795,8 +829,12 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateWarehouseModule(IWebFreightContext context)
         {
-            WarehouseLibUpdateClass warehouseLibUpdateClass = new WarehouseLibUpdateClass();
-            warehouseLibUpdateClass.LoadObjectTablesMetadata(context);
+            WarehouseLibUpdateClass modelUpdateClass = new WarehouseLibUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
+
             WarehouseUpdate updateClass = new WarehouseUpdate();
             updateClass.LoadRolesAndFeatures(0);
             updateClass.CreateTableCounters();
@@ -811,8 +849,11 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateBookingModule(IWebFreightContext context)
         {
-            BookingLibUpdateClass bookingLibUpdateClass = new BookingLibUpdateClass();
-            bookingLibUpdateClass.LoadObjectTablesMetadata(context);
+            BookingLibUpdateClass modelUpdateClass = new BookingLibUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
 
             BookingUpdate updateClass = new BookingUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
@@ -828,8 +869,11 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateCRMModule(IWebFreightContext context)
         {
-            CRMUpdateClass cRMUpdateClass = new CRMUpdateClass();
-            cRMUpdateClass.LoadObjectTablesMetadata(context);
+            CRMUpdateClass modelUpdateClass = new CRMUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context);
 
             CRMUpdate updateClass = new CRMUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
@@ -852,34 +896,40 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.UpgradeClosedTablesForTenantZero();
 
             InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
-            inframodelUpdateClass.LoadObjectTablesMetadata(context);
-
             SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
-            systemLogsModelUpdateClass.LoadObjectTablesMetadata(context);
-
             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
-            shipmentModelUpdateClass.LoadObjectTablesMetadata(context);
-
             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
-            masterModelUpdateClass.LoadObjectTablesMetadata(context);
-
             QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
-            quotemodelUpdateClass.LoadObjectTablesMetadata(context);
-
             InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
-            invoicemodelUpdateClass.LoadObjectTablesMetadata(context);
-
             CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
-            commonmodelUpdateClass.LoadObjectTablesMetadata(context);
-
-
             GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
-            globalmodelUpdateClass.LoadObjectTablesMetadata(context);
+            InfrastructureUpdateClass businessInfraUpdateClass = new InfrastructureUpdateClass();
+            if (runOldUpdateCode)
+            {
+               
+                inframodelUpdateClass.LoadObjectsTenantZero(context);
+                systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
+                shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+                masterModelUpdateClass.LoadObjectsTenantZero(context);
+                quotemodelUpdateClass.LoadObjectsTenantZero(context);
+                invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+                commonmodelUpdateClass.LoadObjectsTenantZero(context);
+                globalmodelUpdateClass.LoadObjectsTenantZero(context);
+                businessInfraUpdateClass.LoadObjectsTenantZero(context);
 
-            InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
-            modelUpdateClass.LoadObjectTablesMetadata(context);
-
-          
+            }
+            else
+            {
+                inframodelUpdateClass.LoadObjectTablesMetadata(context);
+                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context);
+                shipmentModelUpdateClass.LoadObjectTablesMetadata(context);
+                masterModelUpdateClass.LoadObjectTablesMetadata(context);
+                quotemodelUpdateClass.LoadObjectTablesMetadata(context);
+                invoicemodelUpdateClass.LoadObjectTablesMetadata(context);
+                commonmodelUpdateClass.LoadObjectTablesMetadata(context);
+                globalmodelUpdateClass.LoadObjectTablesMetadata(context);
+                businessInfraUpdateClass.LoadObjectTablesMetadata(context);
+            }
             updateClass.LoadUpdateTenantZero(context, false);
 
             //updateClass.LoadOtherFields(context);

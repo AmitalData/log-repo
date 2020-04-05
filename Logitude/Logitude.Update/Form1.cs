@@ -178,7 +178,7 @@ namespace Logitude.Update
             timer1.Enabled = true;
             timer1.Start();
 
-            TenantsUpdateClass.UpdateDataForTenant(tenant, name);
+            TenantsUpdateClass.UpdateDataForTenant(tenant, name, cbxOldUpdateCode.Checked);
 
             // for timer
             globalStopwatch = null;
@@ -200,7 +200,7 @@ namespace Logitude.Update
 
         public void UpdateModule(int tenant, string name)
         {
-            TenantsUpdateClass.UpdateDataForTenant(tenant, name);
+            TenantsUpdateClass.UpdateDataForTenant(tenant, name, cbxOldUpdateCode.Checked);
         }
 
         delegate void SetControlValueCallback(Control oControl, string propName, object propValue);
