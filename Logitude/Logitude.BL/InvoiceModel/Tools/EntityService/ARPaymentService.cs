@@ -294,7 +294,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            ARPaymentValidator.Validate(theEntityPm, objectContext, cashBook);
+            ARPaymentValidator.Validate(theEntityPm, objectContext, cashBook, newPayment, isNewEntity);
             ARPaymentTracing.Trace(theEntityPm, newPayment, isNewEntity);
 
             if (mapComposition)
