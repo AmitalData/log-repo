@@ -28,7 +28,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .IsUnicode(false);
 
             this.Property(t => t.Name)
-                .HasMaxLength(40)
+                .HasMaxLength(200)
                 .IsUnicode(false);
 
             // Table & Column Mappings

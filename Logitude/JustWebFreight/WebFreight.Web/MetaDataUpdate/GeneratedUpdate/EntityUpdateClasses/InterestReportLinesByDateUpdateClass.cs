@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Interest Report Lines By Date",
-			      				    Code =  "a4f5",
+			      				    Code =  "00a5",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -532,8 +532,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StandardInterestPercentage",
-					  						DefaultText =  "Standard Interest Percentage",
-					  						FullLocalDefaultText =  "אחוז ריבית רגילה",
+					  						DefaultText =  "Standard Interest",
+					  						FullLocalDefaultText =  "ריבית רגילה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -592,8 +592,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExceptionalInterestPercentage",
-					  						DefaultText =  "Exceptional Interest Percentage",
-					  						FullLocalDefaultText =  "אחוז ריבית חריגה",
+					  						DefaultText =  "Exceptional Interest",
+					  						FullLocalDefaultText =  "ריבית חריגה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -652,8 +652,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditInterestPercentage",
-					  						DefaultText =  "Credit Interest Percentage",
-					  						FullLocalDefaultText =  "אחוז ריבית זיכוי",
+					  						DefaultText =  "Credit Interest",
+					  						FullLocalDefaultText =  "ריבית זיכוי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1071,7 +1071,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculationDetails",
 					  						DefaultText =  "Calculation Details",
-					  						FullLocalDefaultText =  "פרוט חישוב",
+					  						FullLocalDefaultText =  "אופן החישוב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1130,6 +1130,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "LineNumber",
 					  						DefaultText =  "Line Number",
 					  						FullLocalDefaultText =  "מספר שורה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TotalInterest",
+					  						OldFieldName =  "TotalInterest",
+					  						ObjectTableName =  "InterestReportLinesByDate",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TotalInterest",
+					  						ListPropertyPath =  "TotalInterest",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  20,
+					  						DigitsAfterPoint =  4,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TotalInterest",
+					  						DefaultText =  "Total Interest",
+					  						FullLocalDefaultText =  "ריבית לחיוב",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1222,7 +1282,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable InterestReportLinesByDateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestReportLinesByDate" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode InterestReportLinesByDateTextCode_InterestReportLinesByDateOPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReportLinesByDate.O.Percentage", DefaultText = "Percentage",LocalDefaultText = @"אחוז ריבית", ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportLinesByDateTextCode_InterestReportLinesByDateOTotal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReportLinesByDate.O.Total", DefaultText = "Total",LocalDefaultText = "סה''כ", ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportLinesByDateTextCode_InterestReportLinesByDateOInterestDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReportLinesByDate.O.InterestDetails", DefaultText = "Interest Details",LocalDefaultText = @"פירוט ריבית", ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InterestReportLinesByDateTextCode_InterestReportLinesByDateOTransactionDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReportLinesByDate.O.TransactionDetails", DefaultText = "Transaction Details",LocalDefaultText = @"פירוט תנועות", ObjectTableId = InterestReportLinesByDateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

@@ -68,7 +68,7 @@ namespace WarehouseDataViews.Service
             {
                 if (!string.IsNullOrEmpty(fieldName))
                 {
-                    if (!fieldName.Contains("Key") && !fieldName.Contains("as")  && !fieldName.Contains("@CustomFields"))
+                    if (!fieldName.Contains("Key") && !CheckIfContainesAsString(fieldName)  && !fieldName.Contains("@CustomFields"))
                     {
                         string fieldNameCamelCase = fieldName + "as " + ConvertStringToCamelCase(fieldName);
                         result = result.Replace(fieldName, fieldNameCamelCase);
@@ -78,6 +78,14 @@ namespace WarehouseDataViews.Service
             return result;
         }
 
+
+
+
+        private bool CheckIfContainesAsString(string fieldName)
+        {
+            return (fieldName.Contains("] as") || fieldName.Contains("]  as") || fieldName.Contains("]as")) ? true : false;
+
+        }
        public string ConvertStringToCamelCase(string value)
         {
             string result = string.Empty;

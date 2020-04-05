@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+//import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -12,14 +12,18 @@ import {JournalPM} from '../../EntityPMs/JournalPM';
 import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { ExternalReconciliationLinePM } from '../../EntityPMs/ExternalReconciliationLinePM';
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
+ 
 @Injectable()
 
 export class ExternalReconciliationExtendedPMService {
-    private _http: Http;
+ //   private _http: Http;
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+       // this._http = ServiceHelper.Http;
+        this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliationExtended';
     }
     
@@ -160,9 +164,9 @@ export class ExternalReconciliationExtendedPMService {
 
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+            //var authHeader = new Headers();
+           // authHeader.append('Token', SessionInfo.Token);
+           // authHeader.append('Content-Type', 'application/json');
 
             //var validator: ClassLevelValidator;
 
@@ -176,35 +180,41 @@ export class ExternalReconciliationExtendedPMService {
             //if (errorsArray.length == 0) {
             //var mappedEntity: ReconciliationPM[];
 
-
-            return this._http.post(this._apiUrl + "/PostCreateJournalReconcileAdjustBankFee?"
-                + "&TheAccountId=" + TheAccountId
-                + "&AdjustAccountId=" + AdjustAccountId
-                + "&AccountDate=" + AccountDate                
-                + "&Remarks=" + Remarks
-                , JSON.stringify(reconcileExternalPageLineIdList),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
+            return this.httpClient.post(this._apiUrl + "/PostCreateJournalReconcileAdjustBankFee?"
+            + "&TheAccountId=" + TheAccountId
+            + "&AdjustAccountId=" + AdjustAccountId
+            + "&AccountDate=" + AccountDate                
+            + "&Remarks=" + Remarks
+            , JSON.stringify(reconcileExternalPageLineIdList),  ServiceHelper.GetHttpHeaders()).pipe(
+                map(res => {
+                    var pm = res;
                     if (pm) {
                         var mappedResult: JournalPM;
                         //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
                         serviceResponse.Result = pm;
                     }
-
-
-
                     return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
+            // return this._http.post(this._apiUrl + "/PostCreateJournalReconcileAdjustBankFee?"
+            //     + "&TheAccountId=" + TheAccountId
+            //     + "&AdjustAccountId=" + AdjustAccountId
+            //     + "&AccountDate=" + AccountDate                
+            //     + "&Remarks=" + Remarks
+            //     , JSON.stringify(reconcileExternalPageLineIdList),
+            //     { headers: authHeader }).map((res) => {
+            //         var pm = res.json();
+            //         if (pm) {
+            //             var mappedResult: JournalPM;
+            //              serviceResponse.Result = pm;
+            //         }
 
-                }).catch(ServiceHelper.HandleServiceError);
-            //}
-            //else {
 
-            //    serviceResponse.HasError = true;
-            //    serviceResponse.ErrorsArray = errorsArray;
 
-            //    return Observable.of(serviceResponse);
+            //         return serviceResponse;
 
-            //}
+            //     }).catch(ServiceHelper.HandleServiceError);
+            
         }
 
         );

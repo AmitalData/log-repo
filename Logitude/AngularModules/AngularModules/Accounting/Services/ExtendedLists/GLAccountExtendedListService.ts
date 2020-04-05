@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+//import { Http, Headers } from '@angular/http';
 import { Observable }     from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,64 +11,81 @@ import { AgingReportParameters } from '../../DataContracts/AgingReportParameters
 import { LedgerTransactionListService } from '../StandardLists/LedgerTransactionListService'
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {AppTool} from '../../../Infrastructure/Tools';
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
+ 
 @Injectable()
 
 export class GLAccountExtendedListService {
-    private _http: Http
+   // private _http: Http
     private _apiUrl: string;
-
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+     //   this._http = ServiceHelper.Http;
+        this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/glaccountviews';
      }
 
 
     GetRecentGLAccounts(accountTypeCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+     //   var authHeader = new Headers();
+     //   authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetRecentGLAccounts?accountTypeCode=' + accountTypeCode;
-
-        return Observable.defer(() => {
-            return this._http.get(url, {  headers: authHeader  }).map(response => {
-                var allLists = response.json();
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-             }).catch(ServiceHelper.HandleServiceError);
-         });
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+        // return Observable.defer(() => {
+        //     return this._http.get(url, {  headers: authHeader  }).map(response => {
+        //         var allLists = response.json();
+
+        //         var serviceResponse = new ServiceResponse();
+        //         serviceResponse.Result = allLists;
+        //         return serviceResponse;
+        //      }).catch(ServiceHelper.HandleServiceError);
+        //  });
     }
     GetInsertControlAccount(ControlAccountId:string , ChartOfAccountsId: string )
     {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+     //   var authHeader = new Headers();
+    //    authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetInsertControlAccount?ControlAccountId=' + ControlAccountId + '&ChartOfAccountsId=' + ChartOfAccountsId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var resAccountId = response.json();
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var resAccountId = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = resAccountId;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+        // return Observable.defer(() => {
+        //     return this._http.get(url, { headers: authHeader }).map(response => {
+        //         var resAccountId = response.json();
+
+        //         var serviceResponse = new ServiceResponse();
+        //         serviceResponse.Result = resAccountId;
+        //         return serviceResponse;
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     GetChildrenGLAccounts(GLAccountId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+       // var authHeader = new Headers();
+        //authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetChildrenGLAccounts?GLAccountId=' + GLAccountId , {
-                headers: authHeader
-            }).map(response => {
+        return this.httpClient.get(this._apiUrl + '/GetChildrenGLAccounts?GLAccountId=' + GLAccountId,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
 
                 var _mappedListsArray: Array<GLAccountList> = [];
                 if (serviceResponse.Result) {
@@ -83,21 +100,43 @@ export class GLAccountExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            });
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetChildrenGLAccounts?GLAccountId=' + GLAccountId , {
+        //         headers: authHeader
+        //     }).map(response => {
+        //         var serviceResponse: ServiceResponse = new ServiceResponse();
+
+        //         serviceResponse.Result = response.json();
+
+        //         var _mappedListsArray: Array<GLAccountList> = [];
+        //         if (serviceResponse.Result) {
+        //             for (var key in serviceResponse.Result) {
+
+        //                 var entity: GLAccountList;
+        //                 entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+        //                 _mappedListsArray.push(entity);
+
+        //             }
+        //         }
+
+        //         serviceResponse.Result = _mappedListsArray;
+        //         return serviceResponse;
+        //     });
+        // });
     }
 
     GetSplittedByCurrencyGLAccounts(accountId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+      //  var authHeader = new Headers();
+      //  authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSplittedByCurrencyGLAccounts?accountId=' + accountId, {
-                headers: authHeader
-            }).map(response => {
+        return this.httpClient.get(this._apiUrl + '/GetSplittedByCurrencyGLAccounts?accountId=' + accountId,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
 
                 var _mappedListsArray: Array<GLAccountList> = [];
                 if (serviceResponse.Result) {
@@ -112,21 +151,44 @@ export class GLAccountExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            });
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+            
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetSplittedByCurrencyGLAccounts?accountId=' + accountId, {
+        //         headers: authHeader
+        //     }).map(response => {
+        //         var serviceResponse: ServiceResponse = new ServiceResponse();
+
+        //         serviceResponse.Result = response.json();
+
+        //         var _mappedListsArray: Array<GLAccountList> = [];
+        //         if (serviceResponse.Result) {
+        //             for (var key in serviceResponse.Result) {
+
+        //                 var entity: GLAccountList;
+        //                 entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+        //                 _mappedListsArray.push(entity);
+
+        //             }
+        //         }
+
+        //         serviceResponse.Result = _mappedListsArray;
+        //         return serviceResponse;
+        //     });
+        // });
 
     }
 
     CheckIfHasLedgerTransactions(accountId: string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+    //    var authHeader = new Headers();
+    //    authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetAccountTransactions?accountId=' + accountId;
-
-        return Observable.defer(()=> {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var res = response.json();
+         return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
+            map((response:any) => {
+                var res:any = response;
                 if (res && res != null) {
                     if (res.length > 0) {
                         return true;
@@ -135,20 +197,33 @@ export class GLAccountExtendedListService {
                     }
                 }
 
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+        // return Observable.defer(()=> {
+        //     return this._http.get(url, { headers: authHeader }).map(response => {
+        //         var res = response.json();
+        //         if (res && res != null) {
+        //             if (res.length > 0) {
+        //                 return true;
+        //             } else {
+        //                 return false;
+        //             }
+        //         }
+
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     CheckIfSplitted(accountId: string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+      //  var authHeader = new Headers();
+      //  authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/CheckIfSplitted?accountId=' + accountId;
 
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var res = response.json();
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
+            map((response:any) => {
+                var res = response;
                 if (res && res != null) {
                     if (res.length > 0) {
                         return true;
@@ -157,70 +232,128 @@ export class GLAccountExtendedListService {
                     }
                 }
 
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+
+        // return this.httpClient.get(url,  httpOptions).pipe(
+        //     map((response:any) => {
+        //         var res = response;
+        //         if (res && res != null) {
+        //             if (res.length > 0) {
+        //                 return true;
+        //             } else {
+        //                 return false;
+        //             }
+        //         }
+
+        //     }),
+        //     catchError(ServiceHelper.HandleServiceError)); 
+        // return Observable.defer(() => {
+        //     return this._http.get(url, { headers: authHeader }).map(response => {
+        //         var res = response.json();
+        //         if (res && res != null) {
+        //             if (res.length > 0) {
+        //                 return true;
+        //             } else {
+        //                 return false;
+        //             }
+        //         }
+
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     GetGLAccountsSummary() {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+      //  var authHeader = new Headers();
+      //  authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetGLAccountsSummary?', {
-                headers: authHeader
-            }).map(response => {
+      
+      return this.httpClient.get(this._apiUrl + '/GetGLAccountsSummary?',  ServiceHelper.GetHttpHeaders()).pipe(
+        map(response => {
+         
+            var allLists = response;
+            return allLists;
 
-                var allLists = response.json();
-                return allLists;
-            });
-        });
+        }),
+        catchError(ServiceHelper.HandleServiceError)); 
+
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetGLAccountsSummary?', {
+        //         headers: authHeader
+        //     }).map(response => {
+
+        //         var allLists = response.json();
+        //         return allLists;
+        //     });
+        // });
     }
 
     CalculateFututreCheques() {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCalculateFututreCheques?', {
-                headers: authHeader
-            }).map(response => {
+     //   var authHeader = new Headers();
+     //   authHeader.append('Token', SessionInfo.Token);
+        return this.httpClient.get(this._apiUrl + '/GetCalculateFututreCheques?',  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+             
+                return response;
+    
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetCalculateFututreCheques?', {
+        //         headers: authHeader
+        //     }).map(response => {
 
               
-                return response.json();
-            });
-        });
+        //         return response.json();
+        //     });
+        // });
     }
 
     GetAccountCurrencies(accountId: string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+       // var authHeader = new Headers();
+     //   authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetAccountCurrencies?accountId=' + accountId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+             
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+                return serviceResponse;    
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+        // return Observable.defer(() => {
+        //     return this._http.get(url, { headers: authHeader }).map(response => {
+        //         var allLists = response.json();
+
+        //         var serviceResponse = new ServiceResponse();
+        //         serviceResponse.Result = allLists;
+        //         return serviceResponse;
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     GetAccountReconcilesCount(accountId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetAccountReconcilesCount?glAccountId=' + accountId, {
-                headers: authHeader
-            }).map(response => {
-                var res = response.json();
-                return res;
-            });
-        });
+      //  var authHeader = new Headers();
+       // authHeader.append('Token', SessionInfo.Token);
+       return this.httpClient.get(this._apiUrl + '/GetAccountReconcilesCount?glAccountId='+ accountId,  ServiceHelper.GetHttpHeaders()).pipe(
+        map(response => {
+         
+            var res = response;
+            return res;   
+        }),
+        catchError(ServiceHelper.HandleServiceError)); 
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetAccountReconcilesCount?glAccountId=' + accountId, {
+        //         headers: authHeader
+        //     }).map(response => {
+        //         var res = response.json();
+        //         return res;
+        //     });
+        // });
     }
 
     GetAgingReport(args: AgingReportParameters) {
@@ -240,16 +373,12 @@ export class GLAccountExtendedListService {
         urlParameters += "&groupByDate=" + args.GroupByDate;
         urlParameters += "&forceUseMonthMethod=" + args.ForceUseMonthMethod;
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetGLAccountsAgingReport?' + urlParameters, {
-                headers: authHeader
-            }).map(response => {
-
+      //  var authHeader = new Headers();
+      //  authHeader.append('Token', SessionInfo.Token);
+        return this.httpClient.get(this._apiUrl + '/GetGLAccountsAgingReport?'+ urlParameters,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var _mappedListsArray: Array<PeriodM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -262,22 +391,44 @@ export class GLAccountExtendedListService {
                 }
 
                 serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
-            });
-        });
+                return serviceResponse;   
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetGLAccountsAgingReport?' + urlParameters, {
+        //         headers: authHeader
+        //     }).map(response => {
+
+        //         var serviceResponse: ServiceResponse = new ServiceResponse();
+        //         serviceResponse.Result = response.json();
+        //         var _mappedListsArray: Array<PeriodM> = [];
+        //         if (serviceResponse.Result) {
+        //             for (var key in serviceResponse.Result) {
+
+        //                 var entity: PeriodM;
+        //                 entity = this.MapJsonToPeriodMList(serviceResponse.Result[key]);
+        //                 _mappedListsArray.push(entity);
+
+        //             }
+        //         }
+
+        //         serviceResponse.Result = _mappedListsArray;
+        //         return serviceResponse;
+        //     });
+        // });
     }
 
     GetTopDeptors(filter: string, accountTypeCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+     //   var authHeader = new Headers();
+     //   authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetTopDeptors?filterString=' + filter + '&accountTypeCode=' + accountTypeCode, {
-                headers: authHeader
-            }).map(response => {
+        return this.httpClient.get(this._apiUrl + '/GetTopDeptors?filterString=' + filter + '&accountTypeCode=' + accountTypeCode,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+             
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
 
                 var _mappedListsArray: Array<GLAccountList> = [];
                 if (serviceResponse.Result) {
@@ -292,34 +443,77 @@ export class GLAccountExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            });
-        });
+            }),
+            catchError(ServiceHelper.HandleServiceError)); 
+
+
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetTopDeptors?filterString=' + filter + '&accountTypeCode=' + accountTypeCode, {
+        //         headers: authHeader
+        //     }).map(response => {
+        //         var serviceResponse: ServiceResponse = new ServiceResponse();
+
+        //         serviceResponse.Result = response.json();
+
+        //         var _mappedListsArray: Array<GLAccountList> = [];
+        //         if (serviceResponse.Result) {
+        //             for (var key in serviceResponse.Result) {
+
+        //                 var entity: GLAccountList;
+        //                 entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+        //                 _mappedListsArray.push(entity);
+
+        //             }
+        //         }
+
+        //         serviceResponse.Result = _mappedListsArray;
+        //         return serviceResponse;
+        //     });
+        // });
     }
 
     SetParentAccountId(id: string, parentId:string) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+     //   var authHeader = new Headers();
+     //   authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetParentAccountId?' + 'id=' + id + '&' + 'parentId=' + parentId, {
-                headers: authHeader
-            }).map(response => {
-                var list = response.json();
+        return this.httpClient.get(this._apiUrl + '/GetParentAccountId?' + 'id=' + id + '&' + 'parentId=' + parentId,  ServiceHelper.GetHttpHeaders()).pipe(
+        map(response => {
+         
+            var list = response;
 
 
-                var entity: GLAccountList;
-                if (list) {
-                    entity = this.MapJsonToEntityList(list);
-                }
+            var entity: GLAccountList;
+            if (list) {
+                entity = this.MapJsonToEntityList(list);
+            }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-                return serviceResponse;
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = entity;
+            return serviceResponse; 
+        }),
+        catchError(ServiceHelper.HandleServiceError));
 
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetParentAccountId?' + 'id=' + id + '&' + 'parentId=' + parentId, {
+        //         headers: authHeader
+        //     }).map(response => {
+        //         var list = response.json();
+
+
+        //         var entity: GLAccountList;
+        //         if (list) {
+        //             entity = this.MapJsonToEntityList(list);
+        //         }
+
+        //         var serviceResponse: ServiceResponse;
+        //         serviceResponse = new ServiceResponse();
+        //         serviceResponse.Result = entity;
+        //         return serviceResponse;
+
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     GetAccountOpenTransactionsCount(accountId: string) {
@@ -327,16 +521,27 @@ export class GLAccountExtendedListService {
         authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetAccountOpenTransactionsCount?accountId=' + accountId;
-
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var result = response.json();
+      
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+             
+                var result = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = result;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+                return serviceResponse; 
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+        // return Observable.defer(() => {
+        //     return this._http.get(url, { headers: authHeader }).map(response => {
+        //         var result = response.json();
+
+        //         var serviceResponse = new ServiceResponse();
+        //         serviceResponse.Result = result;
+        //         return serviceResponse;
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
 

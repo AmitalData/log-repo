@@ -162,6 +162,11 @@ export class ContactPM {
     public set DontShowLocal(newValue: boolean) { if (this.dontShowLocal != newValue) { this.dontShowLocal = newValue; this.MarkAsDirty("DontShowLocal"); } }
        
 	 
+    private dontShowLocalLabels: boolean;
+    public get DontShowLocalLabels() { return this.dontShowLocalLabels; }
+    public set DontShowLocalLabels(newValue: boolean) { if (this.dontShowLocalLabels != newValue) { this.dontShowLocalLabels = newValue; this.MarkAsDirty("DontShowLocalLabels"); } }
+       
+	 
     private mustChangePassword: boolean;
     public get MustChangePassword() { return this.mustChangePassword; }
     public set MustChangePassword(newValue: boolean) { if (this.mustChangePassword != newValue) { this.mustChangePassword = newValue; this.MarkAsDirty("MustChangePassword"); } }

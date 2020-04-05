@@ -1,6 +1,6 @@
 import { HttpHeaders ,HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+//import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -9,23 +9,17 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
 import { catchError, map } from 'rxjs/operators';
  
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
 
 @Injectable()
 export class LedgerTransactionExtendedListService {
-    private _http: Http;
+   // private _http: Http;
     private httpClient: HttpClient;
     private _apiUrl: string;
     private _reconciliationUrl: string;
 
     constructor() {
-        this._http = ServiceHelper.Http;
-        this.httpClient=ServiceHelper.HttpClient
+    //    this._http = ServiceHelper.Http;
+        this.httpClient=ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/LedgerTransactions';
         this._reconciliationUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconciliationOp';
     }
@@ -37,7 +31,7 @@ export class LedgerTransactionExtendedListService {
         //var authHeader = new Headers();
         //authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-        return this.httpClient.get(callUrl, httpOptions).pipe(
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response : ServiceResponse)=> {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -93,7 +87,7 @@ export class LedgerTransactionExtendedListService {
         //authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
 
-        return this.httpClient.get(callUrl, httpOptions).pipe(
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -144,7 +138,7 @@ export class LedgerTransactionExtendedListService {
         // var authHeader = new Headers();
         // authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-         return this.httpClient.get(callUrl, httpOptions).pipe(
+         return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
              map((response: ServiceResponse) => {
                  var serviceResponse: ServiceResponse = new ServiceResponse();
                  serviceResponse = response;
@@ -207,7 +201,7 @@ export class LedgerTransactionExtendedListService {
 
 
         var callUrl = url.concat(urlparameters);
-        return this.httpClient.get(callUrl, httpOptions).pipe(
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -243,7 +237,7 @@ export class LedgerTransactionExtendedListService {
         urlparameters = this.parseFiltersToURL(filters, urlparameters);
 
         var callUrl = url.concat(urlparameters);
-        return this.httpClient.get(callUrl, httpOptions).pipe(
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -331,7 +325,7 @@ export class LedgerTransactionExtendedListService {
 
 
         var callUrl = url.concat(urlparameters);
-        return this.httpClient.get(callUrl, httpOptions).pipe(
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -373,7 +367,7 @@ export class LedgerTransactionExtendedListService {
         }
 
         var url = this._apiUrl + '/getLedgerTransactionsByIds?' + params;
-        return this.httpClient.get(url, httpOptions).pipe(
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -397,7 +391,7 @@ export class LedgerTransactionExtendedListService {
 
 
         var url = this._apiUrl + '/GetLast10TransactionsForAccount?AccountId=' + accountId;
-        return this.httpClient.get(url, httpOptions).pipe(
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -424,7 +418,7 @@ export class LedgerTransactionExtendedListService {
         var url = this._apiUrl + '/GetTransactionsForARPayment?arpaymentId=' + arpaymentId
             + '&billToGLAccountId=' + billToGLAccountId + '&paymentCurrencyId=' + paymentCurrencyId;
 
-        return this.httpClient.get(url, httpOptions).pipe(
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;
@@ -449,7 +443,7 @@ export class LedgerTransactionExtendedListService {
         //var authHeader = new Headers();
         //authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-        return this.httpClient.get(callUrl, httpOptions).pipe(
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response:ServiceResponse) => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse = response;

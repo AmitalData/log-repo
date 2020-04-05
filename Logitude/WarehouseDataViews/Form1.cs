@@ -15,11 +15,11 @@ namespace WarehouseDataViews
     {
 
 
-         string dbSourceConnection = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
-         string dbDestinationConnection = "DWPrivate,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
-        //private string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
-        //private string dbDestinationConnection = "2019R1_Global,sa,Saas256,.";
-        private int? tenant = 951;
+       //  string dbSourceConnection = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
+       //  string dbDestinationConnection = "DWPrivate,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
+        private string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";
+        private string dbDestinationConnection = "2019R1_Global,sa,Saas256,.";
+        private int? tenant = 1;// 951;
         //string dbSourceConnection = "LogitudeMain,logitudemanager,!LO852456,ebup282itq.database.windows.net";
         //string dbDestinationConnection = "UnicargoDW, UnicargoDBUser,Y&P95et1,logitude-ep.database.windows.net";
 

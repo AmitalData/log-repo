@@ -207,7 +207,7 @@ namespace WarehouseDataViews
             scriptstring = scriptstring.Replace("[Key]", fieldCode + "key");
             if (tableCode != "DIM_CustomPickLists")
             {
-                scriptstring = scriptstring.Replace("[Code]", "[Code] as [" + fieldCode + " Code]");
+                scriptstring = scriptstring.Replace("[Code]", "[Code] as [" + fieldCode + "Code]");
             }
             scriptView = " CREATE VIEW " + viewName + " AS  " + scriptstring;
 

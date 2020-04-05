@@ -17,10 +17,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
 
         }
 
-        public void UpdateConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
+        public void UpdateConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext,string ARInvoiceId=null,string InvoiceNumber=null, double? AmountInLocalCurrency = null, string InvoiceEntitiId = null)
         {
             InterestReportService interestReportService = new InterestReportService();
-            interestReportService.PutConfirmCreateInvoice(interestReportPM, Tenant, MainContext);
+            interestReportService.PutConfirmCreateInvoice(interestReportPM, Tenant, MainContext,ARInvoiceId,InvoiceNumber, AmountInLocalCurrency, InvoiceEntitiId);
+        }
+
+        public void CancelledInterestTransactionsByARPayment(string EntityId, int Tenant)
+        {
+            InterestReportService interestReportService = new InterestReportService();
+            interestReportService.CancelledInterestTransactionsByARPayment(EntityId, Tenant);
         }
     }
 }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
@@ -21,7 +21,9 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
 import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
+import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+declare var window: any;
 
 @Component({
     moduleId: module.id,
@@ -35,7 +37,7 @@ export class NewConsolidationComponent extends BaseComponent {
     public InvoicePartners: InvoicePartnerType[] = [];
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
-  public DisplaySATSettings: boolean = false;
+    public DisplaySATSettings: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
 
@@ -87,6 +89,83 @@ export class NewConsolidationComponent extends BaseComponent {
           }
         });
     }
+
+
+    ngOnInit() {
+        this.BuildAdditionalFields();
+    }
+
+    private timerToken: any;
+    private Retries: number = 0;
+    private GeneratedComponent: any;
+    private additionalFieldsScreenCode = "ARInvoice.AdditionalFields";
+    public ShowAdditionalFieldsScreen: boolean = false;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+
+    BuildAdditionalFields() {
+
+        var objectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;
+        var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === objectTableId && x.Code.toLowerCase() == this.additionalFieldsScreenCode.toLowerCase())[0];
+
+        if (myScreen != null) {
+
+            var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
+
+            if (myScreenFields.length == 0) {
+                myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id);
+            }
+
+            if (myScreenFields.length != 0) {
+                this.ShowAdditionalFieldsScreen = true;
+                this.RunComponent();
+            }
+        }
+    }
+
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    LoadChildComponent() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+
+                this.GeneratedComponent = cmpRef.instance;
+
+                cmpRef.instance.LoadCompleted.subscribe(s => {
+                    this.SetUIProperties_GeneratedComponent();
+                });
+
+                var screenCode = this.additionalFieldsScreenCode;
+                cmpRef.instance.LabelWidth = 160;
+                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+            });
+    }
+
+    RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+    SetUIProperties_GeneratedComponent() {
+        if (this.GeneratedComponent) {
+            this.GeneratedComponent.SetEnabled(true);
+        }
+    }
+
 
     // SetUIProperties
     public RateIsEnabled: boolean = false;

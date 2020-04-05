@@ -30,6 +30,7 @@ export class InterestTransactionList {
 	InterestEntityIconCode: string;
 	JournalId: string;
 	AccountEntityCode: string;
+	IsCancelled: boolean;
 	
 }
  

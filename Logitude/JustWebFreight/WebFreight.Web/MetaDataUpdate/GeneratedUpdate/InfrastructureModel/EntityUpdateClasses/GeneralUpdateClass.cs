@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "8855",
+			      				    Code =  "51cb",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -582,6 +582,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_REGIONALTAX = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REGIONALTAX", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.REGIONALTAX", NameTextCodeDefaultText = @"Regional Tax" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_TARIFFPRODUCTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TARIFFPRODUCTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TARIFFPRODUCTS", NameTextCodeDefaultText = @"Tariff Products" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_APPaymentExternalPayment = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPaymentExternalPayment", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.APPaymentExternalPayment", NameTextCodeDefaultText = @"APPayment External Payment" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

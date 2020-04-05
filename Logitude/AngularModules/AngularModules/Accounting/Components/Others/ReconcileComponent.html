@@ -617,76 +617,93 @@
                                     [UseVirtuallization]="true">
 
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
-                        <log-cell-template template="let item" [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   [IgnoreMods]="true">
                             <img (click)="CheckBoxValueChanged(item)" class="trashIcon" title="Remove" style="cursor: pointer;" src="./Images/Trash-can.png" />
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'20'">
-                        <log-cell-template template="let item" [IgnoreMods]="true"  title="{{GetIndicatorText(item)}}">
+                        <ng-template let-item>
+                        <log-cell-template   [IgnoreMods]="true"  title="{{GetIndicatorText(item)}}">
                             <div class="circleDraw" [class.orangeCircle]="(item.LocalAmountDebit >0 && item.OpenAmount != item.OriginalAmount) || (item.LocalAmountCredit>0 && item.OpenAmount != -1*item.OriginalAmount)"></div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- AccountingDate -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.AccountingDate' | TextCodeTranslationPipe" [width]="'105'" [binding]="'AccountingDate'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.AccountingDate | DateTimeToDatePipe }}</span>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- DocumentDate -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.DocumentDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DocumentDate'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.DocumentDate | DateTimeToDatePipe }}</span>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- DueDate -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DueDate'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.DueDate | DateTimeToDatePipe }}</span>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- Source -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Source' | TextCodeTranslationPipe" [width]="'100'" [binding]="'Source'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div class="TextTrimming" [style.text-align]="isRTL ? 'left' : 'left'">
                                 <span title="{{item.SourceType}}" *ngIf="item.IconCode" (click)="OpenSource(item.SourceId,item.SourceTypeCode)"
                                       [class]="'SourceTypeIcon color-' + item.SourceTypeCode">{{item.IconCode}}</span>
                                 <a href="javascript:;" (click)="OpenSource(item.SourceId,item.SourceTypeCode)">{{item.SourceNumber}}</a>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- OriginalAmount -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'Accounting.General.O.OriginalAmount' | TextCodeTranslationPipe" [width]="'115'" [binding]="'OriginalAmount'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.OpenAmount<0'>
                                 <span>{{ item.OriginalAmount | NumbersPipe:'N2'  }} {{item.CalculatOriginalCurruncy()}}</span>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- OpenAmount -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.OpenAmount' | TextCodeTranslationPipe" [width]="'100'" [binding]="'OpenAmount'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.OpenAmount<0'>
                                 <span>{{ item.OpenAmount | NumbersPipe:'N2'  }} {{item.OpenAmountCurrencySign}}</span>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- AmountToReconcile -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.AmountToReconcile' | TextCodeTranslationPipe" [width]="'130'" [binding]="'AmountToReconcile'">
-                        <log-cell-template template="let item" #logcelltemplate>
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
                             <div class="TextTrimming" style="text-align: right;padding-right: 5px;direction: ltr;" *ngIf="logcelltemplate.IsDisplayMode">
                                 <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
                             </div>
@@ -696,59 +713,72 @@
                                             [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- Reference1 -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Reference1' | TextCodeTranslationPipe" [width]="'90'" [binding]="'Reference1'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.Reference1}}</span>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- Reference2 -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Reference2' | TextCodeTranslationPipe" [width]="'90'" [binding]="'Reference2'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.Reference2}}</span>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- Reference3 -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Reference3' | TextCodeTranslationPipe" [width]="'90'" [binding]="'Reference3'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.Reference3}}</span>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- JournalNumber -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.JournalNumber' | TextCodeTranslationPipe" [width]="'80'" [binding]="'JournalNumber'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <a href="javascript:;" (click)="OpenJournal(item.JournalId)">{{item.JournalNumber}}</a>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!-- Notes -->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'250'" [binding]="'Notes'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <div [attr.title]="item.Notes" class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span [attr.title]="item.Notes">{{item.Notes}}</span>
                             </div>
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                     <!--  -->
                     <log-column [header]="''" [width]="'90'" [binding]="'button'">
-                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                             <img *ngIf="!item.isLineValid" [title]="'Reconciliations.O.AmountMustBSmaller2OpenAmount' | TextCodeTranslationPipe"
                                  style="padding-top: 2px;" class="exc-remark-button exc-remark-button-red" tabindex="-1" src="./Images/error-16.png" />
                         </log-cell-template>
+                    </ng-template>
                     </log-column>
 
                 </logitude-edit-grid>

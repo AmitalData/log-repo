@@ -116,25 +116,25 @@ export class BanksPageComponent {
     }
 
     LoadQueriesCounts() {
-        this._BankAccountExtendedListService.GetBankAccountsSummary().subscribe((myResult:any) => {
+        this._BankAccountExtendedListService.GetBankAccountsSummary().subscribe((myResult:BankAccountSummary) => {
             if (myResult != null) {
                 this._BankAccountSummary.AllBankAccountsCount = myResult.AllBankAccountsCount > 1000 ? "1000+" : myResult.AllBankAccountsCount.toString();
             }
         });
 
-        this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe((myResult:any) => {
+        this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe((myResult:PaymentChequeSummary) => {
             if (myResult != null) {
-                this.paymentChequeSummary.AllPaymenChequesCount = myResult.AllPaymentChequesCount > 1000 ? "1000+" : myResult.AllPaymentChequesCount.toString();
+                this.paymentChequeSummary.AllPaymentChequesCount = myResult.AllPaymentChequesCount > 1000 ? "1000+" : myResult.AllPaymentChequesCount.toString();
             }
         });
 
-        this.myBankDepositService.GetBankDepositsSummary().subscribe((myResult:any) => {
+        this.myBankDepositService.GetBankDepositsSummary().subscribe((myResult:BankDepositSummary) => {
             if (myResult != null) {
                 this.bankDepositSummary.TodaysDepositCount = myResult.TodaysDepositCount > 1000 ? "1000+" : myResult.TodaysDepositCount.toString();
             }
         });
 
-        this.myCashBookExtendedListService.GetCashBookSummary().subscribe((myResult:any) => {
+        this.myCashBookExtendedListService.GetCashBookSummary().subscribe((myResult:CashBookSummary) => {
             if (myResult != null) {
                 this.cashBookSummary.AllCashbookCount = myResult.AllCashbookCount > 1000 ? "1000+" : myResult.AllCashbookCount.toString();
                 this.cashBookSummary.CashCashbookCount = myResult.CashCashbookCount > 1000 ? "1000+" : myResult.CashCashbookCount.toString();
@@ -236,7 +236,7 @@ export class BanksPageComponent {
             listArgs.ObjectTableName = "BankDeposit";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -318,7 +318,7 @@ export class BanksPageComponent {
             listArgs.ObjectTableName = "CashBook";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -397,7 +397,7 @@ export class BanksPageComponent {
             listArgs.ObjectTableName = "BankAccount";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -437,7 +437,7 @@ export class BanksPageComponent {
             listArgs.ObjectTableName = "PaymentCheque";
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -666,7 +666,7 @@ export class BanksPageComponent {
                 listArgs.ObjectTableName = "CashBook";
                 listArgs.DisplayTitle = TextCodeTranslator.Translate("Accounting.General.O.AllCashbook");
                 listArgs.BackButtonTitle = TextCodeTranslator.Translate('Accounting.General.O.Banks');
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
