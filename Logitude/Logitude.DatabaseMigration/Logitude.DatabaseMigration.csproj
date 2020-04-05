@@ -2287,6 +2287,10 @@
     <Compile Include="Migrations\202004050837450_adding_Metadata_StoredProcedures.Designer.cs">
       <DependentUpon>202004050837450_adding_Metadata_StoredProcedures.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.cs" />
+    <Compile Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.Designer.cs">
+      <DependentUpon>202003312156526_AddTariffCarrierTranslation_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4135,6 +4139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004050837450_adding_Metadata_StoredProcedures.resx">
       <DependentUpon>202004050837450_adding_Metadata_StoredProcedures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.resx">
+      <DependentUpon>202003312156526_AddTariffCarrierTranslation_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

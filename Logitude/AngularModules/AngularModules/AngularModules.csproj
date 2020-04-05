@@ -144,6 +144,8 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Participant\ParticipantDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippingLineDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\AddEditTariffTranslationComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\TariffTranslationsTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.html" />
@@ -514,6 +516,8 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Participant\ParticipantDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingLine\ShippingLineDocsInTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\AddEditTariffTranslationComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\TariffTranslations\TariffTranslationsTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\AccountingPartner\AccountingPartnerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.ts" />
@@ -540,6 +544,7 @@
     <TypeScriptCompile Include="Common\EntityLists\CustomerDepositionList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomsShipperList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\NumberFormatList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\TariffCarrierTranslationList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
@@ -550,6 +555,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\INTTRASettingPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\TariffCarrierTranslationPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\UserExtendedListService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
@@ -561,6 +567,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\NumberFormatListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\RegistryDateTypeListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\TariffCarrierTranslationListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
@@ -568,6 +575,7 @@
     <TypeScriptCompile Include="Common\Services\StandardPMs\DWHSettingPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\INTTRASettingPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\LogBoxTenantSettingPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\TariffCarrierTranslationPMService.ts" />
     <TypeScriptCompile Include="Controls\InvitedFilter.ts" />
     <TypeScriptCompile Include="Controls\ParticipatedFilter.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
