@@ -5977,7 +5977,7 @@
     TabName="&quot;Events&quot;"
     TabLocalName="&quot;Events&quot;"
     ObjectTableName="&quot;Tariff&quot;"
-    Code="&quot;EVTM&quot;"
+    Code="&quot;EVTR&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
     TextCode="&quot;Tariff.TH.Events&quot;"
     IsPackagable="true"

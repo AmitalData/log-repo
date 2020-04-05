@@ -336,12 +336,12 @@
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="SellerId"
     ReferencedTable="Cards"
