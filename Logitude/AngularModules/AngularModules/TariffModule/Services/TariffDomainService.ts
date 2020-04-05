@@ -309,6 +309,20 @@ export class TariffDomainService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    RefreshPortsFromTranslations(tariffId: string, version: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetRefreshPortsFromTranslations?tariffId=' + tariffId + "&version=" + version;
+        return Observable.defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class TariffSummery {
