@@ -2251,6 +2251,7 @@
     <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.Designer.cs">
       <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202003311226006_test.cs" />
     <Compile Include="Migrations\202003311226006_test.Designer.cs">
       <DependentUpon>202003311226006_test.cs</DependentUpon>
@@ -2275,7 +2276,17 @@
     <Compile Include="Migrations\202004011108190_Mutaz_AddIsCancelToInterestTransaction.Designer.cs">
       <DependentUpon>202004011108190_Mutaz_AddIsCancelToInterestTransaction.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.cs" />
+    <Compile Include="Migrations\202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.Designer.cs">
+      <DependentUpon>202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
+    <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
+      <DependentUpon>202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
       <DependentUpon>202003030904524_WesamDBMigrationFixes.cs</DependentUpon>
@@ -4090,6 +4101,7 @@
     <EmbeddedResource Include="Migrations\202003290823147_UsersLayoutDirectionMigration.resx">
       <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202003311226006_test.resx">
       <DependentUpon>202003311226006_test.cs</DependentUpon>
     </EmbeddedResource>
@@ -4107,6 +4119,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004011108190_Mutaz_AddIsCancelToInterestTransaction.resx">
       <DependentUpon>202004011108190_Mutaz_AddIsCancelToInterestTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.resx">
+      <DependentUpon>202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.resx">
+      <DependentUpon>202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
