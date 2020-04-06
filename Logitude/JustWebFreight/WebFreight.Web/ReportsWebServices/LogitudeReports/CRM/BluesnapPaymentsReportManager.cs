@@ -123,6 +123,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                  Tenant = tenantmanagements.Id,
                                                                  TenantName = tenantmanagements.Name,
                                                                  AmountToPay = tenantmanagements.TotalPaymentamount,
+                                                                 ShopperId = tenantmanagements.BluesnapAccount,
                                                                  Transactions = (from a in iQueryable_BluesnapTransactions
                                                                                  where a.Tenant == tenantmanagements.Id
                                                                                  select new BluesnapTransactionItem()
@@ -133,36 +134,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                                                                                  }).ToList(),
                                                              });
 
-            this.iQueryable_JoinTenantBluesnapTransaction = this.SetShopperIdField();
         }
 
-        private IQueryable<TenantJoinBluesnapTransactionList> SetShopperIdField()
-        {
-            if (iQueryable_JoinTenantBluesnapTransaction != null)
-            {
-                var bluesnapTransaction = iQueryable_JoinTenantBluesnapTransaction.ToList();
-                foreach (var item in bluesnapTransaction)
-                {
-                    foreach (BluesnapTransactionItem transaction in item.Transactions)
-                    {
-                        var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
-                        if (queryParameters != null && queryParameters.Count > 0)
-                        {
-                            if (queryParameters.ContainsKey("accountId"))
-                            {
-                                item.ShopperId = queryParameters["accountId"];
-                            }
-
-                        }
-                    }
-                }
-                return bluesnapTransaction.AsQueryable();
-            }
-            else
-            {
-                return null;
-            }
-        }
+       
 
         private void BuildReportData()
         {
@@ -186,13 +160,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         {
             List<BlusnapTransactionsList> tenantZeroTransactions = new List<BlusnapTransactionsList>();
             var tenantZeroTransactions_List = iQueryable_JoinTenantBluesnapTransaction.Where(a => a.Tenant == 0).ToList();
+            SetShopperIdField(tenantZeroTransactions_List);
 
-            var tenantZeroList = (from tenant in tenantZeroTransactions_List
+            var tenantZeroList = (from tenant in BluesnapTransactionItem_TenantZeroList
                                   group tenant by tenant.ShopperId into g
                                   select new
                                   {
                                       ShopperId = g.Key,
-                                      Transactions = g.SelectMany(x => x.Transactions).ToList(),
+                                      Transactions = g.ToList(),
                                   }).ToList();
 
             foreach (var item in tenantZeroList)
@@ -206,7 +181,44 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
                 itemRecord.Notes = "unmatched transaction";
                 tenantZeroTransactions.Add(itemRecord);
             }
+
             this.iDataProvider.BlusnapTransactionsList.AddRange(tenantZeroTransactions);
+        }
+
+        private List<BluesnapTransactionItem> BluesnapTransactionItem_TenantZeroList;
+        private void SetShopperIdField(List<TenantJoinBluesnapTransactionList> list)
+        {
+            BluesnapTransactionItem_TenantZeroList = new List<BluesnapTransactionItem>();
+            if (list != null)
+            {
+                var bluesnapTransaction = list.ToList();
+                foreach (var item in bluesnapTransaction)
+                {
+                    if (item.ShopperId == null)
+                    {
+                        foreach (BluesnapTransactionItem transaction in item.Transactions)
+                        {
+                            var queryParameters = DeserializeDocumentBody(transaction.DocumentId, transaction.Tenant);
+                            string shopperId = null;
+                            if (queryParameters != null && queryParameters.Count > 0)
+                            {
+                                if (queryParameters.ContainsKey("accountId"))
+                                {
+                                    shopperId = queryParameters["accountId"];
+                                }
+                            }
+
+                            BluesnapTransactionItem_TenantZeroList.Add(new BluesnapTransactionItem
+                            {
+                                ShopperId = shopperId,
+                                DocumentId = transaction.DocumentId,
+                                Tenant = transaction.Tenant, 
+                                TransactionDate = transaction.TransactionDate,
+                            });
+                        }
+                    }
+                }
+            }
         }
 
         private void AddToBlueSnapTransactionList(TenantJoinBluesnapTransactionList item)
@@ -304,10 +316,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         public double? AmountToPay { get; set; }
         public List<BluesnapTransactionItem> Transactions { get; set; }
     }
+
     public class BluesnapTransactionItem
     {
         public int Tenant { get; set; }
         public string DocumentId { get; set; }
         public DateTime? TransactionDate { get; set; }
+        public string ShopperId { get; set; }
     }
 }
