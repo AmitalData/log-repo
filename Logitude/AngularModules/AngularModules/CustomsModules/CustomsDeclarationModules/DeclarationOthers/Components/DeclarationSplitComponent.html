@@ -372,20 +372,16 @@
                 אנא בדוק הגדרות הספריה בתיוק
             </div>
 
-            <div
-            [style.transform]="ImgScaleValue"
-            [style.transform-origin]="'top right'"
-
-            >
+            <div [style.transform]="ImgScaleValue"
+                 [style.transform-origin]="'top right'"
+                 class="div-grabbable">
 
                 <img *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null " style="width: 100%;" class="grabbable"
-
-                (mousemove)="OnMouseMove($event)"
-                (mousedown)="OnMouseDown($event)"
-                (mouseup)="OnMouseUp($event)"
-                [attr.src]="base64Image" alt=""
-
-                draggable="false" />
+                     (mousemove)="OnMouseMove($event)"
+                     (mousedown)="OnMouseDown($event)"
+                     (mouseup)="OnMouseUp($event)"
+                     [attr.src]="base64Image" alt=""
+                     draggable="false" />
             </div>
 
 
