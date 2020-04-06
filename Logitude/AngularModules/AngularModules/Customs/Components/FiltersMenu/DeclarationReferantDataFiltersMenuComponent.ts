@@ -52,6 +52,10 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     ngAfterViewInit() {
         this.ApplyTransportSelectedStyle();
+        this.LOVListUsers.push(SessionLocator.LoggedUserPM); // by default is the grid filtered by the current user
+        this.SelectedValueChangedEmitUser();
+
+
     }
 
     SetTransport(itemValue: string) {
