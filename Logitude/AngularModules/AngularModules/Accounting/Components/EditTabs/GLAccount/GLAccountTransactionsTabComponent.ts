@@ -474,7 +474,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
         filters.PageSize = 10000;
         filters.addAdditionalFilter("AccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        this.ledgerTransactionListService.getByFilters(filters).subscribe(myResult => {
+        this.ledgerTransactionListService.getByFilters(filters).subscribe((myResult:any) => {
             console.log("Response: ", myResult);
             if (myResult == null) {
                 this.ItemsSource = [];
