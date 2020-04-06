@@ -141,7 +141,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 paymentElement.DocumentType = "APPAY";
                 paymentElement.PaymentNumber = item.PaymentNo;
                 paymentElement.RegisterDate = item.RegisterDate;
-                paymentElement.PaymentCurrency = item.PaymentCurrency.Code;
+                paymentElement.PaymentCurrency = item.PaymentCurrency != null ? item.PaymentCurrency.Code: null;
                 paymentElement.PaymentMethod = myPaymentMethodCode;
                 paymentElement.PaymentAmount = item.AmountInPaymentCurrency;
                 paymentElement.ExchngeRate = item.PaymentCurrencyExchangeRate;
