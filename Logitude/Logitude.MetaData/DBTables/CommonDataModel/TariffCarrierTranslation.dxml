@@ -19,6 +19,27 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="PartnerCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CarrierId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="CreateDate"
     Type="datetime">
     <Constraints
@@ -47,41 +68,10 @@
   <Column
     Name="SearchFields"
     Type="nvarchar"
-    Size="-1">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="PortId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="PartnerCode"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CarrierId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Relation
-    ForeignKeyColumn="CreatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="UpdatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PortId"
     ReferencedTable="Ports"
@@ -90,6 +80,16 @@
   <Relation
     ForeignKeyColumn="CarrierId"
     ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

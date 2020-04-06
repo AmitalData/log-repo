@@ -5,12 +5,6 @@
   DBType="Main"
   Module="Common">
   <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="CustomerId"
     Type="varchar"
     Size="15">
@@ -27,9 +21,14 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CreateByUserId"
-    Type="varchar"
-    Size="15">
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LastShipmentDateInQueue"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
@@ -40,8 +39,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="LastShipmentDateInQueue"
-    Type="datetime">
+    Name="CreateByUserId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

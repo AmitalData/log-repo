@@ -19,20 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="SCACCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ShippingAgentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="AddedManually"
     Type="bit">
     <Constraints
@@ -46,6 +32,20 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ShippingAgentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SCACCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="IsINTTRARegistered"
     Type="bit">
     <Constraints
@@ -57,6 +57,12 @@
     Size="250">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="INTTRAUpdatesShipment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="PrimaryContactName"
@@ -92,12 +98,6 @@
     Size="4">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="INTTRAUpdatesShipment"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"

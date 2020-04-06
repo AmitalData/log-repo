@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;AccountingSetting,AccountingSettings,,Id,&quot;">
+  SearchFields="&quot;AccountingSetting,AccountingSettings,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;39c4957f-349a-423a-b92e-217ce6577280&quot;"
     FieldName="&quot;Id&quot;"
@@ -261,7 +263,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
@@ -334,7 +336,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"

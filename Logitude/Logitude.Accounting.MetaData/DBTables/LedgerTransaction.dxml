@@ -5,6 +5,19 @@
   DBType="Main"
   Module="Accounting">
   <Column
+    Name="JournalId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="JournalLineNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Id"
     Type="varchar"
     Size="15">
@@ -14,19 +27,6 @@
   </Column>
   <Column
     Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="JournalId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="JournalLineNumber"
     Type="int">
     <Constraints
       Nullable="false" />

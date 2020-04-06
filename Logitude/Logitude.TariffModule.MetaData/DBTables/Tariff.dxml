@@ -3,7 +3,7 @@
   Name="Tariffs"
   Schema="dbo"
   DBType="Main"
-  Module="TariffModule">
+  Module="Tariff">
   <Column
     Name="Id"
     Type="varchar"
@@ -336,12 +336,12 @@
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="SellerId"
     ReferencedTable="Cards"
