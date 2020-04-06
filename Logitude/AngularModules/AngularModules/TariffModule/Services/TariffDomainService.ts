@@ -370,8 +370,15 @@ export class TariffSearchSummary {
     MinPrice: number;
     IsMinIconVisible: boolean;
     LineId: string;
+    ContainersPrices: Array<ContainersPrice>;
 }
 
+export class ContainersPrice {
+    ContainerId: string;
+    TariffId: string;
+    Price: number;
+    Quantity: number;
+}
 
 export class SurchargeSummary {
     Code: string;
@@ -391,6 +398,7 @@ export class SurchargeSummary {
     IsMinIconVisible: boolean;
     LineId: string;
     IsAllIn: boolean;
+    ContainersPrices: Array<ContainersPrice>;
 }
 
 export class ExcelTariffLines {
