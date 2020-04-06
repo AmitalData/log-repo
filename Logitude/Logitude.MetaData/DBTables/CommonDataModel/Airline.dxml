@@ -19,9 +19,22 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="RegistrationUpdatedBy"
+    Name="AddedManually"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Prefix"
+    Type="char"
+    Size="3">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AWBAccount"
     Type="varchar"
-    Size="60">
+    Size="10">
     <Constraints
       Nullable="true" />
   </Column>
@@ -38,6 +51,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="AccountNumber"
+    Type="varchar"
+    Size="14">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="TTY"
     Type="varchar"
     Size="33">
@@ -45,11 +65,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AccountNumber"
-    Type="varchar"
-    Size="14">
+    Name="IsChampRegistered"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChampNeedsRegistration"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="GLSHKPIMA"
@@ -66,18 +91,6 @@
   </Column>
   <Column
     Name="GLSHKNeedsRegistration"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ChampNeedsRegistration"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsChampRegistered"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -193,6 +206,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="RegistrationUpdatedBy"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsManagingProduct"
     Type="bit">
     <Constraints
@@ -223,33 +243,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Prefix"
-    Type="char"
-    Size="3">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AddedManually"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AWBAccount"
-    Type="varchar"
-    Size="10">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OldTTY"
-    Type="varchar"
-    Size="33">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsDeclined"
     Type="bit">
     <Constraints
@@ -259,6 +252,13 @@
     Name="DeclineNotes"
     Type="nvarchar"
     Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OldTTY"
+    Type="varchar"
+    Size="33">
     <Constraints
       Nullable="true" />
   </Column>

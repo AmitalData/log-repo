@@ -53,7 +53,7 @@
   <Column
     Name="Name"
     Type="varchar"
-    Size="40">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

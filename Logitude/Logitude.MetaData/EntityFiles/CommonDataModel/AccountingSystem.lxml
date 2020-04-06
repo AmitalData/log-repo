@@ -59,7 +59,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;AccountingSystem,AccountingSystems,,Code,&quot;">
+  SearchFields="&quot;AccountingSystem,AccountingSystems,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;ceaa8f49-ace6-4e99-a92a-1ce243ffde3b&quot;"
     FieldName="&quot;Code&quot;"

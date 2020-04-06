@@ -27,11 +27,24 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="FacebookId"
     Type="varchar"
     Size="20">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="ExternalId"
@@ -41,7 +54,75 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Email"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BusinessPhone"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Mobile"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Fax"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Birthday"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Anniversary"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Signature"
+    Type="varbinary"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SignatureHtml"
     Type="varbinary"
     Size="-1">
     <Constraints
@@ -74,15 +155,22 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IndexColor"
-    Type="int">
+    Name="CompanyName"
+    Type="varchar"
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Position"
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -118,101 +206,13 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Position"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="EnglishName"
-    Type="varchar"
-    Size="60">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Email"
-    Type="varchar"
-    Size="70">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Mobile"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="BusinessPhone"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Fax"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Birthday"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Anniversary"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InActive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SignatureHtml"
-    Type="varbinary"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CompanyName"
-    Type="varchar"
-    Size="1000">
+    Name="IndexColor"
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CreateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AutomaticLastUpdateDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -223,14 +223,14 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="IndexColor"
-    ReferencedTable="ColorIndexs"
-    ReferencedColumn="IndexNumber"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="ContactDoneMethodCode"
     ReferencedTable="ContactDoneMethods"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="IndexColor"
+    ReferencedTable="ColorIndexs"
+    ReferencedColumn="IndexNumber"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,Email" />

@@ -19,6 +19,34 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="QuoteNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DirectionId"
+    Type="char"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TransportModeId"
+    Type="char"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShipmentTypeId"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="QuoteTemplateId"
     Type="varchar"
     Size="15">
@@ -33,11 +61,160 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="SentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AcceptedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeclinedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="LastVersionNumber"
     Type="int"
     DefaultValue="0">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Subject"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsSubjectEdited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TotalPerContainer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuoteCustomerTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomerContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerReference1"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerReference2"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperReference1"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperReference2"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeReference1"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeReference2"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="FreelancerId"
@@ -61,8 +238,93 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="FromPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToPortId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IncotermId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SalesmanUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OpenDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DescriptionOfGoods"
+    Type="varchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChargeableWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChargeableWeightInKG"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VolumeInCBM"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GrossWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="LastModified"
     Type="timestamp">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsClosed"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
@@ -137,346 +399,18 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsByKG"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsByContainer"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="EstimateProfitEdited"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="FromAddressId"
+    Name="GrossWeightUnitCode"
     Type="varchar"
-    Size="15">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ToAddressId"
+    Name="ChargeableWeightUnitCode"
     Type="varchar"
-    Size="15">
+    Size="3">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="OpportunityId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MinimumFreightCost"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MinimumFreightSale"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastStageDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AgentReference1"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AgentReference2"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsSaleCurrencySameAsCost"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="EstimateProfit"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsFixedPrice"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CustomerContactId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipperName"
-    Type="nvarchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ConsigneeName"
-    Type="nvarchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DeliveryAddress"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PickUpAddress"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SaleCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ExchangeRate"
-    Type="float">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CustomerName"
-    Type="nvarchar"
-    Size="100">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsCancelled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="QuoteNumber"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="MainCarriageCarrierId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DirectionId"
-    Type="char"
-    Size="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="TransportModeId"
-    Type="char"
-    Size="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DepartmentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="BranchId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipmentTypeId"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QuoteCustomerTypeCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CustomerId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipperId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipperContactId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipperReference1"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShipperReference2"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ConsigneeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ConsigneeContactId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ConsigneeReference1"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ConsigneeReference2"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="FromPortId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ToPortId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IncotermId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SalesmanUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CreatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="OpenDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="500">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DescriptionOfGoods"
-    Type="varchar"
-    Size="512">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ChargeableWeight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="GrossWeight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsClosed"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="DimensionsUnitCode"
@@ -486,13 +420,13 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Volume"
+    Name="VolumetricWeight"
     Type="float">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="Ratio"
+    Name="Volume"
     Type="float">
     <Constraints
       Nullable="true" />
@@ -506,6 +440,18 @@
   <Column
     Name="NumberOfContainers"
     Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Ratio"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DimFactor"
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -535,15 +481,28 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="StartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsFreightBySteps"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1500">
+    Name="DepartmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BranchId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -613,6 +572,18 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="IsByKG"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsByContainer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="QuoteTypeCode"
     Type="varchar"
     Size="1">
@@ -620,22 +591,116 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="GrossWeightUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ChargeableWeightUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VolumetricWeight"
+    Name="EstimateProfit"
     Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EstimateProfitEdited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MainCarriageCarrierId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PickUpAddress"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeliveryAddress"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IncludePickUp"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IncludeDelivery"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FromAddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToAddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromAddressCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromAddressCity"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromAddressZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToAddressCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToAddressCity"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToAddressZipCode"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -668,167 +733,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="FromAddressCity"
-    Type="nvarchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="FromAddressCountryId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="FromAddressZipCode"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ToAddressCity"
-    Type="nvarchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ToAddressCountryId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ToAddressZipCode"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DimFactor"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IncludePickUp"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IncludeDelivery"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="QuoteClosingReasonCode"
-    Type="varchar"
-    Size="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SentDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AcceptedDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DeclinedDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="UsageCount"
-    Type="int">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastUsageDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="BusinessUnitId"
-    Type="varchar"
-    Size="50"
-    DefaultValue="'0'">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CustomerReference1"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CustomerReference2"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Subject"
-    Type="nvarchar"
-    Size="200">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsSubjectEdited"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="StageId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="StageDueDate"
     Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="RatingCode"
-    Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LastActivityDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastActivitySubject"
-    Type="nvarchar"
-    Size="255">
     <Constraints
       Nullable="true" />
   </Column>
@@ -840,8 +746,22 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="NextActivityDate"
+    Name="LastActivitySubject"
+    Type="nvarchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastActivityDate"
     Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NextActivityTypeCode"
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -853,9 +773,15 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="NextActivityTypeCode"
+    Name="NextActivityDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OpportunityId"
     Type="varchar"
-    Size="2">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -872,11 +798,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="UpdatedByUserId"
-    Type="varchar"
-    Size="15">
+    Name="AutomaticallyCloseDays"
+    Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="UpdateDate"
@@ -885,15 +810,21 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AutomaticallyCloseDays"
-    Type="int">
+    Name="ProductCode"
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ProductCode"
-    Type="varchar"
-    Size="2">
+    Name="MinimumFreightCost"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MinimumFreightSale"
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -924,6 +855,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="LastStageDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="AgentId"
     Type="varchar"
     Size="15">
@@ -945,9 +882,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="MoveTypeId"
+    Name="AgentReference1"
     Type="varchar"
-    Size="15">
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AgentReference2"
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
@@ -956,6 +900,31 @@
     Type="float">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleCurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExchangeRate"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsFixedPrice"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsSaleCurrencySameAsCost"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="ValueOfGoods"
@@ -984,12 +953,6 @@
   </Column>
   <Column
     Name="IsQuoteDocumentExternal"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="TotalPerContainer"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -1041,32 +1004,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="GrossWeightEdited"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ChargeableWeightEdited"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ChargeableWeightInKG"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VolumeInCBM"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="StartDate"
-    Type="datetime">
+    Name="QuoteHTMLDocumentId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1141,6 +1081,80 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CountryForStatisticsId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="BusinessUnitId"
+    Type="varchar"
+    Size="50"
+    DefaultValue="'0'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RatingCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuoteClosingReasonCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UsageCount"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastUsageDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MoveTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GrossWeightEdited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ChargeableWeightEdited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="RequestDate"
     Type="datetime">
     <Constraints
@@ -1171,65 +1185,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="CountryForStatisticsId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QuoteHTMLDocumentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Relation
-    ForeignKeyColumn="QuoteTemplateId"
-    ReferencedTable="QuoteTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="FreelancerId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="FreelancerAddressId"
-    ReferencedTable="Addresses"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="FreelancerContactId"
-    ReferencedTable="Contacts"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="FromAddressId"
-    ReferencedTable="Addresses"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ToAddressId"
-    ReferencedTable="Addresses"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CustomerContactId"
-    ReferencedTable="Contacts"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="SaleCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="MainCarriageCarrierId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DirectionId"
     ReferencedTable="Directions"
@@ -1241,18 +1196,13 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="DepartmentId"
-    ReferencedTable="Departments"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="BranchId"
-    ReferencedTable="Branches"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="ShipmentTypeId"
     ReferencedTable="ShipmentTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteTemplateId"
+    ReferencedTable="QuoteTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -1263,6 +1213,11 @@
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomerContactId"
+    ReferencedTable="Contacts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -1282,6 +1237,21 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ConsigneeContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FreelancerId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FreelancerAddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FreelancerContactId"
     ReferencedTable="Contacts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
@@ -1308,6 +1278,16 @@
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DepartmentId"
+    ReferencedTable="Departments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BranchId"
+    ReferencedTable="Branches"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -1341,6 +1321,31 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="MainCarriageCarrierId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FromAddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ToAddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FromAddressCountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ToAddressCountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="FromPartnerId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"
@@ -1361,41 +1366,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="FromAddressCountryId"
-    ReferencedTable="Countries"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ToAddressCountryId"
-    ReferencedTable="Countries"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="QuoteClosingReasonCode"
-    ReferencedTable="QuoteClosingReasons"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="BusinessUnitId"
-    ReferencedTable="BusinessUnits"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="StageId"
-    ReferencedTable="QuoteStages"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="RatingCode"
-    ReferencedTable="QuoteRatings"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="UpdatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="AgentId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"
@@ -1411,8 +1381,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="MoveTypeId"
-    ReferencedTable="MoveTypes"
+    ForeignKeyColumn="SaleCurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -1436,8 +1406,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="ProfitCurrencyId"
-    ReferencedTable="Currencies"
+    ForeignKeyColumn="QuoteHTMLDocumentId"
+    ReferencedTable="Documents"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -1446,8 +1416,38 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="QuoteHTMLDocumentId"
-    ReferencedTable="Documents"
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BusinessUnitId"
+    ReferencedTable="BusinessUnits"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RatingCode"
+    ReferencedTable="QuoteRatings"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="StageId"
+    ReferencedTable="QuoteStages"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteClosingReasonCode"
+    ReferencedTable="QuoteClosingReasons"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MoveTypeId"
+    ReferencedTable="MoveTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ProfitCurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
