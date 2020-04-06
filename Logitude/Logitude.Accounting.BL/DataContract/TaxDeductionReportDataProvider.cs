@@ -378,7 +378,8 @@ namespace Logitude.Accounting.BL.DataContract
 
                 if (gLAccount != null)
                 {
-                    List<CardList> selectedVendors = vendors.Where(d => d.GLAccountId == item.VendorId).ToList();
+                    List<CardList> selectedVendors = FillSelectedVendosList(vendors, item.VendorId);
+                //    List<CardList> selectedVendors = vendors.Where(d => d.GLAccountId == item.VendorId).Distinct().ToList();
                     ValidateGLAccountVendors(selectedVendors, gLAccount);
                     
                         groupedbyVendor = SetGLAccountFields(gLAccount, groupedbyVendor);
@@ -406,13 +407,32 @@ namespace Logitude.Accounting.BL.DataContract
             }
             return byVendorList;
         }
+        private List<CardList> FillSelectedVendosList(List<CardList> vendors, string accountId)
+        {
+            List<CardList> selectedVendors = new List<CardList>();
+            foreach (CardList vendor in vendors)
+            {
+                var exist = selectedVendors.Where(d => d.Id == vendor.Id).Any();
+                if (!exist)
+                {
+                    if (vendor.GLAccountId == accountId )
+                    {
+                        selectedVendors.Add(vendor);
+                    }
+                }
+            }
+            return selectedVendors;
+        }
+
         private void ValidateGLAccountVendors(List<CardList> selectedVendors, GLAccountList gLAccount)
         {
             if (selectedVendors.Count() > 1)
             {
+                 
                 string error = TextCodesTranslator.TranslateText("TaxDeductionReport.O.VendorGLAccount", Tenant) + " " + gLAccount.DisplayNumber + " " + TextCodesTranslator.TranslateText("TaxDeductionReport.O.Connected2ManyCards", Tenant) + " ";
                 foreach (CardList vendor in selectedVendors)
                 {
+                    
                     error = error + "," + vendor.Code;
                 }
                 throw new Exception(error);
