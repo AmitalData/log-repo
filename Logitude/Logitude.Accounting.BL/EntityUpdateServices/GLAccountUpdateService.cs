@@ -418,8 +418,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
 
+            if (!entityPM.IsControlAccount.GetValueOrDefault())
+            {
+                this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
+            }
+            
 
-            this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
             if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
