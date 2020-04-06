@@ -1363,7 +1363,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM != null) {
             if (this.EntityPM.BankAccountId != value) {
                 this.EntityPM.BankAccountId = value;
-                this.BankAccountPMService.get(this.EntityPM.BankAccountId).subscribe((res) => {
+                this.BankAccountPMService.get(this.EntityPM.BankAccountId).subscribe((res:any) => {
                     if (res) {
                         if (res.Result) {
                             var bank: BankAccountPM = res.Result;

@@ -356,7 +356,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     StatusItems = [];
     SelectedStatusItems = [];
     GetStatuses() {
-        this._TaxReportLineStatusListService.getAll().subscribe((myResult) => {
+        this._TaxReportLineStatusListService.getAll().subscribe((myResult:any) => {
             this.StatusItems = myResult.Result;
         });
     }

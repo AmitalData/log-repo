@@ -100,12 +100,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentRepository = new ARInvoicePaymentRepository(objectContext);
             this.paymentRepository = new ARPaymentRepository(objectContext);
 
-
             this.vatTypeRepository = new VatTypeRepository(myCommonContext);
+            this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.contactRepository = new ContactRepository(myCommonContext);
-
-
  
             allShipments = new List<Shipment>();
             allReceivables = new List<ShipmentReceivable>();
