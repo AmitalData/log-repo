@@ -427,7 +427,14 @@ export class ListComponent implements OnInit, AfterViewInit {
     public QueryColumns: any[];
     public firstCall: boolean = true;
     public SelectedQueryId: string;
-    public SelectedQuery: any = null;
+    private _SelectedQuery: any = null;
+    public get SelectedQuery(): any {
+        return this._SelectedQuery;
+    }
+    public set SelectedQuery(value: any) {
+        this._SelectedQuery = value;
+    }
+
     public QueryCode: string;
     public NewButtonLable: string;
 
@@ -923,6 +930,27 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         else {
             this.SelectedQuery = allQueries[0];
+        }
+        let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ;
+
+        if (/*forceExistQuery &&*/  this.SelectedQuery != null) {
+            let existSelectedQuery: boolean = false;
+            let alternativeUQuery: any = null;
+            let alternativeQuery: any = null;
+            if (!existSelectedQuery && this.UserQueries != null) {
+                existSelectedQuery = this.UserQueries.filter(r => r.Code == this.SelectedQuery.Code).length > 0;
+                alternativeUQuery = this.UserQueries[0];
+            }
+            if (!existSelectedQuery && this.Queries != null) {
+                existSelectedQuery = this.Queries.filter(r => r.Code == this.SelectedQuery.Code).length > 0;
+                alternativeQuery = this.Queries[0];
+            }
+            if (!existSelectedQuery) {
+                this.SelectedQuery = alternativeQuery;
+                if (this.SelectedQuery == null) {
+                    this.SelectedQuery = alternativeUQuery;
+                }
+            }
         }
         if (this.SelectedQuery != null) {
             this.QueryCode = this.SelectedQuery.Code;
