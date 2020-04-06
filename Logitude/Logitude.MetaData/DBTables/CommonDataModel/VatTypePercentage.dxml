@@ -2,8 +2,7 @@
 <Table
   Name="VatTypePercentages"
   Schema="dbo"
-  DBType="Main"
-  Module="Common">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -26,14 +25,14 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="FromDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Percentage"
     Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FromDate"
+    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
