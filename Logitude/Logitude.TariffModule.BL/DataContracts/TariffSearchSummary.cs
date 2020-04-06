@@ -35,5 +35,14 @@ namespace Logitude.TariffModule.BL.DataContracts
         public decimal? MinPrice { get; set; }
         public bool IsMinIconVisible { get; set; }
         public string LineId { get; set; }
+        public List<ContainersPrice> ContainersPrices { get; set; }
+    }
+
+    public class ContainersPrice
+    {
+        public string ContainerId { get; set; }
+        public string TariffId { get; set; }
+        public decimal? Price { get; set; }
+        public int Quantity { get; set; }
     }
 }

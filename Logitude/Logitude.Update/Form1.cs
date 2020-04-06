@@ -460,9 +460,9 @@ User/Pass",
             //}
 
             double value = 45.49;
-         //   value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
-            value = Math.Round(value * 2,  MidpointRounding.AwayFromZero) / 2;
-            value = Math.Round(value , 1) ;
+            //   value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
+            value = Math.Round(value * 2, MidpointRounding.AwayFromZero) / 2;
+            value = Math.Round(value, 1);
 
             value = 45.5;
             value = Math.Round(value, 1, MidpointRounding.AwayFromZero);
@@ -471,7 +471,7 @@ User/Pass",
             value = 45.49;
             value = Math.Round(value, 2, MidpointRounding.AwayFromZero);
             value = 45.49;
-            value = Math.Round(value*2, 2, MidpointRounding.AwayFromZero);
+            value = Math.Round(value * 2, 2, MidpointRounding.AwayFromZero);
 
 
         }
@@ -4106,6 +4106,12 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
+        private void button49_Click(object sender, EventArgs e)
+        {
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadDefaultReports();
+
+        }
     }
 
     public class TenantMailBox
@@ -4170,5 +4176,6 @@ User/Pass",
         public string OurCode { get; set; }
         public string PartnerCode { get; set; }
     }
-}
 
+
+}
