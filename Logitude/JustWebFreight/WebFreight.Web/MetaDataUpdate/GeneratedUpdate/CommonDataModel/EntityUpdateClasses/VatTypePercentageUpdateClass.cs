@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class VatTypePercentageUpdateClass
    {  		
-		public const string HashString = "a9fe6a3aa022acd7f83cf264b6577170";
+		public const string HashString = "a4c8dfa0af0724a67081993b9cce407b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "VatTypePercentage",
 			      				    IsNew =  false,
 			      				    DBTableName =  "VatTypePercentages",
-			      				    OldDBTableName =  "VatTypePercentages",
 			      				    ObjectTableSingular =  "VAT Type Percentage",
 			      				    ObjectTablePlural =  "VatTypePercentages",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "VAT Type Percentage",
-			      				    Code =  "77f6",
+			      				    Code =  "64d8",
 			      				    Name =  "VatTypePercentage",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -128,7 +127,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "VatTypePercentage,VatTypePercentages,,Id,",
-			      				    
 			      				    HashString =  VatTypePercentageUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -141,7 +139,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Percentage",
-					  						OldFieldName =  "Percentage",
 					  						ObjectTableName =  "VatTypePercentage",
 					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
@@ -202,7 +199,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FromDate",
-					  						OldFieldName =  "FromDate",
 					  						ObjectTableName =  "VatTypePercentage",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,

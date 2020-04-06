@@ -32,7 +32,7 @@ namespace Logitude.Server.Tools.Helpers
             this.commonContext = CommonDataContext.GetContext(tenant);
         }
 
-        public CommunicationLog CreateCommunicationLog(byte[] ByteData, string fileName, string entityId)
+        public CommunicationLog CreateCommunicationLog(byte[] ByteData, string fileName, string entityId, string accountingSystemCode)
         {
             TenantRepository tenantrepository = new TenantRepository(commonContext);
             Tenant curtenant = tenantrepository.GetSingleTenant(tenant);
@@ -41,7 +41,7 @@ namespace Logitude.Server.Tools.Helpers
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(this.commonContext);
 
             string xmlTarget = "Exavault";
-            string xmlSubject = "Generic Interface";
+            string xmlSubject = accountingSystemCode == "GI" ? "Generic Interface" : "Advanced Generic Interface";
 
             Document document = new Document()
             {
@@ -55,7 +55,7 @@ namespace Logitude.Server.Tools.Helpers
             };
 
             documentRepository.Add(document);
-            documentRepository.SubmitChanges();
+            //documentRepository.SubmitChanges();
             
             CommunicationLog commLog = new CommunicationLog()
             {
@@ -80,6 +80,7 @@ namespace Logitude.Server.Tools.Helpers
             };
 
             communicationLogRepository.Add(commLog);
+            commonContext.SaveChanges();
 
             this.DocumentId = document.Id;
             this.DocumentFolder = document.Folder;
@@ -98,13 +99,15 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (fTPDetail != null)
                 {
+                    string[] fileNameArray = fileName.Split('.');
+
                     LogSettings settings = new LogSettings()
                     {
                         Host = fTPDetail.Host,
                         Folder = fTPDetail.Folder,
                         Username = fTPDetail.UserName,
                         Password = fTPDetail.Password,
-                        Filename = fileName,
+                        Filename = fileNameArray[0],
                         UseSFTP = fTPDetail.UseSFTP,
                     };
 
