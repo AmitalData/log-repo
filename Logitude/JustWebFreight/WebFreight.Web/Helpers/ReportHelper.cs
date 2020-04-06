@@ -1691,9 +1691,9 @@ namespace WebFreight.Web.Helpers
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(CustomerStatusDataProvider));
                         CustomerStatusDataProvider reportDataProvider = (CustomerStatusDataProvider)serializer.Deserialize(memorystream);
-                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        CurrentBusinessObject = new StiBusinessObject() { Category = "CSSR", Name = "CustomerStatusDataProvider", BusinessObjectValue = reportDataProvider };
-                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "CSSR", Name = "CustomerStatusDataProvider", BusinessObjectValue = reportDataProvider };
+
                         break;
                     }
                 case "OSBC":
