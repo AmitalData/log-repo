@@ -44,10 +44,8 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using System.Text;
 using System.IO;
 using Logitude.BL.Resolvers;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.BL.EntityUpdateServices;
 
+ 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class ARInvoiceService
@@ -65,7 +63,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private IInvoiceContext objectContext;
         private ICommonDataContext myCommonContext;
         private IShipmentsContext myShipmentContext;
-        private IAccountingContext myAccountingContext;
         private ARInvoiceRepository invoiceRepository;
         private ARInvoiceLineRepository invoiceLineRepository;
         private ARInvoiceTotalVATRepository invoiceTotalVatRepository;
@@ -95,8 +92,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
             this.myShipmentContext = ShipmentsContext.GetContext(tenant);
-            this.myAccountingContext = AccountingContext.GetContext(tenant);
-
+ 
             this.invoiceRepository = new ARInvoiceRepository(objectContext);
             this.invoiceLineRepository = new ARInvoiceLineRepository(objectContext);
             this.invoiceTotalVatRepository = new ARInvoiceTotalVATRepository(objectContext);
@@ -104,15 +100,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentRepository = new ARInvoicePaymentRepository(objectContext);
             this.paymentRepository = new ARPaymentRepository(objectContext);
 
-
             this.vatTypeRepository = new VatTypeRepository(myCommonContext);
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.contactRepository = new ContactRepository(myCommonContext);
-
-
-            this.InterestReportRepository = new InterestReportRepository(myAccountingContext);
-
+ 
             allShipments = new List<Shipment>();
             allReceivables = new List<ShipmentReceivable>();
             shipmentRepository = new ShipmentRepository(myShipmentContext);
@@ -215,16 +207,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool isTaxItemManaged;
         private bool isTransferToDropbox;
         private bool TransferToDropboxActivated;
+        private bool transferToFTPActivated;
+        private bool canTransferToFTP;
         private void GetAccountingSystem()
         {
             this.accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
-            AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+            if (this.accountingSetting != null)
+            {
+                this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                this.transferToFTPActivated = accountingSetting.TransferToFTPActivated;
 
-            this.isJournal = accountingSystem.IsJournalMode;
-            this.isExternal = accountingSystem.IsExternalCodesFromTable;
-            this.isTaxItemManaged = accountingSystem.IsTaxItemManaged;
-            this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
-            this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+                if (accountingSystem != null)
+                {
+                    this.isJournal = accountingSystem.IsJournalMode;
+                    this.isExternal = accountingSystem.IsExternalCodesFromTable;
+                    this.isTaxItemManaged = accountingSystem.IsTaxItemManaged;
+                    this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
+                    this.canTransferToFTP = accountingSystem.CanTransferToFTP;
+                }
+            }
         }
 
         public void Create(ARInvoicePM theEntityPM)
@@ -300,33 +302,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {
-             
-            InterestReport interestReport = InterestReportRepository.GetSingle(theEntityPM.InvoiceEntities[0].EntityId, tenant);
-            InterestReportPM interestReportPM = new InterestReportPM()
-            {
-                Id = interestReport.Id,
-                InterestReportStatusCode = "2",
-                ARinvoiceId = theEntityPM.Id,
-                ARInvoiceNumber =theEntityPM.InvoiceNumber,
-                OpenBalance = interestReport.OpenBalance,
-                CloseBalance = interestReport.CloseBalance,
-                TotalAmount = interestReport.TotalAmount,
-                UpdatedByUserId = interestReport.UpdatedByUserId,
-                UpdateDateTime = interestReport.UpdateDateTime,
-                Tenant = interestReport.Tenant,
-                CreateDateTime = interestReport.CreateDateTime,
-                CreatedByUserId = interestReport.CreatedByUserId,
-                CustomerId = interestReport.CustomerId,
-                GLAccountId = interestReport.GLAccountId,
-                GLAccountInterestCreditLimit = interestReport.GLAccountInterestCreditLimit,
-                ReportNumber = interestReport.ReportNumber,
-                InterestCalculationDate = interestReport.InterestCalculationDate,
-                SearchFields = interestReport.SearchFields,
-                InvoiceAmount = (decimal?) theEntityPM.AmountInLocalCurrency,
-
-            };
-             PutConfirmCreateInvoice(interestReportPM, tenant, myAccountingContext);
-
+            IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
+            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency , theEntityPM.InvoiceEntities[0].EntityId);
         }
 
         private void ValidateInvoiceConnected()
@@ -947,19 +924,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateARInvoiceMessage(bool setApproved)
         {
-            if (setApproved && this.isTransferToDropbox && this.TransferToDropboxActivated)
+            if (setApproved)
             {
-                if (!string.IsNullOrEmpty(entityPM.TransferError))
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
                 {
-                    throw new ApplicationException(entityPM.TransferError);
-                }
-                else
-                {
-                    this.invoice = invoiceRepository.GetSingleInvoice(this.entityPM.Id);
-                    List<ARInvoice> entities = new List<ARInvoice>();
-                    entities.Add(this.invoice);
-                    ARInvoiceMessageHelper myHelper = new ARInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, true);
-                    myHelper.Transfer();
+                    if (!string.IsNullOrEmpty(entityPM.TransferError))
+                    {
+                        throw new ApplicationException(entityPM.TransferError);
+                    }
+                    else
+                    {
+                        bool isDropBox = this.isTransferToDropbox && this.TransferToDropboxActivated;
+                        this.invoice = invoiceRepository.GetSingleInvoice(this.entityPM.Id);
+                        List<ARInvoice> entities = new List<ARInvoice>();
+                        entities.Add(this.invoice);
+                        ARInvoiceMessageHelper myHelper = new ARInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, isDropBox);
+
+                        if(this.canTransferToFTP && this.transferToFTPActivated)
+                        {
+                            myHelper.UsingFTP = true;
+                            myHelper.FTPDetailId = accountingSetting.TransferFTPDetailId;
+                        }
+
+                        myHelper.Transfer();
+                    }
                 }
             }
         }
@@ -1446,9 +1434,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.InitializeTransferFields();
             this.InitializeGLAccountFields();
 
-            if (this.entityPM.SetApproved && this.isTransferToDropbox && this.TransferToDropboxActivated && string.IsNullOrEmpty(entityPM.TransferError))
+            if (this.entityPM.SetApproved && string.IsNullOrEmpty(entityPM.TransferError))
             {
-                this.entityPM.TransferStatusCode = "TR";
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
+                {
+                    this.entityPM.TransferStatusCode = "TR";
+                }
             }
         }
         private void InitializeExternalFields()
@@ -2343,7 +2334,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Tenant = entityPM.Tenant,
                             ARInvoiceId = entityPM.Id,
                             VatTypeId = item.Id,
-                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 2),
+                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 3),
                             LocalVatableAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2),
                             InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
                             ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
@@ -4070,107 +4061,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
 
 
-        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
-        {
-            if (MainContext == null)
-            {
-                MainContext = AccountingContext.GetContext(Tenant);
-            }
+ 
 
-            ContactQuery contactQuery = new ContactQuery(Tenant);
-            ContactPM contact = GetLoggedContact(Tenant) ?? new ContactPM();
-            bool showLocals = !contact.DontShowLocal;
-            InterestReportUpdateService InterestReportUpdate = new InterestReportUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            InterestTransactionUpdateService InterestTransactionUpdate = new InterestTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-
-            interestReportPM.CloseBalance = 0;
-            if (interestReportPM.OpenBalance != null)
-            {
-                interestReportPM.CloseBalance += interestReportPM.OpenBalance;
-            }
-            if (interestReportPM.TotalAmount != null)
-            {
-                interestReportPM.CloseBalance += interestReportPM.TotalAmount;
-            }
-
-            if (interestReportPM.InterestReportStatusCode != "2")
-            {
-                interestReportPM.InterestReportStatusCode = "4";
-            }
-            if (interestReportPM.InterestReportStatusCode != null)
-            {
-                InterestReportStatuseRepository interestReportStatuseRepository = new InterestReportStatuseRepository(Tenant);
-                InterestReportStatuse interestReportStatuse = interestReportStatuseRepository.GetSingle(interestReportPM.InterestReportStatusCode);
-                interestReportPM.InterestReportStatusName = showLocals ? interestReportStatuse.LocalName : interestReportStatuse.EnglishName;
-                interestReportPM.InterestReportStatusLocalName = showLocals ? interestReportStatuse.LocalName : interestReportStatuse.EnglishName;
-            }
-
-            interestReportPM.ChangeSetOp = ChangeSetOperation.Update;
-            InterestReportUpdate.Update(interestReportPM, true);
-            List<InterestTransactionPM> interestTransactionPMs = GetAllInterestTransactionForReport(interestReportPM.Id, Tenant, MainContext).ToList();
-
-            for (int i = 0; i < interestTransactionPMs.Count; i++)
-            {
-                interestTransactionPMs[i].IsClosed = true;
-                interestTransactionPMs[i].InterestReportId = interestReportPM.Id;
-                interestTransactionPMs[i].ChangeSetOp = ChangeSetOperation.Update;
-                InterestTransactionUpdate.Update(interestTransactionPMs[i], true);
-            }
-
-            return interestReportPM;
-        }
-
-        private IQueryable<InterestTransactionPM> GetAllInterestTransactionForReport(string InterestReportId, int Tenant, IAccountingContext MyContext)
-        {
-            IQueryable<InterestTransactionPM> interestTransactionLists = (from a in MyContext.InterestReportLines
-                                                                          where a.Tenant == Tenant && a.InterestReportId == InterestReportId
-                                                                          select new InterestTransactionPM()
-                                                                          {
-                                                                              Id = a.InterestTransaction.Id,
-
-                                                                              Tenant = a.Tenant,
-
-                                                                              CurrencyId = a.InterestTransaction.CurrencyId,
-
-                                                                              InterestEntityTypeCode = a.InterestTransaction.InterestEntityTypeCode,
-
-                                                                              EntityId = a.InterestTransaction.EntityId,
-
-                                                                              LocalAmount = a.InterestTransaction.LocalAmount,
-
-                                                                              ForeignAmount = a.InterestTransaction.ForeignAmount,
-
-                                                                              InterestValueDate = a.InterestTransaction.InterestValueDate,
-
-                                                                              InterestReportId = a.InterestTransaction.InterestReportId,
-
-                                                                              IsClosed = a.InterestTransaction.IsClosed,
-
-                                                                              GLAccountId = a.InterestTransaction.GLAccountId,
-
-                                                                              CreateDateTime = a.InterestTransaction.CreateDateTime,
-
-                                                                              UpdateDateTime = a.InterestTransaction.UpdateDateTime,
-
-                                                                              OriginalEntityLineNumber = a.InterestTransaction.OriginalEntityLineNumber,
-
-                                                                              SearchFields = a.InterestTransaction.SearchFields,
-
-                                                                          });
-            return interestTransactionLists;
-
-        }
-        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-        public bool SuppressFetchOpenReconcilation { get; internal set; }
-
-        private static ContactPM GetLoggedContact(int tenant)
-        {
-            if (OverrideGetLoggedContactFunc != null)
-            {
-                return OverrideGetLoggedContactFunc(tenant);
-            }
-            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
-            return loggedcontact;
-        }
+         
+     
     }
 }

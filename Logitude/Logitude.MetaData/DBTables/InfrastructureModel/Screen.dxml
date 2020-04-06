@@ -2,7 +2,8 @@
 <Table
   Name="Screens"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -52,7 +53,7 @@
   <Column
     Name="Name"
     Type="varchar"
-    Size="40">
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

@@ -55,7 +55,9 @@
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
-  IsLookUp="false">
+  IsLookUp="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;1cf3d4ee-ccae-4fb0-a32f-ee0e72140565&quot;"
     FieldName="&quot;Id&quot;"
@@ -616,7 +618,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;TMOfficeHour&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="true"

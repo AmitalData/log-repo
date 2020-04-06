@@ -2,11 +2,12 @@
 <Table
   Name="BatchServicesDefinitionMods"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Global">
   <Column
     Name="Code"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="40">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />

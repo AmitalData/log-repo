@@ -74,7 +74,7 @@ export class ActionStepsTemplate extends BaseComponent {
 
             this.CurrentSession.StartBusyIndicatorSaving();
             this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res:any)  => {
-                res.subscribe(response => {
+                res.subscribe((response:any) => {
 
                     this.CurrentSession.StopBusyIndicator();
 

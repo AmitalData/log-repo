@@ -58,7 +58,7 @@ export class GeneralPrintHelper {
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
 
-        documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+        documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -97,7 +97,7 @@ export class GeneralPrintHelper {
         if (this.IsLoadPrintControl && !this.IsStartPrint) {
             this.IsStartPrint = true;
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityId, SessionInfo.LoggedUserTenant, this.ChildEntityId, this.documentTypeList.Id).subscribe(res => {
+            this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityId, SessionInfo.LoggedUserTenant, this.ChildEntityId, this.documentTypeList.Id).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -105,7 +105,7 @@ export class GeneralPrintHelper {
                     this.documentOutPM = myResult;
 
                     if (!this.documentOutPM) {
-                        this.documentOutPMService.getCreateDocumentOut(this.documentTypeList.Id, this.EntityId, this.ChildEntityId, this.ChildReference, this.CurrentObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
+                        this.documentOutPMService.getCreateDocumentOut(this.documentTypeList.Id, this.EntityId, this.ChildEntityId, this.ChildReference, this.CurrentObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
                             var pmResponse: ServiceResponse = res;
                             if (!pmResponse.HasError) {
                                 var myResult = pmResponse.Result;
@@ -143,7 +143,7 @@ export class GeneralPrintHelper {
     LoadDocumentTypePm() {
 
 
-        this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
 
             var pmResponse: ServiceResponse = res;

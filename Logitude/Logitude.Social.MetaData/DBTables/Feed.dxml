@@ -2,7 +2,8 @@
 <Table
   Name="Feeds"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Social">
   <Column
     Name="PostId"
     Type="varchar"

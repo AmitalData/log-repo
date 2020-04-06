@@ -2,7 +2,8 @@
 <Table
   Name="TenantManagements"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Global">
   <Column
     Name="Id"
     Type="int">
@@ -299,8 +300,8 @@
   </Column>
   <Column
     Name="CountryName"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="120">
     <Constraints
       Nullable="true" />
   </Column>
@@ -808,6 +809,30 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TotalNumberOfUsers"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalFreeUsers"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AveragePrice"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalPaymentamount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
@@ -832,6 +857,11 @@
     ForeignKeyColumn="PaymentCurrencyCode"
     ReferencedTable="PaymentCurrencies"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BluesnapContractId"
+    ReferencedTable="BluesnapContracts"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="BluesnapCRMContractId"
@@ -863,6 +893,4 @@
     ReferencedTable="TenantTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
-  <Index
-    Columns="BluesnapContractId" />
 </Table>

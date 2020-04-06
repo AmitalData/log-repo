@@ -49,7 +49,7 @@ export class ARInvoiceMenuButtonsHandler {
                         case "SaveAsDraft":
                             {
                                 if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
-                                    button.IsHidden = true;
+                                    myButtonIsDisabled= true;
                                 }
                                 else {
 
@@ -128,9 +128,11 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "VoidARInvoice":
                             {
-                                if (SessionLocator.TenantPM.AccountingActivated == true || this.EntityPM.ARInvoiceTypeCode == 'IT') {
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
                                     button.IsHidden = true;
                                 }
+                                else if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
+                                    myButtonIsDisabled = true;                                }
                                 else {
                                     if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                                         myButtonIsDisabled = true;
@@ -161,7 +163,7 @@ export class ARInvoiceMenuButtonsHandler {
                         case "AutoCredit":
                             {
                                 if (this.EntityPM.ARInvoiceTypeCode == 'IT') {
-                                    button.IsHidden = true;
+                                    myButtonIsDisabled = true;
                                 }
                                 else {
                                     if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
@@ -372,7 +374,7 @@ export class ARInvoiceMenuButtonsHandler {
 
     CheckSATStatus() {
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-        invoiceDomainService.GetARInvoiceSATCancellationStatus(this.EntityPM.Id).subscribe(response => {
+        invoiceDomainService.GetARInvoiceSATCancellationStatus(this.EntityPM.Id).subscribe((response:any) => {
 
         });
 
@@ -382,7 +384,7 @@ export class ARInvoiceMenuButtonsHandler {
     SendToQBO() {
 
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-        invoiceDomainService.getConnectedARPayments(this.EntityPM.Id).subscribe(response => {
+        invoiceDomainService.getConnectedARPayments(this.EntityPM.Id).subscribe((response:any) => {
             if (!response.HasError) {
                 if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
                     var messageText: string = "Resend this invoice to QBO?";
@@ -1149,7 +1151,7 @@ export class ARInvoiceMenuButtonsHandler {
 
 
 
-        this.DocumentsFilingExtendedPMService.getDocumentsFilingsById(this.EntityPM.DocumentFilingId).subscribe(myResult => {
+        this.DocumentsFilingExtendedPMService.getDocumentsFilingsById(this.EntityPM.DocumentFilingId).subscribe((myResult:any) => {
            
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

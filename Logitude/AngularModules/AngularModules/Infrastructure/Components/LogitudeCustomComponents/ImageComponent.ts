@@ -267,7 +267,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
         }
 
 
-        this._imageLibraryService.UploadFile(filter).subscribe(res => {
+        this._imageLibraryService.UploadFile(filter).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             var result: any;

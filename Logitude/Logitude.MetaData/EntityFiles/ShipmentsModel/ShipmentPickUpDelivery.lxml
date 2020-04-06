@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;ShipmentPickUpDelivery,ShipmentPickUpDeliveries,,Id,&quot;">
+  SearchFields="&quot;ShipmentPickUpDelivery,ShipmentPickUpDeliveries,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;6af5b3ba-8469-4e08-8cef-e8efcf043fd3&quot;"
     FieldName="&quot;Id&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;ShipmentPickUpDelivery&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -863,7 +865,7 @@
     ShortFieldLable="&quot;ToAddressId&quot;"
     ShortFieldLableDefaultText="&quot;Address&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -885,7 +887,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Address"
+    NavigationPropertyName="ToAddressObj" />
   <field
     Id="&quot;4be472ef-c54e-4277-9f51-2b4b64495078&quot;"
     FieldName="&quot;ShipmentId&quot;"
@@ -897,14 +901,14 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
@@ -938,7 +942,7 @@
     ListFieldLable="&quot;ShipmentIdListLable&quot;"
     ListLableDefaultText="&quot;Shipment ID&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -960,7 +964,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="true"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Shipment"
+    NavigationPropertyName="Shipment" />
   <field
     Id="&quot;a6458d14-c6a5-4202-82b3-96e93e905f34&quot;"
     FieldName="&quot;PickUpDeliveryNumber&quot;"
@@ -972,14 +978,14 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="20"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
@@ -1085,7 +1091,7 @@
     FullFieldLable="&quot;FromPartnerCardId&quot;"
     DefaultText="&quot;From Partner&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -1107,7 +1113,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="FromPartnerCard" />
   <field
     Id="&quot;2ad23803-b2fe-4e21-81b9-cb5fe76bd987&quot;"
     FieldName="&quot;FromPortId&quot;"
@@ -1159,7 +1167,7 @@
     FullFieldLable="&quot;FromPortId&quot;"
     DefaultText="&quot;From Port&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -1181,7 +1189,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Port"
+    NavigationPropertyName="FromPort" />
   <field
     Id="&quot;8c93559d-e85a-4af5-b7c0-5bcfc3e5f14e&quot;"
     FieldName="&quot;Driver&quot;"
@@ -1306,7 +1316,7 @@
     FullFieldLable="&quot;ToPartnerCardId&quot;"
     DefaultText="&quot;To Partner&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -1328,7 +1338,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="ToPartnerCard" />
   <field
     Id="&quot;c5476f66-37b7-42c0-8ad0-ee4793702c23&quot;"
     FieldName="&quot;ToPortId&quot;"
@@ -1380,7 +1392,7 @@
     FullFieldLable="&quot;ToPortId&quot;"
     DefaultText="&quot;To Port&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -1402,7 +1414,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Port"
+    NavigationPropertyName="ToPort" />
   <field
     Id="&quot;5d42f100-70e9-44be-a3a5-277b218a9118&quot;"
     FieldName="&quot;FromAddressId&quot;"
@@ -1456,7 +1470,7 @@
     ShortFieldLable="&quot;FromAddressId&quot;"
     ShortFieldLableDefaultText="&quot;Address&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -1478,7 +1492,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Address"
+    NavigationPropertyName="FromAddressObj" />
   <field
     Id="&quot;614f1c4e-5e74-4b28-a5d1-a7957a45764e&quot;"
     FieldName="&quot;FullResponsibility&quot;"
@@ -1603,7 +1619,7 @@
     FullFieldLable="&quot;CarrierId&quot;"
     DefaultText="&quot;Trucker&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -1625,7 +1641,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="CarrierCard" />
   <field
     Id="&quot;1b598628-9824-4ab1-b041-6653278168c4&quot;"
     FieldName="&quot;TruckNumber&quot;"
@@ -1780,7 +1798,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentPickUpDelivery&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
@@ -1853,7 +1871,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentPickUpDelivery&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="250"
     IsRequired="false"
@@ -1968,7 +1986,7 @@
     FullFieldLable="&quot;PickUpDeliveryTypeCode&quot;"
     DefaultText="&quot;Pick Up Delivery Type Code&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -1990,7 +2008,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PickUpDeliveryType"
+    NavigationPropertyName="PickUpDeliveryType" />
   <field
     Id="&quot;68a0fe5b-8600-44e9-adc5-06343d458f93&quot;"
     FieldName="&quot;PickUpDeliveryFromTypeCode&quot;"
@@ -2042,7 +2062,7 @@
     FullFieldLable="&quot;PickUpDeliveryFromTypeCode&quot;"
     DefaultText="&quot;Pickup Delivery from Type Code&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -2064,7 +2084,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PickUpDeliveryFromToType"
+    NavigationPropertyName="PickUpDeliveryFromType" />
   <field
     Id="&quot;ad1cce14-494f-4f2e-aeb6-6298709cb3ac&quot;"
     FieldName="&quot;PickUpDeliveryToTypeCode&quot;"
@@ -2116,7 +2138,7 @@
     FullFieldLable="&quot;PickUpDeliveryToTypeCode&quot;"
     DefaultText="&quot;Pickup Delivery to Type Code&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -2138,7 +2160,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PickUpDeliveryFromToType"
+    NavigationPropertyName="PickUpDeliveryToType" />
   <field
     Id="&quot;8a7bb654-6ae7-4272-b50c-5fb43bfcd39a&quot;"
     FieldName="&quot;Vehicle&quot;"
@@ -2415,7 +2439,7 @@
     ShortFieldLable="&quot;FromAddressCountryId&quot;"
     ShortFieldLableDefaultText="&quot;Country&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -2437,7 +2461,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Country"
+    NavigationPropertyName="FromAddressCountry" />
   <field
     Id="&quot;102ec42f-0c0f-4d38-a493-0802b9c869a0&quot;"
     FieldName="&quot;ToAddressCity&quot;"
@@ -2641,7 +2667,7 @@
     ShortFieldLable="&quot;ToAddressCountryId&quot;"
     ShortFieldLableDefaultText="&quot;Country&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -2663,7 +2689,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Country"
+    NavigationPropertyName="ToAddressCountry" />
   <field
     Id="&quot;654c6276-f8f4-4d02-be8d-12bc3a675c8f&quot;"
     FieldName="&quot;ShipmentNumber&quot;"
@@ -2790,7 +2818,7 @@
     HelpTextCode="&quot;EmptyPickupContainerPartnerId&quot;"
     HelpTextDefaultText="&quot;Empty Pickup Depot&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -2811,7 +2839,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="EmptyPickupContainerPartner" />
   <field
     Id="&quot;05405d85-8b86-4d14-b4a1-020bed58c2bc&quot;"
     FieldName="&quot;EmptyDeliveryContainerPartnerId&quot;"
@@ -2865,7 +2895,7 @@
     HelpTextCode="&quot;EmptyDeliveryContainerPartnerId&quot;"
     HelpTextDefaultText="&quot;Empty Delivery Depot&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -2886,7 +2916,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Card"
+    NavigationPropertyName="EmptyDeliveryContainerPartner" />
   <field
     Id="&quot;654ad062-7790-4327-a6e6-f956cdad306f&quot;"
     FieldName="&quot;EmptyPickupDepotReference&quot;"
@@ -3086,7 +3118,7 @@
     FullFieldLable="&quot;TransportModeCode&quot;"
     DefaultText="&quot;Transport Mode&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -3108,7 +3140,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="PickUpDeliveryTransportMode"
+    NavigationPropertyName="TransportMode" />
   <field
     Id="&quot;7204e893-7da6-4a06-ae7b-7958d4109cf4&quot;"
     FieldName="&quot;ShipmentPickUpDeliveryPackages&quot;"

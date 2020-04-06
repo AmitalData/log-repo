@@ -2,7 +2,8 @@
 <Table
   Name="TarrifCharges"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -48,24 +49,24 @@
   <Column
     Name="MaxPrice"
     Type="decimal"
-    Precision="18"
-    Scale="2">
+    Precision="14"
+    Scale="3">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="MinPrice"
     Type="decimal"
-    Precision="18"
-    Scale="2">
+    Precision="14"
+    Scale="3">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="UnitPrice"
     Type="decimal"
-    Precision="18"
-    Scale="2">
+    Precision="14"
+    Scale="3">
     <Constraints
       Nullable="true" />
   </Column>

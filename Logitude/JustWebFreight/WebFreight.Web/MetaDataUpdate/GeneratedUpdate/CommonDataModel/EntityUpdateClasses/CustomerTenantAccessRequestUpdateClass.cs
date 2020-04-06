@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerTenantAccessRequestUpdateClass
-   {  
+   {  		
+		public const string HashString = "64506c85d06bb70ff37cd3c334b929d2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CustomerTenantAccessRequest",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CustomerTenantAccessRequests",
-			      				    OldDBTableName =  "CustomerTenantAccessRequests",
 			      				    ObjectTableSingular =  "Customer Tenant Access Request",
 			      				    ObjectTablePlural =  "Request data from Agents",
 			      				    HasCustomFilter =  false,
@@ -118,6 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    Code =  "CTAR",
 			      				    Name =  "CustomerTenantAccessRequests",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -127,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "CustomerTenantAccessRequest,CustomerTenantAccessRequests,,Id,",
+			      				    HashString =  CustomerTenantAccessRequestUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -138,8 +140,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "CustomerTenantAccessRequest",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -200,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "CustomerTenantAccessRequest",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -263,7 +264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RequestDateTime",
-					  						OldFieldName =  "RequestDateTime",
 					  						ObjectTableName =  "CustomerTenantAccessRequest",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -329,7 +329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RequestStatus",
-					  						OldFieldName =  "RequestStatus",
 					  						ObjectTableName =  "CustomerTenantAccessRequest",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomerTenantAccessStatusType",
@@ -395,7 +394,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "StatusName",
-					  						OldFieldName =  "StatusName",
 					  						ObjectTableName =  "CustomerTenantAccessRequest",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -461,7 +459,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ForwarderId",
-					  						OldFieldName =  "ForwarderId",
 					  						ObjectTableName =  "CustomerTenantAccessRequest",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "HybridPartner",
@@ -527,7 +524,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ForwarderName",
-					  						OldFieldName =  "ForwarderName",
 					  						ObjectTableName =  "CustomerTenantAccessRequest",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

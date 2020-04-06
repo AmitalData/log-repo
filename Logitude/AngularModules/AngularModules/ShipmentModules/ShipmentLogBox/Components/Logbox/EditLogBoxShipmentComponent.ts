@@ -123,7 +123,7 @@ export class EditLogBoxShipmentComponent extends BaseComponent implements OnInit
             this.EntityPm.ChargeableWeightUnitCode = "KG";
             this.EntityPm.VolumeUnitCode = "CBF";
                  
-                this._ShipmentPMService.update(this.EntityPm).subscribe(myResult => {
+                this._ShipmentPMService.update(this.EntityPm).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         //this.CurrentSession.CloseCurrentWindow();

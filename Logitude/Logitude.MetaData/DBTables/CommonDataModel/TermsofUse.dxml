@@ -2,7 +2,8 @@
 <Table
   Name="TermsofUses"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Version"
     Type="int">

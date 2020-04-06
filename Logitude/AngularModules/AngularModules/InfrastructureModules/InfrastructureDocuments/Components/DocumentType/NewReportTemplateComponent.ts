@@ -86,7 +86,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
     SetWindowArgs(args: any) {
 
 
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe((response:any) => {
 
             this.IsLoadPage = true;
             this.DocumentTypeTemplateLists = [];
@@ -251,7 +251,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
 
 
-        this.documentTypeTemplatePMService.insert(newTemplatePm).subscribe(myResult=> {
+        this.documentTypeTemplatePMService.insert(newTemplatePm).subscribe((myResult:any)=> {
 
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
@@ -400,7 +400,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
                     {
                         var newTemplatePm = this.GetNewStanceFromDocumentTypeTemplatePM();
                         if (newTemplatePm.EditorTool == "R") {
-                            this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.UploadTemplateBodyData).subscribe(res => {
+                            this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.UploadTemplateBodyData).subscribe((res:any) => {
                                 var pmResponse: ServiceResponse = res;
                                 if (!pmResponse.HasError) {
                                     var myResult = pmResponse.Result;
@@ -530,7 +530,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         }
 
         var editorTool = this.ValueEditorRadio == "StimulSoft" ? "S" : "R";
-        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibraryByDocumentTypeId(0, this.DocumentType.Id, Isfilter, this.DocumentType.Tenant).subscribe(res => {
+        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibraryByDocumentTypeId(0, this.DocumentType.Id, Isfilter, this.DocumentType.Tenant).subscribe((res:any) => {
 
 
             var pmResponse: ServiceResponse = res;
@@ -552,7 +552,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
     GetDocumentTypeTemplatePMFromLibrary(item: DocumentTypeTemplateViewModel) {
         var id = item.Id + "@0";
-        this.documentTypeTemplatePMService.get(id).subscribe(res=> {
+        this.documentTypeTemplatePMService.get(id).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

@@ -372,7 +372,7 @@ export class ARPaymentMenuButtonsHandler {
     CheckSATStatus() {
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-        invoiceDomainService.GetARPaymentSATCancellationStatus(this.EntityPM.Id).subscribe(response => {
+        invoiceDomainService.GetARPaymentSATCancellationStatus(this.EntityPM.Id).subscribe((response:any) => {
 
         });
     }

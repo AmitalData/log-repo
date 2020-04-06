@@ -114,7 +114,7 @@ export class AddEditTaskSchedulerComponent  {
 
         this.CurrentSession.StartBusyIndicator("Loading...");
 
-        this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe(myResult => {
+        this.schedulerExtendedPMService.GetSchedulerDetailsById(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.SetSchedulerDetailsData(myResponse.Result);
@@ -341,7 +341,7 @@ export class AddEditTaskSchedulerComponent  {
 
             if (this.DataContext.IsNew) {
 
-                this.schedulerExtendedPMService.insert(this.EntityPM).subscribe(myResult => {
+                this.schedulerExtendedPMService.insert(this.EntityPM).subscribe((myResult: ServiceResponse) => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         this.CurrentSession.CloseCurrentWindow();
@@ -364,7 +364,7 @@ export class AddEditTaskSchedulerComponent  {
                 if (this.EntityPM.IsDirty) {
                     this.EntityPM.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
 
-                    this.schedulerExtendedPMService.update(this.EntityPM).subscribe(myResult => {
+                    this.schedulerExtendedPMService.update(this.EntityPM).subscribe((myResult: ServiceResponse) => {
                         var myResponse: ServiceResponse = myResult;
                         if (!myResponse.HasError) {
                             this.EntityPM = myResponse.Result;

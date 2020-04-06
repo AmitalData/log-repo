@@ -41,7 +41,9 @@
   HasShortTitle="false"
   HasMenuButtons="false"
   HasFiltersMenu="false"
-  ParentTableName="Shipment">
+  ParentTableName="Shipment"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;0abbb908-5743-4fe6-a731-beb3a86336c8&quot;"
     FieldName="&quot;Id&quot;"
@@ -60,7 +62,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15" />
   <field
     Id="&quot;4af81655-b6ad-4408-a49f-870db5dcddd2&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -135,12 +138,16 @@
     Code="&quot;ShipmentId&quot;"
     DependencyFilter3IsList="false"
     CopyToDW="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="Shipment"
+    NavigationPropertyName="Shipment"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;458b2f94-587a-4ca2-96c4-e1e9b158b08c&quot;"
     FieldName="&quot;ShipperId&quot;"
@@ -202,7 +209,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="Card"
+    NavigationPropertyName="Shipper" />
   <field
     Id="&quot;297e71bf-5274-4b19-8b94-574b4f2b0c2e&quot;"
     FieldName="&quot;ShipperName&quot;"
@@ -383,12 +393,16 @@
     Code="&quot;CreatedByUserId&quot;"
     DependencyFilter3IsList="false"
     CopyToDW="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;71e84334-2574-438c-b200-c691a62f4473&quot;"
     FieldName="&quot;CreatedByUserName&quot;"
@@ -505,12 +519,16 @@
     Code="&quot;UpdatedByUserId&quot;"
     DependencyFilter3IsList="false"
     CopyToDW="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;25963b7a-da8b-474a-9137-e5254f3dfb8f&quot;"
     FieldName="&quot;UpdatedByUserName&quot;"
@@ -577,7 +595,7 @@
     ObjectTableName="&quot;ShipmentAssembly&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -637,7 +655,7 @@
     ObjectTableName="&quot;ShipmentAssembly&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"

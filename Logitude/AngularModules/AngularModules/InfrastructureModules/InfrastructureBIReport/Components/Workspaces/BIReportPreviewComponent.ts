@@ -24,6 +24,7 @@ import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/Shi
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { LastRunDetailPM } from '../../../../Infrastructure/EntityPMs/LastRunDetailPM';
 import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/LastRunDetailExtendedPMService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
     moduleId: module.id,
     templateUrl: 'BIReportPreviewComponent.html',
@@ -76,7 +77,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     ngOnInit() {
         this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy");
         this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
-        this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe(myResult => {
+        this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.DWQueryData = myResult.Result;
                 if (this.DWQueryData.Filters) {
@@ -123,7 +124,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     public LoadBIReportData(IsBIReportUpdated = false) {
         if (this.DWQueryId != null) {
-            this._InfrastructureDomainService.GetByBIReportId(this.EntityId, this.DWQueryId).subscribe(myResult => {
+            this._InfrastructureDomainService.GetByBIReportId(this.EntityId, this.DWQueryId).subscribe((myResult: ServiceResponse) => {
                 if (!myResult.HasError) {
                     var result: BIReportXMLData = myResult.Result;
                     this.ReportXML = result;
@@ -132,7 +133,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                     // this.BuildColumns(result);
                     if (IsBIReportUpdated) {
-                        this._BIReportPMService.update(this.EntityPM).subscribe(response => {
+                        this._BIReportPMService.update(this.EntityPM).subscribe((response:any) => {
                             this.BuildRows(result);
                         });
                     }
@@ -372,7 +373,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
+        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 var Id = myResult.Result;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -597,7 +598,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             result.DWQueryData.ColumnsSort = result.DWQueryData.ColumnsSort.replace(/,\s*$/, "");
         }
 
-        this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
+        this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe((myResult: ServiceResponse) => {
             if (!myResult.HasError) {
                 this.BIReportXMLData = myResult.Result;
                 this.EntityPM = this.BIReportXMLData.BIReportPM;
@@ -690,7 +691,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         else {
             var lastRunDetail: LastRunDetailPM = this.FillLastRunDetails();
 
-            this.LastRunDetailExtendedPMService.UpdateLastRunDetails(lastRunDetail, SessionLocator.LoggedUserId).subscribe(myResult => {
+            this.LastRunDetailExtendedPMService.UpdateLastRunDetails(lastRunDetail, SessionLocator.LoggedUserId).subscribe((myResult: ServiceResponse) => {
                 this.HasValidationError = false;
                 this.rowData = MyData.rowData;
                 this.isParentTenant = MyData.IsParentTenant;
@@ -788,7 +789,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     // save
-                    this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe(myResult => {
+                    this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
                         if (!myResult.HasError) {
                             if (this.ComponentRef) {
                                 this.BackCompleted.emit(true);

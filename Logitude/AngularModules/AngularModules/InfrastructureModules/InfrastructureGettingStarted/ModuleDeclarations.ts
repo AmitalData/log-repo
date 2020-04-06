@@ -9,12 +9,14 @@ import {CounterTableComponent} from './Components/Counters/EditComponents/Counte
 import {CounterInvoiceComponent} from './Components/Counters/EditComponents/CounterInvoiceComponent';
 import {CounterAdvancedComponent} from './Components/Counters/EditComponents/CounterAdvancedComponent';
 import {AccountingSettingsComponent} from './Components/AccountingSettings/AccountingSettingsComponent';
-import {AccountingAdvancedSettingsComponent} from './Components/AccountingSettings/AccountingAdvancedSettingsComponent';
+import { AccountingAdvancedSettingsComponent } from './Components/AccountingSettings/AccountingAdvancedSettingsComponent';
+import { AccountingAdvancedAPSettingsComponent } from './Components/AccountingSettings/AccountingAdvancedAPSettingsComponent';
 import {LocalSettingsComponent} from  './Components/LocalSettings/LocalSettingsComponent';
 import {InvoiceSettingsComponent} from './Components/InvoiceSettings/InvoiceSettingsComponent';
 import {AirlineSettingsComponent} from './Components/AirlineSettings/AirlineSettingsComponent';
 import {UploadLogoComponent} from './Components/UploadImage/UploadLogoComponent';
-import {PaymentGatewayComponent} from './Components/PaymentGateway/PaymentGatewayComponent';
+import { PaymentGatewayComponent } from './Components/PaymentGateway/PaymentGatewayComponent';
+
 export const Components =
     [
         GettingStartedComponent,
@@ -29,6 +31,7 @@ export const Components =
         CounterAdvancedComponent,
         AccountingSettingsComponent,
         AccountingAdvancedSettingsComponent,
+        AccountingAdvancedAPSettingsComponent,
         LocalSettingsComponent,
         InvoiceSettingsComponent,  
         AirlineSettingsComponent,
@@ -55,6 +58,7 @@ export class ModuleDeclarations {
             case "CounterAdvancedComponent": { myResult = CounterAdvancedComponent; break; }
             case "AccountingSettingsComponent": { myResult = AccountingSettingsComponent; break; }
             case "AccountingAdvancedSettingsComponent": { myResult = AccountingAdvancedSettingsComponent; break; }
+            case "AccountingAdvancedAPSettingsComponent": { myResult = AccountingAdvancedAPSettingsComponent; break; }
             case "LocalSettingsComponent": { myResult = LocalSettingsComponent; break; }
             case "InvoiceSettingsComponent": { myResult = InvoiceSettingsComponent; break; }
             case "AirlineSettingsComponent": { myResult = AirlineSettingsComponent; break; }

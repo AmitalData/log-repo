@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;TarrifCharge,TarrifCharges,,Id,&quot;">
+  SearchFields="&quot;TarrifCharge,TarrifCharges,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;6eb1911e-7c16-4b5d-ae81-7f9a4e6a3c4e&quot;"
     FieldName="&quot;Id&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;TarrifCharge&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -213,14 +215,14 @@
     LookUpTableName="&quot;TarrifHeader&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
@@ -251,7 +253,7 @@
     FullFieldLable="&quot;TarrifHeaderId&quot;"
     DefaultText="&quot;Tariff Header&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -273,7 +275,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="TarrifHeader"
+    NavigationPropertyName="TarrifHeader" />
   <field
     Id="&quot;7fa02104-fd82-4de4-add4-4ce4069b7e43&quot;"
     FieldName="&quot;CurrencyId&quot;"
@@ -325,7 +329,7 @@
     FullFieldLable="&quot;CurrencyId&quot;"
     DefaultText="&quot;Currency&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -347,7 +351,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Currency"
+    NavigationPropertyName="Currency" />
   <field
     Id="&quot;ea53d979-4aa7-41ac-a9cd-e48fe2d8fd18&quot;"
     FieldName="&quot;ChargesTypeId&quot;"
@@ -399,7 +405,7 @@
     FullFieldLable="&quot;ChargesTypeId&quot;"
     DefaultText="&quot;Charge Type&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -421,7 +427,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ChargesType"
+    NavigationPropertyName="ChargesType" />
   <field
     Id="&quot;3c75fa4d-be41-405a-9aaf-6af07a9111b5&quot;"
     FieldName="&quot;MeasurementId&quot;"
@@ -473,7 +481,7 @@
     FullFieldLable="&quot;MeasurementId&quot;"
     DefaultText="&quot;Measurement&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -495,7 +503,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Measurement"
+    NavigationPropertyName="Measurement" />
   <field
     Id="&quot;efcf9b3e-64fa-467a-b624-3c018e144943&quot;"
     FieldName="&quot;MinPrice&quot;"
@@ -504,7 +514,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TarrifCharge&quot;"
-    FieldsDataType="&quot;Double&quot;"
+    FieldsDataType="&quot;Decimal&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -577,7 +587,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TarrifCharge&quot;"
-    FieldsDataType="&quot;Double&quot;"
+    FieldsDataType="&quot;Decimal&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
@@ -650,10 +660,10 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TarrifCharge&quot;"
-    FieldsDataType="&quot;Double&quot;"
+    FieldsDataType="&quot;Decimal&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"

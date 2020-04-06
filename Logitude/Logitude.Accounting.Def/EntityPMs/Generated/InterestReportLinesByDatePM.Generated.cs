@@ -457,6 +457,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal totalInterest ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal TotalInterest  
+	   {
+	    
+	     get
+		{
+		   return totalInterest;
+		 }
+		 set
+		 {
+		   if(totalInterest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalInterest",OldValue=totalInterest,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   totalInterest=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

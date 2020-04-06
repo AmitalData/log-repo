@@ -2,7 +2,8 @@
 <Table
   Name="Countries"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -95,6 +96,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="GlobalZoneId"
     Type="varchar"
     Size="15">
@@ -106,6 +113,8 @@
     ReferencedTable="GlobalZones"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,Code" />
 </Table>

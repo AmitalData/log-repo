@@ -1138,7 +1138,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             var _glaId = this.billtoCard.GLAccountId;
             this.CurrentSession.StartBusyIndicatorLoading();
             this._glaService.getSingle(_glaId)
-                .subscribe(response => {
+                .subscribe((response:any) => {
 
                     var res: ServiceResponse = response;
                     if (!res.HasError) {

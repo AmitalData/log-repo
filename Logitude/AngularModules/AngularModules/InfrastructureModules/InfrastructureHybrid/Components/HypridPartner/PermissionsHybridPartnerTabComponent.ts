@@ -46,7 +46,7 @@ export class PermissionsHybridPartnerTabComponent extends BaseComponent {
         this.IsCompleteLoadAllowdHybrid = false;
         this.AllowdHybridPartnerLists = [];
 
-        this.hybridPartnerExtendedListService.GetAllowdHybridPartnerLists(hybridPartnerId).subscribe(res => {
+        this.hybridPartnerExtendedListService.GetAllowdHybridPartnerLists(hybridPartnerId).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.AllowdHybridPartnerLists = pmResponse.Result;
@@ -65,7 +65,7 @@ export class PermissionsHybridPartnerTabComponent extends BaseComponent {
         this.IsCompleteLoadAllowingHybrid = false;
         this.AllowingHybridPartnerLists = [];
 
-        this.hybridPartnerExtendedListService.GetAllowingHybridPartnerLists(hybridPartnerId).subscribe(res => {
+        this.hybridPartnerExtendedListService.GetAllowingHybridPartnerLists(hybridPartnerId).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.AllowingHybridPartnerLists = pmResponse.Result;

@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;QuoteTemplateSection,QuoteTemplateSections,,Id,&quot;">
+  SearchFields="&quot;QuoteTemplateSection,QuoteTemplateSections,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;f0e4b291-8866-4783-8461-207df7baf895&quot;"
     FieldName="&quot;Id&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;QuoteTemplateSection&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -209,10 +211,10 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;QuoteTemplateSection&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="0"
-    IsRequired="false"
+    MaxLength="60"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -281,9 +283,9 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;QuoteTemplateSection&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="500"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -466,7 +468,7 @@
     FullFieldLable="&quot;QuoteTemplateId&quot;"
     DefaultText="&quot;Quote Template Id&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -488,7 +490,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="QuoteTemplate"
+    NavigationPropertyName="QuoteTemplate" />
   <field
     Id="&quot;a4a295ef-2933-423f-b283-f14384d7264a&quot;"
     FieldName="&quot;SectionDocId&quot;"
@@ -500,7 +504,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="true"
+    IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -538,7 +542,7 @@
     FullFieldLable="&quot;SectionDocId&quot;"
     DefaultText="&quot;Section DocId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -560,7 +564,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Document"
+    NavigationPropertyName="SectionDoc" />
   <field
     Id="&quot;670d0b44-215a-4e2b-bf24-d2f4edf48b52&quot;"
     FieldName="&quot;Order&quot;"
@@ -682,7 +688,7 @@
     FullFieldLable="&quot;QuoteTemplateSectionTypeCode&quot;"
     DefaultText="&quot;Quote Template Section Type Code&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -704,7 +710,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="QuoteTemplateSectionType"
+    NavigationPropertyName="QuoteTemplateSectionType" />
   <field
     Id="&quot;38d77505-2329-4795-8c94-f754849aa840&quot;"
     FieldName="&quot;IschangeBodySection&quot;"

@@ -56,7 +56,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;TenantLoginPolicy,TenantLoginPolicies,,Tenant,&quot;">
+  SearchFields="&quot;TenantLoginPolicy,TenantLoginPolicies,,Tenant,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;82150756-b632-439b-95a8-83733ec2c636&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -176,7 +178,7 @@
     FullFieldLable="&quot;LoginPolicyCode&quot;"
     DefaultText="&quot;Login Policy&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -196,7 +198,9 @@
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    ForeignEntity="LoginPolicy"
+    NavigationPropertyName="LoginPolicy" />
   <field
     Id="&quot;0a178b67-f7a1-4c70-a761-b98706768604&quot;"
     FieldName="&quot;IsEnabledForSpecificUsers&quot;"
@@ -207,7 +211,7 @@
     ObjectTableName="&quot;TenantLoginPolicy&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="true"
@@ -423,7 +427,7 @@
     ObjectTableName="&quot;TenantLoginPolicy&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="true"
@@ -496,7 +500,7 @@
     ObjectTableName="&quot;TenantLoginPolicy&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
-    MaxLength="1"
+    MaxLength="0"
     IsRequired="false"
     DisplayOnLookUp="false"
     CanFilter="true"
@@ -673,7 +677,7 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
+    NumberOfDigits="18"
     DigitsAfterPoint="2"
     InActive="false"
     DisplayLongName="false"

@@ -155,7 +155,10 @@ namespace Simplog.Data.InvoiceModel.Mapping
 
             this.Property(t => t.VendorIBANNumber)
                 .HasMaxLength(30).IsUnicode(true);
-     
+
+
+            this.Property(t => t.ExternalPaymentNotes).HasMaxLength(500).IsUnicode(true);
+
             // Table & Column Mappings
             this.ToTable("APPayments");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -168,8 +171,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.AmountInPaymentCurrency).HasColumnName("AmountInPaymentCurrency").IsRequired();
             this.Property(t => t.PrintNotes).HasColumnName("PrintNotes");
             this.Property(t => t.InternalNotes).HasColumnName("InternalNotes");
-            this.Property(t => t.PaymentCurrencyExchangeRate).HasColumnName("PaymentCurrencyExchangeRate").IsRequired();
-            
+            this.Property(t => t.PaymentCurrencyExchangeRate).HasColumnName("PaymentCurrencyExchangeRate").IsRequired();           
             this.Property(t => t.OpenAmount).HasColumnName("OpenAmount").IsRequired();
             this.Property(t => t.ChequeOrPaymentRef).HasColumnName("ChequeOrPaymentRef");
             this.Property(t => t.ValueDate).HasColumnName("ValueDate").IsRequired();
@@ -200,7 +202,6 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ApprovedDateTime).HasColumnName("ApprovedDateTime");
             this.Property(t => t.BankAccountId).HasColumnName("BankAccountId");
             this.Property(t => t.FirstApproveDate).HasColumnName("FirstApproveDate");
-
             this.Property(t => t.VendorBankAddress).HasColumnName("VendorBankAddress");
             this.Property(t => t.VendorBankName).HasColumnName("VendorBankName");
             this.Property(t => t.VendorBankAccountNumber).HasColumnName("VendorBankAccountNumber");
@@ -216,6 +217,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Field8).HasColumnName("Field8");
             this.Property(t => t.Field9).HasColumnName("Field9");
             this.Property(t => t.Field10).HasColumnName("Field10");
+            this.Property(t => t.ExternalPaymentAmount).HasColumnName("ExternalPaymentAmount");
+            this.Property(t => t.ExternalPaymentDate).HasColumnName("ExternalPaymentDate");
+            this.Property(t => t.ExternalPaymentNotes).HasColumnName("ExternalPaymentNotes");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

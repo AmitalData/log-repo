@@ -60,7 +60,7 @@ export class SharedLogisticsEventPermissiosComponent implements OnInit {
 
         this.myTenantZeroList = [];
 
-        this._eventTypeExtendedPMService.GetEventTypesByObjectTable(this.ObjectTableId,0).subscribe(res => {
+        this._eventTypeExtendedPMService.GetEventTypesByObjectTable(this.ObjectTableId, 0).subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myTenantZeroList = pmResponse.Result;
@@ -77,7 +77,7 @@ export class SharedLogisticsEventPermissiosComponent implements OnInit {
     LoadTenantData() {
         this.myTenantList = [];
 
-        this._eventTypeExtendedPMService.GetEventTypesByObjectTable(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
+        this._eventTypeExtendedPMService.GetEventTypesByObjectTable(this.ObjectTableId, SessionLocator.Tenant).subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myTenantList = pmResponse.Result;
@@ -161,7 +161,7 @@ export class SharedLogisticsEventPermissiosComponent implements OnInit {
 
         if (this.myTenantList.length > 0) {
 
-            this._eventTypeExtendedPMService.update(this.myTenantList).subscribe(res => {
+            this._eventTypeExtendedPMService.update(this.myTenantList).subscribe((res: ServiceResponse) => {
                 this.CloseButtonClicked();
             });
         }

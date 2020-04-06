@@ -202,7 +202,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     SetWindowArgs(args: any) {
         //this.ShipmentList = args.SelectedShipment;
         this.IsNew = args.IsNew; 
-        this._PackageTypeListService.getAll().subscribe(myResult => {
+        this._PackageTypeListService.getAll().subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.UnAssignedPackageTypeId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant && a.Code == '---')[0].Id;
             }
@@ -215,7 +215,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             this.TransportationTypes = [new TransportationTypes("Ashdod", "O", "ASH", "IL"), new TransportationTypes("Haifa", "O", "HFA", "IL"), new TransportationTypes("Eilat", "O", "ETH", "IL")];
             this.SelectedTransportationTypes = this.TransportationTypes[1];
 
-            this._EntityStatusListService.getAll().subscribe(myResult => {
+            this._EntityStatusListService.getAll().subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0].Id;
                 }
@@ -223,7 +223,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
             });
-            this._DepartmentListService.getAll().subscribe(myResult => {
+            this._DepartmentListService.getAll().subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     this.DepartmentId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant)[0].Id;
                 }
@@ -231,7 +231,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
             });
-            this._BranchListService.getAll().subscribe(myResult => {
+            this._BranchListService.getAll().subscribe((myResult:any) => {
                 if (!myResult.HasError) {
                     this.BranchId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant)[0].Id;
                 }
@@ -487,14 +487,14 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
             }
         }
         if (this.ValidationErrorsList.length == 0) {
-            this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe(myResult => {
+            this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe((myResult:any) => {
                 if (myResult.Result) {
                     this.ToPortId = myResult.Result.Id;
                     if (AppTool.IsNullOrEmpty(this.EntityPM.FromPortId)) {
-                        this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe(Result => {
+                        this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result:any) => {
                             this.FromPortId = Result.Result.Id;
                             if (this.IsNew) {
-                                this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe(myResult => {
+                                this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe((myResult:any) => {
                                     if (myResult.Result) {
                                         var confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "Warning !";
@@ -519,7 +519,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                 });
                             }
                             else {
-                                this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe(myResult => {
+                                this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe((myResult:any) => {
                                     if (myResult.Result) {
                                         var confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "Warning !";
@@ -548,7 +548,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                     }
                     else {
                         if (this.IsNew == true) {
-                            this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe(myResult => {
+                            this._ShipmentPMService.GetByCustomerReference1(this.CustomerReference1, false).subscribe((myResult:any) => {
                                 if (myResult.Result) {
                                     var confirmWindow = new ConfirmWindow();
                                     confirmWindow.Title = "Warning !";
@@ -573,7 +573,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                             });
                         }
                         else {
-                            this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe(myResult => {
+                            this._ShipmentPMService.GetByCustomerReference1ForUpdate(this.CustomerReference1, this.EntityPM.Id, false).subscribe((myResult:any) => {
                                 if (myResult.Result) {
                                     var confirmWindow = new ConfirmWindow();
                                     confirmWindow.Title = "Warning !";
@@ -732,7 +732,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 else {
                     this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>false</PLForwarding>";
                 }
-                this._ShipmentPMService.insert(this.EntityPM).subscribe(myResult => {
+                this._ShipmentPMService.insert(this.EntityPM).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -759,7 +759,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                 else {
                     this.EntityPM.ShipmentAddtionalDataXML = "<PLForwarding>false</PLForwarding>";
                 }
-                this._ShipmentPMService.update(this.EntityPM).subscribe(myResult => {
+                this._ShipmentPMService.update(this.EntityPM).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded");

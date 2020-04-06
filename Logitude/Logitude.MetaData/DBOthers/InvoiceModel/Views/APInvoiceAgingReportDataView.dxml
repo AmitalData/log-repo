@@ -1,4 +1,4 @@
-<View DBType="Main" Name="APAgingReportDataView" Schema="dbo">
+<View DBType="Main" Name="APAgingReportDataView" Schema="dbo" Module="Invoice">
   <SqlScript>
     <![CDATA[
 CREATE VIEW [dbo].[APAgingReportDataView]

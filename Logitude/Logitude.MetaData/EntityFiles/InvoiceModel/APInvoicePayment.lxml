@@ -2,7 +2,7 @@
 <entity
   Id="&quot;22a260ed-33a7-4087-93f6-f4d3a8ef133a&quot;"
   ObjectTableName="&quot;APInvoicePayment&quot;"
-  DBTableName="&quot;APInvoicePayment&quot;"
+  DBTableName="&quot;APInvoicePayments&quot;"
   ObjectTableSingular="&quot;A/P Invoice Payment&quot;"
   ObjectTablePlural="&quot;A/P Invoice Payments&quot;"
   DefaultText="&quot;A/P Invoice Payment&quot;"
@@ -40,7 +40,9 @@
   HasShortTitle="false"
   HasMenuButtons="false"
   HasFiltersMenu="false"
-  ParentTableName="APInvoice">
+  ParentTableName="APInvoice"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;c47e6b1d-c6e7-4245-85a2-072a86d9eb5d&quot;"
     FieldName="&quot;Id&quot;"
@@ -61,7 +63,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;1c39774a-3104-4b79-846c-6e05c600426a&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -144,7 +147,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="APInvoice"
+    NavigationPropertyName="APInvoice" />
   <field
     Id="&quot;2945de1a-8df8-4328-9cad-3a7da30c7911&quot;"
     FieldName="&quot;APPaymentId&quot;"
@@ -207,7 +213,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="APPayment"
+    NavigationPropertyName="APPayment" />
   <field
     Id="&quot;f7db32b9-fc28-4e43-a2ff-4472184d16e3&quot;"
     FieldName="&quot;ForeignCurrencyId&quot;"
@@ -270,7 +279,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="Currency"
+    NavigationPropertyName="ForeignCurrency" />
   <field
     Id="&quot;7fa16919-0fae-44e3-9547-4c22b7b5bcba&quot;"
     FieldName="&quot;ForeignAmount&quot;"
@@ -428,7 +440,7 @@
     ObjectTableName="&quot;APInvoicePayment&quot;"
     FieldsDataType="&quot;Double&quot;"
     Code="&quot;ExchangeRate&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsCustom="false"
     MinLength="0"
     DisplayOnLookUp="false"
@@ -486,7 +498,7 @@
     ObjectTableName="&quot;APInvoicePayment&quot;"
     FieldsDataType="&quot;Double&quot;"
     Code="&quot;PaymentAmount&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsCustom="false"
     MinLength="0"
     DisplayOnLookUp="false"

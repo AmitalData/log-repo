@@ -42,7 +42,9 @@
   HasFiltersMenu="false"
   ClientModuleName="&quot;Infrastructure&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Global"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;2bce7dd2-15d9-409f-92cd-78d7bd202f12&quot;"
     FieldName="&quot;Code&quot;"
@@ -172,7 +174,7 @@
     Id="&quot;fe3bfe38-99a0-4971-8a93-378766ddc55f&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;TenantType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

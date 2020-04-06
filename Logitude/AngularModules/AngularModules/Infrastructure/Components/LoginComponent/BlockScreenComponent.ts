@@ -33,7 +33,7 @@ export class BlockScreenComponent {
     public authHeader;
     GoToManage() {
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
             var temp = myResult.Result;
             temp = temp.Token;
             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
@@ -77,7 +77,7 @@ export class BlockScreenComponent {
         //    this.SampleLogoURL = temp;
         //}
         //else {
-        this.loginService.GetGlobalSetting().subscribe(Setting => {
+        this.loginService.GetGlobalSetting().subscribe((Setting: any) => {
             if (Setting) {
                 ObjectsLocator.GlobalSetting = Setting;
                 this.loginService.GetTenantManagement().subscribe(TenantManagement => {
@@ -85,7 +85,7 @@ export class BlockScreenComponent {
                     if (TenantManagement) {
                         var temptenant = myTenantManagementPMService.MapJsonToEntityPM(TenantManagement);
                         if (temptenant) {
-                            this.loginService.GetPrivateLableById(temptenant.PrivateLabelId).subscribe(Result => {
+                            this.loginService.GetPrivateLableById(temptenant.PrivateLabelId).subscribe((Result:any) => {
                                 SessionLocator.PrivateLableSettings = Result;
                                 if (SessionLocator.PrivateLableSettings) {
                                     this.LogoURL = "data:image/JPEG;base64," + SessionLocator.PrivateLableSettings.MainLogo;

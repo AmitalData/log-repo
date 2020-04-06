@@ -2207,7 +2207,6 @@
     <Compile Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.Designer.cs">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.cs" />
     <Compile Include="Migrations\202003100731514_AbedAddReleaseNumberToShipmentPackage.Designer.cs">
       <DependentUpon>202003100731514_AbedAddReleaseNumberToShipmentPackage.cs</DependentUpon>
@@ -2236,13 +2235,67 @@
     <Compile Include="Migrations\202003251225103_Abed_AddLastRunDetailToContext.Designer.cs">
       <DependentUpon>202003251225103_Abed_AddLastRunDetailToContext.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs" />
     <Compile Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.Designer.cs">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.cs" />
+    <Compile Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.Designer.cs">
+      <DependentUpon>202003281703184_GLAccountInternalNumberConstraintMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.cs" />
+    <Compile Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.Designer.cs">
+      <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.cs" />
+    <Compile Include="Migrations\202003290823147_UsersLayoutDirectionMigration.Designer.cs">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003311226006_test.cs" />
+    <Compile Include="Migrations\202003311226006_test.Designer.cs">
+      <DependentUpon>202003311226006_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003311235295_clearthingsup.cs" />
+    <Compile Include="Migrations\202003311235295_clearthingsup.Designer.cs">
+      <DependentUpon>202003311235295_clearthingsup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004020720465_WesamIncreaseScreenNameLength.cs" />
+    <Compile Include="Migrations\202004020720465_WesamIncreaseScreenNameLength.Designer.cs">
+      <DependentUpon>202004020720465_WesamIncreaseScreenNameLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003271035053_AddAPPaymentExternalAmount.cs" />
+    <Compile Include="Migrations\202003271035053_AddAPPaymentExternalAmount.Designer.cs">
+      <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.cs" />
+    <Compile Include="Migrations\202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.Designer.cs">
+      <DependentUpon>202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004011108190_Mutaz_AddIsCancelToInterestTransaction.cs" />
+    <Compile Include="Migrations\202004011108190_Mutaz_AddIsCancelToInterestTransaction.Designer.cs">
+      <DependentUpon>202004011108190_Mutaz_AddIsCancelToInterestTransaction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.cs" />
+    <Compile Include="Migrations\202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.Designer.cs">
+      <DependentUpon>202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002260601502_objecttable_hashstring.cs" />
+    <Compile Include="Migrations\202002260601502_objecttable_hashstring.Designer.cs">
+      <DependentUpon>202002260601502_objecttable_hashstring.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004050837450_adding_Metadata_StoredProcedures.cs" />
+    <Compile Include="Migrations\202004050837450_adding_Metadata_StoredProcedures.Designer.cs">
+      <DependentUpon>202004050837450_adding_Metadata_StoredProcedures.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.cs" />
+    <Compile Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.Designer.cs">
+      <DependentUpon>202003312156526_AddTariffCarrierTranslation_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
+    <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
+      <DependentUpon>202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.cs" />
     <Compile Include="Migrations\202003030904524_WesamDBMigrationFixes.Designer.cs">
       <DependentUpon>202003030904524_WesamDBMigrationFixes.cs</DependentUpon>
@@ -3669,6 +3722,9 @@
     <EmbeddedResource Include="Migrations\201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.resx">
       <DependentUpon>201912221318138_Mutaz_Update_MinimumInterestInvoiceBilling_DataType_Integer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912221319308_AddSupportMailboxTable.resx">
+      <DependentUpon>201912221319308_AddSupportMailboxTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912221834100_ChargesTypeSearchFieldsMigration.resx">
       <DependentUpon>201912221834100_ChargesTypeSearchFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -4018,7 +4074,6 @@
     <EmbeddedResource Include="Migrations\202003180802413_Mutaz_CreateIndexinJournalLines.resx">
       <DependentUpon>202003180802413_Mutaz_CreateIndexinJournalLines.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.resx">
       <DependentUpon>202003070922448_AddIsCostAllInFieldToQuoteChargesTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
@@ -4043,11 +4098,51 @@
     <EmbeddedResource Include="Migrations\202003251225103_Abed_AddLastRunDetailToContext.resx">
       <DependentUpon>202003251225103_Abed_AddLastRunDetailToContext.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.resx">
       <DependentUpon>202003241151168_AbedAddNewFieldsTruckerToWarehouseRlease.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\202003281703184_GLAccountInternalNumberConstraintMigration.resx">
+      <DependentUpon>202003281703184_GLAccountInternalNumberConstraintMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003261152399_AbedMakeQuoteIdLookupOnTicket.resx">
+      <DependentUpon>202003261152399_AbedMakeQuoteIdLookupOnTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003290823147_UsersLayoutDirectionMigration.resx">
+      <DependentUpon>202003290823147_UsersLayoutDirectionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003311226006_test.resx">
+      <DependentUpon>202003311226006_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003311235295_clearthingsup.resx">
+      <DependentUpon>202003311235295_clearthingsup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004020720465_WesamIncreaseScreenNameLength.resx">
+      <DependentUpon>202004020720465_WesamIncreaseScreenNameLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003271035053_AddAPPaymentExternalAmount.resx">
+      <DependentUpon>202003271035053_AddAPPaymentExternalAmount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.resx">
+      <DependentUpon>202003301514239_Wesam_AddCustomFieldsToARAndAPInvoices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004011108190_Mutaz_AddIsCancelToInterestTransaction.resx">
+      <DependentUpon>202004011108190_Mutaz_AddIsCancelToInterestTransaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.resx">
+      <DependentUpon>202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.resx">
+      <DependentUpon>202004050733211_UpdateQBOOAuth2TkensLengthsV2_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002260601502_objecttable_hashstring.resx">
+      <DependentUpon>202002260601502_objecttable_hashstring.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004050837450_adding_Metadata_StoredProcedures.resx">
+      <DependentUpon>202004050837450_adding_Metadata_StoredProcedures.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.resx">
+      <DependentUpon>202003312156526_AddTariffCarrierTranslation_Samar.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

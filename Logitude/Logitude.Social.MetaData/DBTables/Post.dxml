@@ -2,7 +2,8 @@
 <Table
   Name="Posts"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Social">
   <Column
     Name="Id"
     Type="varchar"

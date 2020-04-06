@@ -2,7 +2,8 @@
 <Table
   Name="Users"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -25,28 +26,55 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsBranchRestricted"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
+    Name="IsFreelancer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsProductRestricted"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FreelancerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DepartmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="BranchId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="IsSalesman"
     Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="BusinessUnitId"
+    Type="varchar"
+    Size="50"
+    DefaultValue="'0'">
     <Constraints
       Nullable="false" />
   </Column>
@@ -69,47 +97,11 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsFreelancer"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Technology"
+    Name="ProductTypeCode"
     Type="varchar"
-    Size="5">
+    Size="2">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="IsShowContactDetailsInTheMobileApp"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SetAngularAsDefault"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsTwoFactorAuthenticationEnabled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsProductRestricted"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsDistributor"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="DistributorCode"
@@ -119,6 +111,18 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="IsDistributor"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsShowContactDetailsInTheMobileApp"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="PersonalId"
     Type="varchar"
     Size="20">
@@ -126,47 +130,24 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ProductTypeCode"
-    Type="varchar"
-    Size="2">
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="BusinessUnitId"
-    Type="varchar"
-    Size="50"
-    DefaultValue="'0'">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="BranchId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DepartmentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="FreelancerId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DocumentFilingInbox"
-    Type="varchar"
+    Name="SearchFields"
+    Type="nvarchar"
     Size="1000">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsTwoFactorAuthenticationEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="ShowLogBoxToolTip"
@@ -179,6 +160,26 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="SetAngularAsDefault"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Technology"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentFilingInbox"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="ShowLocalNameInLOV"
@@ -199,29 +200,27 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="LayoutDirection"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Contacts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="DistributorCode"
-    ReferencedTable="Distributors"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ProductTypeCode"
-    ReferencedTable="ProductTypes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="BusinessUnitId"
-    ReferencedTable="BusinessUnits"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="BranchId"
-    ReferencedTable="Branches"
+    ForeignKeyColumn="FreelancerId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -230,10 +229,27 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="FreelancerId"
-    ReferencedTable="Cards"
+    ForeignKeyColumn="BranchId"
+    ReferencedTable="Branches"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BusinessUnitId"
+    ReferencedTable="BusinessUnits"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ProductTypeCode"
+    ReferencedTable="ProductTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DistributorCode"
+    ReferencedTable="Distributors"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

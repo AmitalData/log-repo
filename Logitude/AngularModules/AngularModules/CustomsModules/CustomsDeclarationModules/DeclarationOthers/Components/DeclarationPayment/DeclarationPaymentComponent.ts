@@ -104,7 +104,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         this.SelectedInvoices = new ObservableCollection([]);
         this._ErrorLogPMFileLoggerService = new ErrorLogPMFileLoggerService();
         this._ErrorLogPMFileLoggerService.get(this.ClientBankListLogUntilDateyyyyMMdd)
-            .subscribe(response => {
+            .subscribe((response: ServiceResponse) => {
 
                 this._2LogBankList = response.Result.IsLogInOn;
             });
@@ -2179,7 +2179,7 @@ export class PaymentMethodModel extends BaseComponent {
         errorLogPM.Exception += JSON.stringify({ 'DeclarationId': this.methodPM.DeclarationId, 'Line': this.methodPM.Line, 'SequenceNumeric': this.methodPM.SequenceNumeric });
 
         this.parent._ErrorLogPMFileLoggerService.insert(errorLogPM)
-            .subscribe(r => { });
+            .subscribe((response: ServiceResponse) => { });
 
     }
     agentBanks: CustomBankList[] = [];

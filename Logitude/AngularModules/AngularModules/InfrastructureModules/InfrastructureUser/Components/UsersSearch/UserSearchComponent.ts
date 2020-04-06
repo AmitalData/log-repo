@@ -74,7 +74,7 @@ export class UserSearchComponent {
     }
 
     Run() {
-        this.userExtendedPMService.GetUsersTwoFactorAuthenticationEnabled(SessionLocator.Tenant).subscribe(resp => {
+        this.userExtendedPMService.GetUsersTwoFactorAuthenticationEnabled(SessionLocator.Tenant).subscribe((resp:any) => {
 
             //this.PartnersObslist.push(new EntityPartner("All", "", false));
            
@@ -308,7 +308,7 @@ export class UserSearchComponent {
         this.ValidationErrorsList = [];
         //this.OnCloseSendToContactsEvent.emit(this);
         if (!AppTool.IsNullOrEmpty(window.ToEmailLists) && window.ToEmailLists.length > 0) {
-            this.userExtendedPMService.PostUpdateTwoFactorAuthenticationEnabled(SessionLocator.Tenant, window.ToEmailLists).subscribe(res => {
+            this.userExtendedPMService.PostUpdateTwoFactorAuthenticationEnabled(SessionLocator.Tenant, window.ToEmailLists).subscribe((res:any) => {
 
                 this.CloseButtonClicked();
             });

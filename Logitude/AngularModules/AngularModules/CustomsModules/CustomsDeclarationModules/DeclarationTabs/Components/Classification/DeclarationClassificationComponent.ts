@@ -67,15 +67,15 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this.PreceduralFilterItems = new ApiQueryFilters();
         this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean");
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentInternalTransition").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe(response => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
-                                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
-                                    this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
-                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentInternalTransition").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceItemCertificat").subscribe((response:any) => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
+                                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
+                                    this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
+                                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
 
                                             this.EntityPM = this.entityArgs.EntityPM;
                                             this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -503,7 +503,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
     DocumentFilingId: string;
     GetDocumentFilingId(InvoiceCounterKey) {
         console.log(" --->> Getting related document filing ...");
-        this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.EntityPM.Id, InvoiceCounterKey).subscribe(response => {
+        this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(this.EntityPM.Id, InvoiceCounterKey).subscribe((response:any) => {
             console.log("[Reponse] GetDocumentFilingIdForForInvoice: ", response);
             var result = response.Result;
             if (result) {
@@ -825,7 +825,7 @@ export class AddEditSupplierInvoiceDUMMY {
   //                myGITITEMPM.NAMEENG = item.ItemDescription;
   //                myGITITEMPM.ORIGINCOUNTRY = item.OriginCountryCode;
 
-  //                this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe(myResult => {
+  //                this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe((myResult:any) => {
   //                    var mm: ServiceResponse = myResult;
   //                    if (!mm.HasError) {
   //                        //this.entity = mm.Result;

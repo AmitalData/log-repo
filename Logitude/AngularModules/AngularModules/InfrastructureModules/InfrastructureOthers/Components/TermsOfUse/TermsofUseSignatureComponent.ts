@@ -52,7 +52,7 @@ export class TermsofUseSignatureComponent implements OnInit {
     LoadData() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.TermsofUseSignaturePMLists = [];
-        this._termsofUseSignatureExtendedPM.GetTermsofUseSignatures(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe(res => {
+        this._termsofUseSignatureExtendedPM.GetTermsofUseSignatures(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

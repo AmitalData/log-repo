@@ -2,7 +2,8 @@
 <Table
   Name="DocumentsFilings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -161,8 +162,8 @@
   </Column>
   <Column
     Name="StatusCode"
-    Type="nvarchar"
-    Size="128">
+    Type="char"
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>

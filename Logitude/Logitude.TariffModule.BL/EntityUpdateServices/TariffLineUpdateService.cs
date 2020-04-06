@@ -1,7 +1,14 @@
-﻿using Logitude.Server.Tools.Counters;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -27,9 +34,53 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
+                if ((string.IsNullOrEmpty(entityPOCO.OriginPortId) && !string.IsNullOrEmpty(entityPM.OriginPortId))
+                    ||
+                    (string.IsNullOrEmpty(entityPOCO.DestinationPortId) && !string.IsNullOrEmpty(entityPM.DestinationPortId)))
+                {
+                    TariffRepository tariffRepository = new TariffRepository(entityPM.Tenant);
+                    Tariff tariff = tariffRepository.GetSingle(entityPM.TariffId, entityPM.Tenant);
 
+                    ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
+                    TariffCarrierTranslationService myService = new TariffCarrierTranslationService(commonContext, entityPM.Tenant);                    
 
+                    if (tariff != null)
+                    {
+                        TariffCarrierTranslationRepository tariffCarrierTranslationRepository = new TariffCarrierTranslationRepository(commonContext);
+
+                        if (string.IsNullOrEmpty(entityPOCO.OriginPortId) && !string.IsNullOrEmpty(entityPM.OriginPortId))
+                        {
+                            TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetTranslationByPortAndCarrierAndPartnerCode(entityPM.OriginPortText, entityPM.OriginPortId, tariff.SellerId, entityPM.Tenant);
+                            if (carrierTranslation == null)
+                            {
+                                this.CreateCarrierTranslation(entityPM.OriginPortText, entityPM.OriginPortId, tariff.SellerId, entityPM.Tenant, myService);                                
+                            }
+                        }
+
+                        if (string.IsNullOrEmpty(entityPOCO.DestinationPortId) && !string.IsNullOrEmpty(entityPM.DestinationPortId))
+                        {
+                            TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetTranslationByPortAndCarrierAndPartnerCode(entityPM.DestinationPortText, entityPM.DestinationPortId, tariff.SellerId, entityPM.Tenant);
+                            if (carrierTranslation == null)
+                            {
+                                this.CreateCarrierTranslation(entityPM.DestinationPortText, entityPM.DestinationPortId, tariff.SellerId, entityPM.Tenant, myService);
+                            }
+                        }
+                    }
+                }
             }
+        }
+
+        private void CreateCarrierTranslation(string code, string portId, string carrierId, int tenant, TariffCarrierTranslationService myService)
+        {
+            TariffCarrierTranslationPM carrierTranslation = new TariffCarrierTranslationPM()
+            {
+                Tenant = tenant,
+                PortId = portId,
+                CarrierId = carrierId,
+                PartnerCode = code,
+            };
+
+            myService.Create(carrierTranslation);
         }
 
         protected override void UpdateComposition(TariffLinePM entityPM)

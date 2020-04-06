@@ -334,7 +334,7 @@ export class TranslateLabelsComponent extends BaseComponent {
                 }
 
                 else {
-                    CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                    CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                     });

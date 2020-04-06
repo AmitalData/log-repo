@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentPickUpDeliveryPackages"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -42,7 +43,7 @@
     Name="Quantity"
     Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Volume"

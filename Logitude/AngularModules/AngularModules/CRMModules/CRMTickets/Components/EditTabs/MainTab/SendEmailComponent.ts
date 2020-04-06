@@ -105,7 +105,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
     private GetAllUsers() {
         var filters = new ApiQueryFilters();
-        this.UserListService.getAllFromCache(filters).subscribe(myResult => {
+        this.UserListService.getAllFromCache(filters).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.UsersList = myResponse.Result;
@@ -689,7 +689,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     documentInPMs: DocumentsFilingPM[];
     IsCloseAttachmentDocsIn: boolean;
     public AttachInternalFile() {
-        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.Ticket.Id, null, this.TicketObjectTable.Id, "I", SessionLocator.Tenant, true).subscribe(res => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingPMsAsAttachmentByEntityIdAndObjectTable(this.Ticket.Id, null, this.TicketObjectTable.Id, "I", SessionLocator.Tenant, true).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -762,7 +762,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     CurrentDocument: DocumentsFilingPM;
     AttachExternalFile() {
         //if (!this.CurrentDocument) {
-        this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.documentTypeId, this.EntityPM.EntityId, "", "", this.TicketObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
+        this._documentsFilingExtendedPMService.CreateDocumentsFiling(this.documentTypeId, this.EntityPM.EntityId, "", "", this.TicketObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -813,17 +813,12 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     QuotationAttachmentsLists: AttachmentsArgs[];
     AddQuotationAttachemnt() {
         if (this.ShowQuotationAttachmentLink == true) {
-            var windowArgs: any = {};
-            windowArgs.QuotationAttachmentsLists = this.QuotationAttachmentsLists;
-            windowArgs.TriggerViewModel = this;
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Width = 800;
-            logitudeWindow.Height = 500;
-            logitudeWindow.Title = "Attach Quotation";
-            logitudeWindow.WindowArgs = windowArgs;
-            logitudeWindow.Show("./QuoteModules/QuoteOthers/Components/Quotation/AttachmentQuotationComponent");
+            this.QuotationAttachmentsLists.forEach((doc) => {
+                if (!this.AttachmentsList.filter(d => d.DocumentId == doc.DocumentId)[0]) {
+                    this.AttachmentsList.push(doc);
+                }
+            });
         }
-
     }
 
     ShowQuotationAttachmentLink: boolean = false;

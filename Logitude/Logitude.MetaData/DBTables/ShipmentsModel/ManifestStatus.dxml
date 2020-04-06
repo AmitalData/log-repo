@@ -2,7 +2,8 @@
 <Table
   Name="ManifestStatus"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Code"
     Type="varchar"

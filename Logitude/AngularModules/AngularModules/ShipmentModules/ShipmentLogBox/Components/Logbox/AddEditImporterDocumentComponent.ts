@@ -91,7 +91,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
         if (AppTool.IsNullOrEmpty(this.EntityPm.Description)) {
             this.UIProperties.SetRequired("Description", "DocumentsFiling", true);
         }
-        this.CurrentSession.SessionEvent.subscribe(res => {
+        this.CurrentSession.SessionEvent.subscribe((res:any) => {
             if (res.Name == "LogBoxUploader") {
                 this.IsUploadCanceled = res.IsUploadCanceled;
                 this.IsUploadDone = res.IsUploadDone;
@@ -117,7 +117,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
         this.TopTypes = [];
         var objectTablePm = window.ObjectTables.filter(d => d.Name == "Shipment")[0];
-        this._DocumentTypeListService.getTop5DocumentTypesPMsByObjectTableAndTenant(SessionLocator.Tenant, objectTablePm.Id).subscribe(res => {
+        this._DocumentTypeListService.getTop5DocumentTypesPMsByObjectTableAndTenant(SessionLocator.Tenant, objectTablePm.Id).subscribe((res:any) => {
             var MyType = "";
             res.Result.forEach((item) => {
                 MyType = item.Name.trim();
@@ -279,12 +279,12 @@ export class AddEditImporterDocumentComponent implements OnInit {
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPm.DocumentTypeId)) {
             this.DocumentTypeMetaDataList = [];
-            this._DocumentTypeMetaDataExtendedService.GetDocumentTypeMetaDataByDocumentTypeId(this.EntityPm.DocumentTypeId, SessionLocator.Tenant).subscribe(myResult => {
+            this._DocumentTypeMetaDataExtendedService.GetDocumentTypeMetaDataByDocumentTypeId(this.EntityPm.DocumentTypeId, SessionLocator.Tenant).subscribe((myResult:any) => {
                 this.DocumentTypeMetaDataList = myResult.Result;
                 this.DocumentTypeMetaData = myResult.Result;
                 if (this.DocumentTypeMetaDataList.length > 0) {
                     this.MetaDataVisibility = true;
-                    this._DocumentTypeMetaDataExtendedService.GetDocumentMetaDataValuesByDocument(SessionLocator.Tenant, this.EntityPm.Id).subscribe(myResult => {
+                    this._DocumentTypeMetaDataExtendedService.GetDocumentMetaDataValuesByDocument(SessionLocator.Tenant, this.EntityPm.Id).subscribe((myResult:any) => {
                         if (!myResult.Result || myResult.Result.length == 0) {
                             for (var i = 0; i < this.DocumentTypeMetaDataList.length; i++) {
                                 var value = new DocumentsFilingMetaDataValuePM(this.EntityPm);
@@ -381,11 +381,11 @@ export class AddEditImporterDocumentComponent implements OnInit {
     }
 
     DeleteDocumentWithFile() {
-        this._documentExtendedService.GetDocumentById(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe(myResult => {
+        this._documentExtendedService.GetDocumentById(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe((myResult:any) => {
             var RemovedDoc = myResult.Result;
             if (RemovedDoc) {
-                this._ImageLibraryService.RemoveFile(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe(res => {
-                    //this._documentExtendedService.Delete(item.DocumentId, SessionLocator.Tenant).subscribe(myResult => { 
+                this._ImageLibraryService.RemoveFile(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe((res:any) => {
+                    //this._documentExtendedService.Delete(item.DocumentId, SessionLocator.Tenant).subscribe((myResult:any) => { 
                     //    this.ReloadDocuments(); 
                     //}); 
                     this.EntityPm.HasFile = false;
@@ -394,14 +394,14 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     this.EntityPm.FileName = null;
                     this.EntityPm.DocumentId = null;
                     this.EntityPm.IsDeleted = true;
-                    this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
+                    this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult:any) => {
                         this.CurrentSession.CloseCurrentWindow();
                     });
                 });
             }
             else {
                 this.EntityPm.IsDeleted = true;
-                this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
+                this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult:any) => {
                     this.CurrentSession.CloseCurrentWindow();
                 });
             }
@@ -531,7 +531,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         //    this.EntityPm.IsSharedWithForwarder = false;
                         //    this.EntityPm.DontAddToQueue = true;
                         //}
-                        this._documentExtendedService.update(this.EntityPm, true).subscribe(myResult => {
+                        this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                             this.CurrentSession.StopBusyIndicator();
                             this.CurrentSession.CloseCurrentWindow();
                         });
@@ -561,7 +561,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //    this.EntityPm.IsSharedWithForwarder = false;
                     //    this.EntityPm.DontAddToQueue = true;
                     //}
-                    this._documentExtendedService.update(this.EntityPm, true).subscribe(myResult => {
+                    this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                         this.CurrentSession.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                     });
@@ -571,7 +571,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     //if (!this.EntityPm.IsSharedWithForwarder) {
                     this.EntityPm.DontAddToQueue = true;
                     //}
-                    this._documentExtendedService.update(this.EntityPm, true).subscribe(myResult => {
+                    this._documentExtendedService.update(this.EntityPm, true).subscribe((myResult:any) => {
                         this.CurrentSession.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                     });
@@ -591,7 +591,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
         //this.DocumentTypeId = this.DocumentTypeId;
         //this.Description = this.Description;
         if (!AppTool.IsNullOrEmpty(this.EntityPm.DocumentTypeId)) {
-            this._documentExtendedService.GetDocumentsFilingByDocumentType(this.EntityPm.DocumentTypeId, this.EntityPm.ObjectTableId, this.EntityPm.EntityId, SessionLocator.Tenant).subscribe(res => {
+            this._documentExtendedService.GetDocumentsFilingByDocumentType(this.EntityPm.DocumentTypeId, this.EntityPm.ObjectTableId, this.EntityPm.EntityId, SessionLocator.Tenant).subscribe((res:any) => {
 
                 var pmResponse: any = res;
                 if (!pmResponse.HasError) {
@@ -624,7 +624,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                             this.EntityPm.CreatedByUserId = "xxx";
                             this.EntityPm.OwnerId = "xxx";
 
-                            this._documentExtendedService.insert(this.EntityPm, true).subscribe(myResult => {
+                            this._documentExtendedService.insert(this.EntityPm, true).subscribe((myResult:any) => {
                                 this.CurrentSession.StopBusyIndicator();
                                 if (!myResult.HasError) {
                                     if (this.IsOkButtonClicked) {
@@ -711,7 +711,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
     OpenUploadProgressWindow(file: any, isShareWithAgent: boolean = false) {
 
         if (file && file.size>0) {
-            this._documentExtendedService.GetFileSizeAndUnit(file.size).subscribe(res => {
+            this._documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((res:any) => {
                 var temp = file.name.split('.');
                 var fileExtension: string = temp[temp.length - 1];
                 var pmResponse: ServiceResponse = res;
@@ -767,8 +767,8 @@ export class AddEditImporterDocumentComponent implements OnInit {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 //this.StartBusyIndicator("Loading ..");
-                this._ImageLibraryService.RemoveFile(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe(res => {
-                    //this._documentExtendedService.Delete(item.DocumentId, SessionLocator.Tenant).subscribe(myResult => { 
+                this._ImageLibraryService.RemoveFile(this.EntityPm.DocumentId, SessionLocator.Tenant).subscribe((res:any) => {
+                    //this._documentExtendedService.Delete(item.DocumentId, SessionLocator.Tenant).subscribe((myResult:any) => { 
                     //    this.ReloadDocuments(); 
                     //}); 
                     this.EntityPm.HasFile = false;
@@ -776,7 +776,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     this.EntityPm.FileExtension = null;
                     this.EntityPm.FileName = null;
                     this.EntityPm.DocumentId = null;
-                    this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
+                    this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult:any) => {
                         //this.ReloadDocuments();
                     });
                 });
@@ -811,7 +811,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
     DownloadDocumentFile() {
         ServiceLocator.SendTotangoUserActivity("LogBox", "View Document");
-        this._ImageLibraryService.DownloadFile(this.EntityPm.DocumentId, this.EntityPm.FileExtension, this.EntityPm.Folder, SessionLocator.Tenant).subscribe(res => {
+        this._ImageLibraryService.DownloadFile(this.EntityPm.DocumentId, this.EntityPm.FileExtension, this.EntityPm.Folder, SessionLocator.Tenant).subscribe((res:any) => {
             var EntityNumber = "";
             if (this.ShipmentList != null) {
                 if (this.ShipmentList.ForwarderShipmentNumber == null) {
@@ -888,7 +888,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                 //GraySharedWithAgentVisibility = Visibility.Visible;
 
             }
-            this._documentsFilingPMService.update(this.EntityPm).subscribe(myResult => {
+            this._documentsFilingPMService.update(this.EntityPm).subscribe((myResult:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.IssharedWithAgentButtonEnabled = false;
                 //this.ReloadDocuments();
@@ -1066,7 +1066,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                                 var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
                                 EntityPm.SignDueDate.setMinutes(CurrMin);
                                 EntityPm.CancellSignRequest = false;
-                                this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe(Result => {
+                                this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
                                     ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
                                     if (Result.Result != null && Result.Result.HasError) {
                                         //this.RunSignBusyIndicator(false, EntityPm.Id);
@@ -1100,7 +1100,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                         var CurrMin = EntityPm.SignDueDate.getMinutes() + 5;
                         EntityPm.SignDueDate.setMinutes(CurrMin);
                         EntityPm.CancellSignRequest = false;
-                        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe(Result => {
+                        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPm).subscribe((Result:any) => {
                             ServiceLocator.SendTotangoUserActivity("LogBox", "Sign Document");
                             if (Result.Result != null && Result.Result.HasError) {
                                 //this.RunSignBusyIndicator(false, EntityPm.Id);
@@ -1139,7 +1139,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
     }
 
     CheckIfSignDone(DocId: string) {
-        this._documentsFilingPMService.get(DocId).subscribe(res => {
+        this._documentsFilingPMService.get(DocId).subscribe((res:any) => {
             var pmResponse: any = res;
             if (pmResponse != null && !pmResponse.HasError) {
                 var currentdocument = pmResponse.Result;
@@ -1162,7 +1162,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
 
             Document.DontAddToQueue = false;
             Document.ForwarderDocumentId = null;
-            this._documentsFilingPMService.update(Document).subscribe(myResult => {
+            this._documentsFilingPMService.update(Document).subscribe((myResult:any) => {
 
             });
         }
@@ -1171,7 +1171,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
         EntityPM.DontAddToQueue = true;
         EntityPM.SignRequestByUserEmail = null;
         EntityPM.CancellSignRequest = true; 
-        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPM).subscribe(Result => {
+        this._LogBoxSignatureClientService.GetSignRequestReceived(EntityPM).subscribe((Result:any) => {
             this.RunSignBusyIndicator(false, EntityPM.Id);
         });
     }

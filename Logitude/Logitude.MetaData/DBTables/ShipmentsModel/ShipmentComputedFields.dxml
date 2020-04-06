@@ -2,7 +2,8 @@
 <Table
   Name="ShipmentComputedFields"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -84,29 +85,29 @@
   </Column>
   <Column
     Name="ImporterDepositionRequestDetails"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Commodity"
     Type="nvarchar"
-    Size="-1">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="FirstPickupLocation"
     Type="nvarchar"
-    Size="-1">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ContainersNumbers"
     Type="nvarchar"
-    Size="-1">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -160,19 +161,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ImportDeclarationDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ImportDeclarationNumber"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="LastPickupETA"
     Type="datetime">
     <Constraints
@@ -197,13 +185,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DeliveryToCity"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="DeliveryToPortId"
     Type="varchar"
     Size="15">
@@ -211,36 +192,37 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ContainsDangerousGoods"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="DeliveryFrom"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="DeliveryTo"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="PickupFrom"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="PickupTo"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OperationallyClosedByUserName"
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>

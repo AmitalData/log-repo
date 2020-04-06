@@ -55,5 +55,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int QBOOAuth { get; set; }
         public bool AllowManualARPaymentNumber { get; set; }
         public bool AllowRegionalTaxManagement { get; set; }
+        public bool EnableAPPaymentExternalPayment { get; set; }
+        public bool TransferToFTPActivated { get; set; }
+        public string TransferFTPDetailId { get; set; }
     }
 }

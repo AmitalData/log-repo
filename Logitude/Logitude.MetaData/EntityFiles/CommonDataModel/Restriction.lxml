@@ -55,7 +55,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;Restriction,Restrictions,,Id,&quot;">
+  SearchFields="&quot;Restriction,Restrictions,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;30ff62c9-360b-4bef-99dd-358d192c49c9&quot;"
     FieldName="&quot;Id&quot;"
@@ -66,7 +68,7 @@
     ObjectTableName="&quot;Restriction&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -210,8 +212,8 @@
     ObjectTableName="&quot;Restriction&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
-    IsRequired="false"
+    MaxLength="15"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -282,8 +284,8 @@
     ObjectTableName="&quot;Restriction&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
-    IsRequired="false"
+    MaxLength="15"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -322,7 +324,7 @@
     ListLableDefaultText="&quot;ContactTenantId&quot;"
     ListLocalDefaultText="&quot;ContactTenantId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -343,7 +345,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ContactTenant"
+    NavigationPropertyName="ContactTenant" />
   <field
     Id="&quot;c034a331-d4d2-45a3-8a88-40c7cc046353&quot;"
     FieldName="&quot;ObjectTableId&quot;"
@@ -395,7 +399,7 @@
     FullFieldLable="&quot;ObjectTableId&quot;"
     DefaultText="&quot;Table&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -417,7 +421,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ObjectTable"
+    NavigationPropertyName="ObjectTable" />
   <field
     Id="&quot;0d5b847b-06f1-4700-b75d-df18b76223e3&quot;"
     FieldName="&quot;ObjectFieldId&quot;"
@@ -469,7 +475,7 @@
     FullFieldLable="&quot;ObjectFieldId&quot;"
     DefaultText="&quot;Field&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -491,7 +497,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="ObjectField"
+    NavigationPropertyName="ObjectField" />
   <field
     Id="&quot;b757b54b-1c17-48f9-9f7d-d3f2eec443cb&quot;"
     FieldName="&quot;UserId&quot;"
@@ -653,7 +661,7 @@
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"

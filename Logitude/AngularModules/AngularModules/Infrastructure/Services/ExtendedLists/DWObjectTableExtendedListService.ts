@@ -1,42 +1,34 @@
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { BusinessRoleList } from '../../EntityLists/BusinessRoleList';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { ServiceHelper } from '../../Utilities/ServiceHelper';
-import { BusinessRoleList } from '../../EntityLists/BusinessRoleList';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
-
 export class DWObjectTableExtendedListService {
-    private httpClient: HttpClient;
-    private apiUrl: string;
+    private _httpClient: HttpClient;
+    private _apiUrl: string;
     public static CachedData: Array<BusinessRoleList> = [];
     constructor() {
-        this.httpClient = ServiceHelper.HttpClient;
-        this.apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dwobjecttableextended';
+        this._httpClient = ServiceHelper.HttpClient;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dwobjecttableextended';
     }
 
-    GetFactTablesNames(): Observable<ServiceResponse> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application-json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
-        var url = this.apiUrl + '/GetFactTablesNames';
+    GetFactTablesNames() {
+        var url = this._apiUrl + '/GetFactTablesNames';
+
         return Observable.defer(() => {
-            return this.httpClient.get(url, httpOptions).pipe(
-                map(response => {
-                    var list = response;
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var list = response;
 
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = list;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = list;
 
-                    return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError));
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 }

@@ -93,7 +93,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         ServiceLocator.SendTotangoUserActivity("Shipment", "Docs In Downloaded");
 
         var service: CardPMService = new CardPMService();
-        service.get(SessionLocator.LoggedUserPM.Id).subscribe(res => {
+        service.get(SessionLocator.LoggedUserPM.Id).subscribe((res:any) => {
             if (!res.HasError) {
 
                 var link = ServiceHelper.GetLogitudeURL() + "/WebPages/SharedDownloadPage.aspx?id=" + SessionLocator.Tenant + ":" + null + ":ship:" + this.EntityId + ":" + res.Result.PartnerTypeId + ":" + ServiceHelper.GetLDocumentDownloadToken();
@@ -125,8 +125,8 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         // Please don't remove it
         this.TabHeaderTextCode = this.ObjectTableName + ".TH.DocsIn";
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("DocsIn").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("DocsIn").subscribe((response:any) => {
                 this.IsStardLoadPage = true;
 
 
@@ -225,7 +225,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     //    if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) && this.ChildObjectTableId) objecttableid = this.ChildObjectTableId;
 
     //    else objecttableid = this.ObjectTableId;
-    //    this._documentTypeListExtendedService.getDocumentTypeListsByEnityIdAndTenant(this.TransportModeId, this.ShipmentlevelCode, objecttableid, this.Tenant).subscribe(res => {
+    //    this._documentTypeListExtendedService.getDocumentTypeListsByEnityIdAndTenant(this.TransportModeId, this.ShipmentlevelCode, objecttableid, this.Tenant).subscribe((res:any) => {
 
     //        var pmResponse: ServiceResponse = res;
     //        if (!pmResponse.HasError) {
@@ -249,7 +249,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = this.Tenant;
-        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -276,7 +276,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         }
 
         if (getDocsIn) {
-            this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, false).subscribe(res => {
+            this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, false).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -636,7 +636,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     DeleteAttachmentButtonClicked() {
 
         if (this.SelectedExternalViewModel != null && this.SelectedExternalViewModel.CurrentDocument) {
-            this._documentsFilingExtendedPMService.GetDocumentById(this.SelectedExternalViewModel.CurrentDocument.DocumentId, SessionInfo.LoggedUserTenant).subscribe(res => {
+            this._documentsFilingExtendedPMService.GetDocumentById(this.SelectedExternalViewModel.CurrentDocument.DocumentId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -645,11 +645,11 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                         if (!this.IsDeleteAttachment) {
                             this.IsDeleteAttachment = true;
                             this.CurrentSession.StartBusyIndicator("Saving...");
-                            this._imageLibraryService.RemoveFile(document.Id, document.Tenant).subscribe(result => {
+                            this._imageLibraryService.RemoveFile(document.Id, document.Tenant).subscribe((result:any) => {
 
                
                                 if (this.ObjectTableName == "Shipment") {
-                                    this._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.EntityId, this.SelectedExternalViewModel.FileName, "DODE").subscribe(res => {
+                                    this._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.EntityId, this.SelectedExternalViewModel.FileName, "DODE").subscribe((res:any) => {
                                     });
                                 }
 

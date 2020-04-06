@@ -18,6 +18,7 @@ import { DWObjectTableListService } from '../../../../Infrastructure/Services/St
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DWQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWQueryPMService';
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 
 @Component({
@@ -137,11 +138,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
         //this.ClearData();
         //this._DWQueryBuilderHelper.FillAllFactFields("Fact_Shipments");
         this.ObsList = [];
-        this._DWObjectTableListService.getAll().subscribe(myResult => {
+        this._DWObjectTableListService.getAll().subscribe((myResult:any) => {
             this.AllTables = myResult.Result;
-            this._DWObjectTablePMService.get(this.FactTableName).subscribe(myResult => {
+            this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult:any) => {
                 if (!myResult.HasError) {
-                    this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(myResult.Result.Code).subscribe(Result => {//getDWObjectFieldsByDWTableId
+                    this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(myResult.Result.Code).subscribe((Result: ServiceResponse) => {//getDWObjectFieldsByDWTableId
                         if (!Result.HasError) {
                             var MyGroups = [];
                             var MyAllGroups = [];
@@ -214,7 +215,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                     });
                     //this.StartFiltersBusyIndicator("Restoring filters ..");
-                    //this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
+                    //this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe((Result:any) => {
                     var TempObsList = [];
                     if (window.DWObjectFields) {
                         window.DWObjectFields.forEach((field) => {
@@ -251,7 +252,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         //this.AllFieldsWithChildrenDataSource = args.DWObjectFieldsWithChildren;
         if (this.QID) {
             if (this.CopyBIReportsFromTenant || this.CopyBIReportsFromTenant == 0) {
-                this._DWSubQueryPMService.getByQueryIdFromTenant(this.QID, this.CopyBIReportsFromTenant).subscribe(myResult => {
+                this._DWSubQueryPMService.getByQueryIdFromTenant(this.QID, this.CopyBIReportsFromTenant).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         this.ID = myResult.Result.SubQueryData.Id;
 
@@ -261,7 +262,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 });
             }
             else {
-                this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
+                this._DWSubQueryPMService.getByQueryId(this.QID).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         this.ID = myResult.Result.SubQueryData.Id;
 
@@ -833,7 +834,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
             this.StartBusyIndicator("Loading ..");
             this.IsPreview = !StopPreview;
-            this._DWQueryBuilderService.GetNewDWQueryData(this.DWQueryData).subscribe(myResult => {
+            this._DWQueryBuilderService.GetNewDWQueryData(this.DWQueryData).subscribe((myResult: ServiceResponse) => {
                 this.StopBusyIndicator();
                 if (!myResult.HasError) {
                     //this.SampleData = myResult.Result.SQLDataResult;
@@ -1011,7 +1012,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsPreview = true;
         this.SampleData = Data;
         //var tempSQL = this.Notes.replace("Select ", "Select top 100 ").trim();
-        //this._DWQueryBuilderService.GetDWQueryData(tempSQL, "Fact_Shipments").subscribe(myResult => {
+        //this._DWQueryBuilderService.GetDWQueryData(tempSQL, "Fact_Shipments").subscribe((myResult:any) => {
         //    if (!myResult.HasError) {
         //        this.SampleData = myResult.Result;
 
@@ -1096,7 +1097,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             return;
         }
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
-        this._DWObjectTablePMService.get(this.FactTableName).subscribe(myResult => {
+        this._DWObjectTablePMService.get(this.FactTableName).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 //if (this.IsCopy) {
                 //    this.ComponentRef.destroy();
@@ -1113,7 +1114,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 this.QueryData.Columns = this.SelectedFieldsDataSource;
                 this.QueryData.Filters = this.SelectedFiltersDataSource[0];
                 if (AppTool.IsNullOrEmpty(this.ID) || this.IsCopy) {
-                    this._DWSubQueryPMService.insertDWQueryData(this.QueryData).subscribe(myResult => {
+                    this._DWSubQueryPMService.insertDWQueryData(this.QueryData).subscribe((myResult:any) => {
                         //if (!myResult.HasError) {
 
                         //}
@@ -1137,7 +1138,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.messageWindow.Show(this.messageWindow.Message);
                         this.NotExist = true;
                     }
-                    this._DWSubQueryPMService.UpdateDWQueryData(this.QueryData).subscribe(myResult => {
+                    this._DWSubQueryPMService.UpdateDWQueryData(this.QueryData).subscribe((myResult:any) => {
 
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (this.IsBIReportWorkspace || this.IsBIReportEditScreen) {
@@ -1156,12 +1157,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ..");
         if (!AppTool.IsNullOrEmpty(this.ID)) {
             if ((this.CopyBIReportsFromTenant || this.CopyBIReportsFromTenant == 0) && !getSingle) {
-                this._DWSubQueryPMService.getFromTenant(this.ID, this.CopyBIReportsFromTenant).subscribe(myResult => {
+                this._DWSubQueryPMService.getFromTenant(this.ID, this.CopyBIReportsFromTenant).subscribe((myResult:any) => {
                     this.BuildData(myResult);
                 });
             }
             else {
-                this._DWSubQueryPMService.get(this.ID).subscribe(myResult => {
+                this._DWSubQueryPMService.get(this.ID).subscribe((myResult:any) => {
                     this.BuildData(myResult);
                 });
             }
@@ -1852,9 +1853,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
 
     
-        _DWObjectTablePMService.get(DWObjectField.DimensionTableCode).subscribe(myResult => {
+        _DWObjectTablePMService.get(DWObjectField.DimensionTableCode).subscribe((myResult:any) => {
             if (!myResult.HasError) {
-                _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe(Result => {
+                _DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe((Result: ServiceResponse) => {
                     if (!Result.HasError) {
                         Result.Result.forEach((field) => {
                             if (field.DisplayInQueryBuilder == true) {
@@ -1904,20 +1905,18 @@ export class DWObjectFieldsDetails extends BaseComponent {
         var ObsList = [];
 
         let listDateFields: string[] = ['Date', 'Time']; 
-       // listDateFields.push("Date");
-        //listDateFields.push("Time");
 
         listDateFields.forEach((item) => {
             var dWObjectFieldPM: DWObjectFieldPM = new DWObjectFieldPM();
             dWObjectFieldPM.Code = DWObjectField.Code;
             dWObjectFieldPM.DataTypeCode = item;
-            dWObjectFieldPM.CannotFilter = false;
+            dWObjectFieldPM.CannotFilter = true;
             dWObjectFieldPM.Name = item;
             dWObjectFieldPM.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             var view = new DWObjectFieldsDetails(dWObjectFieldPM, this.MyParentClass);
             view.displayname = DWObjectField.Name + " " + item;
             view.ParentDataTypeCode = "DateParts";
-           
+            
             ObsList.push(view);
             this.Items = ObsList;
             this.IsViewTree = true;

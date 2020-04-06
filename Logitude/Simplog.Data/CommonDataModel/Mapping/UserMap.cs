@@ -99,10 +99,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.UserRoles).HasColumnName("UserRoles");
             this.Property(t => t.AdditionalPackagesOnly).HasColumnName("AdditionalPackagesOnly");
 
+
             this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
 
 
             this.Property(t => t.LayoutDirection).HasColumnName("LayoutDirection");
+
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

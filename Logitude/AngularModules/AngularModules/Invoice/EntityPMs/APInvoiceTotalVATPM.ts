@@ -113,6 +113,11 @@ export class APInvoiceTotalVATPM {
     public set VatRecognizedPercentage(newValue: number) { if (this.vatRecognizedPercentage != newValue) { this.vatRecognizedPercentage = newValue; this.MarkAsDirty("VatRecognizedPercentage"); } }
        
 	 
+    private localVatAmountWithVatRecognized: number;
+    public get LocalVatAmountWithVatRecognized() { return this.localVatAmountWithVatRecognized; }
+    public set LocalVatAmountWithVatRecognized(newValue: number) { if (this.localVatAmountWithVatRecognized != newValue) { this.localVatAmountWithVatRecognized = newValue; this.MarkAsDirty("LocalVatAmountWithVatRecognized"); } }
+       
+	 
 
     public OldEntityPM: APInvoiceTotalVATPM;
 	    

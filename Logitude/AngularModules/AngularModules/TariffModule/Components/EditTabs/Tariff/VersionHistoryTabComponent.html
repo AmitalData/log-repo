@@ -22,7 +22,7 @@
 
                                 <div class="ToggleButtonMenu">
                                     <button *ngIf="IsDownloadExcelTemplateVisible" (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
-                                    <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
+                                    <button *ngIf="IsDownloadExcelTemplateVisible" (click)="DownloadExcelClicked('Data')">Download Excel</button>
                                     <button (click)="CopyVersionClicked()">Copy into new Version</button>
                                     <button *ngIf="IsAllInChargesVisible" (click)="AllInChargesClicked()">All-In Charges</button>
                                 </div>

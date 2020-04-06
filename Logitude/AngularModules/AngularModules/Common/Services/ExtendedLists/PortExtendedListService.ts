@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import {Observable}  from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -20,10 +21,10 @@ import {PortList} from '../../EntityLists/PortList';
 export class PortExtendedListService {
 
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
 	private CachedData: Array<PortList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/portviews';
         this.CachedData = [];
     }
@@ -57,16 +58,12 @@ export class PortExtendedListService {
         var callUrl = this._apiUrl.concat(urlparameters);
 
         return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var viewResponse: ServiceResponse;
-                viewResponse = response.json();
+                var viewResponse: ServiceResponse = response.body;
                 var _mappedListsArray: Array<PortList> = [];
                 if (viewResponse.Result) {
                     for (var key in viewResponse.Result) {
-
                         var entity: PortList;
                         entity = this.MapJsonToEntityList(viewResponse.Result[key]);
                         _mappedListsArray.push(entity);
@@ -74,7 +71,9 @@ export class PortExtendedListService {
                 }
                 viewResponse.Result = _mappedListsArray;
                 return viewResponse;
-            });
+
+                
+            }));
         }
         );
     }

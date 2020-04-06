@@ -36,8 +36,8 @@ export class ClaimImporterDeclBCTabComponent extends BaseComponent {
         this.SaleDeclarlist = new ObservableCollection([]);
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3B").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsPage3B").subscribe((response:any) => {
                     if (this.entityArgs.EntityPM != null) {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.BuildSaleDeclarList();

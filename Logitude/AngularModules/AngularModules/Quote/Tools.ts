@@ -1,5 +1,4 @@
 import {QuotePM} from './EntityPMs/QuotePM';
-import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {AppTool, ArrayTool} from '../Infrastructure/Tools';
 import {QuoteStageList} from './EntityLists/QuoteStageList';
 import {QuoteStageListService} from './Services/StandardLists/QuoteStageListService';

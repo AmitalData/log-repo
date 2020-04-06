@@ -35,7 +35,7 @@ export class NewDeclarationCargoSplitComponent extends BaseComponent implements 
 
         this.EntityPM = new DeclarationCargoSplitPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => { });
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => { });
     }
 
     SetWindowArgs(args: any) {
@@ -98,7 +98,7 @@ export class NewDeclarationCargoSplitComponent extends BaseComponent implements 
             }
         }
 
-        this._DeclarationCargoSplitPMService.insert(this.EntityPM).subscribe(myResult => {
+        this._DeclarationCargoSplitPMService.insert(this.EntityPM).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;

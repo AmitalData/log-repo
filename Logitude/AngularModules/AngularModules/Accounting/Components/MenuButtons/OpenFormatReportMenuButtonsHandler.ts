@@ -103,7 +103,7 @@ export class OpenFormatReportMenuButtonsHandler {
             case "OPDL": // Download
                 {
                     this.try = true;
-                    this.DocumentTypePMExtendedService.GetDocumentTypeByCode("BKMV", this.TenantPM.Id).subscribe(myResult => {
+                    this.DocumentTypePMExtendedService.GetDocumentTypeByCode("BKMV", this.TenantPM.Id).subscribe((myResult:any) => {
                         console.log("[GetLastDocumentsFilingPM]", myResult);
                         var mm: ServiceResponse = myResult;
                         if (!mm.HasError) {
@@ -121,7 +121,7 @@ export class OpenFormatReportMenuButtonsHandler {
             //case "INIDL": // Download
             //    {
 
-            //        this.DocumentTypePMExtendedService.GetDocumentTypeByCode("INI", this.TenantPM.Id).subscribe(myResult => {
+            //        this.DocumentTypePMExtendedService.GetDocumentTypeByCode("INI", this.TenantPM.Id).subscribe((myResult:any) => {
             //            console.log("[GetLastDocumentsFilingPM]", myResult);
             //            var mm: ServiceResponse = myResult;
             //            if (!mm.HasError) {
@@ -159,12 +159,12 @@ export class OpenFormatReportMenuButtonsHandler {
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
        
 
-        this.DocumentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.BMKDocumentType.Id, objectTable.Id, this.EntityPM.Id, this.TenantPM.Id).subscribe(myResult => {
+        this.DocumentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.BMKDocumentType.Id, objectTable.Id, this.EntityPM.Id, this.TenantPM.Id).subscribe((myResult:any) => {
             console.log("[GetLastDocumentsFilingPM]", myResult);
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.BMKDocFilingPM = mm.Result;
-                this.DocumentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.INIDocumentType.Id, objectTable.Id, this.EntityPM.Id, this.TenantPM.Id).subscribe(myResult => {
+                this.DocumentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.INIDocumentType.Id, objectTable.Id, this.EntityPM.Id, this.TenantPM.Id).subscribe((myResult:any) => {
                     console.log("[GetLastDocumentsFilingPM]", myResult);
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
@@ -186,7 +186,7 @@ export class OpenFormatReportMenuButtonsHandler {
 
     public GetDocumentType(code: string) {
 
-        this.DocumentTypePMExtendedService.GetDocumentTypeByCode(code, this.TenantPM.Id).subscribe(myResult => {
+        this.DocumentTypePMExtendedService.GetDocumentTypeByCode(code, this.TenantPM.Id).subscribe((myResult:any) => {
             console.log("[GetLastDocumentsFilingPM]", myResult);
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

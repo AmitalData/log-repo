@@ -268,7 +268,7 @@ export class EditComponent implements OnDestroy {
         if (this.EntityPM) {
             this.IsEntityLoaded = true;
 
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
                 this.GetControllerByTableName(this.ObjectTableName).then(EditComponentController => {
                     //this.EditComponentController = EditComponentController as IEditComponentController;
                     this.CurrentSession.AddEditComponent(this);
@@ -410,7 +410,7 @@ export class EditComponent implements OnDestroy {
 
         if (this.ObjectTableName == "Shipment") {
             if (this.EntityPM.ShipmentLevelCode == "C") {
-                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe((response:any) => {
                     var myObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
                     var myObjectTableId = myObjectTable.Id;
 
@@ -498,7 +498,7 @@ export class EditComponent implements OnDestroy {
 
         //else if (this.ObjectTableName == "Customs.Declaration") {
         //    if (this.EntityPM.IsCourierDeclaration == true) {
-        //        this._entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration", 0).subscribe(response => {
+        //        this._entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration", 0).subscribe((response:any) => {
         //            var myObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.CourierDeclaration")[0];
         //            var myObjectTableId = myObjectTable.Id;
 
@@ -1055,6 +1055,12 @@ export class EditComponent implements OnDestroy {
                     case "Simplog.FreightLib.Views.Areas": {
                         myComponentName = "AreasTabComponent";
                         myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/AreasTabComponent";
+                        break;
+                    }
+
+                    case "Simplog.FreightLib.Views.TariffTranslations": {
+                        myComponentName = "TariffTranslationsTabComponent";
+                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/TariffTranslations/TariffTranslationsTabComponent";
                         break;
                     }
 

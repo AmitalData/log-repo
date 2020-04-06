@@ -52,6 +52,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CalculationDetails  { get; set; }
        [DataMember]
        public int LineNumber  { get; set; }
+       [DataMember]
+       public decimal TotalInterest  { get; set; }
    }
 
 }

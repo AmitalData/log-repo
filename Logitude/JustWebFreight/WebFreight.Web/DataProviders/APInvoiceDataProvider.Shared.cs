@@ -81,7 +81,16 @@ namespace WebFreight.Web.DataProviders
         public double? TotalPayable { get; set; }
         public double? TotalFreight { get; set; }
         public double? TotalOtherCharges { get; set; }
-
+        public string APInvoiceField1 { get; set; }
+        public string APInvoiceField2 { get; set; }
+        public string APInvoiceField3 { get; set; }
+        public string APInvoiceField4 { get; set; }
+        public string APInvoiceField5 { get; set; }
+        public string APInvoiceField6 { get; set; }
+        public string APInvoiceField7 { get; set; }
+        public string APInvoiceField8 { get; set; }
+        public string APInvoiceField9 { get; set; }
+        public string APInvoiceField10 { get; set; }
         public List<APReportInvoiceLine> APInvoiceLinesList { get; set; }
         public List<APTotalVat> APTotalVatList { get; set; }
         public List<APInvoiceMultipleEntity> APInvoiceMultipleEntityList { get; set; }

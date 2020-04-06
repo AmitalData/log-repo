@@ -2,7 +2,8 @@
 <Table
   Name="QuoteTemplateSettings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"
@@ -1128,6 +1129,30 @@
   </Column>
   <Column
     Name="ShowIncludedChargesContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowVATTypePackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowVATTypeContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowVATPercentagePackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowVATPercentageContainers"
     Type="bit">
     <Constraints
       Nullable="false" />

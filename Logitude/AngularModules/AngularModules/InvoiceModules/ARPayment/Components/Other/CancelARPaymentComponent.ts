@@ -43,7 +43,7 @@ export class CancelARPaymentComponent extends BaseComponent implements OnInit {
     }
 
   ngOnInit() {
-    this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe(response => {
+    this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response:any) => {
             //this.IsVisibile = true;
             //this.SetUIProperties();
         });
@@ -51,7 +51,7 @@ export class CancelARPaymentComponent extends BaseComponent implements OnInit {
 
     constructor() {
         super();
-       // this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe(response => {
+       // this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.SetUIProperties();
      //   });

@@ -766,7 +766,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     invoicedataprovider.PlaceOfDelivery = myServicHelper.GetPlaceOfDelivery(shipment, myDelivery);
                     invoicedataprovider.DeliveryFrom = myServicHelper.GetFromDeliveryName(shipment, myDelivery);
-                    invoicedataprovider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery);
+                    invoicedataprovider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery, false);
                     invoicedataprovider.Incoterm = shipment.IncotermCode;
 
                     if (myDelivery != null)

@@ -101,6 +101,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Notes { get; set; }
 
         [DataMember]
+        public bool DontShowLocalLabels { get; set; }
+
+        [DataMember]
         public bool SetAngularAsDefault { get; set; }
 
         [DataMember]
@@ -266,5 +269,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool AdditionalPackagesOnly { get; set; }
         [DataMember]
         public string LayoutDirection { get; set; }
+
     }
 }

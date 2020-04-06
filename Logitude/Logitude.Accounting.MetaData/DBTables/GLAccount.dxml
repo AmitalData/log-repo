@@ -2,7 +2,8 @@
 <Table
   Name="GLAccounts"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Accounting">
   <Column
     Name="Id"
     Type="varchar"
@@ -36,7 +37,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="LocalName"
@@ -366,6 +367,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Smallcashbook"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"
@@ -467,4 +474,6 @@
     Columns="DisplayNumber" />
   <UniqueConstraint
     Columns="DisplayNumber,Tenant" />
+  <UniqueConstraint
+    Columns="Tenant,InternalNumber" />
 </Table>

@@ -2,7 +2,8 @@
 <Table
   Name="AccountingSystems"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Code"
     Type="varchar"
@@ -123,6 +124,12 @@
   </Column>
   <Column
     Name="AllowAPPaymentsTransfer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CanTransferToFTP"
     Type="bit">
     <Constraints
       Nullable="false" />

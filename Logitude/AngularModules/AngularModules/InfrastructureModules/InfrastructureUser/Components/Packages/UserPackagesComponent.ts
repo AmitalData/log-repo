@@ -78,7 +78,7 @@ export class UserPackagesComponent implements OnInit {
 
     ExportFeaturesToCSVFile() {
         var service: ExcelExportService = new ExcelExportService();
-        service.ExportFeaturesToCSVFile().subscribe(res => {
+        service.ExportFeaturesToCSVFile().subscribe((res:any) => {
             if (!res.HasError) {
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Show("Export?");
@@ -112,7 +112,7 @@ export class UserPackagesComponent implements OnInit {
         var file: ImageParameter = new ImageParameter();
         file.Base64String = data;
 
-        service.ImportFeaturePackages(file).subscribe(res => {
+        service.ImportFeaturePackages(file).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
 
             var wind = new MessageWindow();

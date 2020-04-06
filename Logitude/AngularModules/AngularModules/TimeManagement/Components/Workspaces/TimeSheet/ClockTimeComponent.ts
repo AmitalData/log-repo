@@ -28,7 +28,7 @@ export class ClockTimeComponent extends BaseComponent {
         this.ItemSourceCollection = new ObservableCollection([]);
         this.myDomainService = new TimeOfficeHourDomainService();
 
-        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe((response:any) => {
 
         });
     }
@@ -65,7 +65,7 @@ export class ClockTimeComponent extends BaseComponent {
 
 
     AddNewClockHour() {
-        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("TMOfficeHour", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Title = "New Office Hour";
             var args: any = {};

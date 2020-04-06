@@ -90,7 +90,7 @@ export class TariffDatesValidationComponent extends BaseComponent {
                 this.EntityLinePM.ExpirationDate = this.LineExpirationDate;
 
                 var service: TariffDomainService = new TariffDomainService();
-                service.GetCheckDatesValidty(this.EntityLinePM.OriginPortId, this.EntityLinePM.DestinationPortId, this.LineExpirationDate, this.EntityLinePM.TariffId).subscribe(result => {
+                service.GetCheckDatesValidty(this.EntityLinePM.OriginPortId, this.EntityLinePM.DestinationPortId, this.LineExpirationDate, this.EntityLinePM.TariffId).subscribe((result:any) => {
                     if (result.HasError) {
                         this.ValidationErrorsList = this.ValidationErrorsList.concat(result.ErrorsArray);
                     }

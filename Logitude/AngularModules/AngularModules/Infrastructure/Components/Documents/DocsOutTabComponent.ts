@@ -117,7 +117,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         ServiceLocator.SendTotangoUserActivity("Shipment", "Docs Out Downloaded");
 
         var service: CardPMService = new CardPMService();
-        service.get(SessionLocator.LoggedUserPM.Id).subscribe(res => {
+        service.get(SessionLocator.LoggedUserPM.Id).subscribe((res:any) => {
             if (!res.HasError) {
 
                 var link = ServiceHelper.GetLogitudeURL() + "/WebPages/SharedDownloadPage.aspx?id=" + SessionLocator.Tenant + ":" + null + ":ship:" + this.EntityId + ":O:" + ServiceHelper.GetLDocumentDownloadToken();
@@ -173,8 +173,8 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
 
         }
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe((response:any) => {
                 this.IsStardLoadPage = true;
                 this.Load();
             });
@@ -212,7 +212,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
                         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
                         apiQueryFilters.GetAll = true;
                         apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-                        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+                        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
 
                             var pmResponse: ServiceResponse = res;
                             if (!pmResponse.HasError) {
@@ -322,7 +322,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
 
     InitializeDocsOutForAnotherObjectTableMethod(tableId: any) {
 
-        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, tableId, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, tableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var documentids: string = "";
             var documentOuts: any[] = [];
 
@@ -364,7 +364,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
                     });
 
                     //if (!AppTool.IsNullOrEmpty(documentids)) {
-                    //    this._documentTypePMService.getDocumentTypesByIds(documentids, SessionInfo.LoggedUserTenant).subscribe(res => {
+                    //    this._documentTypePMService.getDocumentTypesByIds(documentids, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
                     //        var pmResponse: ServiceResponse = res;
                     //        if (!pmResponse.HasError) {
                     //            var myResult = pmResponse.Result;
@@ -404,7 +404,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
             }
 
             this.DocumentInPMs = new Array<DocumentsFilingPM>();
-            this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode(this.EntityId, this.ChildEntityId, tableId, "I", SessionInfo.LoggedUserTenant, false).subscribe(res => {
+            this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode(this.EntityId, this.ChildEntityId, tableId, "I", SessionInfo.LoggedUserTenant, false).subscribe((res:any) => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -457,7 +457,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     }
     LoadDocumentsFilingsWithDocuments(isLoadOnlay: boolean = false) {
         this.DocumentInPMs = new Array<DocumentsFilingPM>();
-        this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, true).subscribe(res => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, true).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -494,7 +494,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -570,7 +570,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         }
 
         if (getDocsOut) {
-            this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
+            this._documentOutPMService.getDocumentOutsByEntityIdAndObjectTable(this.EntityId, this.ChildEntityId, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -630,7 +630,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
             var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
             apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-            this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
+            this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -654,7 +654,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     LoadCommunicationLogs() {
         this.IsLoadCommunicationLogsListsComplete = false;
         this.CommunicationLogs = new Array<CommunicationLogPMViewModel>();
-        this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityId(this.EntityId, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityId(this.EntityId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -717,7 +717,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         this.SortItemSource();
 
 
-            //this._documentTypePMService.getDocumentTypesByIds(documentids, SessionInfo.LoggedUserTenant).subscribe(res => {
+            //this._documentTypePMService.getDocumentTypesByIds(documentids, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             //    var pmResponse: ServiceResponse = res;
             //    if (!pmResponse.HasError) {
             //        var myResult = pmResponse.Result;
@@ -1123,7 +1123,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
             else {
 
                 this.CurrentSession.StartBusyIndicator(buildingDocumentText);
-                this._documentOutPMService.getCreateDocumentOut(this.SelectedInternalDocument.DocumentTypeId, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe(res => {
+                this._documentOutPMService.getCreateDocumentOut(this.SelectedInternalDocument.DocumentTypeId, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.ObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var documentout = pmResponse.Result;

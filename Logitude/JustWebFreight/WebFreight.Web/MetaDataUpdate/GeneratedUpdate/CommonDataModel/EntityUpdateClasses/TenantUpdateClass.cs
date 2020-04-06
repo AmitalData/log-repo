@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class TenantUpdateClass
-   {  
+   {  		
+		public const string HashString = "ff5010410824b362a95e88e104926f1c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "Tenant",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Tenants",
-			      				    OldDBTableName =  "Tenants",
 			      				    ObjectTableSingular =  "Tenant",
 			      				    ObjectTablePlural =  "Tenants",
 			      				    HasCustomFilter =  false,
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tenant",
-			      				    Code =  "d4f2",
+			      				    Code =  "c188",
 			      				    Name =  "Tenant",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -129,6 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Tenant,Tenants,,,",
+			      				    HashString =  TenantUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -140,7 +141,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Signature",
-					  						OldFieldName =  "Signature",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -205,7 +205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IATA",
-					  						OldFieldName =  "IATA",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -270,7 +269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatNumber",
-					  						OldFieldName =  "VatNumber",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -335,7 +333,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AddressId",
-					  						OldFieldName =  "AddressId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -400,7 +397,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Company",
-					  						OldFieldName =  "Company",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -466,7 +462,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentTermId",
-					  						OldFieldName =  "PaymentTermId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentTerm",
@@ -531,7 +526,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AgentId",
-					  						OldFieldName =  "AgentId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Agent",
@@ -596,13 +590,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CurrencyId",
-					  						OldFieldName =  "CurrencyId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -661,13 +654,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ProfitCurrencyId",
-					  						OldFieldName =  "ProfitCurrencyId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -726,7 +718,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FreightCurrencyId",
-					  						OldFieldName =  "FreightCurrencyId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -791,7 +782,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "OtherChargesCurrencyId",
-					  						OldFieldName =  "OtherChargesCurrencyId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -856,7 +846,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "QuoteSaleCurrencyId",
-					  						OldFieldName =  "QuoteSaleCurrencyId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -921,7 +910,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VolumeUnitCode",
-					  						OldFieldName =  "VolumeUnitCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VolumeUnit",
@@ -987,7 +975,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DimensionsUnitCode",
-					  						OldFieldName =  "DimensionsUnitCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "DimensionsUnit",
@@ -1053,7 +1040,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "GrossWeightUnitCode",
-					  						OldFieldName =  "GrossWeightUnitCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "WeightUnit",
@@ -1119,7 +1105,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ChargeableWeightUnitCode",
-					  						OldFieldName =  "ChargeableWeightUnitCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "WeightUnit",
@@ -1185,7 +1170,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "WeightMeasurementUnitCode",
-					  						OldFieldName =  "WeightMeasurementUnitCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "WeightUnit",
@@ -1251,12 +1235,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExportFreightPrepaidCollectId",
-					  						OldFieldName =  "ExportFreightPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1317,12 +1300,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ImportFreightPrepaidCollectId",
-					  						OldFieldName =  "ImportFreightPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1383,12 +1365,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExportOtherPrepaidCollectId",
-					  						OldFieldName =  "ExportOtherPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1449,12 +1430,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ImportOtherPrepaidCollectId",
-					  						OldFieldName =  "ImportOtherPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1515,12 +1495,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "MasterExportFreightPrepaidCollectId",
-					  						OldFieldName =  "MasterExportFreightPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1581,12 +1560,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "MasterImportFreightPrepaidCollectId",
-					  						OldFieldName =  "MasterImportFreightPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1647,12 +1625,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "MasterExportOtherPrepaidCollectId",
-					  						OldFieldName =  "MasterExportOtherPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1713,12 +1690,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "MasterImportOtherPrepaidCollectId",
-					  						OldFieldName =  "MasterImportOtherPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  1,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1779,7 +1755,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "STDVatPercentage",
-					  						OldFieldName =  "STDVatPercentage",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1845,7 +1820,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TimeZoneOffset",
-					  						OldFieldName =  "TimeZoneOffset",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1911,7 +1885,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Language",
-					  						OldFieldName =  "Language",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1976,7 +1949,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CompanyAddress",
-					  						OldFieldName =  "CompanyAddress",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2041,7 +2013,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentTermName",
-					  						OldFieldName =  "PaymentTermName",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2106,7 +2077,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AgentName",
-					  						OldFieldName =  "AgentName",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2171,7 +2141,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountingCurrencyCode",
-					  						OldFieldName =  "AccountingCurrencyCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2236,7 +2205,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ProfitCurrencyCode",
-					  						OldFieldName =  "ProfitCurrencyCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2301,7 +2269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FreightCurrencyCode",
-					  						OldFieldName =  "FreightCurrencyCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2366,7 +2333,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "OtherChargesCurrencyCode",
-					  						OldFieldName =  "OtherChargesCurrencyCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2431,7 +2397,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "QuoteSaleCurrencyCode",
-					  						OldFieldName =  "QuoteSaleCurrencyCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2496,7 +2461,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2561,7 +2525,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Email",
-					  						OldFieldName =  "Email",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2624,7 +2587,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Website",
-					  						OldFieldName =  "Website",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2687,7 +2649,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Format",
-					  						OldFieldName =  "Format",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2752,7 +2713,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Direction",
-					  						OldFieldName =  "Direction",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2817,7 +2777,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Version",
-					  						OldFieldName =  "Version",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2882,7 +2841,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DayLightOffset",
-					  						OldFieldName =  "DayLightOffset",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2947,11 +2905,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DayLightStartDate",
-					  						OldFieldName =  "DayLightStartDate",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3012,11 +2969,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DayLightEndDate",
-					  						OldFieldName =  "DayLightEndDate",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3077,7 +3033,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PasswordPolicyCode",
-					  						OldFieldName =  "PasswordPolicyCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PasswordPolicy",
@@ -3141,7 +3096,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PasswordStrength",
-					  						OldFieldName =  "PasswordStrength",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3206,7 +3160,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsDataBackupBuilt",
-					  						OldFieldName =  "IsDataBackupBuilt",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3271,7 +3224,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsActive",
-					  						OldFieldName =  "IsActive",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3336,7 +3288,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3401,7 +3352,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PackageCode",
-					  						OldFieldName =  "PackageCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Package",
@@ -3467,7 +3417,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InvoiceSection1",
-					  						OldFieldName =  "InvoiceSection1",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3530,7 +3479,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InvoiceSection2",
-					  						OldFieldName =  "InvoiceSection2",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3593,7 +3541,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BankDetails",
-					  						OldFieldName =  "BankDetails",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3656,11 +3603,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DateTimeFormat",
-					  						OldFieldName =  "DateTimeFormat",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  100,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3721,7 +3667,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsSharedLogisticsActivated",
-					  						OldFieldName =  "IsSharedLogisticsActivated",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3786,7 +3731,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SharedLogisticsMessageLink",
-					  						OldFieldName =  "SharedLogisticsMessageLink",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3851,7 +3795,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ProfitCurrencyRate",
-					  						OldFieldName =  "ProfitCurrencyRate",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -3913,7 +3856,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CASSCode",
-					  						OldFieldName =  "CASSCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3976,7 +3918,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalCustomsCode",
-					  						OldFieldName =  "LocalCustomsCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4040,7 +3981,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatUniqueTypeCode",
-					  						OldFieldName =  "VatUniqueTypeCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatUniqueType",
@@ -4104,7 +4044,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatMandatoryTypeCode",
-					  						OldFieldName =  "VatMandatoryTypeCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatMandatoryType",
@@ -4168,7 +4107,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatUniqueCountryId",
-					  						OldFieldName =  "VatUniqueCountryId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -4232,7 +4170,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatMandatoryCountryId",
-					  						OldFieldName =  "VatMandatoryCountryId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -4296,7 +4233,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsCustomerTelRequired",
-					  						OldFieldName =  "IsCustomerTelRequired",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4361,7 +4297,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsCustomerFaxRequired",
-					  						OldFieldName =  "IsCustomerFaxRequired",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4426,7 +4361,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsPickDelAdrsRequired",
-					  						OldFieldName =  "IsPickDelAdrsRequired",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4491,7 +4425,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsCustomerAddress1Required",
-					  						OldFieldName =  "IsCustomerAddress1Required",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4556,11 +4489,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatMandatoryForPotentialCustomers",
-					  						OldFieldName =  "VatMandatoryForPotentialCustomers",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -4619,7 +4551,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "HasPrimaryContact",
-					  						OldFieldName =  "HasPrimaryContact",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4684,7 +4615,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsQuoteSubjectEdited",
-					  						OldFieldName =  "IsQuoteSubjectEdited",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4747,7 +4677,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RegulatedAgentNumber",
-					  						OldFieldName =  "RegulatedAgentNumber",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4810,7 +4739,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RegulatedAgentRegimeActivated",
-					  						OldFieldName =  "RegulatedAgentRegimeActivated",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4873,7 +4801,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customer",
@@ -4938,7 +4865,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5003,11 +4929,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsCustomerTenantShare",
-					  						OldFieldName =  "IsCustomerTenantShare",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -5068,7 +4993,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomerTenantShareImportFile",
-					  						OldFieldName =  "CustomerTenantShareImportFile",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5133,7 +5057,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsPotentialTelRequired",
-					  						OldFieldName =  "IsPotentialTelRequired",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5198,7 +5121,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsPotentialFaxRequired",
-					  						OldFieldName =  "IsPotentialFaxRequired",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5263,7 +5185,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatFormatTypeCode",
-					  						OldFieldName =  "VatFormatTypeCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatFormatType",
@@ -5327,7 +5248,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatFormatCountryId",
-					  						OldFieldName =  "VatFormatCountryId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -5391,7 +5311,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsNumeric",
-					  						OldFieldName =  "IsNumeric",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5454,7 +5373,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatSize",
-					  						OldFieldName =  "VatSize",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -5517,7 +5435,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LogBoxAdminUserId",
-					  						OldFieldName =  "LogBoxAdminUserId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5582,9 +5499,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Tenant",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -5647,7 +5563,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountingActivationDate",
-					  						OldFieldName =  "AccountingActivationDate",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -5714,7 +5629,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountingActivated",
-					  						OldFieldName =  "AccountingActivated",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5781,7 +5695,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExportQuotationsToIntegratedSystem",
-					  						OldFieldName =  "ExportQuotationsToIntegratedSystem",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5846,7 +5759,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsWebAccessActivated",
-					  						OldFieldName =  "IsWebAccessActivated",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5911,7 +5823,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsRightToLeftEnabled",
-					  						OldFieldName =  "IsRightToLeftEnabled",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5974,7 +5885,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsInternalTicketByDefault",
-					  						OldFieldName =  "IsInternalTicketByDefault",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6037,7 +5947,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ProrateMasterReceivables",
-					  						OldFieldName =  "ProrateMasterReceivables",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6100,7 +6009,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SCACCode",
-					  						OldFieldName =  "SCACCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6164,7 +6072,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FMCNumber",
-					  						OldFieldName =  "FMCNumber",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6229,7 +6136,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsCorrespondenceRightToLeftEnabled",
-					  						OldFieldName =  "IsCorrespondenceRightToLeftEnabled",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6292,7 +6198,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsNotesRightToLeftEnabled",
-					  						OldFieldName =  "IsNotesRightToLeftEnabled",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6355,7 +6260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowAgentInCustomersLOV",
-					  						OldFieldName =  "AllowAgentInCustomersLOV",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6418,7 +6322,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "TemperatureUnitCode",
-					  						OldFieldName =  "TemperatureUnitCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TemperatureUnit",
@@ -6482,11 +6385,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DefaultSLAId",
-					  						OldFieldName =  "DefaultSLAId",
 					  						ObjectTableName =  "Tenant",
-					  						FieldsDataType =  "Boolean",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6545,7 +6447,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalAddressId",
-					  						OldFieldName =  "LocalAddressId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Address",
@@ -6609,7 +6510,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "NumberFormatCode",
-					  						OldFieldName =  "NumberFormatCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "NumberFormat",
@@ -6673,7 +6573,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomerTenantShareExportFile",
-					  						OldFieldName =  "CustomerTenantShareExportFile",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6733,7 +6632,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EcommerceSupportEmail",
-					  						OldFieldName =  "EcommerceSupportEmail",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6791,7 +6689,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CBSA",
-					  						OldFieldName =  "CBSA",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6850,7 +6747,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CAAT",
-					  						OldFieldName =  "CAAT",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6909,7 +6805,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsTestTenant",
-					  						OldFieldName =  "IsTestTenant",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6970,7 +6865,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CheckDigitControlAlgorithmCode",
-					  						OldFieldName =  "CheckDigitControlAlgorithmCode",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CheckDigitControlAlgorithm",
@@ -7032,7 +6926,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "HideFCLAllIn",
-					  						OldFieldName =  "HideFCLAllIn",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7093,7 +6986,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ApplyVATForAllPartners",
-					  						OldFieldName =  "ApplyVATForAllPartners",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7150,7 +7042,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AllowCustomersInAgentsLOV",
-					  						OldFieldName =  "AllowCustomersInAgentsLOV",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,

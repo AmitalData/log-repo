@@ -5,201 +5,197 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {TarrifHeaderPM} from '../../EntityPMs/TarrifHeaderPM';
+import { TarrifHeaderPM } from '../../EntityPMs/TarrifHeaderPM';
 
-import {TarrifChargePM} from '../../EntityPMs/TarrifChargePM';
-import {TarrifFromToPM} from '../../EntityPMs/TarrifFromToPM';
+import { TarrifChargePM } from '../../EntityPMs/TarrifChargePM';
+import { TarrifFromToPM } from '../../EntityPMs/TarrifFromToPM';
 
 @Injectable()
 
 export class TarrifHeaderPMService {
- private _http: Http;
- private _apiUrl: string;
- constructor() {
+    private _http: Http;
+    private _apiUrl: string;
+    constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tarrifheaders';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tarrifheaders';
     }
 
- get(id: string) {
-         
-         
+    get(id: string) {
+
+
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();		
-		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response.json();
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
 
-                   
-					
-                    var entity: TarrifHeaderPM;
-					if(pm)
-					{
-                      entity = this.MapJsonToEntityPM(pm);
-                    }
+
+
+                var entity: TarrifHeaderPM;
+                if (pm) {
+                    entity = this.MapJsonToEntityPM(pm);
+                }
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
-              
-			    var servertime = response.headers.get('ServerExecutionTime');
+
+                var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TarrifHeader", "GetSinglePM", 'id=' + id);
-				 
+
                 return serviceResponse;
 
             }).catch(ServiceHelper.HandleServiceError);
-            });                    
+        });
     }
 
-	 insert(entityPM: TarrifHeaderPM) {
- 
-        var callTime = new Date();        
+    insert(entityPM: TarrifHeaderPM) {
+
+        var callTime = new Date();
         return Observable.defer(() => {
 
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
-                var validator: ClassLevelValidator;
-                 
-                validator = new ClassLevelValidator();
-                 
-                var errorsArray = validator.Validate("TarrifHeader", entityPM);
-                 
+            var validator: ClassLevelValidator;
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-				 if (errorsArray.length == 0) {
-                    var mappedEntity: TarrifHeaderPM;
-                    mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-				
-				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
+            validator = new ClassLevelValidator();
 
-                            var pm = response.json();
-							if(pm)
-							{
-                               var mappedResult:  TarrifHeaderPM;
-                               mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
-							   serviceResponse.Result = mappedResult;
-							}
-							
+            var errorsArray = validator.Validate("TarrifHeader", entityPM);
 
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TarrifHeader", "SaveChanges", "");                    
-												 
-                            
-                            return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
-                }
-                else {
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            if (errorsArray.length == 0) {
+                var mappedEntity: TarrifHeaderPM;
+                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                    serviceResponse.HasError = true;
-                    serviceResponse.ErrorsArray = errorsArray;
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((response) => {
 
-                    return Observable.of(serviceResponse);
-                   
-                }
+                        var pm = response.json();
+                        if (pm) {
+                            var mappedResult: TarrifHeaderPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            serviceResponse.Result = mappedResult;
+                        }
+
+
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TarrifHeader", "SaveChanges", "");
+
+
+                        return serviceResponse;
+
+                    }).catch(ServiceHelper.HandleServiceError);
             }
+            else {
 
-            );
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+
+                return Observable.of(serviceResponse);
+
+            }
+        }
+
+        );
     }
 
     update(entityPM: TarrifHeaderPM) {
 
-            var callTime = new Date();         
-            return Observable.defer(() => {
+        var callTime = new Date();
+        return Observable.defer(() => {
 
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
-                var validator: ClassLevelValidator;
-                 
-                validator = new ClassLevelValidator();
-               
-                var errorsArray = validator.Validate("TarrifHeader", entityPM);
-                 
+            var validator: ClassLevelValidator;
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-				 if (errorsArray.length == 0) {
-                    var mappedEntity: TarrifHeaderPM;
-                    mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-				
-				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
-                 
+            validator = new ClassLevelValidator();
 
-                            var pm = response.json();
-							if(pm)
-							{
-                               var mappedResult:  TarrifHeaderPM;
-                               mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
-							   serviceResponse.Result = mappedResult;
-							 }
-							 
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TarrifHeader", "SaveChanges", "");                    
-					                           
-                            return serviceResponse;
+            var errorsArray = validator.Validate("TarrifHeader", entityPM);
 
-                        }).catch(ServiceHelper.HandleServiceError);
-                }
-                else {
 
-                    serviceResponse.HasError = true;
-                    serviceResponse.ErrorsArray = errorsArray;
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            if (errorsArray.length == 0) {
+                var mappedEntity: TarrifHeaderPM;
+                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                    return Observable.of(serviceResponse);
-                   
-                }
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((response) => {
+
+
+                        var pm = response.json();
+                        if (pm) {
+                            var mappedResult: TarrifHeaderPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            serviceResponse.Result = mappedResult;
+                        }
+
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TarrifHeader", "SaveChanges", "");
+
+                        return serviceResponse;
+
+                    }).catch(ServiceHelper.HandleServiceError);
             }
+            else {
 
-            );
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+
+                return Observable.of(serviceResponse);
+
+            }
+        }
+
+        );
 
     }
 
-   
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TarrifHeaderPM = null) {
 
-         
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TarrifHeaderPM = null) {
+
+
         if (!entityPM) {
-            
+
             entityPM = new TarrifHeaderPM();
         }
 
-		var customFields: Array<string> = [];
+        var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-            var jsonPMKeys = Object.keys(jsonPM);
+        var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-                var property = jsonPMKeys[key];
-				
-			  if(customFields.indexOf(property) > -1)
-                {
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -208,41 +204,41 @@ export class TarrifHeaderPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-                 
-            }
-			
-               this.MapTarrifCharges(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapTarrifFromToes(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
-            
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
+        }
+
+        this.MapTarrifCharges(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapTarrifFromToes(entityPM, jsonPM, mapParent); // Call composition tables map methods
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
             entityPM.OldEntityPM.TarrifCharges = [];
             for (var item in entityPM.TarrifCharges) {
-            var myTarrifChargePM = entityPM.TarrifCharges[item];
-            var newTarrifChargePM: TarrifChargePM = this.clone(myTarrifChargePM);
-						
-							 
-            entityPM.OldEntityPM.TarrifCharges.push(newTarrifChargePM);
+                var myTarrifChargePM = entityPM.TarrifCharges[item];
+                var newTarrifChargePM: TarrifChargePM = this.clone(myTarrifChargePM);
+
+
+                entityPM.OldEntityPM.TarrifCharges.push(newTarrifChargePM);
             }
-			   			   			   
+
             entityPM.OldEntityPM.TarrifFromToes = [];
             for (var item in entityPM.TarrifFromToes) {
-            var myTarrifFromToPM = entityPM.TarrifFromToes[item];
-            var newTarrifFromToPM: TarrifFromToPM = this.clone(myTarrifFromToPM);
-						
-							 
-            entityPM.OldEntityPM.TarrifFromToes.push(newTarrifFromToPM);
+                var myTarrifFromToPM = entityPM.TarrifFromToes[item];
+                var newTarrifFromToPM: TarrifFromToPM = this.clone(myTarrifFromToPM);
+
+
+                entityPM.OldEntityPM.TarrifFromToes.push(newTarrifFromToPM);
             }
-			   
-		}
+
+        }
         else {
 
             entityPM.OldEntityPM = null;
         }
-		entityPM.IsDirty = false;
+        entityPM.IsDirty = false;
         return entityPM;
     }
 
@@ -260,32 +256,31 @@ export class TarrifHeaderPMService {
                 continue;
             }
             var newTarrifChargePM: TarrifChargePM;
-	  
+
             if (mapParent) {
                 newTarrifChargePM = new TarrifChargePM(entityPM);
             }
-            else
-            {
+            else {
                 newTarrifChargePM = new TarrifChargePM(null);
             }
-                
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newTarrifChargePM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newTarrifChargePM.UniqueKey = Guid.newGuid();
                 newTarrifChargePM.ChangeSetOp = "None";
                 jItem.ChangeOp = "None";
                 newTarrifChargePM.OldEntityPM = this.clone(newTarrifChargePM);
 
-				
+
             }
             else {
                 if (newTarrifChargePM.UniqueKey) {
@@ -294,25 +289,25 @@ export class TarrifHeaderPMService {
                         newTarrifChargePM.ChangeSetOp = "Update";
                 }
                 else {
-                        newTarrifChargePM.ChangeSetOp = "Insert";
+                    newTarrifChargePM.ChangeSetOp = "Insert";
                 }
- 
+
                 newTarrifChargePM.OldEntityPM = null;
                 newTarrifChargePM.EntityParentPM = null;
             }
-			
-			 newTarrifChargePM.IsDirty = false;
+
+            newTarrifChargePM.IsDirty = false;
             entityPM.TarrifCharges.push(newTarrifChargePM);
         }
         if (oldTarrifCharges) {
-            
+
             for (var itemKey in oldTarrifCharges) {
-                if (entityPM.TarrifCharges.filter(p=> p.UniqueKey === oldTarrifCharges[itemKey].UniqueKey).length === 0) {
-				
+                if (entityPM.TarrifCharges.filter(p => p.UniqueKey === oldTarrifCharges[itemKey].UniqueKey).length === 0) {
+
                     if (oldTarrifCharges[itemKey]) {
                         //oldTarrifCharges[itemKey].ChangeSetOp = "Delete";
                         //entityPM.TarrifCharges.push(oldTarrifCharges[itemKey]);
-						var oldItemJson = oldTarrifCharges[itemKey];
+                        var oldItemJson = oldTarrifCharges[itemKey];
                         var deletedPM: TarrifChargePM = new TarrifChargePM(null);
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
@@ -325,10 +320,10 @@ export class TarrifHeaderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.TarrifCharges.push(deletedPM);
                     }
@@ -350,32 +345,31 @@ export class TarrifHeaderPMService {
                 continue;
             }
             var newTarrifFromToPM: TarrifFromToPM;
-	  
+
             if (mapParent) {
                 newTarrifFromToPM = new TarrifFromToPM(entityPM);
             }
-            else
-            {
+            else {
                 newTarrifFromToPM = new TarrifFromToPM(null);
             }
-                
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newTarrifFromToPM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newTarrifFromToPM.UniqueKey = Guid.newGuid();
                 newTarrifFromToPM.ChangeOp = "None";
                 jItem.ChangeOp = "None";
                 newTarrifFromToPM.OldEntityPM = this.clone(newTarrifFromToPM);
 
-				
+
             }
             else {
                 if (newTarrifFromToPM.UniqueKey) {
@@ -384,25 +378,25 @@ export class TarrifHeaderPMService {
                         newTarrifFromToPM.ChangeOp = "Update";
                 }
                 else {
-                        newTarrifFromToPM.ChangeOp = "Insert";
+                    newTarrifFromToPM.ChangeOp = "Insert";
                 }
- 
+
                 newTarrifFromToPM.OldEntityPM = null;
                 newTarrifFromToPM.EntityParentPM = null;
             }
-			
-			 newTarrifFromToPM.IsDirty = false;
+
+            newTarrifFromToPM.IsDirty = false;
             entityPM.TarrifFromToes.push(newTarrifFromToPM);
         }
         if (oldTarrifFromToes) {
-            
+
             for (var itemKey in oldTarrifFromToes) {
-                if (entityPM.TarrifFromToes.filter(p=> p.UniqueKey === oldTarrifFromToes[itemKey].UniqueKey).length === 0) {
-				
+                if (entityPM.TarrifFromToes.filter(p => p.UniqueKey === oldTarrifFromToes[itemKey].UniqueKey).length === 0) {
+
                     if (oldTarrifFromToes[itemKey]) {
                         //oldTarrifFromToes[itemKey].ChangeSetOp = "Delete";
                         //entityPM.TarrifFromToes.push(oldTarrifFromToes[itemKey]);
-						var oldItemJson = oldTarrifFromToes[itemKey];
+                        var oldItemJson = oldTarrifFromToes[itemKey];
                         var deletedPM: TarrifFromToPM = new TarrifFromToPM(null);
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
@@ -415,10 +409,10 @@ export class TarrifHeaderPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeOp = "Delete";
-                        
+
                         deletedPM.OldEntityPM = null;
                         entityPM.TarrifFromToes.push(deletedPM);
                     }
@@ -427,13 +421,13 @@ export class TarrifHeaderPMService {
         }
     }
 
-	  public clone(jsonPM: any) {
+    public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-            
+
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -445,12 +439,12 @@ export class TarrifHeaderPMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {		 
-		    var entityPM: TarrifHeaderPM;
-			entityPM = new TarrifHeaderPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
-			return entityPM;
+    public GetNewEntityPM() {
+        var entityPM: TarrifHeaderPM;
+        entityPM = new TarrifHeaderPM();
+        entityPM.Tenant = InfraSettings.TenantPM.Id;
+        return entityPM;
     }
-		 
+
 
 }

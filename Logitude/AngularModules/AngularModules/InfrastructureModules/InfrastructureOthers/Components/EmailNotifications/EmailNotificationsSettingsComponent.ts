@@ -39,7 +39,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
     }
 
     LoadData() {
-        this.emailAlertSettingPMService.getAllEmailAlerts(SessionInfo.LoggedUserTenant).subscribe(response => {
+        this.emailAlertSettingPMService.getAllEmailAlerts(SessionInfo.LoggedUserTenant).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.AllAlerts = response.Result;
                 var ownerArr = this.AllAlerts.filter(a => a.SettingLevelCode == "OWNR");
@@ -84,7 +84,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
             return;
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        this.emailAlertSettingPMService.updateAllAlerts(this.AllAlerts, SessionInfo.LoggedUserTenant).subscribe(response => {
+        this.emailAlertSettingPMService.updateAllAlerts(this.AllAlerts, SessionInfo.LoggedUserTenant).subscribe((response: ServiceResponse) => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (response.HasError)
             {

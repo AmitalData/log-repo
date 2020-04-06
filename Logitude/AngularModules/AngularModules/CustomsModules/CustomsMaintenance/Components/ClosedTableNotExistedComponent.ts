@@ -49,7 +49,7 @@ export class ClosedTableNotExistedComponent implements OnInit {
 
     }
     ngOnInit() {
-        //this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        //this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             //this._entityListService = new EntityListService();
             
             //this.RefreshBtnClick()

@@ -71,7 +71,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 this.ScreenIsReady = true;
 
                 this.BuildFiltersLists();
