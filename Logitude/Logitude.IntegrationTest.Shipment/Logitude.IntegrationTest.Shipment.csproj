@@ -75,6 +75,7 @@
     <Compile Include="Tests\IntegrationShipmentReceivable.cs" />
     <Compile Include="Tests\IntegrationShipmentPackages.cs" />
     <Compile Include="Tests\ShipmentOrderPackagesTest.cs" />
+    <Compile Include="Tests\ShipmentPackageTest.cs" />
     <Compile Include="Tests\ShipmentProfitTest.cs" />
     <Compile Include="Tests\ShipmentRoutingTest.cs" />
     <Compile Include="Tests\ShipmentStatusTest.cs" />

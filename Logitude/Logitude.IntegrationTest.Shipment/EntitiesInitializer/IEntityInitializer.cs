@@ -35,8 +35,7 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
                 case "ShipmentOrderPackage":
                     {
                         return new ShipmentOrderPackageInitializer();
-                    }
-            }
+                    }            
 
                 case "ShipmentPackage":
                     {
@@ -67,5 +66,6 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
         public double? PackageLength { get; set; }
         public double? PackageWidth { get; set; }
         public double? PackageHeight { get; set; }
+        public double? PackgeVolumetricWeight { get; set; }
     }
 }

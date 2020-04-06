@@ -33,7 +33,6 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
             if (entityPM.Length != null && entityPM.Width != null && entityPM.Height != null)
             {
                 entityPM.Volume = entityPM.Length * entityPM.Width * entityPM.Height;
-                //entityPM.VolumetricWeight = entityPM.Quantity * entityPM.UnitPrice;
             }
         }
     }
