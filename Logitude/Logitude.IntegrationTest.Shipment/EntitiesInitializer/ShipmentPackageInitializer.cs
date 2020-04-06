@@ -14,11 +14,27 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
         {
             ShipmentPackagePM entityPM = new ShipmentPackagePM()
             {
-                Tenant = IntegrationTestLoginParameters.Tenant,
-
+                Quantity = args.PackageQuantity,
+                Weight = args.PackageWeight,
+                Length = args.PackageLength,
+                Width = args.PackageWidth,
+                Height = args.PackageHeight,
+                Tenant = IntegrationTestLoginParameters.Tenant,               
+                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
             };
 
+            this.ComouteVolume(entityPM);
+
             return entityPM;
+        }
+
+        private void ComouteVolume(ShipmentPackagePM entityPM)
+        {
+            if (entityPM.Length != null && entityPM.Width != null && entityPM.Height != null)
+            {
+                entityPM.Volume = entityPM.Length * entityPM.Width * entityPM.Height;
+                //entityPM.VolumetricWeight = entityPM.Quantity * entityPM.UnitPrice;
+            }
         }
     }
 }

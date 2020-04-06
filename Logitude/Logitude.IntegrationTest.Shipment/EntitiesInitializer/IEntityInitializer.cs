@@ -50,5 +50,11 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
         public double? PayableUnitPrice { get; set; }
         public double? ReceivableQuantity { get; set; }
         public double? ReceivableUnitPrice { get; set; }
+
+        public int? PackageQuantity { get; set; }
+        public double? PackageWeight { get; set; }
+        public double? PackageLength { get; set; }
+        public double? PackageWidth { get; set; }
+        public double? PackageHeight { get; set; }
     }
 }
