@@ -801,8 +801,14 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     AssignTariffPayablesToShipment(): any {
         this.TariffList_Shipment.forEach(shipmentPayable => {
-             this.FatherComponent.EntityPM.AddPayable(shipmentPayable);
-
+            this.FatherComponent.EntityPM.AddPayable(shipmentPayable);
+            var payableItem = new ShipmentPayableItem(shipmentPayable, this.FatherComponent, false);
+            this.FatherComponent.ItemsSource.Insert(payableItem);
+            payableItem.ChargesTypeId = shipmentPayable.ChargesTypeId;
+            payableItem.MeasurementId = shipmentPayable.MeasurementId;
+            payableItem.CurrencyId = shipmentPayable.CurrencyId;
+            payableItem.UnitPrice = shipmentPayable.UnitPrice;
+            payableItem.MinAmount = shipmentPayable.MinAmount;
         });
         this.ReloadTariffPayables();
     }
@@ -890,15 +896,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.Notes = notes;
                 shipmentPayable.VendorId = newRecord.SellerId;
                 shipmentPayable.VendorName = newRecord.SellerName;
+                shipmentPayable.MinAmount = newRecord.MinPrice;
                 this.TariffList_Shipment.push(shipmentPayable);
-
-                var payableItem = new ShipmentPayableItem(shipmentPayable, this.FatherComponent, false);
-                this.FatherComponent.ItemsSource.Insert(payableItem);
-                payableItem.ChargesTypeId = shipmentPayable.ChargesTypeId;
-                payableItem.MeasurementId = shipmentPayable.MeasurementId;
-                payableItem.CurrencyId = shipmentPayable.CurrencyId;
-                payableItem.UnitPrice = shipmentPayable.UnitPrice;
-                payableItem.MinAmount = newRecord.MinPrice;
             }
         });
     }
