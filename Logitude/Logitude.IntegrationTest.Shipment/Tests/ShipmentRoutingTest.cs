@@ -1,10 +1,11 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.IntegrationTest.Shipment.Services;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.IntegrationTest.Shipment.EntitiesInitializer;
+using Logitude.IntegrationTest.Shipment.Services;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.IntegrationTest.Shipment.Tests
@@ -17,12 +18,14 @@ namespace Logitude.IntegrationTest.Shipment.Tests
         ShipmentTestService service;
         IEntityInitializer initializer;
         EntityInitializerFactory factory;
+        DateTime todayDate;
 
         [TestMethod]
-        public async Task TestShipmentStatus()
+        public async Task TestShipmentRouting()
         {
             service = new ShipmentTestService();
             factory = new EntityInitializerFactory();
+            todayDate = DateTime.UtcNow.Date;
 
             await CreateShipment();
 
@@ -30,23 +33,11 @@ namespace Logitude.IntegrationTest.Shipment.Tests
 
             await UpdateShipmentWithRoutingPorts();
 
-            await UpdateShipmentWithPreCarriageATD();
-            await UpdateShipmentWithPreCarriageATA();
+            await UpdateShipmentWithMainCarriageDates();
 
-            await UpdateShipmentWitMainCarriageATD();
-            await UpdateShipmentWitMainCarriageATA();
+            await UpdateShipmentWitTransshipment1Dates();
 
-            await UpdateShipmentWitTransshipment1ATD();
-            await UpdateShipmentWitTransshipment1ATA();
-
-            await UpdateShipmentWitTransshipment2ATD();
-            await UpdateShipmentWitTransshipment2ATA();
-
-            await UpdateShipmentWitTransshipment3ATD();
-            await UpdateShipmentWitTransshipment3ATA();
-
-            await UpdateShipmentWithOnCarriageATD();
-            await UpdateShipmentWithOnCarriageATA();
+            // .. to be continue
         }
 
         private async Task CreateShipment()
@@ -62,11 +53,22 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             ShipmentPM entityPM = (ShipmentPM)initializer.Create(args);
             shipmentId = await service.CreateShipment(entityPM);
         }
+
         private async Task GetShipment()
         {
             shipmentPM = await service.GetShipment(shipmentId);
-            this.StatusShouldBe("Order", 0);
+            Assert.IsTrue(shipmentPM.Routing == "LHR , JFK");
+            Assert.IsTrue(shipmentPM.OperationalDate == shipmentPM.CreateDateTime);
+            Assert.IsNull(shipmentPM.MainCarriageFinalDestinationETA);
+            Assert.IsNull(shipmentPM.MainCarriageFinalDestinationATA);
+
+            //Assert.IsNull(shipmentPM.FinalArrivalDate);
+            //Assert.IsNull(shipmentPM.EstimatedFinalArrivalDate);
+            //Assert.IsNull(shipmentPM.ActualFinalArrivalDate);
+            // DepartureArrivalFromDate
+            // DepartureArrivalToDate
         }
+
         private async Task UpdateShipmentWithRoutingPorts()
         {
             shipmentPM.PreCarriageFromPortId = ShipmentVariables.PortMIAId;
@@ -95,161 +97,35 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             Assert.IsTrue(shipmentPM.Transshipment2ToPortId == shipmentPM.Transshipment3FromPortId);
             Assert.IsTrue(shipmentPM.Transshipment3ToPortId == shipmentPM.OnCarriageFromPortId);
             Assert.IsTrue(shipmentPM.Transshipment3ToPortId == shipmentPM.MainCarriageFinalDestinationPortId);
+            Assert.IsTrue(shipmentPM.Routing == "MIA , LHR , JFK , MAN");
         }
 
-        private async Task UpdateShipmentWithPreCarriageATD()
+        private async Task UpdateShipmentWithMainCarriageDates()
         {
-            // EventTypes.Code = 'PRCD'
-            shipmentPM.PreCarriageATD = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Departed", 60);
+            shipmentPM.MainCarriageETD = todayDate.AddDays(-10);
+            shipmentPM.MainCarriageETA = todayDate.AddDays(-10).AddHours(1);
+            shipmentPM.MainCarriageATD = todayDate.AddDays(-9);
+            shipmentPM.MainCarriageATA = todayDate.AddDays(-9).AddHours(1);
 
-            shipmentPM.PreCarriageATD = null;
             shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
+            Assert.IsTrue(shipmentPM.OperationalDate == shipmentPM.MainCarriageATD);
+            Assert.IsTrue(shipmentPM.MainCarriageFinalDestinationETA == shipmentPM.MainCarriageETA);
+            Assert.IsTrue(shipmentPM.MainCarriageFinalDestinationATA == shipmentPM.MainCarriageATA);
         }
-        private async Task UpdateShipmentWithPreCarriageATA()
+
+        private async Task UpdateShipmentWitTransshipment1Dates()
         {
-            // EventTypes.Code = 'PRCA'
-            shipmentPM.PreCarriageATA = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Arrived", 70);
+            shipmentPM.Transshipment1ETD = todayDate.AddDays(-8);
+            shipmentPM.Transshipment1ETA = todayDate.AddDays(-8).AddHours(1);
+            shipmentPM.Transshipment1ATD = todayDate.AddDays(-7);
+            shipmentPM.Transshipment1ATA = todayDate.AddDays(-7).AddHours(1);
 
-            shipmentPM.PreCarriageATA = null;
             shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
+            Assert.IsTrue(shipmentPM.OperationalDate == shipmentPM.MainCarriageATD);
+            Assert.IsTrue(shipmentPM.MainCarriageFinalDestinationETA == shipmentPM.Transshipment1ETA);
+            Assert.IsTrue(shipmentPM.MainCarriageFinalDestinationATA == shipmentPM.Transshipment1ATA);
         }
 
-        private async Task UpdateShipmentWitMainCarriageATD()
-        {
-            // EventTypes.Code = 'DEP'
-            shipmentPM.MainCarriageATD = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Departed", 80);
 
-            shipmentPM.MainCarriageATD = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-        private async Task UpdateShipmentWitMainCarriageATA()
-        {
-            // EventTypes.Code = 'ARR'
-            shipmentPM.MainCarriageATA = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Arrived", 90);
-
-            shipmentPM.MainCarriageATA = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-
-        private async Task UpdateShipmentWitTransshipment1ATD()
-        {
-            // EventTypes.Code = 'T1DP'
-            shipmentPM.Transshipment1ATD = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Departed", 100);
-
-            shipmentPM.Transshipment1ATD = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-        private async Task UpdateShipmentWitTransshipment1ATA()
-        {
-            // EventTypes.Code = 'T1AR'
-            shipmentPM.Transshipment1ATA = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Arrived", 110);
-
-            shipmentPM.Transshipment1ATA = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-
-        private async Task UpdateShipmentWitTransshipment2ATD()
-        {
-            // EventTypes.Code = 'T2DP'
-            shipmentPM.Transshipment2ATD = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Departed", 120);
-
-            shipmentPM.Transshipment2ATD = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-        private async Task UpdateShipmentWitTransshipment2ATA()
-        {
-            // EventTypes.Code = 'T2AR'
-            shipmentPM.Transshipment2ATA = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Arrived", 130);
-
-            shipmentPM.Transshipment2ATA = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-
-        private async Task UpdateShipmentWitTransshipment3ATD()
-        {
-            // EventTypes.Code = 'T3DP'
-            shipmentPM.Transshipment3ATD = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Departed", 140);
-
-            shipmentPM.Transshipment3ATD = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-        private async Task UpdateShipmentWitTransshipment3ATA()
-        {
-            // EventTypes.Code = 'T3AR'
-            shipmentPM.Transshipment3ATA = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Arrived", 150);
-
-            shipmentPM.Transshipment3ATA = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-
-        private async Task UpdateShipmentWithOnCarriageATD()
-        {
-            // EventTypes.Code = 'ONCD'
-            shipmentPM.OnCarriageATD = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Departed", 160);
-
-            shipmentPM.OnCarriageATD = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-        private async Task UpdateShipmentWithOnCarriageATA()
-        {
-            // EventTypes.Code = 'ONCA'
-            shipmentPM.OnCarriageATA = DateTime.UtcNow;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Arrived", 170);
-
-            shipmentPM.OnCarriageATA = null;
-            shipmentPM = await service.UpdateShipment(shipmentPM);
-            this.StatusShouldBe("Order", 0);
-        }
-
-        private void StatusShouldBe(string statusName, int statusWeight)
-        {
-            Assert.IsTrue(shipmentPM.StatusName == statusName);
-            Assert.IsTrue(shipmentPM.StatusWeight == statusWeight);
-        }
     }
 }
-
-/*
-select 
-EventTypes.Code, EventTypes.EnglishName,
-EntityStatus.Code, EntityStatus.Name, EntityStatus.StatusWeight
-from
-EventTypes join EntityStatus
-on EventTypes.EntityStatusId = EntityStatus.Id
-where EventTypes.Tenant = 0 and EntityStatus.Tenant = 0
-and EventTypes.Code = 'T1DP'
-*/
