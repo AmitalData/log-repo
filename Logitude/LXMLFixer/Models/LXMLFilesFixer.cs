@@ -696,6 +696,59 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
+        public void FixObjectFieldsNotRequired()
+        {
+            bool exceptCustomsLxml = ConfigurationManager.AppSettings["ExceptCustomsLXML"] == "true";
+            string[] lxmlFiles = GetLXMLFiles(exceptCustomsLxml);
+
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"ObjectFieldsNotRequired.txt");
+            List<string> objectFieldsList = File.ReadLines(filePath).ToList();
+
+            foreach(var objectField in objectFieldsList)
+            {
+                string objectFieldName = objectField.Split(',')[0];
+                string objectFieldFileName = objectField.Split(',')[1] + ".lxml";
+                string lxmlFile = lxmlFiles.Where(l => l.ToLower().Contains(@"\" + objectFieldFileName.ToLower())).FirstOrDefault();
+
+                if (lxmlFile != null)
+                {
+                    Console.WriteLine("Fix Object Field " + objectFieldName + " In " + objectFieldFileName + " ...");
+
+                    List<LXMLAttribute> attributes = new List<LXMLAttribute>();
+
+                    LXMLAttribute attribute = new LXMLAttribute
+                    {
+                        ElementName = "field",
+                        AttributeName = "ObjectFieldNotRequired",
+                        AttributeValue = "true",
+                        OldAttributeValue = "false",
+                        AttributeFilter = new LXMLAttributeFilter
+                        {
+                            Name = "FieldName",
+                            Value = GetStringValue(objectFieldName)
+                        }
+                    };
+
+                    attributes.Add(attribute);
+
+                    LXMLFileFixer lxmlFileFixer = new LXMLFileFixer
+                    {
+                        FilePath = lxmlFile,
+                        Attributes = attributes
+                    };
+
+                    FixLXMLFile(lxmlFileFixer);
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Cannot Find " + objectFieldFileName);
+                    Console.ResetColor();
+                }
+            }
+        }
+
         private string[] GetLXMLFiles(bool exceptCustomsModule)
         {
             try

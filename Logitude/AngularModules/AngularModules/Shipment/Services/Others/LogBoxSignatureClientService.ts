@@ -23,10 +23,6 @@ export class LogBoxSignatureClientService {
     
     GetSignRequestReceived(entityPM) {
 
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
         return Observable.defer(() => {
             return this._httpClient.put(this._apiUrl, JSON.stringify(entityPM), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -66,9 +62,6 @@ export class LogBoxSignatureClientService {
                 return;
             }
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();

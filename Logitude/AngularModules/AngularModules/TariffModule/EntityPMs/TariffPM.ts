@@ -406,10 +406,16 @@ export class TariffPM {
     private tariffProductId: string;
     public get TariffProductId() { return this.tariffProductId; }
     public set TariffProductId(newValue: string) { if (this.tariffProductId != newValue) { this.tariffProductId = newValue; this.MarkAsDirty("TariffProductId"); } }
-
+       
+	 
     private sellerPartnerTypeId: string;
     public get SellerPartnerTypeId() { return this.sellerPartnerTypeId; }
     public set SellerPartnerTypeId(newValue: string) { if (this.sellerPartnerTypeId != newValue) { this.sellerPartnerTypeId = newValue; this.MarkAsDirty("SellerPartnerTypeId"); } }
+       
+	 
+    private isRefreshTranslations: boolean;
+    public get IsRefreshTranslations() { return this.isRefreshTranslations; }
+    public set IsRefreshTranslations(newValue: boolean) { if (this.isRefreshTranslations != newValue) { this.isRefreshTranslations = newValue; this.MarkAsDirty("IsRefreshTranslations"); } }
        
 	 
 
@@ -436,4 +442,4 @@ export class TariffPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

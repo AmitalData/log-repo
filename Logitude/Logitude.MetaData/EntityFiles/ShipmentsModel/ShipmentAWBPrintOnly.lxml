@@ -536,7 +536,8 @@
     HasPMField="true"
     IsForeignKey="true"
     ForeignEntity="Shipment"
-    NavigationPropertyName="Shipment" />
+    NavigationPropertyName="Shipment"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;7bdae354-4253-426a-9d80-4111a8f91b44&quot;"
     FieldName="&quot;Quantity&quot;"

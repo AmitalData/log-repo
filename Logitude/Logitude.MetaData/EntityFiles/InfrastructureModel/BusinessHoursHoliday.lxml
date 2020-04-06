@@ -617,7 +617,8 @@
     GenerateInList="true"
     IsForeignKey="true"
     ForeignEntity="User"
-    NavigationPropertyName="CreatedByUser" />
+    NavigationPropertyName="CreatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;d0433668-aba0-4bf4-b6b1-7f365542a172&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -683,7 +684,8 @@
     GenerateInList="true"
     IsForeignKey="true"
     ForeignEntity="User"
-    NavigationPropertyName="UpdatedByUser" />
+    NavigationPropertyName="UpdatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;d32c97a5-aba7-470a-bf00-95f04dcccb5c&quot;"
     FieldName="&quot;Inactive&quot;"

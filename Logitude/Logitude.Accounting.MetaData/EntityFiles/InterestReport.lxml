@@ -60,7 +60,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;53b0cb37-5b0d-49f8-afd7-5f50ee955545&quot;"
     FieldName="&quot;Id&quot;"
@@ -665,7 +667,7 @@
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="true"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
@@ -1835,7 +1837,7 @@
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="true"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"

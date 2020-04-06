@@ -7399,7 +7399,7 @@
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
@@ -11661,7 +11661,7 @@
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
-    <TextCode
+  <TextCode
       Code="&quot;GLAccount.O.NoCreditDefined&quot;"
       DefaultText="&quot;Credit balance not defined&quot;"
       LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;"
@@ -11786,6 +11786,9 @@
       DefaultText="&quot;Preview&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+       <TextCode Code="&quot;GLAccount.O.IsCreditLimitSet&quot;" DefaultText="&quot;Credit Limit Is Set&quot;" LocalDefaultText="&quot;מוגדר מסגרת אשראי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.SortBy&quot;" DefaultText="&quot;Sort By&quot;" LocalDefaultText="&quot;מיון לפי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+  
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

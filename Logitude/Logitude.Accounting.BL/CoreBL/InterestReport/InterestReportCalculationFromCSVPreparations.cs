@@ -159,7 +159,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     interestTransactionPM.InterestReportId = lineFields[13];
                     interestTransactionPM.IsClosed = lineFields[14] == "0" ? false : true;
 
-                    interestTransactionPMs.Add(interestTransactionPM);
+                    if(!interestTransactionPM.IsCancelled 
+                        && !interestTransactionPM.IsClosed 
+                        &&glaccountId==interestTransactionPM.GLAccountId
+                        && interestTransactionPM.InterestValueDate <= InterestReportCalculationDate)
+                            interestTransactionPMs.Add(interestTransactionPM);
                 }
             }
             return interestTransactionPMs;

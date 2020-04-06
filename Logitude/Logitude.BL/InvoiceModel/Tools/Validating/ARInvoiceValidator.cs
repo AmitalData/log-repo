@@ -431,7 +431,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException("Can't change Consolidation invoice type");
                 }
 
-                bool isEditingEnabled = IsEditingARInvoiceEnabled(entityPOCO);
+                bool isEditingEnabled = IsEditingEntityEnabled(entityPOCO);
 
                 if (!isEditingEnabled)
                 {
@@ -477,18 +477,17 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         throw new ApplicationException("Can't update " + fieldLabel);
                     }
 
+                    if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
 
-                    //if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
-                    //{
-                    //    string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
-                    //    throw new ApplicationException("Can't update " + fieldLabel);
-                    //}
-
-                    //if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
-                    //{
-                    //    string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
-                    //    throw new ApplicationException("Can't update " + fieldLabel);
-                    //}
+                    if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
 
                 }
             }
@@ -1195,7 +1194,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        private static bool IsEditingARInvoiceEnabled(ARInvoice entityPOCO)
+        private static bool IsEditingEntityEnabled(ARInvoice entityPOCO)
         {
             bool myResult = false;
 

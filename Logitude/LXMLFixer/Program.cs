@@ -44,6 +44,15 @@ namespace Logitude.LXMLFixer
             {
                 fixer.FixLXMLFilesMistakes();
             }
+
+            Console.WriteLine("\nDo You Want To Fix Object Fields Not Required List? y/n");
+
+            bool fixObjectFieldsNotRequiredList = Console.ReadLine().ToLower() == "y";
+
+            if (fixObjectFieldsNotRequiredList)
+            {
+                fixer.FixObjectFieldsNotRequired();
+            }
         }
 
         private static int ReadModuleNumber(string userInput)

@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class BusinessUnitUpdateClass
-   {  
+   {  		
+		public const string HashString = "ec5f0deb620174227e45d1c20306fc50";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,6 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    NewWizardComponentPath =  "./Common/Components/Maintenance/BusinessUnit/NewBusinessUnitComponent",
 			      				    Code =  "BUQG",
 			      				    DescriptionDefaultText =  "Define the business units you want to work with for controlling access to information and sharing of information.",
+			      				    HashString =  BusinessUnitUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

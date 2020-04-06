@@ -25,6 +25,6 @@ namespace Logitude.TariffModule.BL.DataContracts
         public bool IsMinIconVisible { get; set; }
         public string LineId { get; set; }
         public bool IsAllIn { get; set; }
-
+        public List<ContainersPrice> ContainersPrices { get; set; }
     }
 }

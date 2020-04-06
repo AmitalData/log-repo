@@ -151,7 +151,7 @@
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="20"
     DisplayInList="false"
     IsCustomFilter="false"

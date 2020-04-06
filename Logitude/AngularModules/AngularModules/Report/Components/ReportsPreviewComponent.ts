@@ -428,7 +428,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
     StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isUsedWorkerRoleAlalways = false) {
-        filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
+        filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = false;
 
         if (isUsedWorkerRoleAlalways) {
             this.StartBusyIndicator("Generating...");
@@ -493,7 +493,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                             this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
                             this.IsUsedReportsRunUsingWR = false;
                             this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
-                          
+
                         }
 
                         if (!pmResponse.HasError) {
