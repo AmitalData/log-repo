@@ -1,45 +1,46 @@
 declare var window: any;
-import {Component, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChildren, QueryList, Output, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
-import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool, ArrayTool, DateTool} from '../../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {Validator} from '../../../../Infrastructure/Validators/Validator';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import { Component, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChildren, QueryList, Output, Input, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
+import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { AppTool, ArrayTool, DateTool } from '../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 
-import {DeclarationPM} from '../../../../Customs/EntityPMs/DeclarationPM';
-import {DocumentsFilingPM}  from '../../../../Common/EntityPMs/DocumentsFilingPM';
+import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
+import { DocumentsFilingPM } from '../../../../Common/EntityPMs/DocumentsFilingPM';
 import { RelatedDocumentViewModel } from '../../../CustomsDocuments/Components/RelatedDocumentViewModel';
 
 // Services
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {CustomsSettingListService} from '../../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { CustomsSettingListService } from '../../../../Customs/Services/StandardLists/CustomsSettingListService';
 //import {DeclarationWebService} from '../Services/WebServices/DeclarationWebService';
-import {CustDocRelatedDocsWebService} from '../../../../Customs/Services/WebServices/CustDocRelatedDocsWebService';
-import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
-import {CustomDocumentViewerService} from '../../../../Customs/Services/WebServices/CustomDocumentViewerService';
-import {CustomsDocumentMetaDataValuePM} from '../../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
-import {CustDocMetaDataValuesWebService} from '../../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
+import { CustDocRelatedDocsWebService } from '../../../../Customs/Services/WebServices/CustDocRelatedDocsWebService';
+import { ImageLibraryService } from '../../../../Common/Services/Others/ImageLibraryService';
+import { CustomDocumentViewerService } from '../../../../Customs/Services/WebServices/CustomDocumentViewerService';
+import { CustomsDocumentMetaDataValuePM } from '../../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
+import { CustDocMetaDataValuesWebService } from '../../../../Customs/Services/WebServices/CustDocMetaDataValuesWebService';
 import { DeclarationEventManager } from '../../../../Customs/Utilities/DeclarationEventManager';
-import {ControlsIdCounter} from '../../../../Infrastructure/Utilities/ControlsIdCounter';
-import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
+import { ControlsIdCounter } from '../../../../Infrastructure/Utilities/ControlsIdCounter';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { SupplierInvoiceItemPM } from '../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 @Component({
     moduleId: module.id,
     templateUrl: './DeclarationSplitComponent.html',
 })
 
-export class DeclarationSplitComponent extends BaseComponent implements AfterViewInit , OnDestroy{
+export class DeclarationSplitComponent extends BaseComponent implements AfterViewInit, OnDestroy {
     public DataContext: any = this;
     public DeclarationPM: DeclarationPM;
     public ObjectTableName: string = "Customs.Declaration";
@@ -60,7 +61,8 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     private custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     DeclarationSplitDocumentSelectionEVENT;
-    constructor(private cd: ChangeDetectorRef) {
+    DeclarationSplitDocumentItemSelectionEVENT;
+    constructor(private cd: ChangeDetectorRef, private elem: ElementRef) {
         super();
         var counter = ControlsIdCounter.GetNextControlIdCounter("DocumentViewerImage");
         this.DocumentViewerImageId = "DocumentViewerImage-" + counter;
@@ -72,6 +74,8 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.DeclarationSplitDocumentSelectionEVENT);
+        AppTool.KillEventEmitter(this.DeclarationSplitDocumentItemSelectionEVENT);
+
     }
     _DocumentFilingIdToSetWhileLoadDocument: string;
     SetComponentArgs(args: any) {
@@ -91,21 +95,21 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                 //this.custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
                 //    this.MetadataValues = response2.Result;
 
-                    // 3- load documents(tickets)
-                    this.LoadDocuments();
+                // 3- load documents(tickets)
+                this.LoadDocuments();
 
 
 
-                    SessionLocator.SelectedSession.StopBusyIndicator();
+                SessionLocator.SelectedSession.StopBusyIndicator();
 
 
-            //    });
+                //    });
             });
 
-
+            debugger;
             this.DeclarationSplitDocumentSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentSelection.subscribe((DocumentFilingId: any) => {
                 console.log("-->> Loading document for supplier invoice: " + DocumentFilingId);
-                if (AppTool.IsNullOrEmpty(this.RelatedDocuments)){
+                if (AppTool.IsNullOrEmpty(this.RelatedDocuments)) {
                     //ClassifcationComponent Build B4 This Component finish Load Document !!!
                     this._DocumentFilingIdToSetWhileLoadDocument = DocumentFilingId;
                     return;
@@ -164,6 +168,20 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         // //this.renderImage();
     }
 
+
+    composedPath(el) {
+        let path = [];
+        while (el) {
+            path.push(el);
+            if (el.tagName === 'HTML') {
+                path.push(document);
+                path.push(window);
+                return path;
+            }
+            el = el.parentElement;
+        }
+    }
+
     LoadDocumentPage(pageIndex: number = null) {
         if (this.SelectedTicket) {
 
@@ -182,8 +200,9 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             //else
             //    var index = this.CurrentPageIndex - 1;
 
+            //let path = this.composedPath(event.target);
 
-            this._CustomDocumentViewerService.GetDocumentPage(this.SelectedTicket.documentsFilingPM.DocumentId, index-1, this.IsConnectedToUniFreight, this.RotationAngle).subscribe((myResponse: ServiceResponse) => {
+            this._CustomDocumentViewerService.GetDocumentPage(this.SelectedTicket.documentsFilingPM.DocumentId, index - 1, this.IsConnectedToUniFreight, this.RotationAngle).subscribe((myResponse: ServiceResponse) => {
                 var result = myResponse.Result;
                 console.log("[Response] GetDocumentPage", result);
                 this.StopBusyIndicator();
@@ -201,8 +220,32 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
                         this.base64Image = "data:image/png;base64," + result.Page;
 
-                        console.log(this.base64Image);
+                        debugger;
+                        this.DeclarationSplitDocumentSelectionEVENT = DeclarationEventManager.DeclarationSplitDocumentItemSelection.subscribe((invoiceItem: SupplierInvoiceItemPM) => {
 
+                            if (invoiceItem != null) {
+                                let rect = document.createElement('div');
+                                rect.className = 'rectangle';
+                                rect.id = 'rectangle-' + "rectangle-1";
+                                rect.style.position = 'absolute';
+                                rect.style.border = '2px solid #0084FF';
+                                rect.style.borderRadius = '3px';
+                                rect.style.left = 0 + 'px';
+                                rect.style.top = invoiceItem.OcrTop + 'px';
+                                rect.style.width = '100%';
+                                rect.style.height = invoiceItem.OcrHeight + 'px';
+                                document.getElementsByClassName("div-grabbable")[0].appendChild(rect);
+
+                                console.log(this.base64Image);
+                                this.CurrentPageIndex = invoiceItem.OcrPageNumber;
+                            }
+                            else {
+                                this.CurrentPageIndex = index;
+
+                            }
+                        });
+
+                        debugger;
                         // this.img.src = this.base64Image;
                         // this.renderImage();
                         // var t = setTimeout(() => { this.renderImage(); }, 20);
@@ -220,13 +263,15 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                     this.CurrentPageIndex = 0;
                     //SessionLocator.SelectedSession.StopBusyIndicator();
                     this.base64Image = null;
-                        // this.img.src = this.base64Image;
-                        // this.renderImage();
-                        // var t = setTimeout(() => { this.renderImage(); },20);
-                        return;
+                    // this.img.src = this.base64Image;
+                    // this.renderImage();
+                    // var t = setTimeout(() => { this.renderImage(); },20);
+                    return;
                 }
                 //SessionLocator.SelectedSession.StopBusyIndicator();
-                this.CurrentPageIndex = index;
+
+
+
             });
         }
     }
@@ -264,7 +309,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
                         //if (!ticket) {
                         var relatedDocViewModel = new RelatedDocumentViewModel(relatedDocs[i], values, true);
-                            this.RelatedDocuments.push(relatedDocViewModel);
+                        this.RelatedDocuments.push(relatedDocViewModel);
                         //}
                     }
                     //Load first document
@@ -292,7 +337,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe(res => {
 
 
-                var documentName =  documentFiling.DocumentId;
+                var documentName = documentFiling.DocumentId;
                 //var token = ServiceHelper.GetLDocumentDownloadToken();
                 //let uri = ServiceHelper.GetLogitudeURL() + "WebPages/Downloadpage.aspx?id=" + documentName + "&tempId=" + token;
                 //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
@@ -349,7 +394,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         this.TrackBarValue += +this.TrackBarStep;
         this.CalculateScaleValue();
 
-        if(this.TrackBarValue == 1)
+        if (this.TrackBarValue == 1)
             this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
 
 
@@ -374,27 +419,27 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
     ToggleTransformOrigin() {
 
-       if (this.RotationAngle == 0) {
-           this.ImgTransformOriginValue = "right top";
-       }
-       else if (this.RotationAngle == 90) {
-           this.ImgTransformOriginValue = "left top";
-       }
-       else if (this.RotationAngle == 180) {
-           this.ImgTransformOriginValue = "left bottom";
-       }
-       else if (this.RotationAngle == 270) {
-           this.ImgTransformOriginValue = "right bottom";
-       }
-       else if (this.RotationAngle == 360) {
-           this.ImgTransformOriginValue = "right top";
-       }
+        if (this.RotationAngle == 0) {
+            this.ImgTransformOriginValue = "right top";
+        }
+        else if (this.RotationAngle == 90) {
+            this.ImgTransformOriginValue = "left top";
+        }
+        else if (this.RotationAngle == 180) {
+            this.ImgTransformOriginValue = "left bottom";
+        }
+        else if (this.RotationAngle == 270) {
+            this.ImgTransformOriginValue = "right bottom";
+        }
+        else if (this.RotationAngle == 360) {
+            this.ImgTransformOriginValue = "right top";
+        }
     }
 
 
-public get transformValue() : string {
-    return this.ImgScaleValue + ' '+ this.ImgRotationValue;
-}
+    public get transformValue(): string {
+        return this.ImgScaleValue + ' ' + this.ImgRotationValue;
+    }
 
 
 
@@ -403,9 +448,9 @@ public get transformValue() : string {
 
         // Rotate
         if (this.RotationAngle >= 360)
-           this.RotationAngle = 90;
+            this.RotationAngle = 90;
         else
-           this.RotationAngle += 90;
+            this.RotationAngle += 90;
 
         this.ImgRotationValue = "rotate(" + this.RotationAngle + "deg)";
 
@@ -421,9 +466,9 @@ public get transformValue() : string {
         if (this.IsNoDocumentSelected) return;
 
         if (this.RotationAngle <= 0)
-           this.RotationAngle = 270;
+            this.RotationAngle = 270;
         else
-           this.RotationAngle -= 90;
+            this.RotationAngle -= 90;
 
         this.ImgRotationValue = "rotate(" + this.RotationAngle + "deg)";
 
@@ -502,7 +547,7 @@ public get transformValue() : string {
             //     this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
             // }, 500);
 
-        }else{
+        } else {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
             this.StopBusyIndicator();
@@ -700,8 +745,8 @@ public get transformValue() : string {
                 //    deltaY = (this.lastOffsetX - event.offsetX) * -1;
 
                 //} else {
-                    deltaY = this.lastOffsetY - event.offsetY;
-                    deltaX = this.lastOffsetX - event.offsetX;
+                deltaY = this.lastOffsetY - event.offsetY;
+                deltaX = this.lastOffsetX - event.offsetX;
                 //}
                 element.scrollTop += deltaY;
                 element.scrollLeft += deltaX;
