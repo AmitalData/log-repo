@@ -159,6 +159,8 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
+            this.button49 = new System.Windows.Forms.Button();
             this.btnCallOldUpdate = new System.Windows.Forms.Button();
             this.UpdateRulesLabel = new System.Windows.Forms.Label();
             this.button48 = new System.Windows.Forms.Button();
@@ -191,9 +193,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
-            this.button49 = new System.Windows.Forms.Button();
-            this.btnCallOldUpdate = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -402,6 +401,7 @@
             // 
             // toolStripTextBoxFilePath
             // 
+            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -530,6 +530,7 @@
             // 
             // tenantTxtBox
             // 
+            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -857,7 +858,7 @@
             // 
             // button29
             // 
-            this.button29.Location = new System.Drawing.Point(437, 355);
+            this.button29.Location = new System.Drawing.Point(373, 398);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(184, 25);
             this.button29.TabIndex = 48;
@@ -869,7 +870,7 @@
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(437, 386);
+            this.button30.Location = new System.Drawing.Point(373, 429);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(184, 25);
             this.button30.TabIndex = 49;
@@ -1030,7 +1031,7 @@
             // UTZSLabel
             // 
             this.UTZSLabel.AutoSize = true;
-            this.UTZSLabel.Location = new System.Drawing.Point(434, 420);
+            this.UTZSLabel.Location = new System.Drawing.Point(370, 463);
             this.UTZSLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.UTZSLabel.Name = "UTZSLabel";
             this.UTZSLabel.Size = new System.Drawing.Size(100, 13);
@@ -1051,7 +1052,7 @@
             // UTenantsStatusLabel
             // 
             this.UTenantsStatusLabel.AutoSize = true;
-            this.UTenantsStatusLabel.Location = new System.Drawing.Point(434, 439);
+            this.UTenantsStatusLabel.Location = new System.Drawing.Point(370, 482);
             this.UTenantsStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.UTenantsStatusLabel.Name = "UTenantsStatusLabel";
             this.UTenantsStatusLabel.Size = new System.Drawing.Size(100, 13);
@@ -1062,7 +1063,7 @@
             // BuildZipFilesStatusLabel
             // 
             this.BuildZipFilesStatusLabel.AutoSize = true;
-            this.BuildZipFilesStatusLabel.Location = new System.Drawing.Point(434, 462);
+            this.BuildZipFilesStatusLabel.Location = new System.Drawing.Point(370, 505);
             this.BuildZipFilesStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.BuildZipFilesStatusLabel.Name = "BuildZipFilesStatusLabel";
             this.BuildZipFilesStatusLabel.Size = new System.Drawing.Size(100, 13);
@@ -1073,7 +1074,7 @@
             // BuildZipFilesCustomsStatusLabel
             // 
             this.BuildZipFilesCustomsStatusLabel.AutoSize = true;
-            this.BuildZipFilesCustomsStatusLabel.Location = new System.Drawing.Point(434, 485);
+            this.BuildZipFilesCustomsStatusLabel.Location = new System.Drawing.Point(370, 528);
             this.BuildZipFilesCustomsStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.BuildZipFilesCustomsStatusLabel.Name = "BuildZipFilesCustomsStatusLabel";
             this.BuildZipFilesCustomsStatusLabel.Size = new System.Drawing.Size(100, 13);
@@ -1492,11 +1493,31 @@
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // cbxOldUpdateCode
+            // 
+            this.cbxOldUpdateCode.AutoSize = true;
+            this.cbxOldUpdateCode.Location = new System.Drawing.Point(431, 350);
+            this.cbxOldUpdateCode.Name = "cbxOldUpdateCode";
+            this.cbxOldUpdateCode.Size = new System.Drawing.Size(103, 17);
+            this.cbxOldUpdateCode.TabIndex = 99;
+            this.cbxOldUpdateCode.Text = "Run Old Update";
+            this.cbxOldUpdateCode.UseVisualStyleBackColor = true;
+            // 
+            // button49
+            // 
+            this.button49.Location = new System.Drawing.Point(543, 313);
+            this.button49.Name = "button49";
+            this.button49.Size = new System.Drawing.Size(184, 23);
+            this.button49.TabIndex = 98;
+            this.button49.Text = "Update Reports";
+            this.button49.UseVisualStyleBackColor = true;
+            this.button49.Click += new System.EventHandler(this.button49_Click);
+            // 
             // btnCallOldUpdate
             // 
-            this.btnCallOldUpdate.Location = new System.Drawing.Point(257, 263);
+            this.btnCallOldUpdate.Location = new System.Drawing.Point(543, 342);
             this.btnCallOldUpdate.Name = "btnCallOldUpdate";
-            this.btnCallOldUpdate.Size = new System.Drawing.Size(170, 23);
+            this.btnCallOldUpdate.Size = new System.Drawing.Size(184, 23);
             this.btnCallOldUpdate.TabIndex = 98;
             this.btnCallOldUpdate.Text = "Update Old Code";
             this.btnCallOldUpdate.UseVisualStyleBackColor = true;
@@ -1862,26 +1883,6 @@
             this.button46.Text = "Update Logos";
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
-            // 
-            // button49
-            // 
-            this.button49.Location = new System.Drawing.Point(543, 313);
-            this.button49.Name = "button49";
-            this.button49.Size = new System.Drawing.Size(184, 23);
-            this.button49.TabIndex = 98;
-            this.button49.Text = "Update Reports";
-            this.button49.UseVisualStyleBackColor = true;
-            this.button49.Click += new System.EventHandler(this.button49_Click);
-            // 
-            // btnCallOldUpdate
-            // 
-            this.cbxOldUpdateCode.AutoSize = true;
-            this.cbxOldUpdateCode.Location = new System.Drawing.Point(543, 310);
-            this.cbxOldUpdateCode.Name = "cbxOldUpdateCode";
-            this.cbxOldUpdateCode.Size = new System.Drawing.Size(103, 17);
-            this.cbxOldUpdateCode.TabIndex = 99;
-            this.cbxOldUpdateCode.Text = "Run Old Update";
-            this.cbxOldUpdateCode.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
