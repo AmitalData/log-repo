@@ -55,7 +55,7 @@ namespace Logitude.Server.Tools.Helpers
             };
 
             documentRepository.Add(document);
-            documentRepository.SubmitChanges();
+            //documentRepository.SubmitChanges();
             
             CommunicationLog commLog = new CommunicationLog()
             {
@@ -80,6 +80,7 @@ namespace Logitude.Server.Tools.Helpers
             };
 
             communicationLogRepository.Add(commLog);
+            commonContext.SaveChanges();
 
             this.DocumentId = document.Id;
             this.DocumentFolder = document.Folder;
