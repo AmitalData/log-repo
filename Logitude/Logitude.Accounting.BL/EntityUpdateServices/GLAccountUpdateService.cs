@@ -417,8 +417,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
 
-
-            this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
+            if (!entityPM.IsControlAccount.GetValueOrDefault())
+            {
+                this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
+            }
+            
 
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
