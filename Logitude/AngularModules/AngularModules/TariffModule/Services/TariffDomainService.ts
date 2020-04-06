@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
@@ -9,23 +10,21 @@ import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomField
 @Injectable()
 
 export class TariffDomainService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TariffDomain';
     }
 
     GetTariffsCounts() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetTariffsCounts';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var myResult = new TariffSummery();
 
@@ -40,91 +39,78 @@ export class TariffDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetAvailableAirlineFreightTariffs(args: TariffSearchArgs) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
+
         return Observable.defer(() => {
-            return this._http.post(this._apiUrl + "/PostAvailableAirlineFreightTariffs", JSON.stringify(args), {
-                headers: authHeader,
-            }).map(response => {
-                var result = response.json();
+            return this._http.post(this._apiUrl + "/PostAvailableAirlineFreightTariffs", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     GetCheckDatesValidty(FromPort: string, ToPort: string, ToDate: Date, TariffId:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetCheckDatesValidty?FromPort=' + FromPort + "&ToPort=" + ToPort +  "&ToDate=" + ServiceHelper.GetDateString(ToDate)  + "&TariffId=" + TariffId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }    
 
     GenerateTariffs() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetGenerateTariffs';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetTariffsLogsByTariffId( tariffId: string, version: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetTariffsLogsByTariffId?tariffId=' + tariffId + "&version=" + version;
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GenerateTariffsFromExcel(filter: TariffFilterParameter) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
+
         return Observable.defer(() => {
-            return this._http.post(this._apiUrl + "/PostGenerateTariffsFromExcel", JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(response => {
-                var result = response.json();
+            return this._http.post(this._apiUrl + "/PostGenerateTariffsFromExcel", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -132,12 +118,10 @@ export class TariffDomainService {
     
     GetTenantTariffSetting() {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetTenantTariffSetting', { headers: authHeader }).map(response => {
-                var pm = response.json();
+            return this._http.get(this._apiUrl + '/GetTenantTariffSetting', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm = response;
 
                 var entity: TariffSettingPM;
                 if (pm) {
@@ -149,53 +133,47 @@ export class TariffDomainService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     DownloadTariff(tariffId: string, version: number, type: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetDownloadTariff?tariffId=' + tariffId + "&version=" + version + "&type=" + type;
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
     PostUploadExcelFile(filter: TariffFilterParameter) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
+
         return Observable.defer(() => {
-            return this._http.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(response => {
-                var result = response.json();
+            return this._http.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     ApproveVersion(tariffId: string, version: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetApproveVersion?tariffId=' + tariffId + "&version=" + version;
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -266,81 +244,83 @@ export class TariffDomainService {
     }
 
     GetTariffVersionLines(tariffId: string, version: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetTariffVersionLines?tariffId=' + tariffId + "&version=" + version
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetAllVersionsWithLinesForTariff(tariffId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetAllVersionsWithLinesForTariff?tariffId=' + tariffId  
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
     PostUpdateSurcharge(filter: UpdateSurchargeArgs) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
+
         return Observable.defer(() => {
-            return this._http.post(this._apiUrl + "/PostUpdateSurcharge", JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(response => {
-                var result = response.json();
+            return this._http.post(this._apiUrl + "/PostUpdateSurcharge", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     GetRecentTariffs() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetRecentTariffs', {
-                headers: authHeader
-            }).map(response => {
-                var allLists = response.json();
+            return this._http.get(this._apiUrl + '/GetRecentTariffs', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
                 return allLists;
-            });
+            }));
         });
     }
 
     GetTariffLineContainerPrices(tariffId:string, version: number, fromPortId: string, toPortId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + "/GetTariffLineContainerPrices?tariffId=" + tariffId + "&version=" + version + "&fromPortId=" + fromPortId + "&toPortId=" + toPortId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    RefreshPortsFromTranslations(tariffId: string, version: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetRefreshPortsFromTranslations?tariffId=' + tariffId + "&version=" + version;
+        return Observable.defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 }
@@ -390,8 +370,15 @@ export class TariffSearchSummary {
     MinPrice: number;
     IsMinIconVisible: boolean;
     LineId: string;
+    ContainersPrices: Array<ContainersPrice>;
 }
 
+export class ContainersPrice {
+    ContainerId: string;
+    TariffId: string;
+    Price: number;
+    Quantity: number;
+}
 
 export class SurchargeSummary {
     Code: string;
@@ -411,6 +398,7 @@ export class SurchargeSummary {
     IsMinIconVisible: boolean;
     LineId: string;
     IsAllIn: boolean;
+    ContainersPrices: Array<ContainersPrice>;
 }
 
 export class ExcelTariffLines {

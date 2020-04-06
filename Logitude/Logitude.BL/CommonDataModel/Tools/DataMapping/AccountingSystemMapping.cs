@@ -37,6 +37,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.SearchFields = entityPM.Code + "," + entityPM.Name;
             poco.CanTransferToDropbox = entityPM.CanTransferToDropbox;
             poco.AllowAPPaymentsTransfer = entityPM.AllowAPPaymentsTransfer;
+            poco.CanTransferToFTP = entityPM.CanTransferToFTP;
         }
     }
 }

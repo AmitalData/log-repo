@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CountryCityUpdateClass
-   {  
+   {  		
+		public const string HashString = "3b7ad0570f8da69c247a9817558378e2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,6 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    SearchFields =  "CountryCity,CountryCities,,Id,",
 			      				    ClientModuleName =  "Common",
 			      				    DescriptionDefaultText =  "Manage the cities to be used in addresses.",
+			      				    HashString =  CountryCityUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

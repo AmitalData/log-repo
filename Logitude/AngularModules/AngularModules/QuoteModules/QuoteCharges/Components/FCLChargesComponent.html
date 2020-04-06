@@ -52,7 +52,7 @@
                                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="50" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
 
                                     <!-- Charges Type -->
-                                    <log-column [width]="'150'" [header]="'QuoteCharge.CH.ChargesTypeIdListLable' | TextCodeTranslationPipe">
+                                    <log-column [width]="'150'" [SortFieldName]="'ChargesTypeCodeName'" [header]="'QuoteCharge.CH.ChargesTypeIdListLable' | TextCodeTranslationPipe">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.ChargesTypeCodeName}}
@@ -61,7 +61,7 @@
                                     </log-column>
 
                                     <!-- Vendor -->
-                                    <log-column [width]="'120'" [header]="'QuoteCharge.CH.VendorIdListLable' | TextCodeTranslationPipe">
+                                    <log-column [width]="'120'" [SortFieldName]="'VendorName'" [header]="'QuoteCharge.CH.VendorIdListLable' | TextCodeTranslationPipe">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.VendorName}}
@@ -70,7 +70,7 @@
                                     </log-column>
 
                                     <!-- Measurement Code -->
-                                    <log-column [width]="'50'" [header]="'QuoteCharge.CH.CostMeasurementIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                    <log-column [width]="'50'" [SortFieldName]="'CostMeasurementCode'" [header]="'QuoteCharge.CH.CostMeasurementIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                                 {{item.CostMeasurementCode}}
@@ -79,7 +79,7 @@
                                     </log-column>
 
                                     <!-- Currency Code -->
-                                    <log-column [width]="'40'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                    <log-column [width]="'40'" [SortFieldName]="'CostCurrencyCode'" [header]="'QuoteCharge.CH.SaleCurrencyIdListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [Alignment]="'center'" [IsEnabled]="false">
                                                 {{item.CostCurrencyCode}}
@@ -88,7 +88,7 @@
                                     </log-column>
 
                                     <!-- Cost Quantity -->
-                                    <log-column [width]="'90'" *ngIf="IsCostQuantityVisible">
+                                    <log-column [SortFieldName]="'CostQuantity'" [width]="'90'" *ngIf="IsCostQuantityVisible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -118,7 +118,7 @@
                                     </log-column>
 
                                     <!-- Cost Price -->
-                                    <log-column [width]="'90'" *ngIf="IsCostPriceVisible">
+                                    <log-column [SortFieldName]="'CostUnitPrice'" [width]="'90'"  *ngIf="IsCostPriceVisible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -167,7 +167,7 @@
                                     </log-column>
 
                                     <!-- Cost 1 -->
-                                    <log-column [width]="'90'" *ngIf="IsCost1Visible">
+                                    <log-column [SortFieldName]="'CostContainerType1UnitPrice'" [width]="'90'" *ngIf="IsCost1Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -197,7 +197,7 @@
                                     </log-column>
 
                                     <!-- Cost 2 -->
-                                    <log-column [width]="'90'" *ngIf="IsCost2Visible">
+                                    <log-column [SortFieldName]="'CostContainerType2UnitPrice'" [width]="'90'" *ngIf="IsCost2Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -227,7 +227,7 @@
                                     </log-column>
 
                                     <!-- Cost 3 -->
-                                    <log-column [width]="'90'" *ngIf="IsCost3Visible">
+                                    <log-column [SortFieldName]="'CostContainerType3UnitPrice'" [width]="'90'" *ngIf="IsCost3Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -257,7 +257,7 @@
                                     </log-column>
 
                                     <!-- Cost 4 -->
-                                    <log-column [width]="'90'" *ngIf="IsCost4Visible">
+                                    <log-column  [SortFieldName]="'CostContainerType4UnitPrice'" [width]="'90'" *ngIf="IsCost4Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -287,7 +287,7 @@
                                     </log-column>
 
                                     <!-- Cost 5 -->
-                                    <log-column [width]="'90'" *ngIf="IsCost5Visible">
+                                    <log-column [SortFieldName]="'CostContainerType5UnitPrice'" [width]="'90'" *ngIf="IsCost5Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -317,7 +317,7 @@
                                     </log-column>
 
                                     <!-- Cost Amount -->
-                                    <log-column [width]="'90'" *ngIf="IsAdhoc">
+                                    <log-column  [SortFieldName]="'CostTotalAmount'" [width]="'90'" *ngIf="IsAdhoc">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -353,7 +353,7 @@
                                     </log-column>
 
                                     <!-- Sale Quantity -->
-                                    <log-column [width]="'90'" *ngIf="IsSaleQuantityVisible">
+                                    <log-column [SortFieldName]="'SaleQuantity'" [width]="'90'" *ngIf="IsSaleQuantityVisible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -383,7 +383,7 @@
                                     </log-column>
 
                                     <!-- Sale Price -->
-                                    <log-column [width]="'90'" *ngIf="IsSalePriceVisible">
+                                    <log-column [SortFieldName]="'SaleUnitPrice'" [width]="'90'" *ngIf="IsSalePriceVisible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -429,7 +429,7 @@
                                     </log-column>
 
                                     <!-- Sale 1 -->
-                                    <log-column [width]="'90'" *ngIf="IsSale1Visible">
+                                    <log-column  [SortFieldName]="'SaleContainerType1UnitPrice'" [width]="'90'" *ngIf="IsSale1Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -475,7 +475,7 @@
                                     </log-column>
 
                                     <!-- Sale 2 -->
-                                    <log-column [width]="'90'" *ngIf="IsSale2Visible">
+                                    <log-column [SortFieldName]="'SaleContainerType2UnitPrice'" [width]="'90'" *ngIf="IsSale2Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -521,7 +521,7 @@
                                     </log-column>
 
                                     <!-- Sale 3 -->
-                                    <log-column [width]="'90'" *ngIf="IsSale3Visible">
+                                    <log-column [SortFieldName]="'SaleContainerType3UnitPrice'" [width]="'90'" *ngIf="IsSale3Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -567,7 +567,7 @@
                                     </log-column>
 
                                     <!-- Sale 4 -->
-                                    <log-column [width]="'90'" *ngIf="IsSale4Visible">
+                                    <log-column [SortFieldName]="'SaleContainerType4UnitPrice'" [width]="'90'" *ngIf="IsSale4Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -613,7 +613,7 @@
                                     </log-column>
 
                                     <!-- Sale 5 -->
-                                    <log-column [width]="'90'" *ngIf="IsSale5Visible">
+                                    <log-column [SortFieldName]="'SaleContainerType5UnitPrice'" [width]="'90'" *ngIf="IsSale5Visible">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -659,7 +659,7 @@
                                     </log-column>
 
                                     <!-- Sale Amount -->
-                                    <log-column [width]="'90'" *ngIf="IsAdhoc">
+                                    <log-column [SortFieldName]="'SaleTotalAmount'" [width]="'90'" *ngIf="IsAdhoc">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -695,7 +695,7 @@
                                     </log-column>
 
                                     <!-- Sale Amount Local -->
-                                    <log-column [width]="'90'" *ngIf="IsAdhoc">
+                                    <log-column  [SortFieldName]="'SaleTotalAmountLocal'" [width]="'90'" *ngIf="IsAdhoc">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -735,7 +735,7 @@
                                     </log-column>
 
                                     <!-- All in -->
-                                    <log-column [width]="'60'" *ngIf="IsAdhoc && !HideFCLAllIn">
+                                    <log-column  [width]="'60'" *ngIf="IsAdhoc && !HideFCLAllIn">
                                         <ng-template let-item>
                                             <log-header-template>
                                                 <div class="GridHeaderCellTemplate">
@@ -768,7 +768,7 @@
                                     </log-column>
 
                                     <!-- VatType -->
-                                    <log-column *ngIf="IsAdhoc && IsChargesByVAT" [header]="'QuoteCharge.F.VatTypeId' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
+                                    <log-column [SortFieldName]="'VatTypeCell'" *ngIf="IsAdhoc && IsChargesByVAT" [header]="'QuoteCharge.F.VatTypeId' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div class="MediaFill">
@@ -811,7 +811,7 @@
                                     </log-column>
 
                                     <!-- Notes -->
-                                    <log-column [width]="'25'">
+                                    <log-column  [width]="'25'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div style="width: 16px; height: 16px;" class="CenterCenter">

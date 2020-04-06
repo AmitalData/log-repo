@@ -1215,6 +1215,11 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
+                    case "CSSR":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadCustomerStatusDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -1682,7 +1687,15 @@ namespace WebFreight.Web.Helpers
                         
                         break;
                     }
+                case "CSSR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(CustomerStatusDataProvider));
+                        CustomerStatusDataProvider reportDataProvider = (CustomerStatusDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "CSSR", Name = "CustomerStatusDataProvider", BusinessObjectValue = reportDataProvider };
 
+                        break;
+                    }
                 case "OSBC":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(OpenShipmentsByCustomerDataProvider));
@@ -2053,7 +2066,7 @@ namespace WebFreight.Web.Helpers
             LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
             return logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, tenant);
         }        
-        
+
         private bool IsHaveReport(string reportCode)
         {
             if (string.IsNullOrEmpty(reportCode))
@@ -2104,6 +2117,7 @@ namespace WebFreight.Web.Helpers
                     case "PTVC":
                     case "LICM":
                     case "LTRP":
+                    case "CSSR":
 
                         return true;
 

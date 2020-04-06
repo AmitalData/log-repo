@@ -130,7 +130,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
             }
             else {
-                this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
+                this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
                     if (MyResult.Result) {
                        
                         this.AdditionalData = MyResult.Result;//AdditionalResult.Result

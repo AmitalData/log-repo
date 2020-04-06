@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConversationHeaderParticipantUpdateClass
-   {  
+   {  		
+		public const string HashString = "481cd403c1698d3a05950efa9e4d4cbe";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -114,6 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    Name =  "ConversationHeaderParticipant Query Group",
 			      				    GenerateDomainService =  false,
 			      				    HasMenuButtons =  false,
+			      				    HashString =  ConversationHeaderParticipantUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

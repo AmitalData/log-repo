@@ -13,6 +13,7 @@ namespace WebFreight.Web.MetaDataUpdate
 {
     public partial class MetaDataUpdateClass
     {
+
         public void LoadObjectTableRulesANDFieldsValidations()
         {
             ObjectContext = WebFreightContext.GetContext(0);

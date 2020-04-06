@@ -254,6 +254,7 @@
     <Compile Include="FTP\FTPServiceExceptionThrower.cs" />
     <Compile Include="FTP\FTPServiceResponse.cs" />
     <Compile Include="FTP\SFTPService.cs" />
+    <Compile Include="Helpers\AccountingTranferViaFTPHelper.cs" />
     <Compile Include="Helpers\AesFunction.cs" />
     <Compile Include="Helpers\AmitalConvertUtil.cs" />
     <Compile Include="Helpers\AuthenticationUtil.cs" />

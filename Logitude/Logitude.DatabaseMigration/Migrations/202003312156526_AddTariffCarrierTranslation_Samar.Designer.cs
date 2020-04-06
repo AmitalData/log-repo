@@ -7,13 +7,13 @@ namespace Logitude.DatabaseMigration.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UsersLayoutDirectionMigration : IMigrationMetadata
+    public sealed partial class AddTariffCarrierTranslation_Samar : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UsersLayoutDirectionMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTariffCarrierTranslation_Samar));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003301436490_UsersLayoutDirectionMigration"; }
+            get { return "202003312156526_AddTariffCarrierTranslation_Samar"; }
         }
         
         string IMigrationMetadata.Source

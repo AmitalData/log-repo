@@ -62,7 +62,7 @@ export class ConnectButtonsListTemplate {
         this._ShipmentPMService.get(this.SourceId).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.SourceEntity = myResult.Result;
-                this._ShipmentPMService.get(this.rowData['Id']).subscribe(myResult1 => {
+                this._ShipmentPMService.get(this.rowData['Id']).subscribe((myResult1:any) => {
                     this.CurrentPM = myResult1.Result;
                     this.CurrentSession.StopBusyIndicator();
                     if (this.CurrentPM.ForwarderPartnerId != this.SourceEntity.ForwarderPartnerId) {

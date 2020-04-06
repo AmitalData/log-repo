@@ -98,10 +98,34 @@ void SaveUpdateClassOutput(string outputFileName)
 
 
 <#+
+	  private string GenerateHashString(string entityString)
+        {
+            if (String.IsNullOrEmpty(entityString))
+            {
+                return "NULL";
+            }
+
+            MD5CryptoServiceProvider cryptoServiceProvider = new MD5CryptoServiceProvider();
+            byte[] stringBytes = Encoding.UTF8.GetBytes(entityString);
+            byte[] computedHash = cryptoServiceProvider.ComputeHash(stringBytes);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (var h in computedHash)
+            {
+                stringBuilder.Append(h.ToString("x2").ToLower());
+            }
+
+            return stringBuilder.ToString();
+        }
+
 Dictionary<string, string> GeneratedTabFeatures = new Dictionary<string, string>();
 Dictionary<string, string> GeneratedTabTextCodes = new Dictionary<string, string>();
+ string entityHashString= "NULL";
  private void WriteUpdateClassMethod(XElement entity)
 {
+		
+    entityHashString= GenerateHashString(entity.ToString());
+
 	string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
 	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
 	if(tableName.Contains("."))
@@ -192,7 +216,8 @@ namespace <#= UpdateClassnamespacestring #>
    {  <#+
 
 	#>
-
+		
+		public const string HashString = "<#=entityHashString #>";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -215,6 +240,9 @@ namespace <#= UpdateClassnamespacestring #>
                 }
  
             }
+				  #>
+				    HashString =  <#=tableName #>UpdateClass.HashString,
+			      <#+  
 
 	#>
               
@@ -1460,8 +1488,87 @@ namespace <#= UpdateClassnamespacestring #>
 		    this.ObjectContext.SaveChanges();
 
         }
+
+		public void LoadObjectTablesMetadata(IWebFreightContext context)
+        {
+		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
+            ObjectContext = context;
+			CommonContext = commonContext;
+            TextCodeRepository = new TextCodeRepository(ObjectContext);
+            ObjectTableRepository = new ObjectTableRepository(ObjectContext);
+            ObjectFieldsRepository = new ObjectFieldRepository(ObjectContext);
+			queriesRepository = new QueryRepository(ObjectContext);
+			queryColumnsRepository = new QueryColumnRepository(ObjectContext);
+            queryGroupRepository = new QueryGroupRepository(ObjectContext);
+			advancedQueryFiltersRepository = new AdvancedQueryFilterRepository(ObjectContext);
+			screensRepository = new ScreensRepository(ObjectContext);
+			screenFieldsRepository = new ScreenFieldsRepository(ObjectContext);
+			objectTableTabsRepository = new ObjectTableTabRepository(ObjectContext);
+			EventTypeRepository = new EventTypeRepository(ObjectContext);
+			menuButtonRepository = new MenuButtonRepository(ObjectContext);
+			menuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
+			FeaturesRepository = new FeatureRepository(CommonContext);
+			EntityStatusRepository = new EntityStatusRepository(context);
+
+            ObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
+            ObjectTable generalTable = ObjectTables["General"];
+            TextCodes = TextCodeRepository.GetTextCodesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
+			TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			ObjectFields = new Dictionary<string, ObjectField>();//ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
+			Queries = new Dictionary<string, Query>();//queriesRepository.GetQueriesByTenantSystemLevel(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			QueryColumns = new Dictionary<string, QueryColumn>();//queryColumnsRepository.GetQueryColumnsByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
+			tenantAdvancedFilters = new Dictionary<string, AdvancedQueryFilter>();//advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
+			tenantScreens = new Dictionary<string, Screen>();//screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			tenantScreenFields = new Dictionary<string, ScreenField>();//screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenCode + d.ObjectFieldCode);
+			TenantObjectTableTabs = new Dictionary<string, ObjectTableTab>();//objectTableTabsRepository.GetObjectTableTabsByTenant(0).ToDictionary(d => d.Code, a => a);
+			tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			tenantMenuButtons = new Dictionary<string, MenuButton>();//menuButtonRepository.GetMenuButtonsByTenant(0).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);
+			tenantMenuButtonGroups = menuButtonGroupRepository.GetMenuButtonGroupsByTenant(0).ToDictionary(d => d.Name, a => a);
+			AllEntityStatuses = EntityStatusRepository.GetEntityStatusByTenant(0).ToList();
 <#+
-	
+     
+#>
+
+			 MetadataUpdateUtility.RunPreDeleteProcedure();
+
+			 CreateAllObjectTablesMetadata();
+			 CreateAllClosedTablesByHash();
+			 this.ObjectContext.SaveChanges();
+			 this.CommonContext.SaveChanges();
+
+			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			//CreateAllObjectTables();
+		    //this.ObjectContext.SaveChanges();
+			//
+			//CreateAllObjectFields();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllQueries();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllScreens();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllTabs();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllEventTypes();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllClosedTables();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllFeatures();
+			//CreateAdditionalTextCodes();
+		    //this.ObjectContext.SaveChanges();
+		    //this.CommonContext.SaveChanges();
+//
+			//CreateAllMenuButtons();
+		    //this.ObjectContext.SaveChanges();
+//
+        }
+<#+
+	GenerateAllTableMethods(sourceFilePath);
 	GenerateAddTableMethods(sourceFilePath);
 	GenerateAddFieldMethods(sourceFilePath);
 #>
@@ -1481,7 +1588,114 @@ string outputfilePah = destinationFolder+"/"+updateClassName +".cs";
 }
 #>
 
+<#+  
 
+public void GenerateAllTableMethods(string sourceFilePath)
+{ 
+
+   #>
+
+		private static Dictionary<string,string> TablesHashStrings { get; set; }		 
+	    public static Dictionary<string, string> GetAllTablesHashStrings()
+        {
+			if (TablesHashStrings != null)
+				return TablesHashStrings;
+
+			TablesHashStrings = new Dictionary<string, string>();
+ <#+
+   foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+        {
+	 
+            var path= Host.ResolvePath(file);
+            XElement entity = XDocument.Load(path).Root;
+            string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+            string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
+            if(tableName.Contains("."))
+            {
+                tableName = tableName.ToString().Split('.')[1];
+                dBTableName = dBTableName.ToString().Split('.')[1];
+          
+            }
+            string classname = tableName + "UpdateClass";
+#>
+			TablesHashStrings.Add("<#=tableName #>",  <#=classname #>.HashString);
+<#+
+        }
+#>
+			return TablesHashStrings;
+        }
+        public void CreateAllObjectTablesMetadata()
+        {
+   <#+
+   foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+    {
+	 
+	 var path= Host.ResolvePath(file);
+     XElement entity = XDocument.Load(path).Root;
+	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
+	if(tableName.Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+          
+    }
+	string classname = tableName + "UpdateClass";
+	 
+		 #><#=""#>
+<#+
+#>
+			if(MetadataUpdateUtility.IsChangedMetadataTable("<#=tableName #>", ObjectTables, <#=classname #>.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("<#=tableName #>");
+<#+
+			if(tableName == "General")
+				{
+#>
+				TextCodes = new Dictionary<string, TextCode>();
+				TenantFeatures = new Dictionary<string, Feature>();
+<#+
+}
+#>
+				<#=classname #>.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				<#=classname #>.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				<#=classname #>.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				<#=classname #>.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				<#=classname #>.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				<#=classname #>.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				<#=classname #>.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				<#=classname #>.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				<#=classname #>.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+<#+
+			if(tableName == "General")
+				{
+#>
+				ObjectTable generalTable = ObjectTables["General"];
+				TextCodes = TextCodeRepository.GetTextCodesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
+				TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+<#+
+				}
+#>
+			}
+<#+
+    }
+	#>
+
+        }
+   <#+
+
+}
+ 
+#>
 
 
 <#+
@@ -1841,6 +2055,54 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 	#>
 
         }
+
+		public void CreateAllClosedTablesByHash()
+		{
+   <#+
+   foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+    {
+	 
+	 var path= Host.ResolvePath(file);
+     XElement entity = XDocument.Load(path).Root; 
+ 
+	    
+	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	 string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
+	if(tableName.Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+          
+    }
+	string classname = tableName + "UpdateClass";
+	 
+	 
+		 #><#=""#>
+	   <#+
+	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
+	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
+	 string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	string IsCLosed = entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'); 
+			string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
+   
+      	 
+	    	if(IsMetadataOnlyTable == "true")
+	    	{
+                continue;
+	    	}
+    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs."))
+    {
+    #>
+			if(MetadataUpdateUtility.IsChangedMetadataTable("<#=tableName #>", ObjectTables, <#=classname #>.HashString))
+				<#=classname #>.Fill<#= tableName.Trim('"') #>();
+	<#+
+    }
+    }
+	#>
+
+        }
+
+  
 
    <#+
 

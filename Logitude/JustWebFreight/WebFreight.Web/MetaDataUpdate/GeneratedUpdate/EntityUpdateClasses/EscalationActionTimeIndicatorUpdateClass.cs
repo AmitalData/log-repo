@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class EscalationActionTimeIndicatorUpdateClass
-   {  
+   {  		
+		public const string HashString = "18efb85f8e01d8f09e2598facf03d126";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -116,6 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    CloseTableName =  "Name",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "CRM",
+			      				    HashString =  EscalationActionTimeIndicatorUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

@@ -161,7 +161,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             VoidARPaymentInFullAccounting(_arpaymentPM, setVoided);
 
             // DropBox
-            CreateARInvoiceMessage(setApproved);
+            CreateARPaymentMessage(setApproved);
 
             //// Full Accounting => Reconciliation
             //if (theEntityPm.IsFullAccounting == true)
@@ -294,7 +294,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            ARPaymentValidator.Validate(theEntityPm, objectContext, cashBook);
+            ARPaymentValidator.Validate(theEntityPm, objectContext, cashBook, newPayment, isNewEntity);
             ARPaymentTracing.Trace(theEntityPm, newPayment, isNewEntity);
 
             if (mapComposition)
@@ -400,7 +400,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildSearchFields();
 
             // DropBox
-            this.CreateARInvoiceMessage(setApproved);
+            this.CreateARPaymentMessage(setApproved);
 
             theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
             paymentRepository.Update(newPayment);
@@ -479,7 +479,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return myResult;
         }
 
-        private void CreateARInvoiceMessage(bool setApproved)
+        private void CreateARPaymentMessage(bool setApproved)
         {
             if (setApproved && this.isTransferToDropbox && this.TransferToDropboxActivated)
             {

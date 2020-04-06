@@ -35,6 +35,9 @@ import { AreasTabComponent } from './Components/EditTabs/AreasTabComponent';
 import { AddEditAreaComponent } from './Components/AddEdit/AddEditAreaComponent';
 import { ChoosePortComponent } from './Components/AddEdit/ChoosePortComponent';
 import { ChooseCountryPortComponent } from './Components/AddEdit/ChooseCountryPortComponent';
+import { TariffTranslationsTabComponent } from './Components/EditTabs/TariffTranslations/TariffTranslationsTabComponent';
+import { AddEditTariffTranslationComponent } from './Components/EditTabs/TariffTranslations/AddEditTariffTranslationComponent';
+
 
 export const Components =
     [
@@ -75,6 +78,8 @@ export const Components =
         AddEditAreaComponent,
         ChoosePortComponent,
         ChooseCountryPortComponent,
+        TariffTranslationsTabComponent,
+        AddEditTariffTranslationComponent,
     ];
 
 export class ModuleDeclarations {
@@ -119,7 +124,9 @@ export class ModuleDeclarations {
             case "AreasTabComponent": { myResult = AreasTabComponent; break; }
             case "AddEditAreaComponent": { myResult = AddEditAreaComponent; break; }
             case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
-            case "ChooseCountryPortComponent": { myResult = ChooseCountryPortComponent; break; }  
+            case "ChooseCountryPortComponent": { myResult = ChooseCountryPortComponent; break; }
+            case "TariffTranslationsTabComponent": { myResult = TariffTranslationsTabComponent; break; }
+            case "AddEditTariffTranslationComponent": { myResult = AddEditTariffTranslationComponent; break; } 
         }
 
         return myResult;

@@ -106,6 +106,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="GLAccountId"
     ReferencedTable="GLAccounts"

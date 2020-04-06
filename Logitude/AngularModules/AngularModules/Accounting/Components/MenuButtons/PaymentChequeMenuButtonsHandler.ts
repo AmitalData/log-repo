@@ -161,7 +161,7 @@ export class PaymentChequeMenuButtonsHandler
                     this.entityArgs.EditComponent.ValidationErrorsList = errors;
                     if (this.entityArgs.EditComponent.ValidationErrorsList.length == 0) {
                        this.CurrentSession.StartBusyIndicatorLoading();
-                        this.bankAccountPMService.get(this.EntityPM.BankAccountId).subscribe((res) => {
+                        this.bankAccountPMService.get(this.EntityPM.BankAccountId).subscribe((res:any) => {
                             this.CurrentSession.StopBusyIndicator();
                             if (res) {
                                 if (res.Result) {

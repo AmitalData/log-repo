@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ReportUpdateClass
-   {  
+   {  		
+		public const string HashString = "7ae85c18b5271e172fabf2d50c46919d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "Report",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Reports",
-			      				    OldDBTableName =  "Reports",
 			      				    ObjectTableSingular =  "Report",
 			      				    ObjectTablePlural =  "Reports",
 			      				    DescriptionDefaultText =  "Maintain all the reports you can use in the system.",
@@ -129,6 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Report,Reports,,Id,",
+			      				    HashString =  ReportUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -140,7 +141,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -202,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -265,7 +264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -332,7 +330,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FilterControlName",
-					  						OldFieldName =  "FilterControlName",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -397,7 +394,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -462,7 +458,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -527,7 +522,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -591,7 +585,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -656,7 +649,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FilterHtmlComponentUrl",
-					  						OldFieldName =  "FilterHtmlComponentUrl",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -718,7 +710,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AvailableForScheduling",
-					  						OldFieldName =  "AvailableForScheduling",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1003,6 +994,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature ReportFeature_INTERESTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTERESTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.INTERESTREPORT", NameTextCodeDefaultText = @"Interest Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ReportFeature_REPORTSSCHEDULER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REPORTSSCHEDULER", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.REPORTSSCHEDULER", NameTextCodeDefaultText = @"Reports Scheduler" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ReportFeature_Report_Features_LTReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.LTReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.Report.Features.LTReport", NameTextCodeDefaultText = @"Ledger Transactions Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ReportFeature_Report_Features_CSStatusReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.CSStatusReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.Report.Features.CSStatusReport", NameTextCodeDefaultText = @"Customer Status Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
