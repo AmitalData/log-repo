@@ -946,8 +946,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                 alternativeQuery = this.Queries[0];
             }
             if (!existSelectedQuery) {
-                this.SelectedQuery = alternativeQuery;
-                if (this.SelectedQuery == null) {
+                if (!AppTool.IsNullOrEmpty(alternativeQuery)) {
+                    this.SelectedQuery = alternativeQuery;
+                } else if (!AppTool.IsNullOrEmpty(alternativeUQuery)) {
                     this.SelectedQuery = alternativeUQuery;
                 }
             }
