@@ -169,7 +169,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
         }
     }
     GetBTE() {
-        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe(myResult => {
+        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe((myResult:any) => {
             console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

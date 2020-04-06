@@ -362,15 +362,15 @@ export class PortListService {
         }
     }
 
-    getByCompactFilters(filters: ApiQueryFilters) {
+	getByCompactFilters(filters: ApiQueryFilters) {
 
-        var callTime = new Date();
-        var urlparameters = '/GetByCompactFilters?';
+		var callTime = new Date();        
+		var urlparameters = '/GetByCompactFilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
 
         for (var i in mykeys) {
-            var propName = mykeys[i];
+			var propName = mykeys[i];
             var propValue = filters[propName];
             var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
@@ -379,13 +379,13 @@ export class PortListService {
             }
 
             if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
+				propValue = encodeURIComponent(propValue);
+				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+			}
 
             if (propName == "AdditionalFilters" && propValue.length > 0) {
                 addtionalFiltersValues = JSON.stringify(propValue);
-            }
+			}
         }
 
         if (addtionalFiltersValues) {
@@ -393,34 +393,34 @@ export class PortListService {
         }
 
         var callUrl = this._apiUrl.concat(urlparameters);
+        		
+		return Observable.defer(() => {
+			return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
+				.pipe(
+					map((response: HttpResponse<any>) => {
 
-        return Observable.defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
+						var serviceResponse: ServiceResponse = response.body;
+						var _mappedListsArray: Array<PortList> = [];
 
-                        var serviceResponse: ServiceResponse = response.body;
-                        var _mappedListsArray: Array<PortList> = [];
+						if (serviceResponse.Result) {
+							for (var key in serviceResponse.Result) {				
+								var entity: PortList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								_mappedListsArray.push(entity);
+							}
+						}
 
-                        if (serviceResponse.Result) {
-                            for (var key in serviceResponse.Result) {
-                                var entity: PortList = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                                _mappedListsArray.push(entity);
-                            }
-                        }
+						serviceResponse.Result = _mappedListsArray; 
+						serviceResponse.CallTime = callTime;
 
-                        serviceResponse.Result = _mappedListsArray;
-                        serviceResponse.CallTime = callTime;
-
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Port", "GetByCompactFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
-
-                        return serviceResponse;
-                    }),
-
-                    catchError(ServiceHelper.HandleServiceError));
-        });
-    }
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Port", "GetByCompactFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 
+						return serviceResponse;
+					}),
+				
+					catchError(ServiceHelper.HandleServiceError));
+		});        
+	}
 	
 	    MapJsonToEntityList(jsonList: any) {
        
