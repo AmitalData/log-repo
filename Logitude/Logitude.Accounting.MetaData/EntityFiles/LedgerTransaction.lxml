@@ -4045,6 +4045,7 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
+  
     <TextCode
       Code="&quot;LedgerTransaction.O.IncludeRelatedCurrenciesAccount&quot;"
       DefaultText="&quot;Include Related Currencies Account&quot;"
@@ -4057,6 +4058,9 @@
       LocalDefaultText="&quot;לכלול כרטיסים מקושרים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
+    <TextCode Code="&quot;LedgerTransaction.O.AgingMonthNotSet&quot;" DefaultText="&quot;Number of aging months is not set in Full Accounting Settings&quot;" LocalDefaultText="&quot;יש להגדיר מספר חודשי גיול בהגדרות מערכת&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

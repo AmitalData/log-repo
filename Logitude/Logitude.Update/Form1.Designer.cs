@@ -192,6 +192,8 @@
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
             this.cbxOldUpdateCode = new System.Windows.Forms.CheckBox();
+            this.button49 = new System.Windows.Forms.Button();
+            this.btnCallOldUpdate = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1427,6 +1429,7 @@
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
             this.tabPage1.Controls.Add(this.cbxOldUpdateCode);
+            this.tabPage1.Controls.Add(this.button49);
             this.tabPage1.Controls.Add(this.btnCallOldUpdate);
             this.tabPage1.Controls.Add(this.UpdateRulesLabel);
             this.tabPage1.Controls.Add(this.button48);
@@ -1860,7 +1863,17 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
-            // cbxOldUpdateCode
+            // button49
+            // 
+            this.button49.Location = new System.Drawing.Point(543, 313);
+            this.button49.Name = "button49";
+            this.button49.Size = new System.Drawing.Size(184, 23);
+            this.button49.TabIndex = 98;
+            this.button49.Text = "Update Reports";
+            this.button49.UseVisualStyleBackColor = true;
+            this.button49.Click += new System.EventHandler(this.button49_Click);
+            // 
+            // btnCallOldUpdate
             // 
             this.cbxOldUpdateCode.AutoSize = true;
             this.cbxOldUpdateCode.Location = new System.Drawing.Point(543, 310);
@@ -2081,6 +2094,7 @@
         private System.Windows.Forms.Button button47;
         private System.Windows.Forms.Button btnCallOldUpdate;
         private System.Windows.Forms.CheckBox cbxOldUpdateCode;
+        private System.Windows.Forms.Button button49;
     }
 }
 
