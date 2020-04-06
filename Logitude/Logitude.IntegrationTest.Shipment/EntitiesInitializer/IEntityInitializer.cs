@@ -31,6 +31,11 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
                     {
                         return new ShipmentReceivableInitializer();
                     }
+
+                case "ShipmentPackage":
+                    {
+                        return new ShipmentPackageInitializer();
+                    }
             }
 
             return null;
