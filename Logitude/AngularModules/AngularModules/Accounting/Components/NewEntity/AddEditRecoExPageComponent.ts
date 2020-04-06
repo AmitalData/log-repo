@@ -531,7 +531,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
     private GetCurrency(currencyId: any)
     {
-        this._CurrencyPMService.get(currencyId).subscribe((myResult) =>
+        this._CurrencyPMService.get(currencyId).subscribe((myResult:any) =>
         {
             var currency = myResult.Result;
             if (!AppTool.IsNullOrEmpty(currency)) {
