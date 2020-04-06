@@ -764,7 +764,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 shipmentModelUpdateClass.LoadObjectTablesMetadata(context);
 
            
-            updateClass.LoadObjectTableRulesANDFieldsValidations();
+          
 
             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
             if (runOldUpdateCode)
@@ -777,6 +777,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 //MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
             }
+
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
         }
 
         private static void UpdateAccountingModule(IWebFreightContext context)
