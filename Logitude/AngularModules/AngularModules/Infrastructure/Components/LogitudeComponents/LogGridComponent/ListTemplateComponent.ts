@@ -32,7 +32,7 @@ export class ListTemplateComponent implements OnInit {
     public noComponent: boolean;
 
     ngOnInit() {
-
+        debugger;
         if (this.htmlListComponentName && this.htmlListComponentUrl) {
             this.noComponent = false;
             if (this.PassAdditionalData == true) {
