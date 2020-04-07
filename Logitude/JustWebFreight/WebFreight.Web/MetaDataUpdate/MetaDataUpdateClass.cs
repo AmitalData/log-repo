@@ -110,10 +110,11 @@ namespace WebFreight.Web.MetaDataUpdate
             InitializeService(context);
             Dictionary<string, ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
             textCodes = new Dictionary<string, TextCode>();
-            TextCodeRepository.GetTextCodesByTenant(0).ToList().ForEach(d =>
-            {
-                textCodes.Add(d.Code + d.Tenant.ToString() + d.ObjectTableId, d);
-            });
+            textCodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
+            //TextCodeRepository.GetTextCodesByTenant(0).ToList().ForEach(d =>
+            //{
+            //    textCodes.Add(d.Code + d.Tenant.ToString() + d.ObjectTableId, d);
+            //});
 
             CreateAllObjectsTables(objectTables, textCodes);
         }
