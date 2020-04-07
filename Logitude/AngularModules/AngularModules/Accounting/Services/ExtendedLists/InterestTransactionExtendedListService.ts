@@ -65,7 +65,7 @@ export class InterestTransactionExtendedListService {
         
         var serviceResponse: ServiceResponse = new ServiceResponse();
         var url = this._apiUrl + "/GetCheckRecentReports?interestDate=" + interestDate + "&customerId=" + customerId;
-        return this.httpClient.get(url, httpOptions).pipe(
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 serviceResponse.Result = response;
                 return serviceResponse;
