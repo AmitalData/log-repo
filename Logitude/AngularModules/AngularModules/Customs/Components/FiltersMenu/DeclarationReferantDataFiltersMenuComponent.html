@@ -12,7 +12,10 @@
                             [PlaceHolder]="'רפרנט'"
                             [LayoutDirection]="'rtl'"
                             [LOVListComponentPropName]="'LOVListUsers'"
-                            (ChosenListItemsChanged)="SelectedValueChangedEmitUser()">
+                            (ChosenListItemsChanged)="SelectedValueChangedEmitUser()"
+                            [ChosenListHeader]="'רפרנטים שנבחרו'"
+                            [ButtonAddLabel]="'בחר'"
+                            >
                 <span class="class-MultiSelectLOV-content">
                     <LogLov [ObjectFieldName]="'ReferentUserId'"
                             [ObjectTableName]="ObjectTableName"
@@ -31,7 +34,10 @@
                             [PlaceHolder]="'קוד חוליה'"
                             [LayoutDirection]="'rtl'"
                             [LOVListComponentPropName]="'LOVListDepartment'"
-                            (ChosenListItemsChanged)="SelectedValueChangedEmitDepartment()">
+                            (ChosenListItemsChanged)="SelectedValueChangedEmitDepartment()"
+                            [ChosenListHeader]="'חוליות שנבחרו'"
+                            [ButtonAddLabel]="'בחר'"
+                            >
                 <span class="class-MultiSelectLOV-content">
                     <LogLov [ObjectFieldName]="'DepartmentId'"
                             [ObjectTableName]="ObjectTableName"
