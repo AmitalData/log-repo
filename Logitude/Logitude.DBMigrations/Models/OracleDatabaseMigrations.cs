@@ -849,7 +849,7 @@ namespace Logitude.DBMigrations.Models
             string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", parentTable, foreignKeyColumns.Replace("\"", String.Empty), createRelationScript);
 
             string createIndexScript = null;
-            if (CurrentTable.AllIndexes.Where(i => i.Columns == foreignKeyColumns.Replace("\"", String.Empty)).FirstOrDefault() == null)
+            if (CurrentTable == null || (CurrentTable != null && CurrentTable.AllIndexes.Where(i => i.Columns == foreignKeyColumns.Replace("\"", String.Empty)).FirstOrDefault() == null))
             {
                 IndexDefinition relationIndex = new IndexDefinition
                 {

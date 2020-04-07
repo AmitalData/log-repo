@@ -999,7 +999,7 @@ namespace Logitude.DBMigrations.Models
             string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", DXMLTable.Name, relation.ForeignKeyColumn, createRelationScript);
 
             string createIndexScript = null;
-            if (CurrentTable.AllIndexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault() == null)
+            if (CurrentTable == null || (CurrentTable != null && CurrentTable.AllIndexes.Where(i => i.Columns == relation.ForeignKeyColumn).FirstOrDefault() == null))
             {
                 IndexDefinition relationIndex = new IndexDefinition
                 {
