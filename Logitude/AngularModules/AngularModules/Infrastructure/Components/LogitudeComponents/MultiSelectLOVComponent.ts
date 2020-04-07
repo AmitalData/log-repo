@@ -45,8 +45,32 @@ export class MultiSelectLOVComponent implements OnInit{
     IsDisplayOnly: boolean = false;
 
     //@ViewChild(LogLovV2Component)
+    InitKeyDownEvent: boolean = false;
     @ContentChild(LogLovV2Component)
-    public MyLogLovV2Component: LogLovV2Component = null;
+    private _MyLogLovV2Component: LogLovV2Component = null;
+    public get MyLogLovV2Component(): LogLovV2Component {
+        if (!this.InitKeyDownEvent && this._MyLogLovV2Component != null) {
+            this.InitKeyDownEvent = true;
+            this._MyLogLovV2Component.KeyDownEvent
+                .subscribe(char => {
+                    var TABKEY = 9;
+                    var ENTERKEY = 13;
+                    var DOWNKEY = 40;
+                    var UPKEY = 38;
+                    var ESC = 27;
+                    var CTRL = 17;
+                    var SHIFT = 16;
+                    if (char == ENTERKEY && this._MyLogLovV2Component.SelectedItem != null) {
+                        this.AddToList();
+                    }
+                });
+        }
+        return this._MyLogLovV2Component;
+    }
+    public set MyLogLovV2Component(value: LogLovV2Component) {
+        this._MyLogLovV2Component = value;
+        
+    }
 
 
     @Input()
