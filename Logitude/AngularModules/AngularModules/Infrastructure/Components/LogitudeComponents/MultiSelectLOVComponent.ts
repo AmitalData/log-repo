@@ -5,6 +5,7 @@ import { LogLovV2Component } from './LogLovV2Component';
 import { forEach } from '@angular/router/src/utils/collection';
 import { retry } from 'rxjs/operator/retry';
 import { setInterval } from 'timers';
+import { UserList } from '../../../Common/EntityLists/UserList';
 
 @Component({
     selector: 'MultiSelectLOV',
@@ -14,6 +15,7 @@ import { setInterval } from 'timers';
 })
 
 export class MultiSelectLOVComponent implements OnInit{
+   
     @Input()
     public IsDisabled: boolean
     //@Output()
@@ -47,7 +49,11 @@ export class MultiSelectLOVComponent implements OnInit{
     public MyLogLovV2Component: LogLovV2Component = null;
 
 
-    
+    @Input()
+    ChosenListHeader: string = 'Chosen List';
+
+    @Input()
+    ButtonAddLabel: string = null;
 
     constructor(private _CD: ChangeDetectorRef, myElement: ElementRef) {
         this._ElementRef = myElement;
@@ -110,7 +116,10 @@ export class MultiSelectLOVComponent implements OnInit{
 
     ngOnInit() {
     }
-
+    public Invalidate(): any {
+        
+        this.FormatList();
+    }
     DropdownDisplayClose() {
         this._DropdownDisplay = 'none';
         this._CD.detectChanges();
@@ -131,14 +140,17 @@ export class MultiSelectLOVComponent implements OnInit{
         this.DropdowndisplayToggle(null, true);
     }
     DropdownMenuButtonClick(event, fucusMe: boolean) {
+        //this.CloseOtherLastmenu()
         this.DropdowndisplayToggle(event, fucusMe);
     }
+    
     DropdowndisplayToggle(event, fucusMe: boolean) {
 
 
         //MouseEvent
 
         MultiSelectLOVComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
+        
         if (this._DropdownDisplay == 'none') {
             var item = document.getElementById(this._MultiSelectLOVId);
             var itemRect = item.getBoundingClientRect();

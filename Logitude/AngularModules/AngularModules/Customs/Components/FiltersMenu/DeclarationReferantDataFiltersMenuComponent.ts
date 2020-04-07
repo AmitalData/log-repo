@@ -1,9 +1,13 @@
-import { Component, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, Output, EventEmitter, ContentChild, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
+import { MultiSelectLOVComponent } from '../../../Infrastructure/Components/LogitudeComponents/MultiSelectLOVComponent';
+import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
+import { UserList } from '../../../Common/EntityLists/UserList';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -23,9 +27,12 @@ export class DeclarationReferantDataFiltersMenuComponent
     TransportFilter_A: string;
     TransportFilter_O: string;
     TransportFilter_I: string;
+    @ViewChildren(MultiSelectLOVComponent)
+    public myViewChildrenMultiSelectLOVComponent: QueryList<MultiSelectLOVComponent> = null;
 
     constructor() {
         super();
+        
         if (this.CurrentSession == null) {
             this.TransportFilter_A = "TransportFilter_A_-1_-1";
             this.TransportFilter_O = "TransportFilter_O_-1_-1";
@@ -52,7 +59,24 @@ export class DeclarationReferantDataFiltersMenuComponent
 
     ngAfterViewInit() {
         this.ApplyTransportSelectedStyle();
-        this.LOVListUsers.push(SessionLocator.LoggedUserPM); // by default is the grid filtered by the current user
+        //
+        //this.LOVListUsers.push(SessionLocator.LoggedUserPM); // by default is the grid filtered by the current user
+        //let myUserListService: UserListService = new UserListService();
+        //myUserListService.getSingleFromCache(SessionLocator.LoggedUserId)
+        //    .subscribe(r => {
+        //        let myUserList: UserList = r.Result;
+        //        if (!AppTool.IsNullOrEmpty(myUserList)) {
+        //            this.myViewChildrenMultiSelectLOVComponent.first.AddUserList(myUserList);
+        //        }
+        //    });
+        let ul = new UserList();
+        ul.Id = SessionLocator.LoggedUserPM.Id;
+        ul.LocalName = SessionLocator.LoggedUserPM.LocalName;
+        if (AppTool.IsNullOrEmpty(ul.LocalName)) {
+            ul.LocalName = SessionLocator.LoggedUserPM.EnglishName;
+        }
+        this.LOVListUsers.push(ul);
+        this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
         this.SelectedValueChangedEmitUser();
 
 
