@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportUpdateClass
    {  		
-		public const string HashString = "7ae85c18b5271e172fabf2d50c46919d";
+		public const string HashString = "f91f82e31faf4caab52980753edb1317";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -995,9 +995,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature ReportFeature_REPORTSSCHEDULER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REPORTSSCHEDULER", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.REPORTSSCHEDULER", NameTextCodeDefaultText = @"Reports Scheduler" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_Report_Features_LTReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.LTReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.Report.Features.LTReport", NameTextCodeDefaultText = @"Ledger Transactions Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
 		   Feature ReportFeature_Report_Features_CSStatusReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.CSStatusReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.Report.Features.CSStatusReport", NameTextCodeDefaultText = @"Customer Status Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ReportFeature_Report_Features_LTReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.LTReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.Report.Features.LTReport", NameTextCodeDefaultText = @"Ledger Transactions Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
