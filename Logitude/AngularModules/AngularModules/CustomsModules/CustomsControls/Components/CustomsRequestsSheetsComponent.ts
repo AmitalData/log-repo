@@ -237,7 +237,7 @@ export class CustomsRequestsSheetsComponent
                     messageWindow.Width = 400;
                     messageWindow.Height = 150;
                     messageWindow.ShowErrorIcon = true;
-                    messageWindow.Show("Error canceling requests.");
+                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllError"));
                 }
 
                 else {
@@ -245,7 +245,7 @@ export class CustomsRequestsSheetsComponent
                 messageWindow.Width = 400;
                 messageWindow.Height = 150;
                 messageWindow.ShowErrorIcon = true;
-                messageWindow.Show("Requests canceled successfully.");
+                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.CancelAllSuccess"));
                 }
 
            
@@ -279,7 +279,7 @@ export class CustomsRequestsSheetsComponent
                         messageWindow.Width = 400;
                         messageWindow.Height = 150;
                         messageWindow.ShowErrorIcon = true;
-                    messageWindow.Show("Error re-analysis requests.");
+                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.ErrorSendReAnalysis"));
                   
                 }
                 else {
@@ -287,7 +287,7 @@ export class CustomsRequestsSheetsComponent
                 messageWindow.Width = 400;
                 messageWindow.Height = 150;
                 messageWindow.ShowErrorIcon = true;
-                    messageWindow.Show("The requests were registered for re-analysis and sent in the background.");
+                    messageWindow.Show(TextCodeTranslator.Translate("Customs.RequestSheet.O.SendReAnalysisInBackground"));
                 }
             
             });
