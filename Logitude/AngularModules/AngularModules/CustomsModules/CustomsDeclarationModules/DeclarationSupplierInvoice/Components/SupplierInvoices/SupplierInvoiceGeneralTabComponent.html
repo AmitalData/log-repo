@@ -706,12 +706,12 @@
 
 
 
-                                <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe" [binding]="'ItemCode'" [width]="'70'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe" [binding]="'ItemCode'" [width]="'70'" [Editable]="true" [Alignment]="'left'">
                                     <log-cell-template template="let item" (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex" (dblclick)="item.ItemCodeDblClick(logcelltemplate)">
-                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <div class="TextTrimming" style="direction: ltr; text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ItemCode}}</span>
                                         </div>
-                                        <div (click)="OnSelectedItemChanged(item)" *ngIf="logcelltemplate.IsEditMode">
+                                        <div style="direction: ltr;" (click)="OnSelectedItemChanged(item)" *ngIf="logcelltemplate.IsEditMode">
                                             <LogTextBox [ObjectFieldName]="'ItemCode'" [DataContext]="item" [InputType]="'text'" [FocusOnMe]="true"
                                                         (LostFocus)="item.ItemCodeLostFocus(logcelltemplate)"
                                                         [Text]="item.ItemCode" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -748,8 +748,8 @@
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'integertext'"
-                                                        [Text]="item.ClassificationCode" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true"
-                                                        (LostFocus)="item.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="item.ClassificationKeyUp($event,logcelltemplate,ClassificationTextBox)"></LogTextBoxV2>
+                                                          [Text]="item.ClassificationCode" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true"
+                                                          (LostFocus)="item.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="item.ClassificationKeyUp($event,logcelltemplate,ClassificationTextBox)"></LogTextBoxV2>
 
 
                                         </div>
@@ -822,7 +822,7 @@
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogTextBoxV2 #ItemPriceTextBox [ObjectFieldName]="'ItemPrice'" [InputType]="'decimal'" [DataContext]="item" [FocusOnMe]="true" [IsAccumulative]="true"
-                                                        [Text]="item.ItemPrice" [ObjectTableName]="ObjectTableName" [HideColumns]="true" (LostFocus)="item.OnItemPriceLostFocus(ItemPriceTextBox)" [DebounceTime]="0"></LogTextBoxV2>
+                                                          [Text]="item.ItemPrice" [ObjectTableName]="ObjectTableName" [HideColumns]="true" (LostFocus)="item.OnItemPriceLostFocus(ItemPriceTextBox)" [DebounceTime]="0"></LogTextBoxV2>
 
 
                                         </div>
@@ -976,8 +976,8 @@
 
                                                         <!-- close button -->
                                                         <!--<div (click)="item.CloseButtonClicked()" style="float: left;" class="CloseButtonWrapper" [title]="'General.B.Close' | TextCodeTranslationPipe">
-                    <div class="CloseButton"></div>
-                </div>-->
+                                <div class="CloseButton"></div>
+                            </div>-->
 
                                                     </div>
 
@@ -988,30 +988,30 @@
 
                                             </div>
                                             <!--
-            <div *ngIf="item.ShowClassefierRemarkInfo" [id]="item.ClassefierRemarkToolTipWrapper" style="position: relative; float: right;height: 18px;width: 20px;">
-    -->
+                        <div *ngIf="item.ShowClassefierRemarkInfo" [id]="item.ClassefierRemarkToolTipWrapper" style="position: relative; float: right;height: 18px;width: 20px;">
+                -->
                                             <!-- Info Icon -->
                                             <!--
-        <img (click)="item.ExcButtonClicked()" class="exc-remark-button" tabindex="-1" src="./Images/exclamation-16.png" />
-    </div>
-    -->
+                    <img (click)="item.ExcButtonClicked()" class="exc-remark-button" tabindex="-1" src="./Images/exclamation-16.png" />
+                </div>
+                -->
                                         </div>
                                         <div class="TextTrimming" *ngIf="item.ShowValidatioIcon" style="position: relative; float: right;height: 20px;width: 20px;">
 
                                             <img tabindex="-1" style="width: 14px; height: 14px; position: relative; vertical-align: text-top;" src="./Images/error-16.png" title="{{item.TariffErrorText}}" />
 
                                         </div>
-                                    
-                        
-                            </log-cell-template>
-                        </log-column>
+
+
+                                    </log-cell-template>
+                                </log-column>
 
 
 
 
 
 
-                        </logitude-edit-grid>
+                            </logitude-edit-grid>
                         </div>
                     </td>
 

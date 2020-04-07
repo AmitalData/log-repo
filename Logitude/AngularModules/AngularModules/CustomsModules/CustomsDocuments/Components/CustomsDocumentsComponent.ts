@@ -547,6 +547,7 @@ export class CustomsDocumentsComponent
                 windowArgs.IsNewState = false;
             }
         }
+
         windowArgs.CustomsDocument = customsDocument;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly && isThereRequests;
         windowArgs.IsEntityDisplayOnly = this.IsDisplayOnly;

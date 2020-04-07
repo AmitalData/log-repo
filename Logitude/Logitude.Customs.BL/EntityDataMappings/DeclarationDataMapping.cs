@@ -108,7 +108,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (transportMode != null)
             {
                 entityPM.TransportModeName = transportMode.Name;
-               
+
             }
 
             if (!string.IsNullOrEmpty(entityPOCO.DepartmentId))
@@ -120,7 +120,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.DepartmentName = department.LocalName != null ? department.LocalName : department.EnglishName;
                 }
             }
-       
+
             if (entityPOCO.DeclarationNumber != null && entityPOCO.VersionId != null)
             {
                 entityPM.DeclarationNumberandVersionId = entityPOCO.DeclarationNumber + "-" + entityPOCO.VersionId;
@@ -153,22 +153,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomerIdentifyTypeQueryService customerIdentifyTypeQueryService = new CustomerIdentifyTypeQueryService(entityPOCO.Tenant);
             if (entityPOCO.ImporterTypeCode != null)
             {
-            
+
                 CustomerIdentifyTypePM importerType = customerIdentifyTypeQueryService.GetSingle(entityPOCO.ImporterTypeCode, false, true);
-                entityPM.ImporterTypeName = importerType != null ? importerType.LocalName : null; 
+                entityPM.ImporterTypeName = importerType != null ? importerType.LocalName : null;
             }
 
 
             if (entityPOCO.TransferImporterTypeCode != null)
             {
-            
+
                 CustomerIdentifyTypePM transferImporterType = customerIdentifyTypeQueryService.GetSingle(entityPOCO.TransferImporterTypeCode, false, true);
                 entityPM.TransferImporterTypeName = transferImporterType != null ? transferImporterType.LocalName : null;
             }
 
             if (entityPOCO.EntitleImporterTypeCode != null)
             {
-           
+
                 CustomerIdentifyTypePM entitleImporterType = customerIdentifyTypeQueryService.GetSingle(entityPOCO.EntitleImporterTypeCode, false, true);
                 entityPM.EntitleImporterTypeName = entitleImporterType != null ? entitleImporterType.LocalName : null;
             }
@@ -210,10 +210,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (client != null)
                 {
 
-                    if (!string.IsNullOrEmpty(client.FullName))entityPM.CalculatedImporterName = client.FullName.Substring(0, Math.Min(35, client.FullName.Length));
+                    if (!string.IsNullOrEmpty(client.FullName)) entityPM.CalculatedImporterName = client.FullName.Substring(0, Math.Min(35, client.FullName.Length));
                     FacilitationTypeQueryService FacilitationTypeQueryService = new FacilitationTypeQueryService(entityPOCO.Tenant);
                     FacilitationTypePM FacilitationType = FacilitationTypeQueryService.GetSingle(client.FacilitationTypeCode, false, true);
-                    entityPM.FacilityTypeName = FacilitationType !=null? FacilitationType.LocalName: null;
+                    entityPM.FacilityTypeName = FacilitationType != null ? FacilitationType.LocalName : null;
                 }
             }
 
@@ -246,9 +246,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 ClientQueryService clientQueryService = new ClientQueryService(entityPOCO.Tenant);
                 ClientPM client = clientQueryService.GetClientByCode(entityPOCO.EntitleImporterCode, entityPOCO.Tenant);
                 if (client != null)
-                {                
+                {
                     entityPM.CalculatedEntitleImporterName = client.FullName;
-                }          
+                }
             }
 
             if (entityPOCO.TransferImporterCode != null)
@@ -257,7 +257,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 ClientPM client = clientQueryService.GetClientByCode(entityPOCO.TransferImporterCode, entityPOCO.Tenant);
                 if (client != null)
                 {
-                    
+
                     entityPM.CalculatedTransferImporterName = client.FullName;
                 }
             }
@@ -265,7 +265,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.EntitleImporterCountryCode != null)
             {
                 CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(entityPOCO.Tenant);
-                CustomsCountryPM customsCountry = customsCountryQueryService.GetSingle(entityPOCO.EntitleImporterCountryCode,false, false);
+                CustomsCountryPM customsCountry = customsCountryQueryService.GetSingle(entityPOCO.EntitleImporterCountryCode, false, false);
                 if (customsCountry != null)
                     entityPM.EntitleImporterCountryName = customsCountry.LocalName;
             }
@@ -287,7 +287,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                 entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
             }
-            
+
             //var move2MenuButtonHandler = true;
             //if (!move2MenuButtonHandler)
             //{
@@ -304,11 +304,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             CourierDeclarationQueryService courierDeclarationService = new CourierDeclarationQueryService(entityPOCO.Tenant);
             CourierDeclarationPM courierDeclaration = courierDeclarationService.GetCourierDeclarationByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
-            if(courierDeclaration!= null)
+            if (courierDeclaration != null)
             {
                 CourierMasterQueryService courierMasterService = new CourierMasterQueryService(entityPOCO.Tenant);
                 CourierMasterPM courierMaster = courierMasterService.GetSingle(courierDeclaration.CourierMasterId, false, false);
-                if(courierMaster != null)
+                if (courierMaster != null)
                 {
                     entityPM.CourierData = courierMaster.AirlinePrefix + "-" + courierMaster.MAWB;
                 }
@@ -355,19 +355,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
-            if (entityPOCO.IsCourierDeclaration == true)
-            {
-                //CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(entityPOCO.Tenant);
-                //entityPM.MAWBCourierMaster = courierDeclarationQueryService.GetMAWBCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
-
-                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPOCO.Tenant);
-                CourierMasterPM courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
-                if(courierMasterPM != null)
-                {
-                    entityPM.CourierMasterId = courierMasterPM.Id;
-                    entityPM.MAWBCourierMaster = courierMasterPM.MAWB;
-                }
-            }
+            UpdateCourierDeclarationFields(entityPM, entityPOCO);
 
             if (entityPOCO.AcceptanceStatusCode != null)
             {
@@ -380,7 +368,50 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 
 
+            //if (entityPM.FastIndividualProcessCode != null)
+            //{
+            //    if (entityPM.FastIndividualProcessCode == "F")
+            //    {
+            //        entityPM.FastIndividualProcessCode = "מהיר";
+            //    }
+            //    else if (entityPM.FastIndividualProcessCode == "I")
+            //    {
+            //        entityPM.FastIndividualProcessCode = "פרטני";
+            //    }
+            //}
 
+        }
+
+        public static void UpdateCourierDeclarationFields(DeclarationPM entityPM, Declaration entityPOCO)
+        {
+            if (entityPOCO.IsCourierDeclaration == true)
+            {
+                //CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(entityPOCO.Tenant);
+                //entityPM.MAWBCourierMaster = courierDeclarationQueryService.GetMAWBCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+
+                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPOCO.Tenant);
+                CourierMasterPM courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+                if (courierMasterPM != null)
+                {
+                    entityPM.CourierMasterId = courierMasterPM.Id;
+                    entityPM.MAWBCourierMaster = courierMasterPM.MAWB;
+                }
+                bool fastWithoutCache_NotNeedName = true;
+                if (fastWithoutCache_NotNeedName)
+                {
+                    var repoDeclarationCourierStatus = new DeclarationCourierStatusRepository(entityPOCO.Tenant);
+                    var pocoDeclarationCourierStatus = repoDeclarationCourierStatus
+                        .GetDeclarationsByIds(new List<string>() { entityPOCO.Id }, entityPOCO.Tenant)
+                        .FirstOrDefault();
+                    if (pocoDeclarationCourierStatus != null)
+                    {
+                        entityPM.CourierManifestStatusCode = pocoDeclarationCourierStatus.CourierManifestStatusCode;
+                        entityPM.CourierPaymentStatusCode = pocoDeclarationCourierStatus.CourierPaymentStatusCode;
+
+                    }
+                }
+
+            }
         }
 
         private static void BuildSearchFields(DeclarationPM entityPM, Declaration poco, bool isNewEntity)

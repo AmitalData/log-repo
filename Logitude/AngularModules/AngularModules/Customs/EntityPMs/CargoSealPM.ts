@@ -85,14 +85,16 @@ export class CargoSealPM {
     private updateTypeName: string;
     public get UpdateTypeName() { return this.updateTypeName; }
     public set UpdateTypeName(newValue: string) { if (this.updateTypeName != newValue) { this.updateTypeName = newValue; this.MarkAsDirty("UpdateTypeName"); } }
-
-    private canToAdd: boolean;
-    public get CanToAdd() { return this.canToAdd; }
-    public set CanToAdd(newValue: boolean) { if (this.canToAdd != newValue) { this.canToAdd = newValue; this.MarkAsDirty("CanToAdd"); } }
- 
+       
+	 
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+       
+	 
+    private canToAdd: boolean;
+    public get CanToAdd() { return this.canToAdd; }
+    public set CanToAdd(newValue: boolean) { if (this.canToAdd != newValue) { this.canToAdd = newValue; this.MarkAsDirty("CanToAdd"); } }
        
 	 
 

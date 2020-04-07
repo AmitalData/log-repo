@@ -949,7 +949,6 @@ export class DeclarationPM {
     public set IsValidTicketsDiamond(newValue: boolean) { if (this.isValidTicketsDiamond != newValue) { this.isValidTicketsDiamond = newValue; this.MarkAsDirty("IsValidTicketsDiamond"); } }
        
 	 
-
     private availabilityDate: Date;
     public get AvailabilityDate() { return this.availabilityDate; }
     public set AvailabilityDate(newValue: Date) { if (this.availabilityDate != newValue) { this.availabilityDate = newValue; this.MarkAsDirty("AvailabilityDate"); } }
@@ -958,7 +957,16 @@ export class DeclarationPM {
     private automaticPayment: number;
     public get AutomaticPayment() { return this.automaticPayment; }
     public set AutomaticPayment(newValue: number) { if (this.automaticPayment != newValue) { this.automaticPayment = newValue; this.MarkAsDirty("AutomaticPayment"); } }
-
+       
+	 
+    private courierManifestStatusCode: string;
+    public get CourierManifestStatusCode() { return this.courierManifestStatusCode; }
+    public set CourierManifestStatusCode(newValue: string) { if (this.courierManifestStatusCode != newValue) { this.courierManifestStatusCode = newValue; this.MarkAsDirty("CourierManifestStatusCode"); } }
+       
+	 
+    private courierPaymentStatusCode: string;
+    public get CourierPaymentStatusCode() { return this.courierPaymentStatusCode; }
+    public set CourierPaymentStatusCode(newValue: string) { if (this.courierPaymentStatusCode != newValue) { this.courierPaymentStatusCode = newValue; this.MarkAsDirty("CourierPaymentStatusCode"); } }
        
 	 
 
@@ -985,4 +993,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

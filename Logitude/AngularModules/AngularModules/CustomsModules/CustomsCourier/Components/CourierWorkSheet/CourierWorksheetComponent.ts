@@ -34,6 +34,7 @@ import { element } from 'protractor';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     moduleId: module.id,
@@ -107,6 +108,7 @@ implements OnDestroy
     IsLoaded: boolean = false;
     IsFiltered: boolean = false;
     IsMamanEnabled: boolean = false;
+    isAllowAccounting: boolean = false;
     IsILOVLEnabled: boolean = false;
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
@@ -139,7 +141,7 @@ implements OnDestroy
         //        });
         //);
         this.GetMamanPUR();
-        
+         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
