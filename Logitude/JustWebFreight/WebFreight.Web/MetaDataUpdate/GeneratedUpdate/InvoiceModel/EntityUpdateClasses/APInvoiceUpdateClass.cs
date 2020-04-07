@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "c01a64447476f5de992a8a8880504af1";
+		public const string HashString = "4aa6364f9f7e07f85727f8fb265e4bfe";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1259,7 +1259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
@@ -1460,7 +1460,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						LookUpTableName =  "APInvoiceStatus",
 					  						MinLength =  0,
 					  						MaxLength =  2,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -1590,7 +1590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
@@ -1658,7 +1658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -2117,7 +2117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -2246,7 +2246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,

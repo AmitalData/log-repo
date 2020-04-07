@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class AccountingTransferLineUpdateClass
    {  		
-		public const string HashString = "0bc360ef39abbc14af3c6107b742ae44";
+		public const string HashString = "1bd1da7d7e95f4136115d3a9d852a3d7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -181,7 +181,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -238,7 +238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
