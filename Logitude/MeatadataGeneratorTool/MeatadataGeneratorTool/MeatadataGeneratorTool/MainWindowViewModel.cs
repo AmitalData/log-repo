@@ -408,6 +408,7 @@ namespace MeatadataGeneratorTool
                         propObjectField.ValidForQuerySection1 = NewObjectTable.ObjectTableName;
                         propObjectField.DefaultText = "Id";
                         propObjectField.NoObjectField = true;
+                       
                         NewObjectTable.UpdateObsList(propObjectField);
                     }
                     if (IsTenantChecked)

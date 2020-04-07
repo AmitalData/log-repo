@@ -5,62 +5,6 @@
   DBType="Main"
   Module="Common">
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Code"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Description"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="FilterControlName"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="ReportGroupId"
     Type="varchar"
     Size="15">
@@ -82,17 +26,59 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InActive"
-    Type="bit">
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="FilterHtmlComponentUrl"
+    Name="Name"
     Type="varchar"
-    Size="256">
+    Size="40">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="FilterControlName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="DefaultTemplateId"
@@ -105,6 +91,20 @@
     Name="DefaultMessageTemplateId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FilterHtmlComponentUrl"
+    Type="varchar"
+    Size="256">
     <Constraints
       Nullable="true" />
   </Column>

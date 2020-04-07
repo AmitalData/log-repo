@@ -73,7 +73,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.LovDisplayMemberPathLocal = objectTablesDetails.LovDisplayMemberPathLocal;
                 objectTable.LovDisplayMemberPath = objectTablesDetails.LovDisplayMemberPath;
                 objectTable.IsTabsHidden = objectTablesDetails.IsTabsHidden;
-                objectTable.HashString = objectTablesDetails.HashString;
+                if (!string.IsNullOrEmpty(objectTablesDetails.HashString))
+                    objectTable.HashString = objectTablesDetails.HashString;
                 objectTableRepository.Add(objectTable);
 
                 TextCode objectSingular = null;
@@ -170,7 +171,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 #region Update
                 ObjectTable updatedObjectTable = tenantZeroObjectTables[objectTablesDetails.ObjectTableName];
-                updatedObjectTable.HashString = objectTablesDetails.HashString;
+                if (!string.IsNullOrEmpty(objectTablesDetails.HashString))
+                    updatedObjectTable.HashString = objectTablesDetails.HashString;
                 updatedObjectTable.HasCustomFilter = objectTablesDetails.HasCustomFilter;                
                 updatedObjectTable.Name = objectTablesDetails.ObjectTableName;
                 updatedObjectTable.Tenant = 0;

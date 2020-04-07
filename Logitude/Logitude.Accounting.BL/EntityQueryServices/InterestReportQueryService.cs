@@ -27,5 +27,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             InterestReportLinesByDateQueryService queryService = new InterestReportLinesByDateQueryService(context);
             entityPM.InterestReportLinesByDates = queryService.GetMulti(activityKeys, true);
         }
+
+        public bool CheckRecentCustomerReports(int tenant, DateTime interestDate, string customerId)
+        {
+            return (from a in context.InterestReports
+                    where a.Tenant == tenant && a.InterestCalculationDate > interestDate && a.InterestReportStatusCode != "3" && a.CustomerId == customerId
+                    select a).Any();
+        }
     }
 }

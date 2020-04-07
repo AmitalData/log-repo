@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TwoFactorAuthenticationDeviceUpdateClass
    {  		
-		public const string HashString = "5664803a40d2caac32f90cb5c64f6af4";
+		public const string HashString = "abe67f40e0897582535debcaa3650272";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

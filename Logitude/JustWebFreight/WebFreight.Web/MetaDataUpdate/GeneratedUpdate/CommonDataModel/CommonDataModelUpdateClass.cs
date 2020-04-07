@@ -510,6 +510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 			TablesHashStrings.Add("ShippingLine",  ShippingLineUpdateClass.HashString);
 			TablesHashStrings.Add("State",  StateUpdateClass.HashString);
 			TablesHashStrings.Add("SystemData",  SystemDataUpdateClass.HashString);
+			TablesHashStrings.Add("TariffCarrierTranslation",  TariffCarrierTranslationUpdateClass.HashString);
 			TablesHashStrings.Add("TarrifCharge",  TarrifChargeUpdateClass.HashString);
 			TablesHashStrings.Add("TarrifFromTo",  TarrifFromToUpdateClass.HashString);
 			TablesHashStrings.Add("TarrifFromToType",  TarrifFromToTypeUpdateClass.HashString);
@@ -3508,6 +3509,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 				SystemDataUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
 				this.ObjectContext.SaveChanges();
 				SystemDataUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffCarrierTranslation", ObjectTables, TariffCarrierTranslationUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffCarrierTranslation");
+				TariffCarrierTranslationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffCarrierTranslationUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffCarrierTranslationUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffCarrierTranslationUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffCarrierTranslationUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffCarrierTranslationUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffCarrierTranslationUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffCarrierTranslationUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffCarrierTranslationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
 			}
 
@@ -7449,6 +7473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	   			if(MetadataUpdateUtility.IsChangedMetadataTable("RegistryDateType", ObjectTables, RegistryDateTypeUpdateClass.HashString))
 				RegistryDateTypeUpdateClass.FillRegistryDateType();
 	
+	   
 	   
 	   
 	   

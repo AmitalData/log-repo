@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "c38a54fface169604d3519a6881aa4bc";
+		public const string HashString = "cfe0b79ff430ceb4069a0681e44df356";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8702,9 +8702,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountOBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Balance", DefaultText = "Balance",LocalDefaultText = @"יתרה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountOIsCreditLimitSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.IsCreditLimitSet", DefaultText = "Credit Limit Is Set",LocalDefaultText = @"מוגדר מסגרת אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 		   TextCode GLAccountTextCode_GLAccountOSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SortBy", DefaultText = "Sort By",LocalDefaultText = @"מיון לפי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
  		   TextCode GLAccountTextCode_AgingReportOPreviewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.PreviewReport", DefaultText = "Preview",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOIsCreditLimitSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.IsCreditLimitSet", DefaultText = "Credit Limit Is Set",LocalDefaultText = @"מוגדר מסגרת אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SortBy", DefaultText = "Sort By",LocalDefaultText = @"מיון לפי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

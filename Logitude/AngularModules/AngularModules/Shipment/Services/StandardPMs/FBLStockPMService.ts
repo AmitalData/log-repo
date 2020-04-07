@@ -6,169 +6,170 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
-import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {Observable}     from 'rxjs/Rx';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import { FBLStockPM } from '../../EntityPMs/FBLStockPM';
+import {FBLStockPM} from '../../EntityPMs/FBLStockPM';
 
 
 @Injectable()
 
 export class FBLStockPMService {
-    private _http: HttpClient;
-    private _apiUrl: string;
-    constructor() {
+ private _http: HttpClient;
+ private _apiUrl: string;
+ constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/fblstocks';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/fblstocks';      
     }
 
-    get(id: string) {
+	get(id: string) {       
 
-        var callTime = new Date();
+		var callTime = new Date();		
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
-                        var pm = response.body;
+		return Observable.defer(() => {
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+				.pipe(
+					map((response: HttpResponse<any>) => {
+						var pm = response.body;
+				
+						var entity: FBLStockPM;
+						if (pm) {
+							entity = this.MapJsonToEntityPM(pm);
+						}
 
-                        var entity: FBLStockPM;
-                        if (pm) {
-                            entity = this.MapJsonToEntityPM(pm);
-                        }
+						var serviceResponse: ServiceResponse = new ServiceResponse();
+						serviceResponse.Result = entity;
+              
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FBLStock", "GetSinglePM", 'id=' + id);
+				 
+						return serviceResponse;
 
-                        var serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
+					}),
+					
+					catchError(ServiceHelper.HandleServiceError));
+		});                    
+	}
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FBLStock", "GetSinglePM", 'id=' + id);
+	insert(entityPM: FBLStockPM) {
+ 
+		var callTime = new Date();  
+		
+		return Observable.defer(() => {
 
-                        return serviceResponse;
-
-                    }),
-
-                    catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    insert(entityPM: FBLStockPM) {
-
-        var callTime = new Date();
-
-        return Observable.defer(() => {
-
-            var serviceResponse: ServiceResponse = new ServiceResponse();
-            var validator: ClassLevelValidator = new ClassLevelValidator();
-            var errorsArray = validator.Validate("FBLStock", entityPM);
-
-
-            if (errorsArray.length == 0) {
-
-                var mappedEntity: FBLStockPM = this.MapJsonToEntityPM(entityPM, false);
-
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: FBLStockPM = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
-
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FBLStock", "SaveChanges", "");
-
-                            return serviceResponse;
-                        }),
-
-                        catchError(ServiceHelper.HandleServiceError));
-            }
-
-            else {
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
-                return Observable.of(serviceResponse);
-            }
-        });
-    }
-
-    update(entityPM: FBLStockPM) {
-
-        var callTime = new Date();
-
-        return Observable.defer(() => {
-
-            var serviceResponse: ServiceResponse = new ServiceResponse();
-            var validator: ClassLevelValidator = new ClassLevelValidator();
-            var errorsArray = validator.Validate("FBLStock", entityPM);
+			var serviceResponse: ServiceResponse = new ServiceResponse();
+			var validator: ClassLevelValidator = new ClassLevelValidator();                
+			var errorsArray = validator.Validate("FBLStock", entityPM);
 
 
-            if (errorsArray.length == 0) {
+			if (errorsArray.length == 0) {
 
-                var mappedEntity: FBLStockPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: FBLStockPM = this.MapJsonToEntityPM(entityPM, false);
+				
+				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
+							var pm = response.body;
+							if (pm) {
+								var mappedResult: FBLStockPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								serviceResponse.Result = mappedResult;
+							}						
 
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: FBLStockPM = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FBLStock", "SaveChanges", "");                    
+												                             
+							return serviceResponse;
+						}),
 
-                            var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FBLStock", "SaveChanges", "");
+						catchError(ServiceHelper.HandleServiceError));
+			}
 
-                            return serviceResponse;
-                        }),
+			else {
+				serviceResponse.HasError = true;
+				serviceResponse.ErrorsArray = errorsArray;
+				return Observable.of(serviceResponse);
+			}
+		});
+	}
 
-                        catchError(ServiceHelper.HandleServiceError));
-            }
+	update(entityPM: FBLStockPM) {
 
-            else {
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
-                return Observable.of(serviceResponse);
-            }
-        });
-    }
+		var callTime = new Date();     
+		
+		return Observable.defer(() => {
 
+			var serviceResponse: ServiceResponse = new ServiceResponse();
+			var validator: ClassLevelValidator = new ClassLevelValidator();               
+			var errorsArray = validator.Validate("FBLStock", entityPM);
 
 
-    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: FBLStockPM = null) {
+			if (errorsArray.length == 0) {
 
+				var mappedEntity: FBLStockPM = this.MapJsonToEntityPM(entityPM, false);
+				
+				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
+                 
+							var pm = response.body;
+							if (pm) {
+								var mappedResult: FBLStockPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								serviceResponse.Result = mappedResult;
+							}
+							 
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "FBLStock", "SaveChanges", "");                    
+					                           
+							return serviceResponse;
+						}),
 
+						catchError(ServiceHelper.HandleServiceError));
+			}
+
+			else {
+				serviceResponse.HasError = true;
+				serviceResponse.ErrorsArray = errorsArray;
+				return Observable.of(serviceResponse);
+			}
+		});
+	}
+
+   
+
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: FBLStockPM = null) {
+
+         
         if (!entityPM) {
-
+            
             entityPM = new FBLStockPM();
         }
 
-        var customFields: Array<string> = [];
+		var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-        var jsonPMKeys = Object.keys(jsonPM);
+            var jsonPMKeys = Object.keys(jsonPM);
 
-        for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+            for (var key in jsonPMKeys) {
+			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-            var property = jsonPMKeys[key];
-
-            if (customFields.indexOf(property) > -1) {
+                var property = jsonPMKeys[key];
+				
+			  if(customFields.indexOf(property) > -1)
+                {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -177,32 +178,32 @@ export class FBLStockPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
+                 
+            }
+			
+			 
+            
 
-        }
+		if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
 
-
-
-
-        if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
-
-        }
+		}
         else {
 
             entityPM.OldEntityPM = null;
         }
-        entityPM.IsDirty = false;
+		entityPM.IsDirty = false;
         return entityPM;
     }
 
 
-    public clone(jsonPM: any) {
+	  public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-
+            
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -214,12 +215,12 @@ export class FBLStockPMService {
         return entityPM;
     }
 
-    public GetNewEntityPM() {
-        var entityPM: FBLStockPM;
-        entityPM = new FBLStockPM();
-        entityPM.Tenant = InfraSettings.TenantPM.Id;
-        return entityPM;
+	  public GetNewEntityPM() {		 
+		    var entityPM: FBLStockPM;
+			entityPM = new FBLStockPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
+			return entityPM;
     }
-
+		 
 
 }

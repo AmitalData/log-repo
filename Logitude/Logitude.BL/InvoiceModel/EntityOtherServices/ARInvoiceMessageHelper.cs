@@ -2004,8 +2004,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 entityId = invoice.Id;
             }
-
-            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, this.filename, entityId);
+            
+            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, this.filename, entityId, myAccountingSystemCode);
 
             this.myDocumentId = helper.DocumentId;
             this.myDocumentFolder = helper.DocumentFolder;

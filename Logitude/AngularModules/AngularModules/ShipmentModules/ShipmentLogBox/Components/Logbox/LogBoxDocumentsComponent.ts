@@ -140,7 +140,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                         }
                         this.ReloadDocuments(true);
                     });
-                    this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe(theResult => {
+                    this._HybridPartnerPMService.get(myResult.Result.ForwarderPartnerId).subscribe((theResult:any) => {
                         if (!theResult.HasError) {
                             this.AllowSendingDocsToAgent = theResult.Result.AllowSendingDocsToAgent;
                         }
