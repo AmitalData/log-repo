@@ -32,6 +32,7 @@ import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMServic
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { VatTypePercentagePM } from '../../../Common/EntityPMs/VatTypePercentagePM';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 export class InterestReportMenuButtonsHandler extends BaseComponent  {
     public EntityPM: InterestReportPM;
@@ -78,6 +79,14 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                                     button.IsDisabled = true;
                                 break;
                             }
+                        case "IRCN":
+                            {
+                                if (this.EntityPM.InterestReportStatusCode == "3")
+                                    button.IsDisabled = true;
+                                else
+                                    button.IsDisabled = false;
+                                break;
+                            }
                     }
                 }
             }
@@ -108,6 +117,10 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                         }
                         break;
                     }
+                case "IRCN": {
+                    this.CancelReport();
+                    break;
+                }
             }
         }
         else {
@@ -138,6 +151,61 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             }
         });
         confirmWindow.Show(TextCodeTranslator.Translate('InterestReport.O.ReportTotalAmountIslowerthanGLAccountMinimumamount'));
+    }
+    ShowErrorMessage() {
+
+        var messageWindow = new MessageWindow();
+        messageWindow.Show(TextCodeTranslator.Translate("InterestReport.O.CantCancel")); 
+    }
+    UpdateReport() {
+        this.EntityPM.InterestReportStatusCode = "3";
+        this.entityArgs.EditComponent.SaveChanges();
+        this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            if (isSaveSuccess) {
+                this.entityArgs.EditComponent.ReloadEntityPM();
+            }
+        });
+
+    }
+    OpenConfirmWindow() {
+        var confirmMessage: string = null;
+        let confirmWindow = new ConfirmWindow();
+        if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4") {
+            confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
+           
+        } else {
+            confirmMessage = TextCodeTranslator.Translate("InterestReport.O.CancelingInvoicedReportMessage");
+        }
+       
+        confirmWindow.Width = 400;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
+        
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.UpdateReport();
+            }
+        });
+        confirmWindow.Show(confirmMessage);
+
+    }
+    CancelReport() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.InterestReportService.GetCheckRecentReports(this.EntityPM.InterestCalculationDate, this.EntityPM.CustomerId).subscribe((myResult: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            var response: ServiceResponse = myResult;
+            if (!response.HasError) {
+                if (response.Result) {
+                    this.ShowErrorMessage();
+                } else {
+                    this.OpenConfirmWindow();
+                }
+            }
+            else {
+
+                this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
+            }
+        });
     }
     ApproveConfirmCreateInvoice() {
         this.CurrentSession.StartBusyIndicatorLoading();

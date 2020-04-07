@@ -4,13 +4,13 @@
   ObjectTableName="&quot;InterestReport&quot;"
   IsNew="true"
   DBTableName="&quot;InterestReports&quot;"
-  OldDBTableName="&quot;InterestReports&quot;"
+  DBTableOldNames="InterestReports"
   ObjectTableSingular="&quot;InterestReport&quot;"
   ObjectTablePlural="&quot;InterestReports&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
-  HasShortTitle="false"
+  HasShortTitle="true"
   HasFiltersMenu="false"
   HasCustomValidator="false"
   IsEditable="false"
@@ -66,7 +66,7 @@
   <field
     Id="&quot;53b0cb37-5b0d-49f8-afd7-5f50ee955545&quot;"
     FieldName="&quot;Id&quot;"
-    OldFieldName="&quot;Id&quot;"
+    OldNames="Id"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -114,6 +114,7 @@
     ListLableDefaultText="&quot;Id&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -138,7 +139,7 @@
   <field
     Id="&quot;05cf9e46-9212-4762-8f81-773794303d4c&quot;"
     FieldName="&quot;Tenant&quot;"
-    OldFieldName="&quot;Tenant&quot;"
+    OldNames="Tenant"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -186,6 +187,7 @@
     ListLableDefaultText="&quot;Tenant&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -210,7 +212,7 @@
   <field
     Id="&quot;ea0a1485-4e61-46ea-b9a1-7e909dab6a3a&quot;"
     FieldName="&quot;CreateDateTime&quot;"
-    OldFieldName="&quot;CreateDateTime&quot;"
+    OldNames="CreateDateTime"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -260,6 +262,7 @@
     ListLocalDefaultText="&quot;שעת יצירה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -284,7 +287,7 @@
   <field
     Id="&quot;2b410062-fb4e-4200-9709-0357a9d3d82c&quot;"
     FieldName="&quot;CreatedByUserId&quot;"
-    OldFieldName="&quot;CreatedByUserId&quot;"
+    OldNames="CreatedByUserId"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -335,6 +338,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="CreatedByUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -360,7 +364,7 @@
   <field
     Id="&quot;576f0c80-daa3-4fbd-906e-9b1f1d929c4f&quot;"
     FieldName="&quot;UpdateDateTime&quot;"
-    OldFieldName="&quot;UpdateDate&quot;"
+    OldNames="UpdateDateTime"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -408,6 +412,7 @@
     ListLableDefaultText="&quot;Update Date&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -432,7 +437,7 @@
   <field
     Id="&quot;636aebea-5239-4295-84e7-8670af7154e5&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
-    OldFieldName="&quot;UpdatedByUserId&quot;"
+    OldNames="UpdatedByUserId"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -479,6 +484,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="User"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="UpdatedByUser"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -504,7 +510,7 @@
   <field
     Id="&quot;03f23836-93fd-4e37-a52a-1e4159cfd470&quot;"
     FieldName="&quot;GLAccountId&quot;"
-    OldFieldName="&quot;GLAccountId&quot;"
+    OldNames="GLAccountId"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -553,6 +559,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="GLAccount"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="GLAccount"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -578,7 +585,7 @@
   <field
     Id="&quot;d6945c30-b4d7-4299-a26a-5cf2ad13edd6&quot;"
     FieldName="&quot;ReportNumber&quot;"
-    OldFieldName="&quot;ReportNumber&quot;"
+    OldNames="ReportNumber"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -628,6 +635,7 @@
     ListLocalDefaultText="&quot;דוח מספר&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -652,7 +660,7 @@
   <field
     Id="&quot;6a24f28f-d741-42c6-bad1-bc25fb4786a0&quot;"
     FieldName="&quot;InterestCalculationDate&quot;"
-    OldFieldName="&quot;InterestCalculationDate&quot;"
+    OldNames="InterestCalculationDate"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -697,6 +705,7 @@
     FullLocalDefaultText="&quot;תאריך חישוב ריבית&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -721,7 +730,7 @@
   <field
     Id="&quot;5b24750e-5102-4d8e-8905-9861d6dba3bd&quot;"
     FieldName="&quot;TotalAmount&quot;"
-    OldFieldName="&quot;TotalAmount&quot;"
+    OldNames="TotalAmount"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -773,6 +782,7 @@
     ListLocalDefaultText="&quot;סכום כולל&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -797,7 +807,7 @@
   <field
     Id="&quot;45985563-d515-4d77-b9c5-8648bfb9872d&quot;"
     FieldName="&quot;OpenBalance&quot;"
-    OldFieldName="&quot;OpenBalance&quot;"
+    OldNames="OpenBalance"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -844,6 +854,7 @@
     FullLocalDefaultText="&quot;יתרת פתיחה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -868,7 +879,7 @@
   <field
     Id="&quot;f2cf5388-093f-4695-8751-1844191a0ecc&quot;"
     FieldName="&quot;CloseBalance&quot;"
-    OldFieldName="&quot;CloseBalance&quot;"
+    OldNames="CloseBalance"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -915,6 +926,7 @@
     FullLocalDefaultText="&quot;יתרת סגירה&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -939,7 +951,7 @@
   <field
     Id="&quot;5ea3efba-738f-491d-971c-a9636f63be74&quot;"
     FieldName="&quot;ARinvoiceId&quot;"
-    OldFieldName="&quot;ARinvoiceId&quot;"
+    OldNames="ARinvoiceId"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -985,6 +997,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="ARInvoice"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="ARInvoice"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1010,7 +1023,7 @@
   <field
     Id="&quot;160aecd7-deb1-47ca-a5f8-83f5be6d6ee1&quot;"
     FieldName="&quot;InvoiceAmount&quot;"
-    OldFieldName="&quot;InvoiceAmount&quot;"
+    OldNames="InvoiceAmount"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1062,6 +1075,7 @@
     ListLocalDefaultText="&quot;סכום חשבונית&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1086,7 +1100,7 @@
   <field
     Id="&quot;f753c4dd-6da4-4716-9393-8d0f10216a1c&quot;"
     FieldName="&quot;GLAccountInterestCreditLimit&quot;"
-    OldFieldName="&quot;GLAccountInterestCreditLimit&quot;"
+    OldNames="GLAccountInterestCreditLimit"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1133,6 +1147,7 @@
     FullLocalDefaultText="&quot;מסגרת אשראי של הכרטיס&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1157,7 +1172,7 @@
   <field
     Id="&quot;abe99afd-27bc-4ecc-ba52-909a3ef2b9eb&quot;"
     FieldName="&quot;InterestReportStatusCode&quot;"
-    OldFieldName="&quot;InterestReportStatusCode&quot;"
+    OldNames="InterestReportStatusCode"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1209,6 +1224,7 @@
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="InterestReportStatuse"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="InterestReportStatuse"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1234,7 +1250,7 @@
   <field
     Id="&quot;0987261f-c454-46d9-88d8-8a40dab37802&quot;"
     FieldName="&quot;CreatedByLocalName&quot;"
-    OldFieldName="&quot;CreatedByLocalName&quot;"
+    OldNames="CreatedByLocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1284,6 +1300,7 @@
     ListLocalDefaultText="&quot;נוצר ע&quot;י משתמש&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1308,7 +1325,7 @@
   <field
     Id="&quot;a442fd04-b474-4394-9ca8-aa0b72b33e0f&quot;"
     FieldName="&quot;GLAccountDisplayNumber&quot;"
-    OldFieldName="&quot;GLAccountDisplayNumber&quot;"
+    OldNames="GLAccountDisplayNumber"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1358,6 +1375,7 @@
     ListLocalDefaultText="&quot;מספר כרטיס&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1382,7 +1400,7 @@
   <field
     Id="&quot;cec35d8f-e292-44b3-8de9-af8dd4a9a48c&quot;"
     FieldName="&quot;GLAccountLocalName&quot;"
-    OldFieldName="&quot;GLAccountLocalName&quot;"
+    OldNames="GLAccountLocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1432,6 +1450,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1456,7 +1475,7 @@
   <field
     Id="&quot;a13d9bfc-aa5f-4966-9f6d-30a22fff2b8b&quot;"
     FieldName="&quot;ARInvoiceNumber&quot;"
-    OldFieldName="&quot;ARInvoiceNumber&quot;"
+    OldNames="ARInvoiceNumber"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1506,6 +1525,7 @@
     ListLocalDefaultText="&quot;מספר חשבונית&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1530,7 +1550,7 @@
   <field
     Id="&quot;12d98d5d-9e79-4cac-8df4-29722fd9b57a&quot;"
     FieldName="&quot;UpdatedByLocalName&quot;"
-    OldFieldName="&quot;UpdatedByLocalName&quot;"
+    OldNames="UpdatedByLocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1579,6 +1599,7 @@
     ListLocalDefaultText="&quot;עודכן על ידי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1603,7 +1624,7 @@
   <field
     Id="&quot;a26b53f8-97c3-4105-b7b6-c8fc41ce523d&quot;"
     FieldName="&quot;InterestReportStatusName&quot;"
-    OldFieldName="&quot;InterestReportStatusName&quot;"
+    OldNames="InterestReportStatusName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1653,6 +1674,7 @@
     ListLocalDefaultText="&quot;סטטוס של הדוח&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1677,7 +1699,7 @@
   <field
     Id="&quot;4d801190-cb99-463b-93ee-35207efc22c2&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1724,6 +1746,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1748,7 +1771,7 @@
   <field
     Id="&quot;ae708296-40fa-45aa-bbad-bca4550ce234&quot;"
     FieldName="&quot;InterestReportStatusLocalName&quot;"
-    OldFieldName="&quot;InterestReportStatusLocalName&quot;"
+    OldNames="InterestReportStatusLocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1797,6 +1820,7 @@
     ListLocalDefaultText="&quot;סטטוס של הדוח&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1821,7 +1845,7 @@
   <field
     Id="&quot;af3f0e13-6acb-4b73-b9fc-79b13859c588&quot;"
     FieldName="&quot;CustomerId&quot;"
-    OldFieldName="&quot;CustomerId&quot;"
+    OldNames="CustomerId"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1868,6 +1892,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="Card"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="Card"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -1893,7 +1918,7 @@
   <field
     Id="&quot;35a0eab1-6e47-4da2-b1ff-6c45b401c119&quot;"
     FieldName="&quot;InterestReportLinesByDates&quot;"
-    OldFieldName="&quot;InterestReportLinesByDates&quot;"
+    OldNames="InterestReportLinesByDates"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1938,6 +1963,7 @@
     DefaultText="&quot;Interest Report Lines By Date&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -1965,7 +1991,7 @@
   <field
     Id="&quot;e6e9f853-2828-47bd-95c2-272e9bd08051&quot;"
     FieldName="&quot;CustomerName&quot;"
-    OldFieldName="&quot;CustomerName&quot;"
+    OldNames="CustomerName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -2009,6 +2035,7 @@
     DefaultText="&quot;Customer&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2033,7 +2060,7 @@
   <field
     Id="&quot;88952651-5350-4a4b-a36c-b70e1bf548fe&quot;"
     FieldName="&quot;GLAccountMinimumInterest&quot;"
-    OldFieldName="&quot;GLAccountMinimumInterest&quot;"
+    OldNames="GLAccountMinimumInterest"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -2078,6 +2105,7 @@
     FullLocalDefaultText="&quot;מינימום חיוב בחשבונית ריבית&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2102,7 +2130,7 @@
   <field
     Id="&quot;cad87be7-5180-4501-bbfe-daa83d1fcac5&quot;"
     FieldName="&quot;CustomerLocalName&quot;"
-    OldFieldName="&quot;CustomerLocalName&quot;"
+    OldNames="CustomerLocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -2146,6 +2174,7 @@
     DefaultText="&quot;Customer&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -2283,6 +2312,17 @@
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    TabLocalName="&quot;אירועים&quot;"
+    ObjectTableName="&quot;InterestReport&quot;"
+    Code="&quot;IREV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;InterestReport.TH.Events&quot;"
+    IsPackagable="false"
+    IndexOrder="1"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -2302,6 +2342,19 @@
       ObjectTableName="&quot;InterestReport&quot;"
       EnglishName="&quot;Updated&quot;"
       LocalName="&quot;Updated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;IRCN&quot;"
+      ObjectTableName="&quot;InterestReport&quot;"
+      EnglishName="&quot;Cancelled&quot;"
+      LocalName="&quot;בוטל&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -2336,6 +2389,13 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
         LocalDefaultText="&quot;הדפסה&quot;"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;IRCN&quot;"
+        DefaultText="&quot;Cancel&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="1"
+        LocalDefaultText="&quot;ביטול דוח&quot;"
         IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
@@ -2395,12 +2455,33 @@
       LocalDefaultText="&quot;חישוב ריבית לתאריך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
     <TextCode
       Code="&quot;InterestReport.O.ClosingBalance&quot;"
       DefaultText="&quot;Closing Balance&quot;"
       LocalDefaultText="&quot;יתרת סגירה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
+    <TextCode
+      Code="&quot;InterestReport.O.CantCancel&quot;"
+      DefaultText="&quot;Cant cancel this report , there’s a recent (with Higher interestReportDate) report for this customer , please cancel it first&quot;"
+      LocalDefaultText="&quot;לא ניתן לבטל את הדוח מכיוון שקיים דוח מאוחר יותר ללקוח זה , אנא בטל אותו קודם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.ConfirmCancelling&quot;"
+      DefaultText="&quot;Please confirm canceling the report&quot;"
+      LocalDefaultText="&quot;הדוח הנ”ל יבוטל , האם להמשיך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;InterestReport.O.CancelingInvoicedReportMessage&quot;"
+      DefaultText="&quot;ARinvoice already issued for this report , cancelling the report will create an Auto Credit Invoice , Continue ?&quot;"
+      LocalDefaultText="&quot;לדוח זה כבר הופקה חשבונית , ביטול הדוח יבטל את החשבונית , האם להמשיך ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
