@@ -46,7 +46,7 @@
                         <td style="width:5px"></td>
                         <!--style="width: 400px;"-->
                         <td class="myLOV-td">
-                            <ng-content select=".class-MultiSelectLOV-content"></ng-content>
+                            <ng-content select=".class-MultiSelectLOV-content" ></ng-content>
                             <!--<LogLov [ObjectFieldName]="'UserId'"
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
@@ -60,7 +60,7 @@
                         <td style="width:50px;">
                             <div style="margin:5px;">
                                 <IconButton *ngIf="ButtonAddLabel == null" [IsEnabled]="!IsDisplayOnly && this.MyLogLovV2Component.SelectedItem" [Name]="'Add'" (click)="AddToList()" title="Add item"></IconButton>
-                                <button *ngIf="ButtonAddLabel != null" class="Button" [disabled]="IsDisplayOnly || !this.MyLogLovV2Component.SelectedItem" (click)="AddToList()" title="Add item">{{ButtonAddLabel}}</button>
+                                <button *ngIf="ButtonAddLabel != null" class="Button" [disabled]="IsDisplayOnly || !this.MyLogLovV2Component.SelectedItem"  (click)="AddToList()" title="Add item">{{ButtonAddLabel}}</button>
 
                             </div>
 

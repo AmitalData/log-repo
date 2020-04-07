@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Output, EventEmitter, ContentChild, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { Component, AfterViewInit, Output, EventEmitter, ContentChild, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -30,7 +30,7 @@ export class DeclarationReferantDataFiltersMenuComponent
     @ViewChildren(MultiSelectLOVComponent)
     public myViewChildrenMultiSelectLOVComponent: QueryList<MultiSelectLOVComponent> = null;
 
-    constructor() {
+    constructor(private _CD: ChangeDetectorRef) {
         super();
         
         if (this.CurrentSession == null) {
@@ -79,7 +79,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
         this.SelectedValueChangedEmitUser();
 
-
+        this._CD.detectChanges();
     }
 
     SetTransport(itemValue: string) {

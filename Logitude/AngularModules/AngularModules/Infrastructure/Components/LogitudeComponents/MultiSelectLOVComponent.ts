@@ -24,7 +24,7 @@ export class MultiSelectLOVComponent implements OnInit{
     //private _CustomSendOptionsArgs: CustomSendOptionsArgs;
     public _DropdownDisplay: string = 'none';
     private _ElementRef: any;
-    static MyId: number = 0;
+    static MyId: number = 1;
     static LastDropdownMenuFilterId: number = 0;
     public _MultiSelectLOVId: string;
     public _MultiSelectLOVMenuId: string;
@@ -119,6 +119,7 @@ export class MultiSelectLOVComponent implements OnInit{
     public Invalidate(): any {
         
         this.FormatList();
+        this._CD.detectChanges();
     }
     DropdownDisplayClose() {
         this._DropdownDisplay = 'none';
@@ -141,6 +142,14 @@ export class MultiSelectLOVComponent implements OnInit{
     }
     DropdownMenuButtonClick(event, fucusMe: boolean) {
         //this.CloseOtherLastmenu()
+        if (MultiSelectLOVComponent.LastDropdownMenuFilterId != 0 && MultiSelectLOVComponent.LastDropdownMenuFilterId != this.MyDropdownMenuFilterId) {
+            var lastSplitButtonComponentMenu = document.getElementById("MultiSelectLOVMenuId_" + MultiSelectLOVComponent.LastDropdownMenuFilterId);
+            if (!AppTool.IsNullOrEmpty(lastSplitButtonComponentMenu)) {
+                lastSplitButtonComponentMenu.style.display = 'none';
+            }
+        }
+        MultiSelectLOVComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
+
         this.DropdowndisplayToggle(event, fucusMe);
     }
     
@@ -149,7 +158,7 @@ export class MultiSelectLOVComponent implements OnInit{
 
         //MouseEvent
 
-        MultiSelectLOVComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
+        //MultiSelectLOVComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
         
         if (this._DropdownDisplay == 'none') {
             var item = document.getElementById(this._MultiSelectLOVId);
