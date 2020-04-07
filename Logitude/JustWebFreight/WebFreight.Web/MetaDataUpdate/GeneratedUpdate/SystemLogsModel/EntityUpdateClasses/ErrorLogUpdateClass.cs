@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 {
    public class ErrorLogUpdateClass
    {  		
-		public const string HashString = "7e52d5c398719568e428d5742770ee78";
+		public const string HashString = "cc03edcd5a83983a5280d49d579465e0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -334,7 +334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  7000,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
