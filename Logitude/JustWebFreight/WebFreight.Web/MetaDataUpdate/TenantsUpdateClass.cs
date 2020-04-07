@@ -895,7 +895,7 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             
             updateClass.LoadObjectTablesToTenantZero(context);
-            updateClass.UpgradeClosedTablesForTenantZero();
+            //updateClass.UpgradeClosedTablesForTenantZero();
 
             InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
             SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
