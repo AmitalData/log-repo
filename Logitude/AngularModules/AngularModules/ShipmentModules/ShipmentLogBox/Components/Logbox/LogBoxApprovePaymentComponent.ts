@@ -131,7 +131,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             }
             var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-            this._HybridPartnerPMService.get(this.ForwarderPartnerId).subscribe(theResult => {
+            this._HybridPartnerPMService.get(this.ForwarderPartnerId).subscribe((theResult:any) => {
                 if (!theResult.HasError) {
                     this.PartnerName = theResult.Result.Name;
                 }

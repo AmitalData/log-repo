@@ -918,7 +918,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
 
-        this._CurrencyListService.getAll().subscribe(myResult => {
+        this._CurrencyListService.getAll().subscribe((myResult:any) => {
             console.log("Currencies: ", myResult);
             if (myResult == null) {
                 this.Currencies = [];

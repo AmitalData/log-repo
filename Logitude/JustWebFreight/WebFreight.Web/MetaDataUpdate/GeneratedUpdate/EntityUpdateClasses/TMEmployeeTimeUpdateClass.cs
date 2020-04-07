@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TMEmployeeTimeUpdateClass
    {  		
-		public const string HashString = "fccf99d624433f63b319d394018437dd";
+		public const string HashString = "08d42a7fcc56c76c52c09e977a809366";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

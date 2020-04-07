@@ -61,6 +61,17 @@ export class InterestTransactionExtendedListService {
                 catchError(ServiceHelper.HandleServiceError));
         }
     }
+    GetCheckRecentReports(interestDate: Date,  customerId: string  ) {
+        
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+        var url = this._apiUrl + "/GetCheckRecentReports?interestDate=" + interestDate + "&customerId=" + customerId;
+        return this.httpClient.get(url, httpOptions).pipe(
+            map(response => {
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
 
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: InterestReportPM = null) {

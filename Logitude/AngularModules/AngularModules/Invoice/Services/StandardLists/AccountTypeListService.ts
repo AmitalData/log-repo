@@ -32,34 +32,34 @@ export class AccountTypeListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accounttypeviews';  
     }
 
-    getSingle(code: string) {
+	getSingle(code: string) {
 
-        var callTime = new Date();
+		var callTime = new Date();
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
+		return Observable.defer(() => {
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
+				.pipe(
+					map((response: HttpResponse<any>) => {
 
-                        var list = response.body;
-                        var entity: AccountTypeList;
-                        if (list) {
-                            entity = this.MapJsonToEntityList(list);
-                        }
+						var list = response.body;                    
+						var entity: AccountTypeList;
+						if (list) {
+							entity = this.MapJsonToEntityList(list);
+						}
 
-                        var serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
-                        serviceResponse.CallTime = callTime;
+						var serviceResponse: ServiceResponse = new ServiceResponse(); 
+						serviceResponse.Result = entity;  
+						serviceResponse.CallTime = callTime;
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountType", "GetSingleList", 'code=' + code);
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountType", "GetSingleList", 'code=' + code); 
 
-                        return serviceResponse;
-                    }),
-
-                    catchError(ServiceHelper.HandleServiceError));
-        });
-    }
+						return serviceResponse;
+					}),
+					
+					catchError(ServiceHelper.HandleServiceError));
+		});
+	}
 
 	getAll() {
 
