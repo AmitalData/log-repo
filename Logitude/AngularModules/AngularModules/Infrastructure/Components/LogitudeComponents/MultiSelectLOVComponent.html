@@ -59,7 +59,8 @@
                         </td>
                         <td style="width:50px;">
                             <div style="margin:5px;">
-                                <IconButton *ngIf="ButtonAddLabel == null" [IsEnabled]="!IsDisplayOnly && this.MyLogLovV2Component.SelectedItem" [Name]="'Add'" (click)="AddToList()" title="Add item"></IconButton>
+                                <!--&& this.MyLogLovV2Component.SelectedItem-->
+                                <IconButton *ngIf="ButtonAddLabel == null" [IsEnabled]="!IsDisplayOnly " [Name]="'Add'" (click)="AddToList()" title="Add item"></IconButton>
                                 <!--[disabled]="IsDisplayOnly || !this.MyLogLovV2Component.SelectedItem"-->
                                 <button *ngIf="ButtonAddLabel != null" class="Button" [disabled]="IsDisplayOnly" (blur)="addOnBlur()" (click)="AddToList()" title="Add item">{{ButtonAddLabel}}</button>
 
