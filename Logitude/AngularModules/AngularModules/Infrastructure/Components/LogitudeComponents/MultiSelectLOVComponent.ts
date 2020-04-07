@@ -121,6 +121,12 @@ export class MultiSelectLOVComponent implements OnInit{
         this.FormatList();
         this._CD.detectChanges();
     }
+    addOnBlur() {
+        if (this.MyLogLovV2Component.SelectedItem == null) {
+            this.DropdownDisplayClose();
+        }
+    }
+    
     DropdownDisplayClose() {
         this._DropdownDisplay = 'none';
         this._CD.detectChanges();
