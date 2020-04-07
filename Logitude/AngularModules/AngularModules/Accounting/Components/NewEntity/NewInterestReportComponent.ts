@@ -113,7 +113,7 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
 
     SubmitChanges() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.myService.insert(this.EntityPM).subscribe(myResult => {
+        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
             var iServiceResponse: ServiceResponse = myResult;
             if (!iServiceResponse.HasError) {

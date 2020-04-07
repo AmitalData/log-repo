@@ -57,7 +57,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     }
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe((response:any) => {
             this.Start(args);
         });
     }

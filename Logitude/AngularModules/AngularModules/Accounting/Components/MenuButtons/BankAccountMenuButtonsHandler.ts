@@ -86,7 +86,7 @@ export class BankAccountMenuButtonsHandler {
                         }
                         else
                         {
-                            this._CurrencyPMService.get(this.EntityPM.GLAccountCurrencyId).subscribe((myResult) => {
+                            this._CurrencyPMService.get(this.EntityPM.GLAccountCurrencyId).subscribe((myResult:any) => {
                                 var currency = myResult.Result;
                                 var openAmountCurrency = currency ? currency.Sign : "";
                                 this.showReconcileWindow(openAmountCurrency);

@@ -2,7 +2,8 @@
 <Table
   Name="TariffVersions"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Tariff">
   <Column
     Name="TariffId"
     Type="varchar"

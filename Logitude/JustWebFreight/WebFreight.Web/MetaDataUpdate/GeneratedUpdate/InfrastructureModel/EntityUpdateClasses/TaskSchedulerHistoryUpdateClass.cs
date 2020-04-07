@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class TaskSchedulerHistoryUpdateClass
-   {  
+   {  		
+		public const string HashString = "56c538c4bf42e97aea4b681cec755c4a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "TaskSchedulerHistory",
 			      				    IsNew =  false,
 			      				    DBTableName =  "TaskSchedulerHistory",
-			      				    OldDBTableName =  "TaskSchedulerHistory",
 			      				    ObjectTableSingular =  "Task Scheduler History",
 			      				    ObjectTablePlural =  "Task Scheduler Histories",
 			      				    HasCustomFilter =  false,
@@ -128,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "TaskSchedulerHistory,TaskSchedulerHistory,,Id,",
+			      				    HashString =  TaskSchedulerHistoryUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -139,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "StartDateTime",
-					  						OldFieldName =  "StartDateTime",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -200,7 +200,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EndDateTime",
-					  						OldFieldName =  "EndDateTime",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -261,11 +260,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "RunResult",
-					  						OldFieldName =  "RunResult",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  200,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -322,7 +320,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "IsError",
-					  						OldFieldName =  "IsError",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -383,7 +380,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "StartDateTimeUTC",
-					  						OldFieldName =  "StartDateTimeUTC",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -443,7 +439,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EndDateTimeUTC",
-					  						OldFieldName =  "EndDateTimeUTC",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -503,7 +498,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LogFirstLine",
-					  						OldFieldName =  "LogFirstLine",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -563,7 +557,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LogType",
-					  						OldFieldName =  "LogType",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -623,7 +616,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Duration",
-					  						OldFieldName =  "Duration",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -683,7 +675,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LogDocumentId",
-					  						OldFieldName =  "LogDocumentId",
 					  						ObjectTableName =  "TaskSchedulerHistory",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -743,6 +734,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
+
+		   ObjectTable TaskSchedulerHistoryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaskSchedulerHistory" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> TaskSchedulerHistoryObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TaskSchedulerHistory").ToList();
+		       
+	      
+
+	         Screen TaskSchedulerHistoryTaskSchedulerHistoryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaskSchedulerHistory.HeaderScreen", Name = "TaskSchedulerHistoryHeaderScreen", ObjectTableId = TaskSchedulerHistoryObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    TaskSchedulerHistoryObjectTable.HeaderScreenId = TaskSchedulerHistoryTaskSchedulerHistoryHeaderScreenScreen0.Id;
+		    TaskSchedulerHistoryObjectTable.HeaderScreenCode = TaskSchedulerHistoryTaskSchedulerHistoryHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;CustomsTransmissionsStatus,CustomsTransmissionsStatus,,Code,Name&quot;">
+  SearchFields="&quot;CustomsTransmissionsStatus,CustomsTransmissionsStatus,,Code,Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;4325e4b1-0868-4551-bac8-561fd0b1369a&quot;"
     FieldName="&quot;Code&quot;"
@@ -215,7 +217,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;CustomsTransmissionsStatus&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

@@ -40,7 +40,9 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   ParentTableName="AccountingTransferHeader"
-  ClientModuleName="&quot;Invoice&quot;">
+  ClientModuleName="&quot;Invoice&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;5f98c173-6716-40dd-bce3-d8796e57c665&quot;"
     FieldName="&quot;Id&quot;"
@@ -60,7 +62,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;16887c35-adab-436d-9973-6b163595f32d&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -134,12 +137,13 @@
     AllowedInCustomerFieldsSettings="false"
     DisplayInDocumentReferences="false"
     CopyToDW="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;2ebac55e-5c76-4e47-bc06-1705f8edb867&quot;"
     FieldName="&quot;AccountingTransferHeaderId&quot;"
@@ -194,17 +198,21 @@
     AllowedInCustomerFieldsSettings="false"
     DisplayInDocumentReferences="false"
     CopyToDW="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="AccountingTransferHeader"
+    NavigationPropertyName="AccountingTransferHeader"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;4cd20cb0-aab6-4959-b1d1-45f9fc50cfa9&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;AccountingTransferLine&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

@@ -152,6 +152,11 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
+                    if (this.isRefreshTranslationsClicked) {
+                        this.isRefreshTranslationsClicked = false;
+                        this.DoRefresh();
+                    }
+
                     this.LoadVersions();
                 }
 
@@ -757,6 +762,22 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             this.EntityPM.IsUpdatingMissingPorts = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
+    }
+
+    private isRefreshTranslationsClicked: boolean = false;
+    RefreshPortsFromTranslations() {
+        if (!this.isRefreshTranslationsClicked) {
+            this.isRefreshTranslationsClicked = true;
+            this.EntityPM.IsRefreshTranslations = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+    }
+    private DoRefresh() {
+        this.TariffDomainService.RefreshPortsFromTranslations(this.EntityPM.Id, this.VersionNumber).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+        });
     }
 }
 

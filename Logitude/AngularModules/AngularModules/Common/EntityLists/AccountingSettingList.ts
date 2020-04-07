@@ -52,5 +52,7 @@ export class AccountingSettingList {
 		QBOOAuth: number;
 		AllowManualARPaymentNumber: boolean;
 		AllowRegionalTaxManagement: boolean;
-	
-}
+		EnableAPPaymentExternalPayment: boolean;
+		TransferToFTPActivated: boolean;
+		TransferFTPDetailId: string;	
+}

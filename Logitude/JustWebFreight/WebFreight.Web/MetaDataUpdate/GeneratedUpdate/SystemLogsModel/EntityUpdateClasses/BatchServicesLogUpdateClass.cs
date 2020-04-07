@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUpdateClasses
 {
    public class BatchServicesLogUpdateClass
-   {  
+   {  		
+		public const string HashString = "d4e346c3c433ef2c1d5abb4b8240c1af";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -84,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 			
 	             				    ObjectTableName =  "BatchServicesLog",
 			      				    IsNew =  false,
-			      				    DBTableName =  "BatchServicesLog",
+			      				    DBTableName =  "BatchServicesLogs",
 			      				    OldDBTableName =  "BatchServicesLog",
 			      				    ObjectTableSingular =  "Batch Services Log",
 			      				    ObjectTablePlural =  "Batch Services Log",
@@ -127,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "BatchServicesLog,BatchServicesLog,,,",
+			      				    HashString =  BatchServicesLogUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -204,8 +206,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						ObjectTableName =  "BatchServicesLog",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  false,
+					  						MaxLength =  40,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -394,9 +396,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					 						FieldName =  "NumberOfDoneItems",
 					  						OldFieldName =  "NumberOfDoneItems",
 					  						ObjectTableName =  "BatchServicesLog",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -458,10 +460,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					 						FieldName =  "DoneItemsInOneMinute",
 					  						OldFieldName =  "DoneItemsInOneMinute",
 					  						ObjectTableName =  "BatchServicesLog",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  40,
-					  						IsRequired =  false,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -522,10 +524,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					 						FieldName =  "DoneItemsInFiveMinutes",
 					  						OldFieldName =  "DoneItemsInFiveMinutes",
 					  						ObjectTableName =  "BatchServicesLog",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  40,
-					  						IsRequired =  false,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -586,10 +588,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					 						FieldName =  "DoneItemsInOneHour",
 					  						OldFieldName =  "DoneItemsInOneHour",
 					  						ObjectTableName =  "BatchServicesLog",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
-					  						MaxLength =  40,
-					  						IsRequired =  false,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -650,9 +652,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					 						FieldName =  "CPU",
 					  						OldFieldName =  "CPU",
 					  						ObjectTableName =  "BatchServicesLog",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -684,8 +686,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CPU",

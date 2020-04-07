@@ -83,7 +83,7 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
 
             if (this.IsNew) {
                 this.CurrentSession.StartBusyIndicatorSaving();
-                this.myService.insert(this.EntityPM).subscribe(Result => {
+                this.myService.insert(this.EntityPM).subscribe((Result:any) => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {
@@ -100,7 +100,7 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
 
             else {
                 this.CurrentSession.StartBusyIndicatorSaving();
-                this.myService.update(this.EntityPM).subscribe(Result => {
+                this.myService.update(this.EntityPM).subscribe((Result:any) => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {

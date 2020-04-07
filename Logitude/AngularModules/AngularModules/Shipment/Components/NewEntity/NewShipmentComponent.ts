@@ -79,7 +79,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 this.BuildFiltersLists();
 
                 if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {

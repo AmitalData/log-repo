@@ -112,7 +112,7 @@ export class TariffTabsContentComponent implements OnDestroy {
         });
 
 
-        this.CurrentSessionSaveEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe(result => {
+        this.CurrentSessionSaveEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((result:any) => {
             this.ComputeDraftHeader();
 
         });

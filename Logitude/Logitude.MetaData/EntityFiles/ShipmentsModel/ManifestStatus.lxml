@@ -38,7 +38,9 @@
   IsEditable="false"
   ClientModuleName="&quot;Shipment&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;928d36fa-ba8a-49b6-8293-cdc0471d2cf7&quot;"
     FieldName="&quot;Code&quot;"
@@ -167,7 +169,7 @@
     Id="&quot;2dc28f74-42fc-4493-848a-35936f7004a6&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;ManifestStatus&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

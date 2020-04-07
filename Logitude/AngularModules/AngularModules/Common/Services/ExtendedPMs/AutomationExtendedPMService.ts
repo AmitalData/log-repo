@@ -1,6 +1,7 @@
-﻿
+
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -16,10 +17,10 @@ import {AutomationArgs} from '../../../Infrastructure/DataContracts/AutomationAr
 @Injectable()
 export class AutomationExtendedPMService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AutomationExtended';
     }
 
@@ -28,9 +29,9 @@ export class AutomationExtendedPMService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetDoesAutomationCodeExist" + '?code=' + code , { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetDoesAutomationCodeExist" + '?code=' + code ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result :any = response;
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -41,7 +42,7 @@ export class AutomationExtendedPMService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
 
     }
 
@@ -50,9 +51,9 @@ export class AutomationExtendedPMService {
     getAutomationesByObjectTableId(objectTableId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/getautomationesbyobjecttableid" + '?objectTableId=' + objectTableId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/getautomationesbyobjecttableid" + '?objectTableId=' + objectTableId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result :any = response;
             var entity: AutomationPM;
             var automationPMLists: AutomationPM[];
             automationPMLists = new Array<AutomationPM>();
@@ -71,15 +72,15 @@ export class AutomationExtendedPMService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     getAutomationBackupDataById(automationId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/getautomationbackupdatabyid" + '?automationId=' + automationId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/getautomationbackupdatabyid" + '?automationId=' + automationId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result :any = response;
   
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -90,7 +91,7 @@ export class AutomationExtendedPMService {
 
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 
@@ -102,11 +103,10 @@ export class AutomationExtendedPMService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.put(this._apiUrl + '/putauomationlist', JSON.stringify(items),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
+            return this._http.put(this._apiUrl + '/putauomationlist', JSON.stringify(items), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var pm = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
 
@@ -134,10 +134,8 @@ export class AutomationExtendedPMService {
             if (errorsArray.length == 0) {
                 var mappedEntity: AutomationPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-                return this._http.put(this._apiUrl + '/put', JSON.stringify(mappedEntity),
-           
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                return this._http.put(this._apiUrl + '/put', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: AutomationPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -147,7 +145,7 @@ export class AutomationExtendedPMService {
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
@@ -184,9 +182,8 @@ export class AutomationExtendedPMService {
             if (errorsArray.length == 0) {
                 var mappedEntity: AutomationPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-                return this._http.post(this._apiUrl + '/post', JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                return this._http.post(this._apiUrl + '/post', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: AutomationPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -195,7 +192,7 @@ export class AutomationExtendedPMService {
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 

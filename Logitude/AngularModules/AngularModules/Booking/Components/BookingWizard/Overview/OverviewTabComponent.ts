@@ -351,7 +351,7 @@ export class OverviewTabComponent {
     private LoadAnswers() {
         var myBookingDomainService: BookingDomainService = new BookingDomainService();
 
-        myBookingDomainService.GetBookingAnswerPMs(this.EntityPM.Id).subscribe(myResult => {
+        myBookingDomainService.GetBookingAnswerPMs(this.EntityPM.Id).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {
@@ -448,7 +448,7 @@ export class OverviewTabComponent {
     private LoadBooking() {
         var myService: BookingPMService = new BookingPMService();
 
-        myService.get(this.EntityPM.Id).subscribe(myResult => {
+        myService.get(this.EntityPM.Id).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {

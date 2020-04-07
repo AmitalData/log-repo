@@ -42,7 +42,9 @@
   ClientModuleName="&quot;Common&quot;"
   NewWizardComponentPath="&quot;./Common/Components/Maintenance/CompetitorComponent&quot;"
   Code="&quot;CMPT&quot;"
-  DescriptionDefaultText="&quot;Define your competitors.&quot;">
+  DescriptionDefaultText="&quot;Define your competitors.&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7b106520-4277-43c7-88cf-03db9ddd432e&quot;"
     FieldName="&quot;Id&quot;"
@@ -63,7 +65,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;a412f230-51d7-47fd-bf78-58012123e6fb&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -528,7 +531,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    IsForeignKey="true"
+    ForeignEntity="Address"
+    NavigationPropertyName="Address" />
   <field
     Id="&quot;7d3fbf9f-c474-4325-a8d0-bbfee90961b3&quot;"
     FieldName="&quot;SearchFields&quot;"
@@ -1072,7 +1078,7 @@
     ObjectTableName="&quot;Competitor&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="true"
     IsCustom="false"
     MinLength="0"

@@ -19,7 +19,7 @@ export class SharedShipmentsWorkspaceComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe((response:any) => {
             this.IsResourcesReady = true;
             this.SetSelectedItem();
 

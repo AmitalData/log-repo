@@ -456,7 +456,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     set SeverityId(newValue: string) {
         if (this.EntityPM.SeverityId != newValue) {
             this.EntityPM.SeverityId = newValue;
-            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe(result => {
+            this.TicketSeverityListService.getSingleFromCache(newValue).subscribe((result:any) => {
                 var severity: TicketSeverityList = result.Result;
                 if (severity != null)
                     this.EntityPM.SeverityName = severity.Name;
@@ -682,7 +682,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     AddButtonClicked() {
         var path = './Quote/ComponentsNewEntity/NewQuoteComponent';
         var windowTitle = "New Quote";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;

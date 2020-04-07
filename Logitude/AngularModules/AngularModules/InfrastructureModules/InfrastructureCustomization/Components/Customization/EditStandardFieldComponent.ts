@@ -36,7 +36,7 @@ export class EditStandardFieldComponent extends BaseComponent {
     SetWindowArgs(args: StandardFieldItem) {
         this.EditedFieldItem = args;  
 
-        this.generalService.GetSingleObjectFieldByFieldCodeFromZeroTenant(args.ObjectFieldCode).subscribe(myResult => {
+        this.generalService.GetSingleObjectFieldByFieldCodeFromZeroTenant(args.ObjectFieldCode).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
@@ -240,12 +240,12 @@ export class EditStandardFieldComponent extends BaseComponent {
             if (this.EntityPM.IsDirty) {
                 this.CurrentSession.StartBusyIndicatorSaving();
 
-                this.myService.update(this.EntityPM).subscribe(myResult => {
+                this.myService.update(this.EntityPM).subscribe((myResult:any) => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         CachedDataManager.RefreshObjectFieldsModifications();
                         if (list.length == 0) {
-                            CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                            CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                                 this.CurrentSession.StopBusyIndicator();
                                 this.CurrentSession.CloseCurrentWindowEmit("Ok");
                             });
@@ -267,7 +267,7 @@ export class EditStandardFieldComponent extends BaseComponent {
                     }
 
                     else {
-                        CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                        CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                             this.CurrentSession.StopBusyIndicator();
                             this.CurrentSession.CloseCurrentWindowEmit("Ok");
                         });

@@ -35,7 +35,7 @@ export class DownloadAllFilesComponent {
         this.ObjectTableId = args.ObjectTableId;
         this.tenant = SessionLocator.Tenant; 
         this.ShipmentId = args.ShipmentId;
-        myService.DownLoadAllFilesForShipments(this.ShipmentId, this.ObjectTableId, this.tenant).subscribe(myResult => {
+        myService.DownLoadAllFilesForShipments(this.ShipmentId, this.ObjectTableId, this.tenant).subscribe((myResult:any) => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;
@@ -66,7 +66,7 @@ export class DownloadAllFilesComponent {
         this.busyExportingVisibile = true;
         this.btnSaveToFileVisibile = false;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.DownLoadAllFilesForShipments(this.ShipmentId, this.ObjectTableId, this.tenant).subscribe(myResult => {
+        myService.DownLoadAllFilesForShipments(this.ShipmentId, this.ObjectTableId, this.tenant).subscribe((myResult:any) => {
             if (myResult == "Faild") {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;

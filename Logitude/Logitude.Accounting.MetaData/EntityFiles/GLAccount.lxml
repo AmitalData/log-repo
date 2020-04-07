@@ -63,7 +63,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;13b6ca7e-c457-45d1-ba06-627fe4194c62&quot;"
     FieldName="&quot;Id&quot;"
@@ -818,7 +820,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;RevenueExpenseType&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="1"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -7387,17 +7389,17 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;GLAccount&quot;"
-    FieldsDataType="&quot;Date&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
@@ -11659,7 +11661,7 @@
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
-    <TextCode
+  <TextCode
       Code="&quot;GLAccount.O.NoCreditDefined&quot;"
       DefaultText="&quot;Credit balance not defined&quot;"
       LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;"
@@ -11784,6 +11786,9 @@
       DefaultText="&quot;Preview&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+       <TextCode Code="&quot;GLAccount.O.IsCreditLimitSet&quot;" DefaultText="&quot;Credit Limit Is Set&quot;" LocalDefaultText="&quot;מוגדר מסגרת אשראי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.SortBy&quot;" DefaultText="&quot;Sort By&quot;" LocalDefaultText="&quot;מיון לפי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+  
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -2,7 +2,8 @@
 <Table
   Name="GlobalDBs"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Global">
   <Column
     Name="Id"
     Type="nvarchar"

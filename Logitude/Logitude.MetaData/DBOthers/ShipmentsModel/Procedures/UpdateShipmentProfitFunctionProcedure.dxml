@@ -1,4 +1,4 @@
-<Procedure DBType="Main" Name="usp_UpdateShipmentProfitFunction" Schema="dbo">
+<Procedure DBType="Main" Name="usp_UpdateShipmentProfitFunction" Schema="dbo" Module="Shipment">
   <SqlScript>
     <![CDATA[
 CREATE PROCEDURE [dbo].[usp_UpdateShipmentProfitFunction]

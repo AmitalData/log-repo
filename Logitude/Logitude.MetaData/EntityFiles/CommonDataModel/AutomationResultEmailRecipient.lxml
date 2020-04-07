@@ -33,7 +33,9 @@
   HasDynamicHeader="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsEditable="false">
+  IsEditable="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;de0d4a7c-8384-4c7a-b0fb-684a4e6c2023&quot;"
     FieldName="&quot;Id&quot;"
@@ -53,7 +55,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15" />
   <field
     Id="&quot;1d5dacf9-952a-4c11-b63b-74e6dbb960b8&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -86,12 +89,16 @@
     ListFieldLable="&quot;AutomationsIdListLable&quot;"
     ListLableDefaultText="&quot;AutomationsId&quot;"
     ListLocalDefaultText="&quot;AutomationsId&quot;"
-    IsRequired="false"
+    IsRequired="true"
     HasDataBaseField="true"
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="Automation"
+    NavigationPropertyName="Automation" />
   <field
     Id="&quot;ea25b4ed-9799-4dbc-bd9d-491dad875403&quot;"
     FieldName="&quot;RecipientType&quot;"
@@ -110,7 +117,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="8" />
   <field
     Id="&quot;0c265952-407c-46cd-9f3d-15e9fe9995e8&quot;"
     FieldName="&quot;RecipientValue&quot;"
@@ -129,7 +137,8 @@
     DisplayInList="true"
     NoMetaDataField="true"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    MaxLength="200" />
   <EventTypes />
   <AdditionalTextCodes></AdditionalTextCodes>
   <AdditionalFeatures />

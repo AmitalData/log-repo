@@ -26,7 +26,7 @@ export class APPaymentCancelationDetailsComponent extends BaseComponent {
     constructor(public entityArgs: EntityArgs) {
         super();
         this.Listen();
-        this._entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.EntityPM = entityArgs.EntityPM;
            this.SetUIProperties();

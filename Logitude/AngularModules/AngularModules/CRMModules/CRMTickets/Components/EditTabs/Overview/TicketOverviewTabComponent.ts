@@ -287,7 +287,7 @@ export class TicketOverviewTabComponent {
                     listArgs.QueryCode = "All Ticket Escalations";
                     listArgs.ObjectTableName = "TicketEscalation";
                     listArgs.BackButtonTitle = "Tickets";
-                    this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
@@ -305,7 +305,7 @@ export class TicketOverviewTabComponent {
                     listArgs.QueryCode = "All Activities";
                     listArgs.ObjectTableName = "Activity";
                     listArgs.BackButtonTitle = "Tickets";
-                    this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;

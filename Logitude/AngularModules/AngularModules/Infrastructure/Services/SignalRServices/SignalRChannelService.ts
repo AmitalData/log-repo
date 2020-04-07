@@ -188,7 +188,7 @@ export class SignalRChannelService {
         window.logitudeHubConnected = false;
         console.log("logitude hub was disconnected, will restart connection after 30 seconds...");
 
-        var upgradingSystemsub = this.startReconnectTimer().subscribe(res => {
+        var upgradingSystemsub = this.startReconnectTimer().subscribe((res:any) => {
             upgradingSystemsub.unsubscribe();
             if (this.connectionStarted != true) {
                 //console.log("reconnecting to hub.");

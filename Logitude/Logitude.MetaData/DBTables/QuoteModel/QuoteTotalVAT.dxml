@@ -2,7 +2,8 @@
 <Table
   Name="QuoteTotalVATs"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Quote">
   <Column
     Name="Id"
     Type="varchar"

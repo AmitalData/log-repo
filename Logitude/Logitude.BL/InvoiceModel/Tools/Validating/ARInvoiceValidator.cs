@@ -213,21 +213,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             }
                         }
                     }
+                    if (!IsFullAccountingActivated(entityPM.Tenant))
+                    {
+                        List<string> gr1 = activeLines.GroupBy(g => new { g.ForiegnCurrencyId }).Select(s => s.Key.ForiegnCurrencyId).ToList();
+                        foreach (string ob in gr1)
+                        {
+                            string ob1 = ob;
+                            var gr2 = activeLines.Where(w => w.ForiegnCurrencyId == ob1).GroupBy(g => new { g.ForiegnExchangeRate }).Select(s => s.Key.ForiegnExchangeRate);
+                            if (gr2.Count() > 1)
+                            {
+                                Currency curr = CurrencyRepository.GetSingleCurrency(ob, entityPM.Tenant, true);
 
-                    //List<string> gr1 = activeLines.GroupBy(g => new { g.ForiegnCurrencyId }).Select(s => s.Key.ForiegnCurrencyId).ToList();
-                    //foreach (string ob in gr1)
-                    //{
-                    //    string ob1 = ob;
-                    //    var gr2 = activeLines.Where(w => w.ForiegnCurrencyId == ob1).GroupBy(g => new { g.ForiegnExchangeRate }).Select(s => s.Key.ForiegnExchangeRate);
-                    //    if (gr2.Count() > 1)
-                    //    {
-                    //        Currency curr = CurrencyRepository.GetSingleCurrency(ob, entityPM.Tenant, true);
-
-                    //        string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates", entityPM.Tenant, useLocal);
-                    //        msg = msg.Replace("%Currency", curr.Code);
-                    //        throw new ApplicationException(msg);
-                    //    }
-                    //}
+                                string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates", entityPM.Tenant, useLocal);
+                                msg = msg.Replace("%Currency", curr.Code);
+                                throw new ApplicationException(msg);
+                            }
+                        }
+                    }
                 }
                 #endregion
             }
@@ -429,7 +431,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException("Can't change Consolidation invoice type");
                 }
 
-                bool isEditingEnabled = IsEditingARInvoiceEnabled(entityPOCO);
+                bool isEditingEnabled = IsEditingEntityEnabled(entityPOCO);
 
                 if (!isEditingEnabled)
                 {
@@ -475,18 +477,17 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         throw new ApplicationException("Can't update " + fieldLabel);
                     }
 
+                    if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
 
-                    //if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
-                    //{
-                    //    string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
-                    //    throw new ApplicationException("Can't update " + fieldLabel);
-                    //}
-
-                    //if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
-                    //{
-                    //    string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
-                    //    throw new ApplicationException("Can't update " + fieldLabel);
-                    //}
+                    if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
 
                 }
             }
@@ -1193,7 +1194,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        private static bool IsEditingARInvoiceEnabled(ARInvoice entityPOCO)
+        private static bool IsEditingEntityEnabled(ARInvoice entityPOCO)
         {
             bool myResult = false;
 

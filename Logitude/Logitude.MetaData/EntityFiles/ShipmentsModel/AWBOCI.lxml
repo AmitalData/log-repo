@@ -56,7 +56,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;AWBOCI,AWBOCIs,,Id,&quot;">
+  SearchFields="&quot;AWBOCI,AWBOCIs,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;05c5ed26-c3bf-4934-9eab-6c43bf1ddfea&quot;"
     FieldName="&quot;Id&quot;"
@@ -67,7 +69,7 @@
     ObjectTableName="&quot;AWBOCI&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -211,7 +213,7 @@
     ObjectTableName="&quot;AWBOCI&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -251,7 +253,7 @@
     ListLableDefaultText="&quot;ShipmentId&quot;"
     ListLocalDefaultText="&quot;ShipmentId&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -272,7 +274,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Shipment"
+    NavigationPropertyName="Shipment" />
   <field
     Id="&quot;1a07dff7-2233-4a0a-9e76-a10ed21b583d&quot;"
     FieldName="&quot;SupplementaryCustomsInfo&quot;"
@@ -401,7 +405,7 @@
     ListFieldLable="&quot;CountryIdListLable&quot;"
     ListLableDefaultText="&quot;Country&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -423,7 +427,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Country"
+    NavigationPropertyName="Country" />
   <field
     Id="&quot;bd1d2f28-752f-4a6a-bed7-dcf26e2c70af&quot;"
     FieldName="&quot;AWBCustomsInformationCode&quot;"
@@ -477,7 +483,7 @@
     ListFieldLable="&quot;AWBCustomsInformationCodeListLable&quot;"
     ListLableDefaultText="&quot;Customs Info. ID&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -499,7 +505,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="AWBCustomsInformation"
+    NavigationPropertyName="AWBCustomsInformation" />
   <field
     Id="&quot;eb50c48c-6117-42af-aa27-ef09719a9165&quot;"
     FieldName="&quot;AWBInformationCode&quot;"
@@ -553,7 +561,7 @@
     ListFieldLable="&quot;AWBInformationCodeListLable&quot;"
     ListLableDefaultText="&quot;Information ID&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -575,7 +583,9 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="AWBInformation"
+    NavigationPropertyName="AWBInformation" />
   <field
     Id="&quot;b2cd3bd7-b2b7-4468-b8ab-0b91468c10b3&quot;"
     FieldName="&quot;IsAWBWizardDefault&quot;"

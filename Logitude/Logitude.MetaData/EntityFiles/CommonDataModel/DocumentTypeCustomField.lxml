@@ -32,7 +32,9 @@
   HasDynamicHeader="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsEditable="true">
+  IsEditable="true"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;71e5aecb-6078-4aeb-8a8a-eb3e7fd41456&quot;"
     FieldName="&quot;Id&quot;"
@@ -51,7 +53,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15" />
   <field
     Id="&quot;7cc2044c-c7a2-4c49-a75b-600175a69bdc&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -146,7 +149,10 @@
     IsSpellCheckedFullFieldLable="true"
     IsSpellCheckedHelpLocalDefaultText="true"
     NoMetaDataField="false"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="DocumentType"
+    NavigationPropertyName="DocumentType" />
   <field
     Id="&quot;a0f215cf-3dd3-4a24-8540-d1130fc2237b&quot;"
     FieldName="&quot;FieldCode&quot;"
@@ -332,14 +338,17 @@
     IsSpellCheckedListLocalDefaultText="true"
     IsSpellCheckedHelpLocalDefaultText="true"
     NoMetaDataField="false"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="FieldDataType"
+    NavigationPropertyName="FieldDataType" />
   <field
     Id="&quot;5b0ccac2-bc13-4c7d-8c16-fa3108f643ac&quot;"
     FieldName="&quot;InActive&quot;"
     ObjectTableName="&quot;DocumentTypeCustomField&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -401,7 +410,7 @@
     ObjectTableName="&quot;DocumentTypeCustomField&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -463,7 +472,7 @@
     ObjectTableName="&quot;DocumentTypeCustomField&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     DataTypeCode="&quot;Boolean&quot;"
-    MaxLength="15"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -523,7 +532,7 @@
     Id="&quot;23bc6794-fd4e-4043-9f77-b4b3f63583bc&quot;"
     FieldName="&quot;DefaultValue&quot;"
     ObjectTableName="&quot;DocumentTypeCustomField&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="250"
     IsRequiered="false"

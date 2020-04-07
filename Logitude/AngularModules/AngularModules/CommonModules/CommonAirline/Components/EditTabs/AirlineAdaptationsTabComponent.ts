@@ -313,7 +313,7 @@ export class AirlineAdaptationsTabComponent extends BaseComponent implements OnI
         logitudeWindow.Title = myWindowTitle;
 
         var service: EntityResourceService = new EntityResourceService();
-        service.getEntityResourceByTableName(objectTableName).subscribe(response => {
+        service.getEntityResourceByTableName(objectTableName).subscribe((response:any) => {
             if (type == "MessagingRule") {
                 logitudeWindow.WindowArgs = { AirlinePM: this.EntityPM, EntityPM: itemPM, ObjectTableName: objectTableName, IsNew: true, };
                 logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
@@ -411,7 +411,7 @@ export class AirlineAdaptationsTabComponent extends BaseComponent implements OnI
     }
     private OpenEditWindow(myWindowTitle: string, itemPM: any, objectTableName: string) {
         var service: EntityResourceService = new EntityResourceService();
-        service.getEntityResourceByTableName(objectTableName).subscribe(response => {
+        service.getEntityResourceByTableName(objectTableName).subscribe((response:any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = myWindowTitle;
             logitudeWindow.WindowArgs = { AirlinePM: this.EntityPM, EntityPM: itemPM, ObjectTableName: objectTableName, IsNew: false, };
@@ -422,7 +422,7 @@ export class AirlineAdaptationsTabComponent extends BaseComponent implements OnI
 
     EditRuleClicked(item: MessagingRuleItem) {
         var service: EntityResourceService = new EntityResourceService();
-        service.getEntityResourceByTableName("AirlineMessagingRule").subscribe(response => {
+        service.getEntityResourceByTableName("AirlineMessagingRule").subscribe((response:any) => {
             var logitudeWindow = new LogitudeWindow();
             var myWindowTitle: string = "Edit Messaging Rule";
             var objectTableName: string = "AirlineMessagingRule";

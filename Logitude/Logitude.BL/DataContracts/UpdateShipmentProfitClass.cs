@@ -33,6 +33,8 @@ namespace Logitude.BL.DataContracts
                 param2.Value = isInvoiceUpdated;
                 cmd.Parameters.Add(param2);
 
+                cmd.CommandTimeout = 6000;
+
                 cn.Open();
                 cmd.ExecuteNonQuery();
                 cn.Close();
@@ -56,6 +58,8 @@ namespace Logitude.BL.DataContracts
                 param2.Value = isInvoiceUpdated;
                 cmd.Parameters.Add(param2);
 
+                cmd.CommandTimeout = 6000;
+
                 cn.Open();
                 cmd.ExecuteNonQuery();
                 cn.Close();
@@ -73,6 +77,8 @@ namespace Logitude.BL.DataContracts
                 param1.Direction = ParameterDirection.Input;
                 param1.Value = shipmentId;
                 cmd.Parameters.Add(param1);
+
+                cmd.CommandTimeout = 6000;
 
                 cn.Open();
                 cmd.ExecuteNonQuery();

@@ -60,7 +60,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;9e90621e-f543-4381-a6d8-c356570731e9&quot;"
     FieldName="&quot;Id&quot;"
@@ -441,7 +443,7 @@
     ObjectTableName="&quot;Journal&quot;"
     FieldsDataType="&quot;LookUp&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="3"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -518,7 +520,7 @@
     FieldsDataType="&quot;LookUp&quot;"
     LookUpTableName="&quot;JournalStatusType&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="3"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -671,7 +673,7 @@
     ObjectTableName="&quot;Journal&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="5"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"

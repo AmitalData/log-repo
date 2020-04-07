@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class DocumentsFilingUpdateClass
-   {  
+   {  		
+		public const string HashString = "38d4d53992a4cad0e1cda4752e856114";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "DocumentsFiling",
 			      				    IsNew =  false,
 			      				    DBTableName =  "DocumentsFilings",
-			      				    OldDBTableName =  "DocumentsFilings",
 			      				    ObjectTableSingular =  "Document Filing",
 			      				    ObjectTablePlural =  "Documents Filings",
 			      				    HasCustomFilter =  false,
@@ -128,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "DocumentsFiling,DocumentsFiling,,Id,",
+			      				    HashString =  DocumentsFilingUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -139,11 +140,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -207,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsDigitallySigned",
-					  						OldFieldName =  "IsDigitallySigned",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -274,7 +273,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsSharedWithForwarder",
-					  						OldFieldName =  "IsSharedWithForwarder",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -341,7 +339,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -404,7 +401,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -470,7 +466,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DocumentTypeId",
-					  						OldFieldName =  "DocumentTypeId",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -534,7 +529,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DocumentTypeName",
-					  						OldFieldName =  "DocumentTypeName",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -600,11 +594,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "DirectionCode",
-					  						OldFieldName =  "DirectionCode",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  4,
+					  						MaxLength =  1,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
@@ -665,7 +658,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ObjectTableId",
-					  						OldFieldName =  "ObjectTableId",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ObjectTable",
@@ -729,7 +721,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ObjectTableName",
-					  						OldFieldName =  "ObjectTableName",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -794,7 +785,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -858,7 +848,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -923,7 +912,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "OwnerId",
-					  						OldFieldName =  "OwnerId",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -987,7 +975,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "OwnerName",
-					  						OldFieldName =  "OwnerName",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1053,11 +1040,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "DocumentsFiling",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  250,
+					  						MaxLength =  256,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1119,9 +1105,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "DocumentsFiling",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -1181,7 +1166,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Extension",
-					  						OldFieldName =  "Extension",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1248,7 +1232,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LastVersion",
-					  						OldFieldName =  "LastVersion",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1311,7 +1294,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsRequested",
-					  						OldFieldName =  "IsRequested",
 					  						ObjectTableName =  "DocumentsFiling",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,

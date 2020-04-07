@@ -23,6 +23,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ShipmentPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     moduleId: module.id,
@@ -173,7 +174,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
                 this.SelectedTransportationTypes = new TransportationTypes("Air Tel-Aviv", "A", "TLV", "IL");
             }
         }
-        this._PackageTypeListService.getAllFromCache().subscribe(myResult => {
+        this._PackageTypeListService.getAllFromCache().subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.UnAssignedPackageTypeId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant && a.Code == '---')[0].Id;
             }
@@ -510,7 +511,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         } 
         if (this.ValidationErrorsList.length == 0) {
-            this._ShipmentPMService.GetSingleByCustomerReference1(this.CustomerReference1).subscribe(myResult => {
+            this._ShipmentPMService.GetSingleByCustomerReference1(this.CustomerReference1).subscribe((myResult:any) => {
                 if (myResult.Result) { 
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Title = "Warning !";
@@ -549,11 +550,11 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     }
 
     ContinueCreateShipmentProcess() {
-        this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe(myResult => {
+        this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe((myResult:any) => {
             if (myResult.Result) {
                 this.ToPortId = myResult.Result.Id;
                 if (AppTool.IsNullOrEmpty(this.SourceEntity.FromPortId)) {
-                    this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe(Result => {
+                    this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result:any) => {
                         this.FromPortId = Result.Result.Id;
                         this.SaveData();
                     });
@@ -616,10 +617,10 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
                     this.SourceEntity.ShipmentPackages[0].Quantity = this.SourceEntity.PackagesQuantity;
                 }
             }
-           
-            this._EntityStatusExtendedListService.getSingle("INPS").subscribe(Status => {
+
+            this._EntityStatusExtendedListService.getSingle("INPS").subscribe((Status: ServiceResponse) => {
                 this.SourceEntity.StatusId = Status.Result.Id;
-                this._ShipmentPMService.update(this.SourceEntity).subscribe(myResult => {
+                this._ShipmentPMService.update(this.SourceEntity).subscribe((myResult:any) => {
                     if (!myResult.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.SessionEvent.emit({ Name: "ReloadShipments" });

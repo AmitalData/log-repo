@@ -35,7 +35,9 @@
   IsLookUp="false"
   IsEditable="true"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;800e3960-f986-43c9-a9e0-5e1a3c7f5eb7&quot;"
     FieldName="&quot;Code&quot;"

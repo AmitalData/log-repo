@@ -70,7 +70,7 @@ export class APILogsResponceBodyComponent extends BaseComponent implements OnIni
 
         var url = ServiceHelper.GetLogitudeURL() + "/WebPages/APILogsDownLoadPage.aspx?header=" + HeaderData;
         window.open(url);
-        //this._documentExtendedService.GetDocumentById(this.EntityPM.DocumentId, this.EntityPM.Tenant).subscribe(res => {
+        //this._documentExtendedService.GetDocumentById(this.EntityPM.DocumentId, this.EntityPM.Tenant).subscribe((res:any) => {
 
         //    var pmResponse: ServiceResponse = res;
         //    if (!pmResponse.HasError) {
@@ -89,7 +89,7 @@ export class APILogsResponceBodyComponent extends BaseComponent implements OnIni
   
     UpdateScreen(document: any) {
 
-        //this._imageLibraryService.DownloadFile(document.Id, document.Extension, document.Folder, this.EntityPM.Tenant).subscribe(res => {
+        //this._imageLibraryService.DownloadFile(document.Id, document.Extension, document.Folder, this.EntityPM.Tenant).subscribe((res:any) => {
 
         //    var pmResponse: ServiceResponse = res;
         //    if (!pmResponse.HasError) {

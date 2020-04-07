@@ -82,7 +82,7 @@ export class CommunicationMoreComponent
     }
     LoadCommunicationLog() {
 
-        this._CommunicationLogListService.getSingle(this.EntityPM.Id).subscribe(res => {
+        this._CommunicationLogListService.getSingle(this.EntityPM.Id).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

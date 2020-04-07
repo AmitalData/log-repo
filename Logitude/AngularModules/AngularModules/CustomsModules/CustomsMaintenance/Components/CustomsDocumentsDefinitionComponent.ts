@@ -60,7 +60,7 @@ export class CustomsDocumentsDefinitionComponent
         this.DocumentTypeFilterItems.addAdditionalFilter("SearchFields", "864", null, null, "NotContains", false, false, false, "string", false, true);
 
         this.CurrentSession.StartBusyIndicator("");
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             this.CurrentSession.StopBusyIndicator();
             this.BuildDocumentsDefinitionList();
             this.IsLoaded = true;
@@ -77,7 +77,7 @@ export class CustomsDocumentsDefinitionComponent
 
     BuildDocumentsDefinitionList() {
 
-        this._EntityListService.getAll().subscribe(myResult => {
+        this._EntityListService.getAll().subscribe((myResult:any) => {
             console.log("Get All Customs Documents Definition: ", myResult);
             if (myResult != null && myResult.Result != null){
                 this.AllDocumentsDefinitionResultList = new ObservableCollection([]);
@@ -186,7 +186,7 @@ export class CustomsDocumentsDefinitionComponent
 
                     if (item.IsNew == true) {
                         item.entityPM.Tenant = 1; // ????
-                        this._EntityPMService.insert(item.entityPM).subscribe(response => {
+                        this._EntityPMService.insert(item.entityPM).subscribe((response:any) => {
                             var res: ServiceResponse = response;
                             if (res.HasError) {
                                 //this.ValidationErrorsList = res.ErrorsArray;
@@ -196,7 +196,7 @@ export class CustomsDocumentsDefinitionComponent
                         });
                     }
                     else {
-                        this._EntityPMService.update(item.entityPM).subscribe(response => {
+                        this._EntityPMService.update(item.entityPM).subscribe((response:any) => {
                             var res: ServiceResponse = response;
                             if (res.HasError) {
                                 //this.ValidationErrorsList = res.ErrorsArray;
@@ -213,7 +213,7 @@ export class CustomsDocumentsDefinitionComponent
             this.DeleteDocumentsDefinitionList.Collection.forEach((item: DocumentsDefinitionComponent) => {
                 if (!AppTool.IsNullOrEmpty(item.entityPM.Id)) {
                     this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-                    this._EntityPMExtendedService.delete(item.entityPM.Id).subscribe(response => {
+                    this._EntityPMExtendedService.delete(item.entityPM.Id).subscribe((response:any) => {
                         var res: ServiceResponse = response;
                         if (res.HasError) {
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -270,7 +270,7 @@ export class CustomsDocumentsDefinitionComponent
         filters.addAdditionalFilter("TransportationTypeCode", this.TransportationTypeCode, null, null, "Equals", false, false, false, "Text");
         filters.addAdditionalFilter("CargoTypeCode", this.CargoTypeCode, null, null, "Equals", false, false, false, "Text");
 
-        this._EntityListService.getByFilters(filters).subscribe(myResult => {
+        this._EntityListService.getByFilters(filters).subscribe((myResult:any) => {
             console.log("Customs Documents Definition: ", myResult);
             if (myResult == null ||
                 (myResult != null && myResult.Result == null) ||

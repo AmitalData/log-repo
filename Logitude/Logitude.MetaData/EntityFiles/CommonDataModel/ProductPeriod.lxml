@@ -36,7 +36,9 @@
   IsLookUp="true"
   IsEditable="true"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;cf6790a7-4134-49e5-94e7-298f61324a0e&quot;"
     FieldName="&quot;Code&quot;"
@@ -103,7 +105,7 @@
     ObjectTableName="&quot;ProductPeriod&quot;"
     FieldsDataType="&quot;Text&quot;"
     DataTypeCode="&quot;Text&quot;"
-    MaxLength="20"
+    MaxLength="60"
     IsRequiered="true"
     IsCustom="false"
     MinLength="0"
@@ -160,7 +162,7 @@
     Id="&quot;e7e370e1-95fd-4c10-81df-b3e92be14485&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;ProductPeriod&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

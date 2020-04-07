@@ -248,7 +248,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 ChargeableWeightUnit: this.EntityPM.ChargeableWeightUnitCode,
                 GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
                 VolumeUnit: this.EntityPM.VolumeUnitCode,
-                ShipmentPM: this.EntityPM,
+                IsShipment: true,
                 FatherComponent: this,
                 TariffType: tariffType
             };

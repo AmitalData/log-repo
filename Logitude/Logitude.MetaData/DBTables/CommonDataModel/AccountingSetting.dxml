@@ -2,7 +2,8 @@
 <Table
   Name="AccountingSettings"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="int">
@@ -157,14 +158,14 @@
   <Column
     Name="QBOAccessToken"
     Type="nvarchar"
-    Size="200">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="QBOAccessTokenSecret"
     Type="nvarchar"
-    Size="200">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -281,6 +282,31 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AllowRegionalTaxManagement"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EnableAPPaymentExternalPayment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TransferToFTPActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TransferFTPDetailId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Tenants"
@@ -295,5 +321,10 @@
     ForeignKeyColumn="RegistryDateTypeCode"
     ReferencedTable="RegistryDateTypes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TransferFTPDetailId"
+    ReferencedTable="FTPDetails"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

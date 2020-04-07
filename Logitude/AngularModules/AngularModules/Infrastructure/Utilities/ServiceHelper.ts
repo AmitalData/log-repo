@@ -1,7 +1,7 @@
 
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import { Http, Headers, Response } from '@angular/http';
-import { HttpClient, HttpResponse, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpEvent, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs/Rx';
 import {AppTool, DateTool} from '../Tools';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
@@ -98,7 +98,7 @@ export class ServiceHelper {
             }
         }
         else if (error instanceof HttpErrorResponse)  {
-            ServiceHelper.HttpClientHandleServiceError(error);
+            response = ServiceHelper.HttpClientHandleServiceError(error);
         }
         else {
 
@@ -191,7 +191,7 @@ export class ServiceHelper {
             ServiceHelper._LogitudeErrorHandler.handleError(error);
         }
 
-        return of(response);
+       return response;
     }
 
     public static HandleTimerServiceError(error: any) {
@@ -285,7 +285,7 @@ export class ServiceHelper {
                             if (exception) {
                                 if (exception.indexOf("Internet Connection Problem") > -1) {
                                     var loginService: LoginService = new LoginService();
-                                    loginService.GetDocumentDownloadToken().subscribe(myResult => {
+                                    loginService.GetDocumentDownloadToken().subscribe((myResult:any) => {
                                         if (myResult) {
                                             SessionInfo.DocumentDownloadToken = myResult;
                                         }
@@ -472,6 +472,58 @@ export class ServiceHelper {
 
     public static GetLDocumentDownloadToken() {
         return SessionInfo.DocumentDownloadToken;
+    }
+
+    public static GetHttpHeaders() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            })
+        };
+
+        return httpOptions;
+    }
+
+    public static GetHttpFullHeaders() {
+
+        const httpOptions: { headers; observe; } = {
+
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+            }),
+
+            observe: 'response'
+        };
+
+        return httpOptions;
+    }
+
+    public static GetHttpHeadersWithoutToken() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+
+        return httpOptions;
+    }
+
+    public static GetHttpFullHeadersWithoutToken() {
+
+        const httpOptions: { headers; observe; } = {
+
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+
+            observe: 'response'
+        };
+
+        return httpOptions;
     }
 }
 

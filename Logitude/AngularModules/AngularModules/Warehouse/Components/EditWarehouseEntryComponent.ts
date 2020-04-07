@@ -70,7 +70,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
 
     ) {
 
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry", 0).subscribe((response:any) => {
             this.InitializeEditWarehouseEntry();
         });
 

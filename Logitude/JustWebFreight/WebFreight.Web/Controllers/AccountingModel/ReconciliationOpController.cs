@@ -188,26 +188,25 @@ tenant);
 
 
 
-        public HttpResponseMessage PutDelsertDraftLedgerTransaction(List<LedgerTransactionList> OpenRecilationDrafts)
+        public HttpResponseMessage PutDelsertDraftLedgerTransaction(List<string> transactionsIds)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
-                //var accountingContext = AccountingContext.GetContext(tenant);
-                //LedgerTransactionListQueryService listService = new LedgerTransactionListQueryService(accountingContext);
-                if (OpenRecilationDrafts == null || OpenRecilationDrafts.Count == 0)
-                {
-                    throw new Exception("PutDelSertDraftLedgerTransaction expected a list !");
-                }
+
 
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
-                var qs = new LedgerTransactionListQueryService(accountingContext);
+                LedgerTransactionListQueryService transactionsQuery = new LedgerTransactionListQueryService(accountingContext);
+                List<LedgerTransactionList> transactions = transactionsQuery.GetTransactionsByIds(transactionsIds);
 
-                LedgerTransactionUpdateService us = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), OpenRecilationDrafts.First().Tenant);
-                us.DelSertOpenRecilationDrafts(OpenRecilationDrafts);
+
+                if (transactions == null || transactions.Count == 0)
+                    throw new Exception("PutDelSertDraftLedgerTransaction expected a list !");
+
+                LedgerTransactionUpdateService us = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                us.DelSertOpenRecilationDrafts(transactions);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { Ok = true });
             }

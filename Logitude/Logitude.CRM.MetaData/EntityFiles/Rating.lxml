@@ -28,7 +28,9 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;Rating&quot;">
+  DefaultText="&quot;Rating&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;ff34b944-7972-48fc-a6d5-7f1a9b4fffe0&quot;"
     FieldName="&quot;Code&quot;"

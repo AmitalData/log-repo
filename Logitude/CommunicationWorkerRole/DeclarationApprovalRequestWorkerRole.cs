@@ -197,7 +197,10 @@ namespace CommunicationWorkerRole
                                     if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
                                     {
                                         // VDK Logic
-                                        AddVDKExternalTaskQueue(ApprovalRequestPM, tenant);
+                                        //if (!ShipmentPm.IsImporterApprovalRequired)
+                                        //{
+                                        //    AddVDKExternalTaskQueue(ApprovalRequestPM, tenant);
+                                        //} 
                                         //var ResponseData = result.Content.ReadAsStringAsync().Result;
                                         var Donemsg = "Declaration Approval Request Sent To Importer Successfully, Start Sending VDK to Unif. " + DateTime.Now;
                                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, "VDK", null, "");

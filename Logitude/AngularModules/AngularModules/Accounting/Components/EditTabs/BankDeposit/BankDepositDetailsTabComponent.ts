@@ -430,7 +430,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         //this._CashBookPMService.get(this.EntityPM.CashBookId)
         this.cashBookListService.getSingle(this.EntityPM.CashBookId)
-            .subscribe(myResult =>
+            .subscribe((myResult:any) =>
             {
                 this.CurrentSession.StopBusyIndicator();
 
@@ -812,7 +812,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     }
     ReturnCheque(chequeId:string ,returnType:string, notes: string) {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.bankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe(myResult => {
+        this.bankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe((myResult:ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -826,7 +826,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         });
     }
     GetEntityPMAndRedrawScreen() {
-        this.BankDepositPMService.get(this.EntityPM.Id).subscribe(Result => {
+        this.BankDepositPMService.get(this.EntityPM.Id).subscribe((Result:any) => {
 
             var result: ServiceResponse = Result;
             if (!result.HasError) {

@@ -197,7 +197,7 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
 
         var myService: ShippingLinePMService = new ShippingLinePMService();
 
-        myService.insert(this.ShippingLinePM).subscribe(myResult => {
+        myService.insert(this.ShippingLinePM).subscribe((myResult:any) => {
 
             this.CurrentSession.StopBusyIndicator();
 

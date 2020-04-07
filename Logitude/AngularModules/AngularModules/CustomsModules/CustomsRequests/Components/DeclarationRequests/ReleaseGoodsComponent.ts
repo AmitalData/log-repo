@@ -40,7 +40,7 @@ export class ReleaseGoodsComponent
     constructor() {
         super();
         this.GoodsItemsList = new ObservableCollection([]);
-        this.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.ReleaseGoods").subscribe(response => {
+        this.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.ReleaseGoods").subscribe((response:any) => {
 
         });
 

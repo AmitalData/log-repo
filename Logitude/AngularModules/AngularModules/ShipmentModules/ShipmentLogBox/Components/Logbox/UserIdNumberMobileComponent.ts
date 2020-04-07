@@ -112,7 +112,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 }
             }
         }
-        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe(myAdditionalResult => {
+        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult:any) => {
 
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity.IsUserIDNumberRequired == false) {
@@ -130,7 +130,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
             }
             else {
-                this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
+                this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
                     if (MyResult.Result) {
                        
                         this.AdditionalData = MyResult.Result;//AdditionalResult.Result
@@ -217,7 +217,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
 
     SendButtonClicked() {
         this.ValidationList = [];
-        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe(myAdditionalResult => {
+        this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult:any) => {
 
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity.IsUserIDNumberRequired == false) {
@@ -236,7 +236,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                     entity.IsUserIDNumberRequired = false;
                     entity.UserIdNumber = this.UserIdNumber;
                     if (this.IsValidIsraeliID(this.UserIdNumber)) {
-                        this._ShipmentAdditionalCloudDataService.updateUserID(entity).subscribe(AdditionalResult => {
+                        this._ShipmentAdditionalCloudDataService.updateUserID(entity).subscribe((AdditionalResult:any) => {
 
                             this.FinalMessage == "זיהוי משתמש נשלח בהצלחה ";
                             this.ShowFinalMessage = true;

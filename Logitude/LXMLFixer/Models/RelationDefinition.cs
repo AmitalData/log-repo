@@ -12,18 +12,15 @@ namespace Logitude.LXMLFixer.Models
     public class RelationDefinition
     {
         [XmlAttribute()]
-        public string ParentTableName { get; set; }
+        public string ForeignKeyColumn { get; set; }
 
         [XmlAttribute()]
-        public string ParentColumnName { get; set; }
+        public string ReferencedTable { get; set; }
 
         [XmlAttribute()]
-        public string ReferencedTableName { get; set; }
+        public string ReferencedTableSchema { get; set; }
 
         [XmlAttribute()]
-        public string ReferencedColumnName { get; set; }
-
-        [XmlAttribute()]
-        public string ForeignKeyConstraintName { get; set; }
+        public string ReferencedColumn { get; set; }
     }
 }

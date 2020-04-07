@@ -63,8 +63,8 @@ export class ClientAddressesTabComponent extends BaseComponent{
     public set EditButtonVisibility(newValue: boolean) { this.editButtonVisibility = newValue; }
 
     NewAddressButtonClicked() {
-        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe((response:any) => {
 
                // this.entityPM.ClientAddresses[0].IsHebrewAddress                
             var item = new ClientAddressPM(this.entityPM);
@@ -93,8 +93,8 @@ export class ClientAddressesTabComponent extends BaseComponent{
     }
 
     EditAddress(address: ClientAddressPM) {
-        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe(response => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe(response => {    
+        this.entityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.ClientsAddressCommType").subscribe((response:any) => {    
 
                 var windowArgs: any = {};
                 windowArgs.clientAddressPM = address;

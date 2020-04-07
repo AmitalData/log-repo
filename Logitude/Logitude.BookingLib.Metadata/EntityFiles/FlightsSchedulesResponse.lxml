@@ -33,7 +33,9 @@
   Code="&quot;1410&quot;"
   Name="&quot;FlightsSchedulesResponse Query Group&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;Booking&quot;">
+  ClientModuleName="&quot;Booking&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;dc907f42-3e80-4294-a985-e96f417f72a7&quot;"
     FieldName="&quot;Id&quot;"

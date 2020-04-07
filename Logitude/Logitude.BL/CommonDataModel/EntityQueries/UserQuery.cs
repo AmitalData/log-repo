@@ -65,6 +65,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LocalName = a.Contact.LocalName,
                                   SearchFields = a.SearchFields,
                                   Mobile = a.Contact.Mobile,
+                                  DontShowLocalLabels=a.Contact.DontShowLocalLabels,
                                   Position = a.Contact.Position,
                                   ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                                   IsBranchRestricted = a.IsBranchRestricted,
@@ -94,8 +95,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
-                                  AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-                                  LayoutDirection = a.LayoutDirection,
+                                  AdditionalPackagesOnly = a.AdditionalPackagesOnly,                            
+                                  LayoutDirection = a.LayoutDirection
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -152,6 +153,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LocalName = a.Contact.LocalName,
                               SearchFields = a.SearchFields,
                               Mobile = a.Contact.Mobile,
+                              DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                               Position = a.Contact.Position,
                               ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                               IsBranchRestricted = a.IsBranchRestricted,
@@ -181,7 +183,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-                              LayoutDirection =a.LayoutDirection
+                              LayoutDirection= a.LayoutDirection
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -239,6 +241,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       LocalName = a.Contact.LocalName,
                                       SearchFields = a.SearchFields,
                                       Mobile = a.Contact.Mobile,
+                                      DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                       Position = a.Contact.Position,
                                       ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                                       IsBranchRestricted = a.IsBranchRestricted,
@@ -269,6 +272,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                      LayoutDirection = a.LayoutDirection
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -324,6 +328,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LocalName = a.Contact.LocalName,
                                   SearchFields = a.SearchFields,
                                   Mobile = a.Contact.Mobile,
+                                  DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                   Position = a.Contact.Position,
                                   ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                                   IsBranchRestricted = a.IsBranchRestricted,
@@ -353,6 +358,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                  LayoutDirection = a.LayoutDirection
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -396,6 +402,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LocalName = a.Contact.LocalName,
                               SearchFields = a.SearchFields,
                               Mobile = a.Contact.Mobile,
+                              DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                               Position = a.Contact.Position,
                               ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                               IsBranchRestricted = a.IsBranchRestricted,
@@ -425,6 +432,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                              LayoutDirection = a.LayoutDirection
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -482,6 +490,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       LocalName = a.Contact.LocalName,
                                       SearchFields = a.SearchFields,
                                       Mobile = a.Contact.Mobile,
+                                      DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                       Position = a.Contact.Position,
                                       ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                                       IsBranchRestricted = a.IsBranchRestricted,
@@ -512,6 +521,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                      LayoutDirection = a.LayoutDirection
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -567,6 +577,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LocalName = a.Contact.LocalName,
                                   SearchFields = a.SearchFields,
                                   Mobile = a.Contact.Mobile,
+                                  DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                   Position = a.Contact.Position,
                                   ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                                   IsBranchRestricted = a.IsBranchRestricted,
@@ -597,6 +608,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                                  LayoutDirection = a.LayoutDirection
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -640,6 +652,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LocalName = a.Contact.LocalName,
                               SearchFields = a.SearchFields,
                               Mobile = a.Contact.Mobile,
+                              DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                               Position = a.Contact.Position,
                               ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                               IsBranchRestricted = a.IsBranchRestricted,
@@ -670,6 +683,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
+                              LayoutDirection = a.LayoutDirection
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -725,6 +739,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       LocalName = a.Contact.LocalName,
                                       SearchFields = a.SearchFields,
                                       Mobile = a.Contact.Mobile,
+                                      DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                       Position = a.Contact.Position,
                                       ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                                       IsBranchRestricted = a.IsBranchRestricted,
@@ -756,7 +771,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-                                      LayoutDirection =a.LayoutDirection,
+                                      LayoutDirection = a.LayoutDirection
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -810,6 +825,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LocalName = a.Contact.LocalName,
                                   SearchFields = a.SearchFields,
                                   Mobile = a.Contact.Mobile,
+                                  DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                   Position = a.Contact.Position,
                                   ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                                   IsBranchRestricted = a.IsBranchRestricted,
@@ -840,7 +856,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-                                  LayoutDirection = a.LayoutDirection,
+
+                                  LayoutDirection = a.LayoutDirection
+
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -883,6 +901,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LocalName = a.Contact.LocalName,
                               SearchFields = a.SearchFields,
                               Mobile = a.Contact.Mobile,
+                              DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                               Position = a.Contact.Position,
                               ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                               IsBranchRestricted = a.IsBranchRestricted,
@@ -913,7 +932,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-                              LayoutDirection = a.LayoutDirection,
+
+                              LayoutDirection = a.LayoutDirection
+
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -962,6 +983,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LocalName = a.Contact.LocalName,
                                            SearchFields = a.SearchFields,
                                            Mobile = a.Contact.Mobile,
+                                           DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                            Position = a.Contact.Position,
                                            IsBranchRestricted = a.IsBranchRestricted,
                                            IsSalesman = a.IsSalesman,
@@ -992,7 +1014,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                            UserRoles = a.UserRoles,
                                            AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-                                           LayoutDirection = a.LayoutDirection,
+
+                                           LayoutDirection = a.LayoutDirection
+
                                        };
             return users;
         }
@@ -1027,6 +1051,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             LocalName = a.Contact.LocalName,
                             SearchFields = a.SearchFields,
                             Mobile = a.Contact.Mobile,
+                            DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                             Position = a.Contact.Position,
                             IsBranchRestricted = a.IsBranchRestricted,
                             IsSalesman = a.IsSalesman,
@@ -1057,7 +1082,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                             UserRoles = a.UserRoles,
                             AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-                            LayoutDirection = a.LayoutDirection,
+
+                            LayoutDirection = a.LayoutDirection
+
                         };
 
             IQueryable<UserPM> query2 = null;
@@ -1261,6 +1288,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  Tenant = a.Tenant,
                                  Email = a.Contact.Email,
                                  IsDistributor = a.IsDistributor,
+                                 DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                  IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
                                  IsShowContactDetailsInTheMobileApp = a.IsShowContactDetailsInTheMobileApp,
                                  Technology = a.Technology,
@@ -1319,6 +1347,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  LocalName = a.Contact.LocalName,
                                  SearchFields = a.SearchFields,
                                  Mobile = a.Contact.Mobile,
+                                 DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                  Position = a.Contact.Position,
                                  ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                                  IsBranchRestricted = a.IsBranchRestricted,
@@ -1347,7 +1376,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                  UserRoles = a.UserRoles,
-                                 LayoutDirection = a.LayoutDirection,
+
+                                 LayoutDirection = a.LayoutDirection
+
                              }).FirstOrDefault();
 
             if (entity != null)
@@ -1410,6 +1441,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         IsTwoFactorAuthenticationEnabled = a.IsTwoFactorAuthenticationEnabled,
                                         DocumentFilingInbox = a.DocumentFilingInbox,
                                         ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                        
                                     }).ToList();
             return users;
         }
@@ -1431,6 +1463,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       EnglishName = a.Contact.EnglishName,
                                       InActive = a.Contact.InActive,
                                       LocalName = a.Contact.LocalName,
+                                      DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                                       SearchFields = a.SearchFields,
                                       Code= a.Code,
                                       IsBranchRestricted = a.IsBranchRestricted,
@@ -1456,7 +1489,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-                                      LayoutDirection = a.LayoutDirection,
+
+                                      LayoutDirection = a.LayoutDirection
+
                                   }).ToList();
             return users;
         }
@@ -1556,6 +1591,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           LocalName = a.Contact.LocalName,
                           SearchFields = a.SearchFields,
                           Mobile = a.Contact.Mobile,
+                          DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                           Position = a.Contact.Position,
                           ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                           IsBranchRestricted = a.IsBranchRestricted,
@@ -1584,7 +1620,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                           ShowInboxToolTip = a.ShowInboxToolTip,
                           ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-                          LayoutDirection = a.LayoutDirection,
+
+                          LayoutDirection = a.LayoutDirection
+
                       }).FirstOrDefault();
 
             if (entity != null)
@@ -1662,6 +1700,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                       {
                           Id = a.Id,
                           Tenant = a.Tenant,
+                          DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                           Email = a.Contact.Email,
                           EnglishName = a.Contact.EnglishName,
                       }).FirstOrDefault();
@@ -1677,6 +1716,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                       {
                           Id = a.Id,
                           Tenant = a.Tenant,
+                          DontShowLocalLabels = a.Contact.DontShowLocalLabels,
                           Email = a.Contact.Email,
                           EnglishName = a.Contact.EnglishName,
                       }).FirstOrDefault();

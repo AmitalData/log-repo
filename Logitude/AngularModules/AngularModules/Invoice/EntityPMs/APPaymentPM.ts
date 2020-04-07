@@ -498,6 +498,21 @@ export class APPaymentPM {
     public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
        
 	 
+    private externalPaymentAmount: number;
+    public get ExternalPaymentAmount() { return this.externalPaymentAmount; }
+    public set ExternalPaymentAmount(newValue: number) { if (this.externalPaymentAmount != newValue) { this.externalPaymentAmount = newValue; this.MarkAsDirty("ExternalPaymentAmount"); } }
+       
+	 
+    private externalPaymentDate: Date;
+    public get ExternalPaymentDate() { return this.externalPaymentDate; }
+    public set ExternalPaymentDate(newValue: Date) { if (this.externalPaymentDate != newValue) { this.externalPaymentDate = newValue; this.MarkAsDirty("ExternalPaymentDate"); } }
+       
+	 
+    private externalPaymentNotes: string;
+    public get ExternalPaymentNotes() { return this.externalPaymentNotes; }
+    public set ExternalPaymentNotes(newValue: string) { if (this.externalPaymentNotes != newValue) { this.externalPaymentNotes = newValue; this.MarkAsDirty("ExternalPaymentNotes"); } }
+       
+	 
 
     public OldEntityPM: APPaymentPM;
 		

@@ -116,7 +116,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
 
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease").subscribe((response:any) => {
             this.Start(args);
         });
     }

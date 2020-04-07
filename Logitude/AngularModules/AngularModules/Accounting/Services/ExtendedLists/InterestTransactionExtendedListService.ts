@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+//import { Http, Headers } from '@angular/http';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,13 +11,7 @@ import { PerformanceLogger } from '../../../Infrastructure/Utilities/Performance
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass';
 import { InterestReportLinesByDatePM } from '../../EntityPMs/InterestReportLinesByDatePM';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
-
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Token': ServiceHelper.GetLoggedUserToken()
-    })
-};
+ 
 
 @Injectable()
 export class InterestTransactionExtendedListService {
@@ -33,7 +27,7 @@ export class InterestTransactionExtendedListService {
     GetAllInterestTransactionByDate(ReportId: string, InterestCalculationDate: Date) {
         var serviceResponse: ServiceResponse = new ServiceResponse();
         var url = this._apiUrl + "/GetAllInterestTransactionByDate?ReportId=" + ReportId + "&InterestCalculationDate=" + InterestCalculationDate;
-        return this.httpClient.get(url, httpOptions).pipe(
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 serviceResponse.Result = response;
                 return serviceResponse;
@@ -53,7 +47,7 @@ export class InterestTransactionExtendedListService {
             var mappedEntity: InterestReportPM;
             mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-            return this.httpClient.put(url, JSON.stringify(mappedEntity),httpOptions).pipe(
+            return this.httpClient.put(url, JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(
                 map(response => {
                     var pm = response;
                     if (pm) {

@@ -32,7 +32,7 @@ export class AccountingPartnerPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingpartner';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingpartners';      
     }
 
  get(id: string) {

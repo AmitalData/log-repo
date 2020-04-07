@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
             entityPM.CreateDateTime = DateTime.UtcNow;
-            entityPM.InterestReportStatusCode = "1";
+            entityPM.InterestReportStatusCode = "5";
             entityPM.ReportNumber = CodeCounter.GetNumber("InterestReport", entityPM.Tenant).ToString();
             CardRepository cardRepository = new CardRepository(entityPM.Tenant);
             Card card = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);

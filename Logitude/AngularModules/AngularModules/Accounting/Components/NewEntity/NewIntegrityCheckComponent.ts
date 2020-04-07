@@ -137,7 +137,7 @@ export class NewIntegrityCheckComponent extends BaseComponent implements OnInit 
             if (this.EntityPM != null) {
 
                 this.CurrentSession.StartBusyIndicatorSaving();
-                this._AccountingIntegrityCheckPMService.insert(this.EntityPM).subscribe(myResult => {
+                this._AccountingIntegrityCheckPMService.insert(this.EntityPM).subscribe((myResult:any) => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {

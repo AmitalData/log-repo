@@ -196,7 +196,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;
 
-        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
             logWindow.Show('./CRMModules/CRMActivity/Components/NewEntity/NewActivityComponent');
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -234,7 +234,7 @@ export class OverviewTabComponent extends BaseComponent implements OnInit, OnDes
     }
     ViewEntity(entity) {
         if (!AppTool.IsNullOrEmpty(entity.Id)) {
-            this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

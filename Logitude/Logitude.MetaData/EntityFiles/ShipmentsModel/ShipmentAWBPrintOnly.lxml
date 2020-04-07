@@ -34,7 +34,9 @@
   HasDynamicHeader="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsEditable="true">
+  IsEditable="true"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;f96118f7-391b-4e22-8ef0-a319eda25961&quot;"
     FieldName="&quot;Id&quot;"
@@ -53,7 +55,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15" />
   <field
     Id="&quot;b23d104e-abdc-4f7f-972b-fd8826f90526&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -197,7 +200,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="Measurement"
+    NavigationPropertyName="Measurement" />
   <field
     Id="&quot;f258cd23-25e1-4177-9f86-1b089f57cb40&quot;"
     FieldName="&quot;IATACodeId&quot;"
@@ -259,7 +265,10 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="IATACode"
+    NavigationPropertyName="IATACode" />
   <field
     Id="&quot;faf06508-00f7-41ca-8b0e-f2f3533c7024&quot;"
     FieldName="&quot;CurrencyId&quot;"
@@ -321,7 +330,10 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="Currency"
+    NavigationPropertyName="Currency" />
   <field
     Id="&quot;dc938d88-e8d1-4566-be40-2280c3dd6625&quot;"
     FieldName="&quot;DueTypeCode&quot;"
@@ -386,7 +398,10 @@
     IsSpellCheckedShortLocalDefaultText="false"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="DueType"
+    NavigationPropertyName="DueType" />
   <field
     Id="&quot;b58fb6da-9589-495b-bde7-825c0ee7ece4&quot;"
     FieldName="&quot;PrepaidCollectId&quot;"
@@ -453,7 +468,10 @@
     IsSpellCheckedShortLocalDefaultText="false"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="PrepaidCollect"
+    NavigationPropertyName="PrepaidCollect" />
   <field
     Id="&quot;1f08f861-0e47-46e7-bc3b-5b3e75d21438&quot;"
     FieldName="&quot;ShipmentId&quot;"
@@ -510,12 +528,16 @@
     DisplayInDocumentReferences="false"
     CopyToDW="false"
     HasTemplate="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="true"
     IsSpellCheckedHelpLocalDefaultText="true"
     NoMetaDataField="false"
     HasDataBaseField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="Shipment"
+    NavigationPropertyName="Shipment"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;7bdae354-4253-426a-9d80-4111a8f91b44&quot;"
     FieldName="&quot;Quantity&quot;"

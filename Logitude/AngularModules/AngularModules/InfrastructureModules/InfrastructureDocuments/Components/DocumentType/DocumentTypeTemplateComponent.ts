@@ -314,7 +314,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
         this.DocumentType.IsAir = !this.DocumentType.IsAir;
         this.DocumentType.IsAir = !this.DocumentType.IsAir;
-        this.documentTypeTemplatePMService.update(item).subscribe(res=> {
+        this.documentTypeTemplatePMService.update(item).subscribe((res:any) => {
 
         });
     }

@@ -46,7 +46,7 @@ export class CreateTenantPackageSelectionComponent extends BaseComponent impleme
 
 
     ) {
-        this._entityResourceService.getEntityResourceByTableName("Package").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Package").subscribe((response:any) => {
             this.IsStardLoadPage = true;
       
         });

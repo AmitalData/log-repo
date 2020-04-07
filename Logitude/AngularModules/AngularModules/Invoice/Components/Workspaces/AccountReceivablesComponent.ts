@@ -92,7 +92,7 @@ export class AccountReceivablesComponent implements OnInit {
     }
 
     LoadBarQueries(months: number, days: number, index: number, currency: number) {
-        this.myChartsService.GetMoneyStatusForTenant(null,months, days, this.TenantPM.Id, index, currency).subscribe(myResult => {
+        this.myChartsService.GetMoneyStatusForTenant(null, months, days, this.TenantPM.Id, index, currency).subscribe((myResult: ServiceResponse) => {
             this.FillBarsMoney(myResult);
         });
     }
@@ -338,7 +338,7 @@ export class AccountReceivablesComponent implements OnInit {
             listArgs.QueryCode = queryCode;
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = backButtonTitle;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;

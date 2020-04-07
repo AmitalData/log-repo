@@ -60,7 +60,7 @@ export class NewMoveTypeComponent extends BaseComponent {
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-            this.MoveTypePMService.insert(this.MoveTypePM).subscribe(res => {
+            this.MoveTypePMService.insert(this.MoveTypePM).subscribe((res:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 var pmResponse: ServiceResponse = res;

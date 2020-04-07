@@ -15,7 +15,7 @@ export class PortPMCustomCode {
         this.entityPM = entityPM;
         if (propertyName == "CountryId" && entityPM.CountryId) {
             var countryService = new CountryListService();
-            countryService.getSingleFromCache(entityPM.CountryId).subscribe(response => {
+            countryService.getSingleFromCache(entityPM.CountryId).subscribe((response:any) => {
                 if (response.Result) {
                     this.Country = response.Result;
                     this.OnCountryChanged(this.Country);
@@ -25,7 +25,7 @@ export class PortPMCustomCode {
         if (propertyName == "StateId") {
             if (entityPM.StateId) {
                 var stateService = new StateListService();
-                stateService.getSingleFromCache(entityPM.StateId).subscribe(response => {
+                stateService.getSingleFromCache(entityPM.StateId).subscribe((response:any) => {
                     if (response.Result) {
                         this.State = response.Result;
                         this.OnStateChanged(this.State);

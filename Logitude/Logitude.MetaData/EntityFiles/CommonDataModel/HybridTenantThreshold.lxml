@@ -54,7 +54,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  SearchFields="&quot;HybridTenantThreshold,HybridTenantThresholds,,Id,&quot;">
+  SearchFields="&quot;HybridTenantThreshold,HybridTenantThresholds,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;0481a7f1-a8cf-4fe6-b765-48f8d864d449&quot;"
     FieldName="&quot;Tenant&quot;"

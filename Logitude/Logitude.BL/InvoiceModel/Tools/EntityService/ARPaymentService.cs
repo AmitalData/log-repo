@@ -161,7 +161,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             VoidARPaymentInFullAccounting(_arpaymentPM, setVoided);
 
             // DropBox
-            CreateARInvoiceMessage(setApproved);
+            CreateARPaymentMessage(setApproved);
 
             //// Full Accounting => Reconciliation
             //if (theEntityPm.IsFullAccounting == true)
@@ -294,7 +294,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            ARPaymentValidator.Validate(theEntityPm, objectContext, cashBook);
+            ARPaymentValidator.Validate(theEntityPm, objectContext, cashBook, newPayment, isNewEntity);
             ARPaymentTracing.Trace(theEntityPm, newPayment, isNewEntity);
 
             if (mapComposition)
@@ -400,7 +400,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildSearchFields();
 
             // DropBox
-            this.CreateARInvoiceMessage(setApproved);
+            this.CreateARPaymentMessage(setApproved);
 
             theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
             paymentRepository.Update(newPayment);
@@ -479,7 +479,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             return myResult;
         }
 
-        private void CreateARInvoiceMessage(bool setApproved)
+        private void CreateARPaymentMessage(bool setApproved)
         {
             if (setApproved && this.isTransferToDropbox && this.TransferToDropboxActivated)
             {
@@ -1726,6 +1726,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
                                     CancelJournal(entityPm);
+                                    CancelledInterestTransactions(entityPm);
                                 }
                             }
                         }
@@ -1765,6 +1766,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     cashBookUpdate.Update(cashBook);
                                     CreateVoidedARPaymentEvent("ARPayment Cancel");
                                     CancelJournal(entityPm);
+                                    CancelledInterestTransactions(entityPm);
                                 }
                             }
                         }
@@ -1772,6 +1774,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             CreateVoidedARPaymentEvent("ARPayment Cancel");
                             CancelJournal(entityPm);
+                            CancelledInterestTransactions(entityPm);
                         }
                     }
                 }
@@ -1831,6 +1834,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Notes = note,
             });
         }
+
+        public void CancelledInterestTransactions(ARPaymentPM entityPm)
+        {
+            IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
+            InterestReportUpdate.CancelledInterestTransactionsByARPayment(entityPm.Id, entityPm.Tenant);
+        }
+
         private void CancelJournal(ARPaymentPM entityPm)
         {
 

@@ -29,12 +29,12 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                     string toPercentage = "Null";
                     if (entityPOCO.Percentage != null)
                     {
-                        fromPercentage = String.Format("{0:N2}", entityPOCO.Percentage);
+                        fromPercentage = String.Format("{0:N3}", entityPOCO.Percentage);
                     }
 
                     if (entityPM.Percentage != null)
                     {
-                        toPercentage = String.Format("{0:N2}", entityPM.Percentage);
+                        toPercentage = String.Format("{0:N3}", entityPM.Percentage);
                     }
 
                     string eventNotes = "Percentage changed from " + fromPercentage + " to " + toPercentage;

@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+//import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -10,19 +10,21 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
 import { PaymentChequePM } from '../../EntityPMs/PaymentChequePM';
-
 import { PaymentChequeLinePM } from '../../EntityPMs/PaymentChequeLinePM';
-
+ 
 @Injectable()
 
 export class PaymentChequeExtendedPMService {
 
-    private _http: Http;
+ //   private _http: Http;
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+    //    this._http = ServiceHelper.Http;
+        this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PaymentChequeViews';
     }
 
@@ -31,14 +33,13 @@ export class PaymentChequeExtendedPMService {
     getPaymentChequeByChequeNumber(chequeNumber: string) {
 
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+      //  var authHeader = new Headers();
+     //   authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetPaymentChequeByChequeNumber?' + 'ChequeNumber=' + chequeNumber, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
+
+        return this.httpClient.get(this._apiUrl + '/GetPaymentChequeByChequeNumber?' + 'ChequeNumber=' + chequeNumber ,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var pm = response;
 
 
 
@@ -54,22 +55,43 @@ export class PaymentChequeExtendedPMService {
               
 
                 return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
 
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetPaymentChequeByChequeNumber?' + 'ChequeNumber=' + chequeNumber, {
+        //         headers: authHeader
+        //     }).map(response => {
+        //         var pm = response.json();
+
+
+
+        //         var entity: PaymentChequePM;
+        //         if (pm) {
+        //             entity = this.MapJsonToEntityPM(pm);
+        //         }
+
+        //         var serviceResponse: ServiceResponse;
+        //         serviceResponse = new ServiceResponse();
+        //         serviceResponse.Result = entity;
+
+              
+
+        //         return serviceResponse;
+
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
     GetPaymentChequeByPaymentIdAndChequeNumber(chequeNumber:string, paymentId: string) {
 
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+      //  var authHeader = new Headers();
+       // authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetPaymentChequeByPaymentIdAndChequeNumber?' + 'paymentId=' + paymentId + '&chequeNo=' + chequeNumber, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
+        return this.httpClient.get(this._apiUrl + '/GetPaymentChequeByPaymentIdAndChequeNumber?' + 'paymentId=' + paymentId + '&chequeNo=' + chequeNumber ,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var pm = response;
 
 
 
@@ -85,9 +107,31 @@ export class PaymentChequeExtendedPMService {
 
 
                 return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        // return Observable.defer(() => {
+        //     return this._http.get(this._apiUrl + '/GetPaymentChequeByPaymentIdAndChequeNumber?' + 'paymentId=' + paymentId + '&chequeNo=' + chequeNumber, {
+        //         headers: authHeader
+        //     }).map(response => {
+        //         var pm = response.json();
 
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+
+
+        //         var entity: PaymentChequePM;
+        //         if (pm) {
+        //             entity = this.MapJsonToEntityPM(pm);
+        //         }
+
+        //         var serviceResponse: ServiceResponse;
+        //         serviceResponse = new ServiceResponse();
+        //         serviceResponse.Result = entity;
+
+
+
+        //         return serviceResponse;
+
+        //     }).catch(ServiceHelper.HandleServiceError);
+        // });
     }
 
 

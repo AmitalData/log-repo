@@ -13,7 +13,7 @@ namespace Logitude.LXMLFixer.Models
     {
         [XmlAttribute()]
         public string Name { get; set; }
-        
+
         [XmlAttribute()]
         public string Type { get; set; }
 

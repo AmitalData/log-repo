@@ -35,19 +35,21 @@
             this.label1 = new System.Windows.Forms.Label();
             this.DestinationConnectionTextBox = new System.Windows.Forms.TextBox();
             this.SourceConnectionTextBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TenantTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ResultLabel
             // 
             this.ResultLabel.AutoSize = true;
-            this.ResultLabel.Location = new System.Drawing.Point(237, 155);
+            this.ResultLabel.Location = new System.Drawing.Point(256, 179);
             this.ResultLabel.Name = "ResultLabel";
             this.ResultLabel.Size = new System.Drawing.Size(0, 13);
             this.ResultLabel.TabIndex = 13;
             // 
             // DeleteViewsButton
             // 
-            this.DeleteViewsButton.Location = new System.Drawing.Point(141, 115);
+            this.DeleteViewsButton.Location = new System.Drawing.Point(141, 108);
             this.DeleteViewsButton.Name = "DeleteViewsButton";
             this.DeleteViewsButton.Size = new System.Drawing.Size(246, 23);
             this.DeleteViewsButton.TabIndex = 12;
@@ -57,7 +59,7 @@
             // 
             // CreateViewsButton
             // 
-            this.CreateViewsButton.Location = new System.Drawing.Point(141, 86);
+            this.CreateViewsButton.Location = new System.Drawing.Point(141, 137);
             this.CreateViewsButton.Name = "CreateViewsButton";
             this.CreateViewsButton.Size = new System.Drawing.Size(246, 23);
             this.CreateViewsButton.TabIndex = 11;
@@ -99,11 +101,30 @@
             this.SourceConnectionTextBox.TabIndex = 7;
             this.SourceConnectionTextBox.TextChanged += new System.EventHandler(this.SourceConnectionTextBox_TextChanged);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(21, 73);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Tenant";
+            // 
+            // TenantTextBox
+            // 
+            this.TenantTextBox.Location = new System.Drawing.Point(141, 71);
+            this.TenantTextBox.Name = "TenantTextBox";
+            this.TenantTextBox.Size = new System.Drawing.Size(246, 20);
+            this.TenantTextBox.TabIndex = 14;
+            this.TenantTextBox.TextChanged += new System.EventHandler(this.TenantTextBox_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 241);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.TenantTextBox);
             this.Controls.Add(this.ResultLabel);
             this.Controls.Add(this.DeleteViewsButton);
             this.Controls.Add(this.CreateViewsButton);
@@ -127,6 +148,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox DestinationConnectionTextBox;
         private System.Windows.Forms.TextBox SourceConnectionTextBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox TenantTextBox;
     }
 }
 

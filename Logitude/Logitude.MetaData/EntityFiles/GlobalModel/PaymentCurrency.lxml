@@ -42,7 +42,9 @@
   HasFiltersMenu="false"
   ClientModuleName="&quot;Infrastructure&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Global"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;73f17464-56a0-441d-91fe-46fe69b65d12&quot;"
     FieldName="&quot;Code&quot;"
@@ -108,7 +110,7 @@
     Id="&quot;e8bc5c3c-24e2-4e72-8bfc-1895ba8966a0&quot;"
     FieldName="&quot;Name&quot;"
     ObjectTableName="&quot;PaymentCurrency&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="40"
     IsRequiered="true"
@@ -172,7 +174,7 @@
     Id="&quot;ece0cfab-5ce4-4c1b-b2c9-74145f70dd2d&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;PaymentCurrency&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"
