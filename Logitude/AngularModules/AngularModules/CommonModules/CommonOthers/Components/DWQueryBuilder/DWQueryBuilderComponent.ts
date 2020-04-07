@@ -515,7 +515,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.SelectedItem = item;
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
         if (this.SelectedItem && myCurrentItem && myCurrentItem.length == 0) {
-            if (this.SelectedItem.Code == '[Full Date]') {
+                if (this.SelectedItem.Code == '[Full Date]' || this.SelectedItem.Code == '[Full Date US]') {
                 this.SelectedItem.ParentDataTypeCode = "LookUp";
                 this.SelectedItem.DataTypeCode = "Date";
                 this.SelectedItem.HasTree = true;
@@ -576,7 +576,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
         if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
             //view.ParentDataTypeCode = "LookUp";
-            if (view.Code == '[Full Date]') {
+            if (view.Code == '[Full Date]' || view.Code == '[Full Date US]') {
+     
                 view.ParentDataTypeCode = "Date";
                 view.DataTypeCode = "Date";
                 view.HasTree = true;
@@ -1240,8 +1241,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             }
             if (field.FilterItems.length == 0) {
                 if (field.DWObjectTableCode && field.DWObjectTableCode.indexOf("DIM_") != -1) {
-
-                    if (view.Code == '[Full Date]') {
+                    if (view.Code == '[Full Date]' || view.Code == '[Full Date US]') {
                         view.ParentDataTypeCode = "Date";
                         view.DataTypeCode = "Date";
                     }
@@ -1860,7 +1860,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                         Result.Result.forEach((field) => {
                             if (field.DisplayInQueryBuilder == true) {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
-                                if (field.Code == '[Full Date]') {
+                                if (field.Code == '[Full Date]' || field.Code == '[Full Date US]') {
                                     view.ParentDataTypeCode = field.DataTypeCode;
                                     view.DataTypeCode = "Date";
                                 }
@@ -2023,7 +2023,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
         if (this.DWObjectTableCode.indexOf("DIM_") != -1) {
 
-            if (this.Code == '[Full Date]' || '[Full Date US]') {
+            if (this.Code == '[Full Date]' || this.Code == '[Full Date US]') {
                 this.ParentDataTypeCode = "Date";
                 this.DataTypeCode = "Date";
             } else this.ParentDataTypeCode = "LookUp";
