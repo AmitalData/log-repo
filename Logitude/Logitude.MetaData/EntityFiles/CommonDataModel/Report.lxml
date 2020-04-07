@@ -43,7 +43,7 @@
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
-  NoDefaultFeatures="true"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="true"
   HasMenuButtons="false"
