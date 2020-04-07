@@ -200,7 +200,7 @@
                                 </tr>
 
                                      <!-- DontShowLocalLabels  -->
-                                    <tr class="FormFieldRow">
+                                    <tr class="FormFieldRow" *ngIf="IsDontShowLocalLabelsVisibile">
                                         <td>
                                             <LogLabel [ObjectFieldName]="'DontShowLocalLabels'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
