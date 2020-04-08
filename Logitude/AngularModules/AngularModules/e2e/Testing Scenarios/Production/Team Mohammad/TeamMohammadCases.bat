@@ -48,7 +48,7 @@ cd C:\Automation e2e\TeamMohammad\Cloud
 IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
-Pause
+
 
 SETLOCAL
 :CheckError

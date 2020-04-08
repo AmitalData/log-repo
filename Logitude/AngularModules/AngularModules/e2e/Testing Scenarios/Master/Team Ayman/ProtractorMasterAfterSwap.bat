@@ -64,7 +64,7 @@ IF %NumberErrors% NEQ 0 (
    XCOPY  "C:\Automation e2e\TeamAyman\Test\screenshots\screenshots.rar" "C:\Program Files (x86)\Jenkins\workspace\TeamAymanMasterCollectionAfterSwap"  /S /I /Q /Y /F
    exit 1
 )
-Pause
+
 
 SETLOCAL
 :CheckError
