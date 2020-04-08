@@ -27,23 +27,15 @@ CALL :CheckError "ShipmentView"
 --NewUser--
   cmd /c call npm run e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,NewUser>D:\E2ETeamIslamReport\Report.log
   CALL :CheckError "NewUser"
- 
-
- 
- 
 )
-
 cd /
 cd C:\Automation e2e\TeamIslam\Test
 >test.txt echo Errors in : %TotalErrors%
 >>test.txt echo Total Errors :%NumberErrors% 
 
-
-
 IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
-Pause
 
 SETLOCAL
 :CheckError

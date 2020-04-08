@@ -43,7 +43,7 @@ cd C:\Automation e2e\TeamAyman\Test
 		XCOPY  "C:\Automation e2e\TeamAyman\Test\screenshots\screenshots.rar" "C:\Program Files (x86)\Jenkins\workspace\TeamAymanE2EScripts"  /S /I /Q /Y /F
 		exit 1
 	)
-	Pause
+	
 
 
 SETLOCAL
