@@ -145,12 +145,17 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public IsShowContactInMobileVisiable: boolean = false;
     public IsAdditionalPackagesOnlyVisible: boolean = false;
     public IsLayoutDirectionVisibile: boolean = false;
+    public IsDontShowLocalLabelsVisibile: boolean = false;
+
     SetUIProperties() {
         if (FeatureLocator.HasFeaturePermession("User", "PERSONALID")) {
             this.IsPersonalIdVisible = true;
         }
         if (FeatureLocator.HasFeaturePermession("User", "LYDR")) {
             this.IsLayoutDirectionVisibile = true;
+        }
+        if (FeatureLocator.HasFeaturePermession("User", "DontShowLocalLabels")) {
+            this.IsDontShowLocalLabelsVisibile = true;
         }
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.IsExpirationDateVisible = true;
