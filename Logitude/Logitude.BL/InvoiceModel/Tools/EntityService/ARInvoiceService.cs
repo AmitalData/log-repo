@@ -209,8 +209,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool isTaxItemManaged;
         private bool isTransferToDropbox;
         private bool TransferToDropboxActivated;
-        private void GetAccountingSystem()
+        private void GetAccountingSystem() 
         {
+        
+            if(accountingSettingRepository == null)
+                accountingSettingRepository = new AccountingSettingRepository(tenant);
             this.accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
             AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
 
