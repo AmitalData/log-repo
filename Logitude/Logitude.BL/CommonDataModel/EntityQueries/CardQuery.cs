@@ -214,6 +214,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IsAutonomy = a.IsAutonomy,
                                       CreatedByPartner = a.CreatedByPartner,
                                       StorageFreeDays = a.StorageFreeDays,
+                                      RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id: null) : null,
+                                      IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
                                   }).FirstOrDefault();
 
 
@@ -1062,6 +1064,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                               CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                               CreatedByPartner = card.CreatedByPartner,
+                                              RankId = card.Customer != null ? (card.Customer.Rank != null ? card.Customer.Rank.Name : null) : null,
+                                              IndustryId = card.Customer != null ? (card.Customer.Industry != null ? card.Customer.Industry.Name : null) : null,
                                           };
 
             if(myResult.Count() > 0)

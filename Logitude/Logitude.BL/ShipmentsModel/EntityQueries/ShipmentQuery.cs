@@ -1772,6 +1772,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AMSBL = shipment.AMSBL;
             shipmentPM.MoveTypeId = shipment.MoveTypeId;
             shipmentPM.HasContainerException = shipment.HasContainerException;
+            shipmentPM.WarehouseStorageFreeDays = shipment.WarehouseStorageFreeDays;
+            shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
 
             if (shipment.MoveTypeId != null)
             {
@@ -3362,6 +3364,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ActualFinalArrivalDate = shipment.ActualFinalArrivalDate;
             shipmentPM.EstimatedFinalArrivalDate = shipment.EstimatedFinalArrivalDate;
             shipmentPM.CreateDateTime = shipment.CreateDateTime;
+            shipmentPM.WarehouseStorageFreeDays = shipment.WarehouseStorageFreeDays;
+            shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;

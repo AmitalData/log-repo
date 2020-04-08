@@ -88,6 +88,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string IRSPlace { get; set; }
         public string IRSNumber { get; set; }
         public string StateName { get; set; }
+        public string RankId { get; set; }
+        public string IndustryId { get; set; }
 
         [Include]
         [Association("CardCustomAgent", "Id", "Id", IsForeignKey = true)]
