@@ -40,6 +40,7 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
     private TabSelectedEvent: any = null;
     Title: string;
 
+    showLocals:boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -214,6 +215,17 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
             Styles: { width: '200px' },
             IsCustomTemplate: true
         });
+
+        this.columns.push({
+            FieldName: this.showLocals ? 'AccountLocalName' :  'AccountName',
+            DataTypeCode: 'String',
+            //Display: 'Created By',
+            Display: TextCodeTranslator.Translate("ExternalReconciliation.F.AccountLocalName"),
+            Styles: { width: '200px' },
+            IsCustomTemplate: true
+        });
+
+
 
         this.columns.push({
             FieldName: 'IsCancelled',
