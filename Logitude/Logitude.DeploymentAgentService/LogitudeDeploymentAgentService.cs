@@ -1,4 +1,5 @@
 ﻿using Logitude.DeploymentAgentService.Models;
+using Microsoft.Web.Administration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Management;
 using System.Net;
 using System.ServiceProcess;
 using System.Text;
@@ -18,15 +20,15 @@ namespace Logitude.DeploymentAgentService
     public partial class LogitudeDeploymentAgentService : ServiceBase
     {
         protected long ServiceIntervalInSeconds = Convert.ToInt64(ConfigurationManager.AppSettings["ServiceIntervalInSeconds"]);
-        protected string FTPUrl = ConfigurationManager.AppSettings["FTPUrl"];
-        protected string FTPUsername = ConfigurationManager.AppSettings["FTPUsername"];
-        protected string FTPPassword = ConfigurationManager.AppSettings["FTPPassword"];
-        protected string FTPConfigurationsFileUrl = ConfigurationManager.AppSettings["FTPConfigurationsFileUrl"];
-        protected string IISFolderName = ConfigurationManager.AppSettings["IISFolderName"];
+        protected string AgentServiceId = ConfigurationManager.AppSettings["AgentServiceId"];
+        protected string InstanceName = ConfigurationManager.AppSettings["InstanceName"];
 
         protected Timer ServiceTimer = new Timer();
 
-        protected string CurrentVersion = null;
+        protected Agent AgentInfo = null;
+        protected string InstanceFolderPath = null;
+
+        protected bool DeploymentCompleted = false;
 
         public LogitudeDeploymentAgentService()
         {
@@ -48,73 +50,88 @@ namespace Logitude.DeploymentAgentService
 
         protected void OnElapsedTime(object source, ElapsedEventArgs e)
         {
-            Configurations configurations = ReadFTPConfigurationsFile();
-            if(configurations != null)
-            {
-                if (IsFTPConfigurationsFileValid(configurations))
-                {
-                    if(!IsCurrentVersionLatest(configurations.CurrentPackage.Version))
-                    {
-                        StartDeploymentProcess(configurations);
-                    }
-                }
-            }
+            GetAgentInfo();
+            GetInstanceFolderPath();
+            StartDeploymentProcess();
         }
-        
-        protected Configurations ReadFTPConfigurationsFile()
-        {
-            Configurations configurations = null;
 
+        protected void GetAgentInfo()
+        {
             try
             {
-                WebClient webClient = new WebClient();
-                string configurationsFileUrl = FTPUrl + @"/" + FTPConfigurationsFileUrl;
-                webClient.Credentials = new NetworkCredential(FTPUsername, FTPPassword);
-
-                string configurationsXmlString = webClient.DownloadString(configurationsFileUrl);
-                configurations = configurationsXmlString.ParseXML<Configurations>();
+                DeploymentApiHttpRequest<Agent> httpRequest = new DeploymentApiHttpRequest<Agent>("/Agents/" + AgentServiceId, HttpRequestType.NoBodyRequestType.Get);
+                AgentInfo = httpRequest.GetResponse();
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Cannot Read FTP Configurations File With Exception: " + exception.Message);
+                AgentInfo = null;
+                WriteToLogsFile("Cannot Get Agent Service Information With Exception: " + exception.Message);
             }
-
-            return configurations;
         }
 
-        protected bool IsFTPConfigurationsFileValid(Configurations configurations)
+        protected void GetInstanceFolderPath()
         {
-            bool isValid = true;
-
-            if(configurations.CurrentPackage.Version == null)
+            try
             {
-                isValid = false;
-                WriteToLogsFile("Version Is Not Defined In FTP Configurations File");
+                string agentServiceType = AgentInfo?.ServiceType.Code.ToLower();
+
+                if (agentServiceType == "web")
+                {
+                    InstanceFolderPath = GetWebApplicationFolderPath();
+                }
+                else if (agentServiceType == "wr")
+                {
+                    InstanceFolderPath = GetWorkerRoleFolderPath();
+                }
             }
-            if(configurations.CurrentPackage.Url == null)
+            catch (Exception exception)
             {
-                isValid = false;
-                WriteToLogsFile("Package Url Is Not Defined In FTP Configurations File");
+                InstanceFolderPath = null;
+                WriteToLogsFile("Cannot Get Instance Folder Path With Exception: " + exception.Message);
             }
 
-            return isValid;
+            if (String.IsNullOrEmpty(InstanceFolderPath))
+            {
+                WriteToLogsFile("Cannot Get Instance Folder Path");
+            }
         }
 
-        protected bool IsCurrentVersionLatest(string packageVersion)
+        protected void StartDeploymentProcess()
         {
-            return (CurrentVersion?.ToLower() == packageVersion.ToLower());
+            if (AgentInfo != null && !String.IsNullOrEmpty(InstanceFolderPath))
+            {
+                if (!IsAgentCurrentVersionLatest())
+                {
+                    DisableAgentServiceTimer();
+
+                    if (AgentInfo.ServiceType.Code.ToLower() == "web")
+                    {
+                        DeployGeneralPackage();
+                    }
+                    else
+                    {
+                        DeployWorkerRolePackage();
+                    }
+
+                    EnableAgentServiceTimer();
+                }
+            }
         }
 
-        protected void StartDeploymentProcess(Configurations configurations)
+        protected bool IsAgentCurrentVersionLatest()
         {
-            ServiceTimer.Enabled = false;
-            string packageVersion = configurations.CurrentPackage.Version;
-            string packageUrl = configurations.CurrentPackage.Url;
+            return (AgentInfo.CurrentVersion == AgentInfo.NewVersion);
+        }
 
-            WriteToLogsFile("Deployment Process For Version " + packageVersion + " Started");
+        protected void DeployGeneralPackage()
+        {
+            int packageVersion = AgentInfo.NewVersion;
+            string packageUrl = AgentInfo.NewVersionArtifact.FolderName + "/" + AgentInfo.NewVersionArtifact.FileName;
 
-            bool createIISTempFolderResult = CreateIISTempFolder();
-            if (createIISTempFolderResult)
+            WriteToLogsFile("Deployment Process For Version " + packageVersion.ToString() + " Started");
+
+            bool createTempFolderResult = CreateTempFolder();
+            if (createTempFolderResult)
             {
                 bool downloadPackageFromFTPResult = DownloadPackageFromFTP(packageUrl);
                 if (downloadPackageFromFTPResult)
@@ -122,48 +139,70 @@ namespace Logitude.DeploymentAgentService
                     bool extractDownloadedPackageResult = ExtractDownloadedPackage(packageUrl);
                     if (extractDownloadedPackageResult)
                     {
-                        bool copyConfigFilesToIISTempFolderResult = CopyConfigFilesToIISTempFolder();
-                        if (copyConfigFilesToIISTempFolderResult)
+                        bool copyConfigFilesToTempFolderResult = CopyConfigFilesToTempFolder();
+                        if (copyConfigFilesToTempFolderResult)
                         {
-                            bool renameIISFolderResult = RenameIISFolder(IISFolderName, IISFolderName + ".Old");
-                            if (renameIISFolderResult)
+                            bool renameOriginalFolderResult = RenameInstanceFolder(null, ".Old");
+                            if (renameOriginalFolderResult)
                             {
-                                bool renameIISTempFolderResult = RenameIISFolder(IISFolderName + ".Temp", IISFolderName);
-                                if (renameIISTempFolderResult)
+                                bool renameTempFolderResult = RenameInstanceFolder(".Temp", null);
+                                if (renameTempFolderResult)
                                 {
-                                    UpdateCurrentVersion(packageVersion);
+                                    UpdateCurrentVersion();
                                 }
                             }
                         }
                     }
                 }
             }
+        }
 
+        protected void DeployWorkerRolePackage()
+        {
+            bool stopWorkerRoleServiceResult = StopWorkerRoleService();
+            if (stopWorkerRoleServiceResult)
+            {
+                DeployGeneralPackage();
+
+                if (DeploymentCompleted)
+                {
+                    StartWorkerRoleService();
+                }
+            }
+        }
+
+        protected void DisableAgentServiceTimer()
+        {
+            ServiceTimer.Enabled = false;
+        }
+
+        protected void EnableAgentServiceTimer()
+        {
             ServiceTimer.Enabled = true;
         }
 
-        protected bool CreateIISTempFolder()
+        protected bool CreateTempFolder()
         {
-            WriteToLogsFile("Create IIS Temp Folder Started");
+            WriteToLogsFile("Create Temp Folder Started");
             
             bool result = false;
 
             try
             {
-                string iisTempFolderUrl = @"C:\inetpub\wwwroot\" + IISFolderName + ".Temp";
-                if (Directory.Exists(iisTempFolderUrl))
+                string tempFolderUrl = InstanceFolderPath + ".Temp";
+                if (Directory.Exists(tempFolderUrl))
                 {
-                    DeleteDirectoryContents(iisTempFolderUrl);
-                    DeleteDirectory(iisTempFolderUrl);
+                    DeleteDirectoryContents(tempFolderUrl);
+                    DeleteDirectory(tempFolderUrl);
                 }
-                Directory.CreateDirectory(iisTempFolderUrl);
+                Directory.CreateDirectory(tempFolderUrl);
                 
                 result = true;
-                WriteToLogsFile("IIS Temp Folder Created Successfully");
+                WriteToLogsFile("Temp Folder Created Successfully");
             }
             catch(Exception exception)
             {
-                WriteToLogsFile("Cannot Create IIS Temp Folder With Exception: " + exception.Message);
+                WriteToLogsFile("Cannot Create Temp Folder With Exception: " + exception.Message);
             }
 
             return result;
@@ -179,14 +218,14 @@ namespace Logitude.DeploymentAgentService
             try
             {
                 WebClient webClient = new WebClient();
-                string packageFileFtpUrl = FTPUrl + @"/" + packageUrl;
-                webClient.Credentials = new NetworkCredential(FTPUsername, FTPPassword);
+                string packageFileFtpUrl = AgentInfo.NewVersionArtifact.FtpUrl.TrimEnd('/') + "/" + packageUrl;
+                webClient.Credentials = new NetworkCredential(AgentInfo.NewVersionArtifact.FtpUsername, AgentInfo.NewVersionArtifact.FtpPassword);
 
                 webClient.DownloadFileCompleted += (sender, e) => {
                     isDownloadPackageFromFTPCompleted = true;
                 };
 
-                webClient.DownloadFileAsync(new Uri(packageFileFtpUrl), @"C:\inetpub\wwwroot\" + IISFolderName + @".Temp\" + Path.GetFileName(packageFileFtpUrl));
+                webClient.DownloadFileAsync(new Uri(packageFileFtpUrl), InstanceFolderPath + @".Temp\" + Path.GetFileName(packageFileFtpUrl));
             }
             catch(Exception exception)
             {
@@ -215,8 +254,8 @@ namespace Logitude.DeploymentAgentService
 
             try
             {
-                string packageFileFtpUrl = FTPUrl + @"/" + packageUrl;
-                ZipFile.ExtractToDirectory(@"C:\inetpub\wwwroot\" + IISFolderName + @".Temp\" + Path.GetFileName(packageFileFtpUrl), @"C:\inetpub\wwwroot\" + IISFolderName + ".Temp");
+                string packageFileFtpUrl = AgentInfo.NewVersionArtifact.FtpUrl.TrimEnd('/') + "/" + packageUrl;
+                ZipFile.ExtractToDirectory(InstanceFolderPath + @".Temp\" + Path.GetFileName(packageFileFtpUrl), InstanceFolderPath + ".Temp");
 
                 result = true;
                 WriteToLogsFile("The Downloaded Package Extracted Successfully");
@@ -229,37 +268,37 @@ namespace Logitude.DeploymentAgentService
             return result;
         }
 
-        protected bool CopyConfigFilesToIISTempFolder()
+        protected bool CopyConfigFilesToTempFolder()
         {
-            WriteToLogsFile("Copy Config Files To IIS Temp Folder Started");
+            WriteToLogsFile("Copy Config Files To Temp Folder Started");
 
             bool result = false;
 
             try
             {
                 string agentConfigFilesUrl = AppDomain.CurrentDomain.BaseDirectory + @"\ConfigFiles";
-                string iisTempFolderPath = @"C:\inetpub\wwwroot\" + IISFolderName + ".Temp";
-                Copy(agentConfigFilesUrl, iisTempFolderPath);
+                string tempFolderPath = InstanceFolderPath + ".Temp";
+                Copy(agentConfigFilesUrl, tempFolderPath);
 
                 result = true;
                 WriteToLogsFile("Config Files Copied Successfully");
             }
             catch(Exception exception)
             {
-                WriteToLogsFile("Cannot Copy Config Files To IIS Temp Folder With Exception: " + exception.Message);
+                WriteToLogsFile("Cannot Copy Config Files To Temp Folder With Exception: " + exception.Message);
             }
 
             return result;
         }
-
-        protected bool RenameIISFolder(string sourceFolderName, string destinationFolderName)
+        
+        protected bool RenameInstanceFolder(string sourcePattern, string destinationPattern)
         {
-            WriteToLogsFile("Rename Folder " + sourceFolderName + " To " + destinationFolderName + " On IIS Started");
+            string sourceUrl = InstanceFolderPath + sourcePattern;
+            string destinationUrl = InstanceFolderPath + destinationPattern;
+
+            WriteToLogsFile("Rename Folder " + sourceUrl + " To " + destinationUrl + " Started");
 
             bool result = false;
-
-            string sourceUrl = @"C:\inetpub\wwwroot\" + sourceFolderName;
-            string destinationUrl = @"C:\inetpub\wwwroot\" + destinationFolderName;
 
             try
             {
@@ -271,20 +310,37 @@ namespace Logitude.DeploymentAgentService
                 Directory.Move(sourceUrl, destinationUrl);
 
                 result = true;
-                WriteToLogsFile("Folder " + sourceFolderName + " Renamed To " + destinationFolderName + " On IIS Successfully");
+                WriteToLogsFile("Folder " + sourceUrl + " Renamed To " + destinationUrl + " Successfully");
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Cannot Rename Folder From " + sourceFolderName + " To " + destinationFolderName + " With Exception: " + exception.Message);
+                WriteToLogsFile("Cannot Rename Folder From " + sourceUrl + " To " + destinationUrl + " With Exception: " + exception.Message);
             }
 
             return result;
         }
 
-        protected void UpdateCurrentVersion(string packageVersion)
+        protected void UpdateCurrentVersion()
         {
-            CurrentVersion = packageVersion;
-            WriteToLogsFile("Deployment Process For Version " + packageVersion + " Completed Successfully");
+            try
+            {
+                SaveAgent saveAgent = new SaveAgent()
+                {
+                    ServiceTypeCode = AgentInfo.ServiceType.Code,
+                    CurrentVersion = AgentInfo.NewVersion,
+                    NewVersion = AgentInfo.NewVersion,
+                    NewVersionArtifactId = AgentInfo.NewVersionArtifact.Id
+                };
+                DeploymentApiHttpRequest<Agent> httpRequest = new DeploymentApiHttpRequest<Agent>("/Agents/" + AgentInfo.Id, saveAgent, HttpRequestType.BodyRequestType.Put);
+                httpRequest.GetResponse();
+
+                DeploymentCompleted = true;
+                WriteToLogsFile("Deployment Process For Version " + AgentInfo.NewVersion + " Completed Successfully");
+            }
+            catch (Exception exception)
+            {
+                WriteToLogsFile("Cannot Get Agent Service Information With Exception: " + exception.Message);
+            }
         }
 
         protected void Copy(string sourceDirectory, string targetDirectory)
@@ -328,6 +384,83 @@ namespace Logitude.DeploymentAgentService
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(directoryUrl);
             directoryInfo.Delete();
+        }
+
+        protected string GetWebApplicationFolderPath()
+        {
+            ServerManager serverManager = new ServerManager();
+            string webApplicationPath = serverManager.Sites[InstanceName].Applications["/"].VirtualDirectories["/"].PhysicalPath;
+            return webApplicationPath;
+        }
+
+        protected string GetWorkerRoleFolderPath()
+        {
+            string servicePath = null;
+
+            ManagementClass managementClass = new ManagementClass("Win32_Service");
+            foreach (ManagementObject managementObject in managementClass.GetInstances())
+            {
+                string serviceName = managementObject.GetPropertyValue("Name").ToString();
+                if (serviceName == InstanceName)
+                {
+                    servicePath = Path.GetDirectoryName(managementObject.GetPropertyValue("PathName").ToString().Trim('"'));
+                    break;
+                }
+            }
+
+            return servicePath;
+        }
+
+        protected bool StopWorkerRoleService()
+        {
+            WriteToLogsFile("Stop " + InstanceName + " Worker Role Started");
+
+            bool result = false;
+
+            try
+            {
+                ServiceController serviceController = new ServiceController(InstanceName);
+
+                if (!((serviceController.Status.Equals(ServiceControllerStatus.Stopped)) || (serviceController.Status.Equals(ServiceControllerStatus.StopPending))))
+                {
+                    serviceController.Stop();
+                }
+
+                result = true;
+                WriteToLogsFile(InstanceName + " Worker Role Stopped Successfully");
+            }
+            catch (Exception exception)
+            {
+                WriteToLogsFile("Cannot Stop " + InstanceName + " Worker Role With Exception: " + exception.Message);
+            }
+
+            return result;
+        }
+
+        protected bool StartWorkerRoleService()
+        {
+            WriteToLogsFile("Start " + InstanceName + " Worker Role Started");
+
+            bool result = false;
+
+            try
+            {
+                ServiceController serviceController = new ServiceController(InstanceName);
+
+                if ((serviceController.Status.Equals(ServiceControllerStatus.Stopped)) || (serviceController.Status.Equals(ServiceControllerStatus.StopPending)))
+                {
+                    serviceController.Start();
+                }
+
+                result = true;
+                WriteToLogsFile(InstanceName + " Worker Role Started Successfully");
+            }
+            catch (Exception exception)
+            {
+                WriteToLogsFile("Cannot Start " + InstanceName + " Worker Role With Exception: " + exception.Message);
+            }
+
+            return result;
         }
 
         protected void WriteToLogsFile(string log)
