@@ -28,8 +28,6 @@ namespace Logitude.DeploymentAgentService
         protected Agent AgentInfo = null;
         protected string InstanceFolderPath = null;
 
-        protected bool DeploymentCompleted = false;
-
         public LogitudeDeploymentAgentService()
         {
             InitializeComponent();
@@ -106,11 +104,11 @@ namespace Logitude.DeploymentAgentService
 
                     if (AgentInfo.ServiceType.Code.ToLower() == "web")
                     {
-                        DeployGeneralPackage();
+                        DeployPackage();
                     }
                     else
                     {
-                        DeployWorkerRolePackage();
+                        DeployPackageForWorkerRole();
                     }
 
                     EnableAgentServiceTimer();
@@ -123,7 +121,7 @@ namespace Logitude.DeploymentAgentService
             return (AgentInfo.CurrentVersion == AgentInfo.NewVersion);
         }
 
-        protected void DeployGeneralPackage()
+        protected void DeployPackage()
         {
             int packageVersion = AgentInfo.NewVersion;
             string packageUrl = AgentInfo.NewVersionArtifact.FolderName + "/" + AgentInfo.NewVersionArtifact.FileName;
@@ -157,17 +155,13 @@ namespace Logitude.DeploymentAgentService
             }
         }
 
-        protected void DeployWorkerRolePackage()
+        protected void DeployPackageForWorkerRole()
         {
             bool stopWorkerRoleServiceResult = StopWorkerRoleService();
             if (stopWorkerRoleServiceResult)
             {
-                DeployGeneralPackage();
-
-                if (DeploymentCompleted)
-                {
-                    StartWorkerRoleService();
-                }
+                DeployPackage();
+                StartWorkerRoleService();
             }
         }
 
@@ -334,7 +328,6 @@ namespace Logitude.DeploymentAgentService
                 DeploymentApiHttpRequest<Agent> httpRequest = new DeploymentApiHttpRequest<Agent>("/Agents/" + AgentInfo.Id, saveAgent, HttpRequestType.BodyRequestType.Put);
                 httpRequest.GetResponse();
 
-                DeploymentCompleted = true;
                 WriteToLogsFile("Deployment Process For Version " + AgentInfo.NewVersion + " Completed Successfully");
             }
             catch (Exception exception)
