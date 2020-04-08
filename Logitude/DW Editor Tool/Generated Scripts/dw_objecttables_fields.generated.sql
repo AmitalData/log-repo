@@ -118,58 +118,61 @@ insert into DWObjectTables(Id,Tenant,Code,Name,TypeCode,IsClosed,DefaultFilterBy
 --Fields --
 declare @DIM_DatesDateKeyNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesDateKeyNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesDateKeyNewId,0,'DIM_Dates','[Date Key]','Date Key','Integer','true',0,0,'true','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesDateKeyNewId,0,'DIM_Dates','[Date Key]','Date Key','DateTime','true',0,0,'true','false','true','false','false','false')  
 declare @DIM_DatesFullDateNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesFullDateNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesFullDateNewId,0,'DIM_Dates','[Full Date]','Full Date','DateTime','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesFullDateNewId,0,'DIM_Dates','[Full Date]','Full Date','DateTime','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesFullDateUSNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesFullDateUSNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesFullDateUSNewId,0,'DIM_Dates','[Full Date US]','Full Date US','Text','false',0,100,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesFullDateUSNewId,0,'DIM_Dates','[Full Date US]','Full Date US','Text','false',0,100,'false','false','true','false','false','false')  
 declare @DIM_DatesDayOfWeekNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesDayOfWeekNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesDayOfWeekNewId,0,'DIM_Dates','[Day Of Week]','Day Of Week','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesDayOfWeekNewId,0,'DIM_Dates','[Day Of Week]','Day Of Week','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesDayNumInMonthNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesDayNumInMonthNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesDayNumInMonthNewId,0,'DIM_Dates','[Day Num In Month]','Day Num In Month','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesDayNumInMonthNewId,0,'DIM_Dates','[Day Num In Month]','Day Num In Month','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesDayNumOverallNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesDayNumOverallNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesDayNumOverallNewId,0,'DIM_Dates','[Day Num Overall]','Day Num Overall','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesDayNumOverallNewId,0,'DIM_Dates','[Day Num Overall]','Day Num Overall','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesDayNameNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesDayNameNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesDayNameNewId,0,'DIM_Dates','[Day Name]','Day Name','Text','false',0,13,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesDayNameNewId,0,'DIM_Dates','[Day Name]','Day Name','Text','false',0,13,'false','false','true','false','false','false')  
 declare @DIM_DatesDayAbbrevNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesDayAbbrevNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesDayAbbrevNewId,0,'DIM_Dates','[Day Abbrev]','Day Abbrev','Text','false',0,3,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesDayAbbrevNewId,0,'DIM_Dates','[Day Abbrev]','Day Abbrev','Text','false',0,3,'false','false','true','false','false','false')  
 declare @DIM_DatesWeekNumInYearNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesWeekNumInYearNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesWeekNumInYearNewId,0,'DIM_Dates','[Week Num In Year]','Week Num In Year','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesWeekNumInYearNewId,0,'DIM_Dates','[Week Num In Year]','Week Num In Year','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesWeekNumOverallNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesWeekNumOverallNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesWeekNumOverallNewId,0,'DIM_Dates','[Week Num Overall]','Week Num Overall','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesWeekNumOverallNewId,0,'DIM_Dates','[Week Num Overall]','Week Num Overall','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesMonthNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesMonthNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesMonthNewId,0,'DIM_Dates','[Month]','Month','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesMonthNewId,0,'DIM_Dates','[Month]','Month','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesMonthNumOverallNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesMonthNumOverallNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesMonthNumOverallNewId,0,'DIM_Dates','[Month Num Overall]','Month Num Overall','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesMonthNumOverallNewId,0,'DIM_Dates','[Month Num Overall]','Month Num Overall','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesMonthNameNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesMonthNameNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesMonthNameNewId,0,'DIM_Dates','[Month Name]','Month Name','Text','false',0,13,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesMonthNameNewId,0,'DIM_Dates','[Month Name]','Month Name','Text','false',0,13,'false','false','true','false','false','false')  
 declare @DIM_DatesMonthAbbrevNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesMonthAbbrevNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesMonthAbbrevNewId,0,'DIM_Dates','[Month Abbrev]','Month Abbrev','Text','false',0,3,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesMonthAbbrevNewId,0,'DIM_Dates','[Month Abbrev]','Month Abbrev','Text','false',0,3,'false','false','true','false','false','false')  
 declare @DIM_DatesQuarterNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesQuarterNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesQuarterNewId,0,'DIM_Dates','[Quarter]','Quarter','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesQuarterNewId,0,'DIM_Dates','[Quarter]','Quarter','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesYearNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesYearNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesYearNewId,0,'DIM_Dates','[Year]','Year','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesYearNewId,0,'DIM_Dates','[Year]','Year','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesYearmoNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesYearmoNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesYearmoNewId,0,'DIM_Dates','[Yearmo]','Yearmo','Integer','false',0,0,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesYearmoNewId,0,'DIM_Dates','[Yearmo]','Yearmo','Integer','false',0,0,'false','false','true','false','false','false')  
 declare @DIM_DatesMonthEndFlagNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DatesMonthEndFlagNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree) Values(@DIM_DatesMonthEndFlagNewId,0,'DIM_Dates','[Month End Flag]','Month End Flag','Text','false',0,100,'false','false','true','false')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesMonthEndFlagNewId,0,'DIM_Dates','[Month End Flag]','Month End Flag','Text','false',0,100,'false','false','true','false','false','false')  
+declare @DIM_DatesDateNumberNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_DatesDateNumberNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,HideTree,CannotFilter,IsCustom) Values(@DIM_DatesDateNumberNewId,0,'DIM_Dates','[Date Number]','Date Number','Integer','true',0,0,'false','false','true','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @DIM_DepartmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_DepartmentsNewId OUTPUT,'DWObjectTable' 
