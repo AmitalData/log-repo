@@ -1003,11 +1003,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                select new TenantManagementDW()
                                                {
                                                    TenantNumber = a.Id,
-                                                   FreeUsers = a.FreeUsers,
+                                                   FreeUsers = a.TotalFreeUsers,
                                                    IsRecurring = a.IsRecurring,
-                                                   LicensePrice = a.LicensePrice,
+                                                   LicensePrice = a.AveragePrice,
                                                    Notes = a.Notes,
-                                                   NumberOfUsers = a.NumberOfUsers,
+                                                   NumberOfUsers = a.TotalNumberOfUsers == null ? 0 : a.TotalNumberOfUsers.Value,
                                                    PaidUntilDate = a.PaidUntilDate,
                                                    PaymentChannel = a.PaymentChannel != null ? a.PaymentChannel.Name : "",
                                                    PaymentCurrency = a.PaymentCurrency != null ? a.PaymentCurrency.Name : "",
@@ -1018,7 +1018,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                    MainPackage = a.PackageName,
                                                    CRMYN = a.PackageCode == "LOGI" ? "Y" : "N",
                                                    EAWBYN = a.IsAWBStockPrepaid || a.PackageCode == "EAWB" || a.PackageCode == "BUBK" ? "Y" : "N",
-                                                   MainPackageNumberOfUsers = !a.IsMultiPackage ? a.NumberOfUsers : 0,
+                                                   MainPackageNumberOfUsers = a.MainAdditionalPackageApplied ? a.NumberOfUsers : (!a.IsMultiPackage ? a.NumberOfUsers : 0),
                                                    CRMNumberOfUsers = !a.IsMultiPackage && a.PackageCode == "LOGI" ? a.NumberOfUsers : 0,
                                                    EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" || a.PackageCode == "BUBK") ? a.NumberOfUsers : 0,
                                                }).OrderBy(d => d.TenantNumber).Skip(skip).Take(take).ToList();
