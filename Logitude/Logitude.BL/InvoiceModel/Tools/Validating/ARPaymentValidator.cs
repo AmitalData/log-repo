@@ -35,7 +35,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class ARPaymentValidator
     {
-        public static void Validate(ARPaymentPM entityPM, IInvoiceContext objectContext, CashBookPM cashBook = null, ARPayment entityPOCO = null, bool isNew = false)
+        public static void Validate(ARPaymentPM entityPM, ARPayment entityPOCO, bool isNew, IInvoiceContext objectContext, CashBookPM cashBook = null)
         {
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
 
