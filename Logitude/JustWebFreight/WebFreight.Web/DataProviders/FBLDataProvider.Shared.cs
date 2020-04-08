@@ -136,6 +136,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeAlways { get; set; }
         public string PreCarriageBy { get; set; }
         public string PreCarriageFromPort { get; set; }
+        public string PreCarriageVesselName { get; set; }
 
         public double? OpenReceivablesInLocalCurrency { get; set; }
         public double? OpenReceivablesInProfitCurrency { get; set; }
