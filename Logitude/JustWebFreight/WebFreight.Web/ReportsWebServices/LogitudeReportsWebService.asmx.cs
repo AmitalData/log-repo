@@ -1656,6 +1656,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.Amount = a.AmountDueInLocalCurrency;
                 }
 
+                invoicesRecored.AmountInProfitCurrency = a.AmountDueInProfitCurrency;
                 dataProvider.InvoicesByPartnerList.Add(invoicesRecored);
             }
 
