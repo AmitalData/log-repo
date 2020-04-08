@@ -43,7 +43,7 @@ IF %NumberErrors% NEQ 0 (
   exit 1
 )
 
-pause
+
 
 SETLOCAL
 :CheckError
