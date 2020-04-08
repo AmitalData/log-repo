@@ -2658,6 +2658,12 @@
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsRequestService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentCarrierStatusService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentService.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\IServiceBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\IServiceInitializer.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentFieldsBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentNumberCounterBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentQuoteUsageBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentServiceInitializer.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\CustomsTransferHeaderTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\MessagingStockTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\SpecialServicesTypeService.cs" />

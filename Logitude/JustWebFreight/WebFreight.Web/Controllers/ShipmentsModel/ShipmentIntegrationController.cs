@@ -28,6 +28,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
+
                 ShipmentPreperationIntegrationVariables shipmentPreperationVariables = new ShipmentPreperationIntegrationVariables(tenant);
                 ShipmentIntegrationVariables vars = shipmentPreperationVariables.GetShipmentVars();
 

@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -26,17 +27,17 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             //ShipmentReceivable.CreateDate = TenantServerConfigration.GetCurrentDateTime(IntegrationTestLoginParameters.Tenant);
             ShipmentReceivable.ChargesTypeId = ShipmentVariables.ChargeTypeAFTId;
             ShipmentReceivable.MeasurementId = ShipmentVariables.MeasurmentGRWTId;
-            ShipmentReceivable.CurrencyId = ShipmentVariables.CurrencyEURId;
+            ShipmentReceivable.CurrencyId = CorePreparationVariables.ProfitCurrencyId;
+            ShipmentReceivable.Rate = CorePreparationVariables.ProfitCurrencyRate;
+            ShipmentReceivable.ProfitCurrencyExchangeRate = CorePreparationVariables.ProfitCurrencyRate;
             ShipmentReceivable.VatTypeId = ShipmentVariables.VATTypeZeroId;
             ShipmentReceivable.ShipmentReceivableLineStatusCode = "OAMT";
-            ShipmentReceivable.ProfitCurrencyExchangeRate = 4;
-            ShipmentReceivable.Rate = 1;
             ShipmentReceivable.Quantity = quantity;
             ShipmentReceivable.UnitPrice = unitPrice;
             ShipmentReceivable.ChangeSetOp = ChangeSetOperation.Insert;
             ShipmentReceivable.TotalAmount = ShipmentReceivable.Quantity * ShipmentReceivable.UnitPrice;
-            ShipmentReceivable.TotalAmountLocal = ShipmentReceivable.TotalAmount * ShipmentReceivable.Rate;
-            ShipmentReceivable.AmountInProfitCurrency = ShipmentReceivable.TotalAmountLocal / ShipmentReceivable.ProfitCurrencyExchangeRate;
+            ShipmentReceivable.TotalAmountLocal = ShipmentReceivable.TotalAmount * CorePreparationVariables.ProfitCurrencyRate;
+            ShipmentReceivable.AmountInProfitCurrency = ShipmentReceivable.TotalAmountLocal / CorePreparationVariables.ProfitCurrencyRate;
             return ShipmentReceivable;
         }
 
