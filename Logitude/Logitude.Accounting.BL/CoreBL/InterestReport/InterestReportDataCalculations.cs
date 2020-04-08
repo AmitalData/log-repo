@@ -60,6 +60,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             {
                 interestReportPM.InterestReportStatusCode = "6";
                 SubmitChangesToInterestReport();
+                scope.Complete();
             }
         }
 
