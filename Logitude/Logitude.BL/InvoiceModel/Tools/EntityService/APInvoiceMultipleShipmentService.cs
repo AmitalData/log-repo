@@ -107,7 +107,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponents();
 
-            APInvoiceValidator.Validate(entityPM, this.objectContext);
+            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
             this.CreateInvoiceEntities();
@@ -138,7 +138,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponents();
 
-            APInvoiceValidator.Validate(entityPM, this.objectContext);
+            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
             
             this.UpdateInvoiceEntities();

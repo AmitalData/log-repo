@@ -21,7 +21,7 @@ describe('ARInvoice Module', function () {
 
     browser.ignoreSynchronization = true;
     
-    Helper.GoToMainMenu('General.MH.FullAccounting');
+    Helper.GoToMainMenu2('General.MH.FullAccounting');
     F.WaitByIdAndClick('FACS');
     arinvoice.CreateNewARInvoice('Test Customer GLAccount');
    // arinvoice.CreateNewARInvoice('Basel - Multi Local');

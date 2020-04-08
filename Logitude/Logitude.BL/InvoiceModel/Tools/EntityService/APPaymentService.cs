@@ -85,7 +85,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.payment = new APPayment();
             this.InitializeComponent();
 
-            APPaymentValidator.Validate(theEntityPm);
+            APPaymentValidator.Validate(this.entityPM, payment, isNewEntity);
             APPaymentTracing.Trace(theEntityPm, payment, isNewEntity);
 
             foreach (APPaymentInvoicePM item in theEntityPm.PaymentInvoices)
@@ -389,7 +389,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APPaymentValidator.Validate(theEntityPm,payment, isNewEntity);
+            APPaymentValidator.Validate(entityPM, payment, isNewEntity);
             APPaymentTracing.Trace(theEntityPm, payment, isNewEntity);
           
             foreach (APPaymentInvoicePM item in changedList)

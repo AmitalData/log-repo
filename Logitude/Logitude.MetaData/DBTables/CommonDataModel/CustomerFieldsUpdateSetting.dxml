@@ -39,6 +39,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectFieldId"
     ReferencedTable="ObjectFields"

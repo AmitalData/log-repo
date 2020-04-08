@@ -216,7 +216,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, this.objectContext, this.MainShipmentConcurrencyGUID);
+            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, this.MainShipmentConcurrencyGUID);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
             if (!entityPM.IsGeneralInvoice)
@@ -500,7 +500,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, this.objectContext, this.MainShipmentConcurrencyGUID, invoice, isNewEntity);
+            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, this.MainShipmentConcurrencyGUID);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
             if (!entityPM.IsGeneralInvoice)

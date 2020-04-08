@@ -13,11 +13,12 @@ export class NewVendor {
 
     public CreateNewVendorGLAccount(Name: string) {
 
-
         this.Helper.WaitByIdAndClick('General.MH.Maintenance');
+        this.Helper.ItemsPresent('null_Search');
+        this.Helper.ItemsVisibility('null_Search');
         this.Helper.WaitByIdAndFill('null_Search', 'Vendor');
 
-        this.Generator.GoToMainMenu('MaintenanceItemMTVD');
+        this.Generator.GoToMainMenu2('MaintenanceItemMTVD');
         this.Helper.ItemsVisibility('NewButton_Vendor');
         this.Helper.ItemsPresent('NewButton_Vendor');
 

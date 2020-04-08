@@ -41,7 +41,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class APInvoiceValidator
     {
-        public static void Validate(APInvoicePM entityPM, IInvoiceContext myContext, string MainShipmentConcurrencyGUID = null, APInvoice entityPOCO = null, bool isNew = false)
+        public static void Validate(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew, IInvoiceContext myContext, string MainShipmentConcurrencyGUID = null)
         {
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
 

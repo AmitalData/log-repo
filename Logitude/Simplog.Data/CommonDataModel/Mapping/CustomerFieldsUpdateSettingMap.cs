@@ -20,7 +20,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ObjectFieldId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdateDirection).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ObjectFieldCode).HasMaxLength(200).IsUnicode(false);
-
+            this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("CustomerFieldsUpdateSettings");
@@ -29,6 +29,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId");
             this.Property(t => t.UpdateDirection).HasColumnName("UpdateDirection");
             this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode");
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
 
             this.HasRequired(t => t.ObjectField).WithMany().HasForeignKey(d => d.ObjectFieldId);
            

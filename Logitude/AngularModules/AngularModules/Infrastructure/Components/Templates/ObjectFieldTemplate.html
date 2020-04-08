@@ -68,7 +68,7 @@
                             <div class="MediaFillRelative" *ngIf="CustomField">
                                 <div class="MediaFillRelative" *ngIf="IsHeaderScreenTemplate">
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue']}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue'] }}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue'] | NumbersPipe:3}}</div>
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{CustomField['ResolvedValue'] | DateTimeToDatePipe}}</div>
 
                                     <div *ngIf="DataTypeCode == 'Boolean'">

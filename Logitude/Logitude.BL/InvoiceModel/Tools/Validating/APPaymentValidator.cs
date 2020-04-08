@@ -24,7 +24,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class APPaymentValidator
     {
-        public static void Validate(APPaymentPM entityPM, APPayment entityPOCO = null, bool isNew = false)
+        public static void Validate(APPaymentPM entityPM, APPayment entityPOCO, bool isNew)
         {
             int tenant = entityPM.Tenant;
 

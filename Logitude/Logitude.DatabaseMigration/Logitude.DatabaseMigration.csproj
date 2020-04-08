@@ -2291,6 +2291,10 @@
     <Compile Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.Designer.cs">
       <DependentUpon>202003312156526_AddTariffCarrierTranslation_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004070823014_WesamAddSearchFieldsToCustomerFieldsUpdateSettingTable.cs" />
+    <Compile Include="Migrations\202004070823014_WesamAddSearchFieldsToCustomerFieldsUpdateSettingTable.Designer.cs">
+      <DependentUpon>202004070823014_WesamAddSearchFieldsToCustomerFieldsUpdateSettingTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4142,6 +4146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003312156526_AddTariffCarrierTranslation_Samar.resx">
       <DependentUpon>202003312156526_AddTariffCarrierTranslation_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004070823014_WesamAddSearchFieldsToCustomerFieldsUpdateSettingTable.resx">
+      <DependentUpon>202004070823014_WesamAddSearchFieldsToCustomerFieldsUpdateSettingTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

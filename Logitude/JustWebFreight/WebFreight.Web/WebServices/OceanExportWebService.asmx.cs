@@ -1574,6 +1574,17 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.OnCarriageToPort = onCarriageToPort.EnglishName;
                 }
 
+                if (shipment.PreCarriageVesselId != null)
+                {
+                    Vessel precarriagevessel = (from a in commonContext.Vessels
+                                                 where a.Id == shipment.PreCarriageVesselId
+                                                 select a).FirstOrDefault();
+                    if (precarriagevessel != null)
+                    {
+                        myDataProvider.PreCarriageVesselName = precarriagevessel.EnglishName;
+                    }
+                }
+
                 if (shipment.MainCarriageVesselId != null)
                 {
                     Vessel maincarriagevessel = (from a in commonContext.Vessels
@@ -1983,11 +1994,11 @@ namespace WebFreight.Web.WebServices
 
                 if (shipment.HAWBDate != null)
                 {
-                    myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yy}", shipment.HAWBDate.Value);
+                    myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yyyy}", shipment.HAWBDate.Value);
                 }
                 else
                 {
-                    myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yy}", TenantServerConfigration.GetCurrentDateTime(tenant));
+                    myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
                 }
 
                 myDataProvider.TenantLogo = DataProviders.General.GetLogo(tenantSettings.Id);

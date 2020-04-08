@@ -34,7 +34,7 @@
   AllowCustomFields="true"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
-  MaxNumberOfCustomFields="10"
+  MaxNumberOfCustomFields="20"
   NewWizardControlName="&quot;Simplog.QuoteLib.NewQuoteCommand&quot;"
   DefaultText="&quot;Quote&quot;"
   Code="&quot;QUOT&quot;"
