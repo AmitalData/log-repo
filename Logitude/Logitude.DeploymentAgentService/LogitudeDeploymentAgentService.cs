@@ -102,11 +102,13 @@ namespace Logitude.DeploymentAgentService
                 {
                     DisableAgentServiceTimer();
 
-                    if (AgentInfo.ServiceType.Code.ToLower() == "web")
+                    string agentServiceType = AgentInfo.ServiceType.Code.ToLower();
+
+                    if (agentServiceType == "web")
                     {
                         DeployPackage();
                     }
-                    else
+                    else if (agentServiceType == "wr")
                     {
                         DeployPackageForWorkerRole();
                     }
