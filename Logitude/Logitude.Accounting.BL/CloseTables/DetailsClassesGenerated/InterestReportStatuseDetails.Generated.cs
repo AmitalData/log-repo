@@ -52,6 +52,22 @@ namespace Logitude.Accounting.BL
                 EnglishName = "Invoiced", 
                 SearchFields = "2,Invoiced,הופקה חשבונית", 
 			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                EnglishName = "Failed", 
+                Code = "6", 
+                SearchFields = "6,Failed,נכשלה", 
+                LocalName = "נכשלה", 
+			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                Code = "5", 
+                LocalName = "בתהליך", 
+                SearchFields = "5,In Progress,בתהליך", 
+                EnglishName = "In Progress", 
+			});
 			
             return all;
        }
