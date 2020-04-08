@@ -384,7 +384,7 @@ namespace Logitude.Accounting.BL.DataContract
                     
                         groupedbyVendor = SetGLAccountFields(gLAccount, groupedbyVendor);
 
-                        groupedbyVendor.VATNumber = selectedVendors[0].VatNumber!= null? selectedVendors[0].VatNumber : throw new Exception(TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant));
+                        groupedbyVendor.VATNumber = selectedVendors[0].VatNumber!= null? selectedVendors[0].VatNumber : throw new Exception(TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber"+" "+ selectedVendors[0].Code, Tenant));
                         groupedbyVendor.VendorName = selectedVendors[0].EnglishName;
                         Address address = addresses.Where(d => d.CardId == selectedVendors[0].Id).FirstOrDefault();
                         if (address != null)
@@ -440,8 +440,9 @@ namespace Logitude.Accounting.BL.DataContract
             }
             else if (selectedVendors.Count() == 0)
             {
-                throw new Exception(TextCodesTranslator.TranslateText("TaxDeductionReport.O.AccountWithoutVendor", Tenant));
+                string error= TextCodesTranslator.TranslateText("TaxDeductionReport.O.VendorGLAccount", Tenant) + " " + gLAccount.DisplayNumber + " " + TextCodesTranslator.TranslateText("TaxDeductionReport.O.AccountWithoutVendor", Tenant);
 
+                throw new Exception(error);
             }
         }
         public decimal? GetEndYearBalance(string glaccountId)
