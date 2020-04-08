@@ -11905,7 +11905,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName ,
 
                                     ParentId = item.ChartOfAcount3,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -11981,7 +11981,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName,
 
                                     ParentId = item.ChartOfAcount2,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -12066,7 +12066,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName,
 
                                     ParentId = item.ChartOfAcount1,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -12152,7 +12152,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+                                    Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName,
 
                                     ParentId = item.ChartOfAcountType,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -12242,7 +12242,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 ResultList parentrecord = new ResultList()
                                 {
                                     Id = record.ParentId,
-                                    Name = chartOfAccountType.Code + "-" + chartOfAccountType.LocalName + " ERROR",
+                                    Name = chartOfAccountType.Code + "-" + chartOfAccountType.LocalName,
 
                                     ParentId = null,
                                     LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -12360,7 +12360,7 @@ namespace WebFreight.Web.ReportsWebServices
                                     ResultList parentrecord = new ResultList()
                                     {
                                         Id = record.ParentId,
-                                        Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
+                                        Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName,
 
                                         ParentId = item.ChartOfAcountType,
                                         LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
