@@ -1656,6 +1656,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicesRecored.Amount = a.AmountDueInLocalCurrency;
                 }
 
+                invoicesRecored.AmountInProfitCurrency = a.AmountDueInProfitCurrency;
                 dataProvider.InvoicesByPartnerList.Add(invoicesRecored);
             }
 
@@ -10771,6 +10772,27 @@ namespace WebFreight.Web.ReportsWebServices
             AgingReportDataProviderLoader agingReportLoader = new AgingReportDataProviderLoader(tenant);
 
             return agingReportLoader.LoadFromXML(xmlFilters);
+
+        }
+
+
+        public byte[] LoadCustomerStatusDataProvider(byte[] xmlFilters, int tenant)
+        {
+            CustomerStatusDataProvider dataprovider = GetCustomerStatusDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(CustomerStatusDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+        private CustomerStatusDataProvider GetCustomerStatusDataProvider(byte[] xmlFilters, int tenant)
+        {
+            CustomerStatusDataProviderLoader customerStatusDataProvider = new CustomerStatusDataProviderLoader(tenant);
+
+            return customerStatusDataProvider.LoadFromXML(xmlFilters);
 
         }
         #endregion

@@ -51,6 +51,8 @@ namespace Logitude.DBMigrations.Models
                 if (error != null) break;
                 error = ValidateDuplicateUniqueConstraints(dxmlTable);
                 if (error != null) break;
+                error = ValidateIndexesAgainstRelations(dxmlTable);
+                if (error != null) break;
             }
 
             if (!String.IsNullOrEmpty(error))
@@ -357,6 +359,21 @@ namespace Logitude.DBMigrations.Models
             if (duplicatedUniqueConstraintsColumns.Any())
             {
                 error = "Invalid DXML Syntax: Duplicate Unique Constraint On Columns [" + duplicatedUniqueConstraintsColumns.First() + "] In [" + dxmlTable.DXMLFileName + "]";
+            }
+
+            return error;
+        }
+
+        private string ValidateIndexesAgainstRelations(DXMLTable dxmlTable)
+        {
+            string error = null;
+
+            List<string> unnecessaryIndexesColumns = dxmlTable.TableDefinition.Indexes.Select(i => i.Columns)
+                .Where(c => dxmlTable.TableDefinition.Relations.Select(r => r.ForeignKeyColumn).Contains(c)).ToList();
+
+            if (unnecessaryIndexesColumns.Any())
+            {
+                error = "Invalid DXML Syntax: Unnecessary Index On Columns [" + unnecessaryIndexesColumns.First() + "] In [" + dxmlTable.DXMLFileName + "]";
             }
 
             return error;

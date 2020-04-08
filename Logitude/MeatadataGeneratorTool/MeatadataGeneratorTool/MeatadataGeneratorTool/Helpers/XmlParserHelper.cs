@@ -1087,7 +1087,7 @@ namespace MeatadataGeneratorTool.Helpers
                 }
                 else
                 {
-                    objectTable.AllowedForComputingPartners = false;
+                    objectTable.IsMetadataOnlyTable = false;
                 }
                 if (entity.Attributes["Code1"] != null && entity.Attributes["Name1"] != null)
                 {

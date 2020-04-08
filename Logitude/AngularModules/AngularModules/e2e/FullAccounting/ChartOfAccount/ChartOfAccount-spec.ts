@@ -20,7 +20,7 @@ describe('ChartOfAccount Module',function (){
 
     console.log('Go To maintenance ')
     browser.ignoreSynchronization = true;
-    z.GoToMainMenu('General.MH.Maintenance');
+    z.GoToMainMenu2('General.MH.Maintenance');
     
       var chartOfAccountNo = z.RandomNumACCWithChars(); 
     c.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');

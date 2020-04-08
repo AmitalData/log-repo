@@ -134,7 +134,7 @@ export class CustomFieldsComponent {
         this.myService.GetFieldDataTypes().subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
-                this._ObjectFieldPMService.get(item.Id).subscribe(field => {
+                this._ObjectFieldPMService.get(item.Id).subscribe((field:any) => {
                     windowArgs.IsNew = false;
                     var objectField = field.Result;
                     //objectField.Tenant = SessionLocator.Tenant;

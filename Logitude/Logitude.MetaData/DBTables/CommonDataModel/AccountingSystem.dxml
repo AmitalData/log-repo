@@ -128,4 +128,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CanTransferToFTP"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

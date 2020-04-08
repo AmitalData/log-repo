@@ -338,6 +338,7 @@
     <Compile Include="CommonDataModel\EntityLists\DocumentsExecutionLogList.cs" />
     <Compile Include="CommonDataModel\EntityLists\LogBoxTenantSettingList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PaymentGatewayPartnerList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\TariffCarrierTranslationList.cs" />
     <Compile Include="CommonDataModel\EntityLists\TenantAdditionalDataList.cs" />
     <Compile Include="CommonDataModel\EntityLists\AccountingPartnerList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreasPortPM.cs" />
@@ -348,6 +349,7 @@
     <Compile Include="CommonDataModel\EntityPMs\DocumentsExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\LogBoxTenantSettingPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\PaymentGatewayPartnerPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\TariffCarrierTranslationPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\TenantAdditionalDataPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AccountingPartnerPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UserLastSettingsPM.cs" />
@@ -359,6 +361,7 @@
     <Compile Include="CommonDataModel\EntityQueries\DocumentsExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\LogBoxTenantSettingQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PaymentGatewayPartnerQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\TariffCarrierTranslationQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\TenantAdditionalDataQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AccountingPartnerQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UserLastSettingsQuery.cs" />
@@ -369,6 +372,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerOpenFilesAmountMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\PaymentGatewayPartnerMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\TariffCarrierTranslationMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TenantAdditionalDataMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AccountingPartnerMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\UserLastSettingsMapping.cs" />
@@ -376,11 +380,13 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\TariffCarrierTranslationService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TenantAdditionalDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\AccountingPartnerService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\UserLastSettingsService.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\AccountingPartnerTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\CarrierAreaTracing.cs" />
+    <Compile Include="CommonDataModel\Tools\Validating\TariffCarrierTranslationValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\AccountingPartnerValidating.cs" />
     <Compile Include="DataContracts\QuoteDashboardArguments.cs" />
@@ -2652,6 +2658,12 @@
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsRequestService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentCarrierStatusService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentService.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\IServiceBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\IServiceInitializer.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentFieldsBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentNumberCounterBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentQuoteUsageBehaviour.cs" />
+    <Compile Include="ShipmentsModel\Tools\Initializers\ShipmentServiceInitializer.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\CustomsTransferHeaderTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\TraceEvents\MessagingStockTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\SpecialServicesTypeService.cs" />

@@ -103,7 +103,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             });
         }
         else {
-            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult) => {
+            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult:any) => {
                 var currency = myResult.Result;
                 this.openAmountCurrency = currency ? currency.Code : "";
                 this.ledgerAmountHeader += " (" + this.openAmountCurrency + ")";

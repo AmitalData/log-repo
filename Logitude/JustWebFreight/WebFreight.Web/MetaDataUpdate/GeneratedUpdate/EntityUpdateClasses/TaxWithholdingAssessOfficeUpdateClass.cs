@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxWithholdingAssessOfficeUpdateClass
-   {  
+   {  		
+		public const string HashString = "b80d438b0042b7d40e94a067b886c6fd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,6 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardComponentPath =  "./Accounting/Components/Maintenance/NewTaxWithholdingAssessingOfficeComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
+			      				    HashString =  TaxWithholdingAssessOfficeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

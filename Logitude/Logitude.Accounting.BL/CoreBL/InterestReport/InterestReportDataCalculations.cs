@@ -28,15 +28,37 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         public void StartCalculations()
         {
-            interestReportPM = interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
-            interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestReportPM.GLAccountId, interestReportPM.InterestCalculationDate, tenant);
-            using (TransactionScope scope= TransactionFactory.GetNewTransaction())
+            try
             {
-                CreateInterestReportLines();
-                interestReportPM.OpenBalance = GetInterestReportOpenBalance();
-                List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = CreateInterestReportLinesByDate();
-                interestReportPM.CloseBalance = GetInterestReportCloseBalance(interestReportLinesByDatePMs);
-                SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
+                interestReportPM = interestReportCalculationPreparations.GetInterestReportPM(interestReportId, tenant);
+                interestTransactionPMs = interestReportCalculationPreparations.GetInterestTransactionsForGlAccountAndInterestValueDate(interestReportPM.GLAccountId, interestReportPM.InterestCalculationDate, tenant);
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    CreateInterestReportLines();
+                    interestReportPM.OpenBalance = GetInterestReportOpenBalance();
+                    List<InterestReportLinesByDatePM> interestReportLinesByDatePMs = CreateInterestReportLinesByDate();
+                    interestReportPM.CloseBalance = GetInterestReportCloseBalance(interestReportLinesByDatePMs);
+                    SetInterestReportStatusDraft();
+                    SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
+                    SubmitChangesToInterestReport();
+                    scope.Complete();
+                }
+            }
+            catch
+            {
+                SetInterestReportStatusFailed();
+                throw;
+            }
+        }
+        private void SetInterestReportStatusDraft()
+        {
+            interestReportPM.InterestReportStatusCode = "1";
+        }
+        private void SetInterestReportStatusFailed()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                interestReportPM.InterestReportStatusCode = "6";
                 SubmitChangesToInterestReport();
                 scope.Complete();
             }

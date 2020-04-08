@@ -288,6 +288,12 @@ export class NewEntityComponent {
                         break;
                     }
 
+                    case "Simplog.FreightLib.Views.TariffTranslations": {
+                        myComponentName = "TariffTranslationsTabComponent";
+                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/TariffTranslations/TariffTranslationsTabComponent";
+                        break;
+                    }
+
                     // Ayman: no need for this the HtmlComponentUrl is enough (also for the apove cases)
                     //case "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.PaymentTermAccountingTabControl": {
                     //    myComponentName = "PaymentTermAccountingTabComponent";

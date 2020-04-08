@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUpdateClasses
 {
    public class ErrorLogUpdateClass
-   {  
+   {  		
+		public const string HashString = "cc03edcd5a83983a5280d49d579465e0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "ErrorLog,ErrorLogs,,,",
+			      				    HashString =  ErrorLogUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -332,7 +334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel.EntityUp
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  7000,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,

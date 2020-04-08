@@ -173,6 +173,11 @@ export class UserPM {
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
+    private dontShowLocalLabels: boolean;
+    public get DontShowLocalLabels() { return this.dontShowLocalLabels; }
+    public set DontShowLocalLabels(newValue: boolean) { if (this.dontShowLocalLabels != newValue) { this.dontShowLocalLabels = newValue; this.MarkAsDirty("DontShowLocalLabels"); } }
+       
+	 
     private setAngularAsDefault: boolean;
     public get SetAngularAsDefault() { return this.setAngularAsDefault; }
     public set SetAngularAsDefault(newValue: boolean) { if (this.setAngularAsDefault != newValue) { this.setAngularAsDefault = newValue; this.MarkAsDirty("SetAngularAsDefault"); } }

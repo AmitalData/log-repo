@@ -145,12 +145,17 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public IsShowContactInMobileVisiable: boolean = false;
     public IsAdditionalPackagesOnlyVisible: boolean = false;
     public IsLayoutDirectionVisibile: boolean = false;
+    public IsDontShowLocalLabelsVisibile: boolean = false;
+
     SetUIProperties() {
         if (FeatureLocator.HasFeaturePermession("User", "PERSONALID")) {
             this.IsPersonalIdVisible = true;
         }
         if (FeatureLocator.HasFeaturePermession("User", "LYDR")) {
             this.IsLayoutDirectionVisibile = true;
+        }
+        if (FeatureLocator.HasFeaturePermession("User", "DontShowLocalLabels")) {
+            this.IsDontShowLocalLabelsVisibile = true;
         }
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.IsExpirationDateVisible = true;
@@ -196,6 +201,8 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.UIProperties.SetEnabled("LicencedUser", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("IsShowContactDetailsInTheMobileApp", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("ShowLocalNameInLOV", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("DontShowLocalLabels", this.ObjectTableName, isEditingEnabled);
+
     }
    
     BuildLayoutDirectionList() {
@@ -357,6 +364,13 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public set ShowLocalNameInLOV (value: boolean) {
         if (this.EntityPM.ShowLocalNameInLOV  != value) {
             this.EntityPM.ShowLocalNameInLOV  = value;
+        }
+    }
+
+    public get DontShowLocalLabels () { return this.EntityPM.DontShowLocalLabels; }
+    public set DontShowLocalLabels (value: boolean) {
+        if (this.EntityPM.DontShowLocalLabels  != value) {
+            this.EntityPM.DontShowLocalLabels  = value;
         }
     }
 

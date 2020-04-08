@@ -2028,6 +2028,27 @@ namespace MeatadataGeneratorTool
             FirePropertyChanged("TabsObsList");
         }
 
+        public RelayCommand<ScreensViewModel> RemoveScreenCommand
+        {
+            get { return new RelayCommand<ScreensViewModel>(m => this.RemoveScreenMethod(m)); }
+        }
+
+        private void RemoveScreenMethod(ScreensViewModel DelScr)
+        {
+            int selectedIndex = ScreensObsList.IndexOf(DelScr);
+            if (selectedIndex != 0)
+            {
+                selectedIndex -= 1;
+            }
+
+            ScreensObsList.Remove(DelScr);
+
+            if (ScreensObsList.Count > 0)
+                this.SelectedScreen = ScreensObsList[selectedIndex];
+
+            FirePropertyChanged("ScreensObsList");
+        }
+
         public RelayCommand<MenuButtonViewModel> RemoveMenuButtonCommand
         {
             get { return new RelayCommand<MenuButtonViewModel>(m => this.RemoveMenuButtonMethod(m)); }

@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AccountingPartnerUpdateClass
-   {  
+   {  		
+		public const string HashString = "a7fb59598d421e6ff348f28ee2a24a40";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "AccountingPartner",
 			      				    IsNew =  false,
 			      				    DBTableName =  "AccountingPartners",
-			      				    OldDBTableName =  "AccountingPartners",
 			      				    ObjectTableSingular =  "Accounting Partner",
 			      				    ObjectTablePlural =  "Accounting Partners",
 			      				    DescriptionDefaultText =  "Add and manage information about  Accounting Partner you work with. Specify communication, address and billing details and create list of contacts.",
@@ -131,6 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "AccountingPartner,AccountingPartners,Simplog.FreightLib.NewAccountingPartnerCommand,Id,",
+			      				    HashString =  AccountingPartnerUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -142,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Website",
-					  						OldFieldName =  "Website",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -207,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -272,7 +271,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -337,7 +335,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -402,7 +399,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -465,7 +461,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -530,7 +525,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatNumber",
-					  						OldFieldName =  "VatNumber",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -595,7 +589,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountingCard",
-					  						OldFieldName =  "AccountingCard",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -659,7 +652,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentTermId",
-					  						OldFieldName =  "PaymentTermId",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentTerm",
@@ -723,7 +715,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentTermEnglishName",
-					  						OldFieldName =  "PaymentTermEnglishName",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -788,7 +779,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -854,7 +844,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InvoiceCurrencyId",
-					  						OldFieldName =  "InvoiceCurrencyId",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -918,7 +907,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "VatTypeId",
-					  						OldFieldName =  "VatTypeId",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatType",
@@ -982,7 +970,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BankName",
-					  						OldFieldName =  "BankName",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1045,7 +1032,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "BankAddress",
-					  						OldFieldName =  "BankAddress",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1108,7 +1094,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Swift",
-					  						OldFieldName =  "Swift",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1171,7 +1156,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AccountNumber",
-					  						OldFieldName =  "AccountNumber",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1234,7 +1218,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IBANNumber",
-					  						OldFieldName =  "IBANNumber",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1297,7 +1280,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnableConsolidationInvoices",
-					  						OldFieldName =  "EnableConsolidationInvoices",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1361,7 +1343,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IRSPlace",
-					  						OldFieldName =  "IRSPlace",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1424,7 +1405,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IRSNumber",
-					  						OldFieldName =  "IRSNumber",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1487,7 +1467,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CityName",
-					  						OldFieldName =  "CityName",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1554,7 +1533,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryId",
-					  						OldFieldName =  "CountryId",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -1622,7 +1600,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1688,7 +1665,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SATForeignRFC",
-					  						OldFieldName =  "SATForeignRFC",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1750,7 +1726,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "MetodoPagoCode",
-					  						OldFieldName =  "MetodoPagoCode",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "MetodoPago",
@@ -1818,7 +1793,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "UsoCFDICode",
-					  						OldFieldName =  "UsoCFDICode",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "UsoCFDI",
@@ -1886,7 +1860,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExternalId2",
-					  						OldFieldName =  "ExternalId2",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1947,7 +1920,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ReceivablesAccountingCard",
-					  						OldFieldName =  "ReceivablesAccountingCard",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2012,7 +1984,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PayablesAccountingCard",
-					  						OldFieldName =  "PayablesAccountingCard",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2077,7 +2048,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExternalAccountingBusinessArea",
-					  						OldFieldName =  "ExternalAccountingBusinessArea",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2140,7 +2110,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PaymentMethodCode",
-					  						OldFieldName =  "PaymentMethodCode",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "SATPaymentMethod",
@@ -2204,7 +2173,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrimaryContactName",
-					  						OldFieldName =  "PrimaryContactName",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2269,7 +2237,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrimaryContactEmail",
-					  						OldFieldName =  "PrimaryContactEmail",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2334,7 +2301,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "PrimaryContactPhone",
-					  						OldFieldName =  "PrimaryContactPhone",
 					  						ObjectTableName =  "AccountingPartner",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2524,13 +2490,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  
                  
 			   TextCode AccountingPartnerEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Events", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.ACEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Events", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APET", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingPartnerGeneralFeature_TH0.Id,FeatureUniqeCode = AccountingPartnerGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AccountingPartnerObjectTable.Id, TabNameTextCodeId = AccountingPartnerGeneralTextCode_TH0.Id, TabNameTextCodeCode = AccountingPartnerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APGT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingPartnerGeneralFeature_TH0.Id,FeatureUniqeCode = AccountingPartnerGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AccountingPartnerObjectTable.Id, TabNameTextCodeId = AccountingPartnerGeneralTextCode_TH0.Id, TabNameTextCodeCode = AccountingPartnerGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingPartnerBillingFeature_TH1.Id,FeatureUniqeCode = AccountingPartnerBillingFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = AccountingPartnerObjectTable.Id, TabNameTextCodeId = AccountingPartnerBillingTextCode_TH1.Id, TabNameTextCodeCode = AccountingPartnerBillingTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
@@ -2542,7 +2508,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/AccountingPartner/AccountingPartnerDocsInTabComponent", FeatureId = AccountingPartnerDocsInFeature_TH5.Id,FeatureUniqeCode = AccountingPartnerDocsInFeature_TH5.FeatureUniqeCode, ControlPath = "", ObjectTableId = AccountingPartnerObjectTable.Id, TabNameTextCodeId = AccountingPartnerDocsInTextCode_TH5.Id, TabNameTextCodeCode = AccountingPartnerDocsInTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingPartnerEventsFeature_TH6.Id,FeatureUniqeCode = AccountingPartnerEventsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AccountingPartnerObjectTable.Id, TabNameTextCodeId = AccountingPartnerEventsTextCode_TH6.Id, TabNameTextCodeCode = AccountingPartnerEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingPartnerEventsFeature_TH6.Id,FeatureUniqeCode = AccountingPartnerEventsFeature_TH6.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AccountingPartnerObjectTable.Id, TabNameTextCodeId = AccountingPartnerEventsTextCode_TH6.Id, TabNameTextCodeCode = AccountingPartnerEventsTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

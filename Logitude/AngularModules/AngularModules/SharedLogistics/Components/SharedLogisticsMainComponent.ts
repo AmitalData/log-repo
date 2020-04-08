@@ -199,7 +199,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     LoadSharedLogisticsSummary() {
-        this._sharedLogisticsService.getSharedLogisticsSummaryData(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._sharedLogisticsService.getSharedLogisticsSummaryData(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.sharedLogisticsSummary = pmResponse.Result;
@@ -238,7 +238,7 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     LoadLastLoginPartners() {
-        this._sharedLogisticsService.getLastLoginPartners(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._sharedLogisticsService.getLastLoginPartners(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.LastPartnersList = pmResponse.Result;

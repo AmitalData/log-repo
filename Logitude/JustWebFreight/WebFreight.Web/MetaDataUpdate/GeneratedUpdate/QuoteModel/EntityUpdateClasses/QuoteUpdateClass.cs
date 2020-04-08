@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteUpdateClass
-   {  
+   {  		
+		public const string HashString = "e6e6c65124a268cd3b9a4f0cfd745a38";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -113,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
-			      				    MaxNumberOfCustomFields =  10,
+			      				    MaxNumberOfCustomFields =  20,
 			      				    NewWizardControlName =  "Simplog.QuoteLib.NewQuoteCommand",
 			      				    DefaultText =  "Quote",
 			      				    Code =  "QUOT",
@@ -130,6 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Quote,Quotes,Simplog.QuoteLib.NewQuoteCommand,Id,",
+			      				    HashString =  QuoteUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -1001,7 +1003,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -8714,7 +8716,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						LookUpTableName =  "BusinessUnit",
 					  						MinLength =  0,
 					  						MaxLength =  50,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -9543,7 +9545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						LookUpTableName =  "QuoteRating",
 					  						MinLength =  0,
 					  						MaxLength =  1,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -14358,7 +14360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 		   Feature QuoteFeature_SETTINGS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETTINGS", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Settings", NameTextCodeDefaultText = @"Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature QuoteFeature_Quote_Followups = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Quote.Followups", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Followups", NameTextCodeDefaultText = @"Follow ups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature QuoteFeature_Quote_Followups = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Quote.Followups", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.QuoteFollowups", NameTextCodeDefaultText = @"Follow ups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature QuoteFeature_NEWQUOTE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWQUOTE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.NewQuote", NameTextCodeDefaultText = @"New Quote" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 

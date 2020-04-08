@@ -1,277 +1,72 @@
-LXML File: AccountingPartner.lxml
+LXML File: InterestReport.lxml
 Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
+entity,DxmlDatabaseTypeCode,NULL,Main
+entity,DxmlDatabaseSchemaCode,NULL,dbo
+
+
+LXML File: InterestTransaction.lxml
+Element,Attribute,Old Value,New Value
+entity,DxmlDatabaseTypeCode,NULL,Main
+entity,DxmlDatabaseSchemaCode,NULL,dbo
 
 
 LXML File: AccountingSetting.lxml
 Element,Attribute,Old Value,New Value
-field[FieldName='"VATableTempCard"'],HasDataBaseField,true,false
-field[FieldName='"VATExemptTempCard"'],HasDataBaseField,true,false
+entity,DxmlDatabaseTypeCode,NULL,Main
+entity,DxmlDatabaseSchemaCode,NULL,dbo
+field[FieldName='"QBOAccessToken"'],IsMaxLength,false,true
+field[FieldName='"QBOAccessTokenSecret"'],IsMaxLength,false,true
 
 
-LXML File: Agent.lxml
+LXML File: AccountingSystem.lxml
 Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
+entity,DxmlDatabaseTypeCode,NULL,Main
+entity,DxmlDatabaseSchemaCode,NULL,dbo
 
 
-LXML File: Airline.lxml
+LXML File: TariffCarrierTranslation.lxml
 Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
-
-
-LXML File: Card.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"PartnerTypeName"'],HasDataBaseField,true,false
-field[FieldName='"AccountingCard"'],HasDataBaseField,true,false
-field[FieldName='"CustomAgent"'],HasDataBaseField,true,false
-field[FieldName='"ShippingAgent"'],HasDataBaseField,true,false
-field[FieldName='"Customer"'],HasDataBaseField,true,false
-field[FieldName='"Agent"'],HasDataBaseField,true,false
-field[FieldName='"Vendor"'],HasDataBaseField,true,false
-field[FieldName='"AccountManagerUserId"'],HasDataBaseField,true,false
-
-
-LXML File: ChargesType.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"ReceivableCreditGLAcountNumber"'],HasDataBaseField,true,false
-field[FieldName='"RecCreditGLAcountLocalName"'],HasDataBaseField,true,false
-field[FieldName='"PayableDebitGLAcountNumber"'],HasDataBaseField,true,false
-field[FieldName='"PayDebitGLAcountLocalName"'],HasDataBaseField,true,false
-
-
-LXML File: Contact.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Roles"'],HasDataBaseField,true,false
-field[FieldName='"Name"'],HasDataBaseField,true,false
-
-
-LXML File: CustomAgent.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
-
-
-LXML File: Customer.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
-
-
-LXML File: CustomerProduct.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"PotentialTEU"'],NumberOfDigits,0,18
-
-
-LXML File: CustomerTenantAccessCard.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"StatusType"'],HasDataBaseField,true,false
-
-
-LXML File: DocumentsFiling.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Folder"'],HasDataBaseField,true,false
-
-
-LXML File: DocumentType.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"FollowUpTypeId"'],HasDataBaseField,true,false
-
-
-LXML File: MAWBStack.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Airline"'],HasDataBaseField,true,false
-
-
-LXML File: Participant.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
-
-
-LXML File: ShippingAgent.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"ShippingLines"'],HasDataBaseField,true,false
-field[FieldName='"Card"'],HasDataBaseField,true,false
-
-
-LXML File: ShippingLine.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
-
-
-LXML File: Tenant.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"AllowAgentInShipmentCustomersLOV"'],HasDataBaseField,true,false
-field[FieldName='"IsDocumentsArchive"'],HasDataBaseField,true,false
-field[FieldName='"CustomerTenantShareImportFile"'],HasDataBaseField,true,false
-field[FieldName='"LogBoxAdminUserId"'],HasDataBaseField,true,false
-field[FieldName='"StockTypeCode"'],HasDataBaseField,true,false
-field[FieldName='"DocumentShareAsDefault"'],HasDataBaseField,true,false
-field[FieldName='"AutoArchiveOnInvoice"'],HasDataBaseField,true,false
-
-
-LXML File: Trucker.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
+field[FieldName='"SearchFields"'],IsMaxLength,true,false
 
 
 LXML File: User.lxml
 Element,Attribute,Old Value,New Value
+entity,DxmlDatabaseTypeCode,NULL,Main
+entity,DxmlDatabaseSchemaCode,NULL,dbo
+field[FieldName='"Id"'],MaxLength,0,15
+field[FieldName='"Id"'],IsForeignKey,false,true
+field[FieldName='"Id"'],ForeignEntity,NULL,Contact
+field[FieldName='"Id"'],NavigationPropertyName,NULL,Contact
+field[FieldName='"Code"'],MaxLength,0,20
+field[FieldName='"Notes"'],FieldsDataType,"Text","nText"
+field[FieldName='"SearchFields"'],FieldsDataType,"Text","nText"
+field[FieldName='"IsSalesman"'],MaxLength,1,0
+field[FieldName='"LicencedUser"'],MaxLength,1,0
+field[FieldName='"IsFreelancer"'],MaxLength,1,0
+field[FieldName='"IsShowContactDetailsInTheMobileApp"'],MaxLength,1,0
+field[FieldName='"SetAngularAsDefault"'],MaxLength,1,0
+field[FieldName='"IsTwoFactorAuthenticationEnabled"'],MaxLength,1,0
+field[FieldName='"IsDistributor"'],MaxLength,1,0
+field[FieldName='"DistributorCode"'],IsForeignKey,false,true
+field[FieldName='"DistributorCode"'],ForeignEntity,NULL,Distributor
+field[FieldName='"DistributorCode"'],NavigationPropertyName,NULL,Distributor
+field[FieldName='"ProductTypeCode"'],IsForeignKey,false,true
+field[FieldName='"ProductTypeCode"'],ForeignEntity,NULL,ProductType
+field[FieldName='"ProductTypeCode"'],NavigationPropertyName,NULL,ProductType
+field[FieldName='"BusinessUnitId"'],IsForeignKey,false,true
+field[FieldName='"BusinessUnitId"'],ForeignEntity,NULL,BusinessUnit
+field[FieldName='"BusinessUnitId"'],NavigationPropertyName,NULL,BusinessUnit
+field[FieldName='"BranchId"'],IsForeignKey,false,true
+field[FieldName='"BranchId"'],ForeignEntity,NULL,Branch
+field[FieldName='"BranchId"'],NavigationPropertyName,NULL,Branch
+field[FieldName='"DepartmentId"'],IsForeignKey,false,true
+field[FieldName='"DepartmentId"'],ForeignEntity,NULL,Department
+field[FieldName='"DepartmentId"'],NavigationPropertyName,NULL,Department
+field[FieldName='"FreelancerId"'],MaxLength,0,15
+field[FieldName='"FreelancerId"'],IsForeignKey,false,true
+field[FieldName='"FreelancerId"'],ForeignEntity,NULL,Card
+field[FieldName='"FreelancerId"'],NavigationPropertyName,NULL,Freelancer
 field[FieldName='"Contact"'],HasDataBaseField,true,false
 field[FieldName='"UserLastLogin"'],HasDataBaseField,true,false
-
-
-LXML File: Vendor.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
-
-
-LXML File: Warehouse.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Card"'],HasDataBaseField,true,false
-
-
-LXML File: AnalyzeQueue.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"AnalyzeQueueStatus"'],HasDataBaseField,true,false
-field[FieldName='"TenantManagement"'],HasDataBaseField,true,false
-
-
-LXML File: ApiCredintials.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"SearchFields"'],HasDataBaseField,true,false
-
-
-LXML File: TenantManagement.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"BluesnapContractQTYs"'],HasDataBaseField,true,false
-field[FieldName='"BluesnapCRMContractQTYs"'],HasDataBaseField,true,false
-field[FieldName='"BluesnapEAWBContractQTYs"'],HasDataBaseField,true,false
-field[FieldName='"BluesnapEAWBSContractQTYs"'],HasDataBaseField,true,false
-field[FieldName='"BluesnapOneTimeContractQTYs"'],HasDataBaseField,true,false
-field[FieldName='"GlobalTenant"'],HasDataBaseField,true,false
-field[FieldName='"BluesnapInttraStockContractQTYs"'],HasDataBaseField,true,false
-
-
-LXML File: BusinessHour.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"MondayFromHour"'],IsRequired,false,true
-field[FieldName='"TuesdayFromHour"'],IsRequired,false,true
-field[FieldName='"WednesdayFromHour"'],IsRequired,false,true
-field[FieldName='"ThursdayFromHour"'],IsRequired,false,true
-field[FieldName='"FridayFromHour"'],IsRequired,false,true
-field[FieldName='"SaturdayFromHour"'],IsRequired,false,true
-field[FieldName='"SundayFromHour"'],IsRequired,false,true
-field[FieldName='"MondayToHour"'],IsRequired,false,true
-field[FieldName='"TuesdayToHour"'],IsRequired,false,true
-field[FieldName='"WednesdayToHour"'],IsRequired,false,true
-field[FieldName='"ThursdayToHour"'],IsRequired,false,true
-field[FieldName='"FridayToHour"'],IsRequired,false,true
-field[FieldName='"SaturdayToHour"'],IsRequired,false,true
-field[FieldName='"SundayToHour"'],IsRequired,false,true
-
-
-LXML File: BusinessHoursHoliday.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"BusinessHour"'],HasDataBaseField,true,false
-
-
-LXML File: DWCategories.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"SearchFields"'],HasDataBaseField,true,false
-
-
-LXML File: DWObjectField.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Category1"'],HasDataBaseField,true,false
-field[FieldName='"Category2"'],HasDataBaseField,true,false
-
-
-LXML File: FollowUp.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"IsNew"'],HasDataBaseField,true,false
-field[FieldName='"DoneNote"'],HasDataBaseField,true,false
-field[FieldName='"DoneDateTime"'],HasDataBaseField,true,false
-field[FieldName='"Done"'],HasDataBaseField,true,false
-
-
-LXML File: InboundEmailLine.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"InboundEmail"'],HasDataBaseField,true,false
-
-
-LXML File: TaskSchedulerHistory.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Duration"'],HasDataBaseField,true,false
-
-
-LXML File: TasksScheduler.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Duration"'],HasDataBaseField,true,false
-field[FieldName='"LastEndStartTimeUTC"'],HasDataBaseField,true,false
-
-
-LXML File: VolumeUnit.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Tenants"'],HasDataBaseField,true,false
-
-
-LXML File: APPayment.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"SATApprovalDate"'],HasDataBaseField,true,false
-
-
-LXML File: ARInvoice.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"CancelledARInvoices"'],HasDataBaseField,true,false
-field[FieldName='"CreditedARInvoices"'],HasDataBaseField,true,false
-field[FieldName='"DateForVATInterest"'],HasDataBaseField,true,false
-
-
-LXML File: Quote.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"ShipmentType"'],HasDataBaseField,true,false
-field[FieldName='"FromPort"'],HasDataBaseField,true,false
-field[FieldName='"ToPort"'],HasDataBaseField,true,false
-field[FieldName='"CreatedByUser"'],HasDataBaseField,true,false
-field[FieldName='"ConvertToLCL"'],HasDataBaseField,true,false
-field[FieldName='"ConvertToFCL"'],HasDataBaseField,true,false
-
-
-LXML File: QuotePackage.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"Quote"'],HasDataBaseField,true,false
-
-
-LXML File: HarmonizeCode.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"SearchFields"'],MaxLength,1000,4000
-
-
-LXML File: Shipment.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"CustomsTransmissionsStatusCode"'],HasDataBaseField,true,false
-field[FieldName='"CustomsTransmissionsStatusError"'],HasDataBaseField,true,false
-field[FieldName='"CustomsTransmissionsStatusDate"'],HasDataBaseField,true,false
-field[FieldName='"CurrentUserId"'],HasDataBaseField,true,false
-field[FieldName='"BasketId"'],HasDataBaseField,true,false
-field[FieldName='"FromPort"'],HasDataBaseField,true,false
-field[FieldName='"ToPort"'],HasDataBaseField,true,false
-field[FieldName='"ShipmentType"'],HasDataBaseField,true,false
-
-
-LXML File: ShipmentPayable.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"QuoteCostMinPrice"'],HasDataBaseField,true,false
-field[FieldName='"ChildShipmentPayables"'],HasDataBaseField,true,false
-
-
-LXML File: ShipmentReceivable.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"QuoteSaleMinPrice"'],HasDataBaseField,true,false
-field[FieldName='"ChildShipmentReceivables"'],HasDataBaseField,true,false
-
-
-LXML File: BatchServicesLog.lxml
-Element,Attribute,Old Value,New Value
-field[FieldName='"CPU"'],NumberOfDigits,0,18
-field[FieldName='"CPU"'],DigitsAfterPoint,0,2
 
 

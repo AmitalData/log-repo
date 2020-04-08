@@ -124,7 +124,7 @@ namespace Logitude.Server.Tools.SQL
             {
                 SqlCommand cmd = new SqlCommand(procedureName, cn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
+                cmd.CommandTimeout = 1200;
                 foreach (StoredProcedureParam parameter in storedProcedureParams)
                 {
                     SqlParameter param = new SqlParameter(parameter.ParamName, parameter.ParamDBType, parameter.ParamSize);

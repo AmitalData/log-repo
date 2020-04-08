@@ -1,3 +1,4 @@
+
 <style type="text/css">
     .SectionTitle > span {
         font-size: 14px;
@@ -21,25 +22,27 @@
 </style>
 
 <table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList.length > 0" style="height:1px;">
+        <td>
+            <WarningSummary [ItemsSource]="ValidationWarningsList"></WarningSummary>
+        </td>
+    </tr>
+
     <tr>
         <td>
             <table>
-                <ScrollViewer>
-                    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-                        <td>
-                            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-                        </td>
-                    </tr>
-
-                    <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList.length > 0" style="height:1px;">
-                        <td>
-                            <WarningSummary [ItemsSource]="ValidationWarningsList"></WarningSummary>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
+                <tr>
+                    <td>
+                        <ScrollViewer>
                             <table *ngIf="IsResourcesReady">
+
                                 <!-- VendorId -->
                                 <tr class="FormFieldRow">
                                     <td style="width:140px;">
@@ -250,18 +253,20 @@
 
                                 <!-- Additional Fields-->
                                 <tr>
-                                    <td colspan="4" style="vertical-align: top;margin-top: 5px;">
-                                        <div *ngIf="ShowAdditionalFieldsScreen">
-                                            <div class="SectionTitle">{{'APInvoice.S.APInvoice.AdditionalFields' | TextCodeTranslationPipe}}</div>
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div>
-                                                            <div class="LocationDirective" #Child></div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                    <td colspan="3" style="vertical-align: top;margin-top: 5px;">
+                                        <div class="MediaFill">
+                                            <div *ngIf="ShowAdditionalFieldsScreen">
+                                                <div class="SectionTitle">{{'APInvoice.S.APInvoice.AdditionalFields' | TextCodeTranslationPipe}}</div>
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <div>
+                                                                <div class="LocationDirective" #Child></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -273,9 +278,9 @@
                                 </tr>
 
                             </table>
-                        </td>
-                    </tr>
-                </ScrollViewer>
+                        </ScrollViewer>                        
+                    </td>
+                </tr>
             </table>
         </td>
     </tr>

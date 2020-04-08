@@ -149,6 +149,336 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         }
 
+		public void LoadObjectTablesMetadata(IWebFreightContext context)
+        {
+		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
+            ObjectContext = context;
+			CommonContext = commonContext;
+            TextCodeRepository = new TextCodeRepository(ObjectContext);
+            ObjectTableRepository = new ObjectTableRepository(ObjectContext);
+            ObjectFieldsRepository = new ObjectFieldRepository(ObjectContext);
+			queriesRepository = new QueryRepository(ObjectContext);
+			queryColumnsRepository = new QueryColumnRepository(ObjectContext);
+            queryGroupRepository = new QueryGroupRepository(ObjectContext);
+			advancedQueryFiltersRepository = new AdvancedQueryFilterRepository(ObjectContext);
+			screensRepository = new ScreensRepository(ObjectContext);
+			screenFieldsRepository = new ScreenFieldsRepository(ObjectContext);
+			objectTableTabsRepository = new ObjectTableTabRepository(ObjectContext);
+			EventTypeRepository = new EventTypeRepository(ObjectContext);
+			menuButtonRepository = new MenuButtonRepository(ObjectContext);
+			menuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
+			FeaturesRepository = new FeatureRepository(CommonContext);
+			EntityStatusRepository = new EntityStatusRepository(context);
+
+            ObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
+            ObjectTable generalTable = ObjectTables["General"];
+            TextCodes = TextCodeRepository.GetTextCodesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a, StringComparer.OrdinalIgnoreCase);
+			TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).Where(t => t.ObjectTableId == generalTable.Id).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			ObjectFields = new Dictionary<string, ObjectField>();//ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
+			Queries = new Dictionary<string, Query>();//queriesRepository.GetQueriesByTenantSystemLevel(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			QueryColumns = new Dictionary<string, QueryColumn>();//queryColumnsRepository.GetQueryColumnsByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
+			tenantAdvancedFilters = new Dictionary<string, AdvancedQueryFilter>();//advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryCode + d.ObjectFieldCode, a => a);
+			tenantScreens = new Dictionary<string, Screen>();//screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			tenantScreenFields = new Dictionary<string, ScreenField>();//screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenCode + d.ObjectFieldCode);
+			TenantObjectTableTabs = new Dictionary<string, ObjectTableTab>();//objectTableTabsRepository.GetObjectTableTabsByTenant(0).ToDictionary(d => d.Code, a => a);
+			tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
+			tenantMenuButtons = new Dictionary<string, MenuButton>();//menuButtonRepository.GetMenuButtonsByTenant(0).ToDictionary(d => d.EventCode + d.MenuButtonGroupId, a => a);
+			tenantMenuButtonGroups = menuButtonGroupRepository.GetMenuButtonGroupsByTenant(0).ToDictionary(d => d.Name, a => a);
+			AllEntityStatuses = EntityStatusRepository.GetEntityStatusByTenant(0).ToList();
+
+			 MetadataUpdateUtility.RunPreDeleteProcedure();
+
+			 CreateAllObjectTablesMetadata();
+			 CreateAllClosedTablesByHash();
+			 this.ObjectContext.SaveChanges();
+			 this.CommonContext.SaveChanges();
+
+			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			//CreateAllObjectTables();
+		    //this.ObjectContext.SaveChanges();
+			//
+			//CreateAllObjectFields();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllQueries();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllScreens();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllTabs();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllEventTypes();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllClosedTables();
+		    //this.ObjectContext.SaveChanges();
+//
+			//CreateAllFeatures();
+			//CreateAdditionalTextCodes();
+		    //this.ObjectContext.SaveChanges();
+		    //this.CommonContext.SaveChanges();
+//
+			//CreateAllMenuButtons();
+		    //this.ObjectContext.SaveChanges();
+//
+        }
+
+		private static Dictionary<string,string> TablesHashStrings { get; set; }		 
+	    public static Dictionary<string, string> GetAllTablesHashStrings()
+        {
+			if (TablesHashStrings != null)
+				return TablesHashStrings;
+
+			TablesHashStrings = new Dictionary<string, string>();
+ 			TablesHashStrings.Add("Tariff",  TariffUpdateClass.HashString);
+			TablesHashStrings.Add("TariffLine",  TariffLineUpdateClass.HashString);
+			TablesHashStrings.Add("TariffLinesContainersPrice",  TariffLinesContainersPriceUpdateClass.HashString);
+			TablesHashStrings.Add("TariffProduct",  TariffProductUpdateClass.HashString);
+			TablesHashStrings.Add("TariffSetting",  TariffSettingUpdateClass.HashString);
+			TablesHashStrings.Add("TariffSurchargesUpdate",  TariffSurchargesUpdateUpdateClass.HashString);
+			TablesHashStrings.Add("TariffSurchargesUpdateMethod",  TariffSurchargesUpdateMethodUpdateClass.HashString);
+			TablesHashStrings.Add("TariffType",  TariffTypeUpdateClass.HashString);
+			TablesHashStrings.Add("TariffVersion",  TariffVersionUpdateClass.HashString);
+			TablesHashStrings.Add("TariffVersionAllInCharge",  TariffVersionAllInChargeUpdateClass.HashString);
+			return TablesHashStrings;
+        }
+        public void CreateAllObjectTablesMetadata()
+        {
+   
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Tariff", ObjectTables, TariffUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("Tariff");
+				TariffUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffLine", ObjectTables, TariffLineUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffLine");
+				TariffLineUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffLineUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffLineUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffLineUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffLineUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffLineUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffLineUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffLineUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffLineUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffLinesContainersPrice", ObjectTables, TariffLinesContainersPriceUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffLinesContainersPrice");
+				TariffLinesContainersPriceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffLinesContainersPriceUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffLinesContainersPriceUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffLinesContainersPriceUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffLinesContainersPriceUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffLinesContainersPriceUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffLinesContainersPriceUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffLinesContainersPriceUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffLinesContainersPriceUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffProduct", ObjectTables, TariffProductUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffProduct");
+				TariffProductUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffProductUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffSetting", ObjectTables, TariffSettingUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffSetting");
+				TariffSettingUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffSettingUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffSettingUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffSettingUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSettingUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSettingUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffSettingUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSettingUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSettingUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffSurchargesUpdate", ObjectTables, TariffSurchargesUpdateUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffSurchargesUpdate");
+				TariffSurchargesUpdateUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffSurchargesUpdateMethod", ObjectTables, TariffSurchargesUpdateMethodUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffSurchargesUpdateMethod");
+				TariffSurchargesUpdateMethodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateMethodUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateMethodUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateMethodUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateMethodUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateMethodUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateMethodUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateMethodUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffSurchargesUpdateMethodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffType", ObjectTables, TariffTypeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffType");
+				TariffTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffVersion", ObjectTables, TariffVersionUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffVersion");
+				TariffVersionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffVersionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffVersionUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffVersionUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffVersionUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffVersionUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffVersionUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffVersionUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffVersionUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffVersionAllInCharge", ObjectTables, TariffVersionAllInChargeUpdateClass.HashString))
+			{
+				MetadataUpdateUtility.DeleteAllTableMetadata("TariffVersionAllInCharge");
+				TariffVersionAllInChargeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffVersionAllInChargeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+				this.ObjectContext.SaveChanges();
+				TariffVersionAllInChargeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+				this.ObjectContext.SaveChanges();
+				TariffVersionAllInChargeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffVersionAllInChargeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffVersionAllInChargeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+				this.ObjectContext.SaveChanges();
+				TariffVersionAllInChargeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffVersionAllInChargeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+				this.ObjectContext.SaveChanges();
+				TariffVersionAllInChargeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+				this.ObjectContext.SaveChanges();
+			}
+
+        }
+   
 
         public void CreateAllObjectTables()
         {
@@ -390,6 +720,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   
         }
+
+		public void CreateAllClosedTablesByHash()
+		{
+   
+	   
+	   
+	   
+	   
+	   
+	   
+	   			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffSurchargesUpdateMethod", ObjectTables, TariffSurchargesUpdateMethodUpdateClass.HashString))
+				TariffSurchargesUpdateMethodUpdateClass.FillTariffSurchargesUpdateMethod();
+	
+	   			if(MetadataUpdateUtility.IsChangedMetadataTable("TariffType", ObjectTables, TariffTypeUpdateClass.HashString))
+				TariffTypeUpdateClass.FillTariffType();
+	
+	   
+	   
+        }
+
+  
 
    	 
 	 

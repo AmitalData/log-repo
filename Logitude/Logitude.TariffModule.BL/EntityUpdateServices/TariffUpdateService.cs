@@ -153,6 +153,12 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 entityPM.IsUpdatingMissingPorts = false;
             }
 
+            //if (entityPM.IsRefreshTranslations)
+            //{
+            //    this.RefreshTranslations(entityPM);
+            //    entityPM.IsRefreshTranslations = false;
+            //}
+
             this.InsertTariffSurchargeLog(entityPM);
         }
         

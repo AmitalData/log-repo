@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ChargesExternalAccountsByProductUpdateClass
-   {  
+   {  		
+		public const string HashString = "b84d472d7d1c854161e20a7b5895f96e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,6 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
 			      				    IsTabsHidden =  false,
+			      				    HashString =  ChargesExternalAccountsByProductUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -434,7 +436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						EnableFullscreenTextBox =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargesTypeId",
 					  						DefaultText =  "Charges Type",
 					  						HelpTextCode =  "ChargesTypeId",
@@ -497,7 +499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						EnableFullscreenTextBox =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						FullFieldLable =  "ProductTypeCode",
 					  						DefaultText =  "Product",
 					  						HelpTextCode =  "ProductTypeCode",
@@ -622,7 +624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						EnableFullscreenTextBox =  false,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
 					  						DefaultText =  "Updated By",
 					  						HelpTextCode =  "UpdatedByUserId",

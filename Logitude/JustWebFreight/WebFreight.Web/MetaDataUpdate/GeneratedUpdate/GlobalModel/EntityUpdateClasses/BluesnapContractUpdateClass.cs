@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class BluesnapContractUpdateClass
-   {  
+   {  		
+		public const string HashString = "24a176a8be1aad328b6d39dc7df5eb6c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,6 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    SearchFields =  "BluesnapContract,BluesnapContracts,,Code,Name",
+			      				    HashString =  BluesnapContractUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

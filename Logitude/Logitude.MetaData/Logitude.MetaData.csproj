@@ -379,6 +379,7 @@
     <None Include="DBTables\CommonDataModel\ShippingLine.dxml" />
     <None Include="DBTables\CommonDataModel\SmallDocument.dxml" />
     <None Include="DBTables\CommonDataModel\State.dxml" />
+    <None Include="DBTables\CommonDataModel\TariffCarrierTranslation.dxml" />
     <None Include="DBTables\CommonDataModel\TarrifCharge.dxml" />
     <None Include="DBTables\CommonDataModel\TarrifFromTo.dxml" />
     <None Include="DBTables\CommonDataModel\TarrifFromToType.dxml" />
@@ -693,6 +694,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
+    <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSectionType.lxml" />

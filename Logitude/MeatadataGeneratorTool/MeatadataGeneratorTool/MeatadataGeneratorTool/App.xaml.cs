@@ -84,8 +84,13 @@ namespace MeatadataGeneratorTool
                         CurrentControl.Closed += CurrentControl_Closed;
                         stream.Close();
                         stream.Dispose();
-                    }
 
+                        LXMLFilesPaths = new List<string>();
+                        DXMLFilesPaths = new List<string>();
+
+                        Thread thread = new Thread(new ThreadStart(GetLXMLAndDXMLFilesPaths));
+                        thread.Start();
+                    }
                     catch (Exception err)
                     {
                         //MessageBox.Show(err.Message);
@@ -118,23 +123,24 @@ namespace MeatadataGeneratorTool
                 loadFileWindow.Show();
             }
 
-            LXMLFilesPaths = new List<string>();
-            DXMLFilesPaths = new List<string>();
-
-            Thread thread = new Thread(new ThreadStart(GetLXMLAndDXMLFilesPaths));
-            thread.Start();
-
             base.OnStartup(e);
         }
 
         public void GetLXMLAndDXMLFilesPaths()
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            if (projectDirectory.Contains(@"\Logitude"))
+            try
             {
-                string logitudePath = projectDirectory.Split(new string[] { @"\Logitude" }, StringSplitOptions.None)[0];
-                LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
-                DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
+                string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"\";
+                if (projectDirectory.Contains(@"\Logitude\"))
+                {
+                    string logitudePath = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0];
+                    LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
+                    DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
+                }
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Error While Loading Files: " + exception.Message);
             }
         }
 

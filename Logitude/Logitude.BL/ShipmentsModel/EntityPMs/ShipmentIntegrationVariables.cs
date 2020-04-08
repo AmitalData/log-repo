@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.BL.ShipmentsModel.EntityQueries;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,5 +54,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipperExport1 { get; set; }
         public string ShipmentId { get; internal set; }
         public string ConcurrencyGUID { get; set; }
+        public List<PreparationShortClass> ChargesTypes { get; set; }
+        public List<PreparationShortClass> VatTypes { get; set; }
+        public List<PreparationShortClass> Currencies { get; set; }
+        public List<PreparationShortClass> Rates { get; set; }
     }
 }

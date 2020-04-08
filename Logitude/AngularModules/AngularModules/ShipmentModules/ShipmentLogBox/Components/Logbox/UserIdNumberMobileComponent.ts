@@ -112,8 +112,8 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 }
             }
         }
+        this.StartBusyIndicator("Loading ...");
         this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe((myAdditionalResult:any) => {
-
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity.IsUserIDNumberRequired == false) {
                 var myMessage = "הפרטים נשמרו בהצלחה";
@@ -127,10 +127,10 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 }
                 this.FinalMessage = myMessage;
                 this.ShowFinalMessage = true;
-
+                this.StopBusyIndicator();
             }
             else {
-                this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe(MyResult => {
+                this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
                     if (MyResult.Result) {
                        
                         this.AdditionalData = MyResult.Result;//AdditionalResult.Result
@@ -139,6 +139,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                         service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
 
                             this.CompanyLogo = myLogoResult.Result;
+                            this.StopBusyIndicator();
 
                         });
                  
@@ -199,6 +200,18 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     public get UserIdNumber() { return this.userIdNumber }
     public set UserIdNumber(newValue: string) { this.userIdNumber = newValue; }
 
+    public BusyIndicatorText: string = null;
+    public ShowBusyIndicator: boolean = false;
+    public StartBusyIndicator(myText: string) {
+        this.BusyIndicatorText = myText;
+        this.ShowBusyIndicator = true;
+    }
+
+    public StopBusyIndicator() {
+        this.BusyIndicatorText = null;
+        this.ShowBusyIndicator = false;
+    }
+
     ShowPaymentDetailsScreen: boolean = false;
 
     PaymentDetailsClick() {
@@ -244,11 +257,11 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                         });
                     }
                     else {
-                        this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
+                        this.ValidationList.push("נם להקליד ת.ז תקנית בעלת 9 ספרות");
                     }
                 }
                 else {
-                    this.ValidationList.push("נא להקליד ת.ז תקנית בעלת 9 ספרות");
+                    this.ValidationList.push("נם להקליד ת.ז תקנית בעלת 9 ספרות");
                 }
             }
 

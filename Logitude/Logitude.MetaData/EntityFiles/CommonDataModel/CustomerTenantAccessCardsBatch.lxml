@@ -34,7 +34,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customer Tenant Access Cards Batch&quot;"
-  Code="&quot;b803&quot;"
+  Code="&quot;f8a6&quot;"
   Name="&quot;CustomerTenantAccessCardsBatch&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -463,7 +463,7 @@
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
@@ -975,15 +975,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Screen
-    Name="&quot;CustomerTenantAccessCardsBatchHeaderScreen&quot;"
-    ObjectTableName="&quot;CustomerTenantAccessCardsBatch&quot;"
-    IsReadOnly="true"
-    IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class PaymentChannelUpdateClass
-   {  
+   {  		
+		public const string HashString = "030582b8b53186c6a3ab4dcd9a4dee89";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,6 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    HasMenuButtons =  false,
 			      				    CustomFieldsCount =  0,
 			      				    SearchFields =  "PaymentChannel,PaymentChannels,,Code,",
+			      				    HashString =  PaymentChannelUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-//import { Http, Headers } from '@angular/http';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
@@ -60,6 +59,17 @@ export class InterestTransactionExtendedListService {
                 }),
                 catchError(ServiceHelper.HandleServiceError));
         }
+    }
+    GetCheckRecentReports(interestDate: Date,  customerId: string  ) {
+        
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+        var url = this._apiUrl + "/GetCheckRecentReports?interestDate=" + interestDate + "&customerId=" + customerId;
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
     }
 
 

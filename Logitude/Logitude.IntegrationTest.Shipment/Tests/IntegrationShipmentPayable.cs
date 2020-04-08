@@ -29,16 +29,16 @@ namespace Logitude.IntegrationTest.Shipment.Tests
             ShipmentPayable.VatTypeId = ShipmentVariables.VATTypeZeroId;
             ShipmentPayable.ShipmentPayableLineStatusCode = "OAMT";
 
-            ShipmentPayable.CurrencyId = ShipmentVariables.CurrencyEURId;
-            ShipmentPayable.Rate = 1;
+            ShipmentPayable.CurrencyId = CorePreparationVariables.ProfitCurrencyId; ;
+            ShipmentPayable.Rate = CorePreparationVariables.ProfitCurrencyRate;
 
             ShipmentPayable.ProfitCurrencyExchangeRate = CorePreparationVariables.ProfitCurrencyRate;
             ShipmentPayable.Quantity = quantity;
             ShipmentPayable.UnitPrice = unitPrice;
             ShipmentPayable.ChangeSetOp = ChangeSetOperation.Insert;
             ShipmentPayable.OpenAmount = ShipmentPayable.Quantity * ShipmentPayable.UnitPrice;
-            ShipmentPayable.OpenAmountInLocalCurrency = ShipmentPayable.OpenAmount * ShipmentPayable.Rate;
-            ShipmentPayable.OpenAmountInProfitCurrency = ShipmentPayable.OpenAmountInLocalCurrency / ShipmentPayable.ProfitCurrencyExchangeRate;
+            ShipmentPayable.OpenAmountInLocalCurrency = ShipmentPayable.OpenAmount * CorePreparationVariables.ProfitCurrencyRate;
+            ShipmentPayable.OpenAmountInProfitCurrency = ShipmentPayable.OpenAmountInLocalCurrency / CorePreparationVariables.ProfitCurrencyRate;
             return ShipmentPayable;
 
         }

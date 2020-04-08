@@ -563,8 +563,8 @@ export class ShipmentTool {
                 newItem.PackageTypeName = item.PackageTypeName;
                 newItem.PackagingGroup = item.PackagingGroup;
                 newItem.Quantity = item.Quantity;
-                newItem.ShipperSeal = item.ShipperSeal;
-                newItem.CarrierSeal = item.CarrierSeal;
+                //newItem.ShipperSeal = item.ShipperSeal;
+                //newItem.CarrierSeal = item.CarrierSeal;
                 newItem.SOC = item.SOC;
                 newItem.Tare = item.Tare;
                 newItem.Temperature = item.Temperature;

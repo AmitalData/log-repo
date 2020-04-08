@@ -515,7 +515,8 @@
     GenerateInList="true"
     IsForeignKey="true"
     ForeignEntity="User"
-    NavigationPropertyName="CreatedByUser" />
+    NavigationPropertyName="CreatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;eb4d386c-748a-446c-9bc6-671704898dcc&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -581,7 +582,8 @@
     GenerateInList="true"
     IsForeignKey="true"
     ForeignEntity="User"
-    NavigationPropertyName="UpdatedByUser" />
+    NavigationPropertyName="UpdatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;b87bbd8d-7706-4b11-a234-b563d8e7acc0&quot;"
     FieldName="&quot;IsMondayEnabeled&quot;"
@@ -1093,7 +1095,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;08642602-1cc3-407f-b8c3-c9650af76263&quot;"
     FieldName="&quot;TuesdayFromHour&quot;"
@@ -1157,7 +1160,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;1a66d031-52b3-4de5-a82c-31daf23ec41f&quot;"
     FieldName="&quot;WednesdayFromHour&quot;"
@@ -1221,7 +1225,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;4db531d2-be49-4752-ab4b-ccd36f77a37d&quot;"
     FieldName="&quot;ThursdayFromHour&quot;"
@@ -1285,7 +1290,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;095ca7ab-1fe3-4db3-b5d5-3eaad6a8bb75&quot;"
     FieldName="&quot;FridayFromHour&quot;"
@@ -1349,7 +1355,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;b8819720-b080-4a0a-bf3e-6fdc53bf277d&quot;"
     FieldName="&quot;SaturdayFromHour&quot;"
@@ -1413,7 +1420,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;7e05621e-d9f7-4413-b154-5d8d42e80bbe&quot;"
     FieldName="&quot;SundayFromHour&quot;"
@@ -1477,7 +1485,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;1608f6fe-cbd1-4fd6-8ad6-2662510e919c&quot;"
     FieldName="&quot;MondayToHour&quot;"
@@ -1541,7 +1550,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;ce9d24a8-a984-47ac-90e4-921032e1685f&quot;"
     FieldName="&quot;TuesdayToHour&quot;"
@@ -1605,7 +1615,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;ae5c24eb-f69f-4be1-9509-27dc7fb370ad&quot;"
     FieldName="&quot;WednesdayToHour&quot;"
@@ -1669,7 +1680,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;fed98dfb-cc99-4c5f-942b-d9aa8765347d&quot;"
     FieldName="&quot;ThursdayToHour&quot;"
@@ -1733,7 +1745,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;ba6e004f-74b7-4790-bc28-5ccb0456eb36&quot;"
     FieldName="&quot;FridayToHour&quot;"
@@ -1797,7 +1810,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;316117e1-1431-468c-b9b0-8a49a3f1b8eb&quot;"
     FieldName="&quot;SaturdayToHour&quot;"
@@ -1861,7 +1875,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;7b387c9b-511d-41c7-b6ab-6734457e6dfe&quot;"
     FieldName="&quot;SundayToHour&quot;"
@@ -1925,7 +1940,8 @@
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
     HasPMField="true"
-    GenerateInList="true" />
+    GenerateInList="true"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;570edbc2-72ee-496c-a042-a37b343e82d8&quot;"
     FieldsDataType="&quot;List&quot;"

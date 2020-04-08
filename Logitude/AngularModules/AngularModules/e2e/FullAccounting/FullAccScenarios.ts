@@ -37,7 +37,7 @@ export class FullAccountingScenarios {
     AccountingScenario(type: string) {
         if (type == 'ChartOfAccounts') {
             var chartOfAccountNo = this.generalFunction.RandomNumAcc();
-            this.generalFunction.GoToMainMenu('General.MH.Maintenance');
+            this.generalFunction.GoToMainMenu2('General.MH.Maintenance');
             this.Helper.WaitByIdAndClick('ACC');
             this.Helper.WaitByIdAndClick('MaintenanceItemMTCA');
             this.newChart.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');
@@ -48,7 +48,7 @@ export class FullAccountingScenarios {
         }
         if (type == 'CustomerGLAccount') {
             var number = this.generalFunction.RandomNum();
-            this.generalFunction.GoToMainMenu('General.MH.CRM');
+            this.generalFunction.GoToMainMenu2('General.MH.CRM');
             this.Helper.WaitByIdAndClick('CRMCUS');
             this.customer.CreateNewCustomerGLAccount('CustomerGLAccount' + number);
            // this.customer.ActivateCustomerGLAccount('CustomerGLAccount' + number, number);
