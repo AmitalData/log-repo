@@ -1,5 +1,5 @@
 
---drop table DIM_Dates
+
   IF OBJECT_ID ('DIM_Dates', 'U')  IS   NULL 
   begin
 
@@ -25,9 +25,9 @@ create table DIM_Dates (
 [Month End Flag] varchar(100),
 primary key ([Date Key]));
 
-insert into DIM_Dates values('1-1-1',-1,null, 'Not Specified',0, 0, 0, 'Not Specified', null, null, 0,null, null, 'Not Specified', null, null, null, null, 'Not Specified')
-insert into DIM_Dates values('2-2-2',-2,null, 'Old Date',0, 0, 0, 'Old Date', null, null, 0,null, null, 'Old Date', null, null, null, null, 'Old Date')
-insert into DIM_Dates values('3-3-3',-3,null, 'Future Date',0, 0, 0, 'Future Date', null, null, 0,null, null, 'Not Specified', null, null, null, null, 'Future Date')
+insert into DIM_Dates values('1-1-1',-1,null, null,0, 0, 0, 'Not Specified', null, null, 0,null, null, 'Not Specified', null, null, null, null, 'Not Specified')
+insert into DIM_Dates values('2-2-2',-2,null, null,0, 0, 0, 'Old Date', null, null, 0,null, null, 'Old Date', null, null, null, null, 'Old Date')
+insert into DIM_Dates values('3-3-3',-3,null, null,0, 0, 0, 'Future Date', null, null, 0,null, null, 'Not Specified', null, null, null, null, 'Future Date')
 
 
 insert into DIM_Dates values( '2008-1-1',20080101, '2008-1-1', '2008-1-1',2, 1, 1, 'Tuesday', 'Tue', 1, 1,1, 1, 'January', 'Jan', 1, 2008, 200801, 'Not Month End')

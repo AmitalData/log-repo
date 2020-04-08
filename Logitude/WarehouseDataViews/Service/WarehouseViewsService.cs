@@ -15,7 +15,7 @@ namespace WarehouseDataViews
        
         private int tenant;
         private DataTable customObjectFields = null;
-
+        DataTable dimensionDWobjectFieldOnFact = null;
 
         public WarehouseViewsService(int tenant )
         {
@@ -46,7 +46,7 @@ namespace WarehouseDataViews
         
         public void CreateAllDimensionViews(string sourceConnectionString, string destinationConnectionString)
         {
-            DataTable dimensionDWobjectFieldOnFact = GetDimensionDWobjectFieldOnFactShipment(sourceConnectionString);
+             dimensionDWobjectFieldOnFact = GetDimensionDWobjectFieldOnFactShipment(sourceConnectionString);
             foreach (DataRow row in dimensionDWobjectFieldOnFact.Rows)
             {
                 string fieldCode = row["Code"].ToString();
@@ -103,8 +103,28 @@ namespace WarehouseDataViews
             scriptView = ConvertFieldsNameToCamelCase(scriptView);
             string customFieldScript = GetCustomFieldsSql();
             scriptView = scriptView.Replace(",@CustomFields", customFieldScript);
+            scriptView = AppendDatesFieldToFactTable(scriptView);
             ExecuteSql(scriptView, destinationConnectionString);
             // warehouseViewsService.GrantView("ShipmentView", destinationConnectionString);
+        }
+
+        private string AppendDatesFieldToFactTable(string scriptView)
+        {
+            var dwObjectFieldDate = dimensionDWobjectFieldOnFact.Rows
+                          .Cast<DataRow>()
+                          .Where(r => r["DimensionTableCode"] != null && r["DimensionTableCode"].ToString() == "DIM_Dates")
+                          .ToList();
+            foreach (DataRow dateField in dwObjectFieldDate)
+            {
+                string fieldCode = dateField["Code"].ToString();
+                if (!string.IsNullOrEmpty(fieldCode))
+                {
+                    string x = "CASE WHEN " + fieldCode + " ='1-1-1' or  " + fieldCode + " ='2-2-2' or  " + fieldCode + " ='3-3-3'  THEN null ELSE " + fieldCode + " END ";
+                    scriptView = scriptView.Replace(fieldCode, x);
+                }
+            }
+
+            return scriptView;
         }
 
         public void DeleteDimensionViews(string sourceConnectionString, string destinationConnectionString)
@@ -144,19 +164,27 @@ namespace WarehouseDataViews
     
         private string GetCustomFieldsSql()
         {
-            
             string result = string.Empty;
             foreach (var customField in customObjectFields.AsEnumerable().ToList())
             {
                 string fieldDisplay = ConvertStringToCamelCase (customField["DefaultText"].ToString());
-                string fieldName = customField["FieldName"].ToString();
+                string fieldCode ="["+ customField["FieldName"].ToString() + "]";
+
                 string dataTypeCode = customField["DataTypeCode"].ToString();
-                if (dataTypeCode != "LookUp" && dataTypeCode != "Date")
+                if (dataTypeCode != "LookUp")
                 {
-                    if(dataTypeCode == "PickList") fieldDisplay = fieldDisplay + "Key";
-                    result += ",CONVERT(" + GetDataWarehouseSqlFieldType(customField) + ",[" + fieldName + "]) as " + "[c_" + fieldDisplay + "]";
+                    if (dataTypeCode == "PickList") fieldDisplay = fieldDisplay + "Key";
+                    if (dataTypeCode == "Date")
+                    {
+                        result += ",CASE WHEN " + fieldCode + " ='1-1-1' or  " + fieldCode + " ='2-2-2' or  " + fieldCode + " ='3-3-3'  THEN null ELSE CONVERT(" + GetDataWarehouseSqlFieldType(customField) + "," + fieldCode + ")" + " END as " + "[c_" + fieldDisplay + "]";
+                    }
+                    else
+                    {
+                        result += ",CONVERT(" + GetDataWarehouseSqlFieldType(customField) + "," + fieldCode + ") as " + "[c_" + fieldDisplay + "]";
+                    }
                 }
-               
+         
+
             }
             return result;
         }
