@@ -167,6 +167,7 @@ export class GLAccountShortTitleComponent {
             case 'TR': { objectTableName = 'Trucker'; break; }
             case 'VD': { objectTableName = 'Vendor'; break; }
             case 'WH': { objectTableName = 'Warehouse'; break; }
+            case 'AC': { objectTableName = 'AccountingPartner'; break; }
 
             case 'CC': { objectTableName = 'Custom Clearance'; break; } // not found
             case 'CO': { objectTableName = 'Coloader'; break; } // not found
