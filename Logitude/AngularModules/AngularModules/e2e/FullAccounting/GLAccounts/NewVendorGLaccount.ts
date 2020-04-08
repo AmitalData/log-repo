@@ -17,7 +17,7 @@ export class NewVendor {
         this.Helper.WaitByIdAndClick('General.MH.Maintenance');
         this.Helper.WaitByIdAndFill('null_Search', 'Vendor');
 
-        this.Generator.GoToMainMenu('MaintenanceItemMTVD');
+        this.Generator.GoToMainMenu2('MaintenanceItemMTVD');
         this.Helper.ItemsVisibility('NewButton_Vendor');
         this.Helper.ItemsPresent('NewButton_Vendor');
 
