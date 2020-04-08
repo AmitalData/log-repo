@@ -196,8 +196,6 @@ export class APPaymentMenuButtonsHandler {
                             }
 
                             button.IsHidden = isHidden;
-                            button.IsDisabled = !isEditingAnabled;
-
                             break;
                         }
                     }
@@ -552,11 +550,27 @@ export class APPaymentMenuButtonsHandler {
 
     VoidingAPPayment(event: any) {
         if (event == null || event == "Ok") {
-            var messageWindow: MessageWindow;
-            if (this.EntityPM.PaymentInvoices.length > 0) {
-                var messageText = TextCodeTranslator.Translate("APPayment.M.DisconnectInvoices");
-                messageWindow = new MessageWindow();
-                messageWindow.Show(messageText);
+
+            var hasConnectedInvoices: boolean = this.EntityPM.PaymentInvoices.length > 0 ? true : false;
+            var hasExternalPaymentAmount: boolean = (this.EntityPM.ExternalPaymentAmount && this.EntityPM.ExternalPaymentAmount != 0) ? true : false;
+
+            if (hasConnectedInvoices || hasExternalPaymentAmount) {
+                var msg: string = null;
+
+                if (hasConnectedInvoices && hasExternalPaymentAmount) {
+                    msg = "Please disconnect all invoices and external payment amount";
+                }
+
+                else if (hasConnectedInvoices && !hasExternalPaymentAmount) {
+                    msg = TextCodeTranslator.Translate("APPayment.M.DisconnectInvoices");
+                }
+
+                else if (!hasConnectedInvoices && hasExternalPaymentAmount) {
+                    msg = "Please disconnect external payment amount";
+                }
+
+                var messageWindow = new MessageWindow();
+                messageWindow.Show(msg);
             }
 
             else {
