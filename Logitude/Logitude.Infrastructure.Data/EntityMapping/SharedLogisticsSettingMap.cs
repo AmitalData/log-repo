@@ -66,6 +66,8 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.IsConsigneeShared).HasColumnName("IsConsigneeShared");
 
             this.Property(t => t.IsShowAmountLocalCurrency).HasColumnName("IsShowAmountLocalCurrency");
+
+            this.Property(t => t.DisplayDocumentsAndEvents).HasColumnName("DisplayDocumentsAndEvents");
         }
     }
 }

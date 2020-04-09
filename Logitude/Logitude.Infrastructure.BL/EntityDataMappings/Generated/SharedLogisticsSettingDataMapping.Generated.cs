@@ -43,7 +43,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsReleasingAgentShared, 
 	         IsShipperShared, 
 	         IsConsigneeShared, 
-	         IsShowAmountLocalCurrency,
+	         IsShowAmountLocalCurrency, 
+	         DisplayDocumentsAndEvents,
 	      }
 
 
@@ -71,7 +72,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsReleasingAgentShared, 
 	         IsShipperShared, 
 	         IsConsigneeShared, 
-	         IsShowAmountLocalCurrency,
+	         IsShowAmountLocalCurrency, 
+	         DisplayDocumentsAndEvents,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -183,6 +185,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShowAmountLocalCurrency))
             {
 				entityPOCO.IsShowAmountLocalCurrency = entityPM.IsShowAmountLocalCurrency;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DisplayDocumentsAndEvents))
+            {
+				entityPOCO.DisplayDocumentsAndEvents = entityPM.DisplayDocumentsAndEvents;
 			}
 			}
 
@@ -299,6 +306,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.IsShowAmountLocalCurrency = entityPOCO.IsShowAmountLocalCurrency;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DisplayDocumentsAndEvents))
+            {
+					entityPM.DisplayDocumentsAndEvents = entityPOCO.DisplayDocumentsAndEvents;
+            }
+
 		}
 
 		public void PMToOldPM(SharedLogisticsSettingPM entityPM, SharedLogisticsSettingPM oldEntityPM)
@@ -408,6 +420,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShowAmountLocalCurrency))
             {
                 oldEntityPM.IsShowAmountLocalCurrency = entityPM.IsShowAmountLocalCurrency;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DisplayDocumentsAndEvents))
+            {
+                oldEntityPM.DisplayDocumentsAndEvents = entityPM.DisplayDocumentsAndEvents;
             }
 			
 		}

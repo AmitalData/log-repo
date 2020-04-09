@@ -526,6 +526,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool displayDocumentsAndEvents ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool DisplayDocumentsAndEvents  
+	   {
+	    
+	     get
+		{
+		   return displayDocumentsAndEvents;
+		 }
+		 set
+		 {
+		   if(displayDocumentsAndEvents != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DisplayDocumentsAndEvents",OldValue=displayDocumentsAndEvents,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   displayDocumentsAndEvents=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

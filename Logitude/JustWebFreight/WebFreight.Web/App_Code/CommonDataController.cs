@@ -252,6 +252,7 @@ namespace WebFreight.Web
                 myResult.IsAgentShared = sharedLogisticsSetting.IsAgentShared;
                 myResult.IsShipperShared = sharedLogisticsSetting.IsShipperShared;
                 myResult.IsConsigneeShared = sharedLogisticsSetting.IsConsigneeShared;
+                myResult.DisplayDocumentsAndEvents = sharedLogisticsSetting.DisplayDocumentsAndEvents;
             }
 
             return myResult;

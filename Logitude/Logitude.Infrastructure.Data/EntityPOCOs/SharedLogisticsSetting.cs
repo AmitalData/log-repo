@@ -63,6 +63,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public bool IsConsigneeShared { get; set; }
         [Column("IsShowAmountLocalCurrency")]
 	    public bool IsShowAmountLocalCurrency { get; set; }
+        [Column("DisplayDocumentsAndEvents")]
+	    public bool DisplayDocumentsAndEvents { get; set; }
     }
 }
 	 
