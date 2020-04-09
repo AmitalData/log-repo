@@ -338,6 +338,9 @@
     <Content Include="CRMModules\CRMActivity\Components\NewEntity\NewTaskComponent.html" />
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
+    <Content Include="dist\out-tsc\Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVLoginProcessComponent.js" />
+    <Content Include="dist\out-tsc\Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVMobileLoginProcessComponent.js" />
+    <Content Include="dist\out-tsc\Infrastructure\Components\LoginComponent\LoginComponent.js" />
     <Content Include="e2e\dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js" />
     <Content Include="Images\Buttons\copy.report.png" />
     <Content Include="Customs\Components\Spotlight\ReferantSpotlightDataTemplate.html" />
@@ -7346,6 +7349,8 @@
     <Content Include="e2e\Testing Scenarios\Production\Team Islam\RunTestCasesProd.bat" />
     <Content Include="e2e\Testing Scenarios\Production\Team Islam\RunTestCasesProdStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Production\Team Mohammad\TeamMohammadCases.bat" />
+    <Content Include="dist\out-tsc\Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVLoginProcessComponent.js.map" />
+    <Content Include="dist\out-tsc\Infrastructure\Components\LoginComponent\CustomLoginComponents\DSVMobileLoginProcessComponent.js.map" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />

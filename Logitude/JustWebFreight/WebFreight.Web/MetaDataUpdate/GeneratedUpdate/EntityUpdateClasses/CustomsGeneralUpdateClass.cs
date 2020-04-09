@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "CustomsGeneral",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CustomsGenerals",
-			      				    
+			      				    OldDBTableName =  "CustomsGenerals",
 			      				    ObjectTableSingular =  "CustomsGeneral",
 			      				    ObjectTablePlural =  "CustomsGenerals",
 			      				    HasCustomFilter =  false,
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "0c37",
+			      				    Code =  "1173",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -130,7 +130,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "CustomsGeneral,CustomsGenerals,,Id,",
-			      				  
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -142,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Id",
-					  						
+					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "CustomsGeneral",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -162,6 +161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Id",
 					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -179,7 +179,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Id",
 					  						DefaultText =  "id",
-					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -199,6 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "CustomsGeneral",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -218,6 +218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Tenant",
 					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -329,7 +330,63 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CustomsGeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsGeneral" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODeclarationRestoreQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeclarationRestoreQuery", DefaultText = "Declaration restore Query",LocalDefaultText = @"שאילתא לשחזור נתוני הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOMorningMessageQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.MorningMessageQuery", DefaultText = "Morning Message Query",LocalDefaultText = @"שאילתא להודעות בוקר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCourierBOLQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CourierBOLQuery", DefaultText = "Courier BOL Query",LocalDefaultText = @"שאילתא לשטרי מטען בלדר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOGuaranteeCertificateFilterQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.GuaranteeCertificateFilterQuery", DefaultText = "Guarantee Certificate Filter Query",LocalDefaultText = @"שאילתא לנתוני כתב ערבות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOFaultQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.FaultQuery", DefaultText = "Faults Query",LocalDefaultText = @"שאילתא לליקויים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOWarehouseBlockBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.WarehouseBlockBalance", DefaultText = "Warehouse Block Balance",LocalDefaultText = @"יתרות מלאי בגוש", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOMasterBOLQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.MasterBOLQuery", DefaultText = "Master BOL Query",LocalDefaultText = @"שאילתא לשטרי מטען", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCurrencyExchangeRateQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CurrencyExchangeRateQuery", DefaultText = "Exchange Rate Query",LocalDefaultText = @"שאילתא לשערים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCustomItemLegalDemandsQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CustomItemLegalDemandsQuery", DefaultText = "Custom Item Legal Demands Query",LocalDefaultText = @"שאילתא לדרישת חוקיות לפרט מכס", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODeclarationPrintQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeclarationPrintQuery", DefaultText = "Declaration Print Query",LocalDefaultText = @"שאילתא להדפסת הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOClientSearchByIDQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClientSearchByIDQuery", DefaultText = "Client Search Query",LocalDefaultText = @"נתונים נוספים ליבואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOBlockListInWarehouseQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.BlockListInWarehouseQuery", DefaultText = "Block List in Warehouse Query",LocalDefaultText = @"שאילתת גושים במחסן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCargoQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CargoQuery", DefaultText = "Manifest Status Query",LocalDefaultText = @"שאילתא למצהר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOImporterDeclarationQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ImporterDeclarationQuery", DefaultText = "Importer Declaration Query",LocalDefaultText = @"שאילתא לתצהיר יבואן", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOBankAccountToRefundQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.BankAccountToRefundQuery", DefaultText = "Bank Account To Refund Query",LocalDefaultText = @"שאילתא לבקשת החזר פיקדון", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODeficitFileFilterQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeficitFileFilterQuery", DefaultText = "Deficit File Filter Query",LocalDefaultText = @"שאילתא לגרעונות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOMasavPaymentsToAgentQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.MasavPaymentsToAgentQuery", DefaultText = "Masav Payments To Agent Query",LocalDefaultText = @"שאילתא לבקשת דוח קופה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOGuaranteeFileFilterQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.GuaranteeFileFilterQuery", DefaultText = "Guarantee File Filter Query",LocalDefaultText = @"שאילתא לערבויות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODeclarationFilterQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeclarationFilterQuery", DefaultText = "Declaration filter Query",LocalDefaultText = "שאילתא לתיקי תפ''ג עבור הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODeclarationReshimonConversion = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DeclarationReshimonConversion", DefaultText = "Special Activity Request",LocalDefaultText = @"המרות בין מספר רשימון ומספר הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCreditQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CreditQuery", DefaultText = "Credit Query",LocalDefaultText = @"שאילתא לתקרת אשראי", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOPaymentQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.PaymentQuery", DefaultText = "Payment Query",LocalDefaultText = @"שאילתא להוראות תשלום", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOClaimFileFilterQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ClaimFileFilterQuery", DefaultText = "Claim Query",LocalDefaultText = @"שאילתא לתביעות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCustomsBookQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CustomsBookQuery", DefaultText = "Customs Book Update",LocalDefaultText = @"עדכון ספר סיווג", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationStatusQueryODeclarationID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationStatusQuery.O.DeclarationID", DefaultText = "Declaration ID",LocalDefaultText = @"מס' הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
