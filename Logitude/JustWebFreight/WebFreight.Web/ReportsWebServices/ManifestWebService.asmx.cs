@@ -125,6 +125,7 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.DescriptionOfGoods = BuildDescriptionOfGoods();
                 manifestDataProvider.ChargeableWeight = master.ChargeableWeight != null ? master.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", master.ChargeableWeight) + " " + (master.ChargeableWeightUnitCode != null ? master.ChargeableWeightUnitCode : "")) : "" : "";
                 manifestDataProvider.TrailerNumber = master.TrailerNumber;
+                manifestDataProvider.ProjectNumber = master.ProjectNumber;
 
                 if (master.BranchId != null)
                 {
