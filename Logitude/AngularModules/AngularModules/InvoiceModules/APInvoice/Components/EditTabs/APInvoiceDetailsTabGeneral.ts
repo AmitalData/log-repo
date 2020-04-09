@@ -792,7 +792,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     // Properties
-    public VendorDependencyProperty1: string = InvoiceTool.GetVendorPartnerTypes();
+    public VendorDependencyProperty1: string = InvoiceTool.GetGeneralAPInvoiceVendorPartnerTypes();
 
     public glaccount: GLAccountPM = null;
     get VendorId() {

@@ -169,6 +169,10 @@ export class InvoiceTool {
     public static GetVendorPartnerTypes() {
         return "AG,AL,CG,SG,SL,TR,VD,WH";
     }
+
+    public static GetGeneralAPInvoiceVendorPartnerTypes() {
+        return "AG,AL,CG,SG,SL,TR,VD,WH,AC";
+    }
     public static GetOperationalDate(shipmentPM: ShipmentPM) {
         var myResult: Date = null;
 
