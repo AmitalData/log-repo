@@ -316,7 +316,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 ChargesTypePM charge = chargesTypeQuery.GetSinglePM(line.ChargesTypeId, tenant);
 
                 if (string.IsNullOrWhiteSpace(line.Description))
-                    line.Description = charge.EnglishName;
+                    line.Description = charge.Description;
                 if (string.IsNullOrWhiteSpace(line.LocalDescription))
                     line.LocalDescription = charge.LocalName ?? charge.EnglishName;
 
