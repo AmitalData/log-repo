@@ -114,7 +114,7 @@ export class ReconcileCurrencyTypeListService {
         
 		
 	   return Observable.defer(() => {
-           return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.body;
@@ -158,7 +158,7 @@ export class ReconcileCurrencyTypeListService {
         else {
 
             return CachedDataManager.GetClosedTableData("ReconcileCurrencyType").pipe(
-                map(cachedJson => {
+                map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<ReconcileCurrencyTypeList> = [];
                 if (cachedJson) {
@@ -205,7 +205,7 @@ export class ReconcileCurrencyTypeListService {
         else {
 
             return CachedDataManager.GetClosedTableData("ReconcileCurrencyType").pipe(
-                map(cachedJson => {
+                map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<ReconcileCurrencyTypeList> = [];
                 if (cachedJson) {

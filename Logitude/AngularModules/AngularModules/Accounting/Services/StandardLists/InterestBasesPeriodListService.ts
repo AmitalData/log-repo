@@ -36,7 +36,7 @@ export class InterestBasesPeriodListService {
        
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'interestbasetypeid=' + interestbasetypeid + '&' + 'linenumber=' + linenumber, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'interestbasetypeid=' + interestbasetypeid + '&' + 'linenumber=' + linenumber, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var list = response.body;
                     
@@ -63,7 +63,7 @@ export class InterestBasesPeriodListService {
 	  
         var callTime = new Date();
        return Observable.defer(() => {
-           return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+           return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                var allLists = response.body;
               var _mappedListsArray: Array< InterestBasesPeriodList> = [];
@@ -124,7 +124,7 @@ export class InterestBasesPeriodListService {
         
 		
 	   return Observable.defer(() => {
-           return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                var serviceResponse: ServiceResponse;
                serviceResponse = response.body;

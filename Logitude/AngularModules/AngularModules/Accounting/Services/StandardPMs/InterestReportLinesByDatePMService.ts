@@ -37,7 +37,7 @@ export class InterestReportLinesByDatePMService {
       
         var callTime = new Date();		
 		 return Observable.defer(() => {
-             return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+             return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                     var pm = response.body;
 
                    
@@ -80,7 +80,7 @@ export class InterestReportLinesByDatePMService {
                     var mappedEntity: InterestReportLinesByDatePM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-                     return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+                     return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                             var pm = response.body;
 							if(pm)
@@ -131,7 +131,7 @@ export class InterestReportLinesByDatePMService {
                     var mappedEntity: InterestReportLinesByDatePM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-                     return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+                     return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
                  
 
                             var pm = response.body;

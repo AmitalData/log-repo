@@ -105,7 +105,7 @@ export class GLAccountBalanceByYearListService {
         
 		
 	   return Observable.defer(() => {
-           return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.body;
@@ -193,7 +193,7 @@ export class GLAccountBalanceByYearListService {
 	   var exists = GLAccountBalanceByYearListService.CachedData.length;
 	   if (exists === 0) {
        return Observable.defer(() => {
-           return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                var serviceResponse: ServiceResponse;
                serviceResponse = response.body;
