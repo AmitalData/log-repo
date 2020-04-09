@@ -54,8 +54,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
 
-                this.ExecuteDailyAutomaticallyClosing(tenant); 
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Quote", "READ", tenant);
 
@@ -577,53 +575,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-
-        private void ExecuteDailyAutomaticallyClosing(int tenant)
-        {
-            IQuotesContext quotesContext = new QuotesContext();
-            IQuotesContext quotesContext_Loop; 
-            DateTime todayDate = DateTime.Now;
-            QuoteQuery quoteQuery;
-            QuoteService quoteService;
-            QuotePM quotePM;
-            QuoteStageRepository quoteStageRepository;
-            QuoteStage quoteStage;
-            IQueryable<Quote> allQuotes = (from d in quotesContext.Quotes
-                                           where d.IsAutomaticallyClosed && !d.IsClosed && d.AutomaticallyCloseDate != null
-                                           && System.Data.Entity.DbFunctions.TruncateTime(d.AutomaticallyCloseDate) == System.Data.Entity.DbFunctions.TruncateTime(todayDate)
-                                           select d);
-
-            var list = allQuotes.ToList();
-
-            foreach (Quote item in allQuotes)
-            {
-                quotesContext_Loop = QuotesContext.GetContext(item.Tenant);
-                quoteQuery = new QuoteQuery(item.Tenant);
-                quoteService = new QuoteService(quotesContext_Loop, item.Tenant);
-                quoteStageRepository = new QuoteStageRepository(item.Tenant);
-                quoteStage = quoteStageRepository.GetSingleQuoteStageByCode("QTDC", item.Tenant);
-                quotePM = quoteQuery.GetSinglePM(item.Id, item.Tenant);
-                quotePM.IsClosed = true;
-                quotePM.QuoteClosingReasonCode = "XQ";
-                quotePM.StageId = quoteStage != null ? quoteStage.Id: null;
-                quotePM.StageDueDate  = this.CalculateStageDueDate(quoteStage, todayDate, quotePM.StageDueDate);
-            
-                quoteService.Update(quotePM, true);
-            }
-        }
-
-        private DateTime? CalculateStageDueDate(QuoteStage quoteStage, DateTime todayDate, DateTime? stageDueDate)
-        {
-            var dueDate = stageDueDate;
-            if(quoteStage != null)
-            {
-                if(quoteStage.MaxDays != null)
-                {
-                    dueDate = todayDate.AddDays(quoteStage.MaxDays.Value);
-                }
-            }
-            return dueDate;
-        }
+        
     }
 }
 

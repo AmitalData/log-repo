@@ -27,7 +27,7 @@ namespace CommunicationWorkerRole
                         if (DateTime.Now >= date1 && DateTime.Now <= date2)
                         {
                             LastActivity = DateTime.UtcNow;
-                            QuoteModelProcedureClass.ExecuteDailyJobAutomaticallyClosing();
+                            QuoteModelProcedureClass.ExecuteDailyAutomaticallyClosing();
                             LogDoneItemInMemory();
 
                             Thread.Sleep(3600000);
