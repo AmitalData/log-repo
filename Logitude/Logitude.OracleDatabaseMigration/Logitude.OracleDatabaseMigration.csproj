@@ -541,6 +541,10 @@
     <Compile Include="Migrations\202003221244107_ExceptionReasonAddSearchFields.Designer.cs">
       <DependentUpon>202003221244107_ExceptionReasonAddSearchFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004090758246_missing09042020Main.cs" />
+    <Compile Include="Migrations\202004090758246_missing09042020Main.Designer.cs">
+      <DependentUpon>202004090758246_missing09042020Main.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -936,6 +940,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003221244107_ExceptionReasonAddSearchFields.resx">
       <DependentUpon>202003221244107_ExceptionReasonAddSearchFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004090758246_missing09042020Main.resx">
+      <DependentUpon>202004090758246_missing09042020Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

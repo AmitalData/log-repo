@@ -454,6 +454,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap()); 
             modelBuilder.Configurations.Add(new UserLastSettingsMap());
             modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
+            modelBuilder.Configurations.Add(new CustomsInterfaceMap());
 
             base.OnModelCreating(modelBuilder);
         }

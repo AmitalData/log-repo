@@ -91,6 +91,14 @@
     <Compile Include="Migrations\201907311203567_missing20190731.Designer.cs">
       <DependentUpon>201907311203567_missing20190731.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004090712472_missing09042020.cs" />
+    <Compile Include="Migrations\202004090712472_missing09042020.Designer.cs">
+      <DependentUpon>202004090712472_missing09042020.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004091008326_missingact2_20200409.cs" />
+    <Compile Include="Migrations\202004091008326_missingact2_20200409.Designer.cs">
+      <DependentUpon>202004091008326_missingact2_20200409.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -120,6 +128,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907311203567_missing20190731.resx">
       <DependentUpon>201907311203567_missing20190731.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004090712472_missing09042020.resx">
+      <DependentUpon>202004090712472_missing09042020.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004091008326_missingact2_20200409.resx">
+      <DependentUpon>202004091008326_missingact2_20200409.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>

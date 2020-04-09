@@ -38,7 +38,15 @@ namespace Simplog.Data.CommonDataModel.Mapping
             .IsUnicode(false);
 
             // Table & Column Mappings
-            this.ToTable("SharedLogisticsContactLastLogins");
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.ToTable("SharedLogsContactLastLogins");
+            }
+            else
+            {
+                this.ToTable("SharedLogisticsContactLastLogins");
+            }
             this.Property(t => t.CardId).HasColumnName("CardId");
             this.Property(t => t.LoginDateTime).HasColumnName("LoginDateTime");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
