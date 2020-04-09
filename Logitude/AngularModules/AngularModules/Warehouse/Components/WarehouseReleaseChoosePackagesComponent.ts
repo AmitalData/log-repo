@@ -358,14 +358,19 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         }
     }
 
+    EditWarehouseReleases(EntryId: any) {
 
+        var myBackButtonLabel = "Choose Cross Dock Package";
 
-
-
-
-
-
-
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: EntryId, ObjectTableName: "WarehouseEntry", BackButtonLabel: myBackButtonLabel });
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    this.LoadWarehouseEntryPackageListsByCustomerId();
+                });
+            });
+    }
 
     LoadWarehouseEntryPackageListsByCustomerId() {
         var shipmentId = this.warehouseReleasePM.ShipmentId ? this.warehouseReleasePM.ShipmentId : "";
@@ -412,6 +417,7 @@ export class WarehouseEntryPackageClass extends BaseComponent {
     FromPortId: string;
     ToPortId: string;
     CustomerId: string;
+    WarehouseEntryNumber: string;
 
     IsSelectedKeyId: string = Guid.newGuid();
     get ReleaseQTY() {
@@ -499,6 +505,7 @@ export class WarehouseEntryPackageClass extends BaseComponent {
         this.Height = entityPM.Height;
         this.Width = entityPM.Width;
         this.Length = entityPM.Length;
+        this.WarehouseEntryNumber = entityPM.WarehouseEntryNumber;
 
         this.Description = entityPM.Description;
         this.Instock = entityPM.Instock;

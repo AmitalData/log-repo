@@ -56,6 +56,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                           WarehouseId = a.WarehouseEntry.Id,
                                                           IsContainer = a.IsContainer,
                                                           IsConnectedToShipment = a.IsConnectedToShipment,
+                                                          WarehouseEntryNumber = a.WarehouseEntry.EntryNumber,
                                                       }).ToList();
             return myResult;
         }
@@ -100,6 +101,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                               IsConnectedToShipment = a.IsConnectedToShipment,
                                                               VolumetricWeight = a.VolumetricWeight,
                                                               ChargeableWeightUnitCode = a.WarehouseEntry.ChargeableWeightUnitCode,
+                                                              WarehouseEntryNumber = a.WarehouseEntry.EntryNumber,
                                                           }).ToList();
 
 
@@ -155,6 +157,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                               IsConnectedToShipment = a.IsConnectedToShipment,
                                                               VolumetricWeight = a.VolumetricWeight,
                                                               ChargeableWeightUnitCode = a.WarehouseEntry.ChargeableWeightUnitCode,
+                                                              WarehouseEntryNumber = a.WarehouseEntry.EntryNumber,
                                                           }).ToList();
 
 
