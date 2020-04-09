@@ -255,22 +255,46 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private static void CheckTransferTransactions(ExternalReconciliationPM externalRecoPM)
         {
-            BankAccountPM bankAccount = GetBankAccount(externalRecoPM);
+            BankAccountPM bankAccount = GetBankAccountForExternalReconciliation(externalRecoPM);
 
-            bool haveExternalPageLines = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerTransactionId == null && d.ExternalPageLineId != null) > 0;
-            int transferTransactionsCount = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerGLAccountId == bankAccount.TransferGLAcccountId);
-            if (haveExternalPageLines && transferTransactionsCount > 1)
+            if (bankAccount != null)
             {
-                var msg = TextCodesTranslator.TranslateText("ExternalReconciliation.O.CantReconcileTwoTransfer", 0,
-                    LoggedContactResolver.GetLoggedContactShowLocal(externalRecoPM.Tenant));
-                throw new ApplicationException(msg);
+                bool haveExternalPageLines = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerTransactionId == null && d.ExternalPageLineId != null) > 0;
+                int transferTransactionsCount = externalRecoPM.ExternalReconciliationLines.Count(d => d.LedgerGLAccountId == bankAccount.TransferGLAcccountId);
+
+                if (haveExternalPageLines && transferTransactionsCount > 1)
+                {
+                    var msg = TextCodesTranslator.TranslateText("ExternalReconciliation.O.CantReconcileTwoTransfer", 0,
+                        LoggedContactResolver.GetLoggedContactShowLocal(externalRecoPM.Tenant));
+                    throw new ApplicationException(msg);
+                }
             }
+
+        }
+
+        private static BankAccountPM GetBankAccountForExternalReconciliation(ExternalReconciliationPM externalRecoPM)
+        {
+            BankAccountPM bankAccount;
+            if (externalRecoPM.BankAccountId != null)
+                bankAccount = GetBankAccount(externalRecoPM);
+            else
+            {
+                bankAccount = GetBankAccountByTransferGLaccount(externalRecoPM.GLAccountId, externalRecoPM.Tenant);
+            }
+
+            return bankAccount;
         }
 
         private static BankAccountPM GetBankAccount(ExternalReconciliationPM externalRecoPM)
         {
             BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(externalRecoPM.Tenant);
             BankAccountPM bankAccount = bankAccountQueryService.GetSingle(externalRecoPM.BankAccountId, false, false);
+            return bankAccount;
+        }
+        private static BankAccountPM GetBankAccountByTransferGLaccount(string transferGLAccountId, int tenant)
+        {
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(tenant);
+            BankAccountPM bankAccount = bankAccountQueryService.GetBankAccountByTransferGLAcccountId(transferGLAccountId, tenant);
             return bankAccount;
         }
 
