@@ -137,7 +137,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 if (entityPM.Reference != null)
                 {
-                    var chars = Regex.Matches(entityPM.Reference, @"[^\d{9}$]");
+                    var chars = Regex.Matches(entityPM.Reference.Trim(), @"[^\d{9}$]");
                     if (chars.Count != 0)
                     {
                         entityPM.StatusCode = "3";
