@@ -1996,6 +1996,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         {
             ObjectTableRepository repo = new ObjectTableRepository(tenant);
             string  objectTableId = repo.GetObjectTableIdByName("ARInvoice");
+            string FTPFileName = "";
 
             AccountingTranferViaFTPHelper helper = new AccountingTranferViaFTPHelper(tenant, objectTableId, FTPDetailId);           
             var invoice = this.invoices.FirstOrDefault();
@@ -2003,9 +2004,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             if (invoice != null)
             {
                 entityId = invoice.Id;
+                FTPFileName = invoice.InvoiceNumber;
             }
             
-            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, this.filename, entityId, myAccountingSystemCode);
+            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode);
 
             this.myDocumentId = helper.DocumentId;
             this.myDocumentFolder = helper.DocumentFolder;

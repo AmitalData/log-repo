@@ -99,7 +99,7 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (fTPDetail != null)
                 {
-                    string[] fileNameArray = fileName.Split('.');
+                    //string[] fileNameArray = fileName.Split('.');
 
                     LogSettings settings = new LogSettings()
                     {
@@ -107,7 +107,8 @@ namespace Logitude.Server.Tools.Helpers
                         Folder = fTPDetail.Folder,
                         Username = fTPDetail.UserName,
                         Password = fTPDetail.Password,
-                        Filename = fileNameArray[0],
+                        //Filename = fileNameArray[0],
+                        Filename = fileName,
                         UseSFTP = fTPDetail.UseSFTP,
                     };
 
