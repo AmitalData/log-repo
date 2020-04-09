@@ -28,6 +28,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -321,6 +323,15 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 tenantMngmentRep.SubmitChanges();
 
                 scop.Complete();
+            }
+            
+            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(currentTenant.Id);
+            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(currentTenant.Id.ToString(), currentTenant.Id);
+            if (sharedLogisticsSetting != null)
+            {
+                sharedLogisticsSetting.DisplayDocumentsAndEvents = currentTenant.DisplayDocumentsAndEvents;
+                sharedLogisticsSettingRepository.Update(sharedLogisticsSetting);
+                sharedLogisticsSettingRepository.SubmitChanges();
             }
         }
 

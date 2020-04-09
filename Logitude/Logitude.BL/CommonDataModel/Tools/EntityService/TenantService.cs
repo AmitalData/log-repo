@@ -19,6 +19,8 @@ using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -45,12 +47,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private TenantRepository entityRepository;
         private LogBoxTenantSettingPM LBTenantSettingentityPM;
         private LogBoxTenantSettingRepository LBsettingentityRepository;
+        private SharedLogisticsSettingRepository sharedLogisticsSettingRepository;
         public TenantService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new TenantRepository(objectContext);
             this.LBsettingentityRepository = new LogBoxTenantSettingRepository(objectContext);
+            this.sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
         }
 
         public void Create(TenantPM theEntityPm)
@@ -199,6 +203,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.LBtenantsettingPoco.IsDocumentsArchive = theEntityPm.IsDocumentsArchive;
             LBsettingentityRepository.Update(this.LBtenantsettingPoco);
             LBsettingentityRepository.SubmitChanges();
+
+            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(entityPM.Id.ToString(), tenant);
+            if (sharedLogisticsSetting != null)
+            {
+                sharedLogisticsSetting.DisplayDocumentsAndEvents = entityPM.DisplayDocumentsAndEvents;
+                sharedLogisticsSettingRepository.Update(sharedLogisticsSetting);
+                sharedLogisticsSettingRepository.SubmitChanges();
+            }
         }
 
         private void InitializeComponent()
