@@ -3,7 +3,7 @@ const HtmlReporter = require('protractor-beautiful-reporter');
 const { JUnitXmlReporter } = require('jasmine-reporters');
 
 exports.config = {
-    allScriptsTimeout: 990000,
+    allScriptsTimeout: 480000,
     // specs: [
     //  './e2e/Operations/**/Operations.e2e-spec.ts'
     // ],

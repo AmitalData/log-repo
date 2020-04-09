@@ -733,7 +733,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var list = query.ToList();
             return list.Count();
         }
-        
+        public int getRecoCount(string glAccountId, int tenant)
+        {
+            return (from a in context.LedgerTransactions
+                    where
+                    a.AccountId == glAccountId
+                    && a.InReconcileProgress == false
+                    && a.IsReconciled == false
+                    && a.Tenant == tenant
+                    select a).Count();
+        }
+
 
         public List<LedgerTransactionList> GetARPaymentOpenTransactions(string billToGLAccountId, int tenant)
         {

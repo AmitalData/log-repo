@@ -77,7 +77,12 @@ namespace WebFreight.Web.Helpers
                 {
                     if (this.GetIfFiltersHaveValues(Myfilter.FilterItems) == true)
                     {
-                        WhereStmt = WhereStmt + " ( ";
+                        WhereStmt = WhereStmt;
+                        if (WhereStmt != " where ")
+                        {
+                            WhereStmt = WhereStmt + " " + AndOr + " ( ";
+                        }
+                       
                     }
                     sqlCommandDefinition = GetWhereStmtForFiltersList(Myfilter.FilterItems, !string.IsNullOrEmpty(Myfilter.AndOr) ? Myfilter.AndOr : "And", sqlCommandDefinition);
                     if (WhereStmt == " where ")
@@ -234,8 +239,9 @@ namespace WebFreight.Web.Helpers
                                 {
                                     if (WhereStmt.EndsWith("( "))
                                     {
-                                        WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('(');
-                                        WhereStmt += " " + AndOr + " ( " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                        
+                                        //WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('('); 
+                                        WhereStmt += " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
                                     }
                                     else
                                     {
@@ -245,7 +251,7 @@ namespace WebFreight.Web.Helpers
                                 }
                                 else
                                 {
-                                    WhereStmt += fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
+                                    WhereStmt += "( " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
                                 }
                                 //WhereStmt += AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
 
@@ -267,8 +273,8 @@ namespace WebFreight.Web.Helpers
                             {
                                 if (WhereStmt.EndsWith("( "))
                                 {
-                                    WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('(');
-                                     WhereStmt += " " + AndOr + " ( " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+                                    //WhereStmt = WhereStmt.TrimEnd(' ').TrimEnd('(');
+                                     WhereStmt += " " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
 
                                 }
                                 else
@@ -278,7 +284,7 @@ namespace WebFreight.Web.Helpers
                             }
                             else
                             {
-                                WhereStmt += sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
+                                WhereStmt += "( " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
                             }
 
 
