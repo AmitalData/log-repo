@@ -1864,6 +1864,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DWQueryData.SubQueryData = dWSubQueryPM;
                         DWQueryData.Columns = Columns;
                         DWQueryData.Filters = Filters;
+                        DWQueryData.FactTableName = entityPM.FactTableName;
                     }
                     var sortingList = new List<Column>();
                     foreach (Column item in bITabularViewSettings.Columns.ToList())
