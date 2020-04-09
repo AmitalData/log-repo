@@ -62,7 +62,7 @@ export class RulesMainComponent {
                 this.TableRulesItems = this.AllTableRules;
             }
 
-            this._objectTableRuleFieldPMService.getAllByTenant(SessionLocator.Tenant).subscribe(response2 => {
+            this._objectTableRuleFieldPMService.getAllByTenant(SessionLocator.Tenant).subscribe((response2: ServiceResponse) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 if (!response2.HasError && response2.Result) {

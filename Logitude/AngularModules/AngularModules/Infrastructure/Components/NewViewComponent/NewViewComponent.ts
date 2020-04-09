@@ -34,6 +34,7 @@ import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { UserList } from '../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
 import { QueryColumnsPMService } from '../../Services/StandardPMs/QueryColumnsPMService'; 
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'NewViewComponent',
@@ -41,7 +42,7 @@ import { QueryColumnsPMService } from '../../Services/StandardPMs/QueryColumnsPM
 
     templateUrl: './NewViewComponent.html',
     inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'QueryCode', 'Filterchangeevent', 'rabaia'],
-    providers: [Http, ServiceArgs],
+    providers: [HttpClient, ServiceArgs],
 })
 
 export class NewViewComponent {
@@ -87,7 +88,7 @@ export class NewViewComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.Http;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
         this._http = ServiceHelper.Http;
         this.removedQueryFilters = [];
         if (this.GeneralEntitiesArgs == null) {

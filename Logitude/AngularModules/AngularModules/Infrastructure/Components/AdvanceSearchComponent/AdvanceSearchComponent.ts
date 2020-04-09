@@ -17,13 +17,14 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     moduleId: module.id,
     selector: 'AdvSearchComponent',
     templateUrl: './AdvanceSearchComponent.html',
     inputs: ['ObjectTableName', 'QueryChangeEvent', 'isWindowViewMode', 'isNewViewMode', 'QueryId','QueryCode', 'Filterchangeevent', 'rabaia'],
-    providers: [Http],
+    providers: [HttpClient],
 })
 
 export class AdvanceSearchComponent implements OnInit {
@@ -58,7 +59,7 @@ export class AdvanceSearchComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private pubSubService: PubSubService, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.Http;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
         this.myForm = fb.group({
             //'ShipperName': ['', Validators.required]
 
@@ -623,7 +624,7 @@ export class AdvanceSearchComponent implements OnInit {
     public DeteteFilter(field: FilterField) {
         //if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] != null) {
         //var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
-        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.FieldCode, field.QueryCode, SessionInfo.LoggedUserId).subscribe(filter => {
+        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.FieldCode, field.QueryCode, SessionInfo.LoggedUserId).subscribe((filter: any) => {
             if (filter) {
                 var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
                 myService.setServiceArgs(this.serviceArgs);
