@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -23,44 +24,39 @@ import {InterestBasesPeriodPM} from '../../EntityPMs/InterestBasesPeriodPM';
 @Injectable()
 
 export class InterestBasesPeriodPMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/interestbasesperiods';      
     }
 
  get(interestbasetypeid: string, linenumber: number) {
          
-         
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+       
         var callTime = new Date();		
-		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'interestbasetypeid=' + interestbasetypeid+'&'+'linenumber=' + linenumber, {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response.json();
+     return Observable.defer(() => {
+         return this._http.get(this._apiUrl + '/getsingle?' + 'interestbasetypeid=' + interestbasetypeid + '&' + 'linenumber=' + linenumber, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+             var pm = response.body;
 
-                   
-					
-                    var entity: InterestBasesPeriodPM;
-					if(pm)
-					{
-                      entity = this.MapJsonToEntityPM(pm);
-                    }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-              
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestBasesPeriod", "GetSinglePM", 'interestbasetypeid=' + interestbasetypeid+'&'+'linenumber=' + linenumber);
-				 
-                return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
-            });                    
+             var entity: InterestBasesPeriodPM;
+             if (pm) {
+                 entity = this.MapJsonToEntityPM(pm);
+             }
+
+             var serviceResponse: ServiceResponse;
+             serviceResponse = new ServiceResponse();
+             serviceResponse.Result = entity;
+
+             var servertime = response.headers.get('ServerExecutionTime');
+             PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestBasesPeriod", "GetSinglePM", 'interestbasetypeid=' + interestbasetypeid + '&' + 'linenumber=' + linenumber);
+
+             return serviceResponse;
+
+         }), catchError(ServiceHelper.HandleServiceError));
+     });
     }
 
 	 insert(entityPM: InterestBasesPeriodPM) {
@@ -68,10 +64,7 @@ export class InterestBasesPeriodPMService {
         var callTime = new Date();        
         return Observable.defer(() => {
 
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
-
+                
                 var validator: ClassLevelValidator;
                  
                 validator = new ClassLevelValidator();
@@ -85,10 +78,9 @@ export class InterestBasesPeriodPMService {
                     var mappedEntity: InterestBasesPeriodPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
+                     return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                            var pm = response.json();
+                            var pm = response.body;
 							if(pm)
 							{
                                var mappedResult:  InterestBasesPeriodPM;
@@ -103,7 +95,7 @@ export class InterestBasesPeriodPMService {
                             
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
@@ -123,10 +115,7 @@ export class InterestBasesPeriodPMService {
             var callTime = new Date();         
             return Observable.defer(() => {
 
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
-
+ 
                 var validator: ClassLevelValidator;
                  
                 validator = new ClassLevelValidator();
@@ -140,11 +129,10 @@ export class InterestBasesPeriodPMService {
                     var mappedEntity: InterestBasesPeriodPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((response) => {
+                     return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
                  
 
-                            var pm = response.json();
+                            var pm = response.body;
 							if(pm)
 							{
                                var mappedResult:  InterestBasesPeriodPM;
@@ -157,7 +145,7 @@ export class InterestBasesPeriodPMService {
 					                           
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 

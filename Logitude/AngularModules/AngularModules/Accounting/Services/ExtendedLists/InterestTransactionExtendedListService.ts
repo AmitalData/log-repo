@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-//import { Http, Headers } from '@angular/http';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -65,7 +64,7 @@ export class InterestTransactionExtendedListService {
         
         var serviceResponse: ServiceResponse = new ServiceResponse();
         var url = this._apiUrl + "/GetCheckRecentReports?interestDate=" + interestDate + "&customerId=" + customerId;
-        return this.httpClient.get(url, httpOptions).pipe(
+        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 serviceResponse.Result = response;
                 return serviceResponse;

@@ -1,5 +1,4 @@
-﻿import {Injectable} from '@angular/core';
-//import {Http, Headers} from '@angular/http';
+﻿import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
@@ -15,19 +14,18 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class AccountingPeriodExtendedListService {
-  //  private _http: Http
+ 
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-        //this._http = ServiceHelper.Http;
+     
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingperiodviews';
     }
 
     getByYear(year: number, typeCode: string) {
 
-        // var authHeader = new Headers();
-        // authHeader.append('Token', SessionInfo.Token);
+        
 
         return this.httpClient.get(this._apiUrl + '/getbyyear/?' + 'year=' + year + '&typeCode=' + typeCode,  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
@@ -42,21 +40,7 @@ export class AccountingPeriodExtendedListService {
                return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-        //     return this._http.get(this._apiUrl + '/getbyyear/?' + 'year=' + year + '&typeCode=' + typeCode, { headers: authHeader }).map(response => {
-        //         var list = response.json();
-
-        //         var entity: AccountingPeriodList;
-        //         if (list) {
-        //             entity = this.MapJsonToEntityList(list);
-        //         }
-
-        //         var serviceResponse: ServiceResponse;
-        //         serviceResponse = new ServiceResponse();
-        //         serviceResponse.Result = entity;
-        //         return serviceResponse;
-        //     }).catch(ServiceHelper.HandleServiceError);
-        // });
+       
     }
 
     MapJsonToEntityList(jsonList: any) {

@@ -1,5 +1,5 @@
-﻿import {Injectable} from '@angular/core';
-//import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,19 +12,18 @@ import { catchError, map } from 'rxjs/operators'
 @Injectable()
 
 export class BankAccountExtendedListService {
- //   private _http: Http
+ 
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-      //  this._http = ServiceHelper.Http;
+     
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bankaccountviews';
     }
 
     
     GetBankAccountsSummary() {
-        // var authHeader = new Headers();
-        // authHeader.append('Token', SessionInfo.Token);
+      
 
         return this.httpClient.get(this._apiUrl + '/GetBankAccountsSummary',  ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
@@ -32,15 +31,7 @@ export class BankAccountExtendedListService {
                  return allLists;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-        //     return this._http.get(this._apiUrl + '/GetBankAccountsSummary', {
-        //         headers: authHeader
-        //     }).map(response => {
-
-        //         var allLists = response.json();
-        //         return allLists;
-        //     });
-        // });
+       
     }
 
     MapJsonToEntityList(jsonList: any) {

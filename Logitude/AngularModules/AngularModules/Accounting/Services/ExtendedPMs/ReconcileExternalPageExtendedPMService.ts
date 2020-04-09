@@ -1,6 +1,5 @@
 import { CustomFieldClass } from './../../../Infrastructure/DataContracts/CustomFieldClass';
 import { Injectable } from '@angular/core';
-//import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -19,12 +18,12 @@ import { catchError, map } from 'rxjs/operators'
 
 export class ReconcileExternalPageExtendedPMService
 {
-   // private _http: Http;
+ 
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor()
     {
-        //this._http = ServiceHelper.Http;
+        
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
     }
@@ -36,9 +35,7 @@ export class ReconcileExternalPageExtendedPMService
         return Observable.defer(() =>
         {
 
-          //  var authHeader = new Headers();
-          //  authHeader.append('Token', SessionInfo.Token);
-           // authHeader.append('Content-Type', 'application/json');
+         
 
             return this.httpClient.get(this._apiUrl + '/GetPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName,  ServiceHelper.GetHttpHeaders()).pipe(
                 map((response:ServiceResponse) => {
@@ -58,27 +55,7 @@ export class ReconcileExternalPageExtendedPMService
                         return serviceResponse;
                 }),
                 catchError(ServiceHelper.HandleServiceError));
-            // return Observable.defer(() =>
-            // {
-            //     return this._http.get(this._apiUrl + '/GetPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName, { headers: authHeader })
-            //         .map(response =>
-            //         {
-            //             var res = response.json();
-            //             var pm = res.Result;
-
-
-            //             var entity: ReconcileExternalPagePM;
-            //             if (pm) {
-            //                 entity = this.MapJsonToEntityPM(pm);
-            //             }
-
-            //             var serviceResponse: ServiceResponse;
-            //             serviceResponse = new ServiceResponse();
-            //             serviceResponse.Result = entity;
-
-            //             return serviceResponse;
-            //         }).catch(ServiceHelper.HandleServiceError);
-            // });
+            
         });
 
 
@@ -105,46 +82,14 @@ export class ReconcileExternalPageExtendedPMService
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() =>
-        // {
-
-        //    // var authHeader = new Headers();
-        //    // authHeader.append('Token', SessionInfo.Token);
-        //   //  authHeader.append('Content-Type', 'application/json');
-      
-
-        //     return Observable.defer(() =>
-        //     {
-        //         return this._http.get(this._apiUrl + '/GetPreviousPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName, { headers: authHeader })
-        //             .map(response =>
-        //             {
-        //                 var res = response.json();
-        //                 var pm = res.Result;
-
-
-        //                 var entity: ReconcileExternalPagePM;
-        //                 if (pm) {
-        //                     entity = this.MapJsonToEntityPM(pm);
-        //                 }
-
-        //                 var serviceResponse: ServiceResponse;
-        //                 serviceResponse = new ServiceResponse();
-        //                 serviceResponse.Result = entity;
-
-        //                 return serviceResponse;
-        //             }).catch(ServiceHelper.HandleServiceError);
-        //     });
-        // });
-
+        
 
     }
 
 
     LoadBankPages(fileUploadParamerter: ImageParameter)
     {
-       // var authHeader = new Headers();
-      //  authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-      //  authHeader.append('Content-Type', 'application/json');
+       
       return this.httpClient.post(this._apiUrl + '/PostLoadBankPages', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             var result = response;
@@ -155,23 +100,7 @@ export class ReconcileExternalPageExtendedPMService
             return pmresponse;
         }),
         catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() =>
-        // {
-        //     return this._http.post(this._apiUrl + '/PostLoadBankPages', JSON.stringify(fileUploadParamerter), {
-        //         headers: authHeader,
-
-        //     }).map(response =>
-        //     {
-        //         var result = response.json();
-        //         var pmresponse: ServiceResponse;
-        //         pmresponse = new ServiceResponse();
-
-        //         pmresponse.Result = result;
-        //         return pmresponse;
-
-        //     }).catch(ServiceHelper.HandleServiceError);
-        // }
-        // );
+        
 
     }
 
@@ -185,25 +114,7 @@ export class ReconcileExternalPageExtendedPMService
                 return res;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() =>
-        // {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-
-        //     return Observable.defer(() =>
-        //     {
-        //         return this._http.get(this._apiUrl + '/GetCheckLastApprovedBankPageAndReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId+ '&objectTableName=' + objectTableName, { headers: authHeader })
-        //             .map(response =>
-        //             {
-        //                 var res = response.json();
-
-        //                 return res;
-        //             }).catch(ServiceHelper.HandleServiceError);
-        //     });
-        // });
+        
 
 
     }
@@ -216,25 +127,7 @@ export class ReconcileExternalPageExtendedPMService
                         return res;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() =>
-        // {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-
-        //     return Observable.defer(() =>
-        //     {
-        //         return this._http.get(this._apiUrl + '/GetCheckRestorePossibility?reconcileExternalPageId=' + reconcileExternalPageId, { headers: authHeader })
-        //             .map(response =>
-        //             {
-        //                 var res = response.json();
-
-        //                 return res;
-        //             }).catch(ServiceHelper.HandleServiceError);
-        //     });
-        // });
+        
 
 
     }
@@ -247,26 +140,7 @@ export class ReconcileExternalPageExtendedPMService
         }),
         catchError(ServiceHelper.HandleServiceError));
 
-        // return Observable.defer(() =>
-        // {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-
-        //     return Observable.defer(() =>
-        //     {
-        //         return this._http.get(this._apiUrl + '/GetDraftPage?entityId=' + entityId + '&objectTableName=' + objectTableName, { headers: authHeader })
-        //             .map(response =>
-        //             {
-        //                 var res = response.json();
-
-        //                 return res;
-        //             }).catch(ServiceHelper.HandleServiceError);
-        //     });
-        // });
-
+        
 
     }
 

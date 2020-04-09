@@ -27,6 +27,7 @@ import { AgingReportParameters } from '../../../DataContracts/AgingReportParamet
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ModulesService } from '../../../Services/ModulesService';
+import { AccountReceivablesSummary } from '../../../../Invoice/Services/InvoiceDomainService';
 
 @Component({
     moduleId: module.id,
@@ -349,7 +350,7 @@ export class ReceivablePageComponent {
         // ARPayments
 
         var myService = new ModulesService();
-        myService.GetAccountingReceivablesSummary().subscribe(myResult => {
+        myService.GetAccountingReceivablesSummary().subscribe((myResult:AccountReceivablesSummary) => {
             if (myResult != null) {
                 this.ARInvoicesDraftsCount = myResult.ARInvoicesDraftsCount > 1000 ? "1000+" : myResult.ARInvoicesDraftsCount.toString();
                 this.ARInvoicesUnpaidCount = myResult.ARInvoicesUnpaidCount > 1000 ? "1000+" : myResult.ARInvoicesUnpaidCount.toString();

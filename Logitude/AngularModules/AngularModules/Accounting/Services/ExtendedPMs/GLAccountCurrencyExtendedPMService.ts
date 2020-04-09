@@ -1,7 +1,6 @@
 ﻿
 
 import {Injectable} from '@angular/core';
-//import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -20,11 +19,11 @@ import { catchError, map } from 'rxjs/operators'
 
 export class GLAccountCurrencyExtendedPMService{
 
- //   private _http: Http;
+
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-       // this._http = ServiceHelper.Http;
+       
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccountCurrency';
     }
@@ -32,12 +31,9 @@ export class GLAccountCurrencyExtendedPMService{
     insert(entityPM: GLAccountCurrencyPM) {
 
         var callTime = new Date();
-       // return Observable.defer(() => {
+     
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
+         
             var validator: ClassLevelValidator;
 
             validator = new ClassLevelValidator();
@@ -65,21 +61,7 @@ export class GLAccountCurrencyExtendedPMService{
 
                     }),
                     catchError(ServiceHelper.HandleServiceError));
-                // return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                //     { headers: authHeader }).map((response) => {
-
-                //         var pm = response.json();
-                //         if (pm) {
-                //             var mappedResult: GLAccountCurrencyPM;
-                //             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                //             serviceResponse.Result = mappedResult;
-                //         }
-
-
-
-                //         return serviceResponse;
-
-                //     }).catch(ServiceHelper.HandleServiceError);
+                 
             }
             else {
 
@@ -89,9 +71,7 @@ export class GLAccountCurrencyExtendedPMService{
                 return Observable.of(serviceResponse);
 
             }
-        // }
-
-        // );
+      
     }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: GLAccountCurrencyPM = null) {

@@ -1,6 +1,5 @@
 
 import { Injectable } from '@angular/core';
-//import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -19,11 +18,11 @@ import { catchError, map } from 'rxjs/operators'
 
 export class TaxDeductionReportExtendedPMService {
 
-   // private _http: Http;
+   
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-      //  this._http = ServiceHelper.Http;
+     
         this.httpClient = ServiceHelper.HttpClient;
          this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxDeductionReportFile';
     }
@@ -44,28 +43,7 @@ export class TaxDeductionReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-        //     var mappedEntity: TaxDeductionReportPM;
-        //     mappedEntity = this.MapJsonToEntityPM(taxDeductionReportPM, false);
-
-        //     return this._http.post(this._apiUrl + "/PostDownloadTaxDeduction856FileInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
-        //         .map((res) => {
-
-        //             var result = res.json();
-        //             serviceResponse.Result = result;
-
-        //             return serviceResponse;
-
-        //         }).catch(ServiceHelper.HandleServiceError);
-        // });
+        
 
     }
 

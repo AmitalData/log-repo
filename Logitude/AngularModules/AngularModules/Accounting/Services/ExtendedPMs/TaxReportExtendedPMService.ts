@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-//import {Http, Headers} from '@angular/http';
+
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -16,11 +16,11 @@ import { catchError, map } from 'rxjs/operators'
 @Injectable()
 
 export class TaxReportExtendedPMService {
-   // private _http: Http;
+  
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-       // this._http = ServiceHelper.Http;
+       
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
     }
@@ -36,28 +36,7 @@ export class TaxReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-        //     //var mappedEntity: TaxReportPM;
-        //     //mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
-
-        //     return this._http.post(this._apiUrl + "/PostDownloadPNC874File", JSON.stringify(taxReportPM), { headers: authHeader })
-        //         .map((res) => {
-
-        //             var result = res.json();
-        //             serviceResponse.Result = result;
-
-        //             return serviceResponse;
-
-        //         }).catch(ServiceHelper.HandleServiceError);
-        // });
+        
 
     }
 
@@ -72,28 +51,7 @@ export class TaxReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-        //     //var mappedEntity: TaxReportPM;
-        //     //mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
-
-        //     return this._http.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(taxReportPM), { headers: authHeader })
-        //         .map((res) => {
-
-        //             var result = res.json();
-        //             serviceResponse.Result = result;
-
-        //             return serviceResponse;
-
-        //         }).catch(ServiceHelper.HandleServiceError);
-        // });
+       
 
     }
 
@@ -109,28 +67,7 @@ export class TaxReportExtendedPMService {
             }),
             catchError(ServiceHelper.HandleServiceError));
 
-        // return Observable.defer(() => {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-        //     //var mappedEntity: TaxReportPM;
-        //     //mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
-
-        //     return this._http.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(taxReportPM), { headers: authHeader })
-        //         .map((res) => {
-
-        //             var result = res.json();
-        //             serviceResponse.Result = result;
-
-        //             return serviceResponse;
-
-        //         }).catch(ServiceHelper.HandleServiceError);
-        // });
+        
       }
 
     GetReportLinesCounter(taxReportId: string) {
@@ -145,32 +82,14 @@ export class TaxReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-            // return Observable.defer(() => {
-
-            //     var authHeader = new Headers();
-            //     authHeader.append('Token', SessionInfo.Token);
-            //     authHeader.append('Content-Type', 'application/json');
-
-            //     var serviceResponse: ServiceResponse;
-            //     serviceResponse = new ServiceResponse();
-
-            //     return this._http.get(this._apiUrl+'/GetLinesCounters?taxReportId='+taxReportId, { headers: authHeader }).map(response => {
-            //         var allLists = response.json();
-
-            //         var serviceResponse = new ServiceResponse();
-            //         serviceResponse.Result = allLists;
-            //         return serviceResponse;
-
-            //     }).catch(ServiceHelper.HandleServiceError);
-            // });
+            
 
     }
 
 
     getErrorsCount(reportId: string) {
 	    var callTime = new Date();
-        //var authHeader = new Headers();
-       // authHeader.append('Token', SessionInfo.Token);
+        
        return this.httpClient.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId,  ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             var result = response;
@@ -178,17 +97,7 @@ export class TaxReportExtendedPMService {
             return result;
         }),
         catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-        //     return this._http.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId, {
-        //         headers: authHeader
-        //     }).map(response => {
-        //         var result = response.json();
-
-        //         return result;
-        //     }).catch(ServiceHelper.HandleServiceError);
-        // }
-
-        // );
+       
     }
 
 
