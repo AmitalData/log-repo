@@ -19,9 +19,9 @@ namespace Logitude.DeploymentAgentService
 {
     public partial class LogitudeDeploymentAgentService : ServiceBase
     {
-        protected long ServiceIntervalInSeconds = Convert.ToInt64(ConfigurationManager.AppSettings["ServiceIntervalInSeconds"]);
         protected string AgentServiceId = ConfigurationManager.AppSettings["AgentServiceId"];
         protected string InstanceName = ConfigurationManager.AppSettings["InstanceName"];
+        protected long ServiceIntervalInSeconds = Convert.ToInt64(ConfigurationManager.AppSettings["ServiceIntervalInSeconds"]);
 
         protected Timer ServiceTimer = new Timer();
 
