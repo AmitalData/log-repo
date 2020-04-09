@@ -2289,11 +2289,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                    
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                     journal.JournalLines.Add(journalLine);
-                    var total = entityPM.InvoiceLines.Sum(s => s.LocalCurrencyAmount);
+                    //double? total = 0;// entityPM.InvoiceLines.Sum(a => a.LocalCurrencyAmount);// + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)));//.Sum(s => s.LocalCurrencyAmount);
+                    //double? amount = 0.0;
+                    //foreach(APInvoiceLinePM a in entityPM.InvoiceLines)
+                    //{
+                    //    if(a.VatRecognizedPercentage != null)
+                    //    {
+                    //    }
+                    //    amount = (a.VatRecognizedPercentage == null || a.VatRecognizedPercentage == 0) ? a.LocalCurrencyAmount :
+                    //   (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)));
+
+                    //    total = (double?) amount + total;
+
+                    //}
+
+
                     // [Debit]
                     journalLine = new JournalLinePM();
                     int counter = 1;
-               
+                    List<JournalLinePM> journalDebitLines = new List<JournalLinePM>();
                     List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
                                                         group d by new { d.ChargeTypeGLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
                                                         select new JournalLinePM()
@@ -2309,9 +2323,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
 
-                                                            LocalAmount = (decimal)g.Sum(a => 
+                                                            LocalAmount =(decimal)g.Sum(a => 
                                                             (a.VatRecognizedPercentage == null || a.VatRecognizedPercentage==0) ? a.LocalCurrencyAmount :
-                                                                 (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)))),
+                                                               Math.Round( (double) (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2))),2)),
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
                                                             ForeignAmount = (decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),
@@ -2323,7 +2337,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                         }).ToList();
 
                     journal.JournalLines.AddRange(journalLines);
-                    var total2 = journal.JournalLines.Sum(d => d.LocalAmount);
+                    journalDebitLines.AddRange(journalLines);
+                    var totalDebitLines = journal.JournalLines.Where(d=> d.ActionCode=="2").Sum(d => d.LocalAmount);
                     // [Vats]
                     //List<APInvoiceTotalVAT> APInvoiceTotalVATs = new List<APInvoiceTotalVAT>();
 
@@ -2360,10 +2375,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                             CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
-                        total2 = total2 + journalLine.LocalAmount;
+                        totalDebitLines = totalDebitLines + journalLine.LocalAmount;
                         journal.JournalLines.Add(journalLine);
                     }
+                   var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == "1").FirstOrDefault().LocalAmount;
+                    var difference = journalCreditAmount - totalDebitLines  ;
 
+                        if (Math.Abs(difference) < (decimal) 0.06)
+                        {
+                            JournalLinePM largestJournalAmount = journalDebitLines.Where(d =>  d.LocalAmount == journalDebitLines.Max(a=> a.LocalAmount)).FirstOrDefault();
+                            journal.JournalLines.Where(d => d.Line == largestJournalAmount.Line).ToList().ForEach(d => { d.LocalAmount = d.LocalAmount + difference; d.ForeignAmount = d.ForeignAmount + difference; });
+                        }
+
+                    
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
                     journalUpdate.Update(journal);
                 }
