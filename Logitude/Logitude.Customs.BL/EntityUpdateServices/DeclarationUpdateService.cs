@@ -62,7 +62,12 @@ using System.Diagnostics;
             {
                 entityPM.CreateDateTime = DateTime.Now;
             }
-          
+
+            if (entityPM.AvailabilityDate.Year == 1)
+            {
+                entityPM.AvailabilityDate = DateTime.Now;
+            }
+
             ICustomContext context = MainContext as CustomContext;
             if (string.IsNullOrWhiteSpace(entityPM.ImporterTypeCode)) entityPM.ImporterTypeCode = "1";
             if (string.IsNullOrWhiteSpace(entityPM.TransferImporterTypeCode)) entityPM.TransferImporterTypeCode = "1";

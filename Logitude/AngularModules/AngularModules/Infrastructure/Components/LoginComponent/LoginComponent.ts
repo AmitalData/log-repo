@@ -507,9 +507,12 @@ export class LoginComponent implements OnInit {
 
                 CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(response => {
                     this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe(response => {
-                        this.IncreaseProgressBar("General Resources");
-                        //26
+                        this.entityResourceService.getEntityResourceByTableName("CustomsGeneral", 0).subscribe(response => {
+                            this.IncreaseProgressBar("General Resources");
+                            //26
+                        });
                     });
+                   
                 });
 
                 this.generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe(response => {
