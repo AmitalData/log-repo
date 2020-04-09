@@ -4,8 +4,6 @@ using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.FTP;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
@@ -49,9 +47,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private IShipmentsContext shipmentsContext;
         private MessageTransferHelper Helper;
         private bool isDropBox = false;
-        public bool UsingFTP = false;
-        public string FTPDetailId;
-        public ARInvoiceMessageHelper(List<ARInvoice> invoices, string filename, int tenant,  bool isDropBox = false)
+        private bool UsingFTP = false;
+        private string FTPDetailId;
+        public ARInvoiceMessageHelper(List<ARInvoice> invoices, string filename, int tenant,  bool isDropBox = false, bool isFTP = false)
         {
             this.tenant = tenant;
             this.filename = filename;
@@ -61,6 +59,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             this.shipmentsContext = ShipmentsContext.GetContext(tenant);
             this.Helper = new MessageTransferHelper(tenant, this.invoiceCotnext, this.commonContext, this.shipmentsContext);
             this.isDropBox = isDropBox;
+            this.UsingFTP = isFTP;
+
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(commonContext);
             AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
             if (accountingSetting != null)
@@ -68,6 +68,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myVATableTempCard = accountingSetting.ReceivableVATableTempCard;
                 myVATExemptTempCard = accountingSetting.ReceivableVATExemptTempCard;
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
+                FTPDetailId = accountingSetting.TransferFTPDetailId;
             }
         }
         public ARInvoiceMessageHelper(int tenant)
@@ -1996,6 +1997,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         {
             ObjectTableRepository repo = new ObjectTableRepository(tenant);
             string  objectTableId = repo.GetObjectTableIdByName("ARInvoice");
+            string FTPFileName = "";
 
             AccountingTranferViaFTPHelper helper = new AccountingTranferViaFTPHelper(tenant, objectTableId, FTPDetailId);           
             var invoice = this.invoices.FirstOrDefault();
@@ -2003,9 +2005,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             if (invoice != null)
             {
                 entityId = invoice.Id;
+                FTPFileName = invoice.InvoiceNumber;
             }
             
-            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, this.filename, entityId, myAccountingSystemCode);
+            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode, "ARInvoice");
 
             this.myDocumentId = helper.DocumentId;
             this.myDocumentFolder = helper.DocumentFolder;
@@ -2041,7 +2044,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     ip = HttpContext.Current.Request.UserHostAddress;
                 }
 
-                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "INTTRA controller", null, ip);
+                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "AR Invoice Transfer", null, ip);
             }
         }
         #endregion

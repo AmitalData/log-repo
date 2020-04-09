@@ -160,19 +160,31 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool isTransferToDropbox;
         private bool TransferToDropboxActivated;
         AccountingSetting accountingSetting;
+        private bool transferToFTPActivated;
+        private bool canTransferToFTP;
         private void GetAccountingSystem()
         {
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(tenant);
             this.accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
 
-            AccountingSystemRepository accountingSystemRepository = new AccountingSystemRepository(tenant);
-            AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+            if (accountingSetting != null)
+            {
+                this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                this.transferToFTPActivated = accountingSetting.TransferToFTPActivated;
 
-            this.isJournal = accountingSystem.IsJournalMode;
-            this.isExternal = accountingSystem.IsExternalCodesFromTable;
-            this.isTaxItemManaged = accountingSystem.IsTaxItemManaged;
-            this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
-            this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                AccountingSystemRepository accountingSystemRepository = new AccountingSystemRepository(tenant);
+                AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+
+                if (accountingSystem != null)
+                {
+                    this.isJournal = accountingSystem.IsJournalMode;
+                    this.isExternal = accountingSystem.IsExternalCodesFromTable;
+                    this.isTaxItemManaged = accountingSystem.IsTaxItemManaged;
+                    this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
+                    this.canTransferToFTP = accountingSystem.CanTransferToFTP;
+
+                }
+            }
         }
 
         private void ValidateInvoiceCreated()
@@ -614,19 +626,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateAPInvoiceMessage(bool setApproved)
         {
-            if (setApproved && this.isTransferToDropbox && this.TransferToDropboxActivated)
+            if (setApproved)
             {
-                if (!string.IsNullOrEmpty(entityPM.TransferError))
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
                 {
-                    throw new ApplicationException(entityPM.TransferError);
-                }
-                else
-                {
-                    this.invoice = invoiceRepository.GetSingleAPInvoice(this.entityPM.Id, this.entityPM.Tenant);
-                    List<APInvoice> entities = new List<APInvoice>();
-                    entities.Add(this.invoice);
-                    APInvoiceMessageHelper myHelper = new APInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, true);
-                    myHelper.Transfer();
+                    if (!string.IsNullOrEmpty(entityPM.TransferError))
+                    {
+                        throw new ApplicationException(entityPM.TransferError);
+                    }
+                    else
+                    {
+                        bool isDropBox = this.isTransferToDropbox && this.TransferToDropboxActivated;
+                        bool isFTP = this.canTransferToFTP && this.transferToFTPActivated;
+
+                        this.invoice = invoiceRepository.GetSingleAPInvoice(this.entityPM.Id, this.entityPM.Tenant);
+                        List<APInvoice> entities = new List<APInvoice>();
+                        entities.Add(this.invoice);
+
+                        APInvoiceMessageHelper myHelper = new APInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, isDropBox, isFTP);
+                        myHelper.Transfer();
+                    }
                 }
             }
         }
@@ -839,9 +858,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.InitializeTransferFields();
             this.InitializeGLAccountFields();
             // DropBox
-            if (this.entityPM.SetApproved && this.isTransferToDropbox && this.TransferToDropboxActivated && string.IsNullOrEmpty(entityPM.TransferError))
+            if (this.entityPM.SetApproved && string.IsNullOrEmpty(entityPM.TransferError))
             {
-                this.entityPM.TransferStatusCode = "TR";
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
+                {
+                    this.entityPM.TransferStatusCode = "TR";
+                }
             }
         }
         private void InitializeExternalFields()
