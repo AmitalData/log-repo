@@ -330,6 +330,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
                         LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
                         HideFCLAllIn = tt.HideFCLAllIn,
+                        DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -487,6 +488,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
                     LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
                     HideFCLAllIn = tt.HideFCLAllIn,
+                    DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -627,6 +629,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                            ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                            HideFCLAllIn = a.HideFCLAllIn,
+                                           DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -763,6 +766,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                        ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                        HideFCLAllIn = a.HideFCLAllIn,
+                                       DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -910,6 +914,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                                DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                                LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                                               DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1059,6 +1064,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                            DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                            LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                                           DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1196,6 +1202,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                        DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                        LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                                       DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1352,6 +1359,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DocumentShareAsDefault = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.DocumentShareAsDefault:false,
                     LogBoxAdminUserId = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.LogBoxAdminUserId : null,
                     HideFCLAllIn = myPOCO.HideFCLAllIn,
+                    DisplayDocumentsAndEvents = myPOCO.DisplayDocumentsAndEvents,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1745,13 +1753,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entityPM.CompanyAddress = address.Name;
                 }
             }
-
-            IInfrastructureContext infrastructureContext = InfrastructureContext.GetContext(entityPM.Id);
-            SharedLogisticsSetting sharedLogisticsSetting = (from d in infrastructureContext.SharedLogisticsSettings where d.Id == entityPM.Id.ToString() select d).FirstOrDefault();
-            if (sharedLogisticsSetting != null)
-            {
-                entityPM.DisplayDocumentsAndEvents = sharedLogisticsSetting.DisplayDocumentsAndEvents;
-            }
         }
 
         private static void GetStaticTenantOtherFields(TenantPM entityPM)
@@ -1787,13 +1788,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entityPM.CountryName = address.CountryEnglishName;
                     entityPM.CompanyAddress = address.Name;
                 }
-            }
-
-            IInfrastructureContext infrastructureContext = InfrastructureContext.GetContext(entityPM.Id);
-            SharedLogisticsSetting sharedLogisticsSetting = (from d in infrastructureContext.SharedLogisticsSettings where d.Id == entityPM.Id.ToString() select d).FirstOrDefault();
-            if (sharedLogisticsSetting != null)
-            {
-                entityPM.DisplayDocumentsAndEvents = sharedLogisticsSetting.DisplayDocumentsAndEvents;
             }
         }
     }

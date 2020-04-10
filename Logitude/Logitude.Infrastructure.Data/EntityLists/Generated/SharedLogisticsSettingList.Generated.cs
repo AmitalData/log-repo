@@ -20,8 +20,6 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public bool IsShowAmountLocalCurrency  { get; set; }
-       [DataMember]
-       public bool DisplayDocumentsAndEvents  { get; set; }
    }
 
 }

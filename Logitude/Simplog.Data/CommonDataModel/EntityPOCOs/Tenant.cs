@@ -182,5 +182,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool HideFCLAllIn { get; set; }
         public bool AllowCustomersInAgentsLOV { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
+        public bool DisplayDocumentsAndEvents { get; set; }
+
     }
 }

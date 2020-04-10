@@ -7,12 +7,12 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.SharedLogisticsSettings", "DisplayDocumentsAndEvents", c => c.Boolean(nullable: false));
+            //AddColumn("dbo.SharedLogisticsSettings", "DisplayDocumentsAndEvents", c => c.Boolean(nullable: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.SharedLogisticsSettings", "DisplayDocumentsAndEvents");
+            //DropColumn("dbo.SharedLogisticsSettings", "DisplayDocumentsAndEvents");
         }
     }
 }

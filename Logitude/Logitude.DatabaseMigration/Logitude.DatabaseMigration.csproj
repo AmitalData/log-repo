@@ -2299,6 +2299,10 @@
     <Compile Include="Migrations\202004081735313_AddDisplayDocumentsAndEvents.Designer.cs">
       <DependentUpon>202004081735313_AddDisplayDocumentsAndEvents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004100922221_AddDisplayDocumentsAndEventsToTenant.cs" />
+    <Compile Include="Migrations\202004100922221_AddDisplayDocumentsAndEventsToTenant.Designer.cs">
+      <DependentUpon>202004100922221_AddDisplayDocumentsAndEventsToTenant.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4156,6 +4160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004081735313_AddDisplayDocumentsAndEvents.resx">
       <DependentUpon>202004081735313_AddDisplayDocumentsAndEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004100922221_AddDisplayDocumentsAndEventsToTenant.resx">
+      <DependentUpon>202004100922221_AddDisplayDocumentsAndEventsToTenant.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

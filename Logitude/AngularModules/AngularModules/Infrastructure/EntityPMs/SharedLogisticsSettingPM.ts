@@ -134,11 +134,6 @@ export class SharedLogisticsSettingPM {
     public set IsShowAmountLocalCurrency(newValue: boolean) { if (this.isShowAmountLocalCurrency != newValue) { this.isShowAmountLocalCurrency = newValue; this.MarkAsDirty("IsShowAmountLocalCurrency"); } }
        
 	 
-    private displayDocumentsAndEvents: boolean;
-    public get DisplayDocumentsAndEvents() { return this.displayDocumentsAndEvents; }
-    public set DisplayDocumentsAndEvents(newValue: boolean) { if (this.displayDocumentsAndEvents != newValue) { this.displayDocumentsAndEvents = newValue; this.MarkAsDirty("DisplayDocumentsAndEvents"); } }
-       
-	 
 
     public OldEntityPM: SharedLogisticsSettingPM;
 		

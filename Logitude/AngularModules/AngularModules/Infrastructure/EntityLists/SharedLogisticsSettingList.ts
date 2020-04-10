@@ -11,7 +11,6 @@ export class SharedLogisticsSettingList {
 	Tenant: number;
 	Id: string;
 	IsShowAmountLocalCurrency: boolean;
-	DisplayDocumentsAndEvents: boolean;
 	
 }
  
