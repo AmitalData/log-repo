@@ -935,17 +935,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     else
                     {
                         bool isDropBox = this.isTransferToDropbox && this.TransferToDropboxActivated;
+                        bool isFTP = this.canTransferToFTP && this.transferToFTPActivated;
+
                         this.invoice = invoiceRepository.GetSingleInvoice(this.entityPM.Id);
                         List<ARInvoice> entities = new List<ARInvoice>();
                         entities.Add(this.invoice);
-                        ARInvoiceMessageHelper myHelper = new ARInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, isDropBox);
 
-                        if(this.canTransferToFTP && this.transferToFTPActivated)
-                        {
-                            myHelper.UsingFTP = true;
-                            myHelper.FTPDetailId = accountingSetting.TransferFTPDetailId;
-                        }
-
+                        ARInvoiceMessageHelper myHelper = new ARInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, isDropBox, isFTP);
                         myHelper.Transfer();
                     }
                 }
