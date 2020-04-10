@@ -126,8 +126,8 @@ namespace WebFreight.Web.DataProviders
         public string DescriptionOfGoods { get; set; }
         public string ChargeableWeight { get; set; }
         public string AgentContactEmail { get; set; }
-
         public string TrailerNumber { get; set; }
+        public string ProjectNumber { get; set; }
         #endregion
 
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
