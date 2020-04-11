@@ -36,6 +36,7 @@ namespace Logitude.TariffModule.BL.DataContracts
         public bool IsMinIconVisible { get; set; }
         public string LineId { get; set; }
         public List<ContainersPrice> ContainersPrices { get; set; }
+        public string TransitTime { get; set; }
     }
 
     public class ContainersPrice

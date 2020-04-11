@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffLineUpdateClass
    {  		
-		public const string HashString = "1b2bfd761892d9823102d9cc1d20b453";
+		public const string HashString = "5301c0473be3a77b7a528e2e3c707a27";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "TariffLine",
 			      				    IsNew =  true,
 			      				    DBTableName =  "TariffLines",
-			      				    OldDBTableName =  "Sprints",
 			      				    ObjectTableSingular =  "TariffLine",
 			      				    ObjectTablePlural =  "TariffLines",
 			      				    HasCustomFilter =  false,
@@ -118,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
 			      				    DefaultText =  "Tariff Lines",
-			      				    Code =  "c82f",
+			      				    Code =  "1a09",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "TariffModule",
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StartDate",
-					  						OldFieldName =  "FromDate",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -266,7 +263,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExpirationDate",
-					  						OldFieldName =  "ToDate",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -328,7 +324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TariffId",
-					  						OldFieldName =  "SellerId",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Tariff",
@@ -389,7 +384,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Version",
-					  						OldFieldName =  "LastVersion",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -449,7 +443,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MinPrice",
-					  						OldFieldName =  "ContractNumber",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -511,7 +504,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step1Price",
-					  						OldFieldName =  "Step1Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -570,7 +562,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step2Price",
-					  						OldFieldName =  "Step1Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -629,7 +620,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step3Price",
-					  						OldFieldName =  "Step1Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -688,7 +678,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step4Price",
-					  						OldFieldName =  "Step1Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -747,7 +736,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step5Price",
-					  						OldFieldName =  "Step1Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -806,7 +794,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step6Price",
-					  						OldFieldName =  "Step1Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -865,7 +852,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step7Price",
-					  						OldFieldName =  "Step1Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -924,7 +910,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step8Price",
-					  						OldFieldName =  "Step1Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -983,7 +968,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge1Price",
-					  						OldFieldName =  "Surcharge1Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1042,7 +1026,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge2Price",
-					  						OldFieldName =  "Surcharge2Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1101,7 +1084,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge3Price",
-					  						OldFieldName =  "Surcharge3Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1160,7 +1142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge4Price",
-					  						OldFieldName =  "Surcharge4Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1219,7 +1200,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge5Price",
-					  						OldFieldName =  "Surcharge5Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1278,7 +1258,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge6Price",
-					  						OldFieldName =  "Surcharge6Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1337,7 +1316,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge7Price",
-					  						OldFieldName =  "Surcharge7Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1396,7 +1374,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge8Price",
-					  						OldFieldName =  "Surcharge8Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1455,7 +1432,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge9Price",
-					  						OldFieldName =  "Surcharge9Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1514,7 +1490,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge10Price",
-					  						OldFieldName =  "Surcharge10Price",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1573,7 +1548,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OriginPortId",
-					  						OldFieldName =  "OriginPortId",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -1631,7 +1605,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DestinationPortId",
-					  						OldFieldName =  "DestinationPortId",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Port",
@@ -1689,7 +1662,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OriginPortName",
-					  						OldFieldName =  "OriginPortName",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1746,7 +1718,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OriginPortCode",
-					  						OldFieldName =  "OriginPortCode",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1803,7 +1774,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DestinationPortName",
-					  						OldFieldName =  "DestinationPortName",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1860,7 +1830,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DestinationPortCode",
-					  						OldFieldName =  "DestinationPortCode",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1917,7 +1886,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OriginPortText",
-					  						OldFieldName =  "OriginPortText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1974,7 +1942,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DestinationPortText",
-					  						OldFieldName =  "DestinationPortText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2031,7 +1998,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "MinPriceText",
-					  						OldFieldName =  "MinPriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2088,7 +2054,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step1PriceText",
-					  						OldFieldName =  "Step1PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2145,7 +2110,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step2PriceText",
-					  						OldFieldName =  "Step2PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2202,7 +2166,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step3PriceText",
-					  						OldFieldName =  "Step3PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2259,7 +2222,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step4PriceText",
-					  						OldFieldName =  "Step4PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2316,7 +2278,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step5PriceText",
-					  						OldFieldName =  "Step5PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2373,7 +2334,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step6PriceText",
-					  						OldFieldName =  "Step6PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2430,7 +2390,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step7PriceText",
-					  						OldFieldName =  "Step7PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2487,7 +2446,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Step8PriceText",
-					  						OldFieldName =  "Step8PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2544,7 +2502,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge1PriceText",
-					  						OldFieldName =  "Surcharge1PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2601,7 +2558,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge2PriceText",
-					  						OldFieldName =  "Surcharge2PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2658,7 +2614,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge3PriceText",
-					  						OldFieldName =  "Surcharge3PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2715,7 +2670,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge4PriceText",
-					  						OldFieldName =  "Surcharge4PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2772,7 +2726,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge5PriceText",
-					  						OldFieldName =  "Surcharge5PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2829,7 +2782,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge6PriceText",
-					  						OldFieldName =  "Surcharge6PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2886,7 +2838,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge7PriceText",
-					  						OldFieldName =  "Surcharge7PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2943,7 +2894,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge8PriceText",
-					  						OldFieldName =  "Surcharge8PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3000,7 +2950,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge9PriceText",
-					  						OldFieldName =  "Surcharge9PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3057,7 +3006,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge10PriceText",
-					  						OldFieldName =  "Surcharge10PriceText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3114,7 +3062,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "HasErrors",
-					  						OldFieldName =  "HasErrors",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3171,7 +3118,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ErrorText",
-					  						OldFieldName =  "ErrorText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3228,7 +3174,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LineUniqueKey",
-					  						OldFieldName =  "UniqueKey",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3286,7 +3231,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LineUniqueKeyText",
-					  						OldFieldName =  "UniqueKeyText",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3344,7 +3288,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Index",
-					  						OldFieldName =  "Index",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -3401,7 +3344,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3458,7 +3400,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "AddedManually",
-					  						OldFieldName =  "AddedManually",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3515,7 +3456,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsFromAllOtherPorts",
-					  						OldFieldName =  "IsFromAllOtherPorts",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3572,7 +3512,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsToAllOtherPorts",
-					  						OldFieldName =  "IsToAllOtherPorts",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3629,7 +3568,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge1MinPrice",
-					  						OldFieldName =  "Surcharge1MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3688,7 +3626,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge2MinPrice",
-					  						OldFieldName =  "Surcharge2MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3747,7 +3684,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge3MinPrice",
-					  						OldFieldName =  "Surcharge3MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3806,7 +3742,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge4MinPrice",
-					  						OldFieldName =  "Surcharge4MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3865,7 +3800,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge5MinPrice",
-					  						OldFieldName =  "Surcharge5MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3924,7 +3858,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge6MinPrice",
-					  						OldFieldName =  "Surcharge6MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3983,7 +3916,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge7MinPrice",
-					  						OldFieldName =  "Surcharge7MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4042,7 +3974,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge8MinPrice",
-					  						OldFieldName =  "Surcharge8MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4101,7 +4032,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge9MinPrice",
-					  						OldFieldName =  "Surcharge9MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4160,7 +4090,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Surcharge10MinPrice",
-					  						OldFieldName =  "Surcharge10MinPrice",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4219,7 +4148,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyId",
-					  						OldFieldName =  "CurrencyId",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -4278,7 +4206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CurrencyCode",
-					  						OldFieldName =  "CurrencyCode",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4335,7 +4262,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ContainersPrices",
-					  						OldFieldName =  "ContainersPrices",
 					  						ObjectTableName =  "TariffLine",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -4412,6 +4338,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OriginPortCombinedCode",
 					  						ListPropertyPath =  "OriginPortCombinedCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4467,6 +4394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "DestinationPortCombinedCode",
 					  						ListPropertyPath =  "DestinationPortCombinedCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4484,6 +4412,63 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DestinationPortCombinedCode",
 					  						DefaultText =  "Destination Port Combined Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "TransitTime",
+					  						ObjectTableName =  "TariffLine",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "TransitTime",
+					  						ListPropertyPath =  "TransitTime",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "TransitTime",
+					  						DefaultText =  "Transit Time",
+					  						ListFieldLable =  "TransitTimeListLable",
+					  						ListLableDefaultText =  "Transit Time",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

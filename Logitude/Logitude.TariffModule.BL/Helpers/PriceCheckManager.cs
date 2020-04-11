@@ -470,7 +470,8 @@ namespace Logitude.TariffModule.BL.Helpers
                             item.Price = 0;
                         }
                     }
-                    
+
+                    tariffsSummary.TransitTime = SelectedLine.TransitTime;
                     tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(item.Price != null ? item.Price.Value : 0, currencyId, result.CurrencyId), 2).ToString("0.00");
                     tariffsSummary.ActualPrice = item.Price;
                     List<TariffVersionAllInCharge> allinList = TariffVersionAllInChargesList.Where(p => p.TariffId == item.tariffid && p.Version == item.TariffVersion).ToList();
@@ -713,7 +714,7 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.VersionId = tariffLine.Version + "";
                     tariffsSummary.TariffId = tariffLine.TariffId;
                     tariffsSummary.TariffNumber = trariff.TariffNumber;
-
+                    tariffsSummary.TransitTime = tariffLine.TransitTime;
                     var airChrageType = chargesTypes.Where(p => p.Code == chargeCode).Select(p => p).FirstOrDefault();
                     tariffsSummary.ChargeTypeId = airChrageType.Id;
                     tariffsSummary.TotalSurcharge = Sum + "";

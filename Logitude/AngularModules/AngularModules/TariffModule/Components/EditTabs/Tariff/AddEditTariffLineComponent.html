@@ -617,6 +617,21 @@
                             </td>
                         </tr>
 
+                        <!-- TransitTime -->
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'AFC' || TariffType == 'OLC' || TariffType == 'OFC'">
+                            <td>
+                                <LogLabel [ObjectFieldName]="'TransitTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogTextBox [ObjectFieldName]="'TransitTime'" [Text]="DataContext.TransitTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </td>
+
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
                         <tr class="FormFieldRow">
                             <td style="vertical-align:top;">
                                 <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>

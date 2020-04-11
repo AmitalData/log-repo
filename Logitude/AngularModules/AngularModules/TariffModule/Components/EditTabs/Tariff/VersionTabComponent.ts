@@ -580,7 +580,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
-            
+            tariffLine.TransitTime = item.TransitTime;
+
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = this.PriceSteps.split(",");
                 var count = steps.length;
@@ -691,6 +692,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         tariffLine.Step8Price = item.Step8Price;
                         tariffLine.Index = item.Index;
                         tariffLine.Notes = item.Notes;
+                        tariffLine.TransitTime = item.TransitTime;
                         copiedVersion.AddTariffLine(tariffLine);
                     });
 

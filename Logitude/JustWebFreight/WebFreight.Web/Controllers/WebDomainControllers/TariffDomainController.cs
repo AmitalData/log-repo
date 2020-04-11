@@ -325,6 +325,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     table.Columns.Add(steps[i] + " KG");
                 }
 
+                table.Columns.Add("Transit Time");
                 table.Columns.Add("Notes");
             }
             else
@@ -333,43 +334,44 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 table.Columns.Add("To");
                 table.Columns.Add("Min Price");
                 table.Columns.Add(tariff.PriceSteps + " KG");
+                table.Columns.Add("Transit Time");
                 table.Columns.Add("Notes");
             }
 
-            string range = "A1:E1";
+            string range = "A1:F1";
             if (steps.Length == 2)
-            {
-                range = "A1:F1";
-            }
-
-            else if (steps.Length == 3)
             {
                 range = "A1:G1";
             }
 
-            else if (steps.Length == 4)
+            else if (steps.Length == 3)
             {
                 range = "A1:H1";
             }
 
-            else if (steps.Length == 5)
+            else if (steps.Length == 4)
             {
                 range = "A1:I1";
             }
 
-            else if (steps.Length == 6)
+            else if (steps.Length == 5)
             {
                 range = "A1:J1";
             }
 
-            else if (steps.Length == 7)
+            else if (steps.Length == 6)
             {
                 range = "A1:K1";
             }
 
-            else if (steps.Length == 8)
+            else if (steps.Length == 7)
             {
                 range = "A1:L1";
+            }
+
+            else if (steps.Length == 8)
+            {
+                range = "A1:M1";
             }
 
             if (type == "Data")
@@ -427,7 +429,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             row[10] = item.Step8Price ?? null;
                         }
 
-                        row[steps.Length + 3] = item.Notes ?? null;
+                        row[steps.Length + 3] = item.TransitTime ?? null;
+
+                        row[steps.Length + 4] = item.Notes ?? null;
 
                         table.Rows.Add(row);
                     }
@@ -437,7 +441,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
             sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
+            sheet1.Columns[steps.Length + 3].ColumnWidth = 14;
             sheet1.ImportDataTable(table, true, 1, 1);
             workbook.SaveAs(memory);
             return memory.ToArray();
@@ -1088,30 +1092,31 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
 
+            table.Columns.Add("Transit Time");
             table.Columns.Add("Notes");
             #endregion
 
             #region range
-            string range = "A1:C1";
+            string range = "A1:D1";
             if (count == 1)
-            {
-                range = "A1:D1";
-            }
-            else if (count == 2)
             {
                 range = "A1:E1";
             }
-            else if (count == 3)
+            else if (count == 2)
             {
                 range = "A1:F1";
             }
-            else if (count == 4)
+            else if (count == 3)
             {
                 range = "A1:G1";
             }
-            else if (count == 5)
+            else if (count == 4)
             {
                 range = "A1:H1";
+            }
+            else if (count == 5)
+            {
+                range = "A1:I1";
             }          
             #endregion
 
@@ -1151,8 +1156,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             row[rowIndex++] = item.Surcharge5Price ?? null;
                         }
-                                                
-                        row[count + 2] = item.Notes ?? null;
+
+                        row[count + 2] = item.TransitTime ?? null;
+                        row[count + 3] = item.Notes ?? null;
 
                         table.Rows.Add(row);
                     }
@@ -1162,7 +1168,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
             sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
+            sheet1.Columns[count + 2].ColumnWidth = 14;
             sheet1.ImportDataTable(table, true, 1, 1);
             workbook.SaveAs(memory);
             return memory.ToArray();

@@ -15,44 +15,44 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityLists;
 
 namespace Logitude.TariffModule.Data.EntityListQueryServices
-{ 
+{
 
     public partial class TariffProductListQueryService
     {
-	    private IQueryable<TariffProductList> GetIqueryableList(IQueryable<TariffProduct> iQueryable)
+        private IQueryable<TariffProductList> GetIqueryableList(IQueryable<TariffProduct> iQueryable)
         {
-		IQueryable<TariffProductList> query = (from a in iQueryable
-                                            select new TariffProductList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          Code = a.Code,
-					
-					                          Name = a.Name,
-					
-					                          LocalName = a.LocalName,
-					
-					                          Inactive = a.Inactive,
-					
-					                          SearchFields = a.SearchFields,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<TariffProductList> query = (from a in iQueryable
+                                                   select new TariffProductList()
+                                                   {
 
-		private IQueryable<TariffProduct> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TariffProduct> iQueryable, int tenant)
+                                                       Id = a.Id,
+
+                                                       Tenant = a.Tenant,
+
+                                                       Code = a.Code,
+
+                                                       Name = a.Name,
+
+                                                       LocalName = a.LocalName,
+
+                                                       Inactive = a.Inactive,
+
+                                                       SearchFields = a.SearchFields,
+
+                                                   });
+            return query;
+        }
+
+        private IQueryable<TariffProduct> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<TariffProduct> iQueryable, int tenant)
         {
             return iQueryable;
         }
-				private IQueryable<TariffProduct> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<TariffProduct> iQueryable, int tenant)
+        private IQueryable<TariffProduct> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<TariffProduct> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
+
+    }
 
 
 }

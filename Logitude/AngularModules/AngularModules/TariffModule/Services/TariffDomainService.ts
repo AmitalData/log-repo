@@ -371,6 +371,7 @@ export class TariffSearchSummary {
     IsMinIconVisible: boolean;
     LineId: string;
     ContainersPrices: Array<ContainersPrice>;
+    TransitTime: string;
 }
 
 export class ContainersPrice {
@@ -460,6 +461,7 @@ export class ExcelTariffLines {
     Notes: string;
     StartDate: Date;
     StartDateText: string;
+    TransitTime: string;
 }
 
 export class UpdateSurchargeArgs {
