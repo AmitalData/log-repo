@@ -716,6 +716,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.NotifyNote = null;
             }
 
+            if (string.IsNullOrEmpty(entityPM.CustomerId))
+            {
+                entityPM.CustomerName = null;
+                entityPM.CustomerContactId = null;
+                entityPM.CustomerReference1 = null;
+                entityPM.CustomerReference2 = null;
+                entityPM.CustomerNote = null;
+            }
+
             if (string.IsNullOrEmpty(entityPM.QuoteCustomerTypeCode))
             {
                 if (entityPM.DirectionId == "I")
