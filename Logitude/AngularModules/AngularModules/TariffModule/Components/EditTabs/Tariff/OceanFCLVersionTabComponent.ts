@@ -537,6 +537,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
+            tariffLine.TransitTime = item.TransitTime;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType1Id)) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
@@ -656,6 +657,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                         tariffLine.Surcharge5Price = item.Surcharge5Price;
                         tariffLine.Index = item.Index;
                         tariffLine.Notes = item.Notes;
+                        tariffLine.TransitTime = item.TransitTime;
                         copiedVersion.AddTariffLine(tariffLine);
                     });
 

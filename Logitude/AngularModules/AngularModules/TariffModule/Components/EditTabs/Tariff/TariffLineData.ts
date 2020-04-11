@@ -539,6 +539,15 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
+    get TransitTime() {
+        return this.EntityPM.TransitTime;
+    }
+    set TransitTime(value: string) {
+        if (this.EntityPM.TransitTime != value) {
+            this.EntityPM.TransitTime = value;
+        }
+    }
+
     // Min Price
     get MinPrice() {
         return this.EntityPM.MinPrice;
@@ -2499,6 +2508,15 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
     set Notes(value: string) {
         if (this.EntityPM.Notes != value) {
             this.EntityPM.Notes = value;
+        }
+    }
+
+    get TransitTime() {
+        return this.EntityPM.TransitTime;
+    }
+    set TransitTime(value: string) {
+        if (this.EntityPM.TransitTime != value) {
+            this.EntityPM.TransitTime = value;
         }
     }
 

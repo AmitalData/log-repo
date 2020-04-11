@@ -81,6 +81,7 @@ namespace WebFreight.Web.Helpers
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
             string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+            string transitTimecolumn = sheet.Columns[sheet.Columns.Count() - 2].DisplayText;
 
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
@@ -95,8 +96,9 @@ namespace WebFreight.Web.Helpers
                 }
 
                 String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
+                String transitTimeRowData = row.Cells[sheet.Columns.Count() - 2].Value2.ToString();
 
-                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
+                for (int i = 0; i < sheet.Columns.Count() - 2; i++)
                 {
                     if (row.Cells[i].HasFormula)
                     {
@@ -364,6 +366,16 @@ namespace WebFreight.Web.Helpers
                     }
                 }
 
+                if (!string.IsNullOrEmpty(transitTimecolumn))
+                {
+                    tariffLine.TransitTime  = transitTimeRowData;
+
+                    if (transitTimeRowData.Length > 100)
+                    {
+                        tariffLine.TransitTime = transitTimeRowData.Substring(0, 100);
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(notescolumn))
                 {
                     tariffLine.Notes = notesRowData;
@@ -391,6 +403,7 @@ namespace WebFreight.Web.Helpers
             int rowIndex = 0;
 
             string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+            string transitTimecolumn = sheet.Columns[sheet.Columns.Count() - 2].DisplayText;
 
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
@@ -399,8 +412,9 @@ namespace WebFreight.Web.Helpers
                 tariffLine.Index = rowIndex;
 
                 String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
+                String transitTimeRowData = row.Cells[sheet.Columns.Count() - 2].Value2.ToString();
 
-                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
+                for (int i = 0; i < sheet.Columns.Count() - 2; i++)
                 {
                     if (row.Cells[i].HasFormula)
                     {
@@ -577,6 +591,17 @@ namespace WebFreight.Web.Helpers
                     else
                     {
                         tariffLine.Surcharge5PriceText = this.TrimTo_20(rowData[6]);
+                    }
+                }
+
+
+                if (!string.IsNullOrEmpty(transitTimecolumn))
+                {
+                    tariffLine.TransitTime = transitTimeRowData;
+
+                    if (transitTimeRowData.Length > 100)
+                    {
+                        tariffLine.TransitTime = transitTimeRowData.Substring(0, 100);
                     }
                 }
 
@@ -1493,5 +1518,6 @@ namespace WebFreight.Web.Helpers
         public string Notes { get; set; }
         public DateTime? StartDate { get; set; }
         public string StartDateText { get; set; }
+        public string TransitTime { get; set; }
     }
 }

@@ -547,6 +547,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.DestinationPortName = item.DestinationPortName;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
+            tariffLine.TransitTime = item.TransitTime;
             tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
             tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
 
@@ -657,6 +658,7 @@ export class VersionHistoryTariffLine {
     public IsToAllOtherPorts: boolean;
     public CurrencyCode: string;
     public StartDate: Date;
+    public TransitTime: string;
 
     //AFC || OLC
     public MinPrice: number;
@@ -734,6 +736,7 @@ export class VersionHistoryTariffLine {
         this.IsToAllOtherPorts = this.myTariffLine.IsToAllOtherPorts;
         this.CurrencyCode = this.myTariffLine.CurrencyCode;
         this.StartDate = this.myTariffLine.StartDate;
+        this.TransitTime = this.myTariffLine.TransitTime;
     }
 
     private AssignData_FreightCost() {

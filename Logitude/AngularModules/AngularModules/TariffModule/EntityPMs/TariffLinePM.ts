@@ -442,6 +442,11 @@ export class TariffLinePM {
     public set DestinationPortCombinedCode(newValue: string) { if (this.destinationPortCombinedCode != newValue) { this.destinationPortCombinedCode = newValue; this.MarkAsDirty("DestinationPortCombinedCode"); } }
        
 	 
+    private transitTime: string;
+    public get TransitTime() { return this.transitTime; }
+    public set TransitTime(newValue: string) { if (this.transitTime != newValue) { this.transitTime = newValue; this.MarkAsDirty("TransitTime"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	
