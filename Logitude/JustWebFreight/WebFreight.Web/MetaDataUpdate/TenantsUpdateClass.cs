@@ -778,6 +778,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
             }
 
+            updateClass.LoadRolesAndFeatures(0);
+
             updateClass.LoadObjectTableRulesANDFieldsValidations();
         }
 
