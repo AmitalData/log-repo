@@ -14,6 +14,7 @@ using System.Web;
 using Logitude.WarehouseLib.BL.Helpers;
 using Logitude.WarehouseLib.BL.DataContracts;
 using Simplog.Data.Helpers;
+using Logitude.WarehouseLib.Data.EntityPOCOs;
 
 namespace Logitude.WarehouseLib.BL.EntityQueryServices
 {
@@ -26,7 +27,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         {
 
             List<WarehouseReleasePackagePM> myResult = (from a in context.WarehouseReleasePackages
-                                                        where a.Tenant == tenant && a.WarehouseRelease.Id == WarehouseReleaseId
+                                                        where a.Tenant == tenant && a.WarehouseRelease.Id == WarehouseReleaseId && a.IsCanceled == false
                                                         select new WarehouseReleasePackagePM()
                                                         {
                                                             Id = a.Id,
@@ -107,6 +108,15 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                               ReleaseNumber = a.WarehouseRelease != null ? a.WarehouseRelease.ReleaseNumber : null,
                                                               WarehouseReleaseId = a.WarehouseReleaseId,
                                                           }).ToList();
+
+            return myResult;
+        }
+
+        public List<WarehouseReleasePackage> GetWarehouseReleasePackagesByIds(List<string> warehousePackagesReleaseIds, int tenant)
+        {
+            List<WarehouseReleasePackage> myResult = (from a in context.WarehouseReleasePackages.Include("WarehouseRelease")
+                                                        where a.Tenant == tenant && warehousePackagesReleaseIds.Contains(a.Id)
+                                                        select a).ToList();
 
             return myResult;
         }

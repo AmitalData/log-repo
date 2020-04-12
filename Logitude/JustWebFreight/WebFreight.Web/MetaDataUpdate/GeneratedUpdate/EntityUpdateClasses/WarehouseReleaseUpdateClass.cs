@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseReleaseUpdateClass
    {  		
-		public const string HashString = "21ed04cc029b6bfb04304d5b8b3126b1";
+		public const string HashString = "a59e3393140c03833314795fd72d6e05";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3737,7 +3737,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TruckerId",
-					  						OldFieldName =  "TruckerId",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -3795,7 +3794,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TruckerReference",
-					  						OldFieldName =  "TruckerReference",
 					  						ObjectTableName =  "WarehouseRelease",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

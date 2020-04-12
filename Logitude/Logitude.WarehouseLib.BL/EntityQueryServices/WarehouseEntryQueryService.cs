@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.WarehouseLib.BL.EntityPMs;
+using Logitude.WarehouseLib.BL.EntityUpdateServices;
 using Logitude.WarehouseLib.BL.Helpers;
 using Logitude.WarehouseLib.BL.Service;
 using Logitude.WarehouseLib.Data;
@@ -22,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Logitude.WarehouseLib.BL.EntityQueryServices
 {
@@ -245,6 +247,110 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return warehouseEntryLists;
         }
 
+        
+
+        public void PutCancelWarehouseEntry(WarehouseEntryPM entityPM)
+        {
+            WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository = null;
+            WarehouseEntryPackageRepository warehouseEntryPackageRepository = null;
+            List<string> warehousePackagesReleaseIds = null;
+
+            if (entityPM.WarehouseEntryPackages != null && entityPM.WarehouseEntryPackages.Count > 0)
+            {
+                warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(entityPM.Tenant);
+                warehouseEntryPackagesReleaseRepository = new WarehouseEntryPackagesReleaseRepository(entityPM.Tenant);
+                warehousePackagesReleaseIds = CanceledPackagesEntryAndGetPackagesReleaseIds(entityPM, warehouseEntryPackagesReleaseRepository, warehouseEntryPackageRepository);
+            }
+
+            EmptyconnectedWarehouseReleasePackages(warehousePackagesReleaseIds, entityPM.Tenant);
+            SubmitEntryPackagesChanges(entityPM, warehouseEntryPackagesReleaseRepository, warehouseEntryPackageRepository);
+        }
+
+        private List<string> CanceledPackagesEntryAndGetPackagesReleaseIds(WarehouseEntryPM entityPM, WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository, WarehouseEntryPackageRepository warehouseEntryPackageRepository)
+        {
+            List<string> entryPackageIds = entityPM.WarehouseEntryPackages.Select(d => d.Id).ToList();
+            List<WarehouseEntryPackage> warehouseEntryPackages = warehouseEntryPackageRepository.GetWarehouseEntryPackageByIds(entryPackageIds, entityPM.Tenant);
+            List<string> warehousePackagesReleaseIds = new List<string>();
+
+            List<WarehouseEntryPackagesRelease> warehouseEntryPackagesReleases = warehouseEntryPackagesReleaseRepository.GetWarehouseEntryPackagesReleaseByEntryPackageIds(entryPackageIds, entityPM.Tenant);
+
+            foreach (WarehouseEntryPackagePM item in entityPM.WarehouseEntryPackages)
+            {
+                List<WarehouseEntryPackagesRelease> warehouseEntryPackagesRelease = warehouseEntryPackagesReleases.Where(d => d.EntryPackageId == item.Id).ToList();
+
+                if (warehouseEntryPackagesRelease != null && warehouseEntryPackagesRelease.Count > 0)
+                {
+                    foreach (WarehouseEntryPackagesRelease entryPackagesRelease in warehouseEntryPackagesRelease)
+                    {
+                        warehousePackagesReleaseIds.Add(entryPackagesRelease.ReleasePackageId);
+                        WarehouseEntryPackage warehouseEntryPackage = warehouseEntryPackages.Where(d => d.Id == item.Id).FirstOrDefault();
+                        if (warehouseEntryPackage != null)
+                        {
+                            item.Instock += entryPackagesRelease.Quantity;
+                        }
+
+                        item.Quantity = 0;
+                        item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+
+                        entryPackagesRelease.IsCanceled = true;
+                        warehouseEntryPackagesReleaseRepository.Update(entryPackagesRelease);
+                    }
+                }
+
+            }
+
+            return warehousePackagesReleaseIds;
+        }
+
+        private static void EmptyconnectedWarehouseReleasePackages(List<string> warehousePackagesReleaseIds, int tenant)
+        {
+            WarehouseReleasePackageRepository warehouseReleasePackageRepository = new WarehouseReleasePackageRepository(tenant);
+            List<WarehouseReleasePackage> warehouseReleasePackagePMs = warehouseReleasePackageRepository.GetWarehouseReleasePackagesByIds(warehousePackagesReleaseIds, tenant);
+
+            foreach (WarehouseReleasePackage item in warehouseReleasePackagePMs)
+            {
+                if (item != null)
+                {
+                    item.Quantity = 0;
+                    warehouseReleasePackageRepository.Update(item);
+                }
+            }
+
+            if (warehouseReleasePackageRepository != null) warehouseReleasePackageRepository.SubmitChanges();
+        }
+
+        private static void SubmitEntryPackagesChanges(WarehouseEntryPM entityPM, WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository, WarehouseEntryPackageRepository warehouseEntryPackageRepository)
+        {
+            IWarehouseContext MyContext = WarehouseContext.GetContext(entityPM.Tenant);
+            WarehouseEntryUpdateService service = new WarehouseEntryUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            service.InitializeEntityPM(entityPM);
+
+            entityPM.StatusCode = "CAEA";
+            entityPM.StatusName = "Cancelled";
+            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            service.Update(entityPM, true);
+
+            if (warehouseEntryPackageRepository != null) warehouseEntryPackageRepository.SubmitChanges();
+            if (warehouseEntryPackagesReleaseRepository != null) warehouseEntryPackagesReleaseRepository.SubmitChanges();
+        }
+
+        private void i(List<string> warehousePackagesReleaseIds, int tenant)
+        {
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                IWarehouseContext MyContext = WarehouseContext.GetContext(tenant);
+                WarehouseReleasePackageRepository warehouseReleasePackageRepository = new WarehouseReleasePackageRepository(MyContext);
+                WarehouseReleasePackageQueryService warehouseReleasePackageQueryService = new WarehouseReleasePackageQueryService(tenant);
+                List<WarehouseReleasePackage> warehouseReleasePackagePMs = warehouseReleasePackageQueryService.GetWarehouseReleasePackagesByIds(warehousePackagesReleaseIds, tenant);
+                foreach (WarehouseReleasePackage item in warehouseReleasePackagePMs)
+                {
+                    item.Quantity = 0;
+                    warehouseReleasePackageRepository.Update(item);
+                }
+                if (warehouseReleasePackageRepository != null) warehouseReleasePackageRepository.SubmitChanges();
+                scope.Complete();
+            }
+        }
     }
 
 }
