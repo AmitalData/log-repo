@@ -213,7 +213,7 @@ export class WebFreightDomainService {
                         var entity = response;
                         var serviceResponse: ServiceResponse;
                         serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
+                        serviceResponse.Result = entity.body;
                         var servertime = response.headers.get('ServerExecutionTime');
                         return serviceResponse;
                     }
