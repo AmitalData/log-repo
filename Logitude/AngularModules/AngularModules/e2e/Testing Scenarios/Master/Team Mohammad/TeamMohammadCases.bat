@@ -9,25 +9,25 @@ cd C:\Program Files (x86)\Jenkins\workspace\LogitudeTestDevOps\Logitude\AngularM
 
 
 FOR /L %%A IN (1,1,1) DO (  
-rem call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,RevGLAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
+rem call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,RevGLAccount
 rem CALL :CheckError "Create RevGLAccount"
 
-   cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,NewChartOfAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
+   cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,NewChartOfAccount
    CALL :CheckError "Create NewChartOfAccount"
 
-  cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,BankAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
+  cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,BankAccount
   CALL :CheckError "Create BankAccount"
 
-  cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,VendorGLAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
+  cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,VendorGLAccount
   CALL :CheckError "Create VendorGLAccount"
 
-  cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,CustomerGLAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
+  cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,CustomerGLAccount
   CALL :CheckError "Create CustomerGLAccount"
 
- cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,ARPayment>D:\TeamMohammadE2E\Test\prot.log 2>&1
+ cmd /c call npm run e2e -- --params.Env="test_1209" --params.Team="mohammad" --suite=login,ARPayment
  CALL :CheckError "Create ARPayment"
 
-rem call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,PaymentCheque>D:\TeamMohammadE2E\Test\prot.log 2>&1
+rem call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,PaymentCheque
 rem CALL :CheckError "Create PaymentCheque"
 )
 cd /
