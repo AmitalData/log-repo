@@ -1,4 +1,4 @@
-﻿<table *ngIf="IsLoadPage">
+<table *ngIf="IsLoadPage">
 
 
     <tr style="height:10px"><td colspan="3"><div></div></td></tr>
@@ -153,9 +153,11 @@
 
                                                         <td style="width: 125px;min-width:125px;max-width: 125px;">Description Of Goods</td>
                                                         <td style="width: 85px;min-width :85px">Release QTY</td>
+                                                        <td style="width: 60px;min-width :60px">Entry #</td>
                                                         <td style="width: 80px;min-width :80px">In Stock</td>
 
-                                                        <td style="width: 100%;min-width :100%;max-width:100%;" class="LastChild">Connected To Shipment</td>
+                                                        <td *ngIf="!IsContainerShipment" style="width: 100%;min-width :100%;max-width:100%;"><span title="Connected To Shipment" class="LastChild">Connected</span></td>
+                                                        <td *ngIf="IsContainerShipment" style="width: 100%;min-width :100%;max-width:100%;" class="LastChild">Connected To Shipment</td>
 
 
 
@@ -221,8 +223,8 @@
 
 
                                                                                 <!--<td *ngIf="!IsContainerShipment" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;text-align:right">
-                                                                                    {{item.Dimensions}}
-                                                                                </td>-->
+        {{item.Dimensions}}
+    </td>-->
 
                                                                                 <td *ngIf="!IsContainerShipment" class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
                                                                                     {{item.Length}}
@@ -279,6 +281,11 @@
 
                                                                                 </td>
 
+                                                                                <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;vertical-align:central;text-align:center">
+                                                                                    <a (click)="EditWarehouseReleases(item.EntityPM.WarehouseEntryId)">
+                                                                                        {{item.WarehouseEntryNumber}}
+                                                                                    </a>
+                                                                                </td>
 
                                                                                 <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;vertical-align:central;text-align:right">
 
@@ -288,9 +295,9 @@
 
 
                                                                                 <td class="CellStretched" style="width:  100%; min-width: 100%; max-width:  100%; position: relative;">
-                                                                                    <div [style.width]="!IsContainerShipment ? '133px':'100%'">
+                                                                                    <!--<div [style.width]="!IsContainerShipment ? '133px':'100%'">-->
                                                                                         <img class="CenterCenter" *ngIf="item.IsConnectedToShipment" style="width:20px;height:20px;" src="./Images/SimplogIcons/tick.png" />
-                                                                                    </div>
+                                                                                    <!--</div>-->
 
                                                                                 </td>
 

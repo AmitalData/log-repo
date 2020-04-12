@@ -52,7 +52,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool isTransferToDropbox;
         private bool TransferToDropboxActivated;
         bool setApproved;
-
+        private bool transferToFTPActivated;
+        private bool canTransferToFTP;
         public APPaymentService(IInvoiceContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -71,11 +72,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             AccountingSystemRepository accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
-            AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
-            this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
-            this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
-        }
+            if (accountingSetting != null)
+            {
+                this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                this.transferToFTPActivated = accountingSetting.TransferToFTPActivated;
 
+                AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+                if (accountingSystem != null)
+                {
+                    this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
+                    this.canTransferToFTP = accountingSystem.CanTransferToFTP;
+                }
+            }
+        }
        
         public void Create(APPaymentPM theEntityPm)
         {
@@ -129,19 +138,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateAPPaymentMessage(bool setApproved)
         {
-            if (setApproved && this.isTransferToDropbox && this.TransferToDropboxActivated)
+            if (setApproved)
             {
-                if (!string.IsNullOrEmpty(entityPM.TransferError))
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
                 {
-                    throw new ApplicationException(entityPM.TransferError);
-                }
-                else
-                {
-                    this.payment = paymentRepository.GetSingleAPPayment(this.entityPM.Id);
-                    List<APPayment> entities = new List<APPayment>();
-                    entities.Add(this.payment);
-                    APPaymentMessageHelper myHelper = new APPaymentMessageHelper(entities, this.payment.PaymentNo + ".xml", tenant, true);
-                    myHelper.Transfer();
+                    if (!string.IsNullOrEmpty(entityPM.TransferError))
+                    {
+                        throw new ApplicationException(entityPM.TransferError);
+                    }
+                    else
+                    {
+                        bool isDropBox = this.isTransferToDropbox && this.TransferToDropboxActivated;
+                        bool isFTP = this.canTransferToFTP && this.transferToFTPActivated;
+
+                        this.payment = paymentRepository.GetSingleAPPayment(this.entityPM.Id);
+                        List<APPayment> entities = new List<APPayment>();
+                        entities.Add(this.payment);
+
+                        APPaymentMessageHelper myHelper = new APPaymentMessageHelper(entities, this.payment.PaymentNo + ".xml", tenant, isDropBox, isFTP);
+                        myHelper.Transfer();
+                    }
                 }
             }
         }
@@ -167,13 +183,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         SecurityUtility.CheckContactFeature("PaymentCheque", "NEW", entityPM.Tenant);
                          VendorGLAccount = GetGLAccountByCard(entityPM);
                         paymentCheque= CreatePaymentCheque(entityPM);
-                        SubmitPaymentCheque(paymentCheque);
-                       
-
+                        SubmitPaymentCheque(paymentCheque); 
                     }
-
                 }
-
             }
 
             return paymentCheque;

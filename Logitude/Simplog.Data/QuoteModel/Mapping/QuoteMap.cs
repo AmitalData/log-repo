@@ -76,7 +76,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.CustomerReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CustomerReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.QuoteCustomerTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.CustomerName).IsRequired().HasMaxLength(100).IsUnicode(true);
+            this.Property(t => t.CustomerName).HasMaxLength(100).IsUnicode(true);
             this.Property(t => t.SaleCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipperName).HasMaxLength(100).IsUnicode(true);
             this.Property(t => t.ConsigneeName).HasMaxLength(100).IsUnicode(true);

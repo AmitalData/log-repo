@@ -29,6 +29,7 @@ import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadMana
 import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
 import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'LogBoxDocuments',
@@ -72,7 +73,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
     private messageWindow: MessageWindow = new MessageWindow();
     RefreshTimer: any;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public http: Http, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
+    constructor(public http: HttpClient, public serviceArgs: ServiceArgs, private _entityListService: EntityListService) {
         super();
         this.serviceArgs.http = this.http;
         this.SelectedTabCode = "CAT";

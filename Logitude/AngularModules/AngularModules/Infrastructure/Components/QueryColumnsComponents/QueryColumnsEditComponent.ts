@@ -13,6 +13,7 @@ import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     moduleId: module.id,
@@ -21,7 +22,7 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
     templateUrl: './QueryColumnsEditComponent.html',
     //pipes: [TextCodeTranslationPipe],
     //inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'Filterchangeevent', 'rabaia'],
-    providers: [Http, ServiceArgs],
+    providers: [HttpClient, ServiceArgs],
     //directives: [LogitudeListBoxComponent]
 })
 
@@ -58,7 +59,7 @@ export class QueryColumnsEditComponent {
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this._http = ServiceHelper.Http;
-        this.serviceArgs.http = ServiceHelper.Http;;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
         if (this.CurrentSession == null) {
             this.SearchFieldsId = "SearchFields_-1_-1";
         }

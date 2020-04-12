@@ -1803,6 +1803,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string transitTime ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransitTime  
+	   {
+	    
+	     get
+		{
+		   return transitTime;
+		 }
+		 set
+		 {
+		   if(transitTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransitTime",OldValue=transitTime,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   transitTime=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

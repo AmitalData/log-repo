@@ -23,7 +23,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
     {
         CrossDockEntryDataProvider crossDockEntryDataProvider;
         WarehouseEntryPM warehouseEntryPM;
-       public byte[] LoadDataToCrossDockEntryDataProvider(string entityId, int tenant, string userId)
+        public byte[] LoadDataToCrossDockEntryDataProvider(string entityId, int tenant, string userId)
         {
             CrossDockEntryDataProvider dataprovider = LoadCrossDockEntryDataProvider(entityId, tenant, userId);
             XmlSerializer serializer = new XmlSerializer(typeof(CrossDockEntryDataProvider));
@@ -37,18 +37,18 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
         }
 
-       public CrossDockEntryDataProvider LoadCrossDockEntryDataProvider(string entityId, int tenant, string userId=null)
+        public CrossDockEntryDataProvider LoadCrossDockEntryDataProvider(string entityId, int tenant, string userId = null)
         {
             crossDockEntryDataProvider = new CrossDockEntryDataProvider();
             WarehouseEntryQueryService warehouseEntryQueryService = new WarehouseEntryQueryService(tenant);
-            warehouseEntryPM = warehouseEntryQueryService.GetSingle(entityId,true,false);
+            warehouseEntryPM = warehouseEntryQueryService.GetSingle(entityId, true, false);
             if (warehouseEntryPM != null)
             {
                 SetCrossDockGeneralFields(tenant);
                 SetCrossDockTenantDetails(tenant);
                 SetCrossDockTruckerDetails(tenant);
                 SetCrossDockCountryName(tenant);
-                SetCrossDockShipmentDetails();
+                SetCrossDockShipmentDetails(tenant);
                 List<CardList> cardLists = GetCardList(tenant);
                 SetCrossDockWarehouseDetails(cardLists, tenant);
                 SetCrossDockShipperDetails(cardLists, tenant);
@@ -59,7 +59,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 {
                     crossDockEntryDataProvider.EntryPackages = FullPackage(warehouseEntryPM);
                     crossDockEntryDataProvider.NumberOfPackages = GetNumberOfWarehouseEntryPackages(warehouseEntryPM);
-
                 }
             }
             return crossDockEntryDataProvider;
@@ -116,7 +115,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
                 result.Add(item);
             }
-           
+
             return result;
         }
 
@@ -138,11 +137,11 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             crossDockEntryDataProvider.ActualEntryDate = warehouseEntryPM.ActualEntryDate;
             crossDockEntryDataProvider.ExpectedEntryDate = warehouseEntryPM.ExpectedEntryDate;
             crossDockEntryDataProvider.SpecialInstruction = warehouseEntryPM.SpecialInstruction;
-            crossDockEntryDataProvider.EntryTruckerReference = warehouseEntryPM.TruckerReference; 
+            crossDockEntryDataProvider.EntryTruckerReference = warehouseEntryPM.TruckerReference;
             crossDockEntryDataProvider.TenantLogo = DataProviders.General.GetLogo(tenant);
             crossDockEntryDataProvider.UpdatedBy = GetContactNameById(warehouseEntryPM.UpdatedByUserId, tenant);
         }
-        
+
         private string GetContactNameById(string contactId, int tenant)
         {
             string contactName = string.Empty;
@@ -153,7 +152,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             }
             return contactName;
         }
-        
+
         private List<CardList> GetCardList(int tenant)
         {
             List<string> cardIds = new List<string>();
@@ -177,7 +176,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
             return cardLists;
         }
-    
+
         private void SetCrossDockTenantDetails(int tenant)
         {
             TenantRepository tenantRepository = new TenantRepository(tenant);
@@ -196,7 +195,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
             }
         }
-    
+
         private void SetCrossDockTruckerDetails(int tenant)
         {
             if (!string.IsNullOrEmpty(warehouseEntryPM.TruckerId))
@@ -223,7 +222,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 }
             }
         }
-        
+
         private void SetCrossDockWarehouseDetails(List<CardList> cardLists, int tenant)
         {
             if (!string.IsNullOrEmpty(warehouseEntryPM.WarehouseId))
@@ -250,20 +249,25 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     crossDockEntryDataProvider.WarehouseCity = entityAddress.City;
                     crossDockEntryDataProvider.WarehouseState = entityAddress.StateEnglishName;
                 }
-
-
             }
         }
-    
-        private void SetCrossDockShipmentDetails()
+
+        private void SetCrossDockShipmentDetails(int tenant)
         {
             if (!string.IsNullOrEmpty(warehouseEntryPM.ShipmentId))
             {
                 CrossDockEntryShipmentService crossDockEntryShipmentService = new CrossDockEntryShipmentService();
                 crossDockEntryDataProvider = crossDockEntryShipmentService.FullCrossDockEntryProviderFromShipment(crossDockEntryDataProvider, warehouseEntryPM.ShipmentId, warehouseEntryPM.Tenant);
-            }
+
+                ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                Shipment shipment = shipmentRepository.GetSingleShipment(warehouseEntryPM.ShipmentId, tenant);
+                if (shipment != null)
+                {
+                    crossDockEntryDataProvider.ProjectNumber = shipment.ProjectNumber;
+                }
+            }            
         }
-    
+
         private void SetCrossDockShipperDetails(List<CardList> cardLists, int tenant)
         {
             if (!string.IsNullOrEmpty(warehouseEntryPM.ShipperId))
@@ -307,11 +311,11 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             Address address = addressRepository.GetMainAddressByCardId(warehouseEntryPM.ShipperId, tenant);
             return address;
         }
-    
+
         private void SetCrossDockLoggedUserDetails(string userId, int tenant)
         {
             ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact loggeduser = contactRepository.GetSingleContact(userId,tenant);
+            Contact loggeduser = contactRepository.GetSingleContact(userId, tenant);
             if (loggeduser != null)
             {
                 crossDockEntryDataProvider.LoggedUserName = loggeduser.EnglishName;

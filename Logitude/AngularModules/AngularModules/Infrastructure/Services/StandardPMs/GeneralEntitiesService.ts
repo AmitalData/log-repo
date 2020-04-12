@@ -1,6 +1,7 @@
 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 //import Rx from 'rxjs/Rx';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
@@ -16,7 +17,7 @@ import {GeneralEntitiesArgs} from '../../DataContracts/GeneralEntitiesArgs';
 export class GeneralEntitiesService {
 
     private _apiUrl: string;
-    private _http: Http;
+    private _http: HttpClient;
     private _serviceArgs: ServiceArgs;
     constructor() {
 
@@ -38,7 +39,7 @@ export class GeneralEntitiesService {
     //        return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenant?' + 'tenant=' + tenant + '&loggedcontactid=' + userid, {
     //            headers: authHeader
     //        }).map(response => {
-    //            var pms = response.json();
+    //            var pms = response.body;
 
     //            return pms;
     //        });
@@ -63,38 +64,37 @@ export class GeneralEntitiesService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
 
 
-            var response: EntityPMServiceResponse;
-            response = new EntityPMServiceResponse();
+            var serviceResponse: EntityPMServiceResponse;
+            serviceResponse = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: GeneralEntitiesArgs;
                 mappedEntity = this.MapJsonToEntityPM(entities, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
-                        if (pm) {
-                            var mappedResult: GeneralEntitiesArgs;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entities);
-                            response.Result = mappedResult;
-                        }
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: GeneralEntitiesArgs;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entities);
+                                serviceResponse.Result = mappedResult;
+                            }
 
 
 
-                        return response;
+                            return serviceResponse;
 
-                    });
+                        }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
-                response.HasError = true;
-                response.ErrorsArray = errorsArray;
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(response);
+                return Observable.of(serviceResponse);
 
             }
-        }
-
-        );
+        });
     }
 
     update(entities: GeneralEntitiesArgs) {
@@ -112,38 +112,37 @@ export class GeneralEntitiesService {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
 
 
-            var response: EntityPMServiceResponse;
-            response = new EntityPMServiceResponse();
+            var serviceResponse: EntityPMServiceResponse;
+            serviceResponse = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: GeneralEntitiesArgs;
                 mappedEntity = this.MapJsonToEntityPM(entities, false);
 
-                return this._http.put(this._apiUrl + "/PutGeneralEntities", JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
-                        if (pm) {
-                            var mappedResult: GeneralEntitiesArgs;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entities);
-                            response.Result = mappedResult;
-                        }
+                return this._http.put(this._apiUrl + "/PutGeneralEntities", JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: GeneralEntitiesArgs;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entities);
+                                serviceResponse.Result = mappedResult;
+                            }
 
 
 
-                        return response;
+                            return serviceResponse;
 
-                    });
+                        }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
-                response.HasError = true;
-                response.ErrorsArray = errorsArray;
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(response);
+                return Observable.of(serviceResponse);
 
             }
-        }
-
-        );
+        });
     }
      
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entities: GeneralEntitiesArgs = null) {

@@ -26,6 +26,7 @@ import { QueryPM } from '../../../EntityPMs/QueryPM';
 import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -34,7 +35,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
     selector: 'QueryList',
     templateUrl: './QueryListComponent.html',
     inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'UserItemSource', 'ObjectTableName', 'onSelectedQueryChangeEvent', 'LoadResourceCompleted', 'pubSubAdvanceQueryFiltersService', 'QueryListSourceChanged'],
-    providers: [Http],
+    providers: [HttpClient],
 })
 
 export class QueryListComponent implements OnInit, AfterViewInit {
@@ -79,7 +80,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.Http;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
         this.ItemsSource = [];
         this.UserItemSource = [];
         this.HandledUserItemSource = [];

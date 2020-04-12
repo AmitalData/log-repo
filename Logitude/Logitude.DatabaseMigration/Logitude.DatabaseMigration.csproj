@@ -2295,6 +2295,14 @@
     <Compile Include="Migrations\202004070823014_WesamAddSearchFieldsToCustomerFieldsUpdateSettingTable.Designer.cs">
       <DependentUpon>202004070823014_WesamAddSearchFieldsToCustomerFieldsUpdateSettingTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004110956194_ModifyQuoteCustomerNameField_Maheera.cs" />
+    <Compile Include="Migrations\202004110956194_ModifyQuoteCustomerNameField_Maheera.Designer.cs">
+      <DependentUpon>202004110956194_ModifyQuoteCustomerNameField_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.cs" />
+    <Compile Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.Designer.cs">
+      <DependentUpon>202004111256429_AddTransitTimeFieldToTariff_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4149,6 +4157,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004070823014_WesamAddSearchFieldsToCustomerFieldsUpdateSettingTable.resx">
       <DependentUpon>202004070823014_WesamAddSearchFieldsToCustomerFieldsUpdateSettingTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004110956194_ModifyQuoteCustomerNameField_Maheera.resx">
+      <DependentUpon>202004110956194_ModifyQuoteCustomerNameField_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.resx">
+      <DependentUpon>202004111256429_AddTransitTimeFieldToTariff_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

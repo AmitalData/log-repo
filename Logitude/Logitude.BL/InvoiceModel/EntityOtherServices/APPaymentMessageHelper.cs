@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Simplog.Server.Infrastructure.Helpers;
 using System.IO;
@@ -15,6 +14,11 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Xml;
 using Microsoft.Practices.Unity;
+using Logitude.Server.Tools.StorageService;
+using Logitude.Server.Tools;
+using System.Web;
+using Logitude.SystemLogs;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.InvoiceModel.EntityOtherServices
 {
@@ -27,6 +31,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private string myVATExemptTempCard;
         private string myAccountingSystemCode;
         private bool isDropBox = false;
+        private bool UsingFTP = false;
+        private string FTPDetailId;
         public APPaymentMessageHelper(int tenant)
         {
             this.tenant = tenant;
@@ -40,12 +46,13 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
             }
         }
-        public APPaymentMessageHelper(List<APPayment> allEntities, string filename, int tenant, bool isDropBox = false)
+        public APPaymentMessageHelper(List<APPayment> allEntities, string filename, int tenant, bool isDropBox = false, bool isFTP = false)
         {
             this.tenant = tenant;
             this.filename = filename;
             this.allEntities = allEntities;
             this.isDropBox = isDropBox;
+            this.UsingFTP = isFTP;
 
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(tenant);
             AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
@@ -54,6 +61,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myVATableTempCard = accountingSetting.PayableVATableTempCard;
                 myVATExemptTempCard = accountingSetting.PayableVATExemptTempCard;
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
+                FTPDetailId = accountingSetting.TransferFTPDetailId;
             }
         }
 
@@ -95,10 +103,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             List<string> allPaymentIds = allEntities.Select(s => s.Id).ToList();
             List<CreditCardType> creditCardTypes = (from d in invoiceContext.CreditCardTypes where d.Tenant == tenant select d).ToList();
-            //List<APPaymentMethod> paymentMethods = (from d in invoiceContext.APPaymentMethods where d.Tenant == tenant select d).ToList();
             List<AccountingPaymentMethod> paymentMethods = (from d in invoiceContext.AccountingPaymentMethods where d.IsAP == true && d.Tenant == tenant select d).ToList();
-            //List<APInvoiceType> invoiceTypes = (from d in invoiceContext.APInvoiceTypes select d).ToList();
-
+            
             List<APInvoicePayment> allInvoicesPayments = (from d in invoiceContext.APInvoicePayments
                                                           where d.Tenant == tenant
                                                           && allPaymentIds.Contains(d.APPaymentId)
@@ -260,9 +266,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 this.BulidDropBoxXMLLFile(bytearray);
             }
+
+            else if (this.UsingFTP && !string.IsNullOrEmpty(this.FTPDetailId))
+            {
+                this.BuildFile_ViaFTP(bytearray);
+            }
+
             else
             {
-                //Stream blbstr = null;
                 if (bytearray != null)
                 {
                     string[] fileProps = fileName.Split('.');
@@ -292,6 +303,65 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 entityId = payment.Id;
             }
             var commLog = helper.CreateDropBoxCommunicationLog(tenant, objectTableId, bytearray, this.filename, "APPayments", "AP Payment", entityId);
+        }
+
+        private string myDocumentId;
+        private string myDocumentFolder;
+        private string myDocumentExtension;
+        private string myCommunicationLogId;
+        private void BuildFile_ViaFTP(byte[] myByteArray)
+        {
+            ObjectTableRepository repo = new ObjectTableRepository(tenant);
+            string objectTableId = repo.GetObjectTableIdByName("APPayment");
+            string FTPFileName = "";
+
+            AccountingTranferViaFTPHelper helper = new AccountingTranferViaFTPHelper(tenant, objectTableId, FTPDetailId);
+            var payment = this.allEntities.FirstOrDefault();
+            var entityId = "";
+            if (payment != null)
+            {
+                entityId = payment.Id;
+                FTPFileName = payment.PaymentNo;
+            }
+
+            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode, "APPayment");
+
+            this.myDocumentId = helper.DocumentId;
+            this.myDocumentFolder = helper.DocumentFolder;
+            this.myDocumentExtension = helper.DocumentExtension;
+            this.myCommunicationLogId = commLog.Id;
+
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = myDocumentId,
+                FolderName = myDocumentFolder,
+                Extension = myDocumentExtension,
+                Tenant = tenant,
+                FileSize = myByteArray.Length,
+            };
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(myByteArray, fileInfo);
+
+            try
+            {
+                //helper.Test(commLog, tenant);
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(commLog.QueueName, 0);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
+            }
+
+            catch (Exception ex)
+            {
+                string ip = "";
+
+                if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                {
+                    ip = HttpContext.Current.Request.UserHostAddress;
+                }
+
+                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "AP Payment Transfer", null, ip);
+            }
         }
         #endregion
     }

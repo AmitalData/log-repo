@@ -83,12 +83,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private bool isTransferToDropbox;
         private bool TransferToDropboxActivated;
+        private bool transferToFTPActivated;
+        private bool canTransferToFTP;
+        private AccountingSetting accountingSetting;
         private void GetAccountingSystem()
         {
-            AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
-            AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
-            this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
-            this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+            this.accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
+            if (accountingSetting != null)
+            {
+                this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                this.transferToFTPActivated = accountingSetting.TransferToFTPActivated;
+
+                AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+                if (accountingSystem != null)
+                {
+                    this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
+                    this.canTransferToFTP = accountingSystem.CanTransferToFTP;
+                }
+            }
         }
 
         /*
@@ -96,10 +108,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
          */
         public void Create(ARPaymentPM _arpaymentPM)
         {
-
             _arpaymentPM.IsFullAccounting = IsFullAccActivated();
-
-
+            
             isNewEntity = true;
             entityPM = _arpaymentPM;
             isVoidingInvoice = entityPM.SetVoided;
@@ -111,7 +121,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARPaymentValidator.Validate(entityPM, newPayment, isNewEntity, objectContext, cashBook);
             ARPaymentTracing.Trace(_arpaymentPM, newPayment, isNewEntity);
-
 
             InitializeTransferComponents();
 
@@ -482,19 +491,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateARPaymentMessage(bool setApproved)
         {
-            if (setApproved && this.isTransferToDropbox && this.TransferToDropboxActivated)
+            if (setApproved)
             {
-                if (!string.IsNullOrEmpty(entityPM.TransferError))
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated)) 
                 {
-                    throw new ApplicationException(entityPM.TransferError);
-                }
-                else
-                {
-                    this.newPayment = paymentRepository.GetSingleARPayment(this.entityPM.Id);
-                    List<ARPayment> entities = new List<ARPayment>();
-                    entities.Add(this.newPayment);
-                    ARPaymentMessageHelper myHelper = new ARPaymentMessageHelper(entities, this.newPayment.PaymentNo + ".xml", tenant, true);
-                    myHelper.Transfer();
+                    if (!string.IsNullOrEmpty(entityPM.TransferError))
+                    {
+                        throw new ApplicationException(entityPM.TransferError);
+                    }
+                    else
+                    {
+                        bool isDropBox = this.isTransferToDropbox && this.TransferToDropboxActivated;
+                        bool isFTP = this.canTransferToFTP && this.transferToFTPActivated;
+
+                        this.newPayment = paymentRepository.GetSingleARPayment(this.entityPM.Id);
+                        List<ARPayment> entities = new List<ARPayment>();
+                        entities.Add(this.newPayment);
+
+                        ARPaymentMessageHelper myHelper = new ARPaymentMessageHelper(entities, this.newPayment.PaymentNo + ".xml", tenant, isDropBox, isFTP);
+                        myHelper.Transfer();
+                    }
                 }
             }
         }
@@ -1586,9 +1602,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void InitializeTransferComponents()
         {
             this.InitializeTransferFields();
-            if (this.entityPM.SetApproved && this.isTransferToDropbox && this.TransferToDropboxActivated && string.IsNullOrEmpty(entityPM.TransferError))
+
+            if (this.entityPM.SetApproved && string.IsNullOrEmpty(entityPM.TransferError))
             {
-                this.entityPM.TransferStatusCode = "TR";
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
+                {
+                    this.entityPM.TransferStatusCode = "TR";
+                }
             }
         }
         private void InitializeTransferFields()

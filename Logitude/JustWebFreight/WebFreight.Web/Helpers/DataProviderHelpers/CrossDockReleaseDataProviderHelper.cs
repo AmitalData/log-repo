@@ -375,11 +375,21 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
                     Shipment shipment = shipmentRepository.GetSingleShipment(warehouseReleasePM.ShipmentId, tenant);
                     if(shipment != null)
-                    {
-                      
+                    {                      
                         dataProvider.ShipperName = shipment.ShipperName;
                         dataProvider.ConsigneeName = shipment.ConsigneeName;
 
+                        if (!string.IsNullOrEmpty(shipment.MasterShipmentDataId))
+                        {
+                            ShipmentMasterData masterData = (from a in shipmentRepository.context.ShipmentMasterDatas
+                                                             where a.Id == shipment.MasterShipmentDataId
+                                                             select a).FirstOrDefault();
+
+                            if(masterData != null)
+                            {
+                                dataProvider.ImportManifest = masterData.ImportManifest;
+                            }
+                        }
                     }
                 }
 
