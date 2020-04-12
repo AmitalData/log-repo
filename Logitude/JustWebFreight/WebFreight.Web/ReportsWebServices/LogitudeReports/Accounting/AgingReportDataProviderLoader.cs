@@ -53,6 +53,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             //CreateAndAppendTotalBalanceColumn(resultedPeriods, dataProvider);
 
             AddTotalBalancePeriods(resultedPeriods, dataProvider);
+            AddTotalLocalBalancePeriods(resultedPeriods, dataProvider);
+            //AddTotalSummationFooterPeriod(resultedPeriods, dataProvider);
+            
             FilterCustomerPeriodsOnBalance(dataProvider);
 
             SetOrderForPeriods(resultedPeriods, dataProvider);
@@ -106,28 +109,32 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             foreach (var sumValue in sums)
             {
                 bool showDetailedCurrencyAccounts = GetFilterValue<bool>("Detailed");
-                var pname = showLocals ? "סה''כ יתרה" : "Total Balance";
+                var pname = showLocals ? "סיכום במט''ז" : "Total Foreign Balance";
                 var _balancePeriod = totalData.AgingPeriods.FirstOrDefault(d => d.AccountLocalName == sumValue.Key.AccountLocalName && d.PeriodName == pname && d.CurrencyCode == sumValue.Key.CurrencyCode);
                 if (_balancePeriod == null)
                 {
                     if (showDetailedCurrencyAccounts)
                         totalData.AgingPeriods.Add(new AgingPeriod()
                         {
-                            PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance",
+                            PeriodName = pname,
                             Total = sumValue.Value,
                             AccountName = (sumValue.Key.AccountLocalName != null ? sumValue.Key.AccountLocalName : sumValue.Key.AccountEnglishName) + " / " + sumValue.Key.CurrencyCode,
                             AccountLocalName = sumValue.Key.AccountLocalName + " / " + sumValue.Key.CurrencyCode,
                             AccountEnglishName = sumValue.Key.AccountEnglishName + " / " + sumValue.Key.CurrencyCode,
+                            AccountCurrencyCode = sumValue.Key.AccountCurrencyCode,
+                            AccountDisplayNumber = sumValue.Key.AccountDisplayNumber,
 
                         });
                     else
                         totalData.AgingPeriods.Add(new AgingPeriod()
                         {
-                            PeriodName = showLocals ? "סה''כ יתרה" : "Total Balance",
+                            PeriodName = pname,
                             Total = sumValue.Value,
                             AccountName = (sumValue.Key.AccountLocalName != null ? sumValue.Key.AccountLocalName : sumValue.Key.AccountEnglishName),
                             AccountLocalName = sumValue.Key.AccountLocalName,
                             AccountEnglishName = sumValue.Key.AccountEnglishName,
+                            AccountCurrencyCode = sumValue.Key.AccountCurrencyCode,
+                            AccountDisplayNumber = sumValue.Key.AccountDisplayNumber,
 
                         });
                 }
@@ -138,6 +145,58 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             }
         }
+
+        private void AddTotalLocalBalancePeriods(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
+        {
+            //var groupedPeriodsByAccount0 = result.GroupBy(d => d.AccountId);
+            List<AgingPeriod> groupedPeriodsByAccount;
+            bool showDetailedCurrencyAccounts = GetFilterValue<bool>("Detailed");
+            if (showDetailedCurrencyAccounts)
+                groupedPeriodsByAccount = result.Where(d=>d.Total != null).GroupBy(d => d.AccountId).Distinct().Select(d => new AgingPeriod()
+                {
+                    PeriodName = showLocals ? "סיכום בש''ח" : "Total Local Balance",
+                    Total = d.FirstOrDefault() == null ? 0 : d.FirstOrDefault().BalanceInLocalCurrency, 
+                    AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
+                    AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
+                    AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
+                    AccountCurrencyCode = d.First().AccountCurrencyCode,
+                    AccountDisplayNumber = d.First().AccountDisplayNumber,
+
+                }).ToList();
+            else
+                groupedPeriodsByAccount = result.Where(d => d.Total != null).GroupBy(d => d.AccountId).Distinct().Select(d => new AgingPeriod()
+                {
+                    PeriodName = showLocals ? "סיכום בש''ח" : "Total Local Balance",
+                    Total = d.FirstOrDefault() == null ? 0 : d.FirstOrDefault().BalanceInLocalCurrency,
+                    AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
+                    AccountLocalName = d.First().AccountLocalName,
+                    AccountEnglishName = d.First().AccountEnglishName ,
+                    AccountCurrencyCode = d.First().AccountCurrencyCode,
+                    AccountDisplayNumber = d.First().AccountDisplayNumber,
+
+                }).ToList();
+
+            totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
+
+        }
+        private void AddTotalSummationFooterPeriod(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
+        {
+            string pname = showLocals ? "סיכום בש''ח" : "Total Local Balance";
+            decimal? summation = totalData.AgingPeriods.Where(d=>d.PeriodName == pname).Sum(d => d.Total);
+
+            string totalLabel = showLocals ? "Local Total" : "Totals";
+            totalData.AgingPeriods.Add(new AgingPeriod()
+            {
+                AccountEnglishName = totalLabel,
+                AccountLocalName = totalLabel,
+                AccountName = totalLabel,
+                Total = summation??0,
+                PeriodName = pname,
+                OrderIndex = 99999999,
+            });
+
+        }
+
 
         private static List<AgingPeriod> GetTotalBalancePeriods(AccountingAgingDataProvider totalData, bool showLocals)
         {
@@ -255,6 +314,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.AccountEnglishName = item.AccountEnglishName + " / " + item.CurrencyCode;
                     record.AccountLocalName = item.AccountLocalName + " / " + item.CurrencyCode;
                     record.CurrencyCode = item.CurrencyCode;
+                    record.AccountDisplayNumber = item.AccountDisplayNumber;
+                    record.AccountCurrencyCode = item.AccountCurrencyCode;
 
                     record.Total = item.Total;
 
@@ -271,6 +332,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.AccountName = item.AccountLocalName != null ? item.AccountLocalName : item.AccountEnglishName;
                     record.AccountEnglishName = item.AccountEnglishName;
                     record.AccountLocalName = item.AccountLocalName;
+                    record.AccountDisplayNumber = item.AccountDisplayNumber;
+                    record.AccountCurrencyCode = item.AccountCurrencyCode;
 
                     record.Total = item.Total;
 
