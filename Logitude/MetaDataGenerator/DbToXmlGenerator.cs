@@ -363,6 +363,56 @@ namespace MetaDataGenerator
             return true;
         }
 
+        public bool UpdateTextCodesAndFeaturesForCustomsGeneralLXML()
+        {
+
+            string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+            string solutionDirectory = solutionDir.FullName;
+
+            string filePath = solutionDirectory + @"\Logitude.Customs.MetaData\EntityFiles\CustomsGeneral.lxml";
+
+
+
+
+            ObjectFieldRepository rep = new ObjectFieldRepository(0);
+
+            ObjectTable table = (from a in rep.context.ObjectTables
+                                 where a.Name == "General"
+                                 select a).First();
+
+
+            List<ObjectField> fields = (from a in this.allFields
+                                        where a.ObjectTableId == table.Id
+                                        select a).ToList();
+
+            List<TextCode> tableTextCodes = allTextCodes.Where(t => t.ObjectTableId == table.Id).ToList();
+
+
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filePath);
+
+
+            XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
+            GenerateAdditionalTextCodes(doc, entityElement, table, fields,"customs.");
+            GenerateAdditionalFeatures(doc, entityElement, table, fields, "customs");
+
+
+
+            #region Write Xml To file
+
+
+
+
+            XmlDocument newdoc = new XmlDocument();
+            doc.Save(filePath);
+
+            #endregion
+
+
+            return true;
+        }
         #region GenerateEntityElement
 
 
@@ -679,7 +729,7 @@ namespace MetaDataGenerator
             GenerateAdditionalFeatures(doc, entityElement, table, fields);
         }
 
-        private void GenerateAdditionalTextCodes(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
+        private void GenerateAdditionalTextCodes(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields, string startsWith = "")
         {
             //            select* from textcodes where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
             //and textcodetypecode<> 'f' and TextCodeTypeCode<> 'TH'
@@ -719,7 +769,10 @@ namespace MetaDataGenerator
                                                   && !allMenuButtons.Any(f => f.LabelTextCodeId == a.Id)
                                                   && !tableObjectFields.Any(f => f.FullNameTextCodeId == a.Id || f.ListTextCodeId == a.Id || f.HelpTextCodeId == a.Id)
                                                   select a).ToList();
-
+            if (!string.IsNullOrEmpty(startsWith))
+            {
+                additionalTextCodes = additionalTextCodes.Where(t => t.Code.ToLower().StartsWith(startsWith.ToLower())).ToList();
+            }
             foreach (TextCode tcode in additionalTextCodes)
             {
                 XmlElement codeXElement = GetElementNodeByTagAndAttributeName(doc, additionalTextCodesListXElement, "TextCode", "Code", tcode.Code, true);//doc.CreateElement("TextCode");
@@ -734,7 +787,7 @@ namespace MetaDataGenerator
             }
         }
 
-        private void GenerateAdditionalFeatures(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
+        private void GenerateAdditionalFeatures(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields, string startsWith = "")
         {
 			//            select* from Features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
 			//and Code<> 'NEW'and Code<> 'UPDATE'and Code<> 'READ'and Code<> 'Module'
@@ -767,7 +820,10 @@ namespace MetaDataGenerator
                                                 && !allMenuButtons.Any(f => f.FeatureId == a.Id)
 
                                                 select a).ToList();
-
+            if (!string.IsNullOrEmpty(startsWith))
+            {
+                additionalFeatures = additionalFeatures.Where(t => t.Code.ToLower().StartsWith(startsWith.ToLower())).ToList();
+            }
             foreach (Feature feature in additionalFeatures)
             {
 

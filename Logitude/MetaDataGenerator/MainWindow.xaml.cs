@@ -495,6 +495,12 @@ namespace MetaDataGenerator
 			string[] allFiles = Directory.GetFiles(dxmlFilesPath, "*.lxml", SearchOption.AllDirectories);
 			return allFiles;
 		}
+
+		private void button_Click_2(object sender, RoutedEventArgs e)
+		{
+			DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
+			dbToXmlGeneratorFrom.UpdateTextCodesAndFeaturesForCustomsGeneralLXML();
+		}
 	}
 }
 /*
