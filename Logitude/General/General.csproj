@@ -243,7 +243,11 @@
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs2019\to execute problem of chronological dates.sql" />
-    <Content Include="Customs2020\AMINETCST_GLOBAL~1.sql" />
+    <Content Include="Customs2020\1tenantmanagementlicenses_PACKAGECODE_ORACLE.sql" />
+    <Content Include="Customs2020\4before update delete all metadata.sql" />
+    <Content Include="Customs2020\3DROP CONSTRAINTS FOR METADATA ORACLE.sql" />
+    <Content Include="Customs2020\2oracle before delete metadata.sql" />
+    <Content Include="Customs2020\SELECT CONSTRAINTS.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
