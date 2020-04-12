@@ -72,6 +72,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 myDataProvider.HouseNumber = shipmentPM.House != null ? shipmentPM.House : "";
+                myDataProvider.AirlineLogo = DataProviders.General.GetCarrierLogo(shipmentPM.MainCarriageCarrierId, tenant);
 
                 #region Amounts
                 if (shipmentPM.GrossWeight != null)
@@ -234,6 +235,7 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.HouseNumber = myDataProvider.HouseNumber;
                     newlabel.UserName = myDataProvider.UserName;
                     newlabel.ConsigneePhoneNumber = myDataProvider.ConsigneePhoneNumber;
+                    newlabel.AirlineLogo = myDataProvider.AirlineLogo;
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, newlabel);
