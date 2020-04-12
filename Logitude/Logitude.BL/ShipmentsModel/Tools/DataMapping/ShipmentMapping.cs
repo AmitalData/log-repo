@@ -2509,7 +2509,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "ActualFinalArrivalDate", changeTrackingPM.ActualFinalArrivalDate, pm.ActualFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "EstimatedFinalArrivalDate", changeTrackingPM.EstimatedFinalArrivalDate, pm.EstimatedFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CreateDateTime", changeTrackingPM.CreateDateTime, pm.CreateDateTime, "CreateDateTime", notifyPropertyChangeValuesList);
-
+            AddFieldChangedProperties(changeTrackingPM, "WarehouseStorageFreeDays", changeTrackingPM.WarehouseStorageFreeDays, pm.WarehouseStorageFreeDays, "WarehouseStorageFreeDays", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "OrderIsDangerouseGoods", changeTrackingPM.OrderIsDangerouseGoods, pm.OrderIsDangerouseGoods, "OrderIsDangerouseGoods", notifyPropertyChangeValuesList);
 
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
@@ -2621,6 +2622,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.ActualFinalArrivalDate = houseShipment.ActualFinalArrivalDate;
             shipmentPM.EstimatedFinalArrivalDate = houseShipment.EstimatedFinalArrivalDate;
             shipmentPM.CreateDateTime = houseShipment.CreateDateTime;
+            shipmentPM.WarehouseStorageFreeDays = houseShipment.WarehouseStorageFreeDays;
+            shipmentPM.OrderIsDangerouseGoods = houseShipment.OrderIsDangerouseGoods;
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
                 shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;

@@ -123,7 +123,7 @@ function Contexting(e) {
     return e.context;
 }
 
-function logLoveReturnWhich(keyboardEvent) {
+function logLoveReturnWhich(keyboardEvent: any) {
     return keyboardEvent.which;
 }
 
