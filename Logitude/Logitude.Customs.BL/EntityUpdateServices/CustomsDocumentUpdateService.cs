@@ -789,10 +789,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICustomContext context = MainContext as CustomContext;
             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(context);
             CustomDocumentTypePM docType = docTypeQuery.GetSingle(entityPM.DocumentTypeCode, false, false);
-            if (docType != null && docType.IsCourierManadatory)
+            if (docType != null && docType.IsCourierManadatory )
                 //if (entityPM.DocumentTypeCode == "380")
             {
                 //ICustomContext context = MainContext as CustomContext;
+
                 DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
                 if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
                 {

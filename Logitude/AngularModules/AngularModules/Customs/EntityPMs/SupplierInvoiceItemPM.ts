@@ -707,6 +707,21 @@ export class SupplierInvoiceItemPM {
     public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
        
 	 
+    private ocrHeight: number;
+    public get OcrHeight() { return this.ocrHeight; }
+    public set OcrHeight(newValue: number) { if (this.ocrHeight != newValue) { this.ocrHeight = newValue; this.MarkAsDirty("OcrHeight"); } }
+       
+	 
+    private ocrTop: number;
+    public get OcrTop() { return this.ocrTop; }
+    public set OcrTop(newValue: number) { if (this.ocrTop != newValue) { this.ocrTop = newValue; this.MarkAsDirty("OcrTop"); } }
+       
+	 
+    private ocrPageNumber: number;
+    public get OcrPageNumber() { return this.ocrPageNumber; }
+    public set OcrPageNumber(newValue: number) { if (this.ocrPageNumber != newValue) { this.ocrPageNumber = newValue; this.MarkAsDirty("OcrPageNumber"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemPM;
 	

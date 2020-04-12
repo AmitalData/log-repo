@@ -312,6 +312,8 @@ import { CustomsHouseTypeExtendedPMService } from './Services/ExtendedPMs/Custom
 import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
 import { PaymentOrderConnectionTableExtendedPMService } from './Services/ExtendedPMs/PaymentOrderConnectionTableExtendedPMService';
 import { SupplierInvoiceExtendedPMService } from './Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import { ReferantExceptionExtendedPMService } from './Services/ExtendedPMs/ReferantExceptionExtendedPMService';
+
 ///????  import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
 
 
@@ -673,7 +675,9 @@ export class ModuleProviders {
             case "CustomsHouseTypeExtendedPMService": { myResult = new CustomsHouseTypeExtendedPMService(); break; }
             case "CustomsRequestSheetExtendedPMService": { myResult = new CustomsRequestSheetExtendedPMService(); break; }
             case "PaymentOrderConnectionTableExtendedPMService": { myResult = new PaymentOrderConnectionTableExtendedPMService(); break; }
-            case "SupplierInvoiceExtendedPMService": { myResult = new SupplierInvoiceExtendedPMService(); break; } 
+            case "SupplierInvoiceExtendedPMService": { myResult = new SupplierInvoiceExtendedPMService(); break; }
+            case "ReferantExceptionExtendedPMService": { myResult = new ReferantExceptionExtendedPMService(); break; }
+
             //#endregion
 
             //#region WebServices

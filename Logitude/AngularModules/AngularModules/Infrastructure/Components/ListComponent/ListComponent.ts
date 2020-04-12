@@ -427,7 +427,14 @@ export class ListComponent implements OnInit, AfterViewInit {
     public QueryColumns: any[];
     public firstCall: boolean = true;
     public SelectedQueryId: string;
-    public SelectedQuery: any = null;
+    private _SelectedQuery: any = null;
+    public get SelectedQuery(): any {
+        return this._SelectedQuery;
+    }
+    public set SelectedQuery(value: any) {
+        this._SelectedQuery = value;
+    }
+
     public QueryCode: string;
     public NewButtonLable: string;
 
@@ -442,7 +449,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private _ListComponentArgs:ListComponentArgs , private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+    constructor(public _ListComponentArgs:ListComponentArgs , private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
         this.ComponentIndex = this.CurrentSession.GetNewListComponentIndex();
 
         this.serviceArgs = new ServiceArgs();
@@ -923,6 +930,28 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         else {
             this.SelectedQuery = allQueries[0];
+        }
+        let forceExistQuery = (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") ;
+
+        if (/*forceExistQuery &&*/  this.SelectedQuery != null) {
+            let existSelectedQuery: boolean = false;
+            let alternativeUQuery: any = null;
+            let alternativeQuery: any = null;
+            if (!existSelectedQuery && this.UserQueries != null) {
+                existSelectedQuery = this.UserQueries.filter(r => r.Code == this.SelectedQuery.Code).length > 0;
+                alternativeUQuery = this.UserQueries[0];
+            }
+            if (!existSelectedQuery && this.Queries != null) {
+                existSelectedQuery = this.Queries.filter(r => r.Code == this.SelectedQuery.Code).length > 0;
+                alternativeQuery = this.Queries[0];
+            }
+            if (!existSelectedQuery) {
+                if (!AppTool.IsNullOrEmpty(alternativeQuery)) {
+                    this.SelectedQuery = alternativeQuery;
+                } else if (!AppTool.IsNullOrEmpty(alternativeUQuery)) {
+                    this.SelectedQuery = alternativeUQuery;
+                }
+            }
         }
         if (this.SelectedQuery != null) {
             this.QueryCode = this.SelectedQuery.Code;
@@ -2063,13 +2092,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                                 "ScriptableGatewayUtil.ShowCFIUFILEFromDeclarationReferantDataList",
                                 "CFIHMAIN.LogitudeTask",
-                                "ShowCFIUFILEFromDeclarationReferantData",
+                                "ShowCustomFileOPCFromDeclaration",
                                 unifreightMessageM,
                                 " הצגת מסך :הזנת תיק כללי עמילות מכס");
 
                         }
                         else {
-                            alert("ShowCFIUFILEFromDeclarationReferantData");
+                            alert("ShowCustomFileOPCFromDeclaration");
                         }
 
                         /*

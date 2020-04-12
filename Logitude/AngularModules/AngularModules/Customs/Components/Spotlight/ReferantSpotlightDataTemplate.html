@@ -1,7 +1,7 @@
 <div  style="min-height: 150px; width: 100%; border: 1px solid #6A8299; background-color:#E8F7FF; ">
     <div style="height: 150px; position: absolute; left: 5px; right: 5px; top: 5px;">
         <div class="MediaFillRelative" style=" overflow-x: auto;overflow-y: hidden;">
-            <table *ngIf="_IsReady" style="width:80%;">
+            <table style="width:80%;">
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
                     <td colspan="2">
                         <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
@@ -9,7 +9,7 @@
                 </tr>
                 <tr style="visibility:visible;">
                     <td>
-                        <div class="CellContent" style="width:435px; max-height:125px; bottom :15px; left:170px">
+                        <div *ngIf="_IsReady" class="CellContent" style="width:435px; max-height:125px; bottom :15px; left:170px">
                             <logitude-edit-grid GridWidth="100%"
                                                 GridHeight="100%"
                                                 (RowEnded)="OnRowEnded($event)"

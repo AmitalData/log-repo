@@ -25,9 +25,15 @@ export class FieldTemplateComponent {
     public IsSpotLightTemplate: boolean = false;
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
+    private _ListComponentArgs: ListComponentArgs ;
     @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
-    constructor(private _ListComponentArgs: ListComponentArgs) {
-
+    constructor() {
+        if (SessionLocator.SelectedSession.CurrentListComponent != null) {
+            this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
+        } else {
+            this._ListComponentArgs = new ListComponentArgs();
+        }
+        
     }
 
     public ButtonClick() {
@@ -270,13 +276,13 @@ export class FieldTemplateComponent {
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "ScriptableGatewayUtil.ShowCFIUFILEFromDeclarationReferantDataList",
                 "CFIHMAIN.LogitudeTask",
-                "ShowCFIUFILEFromDeclarationReferantData",
+                "ShowCustomFileOPCFromDeclaration",
                 unifreightMessageM,
                 " הצגת מסך :הזנת תיק כללי עמילות מכס");
 
         }
         else {
-            alert("ShowCFIUFILEFromDeclarationReferantData");
+            alert("ShowCustomFileOPCFromDeclaration");
         }
 
     }

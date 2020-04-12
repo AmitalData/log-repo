@@ -5,6 +5,7 @@ import { LogLovV2Component } from './LogLovV2Component';
 import { forEach } from '@angular/router/src/utils/collection';
 import { retry } from 'rxjs/operator/retry';
 import { setInterval } from 'timers';
+import { UserList } from '../../../Common/EntityLists/UserList';
 
 @Component({
     selector: 'MultiSelectLOV',
@@ -14,6 +15,7 @@ import { setInterval } from 'timers';
 })
 
 export class MultiSelectLOVComponent implements OnInit{
+   
     @Input()
     public IsDisabled: boolean
     //@Output()
@@ -22,7 +24,7 @@ export class MultiSelectLOVComponent implements OnInit{
     //private _CustomSendOptionsArgs: CustomSendOptionsArgs;
     public _DropdownDisplay: string = 'none';
     private _ElementRef: any;
-    static MyId: number = 0;
+    static MyId: number = 1;
     static LastDropdownMenuFilterId: number = 0;
     public _MultiSelectLOVId: string;
     public _MultiSelectLOVMenuId: string;
@@ -43,11 +45,39 @@ export class MultiSelectLOVComponent implements OnInit{
     IsDisplayOnly: boolean = false;
 
     //@ViewChild(LogLovV2Component)
+    InitKeyDownEvent: boolean = false;
     @ContentChild(LogLovV2Component)
-    public MyLogLovV2Component: LogLovV2Component = null;
+    private _MyLogLovV2Component: LogLovV2Component = null;
+    public get MyLogLovV2Component(): LogLovV2Component {
+        if (!this.InitKeyDownEvent && this._MyLogLovV2Component != null) {
+            this.InitKeyDownEvent = true;
+            this._MyLogLovV2Component.KeyDownEvent
+                .subscribe(char => {
+                    var TABKEY = 9;
+                    var ENTERKEY = 13;
+                    var DOWNKEY = 40;
+                    var UPKEY = 38;
+                    var ESC = 27;
+                    var CTRL = 17;
+                    var SHIFT = 16;
+                    if (char == ENTERKEY && this._MyLogLovV2Component.SelectedItem != null) {
+                        this.AddToList();
+                    }
+                });
+        }
+        return this._MyLogLovV2Component;
+    }
+    public set MyLogLovV2Component(value: LogLovV2Component) {
+        this._MyLogLovV2Component = value;
+        
+    }
 
 
-    
+    @Input()
+    ChosenListHeader: string = 'Chosen List';
+
+    @Input()
+    ButtonAddLabel: string = null;
 
     constructor(private _CD: ChangeDetectorRef, myElement: ElementRef) {
         this._ElementRef = myElement;
@@ -110,7 +140,17 @@ export class MultiSelectLOVComponent implements OnInit{
 
     ngOnInit() {
     }
-
+    public Invalidate(): any {
+        
+        this.FormatList();
+        this._CD.detectChanges();
+    }
+    addOnBlur() {
+        if (this.MyLogLovV2Component.SelectedItem == null) {
+            this.DropdownDisplayClose();
+        }
+    }
+    
     DropdownDisplayClose() {
         this._DropdownDisplay = 'none';
         this._CD.detectChanges();
@@ -131,14 +171,25 @@ export class MultiSelectLOVComponent implements OnInit{
         this.DropdowndisplayToggle(null, true);
     }
     DropdownMenuButtonClick(event, fucusMe: boolean) {
+        //this.CloseOtherLastmenu()
+        if (MultiSelectLOVComponent.LastDropdownMenuFilterId != 0 && MultiSelectLOVComponent.LastDropdownMenuFilterId != this.MyDropdownMenuFilterId) {
+            var lastSplitButtonComponentMenu = document.getElementById("MultiSelectLOVMenuId_" + MultiSelectLOVComponent.LastDropdownMenuFilterId);
+            if (!AppTool.IsNullOrEmpty(lastSplitButtonComponentMenu)) {
+                lastSplitButtonComponentMenu.style.display = 'none';
+            }
+        }
+        MultiSelectLOVComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
+
         this.DropdowndisplayToggle(event, fucusMe);
     }
+    
     DropdowndisplayToggle(event, fucusMe: boolean) {
 
 
         //MouseEvent
 
-        MultiSelectLOVComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
+        //MultiSelectLOVComponent.LastDropdownMenuFilterId = this.MyDropdownMenuFilterId;
+        
         if (this._DropdownDisplay == 'none') {
             var item = document.getElementById(this._MultiSelectLOVId);
             var itemRect = item.getBoundingClientRect();

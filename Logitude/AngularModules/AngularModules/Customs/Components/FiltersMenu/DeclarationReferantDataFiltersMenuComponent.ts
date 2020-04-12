@@ -1,9 +1,13 @@
-import { Component, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, Output, EventEmitter, ContentChild, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
+import { MultiSelectLOVComponent } from '../../../Infrastructure/Components/LogitudeComponents/MultiSelectLOVComponent';
+import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
+import { UserList } from '../../../Common/EntityLists/UserList';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -23,8 +27,12 @@ export class DeclarationReferantDataFiltersMenuComponent
     TransportFilter_A: string;
     TransportFilter_O: string;
     TransportFilter_I: string;
-    constructor() {
+    @ViewChildren(MultiSelectLOVComponent)
+    public myViewChildrenMultiSelectLOVComponent: QueryList<MultiSelectLOVComponent> = null;
+
+    constructor(private _CD: ChangeDetectorRef) {
         super();
+        
         if (this.CurrentSession == null) {
             this.TransportFilter_A = "TransportFilter_A_-1_-1";
             this.TransportFilter_O = "TransportFilter_O_-1_-1";
@@ -43,19 +51,42 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.itmImportDeclarationReferantDatas = false;
             this.DirectionWidth = 140;
         }
-        //this.MyObservableCollection = new ObservableCollection(this._LOVListUsers);
-       // this.MyObservableCollection.Changed.subscribe(r => { this.SelectedValueChangedEmitUser(); });
     }
+
     OnChosenListItemsChanged() {
         this.SelectedValueChangedEmitUser();
     }
+
     ngAfterViewInit() {
         this.ApplyTransportSelectedStyle();
+        //
+        //this.LOVListUsers.push(SessionLocator.LoggedUserPM); // by default is the grid filtered by the current user
+        //let myUserListService: UserListService = new UserListService();
+        //myUserListService.getSingleFromCache(SessionLocator.LoggedUserId)
+        //    .subscribe(r => {
+        //        let myUserList: UserList = r.Result;
+        //        if (!AppTool.IsNullOrEmpty(myUserList)) {
+        //            this.myViewChildrenMultiSelectLOVComponent.first.AddUserList(myUserList);
+        //        }
+        //    });
+        let ul = new UserList();
+        ul.Id = SessionLocator.LoggedUserPM.Id;
+        ul.LocalName = SessionLocator.LoggedUserPM.LocalName;
+        if (AppTool.IsNullOrEmpty(ul.LocalName)) {
+            ul.LocalName = SessionLocator.LoggedUserPM.EnglishName;
+        }
+        this.LOVListUsers.push(ul);
+        this.myViewChildrenMultiSelectLOVComponent.first.Invalidate();
+        this.SelectedValueChangedEmitUser();
+
+        this._CD.detectChanges();
     }
+
     SetTransport(itemValue: string) {
         this.selectedValue = itemValue;
         this.ApplyTransportSelectedStyle();
     }
+
     _LOVListUsers :any[] = [];
     get LOVListUsers() { return this._LOVListUsers; }
     set LOVListUsers(value) {
@@ -63,6 +94,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             this._LOVListUsers = value;
         }
     }
+
     _LOVListDepartment: any[] = [];
     get LOVListDepartment() { return this._LOVListDepartment; }
     set LOVListDepartment(value) {
@@ -78,21 +110,17 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.selectedValue = value;
         }
     }
+
     ApplyTransportSelectedStyle() {
         var itemValue = this.SelectedValue;
-
         var img_A = document.getElementById(this.TransportFilter_A);
         var img_O = document.getElementById(this.TransportFilter_O);
         var img_I = document.getElementById(this.TransportFilter_I);
-
         if (img_A) {
-
             this.CurrentSession.ChangeSessionHeader({ TransportId: itemValue });
-
             img_A.setAttribute("src", "./Images/TransportModes/A_g.png");
             img_O.setAttribute("src", "./Images/TransportModes/O_g.png");
             img_I.setAttribute("src", "./Images/TransportModes/I_G.png");
-
             switch (itemValue) {
                 case "A": {
                     img_A.setAttribute("src", "./Images/TransportModes/A_w.png");
@@ -111,6 +139,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             }
         }
     }
+
     itemMouseOver(itemValue: string) {
         if (this.SelectedValue != itemValue) {
             var img_A = document.getElementById(this.TransportFilter_A);
@@ -136,6 +165,7 @@ export class DeclarationReferantDataFiltersMenuComponent
             }
         }
     }
+
     itemMouseLeave(itemValue: string) {
         if (this.SelectedValue != itemValue) {
             var img_A = document.getElementById(this.TransportFilter_A);
@@ -163,20 +193,6 @@ export class DeclarationReferantDataFiltersMenuComponent
     
     SelectedValueChangedEmitUser() {
         var RemoveFilter = false;
-        //if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-        //    this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ReferentUserId");
-        //}
-
-        //this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
-        //if (itemValue == "All") {
-        //    RemoveFilter = true;
-        //}
-        //if (this._LOVListUsers.length == 0) {
-        //    this.apiQueryFilters.removeAdditionalFilter("ReferentUserId");
-        //    RemoveFilter = true;
-        //    this.SelectedValueChanged.emit({ Filters: null, RemoveFilter: RemoveFilter });
-
-        //} else {
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ReferentUserId");
         }
@@ -192,28 +208,26 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
         this.apiQueryFilters.addAdditionalFilter("ReferentUserId", UsersListString, null, null, "InList", false, false, false, "string", this._LOVListUsers.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
-        //}
-
     }
+
     SelectedValueChangedEmitDepartment() {
         var RemoveFilter = false;
-        if (this.LOVListDepartment.length == 0) {
-            this.apiQueryFilters.removeAdditionalFilter("DepartmentId");
-            RemoveFilter = true;
+        if (this.apiQueryFilters.AdditionalFilters.length > 0) {
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "DepartmentId");
+        }
+        var LOVListDepartment = "";
+        if (this._LOVListDepartment.length > 0) {
+            this._LOVListDepartment.forEach(item => { LOVListDepartment += item["Id"] + ","; });//Id: "1-3697"
+            LOVListDepartment = LOVListDepartment.slice(0, -1); // trim last comma
 
         } else {
-            if (this.LOVListDepartment.length > 0) {
-                var DepartmentListString = "";
-                if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-                    this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "DepartmentId");
-                }
-                this.LOVListDepartment.forEach(item => { DepartmentListString += item["Id"] + ","; });//Id: "1-3697"
-                DepartmentListString = DepartmentListString.slice(0, -1); // trim last comma
-                this.apiQueryFilters.addAdditionalFilter("DepartmentId", DepartmentListString, null, null, "InList", false, false, false, "string");
-            } 
+            LOVListDepartment = "HowCare"
+            RemoveFilter = true;
         }
+        this.apiQueryFilters.addAdditionalFilter("DepartmentId", LOVListDepartment, null, null, "InList", false, false, false, "string", this._LOVListDepartment.length == 0);
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
     }
+
     itemClicked(itemValue: string) {
         var RemoveFilter = false;
         if (this.SelectedValue != itemValue) {

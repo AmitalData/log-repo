@@ -24,6 +24,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<DeclarationReferantDataList> query = (from a in iQueryable.Include("CustomsVendor")
                                                              join d in context.Declarations.Include("CustomerCard").Include("DeclarationOffice").Include("DeclarationStatusType")
                                                              on a.DeclarationId equals d.Id
+                                                             where d.ReferentUserId != null
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant=a.Tenant,

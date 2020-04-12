@@ -17,6 +17,8 @@ import { ObservableCollection } from    '../../../Infrastructure/Utilities/Obser
 import { EntityListService } from   '../../../Infrastructure/Services/EntityListService';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { CustomsRequestsSheetExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsRequestsSheetExtendedListService';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 //////////////////////////////////////////////////////////////////
 
@@ -25,6 +27,7 @@ import { Guid } from '../../../Infrastructure/Utilities/Guid';
     selector: 'CustomsRequestsSheetsComponent',
     moduleId: module.id,
     templateUrl: './CustomsRequestsSheetsComponent.html',
+    providers: [CustomsRequestsSheetExtendedListService]
 })
 
 
@@ -105,14 +108,20 @@ export class CustomsRequestsSheetsComponent
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
-
+    isReAnAnalysis: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private _CD: ChangeDetectorRef) {
+    constructor(public entityArgs: EntityArgs, private _CD: ChangeDetectorRef, public customsRequestsSheetExtendedListService: CustomsRequestsSheetExtendedListService) {
         super();
         this._CustomsRequestsSheetStatusListService = new CustomsRequestsSheetStatusListService();
         this._AllCustomsRequestsSheetStatusListVM = [];
         console.log("12....");
         
+    }
+
+    SetWindowArgs(args) {
+        if (args != null) {
+            this.isReAnAnalysis = args.isReAnAnalysis;
+        }
     }
 
 
@@ -206,6 +215,196 @@ export class CustomsRequestsSheetsComponent
     ngAfterViewInit() {
         //this._CD.detectChanges();
         //this.CRSSearch();
+    }
+    CancelByFilters() {
+         if (!this.CheckValidation("Cancel")) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 150;
+            messageWindow.ShowErrorIcon = true;
+             messageWindow.Show("You cannot cancel a request other than status Sending failed(15).");
+            return;
+        }
+        this.CurrentSession.StartBusyIndicator("");
+
+         this.InitFilter();
+        this.customsRequestsSheetExtendedListService.CancelByFilters(this.filterAgrs).subscribe(
+            data => {
+                this.CurrentSession.StopBusyIndicator();
+
+                if (data.HasError) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 150;
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show("Error canceling requests.");
+                }
+
+                else {
+                 var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 150;
+                messageWindow.ShowErrorIcon = true;
+                messageWindow.Show("Requests canceled successfully.");
+                }
+
+           
+            }
+        );
+
+       
+      
+        
+    }
+
+    ReAnalysisByFilters() {
+        if (!this.CheckValidation("ReAnalysis")) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Width = 400;
+            messageWindow.Height = 150;
+            messageWindow.ShowErrorIcon = true;
+            messageWindow.Show("Requests in different statuses cannot be re-analyzed from failure or request registered");
+            return;
+        }
+        this.CurrentSession.StartBusyIndicator("");
+
+        this.InitFilter();
+        this.customsRequestsSheetExtendedListService.ReAnalysisByFilters(this.filterAgrs).subscribe(
+            data => {
+                this.CurrentSession.StopBusyIndicator();
+
+                if (data.HasError) {
+               
+                        var messageWindow = new MessageWindow();
+                        messageWindow.Width = 400;
+                        messageWindow.Height = 150;
+                        messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show("Error re-analysis requests.");
+                  
+                }
+                else {
+    var messageWindow = new MessageWindow();
+                messageWindow.Width = 400;
+                messageWindow.Height = 150;
+                messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show("The requests were registered for re-analysis and sent in the background.");
+                }
+            
+            });
+    }
+    CheckValidation(type: string) {
+        if (this.AllCRSSChecked) return false;
+
+        for (var i = 0; i < this._AllCustomsRequestsSheetStatusListVM.length; i++) {
+            if (this._AllCustomsRequestsSheetStatusListVM[i].IsChecked) {
+                if (type == "ReAnalysis" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "21" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "25")
+                    return false;
+                if (type == "Cancel" && this._AllCustomsRequestsSheetStatusListVM[i].MyItem.Code != "15")
+                    return false;
+            }
+        }  
+
+            
+      
+        return true;
+     }
+
+    InitFilter() {
+
+ 
+          var  filters = new ApiQueryFilters();
+        
+ 
+        filters.GetAll = true;
+        filters.GetCount = true;
+ 
+        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
+            filters.SortBy = "RequestCreateDate";
+        }
+        if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
+            filters.SortDirection = "Descending";
+        }
+
+        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+        let objectTableName = "";
+        let objectTableId1 = "";
+        if (this.entityArgs) {
+            if (!AppTool.IsNullOrEmpty(this.entityArgs.ObjectTableName)) {
+                objectTableName = this.entityArgs.ObjectTableName;
+                var objectTablePM = //window.ObjectTables.filter(d => d.Id == ObjectTableId)[0];
+                    window.ObjectTables.filter(t => t.Name == objectTableName)[0];
+                objectTableId1 = objectTablePM.Id;
+            }
+        }
+        //if (!AppTool.IsNullOrEmpty(objectTableName)) {
+        if (objectTableName === "Customs.Notification") {
+            //////never tested !!!!!!!- copy from silverlight
+            filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        }
+        else {
+            if (!AppTool.IsNullOrEmpty(objectTableName) && objectTableName != "Customs.Declaration") {
+                //////never tested !!!!!!!- copy from silverlight
+                //filters.addAdditionalFilter("ObjectTableId1", objectTableId, null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("ObjectTableId1", objectTableId1, null, null, "Equals", false, false, false, "string");
+                let EntityId1 = this.entityArgs.EntityPM.Id;
+                if (AppTool.IsNullOrEmpty(EntityId1)) {
+                    EntityId1 = "new Entity do not get any rows !!!!";
+                }
+                //filters.addAdditionalFilter("EntityId1", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+                filters.addAdditionalFilter("EntityId1", EntityId1, null, null, "Equals", false, false, false, "string");
+
+            }
+
+            else {
+
+                if (this.FromDateTime != null || this.ToDateTime != null) {// for Region
+                    filters.addAdditionalFilter("RequestCreateDate", this.FromDateTime, this.ToDateTime, null, "Between", false, false, false, "DateTime");
+                }
+
+                if (this.MyRequestOnly) {
+                    filters.addAdditionalFilter("RequestOwnerId", SessionLocator.LoggedUserId, null, null, "Equals", false, false, false, "string");
+                }
+
+                if (!AppTool.IsNullOrEmpty(this.CorrelationId)) {
+                    filters.addAdditionalFilter("CorrelationId", this.CorrelationId, null, null, "Equals", false, false, false, "string");
+                }
+
+                if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
+                    filters.addAdditionalFilter("CustomFileNo", this.CustomFileNo, null, null, "Equals", false, false, false, "string");
+                }
+                if (!AppTool.IsNullOrEmpty(this.InterfaceTypeCode)) {
+
+                    filters.addAdditionalFilter("InterfaceTypeCode", this.InterfaceTypeCode, null, null, "Equals", false, false, false, "string");
+
+                }
+                if (!AppTool.IsNullOrEmpty(this.SearchFields)) {
+                    filters.addAdditionalFilter("SearchFields", this.SearchFields, null, null, "Contains", false, false, false, "string");
+
+                }
+
+
+                if (!AppTool.IsNullOrEmpty(this.EntityReference)) {
+
+                    filters.addAdditionalFilter("EntityReference", this.EntityReference, null, null, "Equals", false, false, false, "string");
+                }
+                if (AppTool.IsNullOrEmpty(objectTableName) || objectTableName == "Customs.Declaration") {
+                    this.GetRequestStatusString(filters);
+                }
+
+
+                if (this.IsRestored) {
+                    filters.addAdditionalFilter("IsRestored", this.IsRestored, null, null, "Equals", false, false, false, "boolean");
+                }
+                //_SelectedDCAValue: string = 'ALL';//'ALL';//DCA//!DCA
+                if (this._SelectedDCAValue != "ALL") {
+                    filters.addAdditionalFilter("IsDCA", this._SelectedDCAValue === "DCA", null, null, "Equals", false, false, false, "boolean");
+
+                }
+            }
+        }
+
+        this.filterAgrs = filters;
+
     }
 
     CRSSearch() {
@@ -304,7 +503,7 @@ export class CustomsRequestsSheetsComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
-            
+            AdditionalDataCustom: this.isReAnAnalysis
         });
         
         
@@ -335,6 +534,8 @@ export class CustomsRequestsSheetsComponent
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
+            AdditionalDataCustom: this.isReAnAnalysis
+
         });
     }
     OnFirstRowSelected($event) {
