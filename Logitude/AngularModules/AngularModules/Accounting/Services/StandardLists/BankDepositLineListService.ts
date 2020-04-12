@@ -1,6 +1,7 @@
 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -15,10 +16,10 @@ import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorag
 @Injectable()
 
 export class BankDepositLineListService {
-	private _http: Http;
+	private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/BankDepositLineViews';
     }
 
@@ -53,18 +54,15 @@ export class BankDepositLineListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+     
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
 	   return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response.body;
 
                 // var _mappedListsArray: Array< BankDepositLineList> = [];
                 // if (serviceResponse.Result) {
@@ -84,7 +82,7 @@ export class BankDepositLineListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BankDepositLine", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));;
         });
     }
 

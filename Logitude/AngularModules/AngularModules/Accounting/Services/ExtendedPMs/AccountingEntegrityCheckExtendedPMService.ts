@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-//import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -16,11 +15,10 @@ import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFi
 @Injectable()
 
 export class AccountingEntegrityCheckExtendedPMService {
-  //  private _http: Http;
+
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-       // this._http = ServiceHelper.Http;
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AccountingEntegrityCheck';
     }
@@ -41,29 +39,7 @@ export class AccountingEntegrityCheckExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-        //     var mappedEntity: AccountingIntegrityCheckPM;
-        //     mappedEntity = this.MapJsonToEntityPM(accountingEntegrityCheck, false);
-
-        //     return this._http.post(this._apiUrl + "/PostFixEntegrityCheckErrorInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
-        //         .map((res) => {
-
-        //             var result = res.json();
-        //             serviceResponse.Result = result;
-
-        //             return serviceResponse;
-
-        //         }).catch(ServiceHelper.HandleServiceError);
-        // });
-    }
+      }
 
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: AccountingIntegrityCheckPM = null) {

@@ -721,7 +721,7 @@ class JournalLineModel extends BaseComponent {
     set CreditAccountId(value: string) {
         if (this.JournalLinePM.CreditAccountId != value) {
             this.JournalLinePM.CreditAccountId = value;
-            this.glaccountListService.getSingle(value).subscribe((result)=>{
+            this.glaccountListService.getSingle(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
                 if(entity){
                     this.CreditAccount=entity;
@@ -735,7 +735,7 @@ class JournalLineModel extends BaseComponent {
     set DebitAccountId(value: string) {
         if (this.JournalLinePM.DebitAccountId != value) {
             this.JournalLinePM.DebitAccountId = value;
-            this.glaccountListService.getSingle(value).subscribe((result)=>{
+            this.glaccountListService.getSingle(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
                 if(entity){
                     this.DebitAccount=entity;

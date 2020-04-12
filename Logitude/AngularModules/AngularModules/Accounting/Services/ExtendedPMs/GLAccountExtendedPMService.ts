@@ -1,5 +1,4 @@
-﻿import {Injectable} from '@angular/core';
-//import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -15,18 +14,17 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class GLAccountExtendedPMService {
-  //  private _http: Http;
+
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-       // this._http = ServiceHelper.Http;
+
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccountViews';
     }
 
     GetSplittedByCurrencyGLAccounts(accountId: string) {
-     //   var authHeader = new Headers();
-     //   authHeader.append('Token', SessionInfo.Token);
+
      return this.httpClient.get(this._apiUrl + '/GetSplittedByCurrencyGLAccounts?accountId=' + accountId,  ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -48,36 +46,12 @@ export class GLAccountExtendedPMService {
                 return serviceResponse;
         }),
         catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-        //     return this._http.get(this._apiUrl + '/GetSplittedByCurrencyGLAccounts?accountId=' + accountId, {
-        //         headers: authHeader
-        //     }).map(response => {
-        //         var serviceResponse: ServiceResponse = new ServiceResponse();
-
-        //         serviceResponse.Result = response.json();
-
-        //         var _mappedListsArray: Array<GLAccountPM> = [];
-        //         if (serviceResponse.Result) {
-        //             for (var key in serviceResponse.Result) {
-
-        //                 var entity: GLAccountPM;
-        //                 entity = this.MapJsonToEntityPM(serviceResponse.Result[key]);
-        //                 _mappedListsArray.push(entity);
-
-        //             }
-        //         }
-
-        //         serviceResponse.Result = _mappedListsArray;
-        //         return serviceResponse;
-        //     });
-        // });
-
+       
     }
 
     ConnectCardToGLAccount(accountId: string, cardId: string, skipConnectedCardsValidation: boolean = false)
     {
-       // var authHeader = new Headers();
-      //  authHeader.append('Token', SessionInfo.Token);
+    
         
         var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
         return this.httpClient.get(api + '/GetConnectCardToGLAccount?accountId=' + accountId
@@ -91,29 +65,13 @@ export class GLAccountExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() =>
-        // {
-        //     var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-        //     return this._http.get(api + '/GetConnectCardToGLAccount?accountId=' + accountId
-        //         + '&cardId=' + cardId
-        //         + '&skipConnectedCardsValidation=' + skipConnectedCardsValidation, {
-        //         headers: authHeader
-        //     }).map(response =>
-        //     {
-        //         var serviceResponse: ServiceResponse = new ServiceResponse();
-
-        //         serviceResponse.Result = response.json();
-
-        //         return serviceResponse;
-        //     }).catch(ServiceHelper.HandleServiceError);
-        // });
+       
 
     }
 
     GetConnectedCardsForGLAccount(accountId: string)
     {
-       // var authHeader = new Headers();
-     //   authHeader.append('Token', SessionInfo.Token);
+     
      var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
      return this.httpClient.get(api + '/GetConnectedCardsForGLAccount?accountId=' + accountId,  ServiceHelper.GetHttpHeaders()).pipe(
          map(response => {
@@ -124,20 +82,7 @@ export class GLAccountExtendedPMService {
             return serviceResponse;
          }),
          catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() =>
-        // {
-        //     var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-        //     return this._http.get(api + '/GetConnectedCardsForGLAccount?accountId=' + accountId, {
-        //         headers: authHeader
-        //     }).map(response =>
-        //     {
-        //         var serviceResponse: ServiceResponse = new ServiceResponse();
-
-        //         serviceResponse.Result = response.json();
-
-        //         return serviceResponse;
-        //     }).catch(ServiceHelper.HandleServiceError);
-        // });
+        
 
     }
 

@@ -357,7 +357,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             var _glaId = this.billtoCard.GLAccountId;
             this.StartBusyIndicator('fetchGLAccount');
             this._glaService.getSingle(_glaId)
-                .subscribe(response => {
+                .subscribe((response:ServiceResponse) => {
 
                     var res: ServiceResponse = response;
                     if (!res.HasError) {

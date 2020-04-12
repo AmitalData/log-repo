@@ -14,11 +14,11 @@ import { catchError, map } from 'rxjs/operators'
 @Injectable()
 
 export class JournalExtendedPMService {
-   // private _http: Http;
+
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-       // this._http = ServiceHelper.Http;
+  
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + /*'api/journalviews'*/ 'api/journalop';
     }
@@ -37,7 +37,7 @@ export class JournalExtendedPMService {
                 var pm = response;
                 if (pm) {
                     var mappedResult: JournalPM;
-                    //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                
                     serviceResponse.Result = mappedResult;
                 }
 
@@ -45,63 +45,13 @@ export class JournalExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-
-        //   //  var authHeader = new Headers();
-        //  //   authHeader.append('Token', SessionInfo.Token);
-        //    // authHeader.append('Content-Type', 'application/json');
-
-
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-
-        //     // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-        //     return this._http.delete(url, { headers: authHeader }).map(response => {
-
-        //         var pm = response.json();
-        //         if (pm) {
-        //             var mappedResult: JournalPM;
-        //             //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-        //             serviceResponse.Result = mappedResult;
-        //         }
-
-
-        //         return serviceResponse;
-
-        //     }).catch(ServiceHelper.HandleServiceError);
-        // }
-
-        //);
+       
 
     }
-    //GetByAccountingEntityId(accountingEntityId) {
-    //    var authHeader = new Headers();
-    //    authHeader.append('Token', SessionInfo.Token);
-    //    var url = this._apiUrl + '/GetByAccountingEntityId?accountingEntityId=' + accountingEntityId;
 
-    //    return Observable.defer(() => {
-    //        return this._http.get(url, { headers: authHeader }).map(response => {
-
-    //            var result = response.json();
-    //            var entity: JournalPM;
-    //            if (result) {
-    //                entity = this.MapJsonToEntityPM(result);
-    //            }
-    //            var serviceResponse: ServiceResponse;
-    //            serviceResponse = new ServiceResponse();
-    //            serviceResponse.Result = entity;
-    //            return serviceResponse;
-
-    //        }).catch(ServiceHelper.HandleServiceError);
-    //    });
-    //}
 
     GetByAccountingEntityId(accountingEntityId: string, accountingEntityCode:string) {
-      //  var authHeader = new Headers();
-      //  authHeader.append('Token', SessionInfo.Token);
+   
       return this.httpClient.get(this._apiUrl + '/GetJournalByAccountingEntityId?accountingEntityId=' + accountingEntityId + '&accountingEntityCode=' + accountingEntityCode,   ServiceHelper.GetHttpHeaders()).pipe(
         map(res => {
             var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -117,23 +67,7 @@ export class JournalExtendedPMService {
             return serviceResponse;
         }),
         catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-        //     return this._http.get(this._apiUrl + '/GetJournalByAccountingEntityId?accountingEntityId=' + accountingEntityId + '&accountingEntityCode=' + accountingEntityCode, {
-        //         headers: authHeader
-        //     }).map(response => {
-        //         var serviceResponse: ServiceResponse = new ServiceResponse();
-
-        //         var result = response.json();
-        //         var entity: JournalPM;
-        //         if (result) {
-        //             entity = this.MapJsonToEntityPM(result);
-        //         }
-        //         var serviceResponse: ServiceResponse;
-        //         serviceResponse = new ServiceResponse();
-        //         serviceResponse.Result = entity;
-        //         return serviceResponse;
-        //     });
-        // });
+     
 
     }
 

@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -20,24 +21,19 @@ import {GLAccountBalanceByYearPM} from '../../EntityPMs/GLAccountBalanceByYearPM
 @Injectable()
 
 export class GLAccountBalanceByYearPMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/glaccountbalancesbyyear';      
     }
 
  get(accountid: string, year: number, currencyid: string) {
          
-         
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-		
+        
 		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'accountid=' + accountid+'&'+'year=' + year+'&'+'currencyid=' + currencyid, {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response.json();
+             return this._http.get(this._apiUrl + '/getsingle?' + 'accountid=' + accountid + '&' + 'year=' + year + '&' + 'currencyid=' + currencyid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var pm = response;
                     
 					
                     var entity: GLAccountBalanceByYearPM;
@@ -51,7 +47,7 @@ export class GLAccountBalanceByYearPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 
@@ -59,9 +55,7 @@ export class GLAccountBalanceByYearPMService {
          
         return Observable.defer(() => {
 
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
+          
 
                 var validator: ClassLevelValidator;
                  
@@ -76,9 +70,8 @@ export class GLAccountBalanceByYearPMService {
                     var mappedEntity: GLAccountBalanceByYearPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((res) => {
-                            var pm = res.json();
+                     return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                            var pm = res;
 							if(pm)
 							{
                                var mappedResult:  GLAccountBalanceByYearPM;
@@ -90,7 +83,7 @@ export class GLAccountBalanceByYearPMService {
                             
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 
@@ -110,9 +103,7 @@ export class GLAccountBalanceByYearPMService {
          
             return Observable.defer(() => {
 
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
+   
 
                 var validator: ClassLevelValidator;
                  
@@ -127,9 +118,8 @@ export class GLAccountBalanceByYearPMService {
                     var mappedEntity: GLAccountBalanceByYearPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                        { headers: authHeader }).map((res) => {
-                            var pm = res.json();
+                     return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                            var pm = res;
 							if(pm)
 							{
                                var mappedResult:  GLAccountBalanceByYearPM;
@@ -140,7 +130,7 @@ export class GLAccountBalanceByYearPMService {
                            
                             return serviceResponse;
 
-                        }).catch(ServiceHelper.HandleServiceError);
+                        }),catchError(ServiceHelper.HandleServiceError));
                 }
                 else {
 

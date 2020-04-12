@@ -1,5 +1,4 @@
-﻿import {Injectable} from '@angular/core';
-//import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -14,11 +13,11 @@ import { catchError, map } from 'rxjs/operators'
 
 @Injectable()
 export class CashBookExtendedPMService {
-  //  private _http: Http;
+ 
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-       // this._http = ServiceHelper.Http;
+   
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CashBookOp';
     }
@@ -32,22 +31,7 @@ export class CashBookExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-        //     return this._http.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id , { headers: authHeader })
-        //         .map((res) => {
-        //             serviceResponse.Result = res.json();
-        //             return serviceResponse;
-        //         })
-        //             .catch(ServiceHelper.HandleServiceError);
-        //     });
+    
     }
 
 
@@ -60,22 +44,7 @@ export class CashBookExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-        //     return this._http.get(this._apiUrl + '/GetCashbookChequesCounter?cashbookId=' + cashbookId , { headers: authHeader })
-        //         .map((res) => {
-        //             serviceResponse.Result = res.json();
-        //             return serviceResponse;
-        //         })
-        //             .catch(ServiceHelper.HandleServiceError);
-        //     });
+      
     }
 
     GetCashbookUndepositedChequesCount(cashbookId: string) {
@@ -87,22 +56,7 @@ export class CashBookExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-        //     return this._http.get(this._apiUrl + '/GetCashbookUndepositedChequesCount?cashbookId=' + cashbookId , { headers: authHeader })
-        //         .map((res) => {
-        //             serviceResponse.Result = res.json();
-        //             return serviceResponse;
-        //         })
-        //             .catch(ServiceHelper.HandleServiceError);
-        //     });
+      
     }
 
     GetCashbookTotalAmount(cashbookId: string, chequeFilterType: string) {
@@ -114,23 +68,7 @@ export class CashBookExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        // return Observable.defer(() => {
-
-        //     var authHeader = new Headers();
-        //     authHeader.append('Token', SessionInfo.Token);
-        //     authHeader.append('Content-Type', 'application/json');
-
-        //     var serviceResponse: ServiceResponse;
-        //     serviceResponse = new ServiceResponse();
-
-        //     return this._http.get(this._apiUrl + '/GetCashbookTotalAmount?cashbookId=' + cashbookId + '&chequeFilterType=' + chequeFilterType,
-        //      { headers: authHeader })
-        //         .map((res) => {
-        //             serviceResponse.Result = res.json();
-        //             return serviceResponse;
-        //         })
-        //             .catch(ServiceHelper.HandleServiceError);
-        //     });
+      
     }
 
 
