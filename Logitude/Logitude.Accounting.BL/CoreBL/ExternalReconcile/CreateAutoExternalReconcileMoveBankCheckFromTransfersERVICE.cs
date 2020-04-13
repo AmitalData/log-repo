@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             reconcile_DebitPage_CreditGLAccount.GLAccountId = myNewLedgerTransactionBankGLAccountInCredit.AccountId;
             reconcile_DebitPage_CreditGLAccount.Id = "new";
 
+            LedgerTransactionPM transferAccountTransaction = GetLedgerTransactionById(myJournalExternalReconcile.LedgerTransactionId);
+
+            BankAccountPM bankAccount = GetBankAccountByTransferAccountId(transferAccountTransaction.AccountId);
+            reconcile_DebitPage_CreditGLAccount.BankAccountId = bankAccount.Id;
+
 
             var reconcileLine_DebitPage = new ExternalReconciliationLinePM()
             {
@@ -84,6 +90,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             reconcile_DebitPage_CreditGLAccount.ExternalReconciliationLines.Add(reconcileLine_CreditGLAccount);
             this.ExternalReconciliationList.Add(reconcile_DebitPage_CreditGLAccount);
+        }
+
+        private LedgerTransactionPM GetLedgerTransactionById(string id)
+        {
+            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(_JournalPM.Tenant);
+            LedgerTransactionPM transferLedgerTransaction = transactionQueryService.GetSingle(id, false, false);
+            return transferLedgerTransaction;
         }
 
         private List<LedgerTransactionPM> GetOldTransToReconcileThrowIfNotInProgress()
@@ -133,6 +146,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             reconcile_DebitCreditTransferGL.ChangeSetOp = ChangeSetOperation.Insert;
             reconcile_DebitCreditTransferGL.GLAccountId = myLedgerTransactionTransferInCredit.AccountId;
             reconcile_DebitCreditTransferGL.Id = "new";
+
+            BankAccountPM bankAccount = GetBankAccountByTransferAccountId(myLedgerTransactionTransferInCredit.AccountId);
+            reconcile_DebitCreditTransferGL.BankAccountId = bankAccount.Id;
+
             //reconcile_DebitCreditTransferGL.AccountCurrencyId = myLedgerTransactionTransferInCredit.CurrencyId;
             //reconcile_DebitCreditTransferGL.CreatedByUserId = _JournalPM.CreatedByUserId;
             //reconcile_DebitCreditTransferGL.CreateDate = 
@@ -165,6 +182,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             this.ExternalReconciliationList.Add(reconcile_DebitCreditTransferGL);
         }
 
-
+        private BankAccountPM GetBankAccountByTransferAccountId(string transferAccountId)
+        {
+            BankAccountQueryService bankAccountQuery = new BankAccountQueryService(_JournalPM.Tenant);
+            BankAccountPM bankAccount = bankAccountQuery.GetBankAccountByTransferGLAcccountId(transferAccountId, _JournalPM.Tenant);
+            if (bankAccount == null)
+                throw new ApplicationException("We need bank account id inorder to reconcile transfer transaction!!");
+            return bankAccount;
+        }
     }
 }
