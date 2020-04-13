@@ -25,8 +25,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsMeasurement { get; set; }
         public string AggregationTypeCode { get; set; }
         public bool DisplayInQueryBuilder { get; set; }
-        //public string Category1 { get; set; }
-        //public string Category2 { get; set; }
+        public string Category1 { get; set; }
+        public string Category2 { get; set; }
         public string LOVAdditionalColumns { get; set; }
         public bool HideTree { get; set; }
         public bool CannotFilter { get; set; }
