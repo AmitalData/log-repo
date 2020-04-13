@@ -246,7 +246,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM
             int myMonthItemIndex = 0;
             int numberOfMonths = 0;
 
-            while (myDate1 < toDate)
+            while (myDate1 <= toDate)
             {
                 numberOfMonths++;
 
