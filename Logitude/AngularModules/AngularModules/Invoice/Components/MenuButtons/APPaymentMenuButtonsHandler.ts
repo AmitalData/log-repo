@@ -196,6 +196,15 @@ export class APPaymentMenuButtonsHandler {
                             }
 
                             button.IsHidden = isHidden;
+
+                            if (this.EntityPM.StatusCode == "VD") {
+                                button.IsDisabled = true;
+                            }
+
+                            else {
+                                button.IsDisabled = false;
+                            }
+
                             break;
                         }
                     }
