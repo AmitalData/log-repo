@@ -211,6 +211,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool canTransferToFTP;
         private void GetAccountingSystem()
         {
+        
+            if(accountingSettingRepository == null)
+                accountingSettingRepository = new AccountingSettingRepository(tenant);
             this.accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
             if (this.accountingSetting != null)
             {

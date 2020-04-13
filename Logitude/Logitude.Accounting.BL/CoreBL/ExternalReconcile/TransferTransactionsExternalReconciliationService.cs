@@ -43,18 +43,17 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             {
                 List<ExternalReconciliationLinePM> transferRecoLines = GetRecoLinesOfTransferAccount();
 
-                if (transferRecoLines.Count != 1)
+                if (transferRecoLines.Count == 1)
+                {
+                    MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines.First().LedgerTransactionId);
+                }
+                else if (transferRecoLines.Count == 0)
                 {
                     UpdateExternalReconciliation();
                 }
-                else
+                else if (transferRecoLines.Count > 1)
                 {
-                    if (transferRecoLines.Count > 1) throw new ApplicationException("for now, you can select only one transaction for transfer account");
-
-                    for (int i = 0; i < transferRecoLines.Count; i++)
-                    {
-                        MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines[i].LedgerTransactionId);
-                    }
+                    throw new ApplicationException("for now, you can select only one transaction for transfer account");
                 }
 
             }

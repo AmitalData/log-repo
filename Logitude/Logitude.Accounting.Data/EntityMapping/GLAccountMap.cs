@@ -135,7 +135,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
 
             this.Property(t => t.AllowEditChequePayToName).HasColumnName("AllowEditChequePayToName");
 

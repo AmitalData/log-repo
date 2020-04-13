@@ -20,6 +20,7 @@ export class ExternalReconciliationList {
 	CreatedByUserName: string;
 	AccountCurrencyId: string;
 	IsCancelled: boolean;
+	AccountLocalName: string;
 	
 }
  
