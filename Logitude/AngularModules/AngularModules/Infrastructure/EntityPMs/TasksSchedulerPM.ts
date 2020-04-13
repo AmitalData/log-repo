@@ -190,6 +190,11 @@ export class TasksSchedulerPM {
     public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
        
 	 
+    private recepients: string;
+    public get Recepients() { return this.recepients; }
+    public set Recepients(newValue: string) { if (this.recepients != newValue) { this.recepients = newValue; this.MarkAsDirty("Recepients"); } }
+       
+	 
     private lastRunEndTime: Date;
     public get LastRunEndTime() { return this.lastRunEndTime; }
     public set LastRunEndTime(newValue: Date) { if (this.lastRunEndTime != newValue) { this.lastRunEndTime = newValue; this.MarkAsDirty("LastRunEndTime"); } }
