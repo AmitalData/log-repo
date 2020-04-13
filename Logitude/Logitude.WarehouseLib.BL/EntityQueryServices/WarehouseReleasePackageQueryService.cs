@@ -27,7 +27,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         {
 
             List<WarehouseReleasePackagePM> myResult = (from a in context.WarehouseReleasePackages
-                                                        where a.Tenant == tenant && a.WarehouseRelease.Id == WarehouseReleaseId && a.IsCanceled == false
+                                                        where a.Tenant == tenant && a.WarehouseRelease.Id == WarehouseReleaseId
                                                         select new WarehouseReleasePackagePM()
                                                         {
                                                             Id = a.Id,
