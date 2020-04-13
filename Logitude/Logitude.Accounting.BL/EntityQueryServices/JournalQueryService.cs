@@ -449,14 +449,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<JournalPM> journalPMs = new List<JournalPM>();
             IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingIds(ids, tenant);
 
-            IQueryable<JournalPM> journals = from a in context.Journals
+            IQueryable<JournalPM> journals = from a in journalQuery
                                              join jl in context.JournalLines
                                              on a.Id equals jl.JournalId
                                            
                                              into groupJoin
                                           
                                              from groupJoinData in groupJoin
-                                             where groupJoinData.Line ==1
+                                            
                                              select new JournalPM()
                                              {
                                                  JournalNumber = a.JournalNumber,
