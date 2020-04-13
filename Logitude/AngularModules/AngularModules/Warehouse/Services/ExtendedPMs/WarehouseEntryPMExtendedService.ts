@@ -24,6 +24,42 @@ export class WarehouseEntryPMExtendedService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/WarehouseEntryExtended';
     }
 
+    CancelEntry(entityPM: WarehouseEntryPM) {
+
+        return Observable.defer(() => {
+
+            var validator: ClassLevelValidator;
+
+            validator = new ClassLevelValidator();
+
+            var errorsArray = validator.Validate("WarehouseEntry", entityPM);
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            if (errorsArray.length == 0) {
+                var mappedEntity: WarehouseEntryPM;
+                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.put(this._apiUrl + '/PutCancelWarehouseReleasePM', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var pm = response;
+                    if (pm) {
+                        var mappedResult: WarehouseEntryPM;
+                        mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                        serviceResponse.Result = mappedResult;
+                    }
+
+                    return serviceResponse;
+
+                }), catchError(ServiceHelper.HandleServiceError));
+            }
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+
+                return Observable.of(serviceResponse);
+            }
+        });
+    }
 
     GetWarehouseConnectedEntitiesByEntityId(entityId: string) {
         

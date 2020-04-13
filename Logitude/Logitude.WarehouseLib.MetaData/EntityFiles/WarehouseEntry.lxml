@@ -9,7 +9,7 @@
   ObjectTablePlural="&quot;WarehouseEntries&quot;"
   HasCustomFilter="true"
   HasCustomFields="false"
-  HasHelper="false"
+  HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="true"
   HasCustomValidator="true"
@@ -49,7 +49,7 @@
   NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
-  HasMenuButtons="false"
+  HasMenuButtons="true"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
@@ -6439,8 +6439,31 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;CAEA&quot;"
+      ObjectTableName="&quot;WarehouseEntry&quot;"
+      EnglishName="&quot;Cancelled&quot;"
+      LocalName="&quot;Cancelled&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <MenuButtons
+    MenuButtonGroupType="&quot;WarehouseEntryEdit&quot;"
+    MenuButtonGroupName="&quot;WarehouseEntryEditButtonsGroup&quot;">
+    <MenuButton
+      EventCode="&quot;CancelEntry&quot;"
+      DefaultText="&quot;Cancel Entry&quot;"
+      MenuButtonType="&quot;button&quot;"
+      IndexOrder="0"
+      IsPackagable="false" />
+  </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

@@ -280,6 +280,23 @@ export class WarehouseReleasePMExtendedService {
         return entityPM;
     }
 
+    GetNumberofConnectedWarehouseReleasesByEntryId(entryId: string) {
+
+
+        return this._http.get(this._apiUrl + "/GetNumberofConnectedWarehouseReleasesByEntryId" + '?entryId=' + entryId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+            var result = response;
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = result;
+            return pmresponse;
+
+
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
     GetWarehouseConnectedReleaseByEntityId(entityId: string) {
         
         

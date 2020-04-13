@@ -614,6 +614,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             }
         }
 
+        if (this.AccountingSystemCode == "GI" || this.AccountingSystemCode == "AI") {
+            if (this.TransferToFTPActivated) {
+                if (AppTool.IsNullOrEmpty(this.TransferFTPDetailId)) {
+                    errors.push(TextCodeTranslator.Translate("AccountingSetting.F.TransferFTPDetailId"));
+                }
+            }
+        }
+
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {

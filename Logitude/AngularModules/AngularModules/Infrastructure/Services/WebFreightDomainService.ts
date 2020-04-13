@@ -196,7 +196,7 @@ export class WebFreightDomainService {
 
     GetExportBIReportToExcel(QueryData: BIReportXMLData) {
         return Observable.defer(() => {
-            var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
+            var errorsArray = [];
             var url = this._apiUrl + "/PutExportBIReportToExcelByWR";
             var response: ServiceResponse;
             response = new ServiceResponse();
@@ -208,15 +208,11 @@ export class WebFreightDomainService {
                 QueryData.BIReportPM = mappedEntity;
                 QueryData.DWQueryData = temp;
                 var temp2 = this.deepClone(QueryData);
-                return this._http.put(url, JSON.stringify(QueryData), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
-                    if (response instanceof HttpResponse) {
-                        var entity = response;
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity.body;
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        return serviceResponse;
-                    }
+                return this._http.put(url, JSON.stringify(QueryData), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
             }
             else {

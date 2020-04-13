@@ -4643,7 +4643,7 @@
   <field
     Id="&quot;4bec9396-89df-43eb-95d4-94285ca3342b&quot;"
     FieldName="&quot;TruckerId&quot;"
-    OldFieldName="&quot;TruckerId&quot;"
+    OldNames="TruckerId"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -4689,6 +4689,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="Card"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="Trucker"
     IsPrimaryKey="false"
     HasDataBaseField="true"
@@ -4714,7 +4715,7 @@
   <field
     Id="&quot;1cf14a38-2139-42b6-bb17-62db1258f940&quot;"
     FieldName="&quot;TruckerReference&quot;"
-    OldFieldName="&quot;TruckerReference&quot;"
+    OldNames="TruckerReference"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -4758,6 +4759,7 @@
     DefaultText="&quot;Truck Number&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"

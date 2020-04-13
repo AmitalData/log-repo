@@ -53,12 +53,12 @@ export class QueryColumnsEditComponent {
     HasChanges: boolean = false;
     needsRebuildList: boolean = false;
     private myQueryColumnsPMService: QueryColumnsPMService;
-    private _http: Http;
+    private _http: HttpClient;
     public serviceArgs: ServiceArgs;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this.serviceArgs.http = ServiceHelper.HttpClient;
         if (this.CurrentSession == null) {
             this.SearchFieldsId = "SearchFields_-1_-1";
@@ -103,8 +103,8 @@ export class QueryColumnsEditComponent {
         this.removedQueryColumnList = [];
         //queriesByUser = TenantContext.Current.Queries.Where(d => d.UserId == TenantContext.Current.LoggedContactId).ToList();
         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
-            .subscribe((response) => {
-                this.queryColumnsList = response.json();
+            .subscribe((response: any) => {
+                this.queryColumnsList = response;
                 // this.queryColumnsList = TenantContext.Current.GeneralContext.QueryColumnPMs.Where(d => d.QueryId == QueryId && ((d.UserId == TenantContext.Current.LoggedContactId && d.Tenant == TenantContext.Current.Id)) && d.DisplayInList).OrderBy(d => d.IndexOrder).ToList();
                 this.queryColumnsList = this.queryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
@@ -112,8 +112,8 @@ export class QueryColumnsEditComponent {
                 {
                     var zeroColumnsList = [];
                     this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
-                        .subscribe((response) => {
-                            zeroColumnsList = response.json();
+                        .subscribe((response: any) => {
+                            zeroColumnsList = response;
                             zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
                             zeroColumnsList.forEach((querycolumn, key) => {
                                 var newcolumn = new QueryColumnPM();
