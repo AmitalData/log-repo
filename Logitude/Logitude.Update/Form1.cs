@@ -3960,13 +3960,20 @@ User/Pass",
                                 if (airline.Tenant == 0)
                                 {
                                     airline.ImageDetailId = result;
+                                    isUpdated = true;
                                 }
                                 else
                                 {
                                     if (string.IsNullOrEmpty(airline.ImageDetailId))
                                     {
                                         airline.ImageDetailId = result;
+                                        isUpdated = true;
                                     }
+                                }
+
+                                if (isUpdated)
+                                {
+                                    cardRepository.Update(airline);
                                 }
                             }
                         }
