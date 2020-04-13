@@ -34,6 +34,7 @@ import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocat
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
+    private datePipe: DatePipe;
     _ImageLibraryService: ImageLibraryService;
     constructor(private cd: ChangeDetectorRef) {
         super();
@@ -65,6 +67,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         this._ImageLibraryService = new ImageLibraryService();
         this._DocumentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
         this._ShipmentPMService = new ShipmentPMService();
+        this.datePipe = new DatePipe("en-US");
         //this.AdditionalData.RequestPaymentData = {};
         //this.AdditionalData.PaymentData = {};
 
@@ -124,7 +127,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
-
+                        
                         var ammount = 0;
 
                         this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
@@ -135,7 +138,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
+                    var myMessage = "משלוח זה כבר שולם בתאריך";
+                    if (this.AdditionalData.PaymentDateTime != null) {
+                        var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
+                        myMessage = myMessage + " " + formatedPaymentDateTime;
+                    }
+                    this.FinalMessage = myMessage;
                     this.ShowFinalMessage = true;
                 }
 
@@ -187,12 +195,17 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                             this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
                                 ammount += +(item.AmountInNIS);
                             });
-
+                            
                             this.TotalAmount = ammount;
                         }
                     }
                     else {
-                        this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
+                        var myMessage = "משלוח זה כבר שולם בתאריך";
+                        if (this.AdditionalData.PaymentDateTime != null) {
+                            var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
+                            myMessage = myMessage + " " + formatedPaymentDateTime;
+                        }
+                        this.FinalMessage = myMessage;
                         this.ShowFinalMessage = true;
                     }
 
