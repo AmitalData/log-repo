@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.Tools.EntityService;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -57,6 +58,67 @@ namespace WebFreight.Web.QuoteModel
             return context.Database.Connection.ConnectionString;
         }
 
+        public static bool IsExistsQuoteAutomaticallyClosingDataHistory(int tenant, DateTime? startDateTime)
+        {
+            bool isExists = false;
+
+            string strConnString = GetConnection(tenant);
+
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("select top 1 Id from QuoteAutomaticallyClosingDataHistory where Tenant = @Tenant and CONVERT(date,StartDateTime) = CONVERT(date,@StartDateTime)", cn);
+
+                cmd.Parameters.AddWithValue("@Tenant", tenant);
+                cmd.Parameters.AddWithValue("@StartDateTime", startDateTime);
+
+                cn.Open();
+
+                var iResult = cmd.ExecuteScalar();
+                if (iResult != null)
+                {
+                    isExists = true;
+                }
+
+                cn.Close();
+            }
+
+            return isExists;
+        }
+
+        public static void ExecuteSingleQuoteAutomaticallyClosing(int tenant)
+        {
+            IQuotesContext quotesContext;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            QuoteQuery quoteQuery;
+            QuoteService quoteService;
+            QuotePM quotePM;
+            QuoteStageRepository quoteStageRepository;
+            QuoteStage quoteStage;
+            IQuotesContext quotesContext_Loop;
+            quotesContext = QuotesContext.GetContext(tenant);
+            IQueryable<Quote> allQuotes = (from d in quotesContext.Quotes
+                                           where d.IsAutomaticallyClosed && !d.IsClosed && d.AutomaticallyCloseDate != null
+                                           && System.Data.Entity.DbFunctions.TruncateTime(d.AutomaticallyCloseDate) == System.Data.Entity.DbFunctions.TruncateTime(todayDate)
+                                           && d.Tenant == tenant
+                                           select d);
+
+            foreach (Quote item in allQuotes)
+            {
+                quotesContext_Loop = QuotesContext.GetContext(item.Tenant);
+                quoteQuery = new QuoteQuery(item.Tenant);
+                var email = "system@tenant" + item.Tenant + ".com";
+                quoteService = new QuoteService(quotesContext_Loop, item.Tenant, email);
+                quoteStageRepository = new QuoteStageRepository(item.Tenant);
+                quoteStage = quoteStageRepository.GetSingleQuoteStageByCode("QTDC", item.Tenant);
+                quotePM = quoteQuery.GetSinglePM(item.Id, item.Tenant);
+                quotePM.IsClosed = true;
+                quotePM.QuoteClosingReasonCode = "XQ";
+                quotePM.StageId = quoteStage != null ? quoteStage.Id : null;
+                quotePM.StageDueDate = CalculateStageDueDate(quoteStage, todayDate, quotePM.StageDueDate);
+                quoteService.Update(quotePM, true);
+            }
+        }
+
         public static void ExecuteDailyAutomaticallyClosing()
         {
             IQuotesContext quotesContext;
@@ -89,6 +151,37 @@ namespace WebFreight.Web.QuoteModel
                 quotePM.StageId = quoteStage != null ? quoteStage.Id : null;
                 quotePM.StageDueDate = CalculateStageDueDate(quoteStage, todayDate, quotePM.StageDueDate);
                 quoteService.Update(quotePM, true);
+            }
+        }
+
+        public static void InsertQuoteAutomaticallyClosingDataHistory(int tenant, DateTime? startDateTime, DateTime? endDateTime, bool hasException, string exceptionMessage)
+        {
+            string strConnString = GetConnection(tenant);
+
+            using (SqlConnection conn = new SqlConnection(strConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = @"insert into QuoteAutomaticallyClosingDataHistory(Tenant, StartDateTime, EndDateTime, HasException, ExceptionMessage) VALUES(@Tenant, @StartDateTime, @EndDateTime, @HasException, @ExceptionMessage)";
+
+                    cmd.Parameters.AddWithValue("@Tenant", tenant);
+                    cmd.Parameters.AddWithValue("@StartDateTime", startDateTime);
+                    cmd.Parameters.AddWithValue("@EndDateTime", endDateTime);
+                    cmd.Parameters.AddWithValue("@HasException", hasException);
+                    if (exceptionMessage == null)
+                    {
+                        cmd.Parameters.AddWithValue("@ExceptionMessage", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@ExceptionMessage", exceptionMessage);
+                    }
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
             }
         }
 
