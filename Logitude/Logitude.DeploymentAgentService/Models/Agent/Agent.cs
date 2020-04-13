@@ -18,5 +18,9 @@ namespace Logitude.DeploymentAgentService.Models
         public ServiceType ServiceType { get; set; }
 
         public Artifact NewVersionArtifact { get; set; }
+
+        public Customer Customer { get; set; }
+
+        public DeploymentStatus DeploymentStatus { get; set; }
     }
 }

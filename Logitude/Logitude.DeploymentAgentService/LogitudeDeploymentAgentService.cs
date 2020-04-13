@@ -23,6 +23,10 @@ namespace Logitude.DeploymentAgentService
         protected string InstanceName = ConfigurationManager.AppSettings["InstanceName"];
         protected long ServiceIntervalInSeconds = Convert.ToInt64(ConfigurationManager.AppSettings["ServiceIntervalInSeconds"]);
 
+        protected string InProgressDeploymentStatusCode = "I";
+        protected string CompletedDeploymentStatusCode = "C";
+        protected string ErrorDeploymentStatusCode = "E";
+
         protected Timer ServiceTimer = new Timer();
 
         protected Agent AgentInfo = null;
@@ -35,7 +39,7 @@ namespace Logitude.DeploymentAgentService
         
         protected override void OnStart(string[] args)
         {
-            WriteToLogsFile("Deployment Agent Service Started");
+            AddAgentLog("Deployment Agent Service Started");
             ServiceTimer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             ServiceTimer.Interval = ServiceIntervalInSeconds * 1000;
             ServiceTimer.Enabled = true;
@@ -43,7 +47,7 @@ namespace Logitude.DeploymentAgentService
 
         protected override void OnStop()
         {
-            WriteToLogsFile("Deployment Agent Service Stopped");
+            AddAgentLog("Deployment Agent Service Stopped");
         }
 
         protected void OnElapsedTime(object source, ElapsedEventArgs e)
@@ -63,7 +67,7 @@ namespace Logitude.DeploymentAgentService
             catch (Exception exception)
             {
                 AgentInfo = null;
-                WriteToLogsFile("Cannot Get Agent Service Information With Exception: " + exception.Message);
+                AddAgentLog("Cannot Get Agent Service Information With Exception: " + exception.Message, true);
             }
         }
 
@@ -85,12 +89,12 @@ namespace Logitude.DeploymentAgentService
             catch (Exception exception)
             {
                 InstanceFolderPath = null;
-                WriteToLogsFile("Cannot Get Instance Folder Path With Exception: " + exception.Message);
+                AddAgentLog("Cannot Get Instance Folder Path With Exception: " + exception.Message, true);
             }
 
             if (String.IsNullOrEmpty(InstanceFolderPath))
             {
-                WriteToLogsFile("Cannot Get Instance Folder Path");
+                AddAgentLog("Cannot Get Instance Folder Path", true);
             }
         }
 
@@ -128,7 +132,8 @@ namespace Logitude.DeploymentAgentService
             int packageVersion = AgentInfo.NewVersion;
             string packageUrl = AgentInfo.NewVersionArtifact.FolderName + "/" + AgentInfo.NewVersionArtifact.FileName;
 
-            WriteToLogsFile("Deployment Process For Version " + packageVersion.ToString() + " Started");
+            AddAgentLog("Deployment Process For Version " + packageVersion + " Started");
+            UpdateDeploymentStatus(InProgressDeploymentStatusCode);
 
             bool createTempFolderResult = CreateTempFolder();
             if (createTempFolderResult)
@@ -179,7 +184,7 @@ namespace Logitude.DeploymentAgentService
 
         protected bool CreateTempFolder()
         {
-            WriteToLogsFile("Create Temp Folder Started");
+            AddAgentLog("Create Temp Folder Started");
             
             bool result = false;
 
@@ -194,11 +199,11 @@ namespace Logitude.DeploymentAgentService
                 Directory.CreateDirectory(tempFolderUrl);
                 
                 result = true;
-                WriteToLogsFile("Temp Folder Created Successfully");
+                AddAgentLog("Temp Folder Was Created");
             }
             catch(Exception exception)
             {
-                WriteToLogsFile("Cannot Create Temp Folder With Exception: " + exception.Message);
+                AddAgentLog("Cannot Create Temp Folder With Exception: " + exception.Message, true);
             }
 
             return result;
@@ -206,7 +211,7 @@ namespace Logitude.DeploymentAgentService
 
         protected bool DownloadPackageFromFTP(string packageUrl)
         {
-            WriteToLogsFile("Download Package From FTP Started");
+            AddAgentLog("Download Package From FTP Started");
 
             bool isDownloadPackageFromFTPCompleted = false;
             bool result = false;
@@ -225,7 +230,7 @@ namespace Logitude.DeploymentAgentService
             }
             catch(Exception exception)
             {
-                WriteToLogsFile("Cannot Download Package From FTP With Exception: " + exception.Message);
+                AddAgentLog("Cannot Download Package From FTP With Exception: " + exception.Message, true);
             }
 
             while (!isDownloadPackageFromFTPCompleted)
@@ -236,7 +241,7 @@ namespace Logitude.DeploymentAgentService
             if (isDownloadPackageFromFTPCompleted)
             {
                 result = true;
-                WriteToLogsFile("Package Downloaded Successfully");
+                AddAgentLog("Package Was Downloaded From FTP");
             }
 
             return result;
@@ -244,7 +249,7 @@ namespace Logitude.DeploymentAgentService
 
         protected bool ExtractDownloadedPackage(string packageUrl)
         {
-            WriteToLogsFile("Extract The Downloaded Package Started");
+            AddAgentLog("Extract The Downloaded Package Started");
 
             bool result = false;
 
@@ -254,11 +259,11 @@ namespace Logitude.DeploymentAgentService
                 ZipFile.ExtractToDirectory(InstanceFolderPath + @".Temp\" + Path.GetFileName(packageFileFtpUrl), InstanceFolderPath + ".Temp");
 
                 result = true;
-                WriteToLogsFile("The Downloaded Package Extracted Successfully");
+                AddAgentLog("The Downloaded Package Was Extracted");
             }
             catch(Exception exception)
             {
-                WriteToLogsFile("Cannot Extract The Downloaded Package With Exception: " + exception.Message);
+                AddAgentLog("Cannot Extract The Downloaded Package With Exception: " + exception.Message, true);
             }
 
             return result;
@@ -266,7 +271,7 @@ namespace Logitude.DeploymentAgentService
 
         protected bool CopyConfigFilesToTempFolder()
         {
-            WriteToLogsFile("Copy Config Files To Temp Folder Started");
+            AddAgentLog("Copy Config Files To Temp Folder Started");
 
             bool result = false;
 
@@ -277,11 +282,11 @@ namespace Logitude.DeploymentAgentService
                 Copy(agentConfigFilesUrl, tempFolderPath);
 
                 result = true;
-                WriteToLogsFile("Config Files Copied Successfully");
+                AddAgentLog("Config Files Was Copied To Temp Folder");
             }
             catch(Exception exception)
             {
-                WriteToLogsFile("Cannot Copy Config Files To Temp Folder With Exception: " + exception.Message);
+                AddAgentLog("Cannot Copy Config Files To Temp Folder With Exception: " + exception.Message, true);
             }
 
             return result;
@@ -292,7 +297,7 @@ namespace Logitude.DeploymentAgentService
             string sourceUrl = InstanceFolderPath + sourcePattern;
             string destinationUrl = InstanceFolderPath + destinationPattern;
 
-            WriteToLogsFile("Rename Folder " + sourceUrl + " To " + destinationUrl + " Started");
+            AddAgentLog("Rename Folder " + sourceUrl + " To " + destinationUrl + " Started");
 
             bool result = false;
 
@@ -306,11 +311,11 @@ namespace Logitude.DeploymentAgentService
                 Directory.Move(sourceUrl, destinationUrl);
 
                 result = true;
-                WriteToLogsFile("Folder " + sourceUrl + " Renamed To " + destinationUrl + " Successfully");
+                AddAgentLog("Folder " + sourceUrl + " Was Renamed To " + destinationUrl);
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Cannot Rename Folder From " + sourceUrl + " To " + destinationUrl + " With Exception: " + exception.Message);
+                AddAgentLog("Cannot Rename Folder " + sourceUrl + " To " + destinationUrl + " With Exception: " + exception.Message, true);
             }
 
             return result;
@@ -320,21 +325,39 @@ namespace Logitude.DeploymentAgentService
         {
             try
             {
-                SaveAgent saveAgent = new SaveAgent()
+                UpdateAgentCurrentVersion updateAgentCurrentVersion = new UpdateAgentCurrentVersion()
                 {
-                    ServiceTypeCode = AgentInfo.ServiceType.Code,
-                    CurrentVersion = AgentInfo.NewVersion,
-                    NewVersion = AgentInfo.NewVersion,
-                    NewVersionArtifactId = AgentInfo.NewVersionArtifact.Id
+                    CurrentVersion = AgentInfo.NewVersion
                 };
-                DeploymentApiHttpRequest<Agent> httpRequest = new DeploymentApiHttpRequest<Agent>("/Agents/" + AgentInfo.Id, saveAgent, HttpRequestType.BodyRequestType.Put);
+                DeploymentApiHttpRequest<Agent> httpRequest = new DeploymentApiHttpRequest<Agent>("/Agents/UpdateCurrentVersion/" + AgentInfo.Id, updateAgentCurrentVersion, HttpRequestType.BodyRequestType.Put);
                 httpRequest.GetResponse();
 
-                WriteToLogsFile("Deployment Process For Version " + AgentInfo.NewVersion + " Completed Successfully");
+                AddAgentLog("Agent Current Version Was Updated To " + AgentInfo.NewVersion);
+                AddAgentLog("Deployment Process For Version " + AgentInfo.NewVersion + " Was Completed");
+                UpdateDeploymentStatus(CompletedDeploymentStatusCode);
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Cannot Get Agent Service Information With Exception: " + exception.Message);
+                AddAgentLog("Cannot Update Agent Current Version With Exception: " + exception.Message, true);
+            }
+        }
+
+        protected void UpdateDeploymentStatus(string deploymentStatusCode)
+        {
+            try
+            {
+                UpdateAgentDeploymentStatus updateAgentDeploymentStatus = new UpdateAgentDeploymentStatus()
+                {
+                    DeploymentStatusCode = deploymentStatusCode
+                };
+                DeploymentApiHttpRequest<Agent> httpRequest = new DeploymentApiHttpRequest<Agent>("/Agents/UpdateDeploymentStatus/" + AgentInfo.Id, updateAgentDeploymentStatus, HttpRequestType.BodyRequestType.Put);
+                Agent updatedAgent = httpRequest.GetResponse();
+
+                AddAgentLog("Agent Deployment Status Was Updated To " + updatedAgent.DeploymentStatus.Name);
+            }
+            catch (Exception exception)
+            {
+                AddAgentLog("Cannot Update Agent Deployment Status With Exception: " + exception.Message, true);
             }
         }
 
@@ -408,7 +431,7 @@ namespace Logitude.DeploymentAgentService
 
         protected bool StopWorkerRoleService()
         {
-            WriteToLogsFile("Stop " + InstanceName + " Worker Role Started");
+            AddAgentLog("Stop " + InstanceName + " Worker Role Started");
 
             bool result = false;
 
@@ -422,11 +445,11 @@ namespace Logitude.DeploymentAgentService
                 }
 
                 result = true;
-                WriteToLogsFile(InstanceName + " Worker Role Stopped Successfully");
+                AddAgentLog(InstanceName + " Worker Role Was Stopped");
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Cannot Stop " + InstanceName + " Worker Role With Exception: " + exception.Message);
+                AddAgentLog("Cannot Stop " + InstanceName + " Worker Role With Exception: " + exception.Message, true);
             }
 
             return result;
@@ -434,7 +457,7 @@ namespace Logitude.DeploymentAgentService
 
         protected bool StartWorkerRoleService()
         {
-            WriteToLogsFile("Start " + InstanceName + " Worker Role Started");
+            AddAgentLog("Start " + InstanceName + " Worker Role Started");
 
             bool result = false;
 
@@ -448,11 +471,11 @@ namespace Logitude.DeploymentAgentService
                 }
 
                 result = true;
-                WriteToLogsFile(InstanceName + " Worker Role Started Successfully");
+                AddAgentLog(InstanceName + " Worker Role Was Started");
             }
             catch (Exception exception)
             {
-                WriteToLogsFile("Cannot Start " + InstanceName + " Worker Role With Exception: " + exception.Message);
+                AddAgentLog("Cannot Start " + InstanceName + " Worker Role With Exception: " + exception.Message, true);
             }
 
             return result;
@@ -472,20 +495,45 @@ namespace Logitude.DeploymentAgentService
                 {
                     using (StreamWriter streamWriter = File.CreateText(logsFilepath))
                     {
-                        streamWriter.WriteLine(log.Replace("\n", " ").TrimEnd('.') + ". At " + GetCurrentDateTime(true));
+                        streamWriter.WriteLine(log.TrimEnd('.') + ". At " + GetCurrentDateTime(true));
                     }
                 }
                 else
                 {
                     using (StreamWriter streamWriter = File.AppendText(logsFilepath))
                     {
-                        streamWriter.WriteLine(log.Replace("\n", " ").TrimEnd('.') + ". At " + GetCurrentDateTime(true));
+                        streamWriter.WriteLine(log.TrimEnd('.') + ". At " + GetCurrentDateTime(true));
                     }
                 }
             }
             catch (Exception)
             {
                 //Error While Writing To Logs File
+            }
+        }
+
+        protected void AddAgentLog(string logMessage, bool isException = false)
+        {
+            try
+            {
+                SaveAgentLog saveAgentLog = new SaveAgentLog()
+                {
+                    AgentId = (AgentInfo != null ? AgentInfo.Id : AgentServiceId),
+                    LogMessage = logMessage,
+                    IsException = isException,
+                    LogDatetime = DateTime.Now
+                };
+                DeploymentApiHttpRequest<AgentLog> httpRequest = new DeploymentApiHttpRequest<AgentLog>("/AgentLogs", saveAgentLog, HttpRequestType.BodyRequestType.Post);
+                httpRequest.GetResponse();
+
+                if (isException)
+                {
+                    UpdateDeploymentStatus(ErrorDeploymentStatusCode);
+                }
+            }
+            catch (Exception exception)
+            {
+                WriteToLogsFile(exception.ToString());
             }
         }
 
