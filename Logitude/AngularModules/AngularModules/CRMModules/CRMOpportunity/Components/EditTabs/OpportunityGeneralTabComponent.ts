@@ -271,8 +271,8 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
             this.EntityPM.ContactId = value;
 
             var cardService: ContactListService = new ContactListService();
-            cardService.getAll().subscribe(contactResult => {
-                var contact: ContactList = contactResult.Result.filter(p => p.Id == this.ContactId)[0];
+            cardService.getAll().subscribe((response: ServiceResponse) => {
+                var contact: ContactList = response.Result.filter(p => p.Id == this.ContactId)[0];
                 if (contact != null)
                     this.EntityPM.ContactName = contact.EnglishName;
                 else
