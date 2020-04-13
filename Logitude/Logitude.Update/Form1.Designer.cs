@@ -193,6 +193,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
+            this.AirlineLogosCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -401,7 +402,6 @@
             // 
             // toolStripTextBoxFilePath
             // 
-            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -530,7 +530,6 @@
             // 
             // tenantTxtBox
             // 
-            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -1810,6 +1809,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.AirlineLogosCheckBox);
             this.tabPage3.Controls.Add(this.UpdateLogosLabel);
             this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.Controls.Add(this.FilePathTextBox);
@@ -1876,13 +1876,23 @@
             // 
             // button46
             // 
-            this.button46.Location = new System.Drawing.Point(23, 97);
+            this.button46.Location = new System.Drawing.Point(23, 117);
             this.button46.Name = "button46";
             this.button46.Size = new System.Drawing.Size(100, 23);
             this.button46.TabIndex = 99;
             this.button46.Text = "Update Logos";
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
+            // 
+            // AirlineLogosCheckBox
+            // 
+            this.AirlineLogosCheckBox.AutoSize = true;
+            this.AirlineLogosCheckBox.Location = new System.Drawing.Point(73, 83);
+            this.AirlineLogosCheckBox.Name = "AirlineLogosCheckBox";
+            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.AirlineLogosCheckBox.TabIndex = 106;
+            this.AirlineLogosCheckBox.Text = "Apply for all tenants";
+            this.AirlineLogosCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -2096,6 +2106,7 @@
         private System.Windows.Forms.Button btnCallOldUpdate;
         private System.Windows.Forms.CheckBox cbxOldUpdateCode;
         private System.Windows.Forms.Button button49;
+        private System.Windows.Forms.CheckBox AirlineLogosCheckBox;
     }
 }
 
