@@ -5421,7 +5421,7 @@
     <Compile Include="ApiTest.aspx.designer.cs">
       <DependentUpon>ApiTest.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Code\CommonDataController.cs" />
+    <Content Include="App_Code\CommonDataController.cs" />
     <Content Include="App_Code\AuthenticationController.cs" />
     <Content Include="App_Code\DocumentsDataController.cs" />
     <Content Include="App_Code\InvoicesDataController.cs" />
