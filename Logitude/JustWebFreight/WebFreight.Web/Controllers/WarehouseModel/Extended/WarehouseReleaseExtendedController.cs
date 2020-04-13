@@ -37,6 +37,27 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
 {
     public class WarehouseReleaseExtendedController : ApiController
     {
+        public HttpResponseMessage GetNumberofConnectedWarehouseReleasesByEntryId(string entryId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", tenant);
+
+                WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
+                int numberofConnectedWarehouseReleasePackages = warehouseReleaseQueryService.GetNumberofConnectedWarehouseReleasesByEntryId(entryId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, numberofConnectedWarehouseReleasePackages);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetWarehouseConnectedReleaseByEntityId(string entityId)
         {
