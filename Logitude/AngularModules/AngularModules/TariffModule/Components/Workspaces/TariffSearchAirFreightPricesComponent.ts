@@ -1038,21 +1038,20 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.ChargesTypeId = item.ChargesTypeId;
             chargeItem.CostMeasurementId = item.CostMeasurementId;
             chargeItem.CostCurrencyId = item.CostCurrencyId;
-            chargeItem.CostUnitPrice = item.CostUnitPrice;
+            chargeItem.CostTotalAmount = item.CostTotalAmount;
             chargeItem.CostMinAmount = item.CostMinAmount;
             chargeItem.CostExchangeRate = item.CostExchangeRate;
             chargeItem.SaleMeasurementId = item.SaleMeasurementId;
             chargeItem.SaleCurrencyId = item.SaleCurrencyId;
             chargeItem.SaleExchangeRate = item.SaleExchangeRate;
-
-            //chargeItem.SaleUnitPrice = item.SaleUnitPrice;
             chargeItem.ChargesGroupCode = item.ChargesGroupCode;
-
             this.FatherComponent.ItemsSource.Insert(chargeItem);       
+           
+            chargeItem.SetCostQuantity();
+            chargeItem.CostUnitPrice = chargeItem.CostTotalAmount / chargeItem.CostQuantity;
+
             chargeItem.ComputeCostInSalePrice();
             chargeItem.SetSaleQuantity();
-            chargeItem.SetCostQuantity();
-            chargeItem.ComputeCostAmounts();
             chargeItem.ComputeSalePrice();
             chargeItem.SetUIProperties_AllIn();
              this.FatherComponent.EntityPM.AddQuoteChargePM(item);
@@ -1107,9 +1106,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
                 if (!item.IsAllIn) {
                     chargePM.CostMinAmount = AppTool.Round(item.MinPrice, 3);
-                    chargePM.CostUnitPrice = AppTool.Round(item.ActualPrice, 3); 
+                    chargePM.CostTotalAmount = AppTool.Round(item.ActualPrice, 3); 
                 }
-
+                
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsCostAllIn = item.IsAllIn;
