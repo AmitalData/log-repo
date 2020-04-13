@@ -272,17 +272,19 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 AccountingSetting accountingSetting = (from d in myCommonContext.AccountingSettings
                                                        where d.Id == entityPM.Tenant
                                                        select d).FirstOrDefault();
-
-                if (!accountingSetting.EnableMultiPercentageVATTypes)
+                if (accountingSetting != null)
                 {
-                    List<VatType> allVats = (from f in myCommonContext.VatTypes
-                                             where allVatsIds.Contains(f.Id)
-                                             && f.Tenant == entityPM.Tenant
-                                             select f).ToList();
-
-                    if (allVats.Where(d => d.IsMultiPercentage).Any())
+                    if (!accountingSetting.EnableMultiPercentageVATTypes)
                     {
-                        throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
+                        List<VatType> allVats = (from f in myCommonContext.VatTypes
+                                                 where allVatsIds.Contains(f.Id)
+                                                 && f.Tenant == entityPM.Tenant
+                                                 select f).ToList();
+
+                        if (allVats.Where(d => d.IsMultiPercentage).Any())
+                        {
+                            throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
+                        }
                     }
                 }
             }
