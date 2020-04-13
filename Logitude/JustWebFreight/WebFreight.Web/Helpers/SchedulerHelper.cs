@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace WebFreight.Web.Helpers
         public void AddSchedulerQueue(TasksSchedulerPM task)
         {
             var queueservice = new DbQueueService();
+            var TodayDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+
             if (task.NextRunTime < DateTime.Now)
             {
                 var NewNextRunTime = new DateTime(task.NextRunTime.Value.Year, task.NextRunTime.Value.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
@@ -21,21 +24,41 @@ namespace WebFreight.Web.Helpers
                 task.NextRunTime = NewNextRunTime;
                 task.NextRunTimeUTC = NewNextRunTimeUTC; 
             }
-            var TodayDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
             switch (task.TriggerType)
             {
                 case "D":
                     {
+
+                        //if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
+                        //{
+                        //    task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+                        //    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+                        //}
+                        //else
+                        //{
+                        //    task.NextRunTime = task.NextRunTime.Value.AddDays(1);
+                        //    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
+                        //}
+                        var tenantDateNow = TenantServerConfigration.GetCurrentDateTime(task.Tenant);
+                        var nowDateUTC = DateTime.UtcNow;
+                        TodayDate = new DateTime(tenantDateNow.Year, tenantDateNow.Month, tenantDateNow.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+                        var TodayUtcDate = new DateTime(nowDateUTC.Year, nowDateUTC.Month, nowDateUTC.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
+
+                        DateTime NewNextRunTime = TodayDate;
+                        DateTime NewNextRunTimeUTC = TodayUtcDate;
                         if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
                         {
-                            task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
-                            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+                            NewNextRunTime = NewNextRunTime.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+                            NewNextRunTimeUTC = NewNextRunTimeUTC.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
                         }
                         else
                         {
-                            task.NextRunTime = task.NextRunTime.Value.AddDays(1);
-                            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
+                            NewNextRunTime = NewNextRunTime.AddDays(1);
+                            NewNextRunTimeUTC = NewNextRunTimeUTC.AddDays(1);
                         }
+
+                        task.NextRunTime = NewNextRunTime;
+                        task.NextRunTimeUTC = NewNextRunTimeUTC;
                         break;
                     }
                 case "W":
