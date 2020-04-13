@@ -446,6 +446,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
         return myResult;
     }
+
     PriceCheck() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
@@ -458,13 +459,14 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             var tariffType = "";
-            if (this.EntityPM.TransportModeId == "A") {
-                tariffType = "AFC";
-            }
-            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
+            if (QuoteUtilities.IsLCLQuote(this.EntityPM)){
                 tariffType = "OLC";
             }
 
+            else if (this.EntityPM.TransportModeId == "A") {
+                tariffType = "AFC";
+            }
+            
             var WindowArgs: any =
             {
                 BetweenDate: betweenDate,
