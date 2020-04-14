@@ -97,9 +97,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                     else
                     {
-                        if (entityPM.LineTypeCode == "K" && entityPM.VatNumber == "000000000")
+                        if ( entityPM.VatNumber == "000000000")
                         {
-                            entityPM.StatusCode = "6";
+                            entityPM.StatusCode  =entityPM.LineTypeCode =="K"? "6" :"2";
                             return;
                         }
                         else
