@@ -567,7 +567,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;
-                   
+                        this.NoDataMessage = "No results found matching your search. Please refine your search, or enter more tariffs to the system";
                     }
                 }
                 this.CurrentSession.StopBusyIndicator();
@@ -1137,5 +1137,48 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
         
         return isValid;
+    }
+
+    public IsFiltersExtended: boolean = false;
+    public IsFiltersHidden: boolean = true;
+    public FiltersHeight: number = 90;
+    public NoDataMessage: string = "Please enter data to get up-to-date results";
+    ExtendedFiltersClicked(action: string) {
+        if (action == "show") {
+            this.IsFiltersExtended = true;
+            this.IsFiltersHidden = false;
+            this.FiltersHeight = 130;
+        }
+
+        else {
+            this.IsFiltersExtended = false;
+            this.IsFiltersHidden = true;
+            this.FiltersHeight = 90;
+        }        
+    }
+
+    //FlexibleDate
+
+    get GrossWeightFilterVisible() { return AppTool.IsNullOrZero(this.GrossWeight) ? false : true }
+    get VolumeFilterVisible() { return AppTool.IsNullOrZero(this.Volume) ? false : true }
+
+    private fromPrice: number;
+    get FromPrice() {
+        return this.fromPrice;
+    }
+    set FromPrice(value: number) {
+        if (this.fromPrice != value) {
+            this.fromPrice = value;
+        }
+    }
+
+    private toPrice: number;
+    get ToPrice() {
+        return this.toPrice;
+    }
+    set ToPrice(value: number) {
+        if (this.toPrice != value) {
+            this.toPrice = value;
+        }
     }
 }

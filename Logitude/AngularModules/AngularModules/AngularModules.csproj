@@ -333,6 +333,8 @@
     <Content Include="Images\Menu\Documents.Selected.png" />
     <Content Include="Images\Menu\Shared.png" />
     <Content Include="Images\numberIcon.png" />
+    <Content Include="Images\PriceCheck\EmptyTariffPrice.png" />
+    <Content Include="Images\PriceCheck\FillDimensions.png" />
     <Content Include="Images\ReportScheduler.png" />
     <Content Include="Images\ShowFilters.png" />
     <Content Include="Images\train.png" />

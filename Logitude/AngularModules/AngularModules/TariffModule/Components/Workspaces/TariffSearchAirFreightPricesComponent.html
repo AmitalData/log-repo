@@ -14,6 +14,23 @@
     .hyperlink:hover {
         cursor: pointer;
     }
+
+    .SearchButton {
+        border: 1px solid #00b180;
+        background-color: #00b180;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        height: 60px;
+        color: white;
+        outline: none;
+        text-align: center;
+        font-size: 18px;
+        position: relative;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+    }
 </style>
 
 <table>
@@ -23,352 +40,415 @@
         </td>
     </tr>
 
-
-
     <tr style="height: 5px;">
         <td>
             <div></div>
         </td>
     </tr>
 
-    <tr style="height:70px">
+    <!--Filters-->
+    <!--background-color: #f4f4f4;-->
+    <tr style="height:90px; background-color: #f4f4f4;">
         <td>
             <table>
-                <tr>
-                    <td style="width:5px">
-                        <div></div>
-                    </td>
+                <tr style="height:90px;">
                     <td>
                         <table>
-                            <tr>
+                            <tr class="FormFieldRow">
                                 <td>
                                     <table>
                                         <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:120px;">
-                                                            <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-                                                        <td style="width:220px;">
-                                                            <LogLov [ObjectFieldName]="'OriginPortId'"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [LookUpTableName]="'Port'"
-                                                                    [DataContext]="DataContext"
-                                                                    (SelectedItemChanged)="OriginPortId"
-                                                                    [DisplayMemberPath]="'Code'"
-                                                                    [SelectedValue]="OriginPortId"
-                                                                    [DependencyFilter1Value]="OriginDependencyFilterValue">
-                                                            </LogLov>
-                                                        </td>
-
-                                                        <td style="width:10px">
-                                                            <div>
-
-                                                            </div>
-                                                        </td>
-
-                                                        <td style="width:82px;">
-                                                            <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-                                                        <td style="width:220px;">
-                                                            <LogLov [ObjectFieldName]="'DestinationPortId'"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [LookUpTableName]="'Port'"
-                                                                    [DataContext]="DataContext"
-                                                                    (SelectedItemChanged)="DestinationPortId"
-                                                                    [DisplayMemberPath]="'Code'"
-                                                                    [SelectedValue]="DestinationPortId"
-                                                                    [DependencyFilter1Value]="DestinationDependencyFilterValue">
-                                                            </LogLov>
-
-                                                        </td>
-
-                                                        <td style="width:10px">
-                                                            <div>
-
-                                                            </div>
-                                                        </td>
-
-                                                        <td style="width:130px">
-                                                            <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td style="width:220px">
-                                                            <table>
-                                                                <tr>
-                                                                    <td>
-                                                                        <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
-
-                                                                    </td>
-
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-
-
-                                                        <td></td>
-
-                                                    </tr>
-                                                </table>
+                                            <td style="width:55px;">
+                                                <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
-                                        </tr>
+                                            <td style="width:180px;">
+                                                <LogLov [ObjectFieldName]="'OriginPortId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [LookUpTableName]="'Port'"
+                                                        [DataContext]="DataContext"
+                                                        (SelectedItemChanged)="OriginPortId"
+                                                        [DisplayMemberPath]="'Code'"
+                                                        [SelectedValue]="OriginPortId"
+                                                        [DependencyFilter1Value]="OriginDependencyFilterValue">
+                                                </LogLov>
+                                            </td>
 
-                                        <tr style="height:5px">
-                                            <td colspan="2">
+                                            <td style="width:10px">
+                                                <div> </div>
+                                            </td>
+
+                                            <td style="width:40px;">
+                                                <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:180px;">
+                                                <LogLov [ObjectFieldName]="'DestinationPortId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [LookUpTableName]="'Port'"
+                                                        [DataContext]="DataContext"
+                                                        (SelectedItemChanged)="DestinationPortId"
+                                                        [DisplayMemberPath]="'Code'"
+                                                        [SelectedValue]="DestinationPortId"
+                                                        [DependencyFilter1Value]="DestinationDependencyFilterValue">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width:10px">
+                                                <div> </div>
+                                            </td>
+
+                                            <td style="width:130px">
+                                                <LogLabel [ObjectFieldName]="'Weight'" [NoObjectField]="true" [Text]="'Chargeable weight'" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:100px">
+                                                <LogTextBox [NoObjectField]="true" [InputType]="'sigdouble'" [ObjectFieldName]="'Weight'" [Text]="Weight" [HideColumns]="true"
+                                                            (ValueChanged)="Weight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td style="width:4px">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:100px">
+                                                <LogLov [ObjectFieldName]="'WeightCode'"
+                                                        [SelectedValue]="WeightCode"
+                                                        [NoObjectField]="true"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'WeightUnit'"
+                                                        [HideLastColumn]="true"
+                                                        [RunToggleMode]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width:10px">
+                                                <div> </div>
+                                            </td>
+
+                                            <td style="width:50px">
+                                                <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:150px">
+                                                <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
+                                            </td>
+
+                                            <td>
                                                 <div></div>
                                             </td>
                                         </tr>
-                                        <tr style="height:15px" *ngIf="TariffType == 'OLC' || TariffType == 'AFC'">
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td *ngIf="TariffType == 'OLC' || TariffType == 'AFC'">
-                                                            <div class="FillParent" style="padding-left:10px">
-                                                                <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please insert totals or </span>
-                                                                <Hyperlink (click)="FillDimensionsClicked()">Fill Dimensions</Hyperlink>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-
-                                        <tr style="height:5px">
-                                            <td colspan="2">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                        <tr *ngIf="TariffType == 'OFC'">
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:120px">
-                                                            <LogLabel [NoObjectField]="true" [Text]="'Containers'" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td style="width:40px">
-                                                            <LogTextBox [ObjectFieldName]="'Quantity1'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity1" [DataContext]="DataContext"></LogTextBox>
-                                                        </td>
-                                                        <td style="width:2px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:120px;">
-                                                            <LogLov [ObjectFieldName]="'ContainerType1Id'"
-                                                                    [SelectedValue]="ContainerType1Id"
-                                                                    [NoObjectField]="true"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'PackageType'"
-                                                                    [HideLastColumn]="true"
-                                                                    [RunToggleMode]="true"
-                                                                    [DependencyFilter1Value]="'O'"
-                                                                    [DependencyFilter2Value]="true">
-                                                            </LogLov>
-                                                        </td>
-
-                                                        <td style="width:40px">
-                                                            <LogTextBox [ObjectFieldName]="'Quantity2'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity2" [DataContext]="DataContext"></LogTextBox>
-                                                        </td>
-                                                        <td style="width:2px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:120px;">
-                                                            <LogLov [ObjectFieldName]="'ContainerType2Id'"
-                                                                    [SelectedValue]="ContainerType2Id"
-                                                                    [NoObjectField]="true"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'PackageType'"
-                                                                    [HideLastColumn]="true"
-                                                                    [RunToggleMode]="true"
-                                                                    [DependencyFilter1Value]="'O'"
-                                                                    [DependencyFilter2Value]="true">
-                                                            </LogLov>
-                                                        </td>
-
-                                                        <td style="width:40px">
-                                                            <LogTextBox [ObjectFieldName]="'Quantity3'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity3" [DataContext]="DataContext"></LogTextBox>
-                                                        </td>
-                                                        <td style="width:2px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:120px;">
-                                                            <LogLov [ObjectFieldName]="'ContainerType3Id'"
-                                                                    [SelectedValue]="ContainerType3Id"
-                                                                    [NoObjectField]="true"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'PackageType'"
-                                                                    [HideLastColumn]="true"
-                                                                    [RunToggleMode]="true"
-                                                                    [DependencyFilter1Value]="'O'"
-                                                                    [DependencyFilter2Value]="true">
-                                                            </LogLov>
-                                                        </td>
-
-                                                        <td style="width:40px">
-                                                            <LogTextBox [ObjectFieldName]="'Quantity4'" [NoObjectField]="true" [HideColumns]="true" [Text]="Quantity4" [DataContext]="DataContext"></LogTextBox>
-                                                        </td>
-                                                        <td style="width:2px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:120px;">
-                                                            <LogLov [ObjectFieldName]="'ContainerType4Id'"
-                                                                    [SelectedValue]="ContainerType4Id"
-                                                                    [NoObjectField]="true"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'PackageType'"
-                                                                    [HideLastColumn]="true"
-                                                                    [RunToggleMode]="true"
-                                                                    [DependencyFilter1Value]="'O'"
-                                                                    [DependencyFilter2Value]="true">
-                                                            </LogLov>
-                                                        </td>
-
-                                                        <td style="width:40px">
-                                                            <LogTextBox [ObjectFieldName]="'Quantity5'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity5" [DataContext]="DataContext"></LogTextBox>
-                                                        </td>
-                                                        <td style="width:2px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:120px;">
-                                                            <LogLov [ObjectFieldName]="'ContainerType5Id'"
-                                                                    [SelectedValue]="ContainerType5Id"
-                                                                    [NoObjectField]="true"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'PackageType'"
-                                                                    [HideLastColumn]="true"
-                                                                    [RunToggleMode]="true"
-                                                                    [DependencyFilter1Value]="'O'"
-                                                                    [DependencyFilter2Value]="true">
-                                                            </LogLov>
-                                                        </td>
-
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-
-                                        <tr *ngIf="TariffType != 'OFC'">
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:90px">
-                                                            <LogLabel [ObjectFieldName]="'GrossWeight'" [NoObjectField]="true" [Text]="'Gross Weight'" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-                                                        <td style="width:30px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:100px">
-                                                            <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [Text]="GrossWeight" [ObjectFieldName]="'GrossWeight'" [HideColumns]="true"
-                                                                        (ValueChanged)="GrossWeight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-
-                                                        </td>
-                                                        <td style="width:4px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:100px">
-                                                            <LogLov [ObjectFieldName]="'GrossWeightCode'"
-                                                                    [SelectedValue]="GrossWeightCode"
-                                                                    [NoObjectField]="true"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'WeightUnit'"
-                                                                    [HideLastColumn]="true"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [RunToggleMode]="true">
-                                                            </LogLov>
-
-                                                        </td>
-
-                                                        <td style="width:25px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:80px">
-                                                            <LogLabel [ObjectFieldName]="'Volume'" [NoObjectField]="true" [Text]="'Volume'" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-                                                        <td style="width:4px">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width:100px">
-                                                            <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Volume'" [HideColumns]="true" [Text]="Volume"
-                                                                        (ValueChanged)="Volume=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-
-                                                        </td>
-                                                        <td style="width:4px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:100px">
-                                                            <LogLov [ObjectFieldName]="'VolumeUnitCode'"
-                                                                    [SelectedValue]="VolumeUnitCode"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'VolumeUnit'"
-                                                                    [HideColumns]="true">
-                                                            </LogLov>
-                                                        </td>
-                                                        <td style="width:25px">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width:130px">
-                                                            <LogLabel [ObjectFieldName]="'Weight'" [NoObjectField]="true" [Text]="'Chargeable weight'" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-
-                                                        <td style="width:100px">
-                                                            <LogTextBox [NoObjectField]="true" [InputType]="'sigdouble'" [ObjectFieldName]="'Weight'" [Text]="Weight" [HideColumns]="true"
-                                                                        (ValueChanged)="Weight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-
-                                                        </td>
-                                                        <td style="width:4px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:100px">
-                                                            <LogLov [ObjectFieldName]="'WeightCode'"
-                                                                    [SelectedValue]="WeightCode"
-                                                                    [NoObjectField]="true"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'WeightUnit'"
-                                                                    [HideLastColumn]="true"
-                                                                    [RunToggleMode]="true">
-                                                            </LogLov>
-
-                                                        </td>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-
                                     </table>
-                                </td>
-                                <td style="width: 100px">
-                                    <button class="GreenButton" style="height:60px;font-size:14px;font-weight:bold" (click)="SearchButtonClicked()">Search</button>
                                 </td>
                             </tr>
 
+                            <tr style="height:22px;" *ngIf="TariffType == 'OLC' || TariffType == 'AFC'">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:585px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:12px;" *ngIf="TariffType == 'OLC' || TariffType == 'AFC'">
+                                                <div>
+                                                    <img style="height:14px;" class="CenterCenter" src="./Images/PriceCheck/FillDimensions.png" />
+                                                </div>
+                                            </td>
+
+                                            <td style="width:5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:100px">
+                                                <div style="color: #1b90cb;">
+                                                    <Hyperlink (click)="FillDimensionsClicked()">Fill Dimensions</Hyperlink>
+                                                </div>
+                                            </td>
+
+                                            <td style="width:140px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td>
+                                                <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'FlexibleDate'" [DataContext]="DataContext" [Checked]="FlexibleDate" [Text]="'Flexible Date'"></LogCheckBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" *ngIf="TariffType != 'OFC'">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:14px;">
+                                                <div>
+                                                    <img style="height:16px;" class="CenterCenter" src="./Images/PriceCheck/ExtendedFilters.png" />
+                                                </div>
+                                            </td>
+
+                                            <td style="width:5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:90px;" class="Label">
+                                                Extended Filters
+                                            </td>
+
+                                            <td style="width:20px">
+                                                <img *ngIf="IsFiltersExtended" (click)="ExtendedFiltersClicked('hide')" src="./Images/PriceCheck/UpArrow.png" style="cursor:pointer;width:10px; height:7px;" />
+                                                <img *ngIf="!IsFiltersExtended" (click)="ExtendedFiltersClicked('show')" src="./Images/PriceCheck/DownArrow.png" style="cursor:pointer;width:10px; height:7px;" />
+                                            </td>
+
+                                            <td *ngIf="GrossWeightFilterVisible" style="background-color:white; border-radius:8px; width:150px; height:22px;">
+                                                Gross Weight {{GrossWeight | NumbersPipe:'N2'}} {{GrossWeightCode}}
+                                            </td>
+
+                                            <td style="width:10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td *ngIf="VolumeFilterVisible" style="background-color:white; border-radius:8px; width:150px; height:22px;">
+                                                Volume {{Volume | NumbersPipe:'N2'}} {{VolumeUnitCode}}
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:5px;" *ngIf="TariffType != 'OFC'"><td><div></div></td></tr>
+                            
+                            <tr class="FormFieldRow" *ngIf="TariffType == 'OFC'">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:90px">
+                                                <LogLabel [NoObjectField]="true" [Text]="'Containers'" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:40px">
+                                                <LogTextBox [ObjectFieldName]="'Quantity1'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity1" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td style="width:2px">
+                                                <div></div>
+                                            </td>
+                                            <td style="width:120px;">
+                                                <LogLov [ObjectFieldName]="'ContainerType1Id'"
+                                                        [SelectedValue]="ContainerType1Id"
+                                                        [NoObjectField]="true"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'PackageType'"
+                                                        [HideLastColumn]="true"
+                                                        [RunToggleMode]="true"
+                                                        [DependencyFilter1Value]="'O'"
+                                                        [DependencyFilter2Value]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width:40px">
+                                                <LogTextBox [ObjectFieldName]="'Quantity2'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity2" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td style="width:2px">
+                                                <div></div>
+                                            </td>
+                                            <td style="width:120px;">
+                                                <LogLov [ObjectFieldName]="'ContainerType2Id'"
+                                                        [SelectedValue]="ContainerType2Id"
+                                                        [NoObjectField]="true"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'PackageType'"
+                                                        [HideLastColumn]="true"
+                                                        [RunToggleMode]="true"
+                                                        [DependencyFilter1Value]="'O'"
+                                                        [DependencyFilter2Value]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width:40px">
+                                                <LogTextBox [ObjectFieldName]="'Quantity3'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity3" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td style="width:2px">
+                                                <div></div>
+                                            </td>
+                                            <td style="width:120px;">
+                                                <LogLov [ObjectFieldName]="'ContainerType3Id'"
+                                                        [SelectedValue]="ContainerType3Id"
+                                                        [NoObjectField]="true"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'PackageType'"
+                                                        [HideLastColumn]="true"
+                                                        [RunToggleMode]="true"
+                                                        [DependencyFilter1Value]="'O'"
+                                                        [DependencyFilter2Value]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width:40px">
+                                                <LogTextBox [ObjectFieldName]="'Quantity4'" [NoObjectField]="true" [HideColumns]="true" [Text]="Quantity4" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td style="width:2px">
+                                                <div></div>
+                                            </td>
+                                            <td style="width:120px;">
+                                                <LogLov [ObjectFieldName]="'ContainerType4Id'"
+                                                        [SelectedValue]="ContainerType4Id"
+                                                        [NoObjectField]="true"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'PackageType'"
+                                                        [HideLastColumn]="true"
+                                                        [RunToggleMode]="true"
+                                                        [DependencyFilter1Value]="'O'"
+                                                        [DependencyFilter2Value]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width:40px">
+                                                <LogTextBox [ObjectFieldName]="'Quantity5'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity5" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td style="width:2px">
+                                                <div></div>
+                                            </td>
+                                            <td style="width:120px;">
+                                                <LogLov [ObjectFieldName]="'ContainerType5Id'"
+                                                        [SelectedValue]="ContainerType5Id"
+                                                        [NoObjectField]="true"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'PackageType'"
+                                                        [HideLastColumn]="true"
+                                                        [RunToggleMode]="true"
+                                                        [DependencyFilter1Value]="'O'"
+                                                        [DependencyFilter2Value]="true">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
                         </table>
                     </td>
-                    <td style="width:5px">
-                        <div></div>
+
+                    <td style="width:180px;">
+                        <button style="margin-top:-15px;" class="SearchButton" (click)="SearchButtonClicked()">Search</button>
                     </td>
 
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="!IsFiltersHidden">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:90px">
+                                    <LogLabel [ObjectFieldName]="'GrossWeight'" [NoObjectField]="true" [Text]="'Gross Weight'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:100px">
+                                    <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [Text]="GrossWeight" [ObjectFieldName]="'GrossWeight'" [HideColumns]="true"
+                                                (ValueChanged)="GrossWeight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td style="width:4px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:100px">
+                                    <LogLov [ObjectFieldName]="'GrossWeightCode'"
+                                            [SelectedValue]="GrossWeightCode"
+                                            [NoObjectField]="true"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'WeightUnit'"
+                                            [HideLastColumn]="true"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [RunToggleMode]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:65px">
+                                    <LogLabel [ObjectFieldName]="'Volume'" [NoObjectField]="true" [Text]="'Volume'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:4px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:100px">
+                                    <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Volume'" [HideColumns]="true" [Text]="Volume"
+                                                (ValueChanged)="Volume=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td style="width:4px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:100px">
+                                    <LogLov [ObjectFieldName]="'VolumeUnitCode'"
+                                            [SelectedValue]="VolumeUnitCode"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'VolumeUnit'"
+                                            [HideLastColumn]="true"
+                                            [RunToggleMode]="true"
+                                            [NoObjectField]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:75px">
+                                    <LogLabel [ObjectFieldName]="'FromPrice'" [NoObjectField]="true" [Text]="'From Price'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:100px">
+                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'FromPrice'" [HideColumns]="true" [Text]="FromPrice"
+                                                (ValueChanged)="FromPrice=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td style="width:65px">
+                                    <LogLabel [ObjectFieldName]="'ToPrice'" [NoObjectField]="true" [Text]="'To Price'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:100px">
+                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'ToPrice'" [HideColumns]="true" [Text]="ToPrice"
+                                                (ValueChanged)="ToPrice=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
             </table>
-
         </td>
     </tr>
-
 
     <tr style="height: 5px;">
         <td>
@@ -376,9 +456,75 @@
         </td>
     </tr>
 
-    <tr>
+    <tr *ngIf="AvailableTariffs.length > 0">
         <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
 
+                                <td style="width:70px;color: #45494a;font-size:16px;">Results</td>
+
+                                <td style="width:50px; font-size:12px;" class="Label">({{AvailableTariffs.length}})</td>
+
+                                <td style="width:15px;">
+                                    <img src="./Images/PriceCheck/Price.png" style="width:15px; height:11px;" />
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:100px;">
+                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                            [NoObjectField]="true"
+                                            [DataContext]="DataContext"
+                                            [HideLastColumn]="true"
+                                            [HideAddLink]="true"
+                                            [HideMaintenanceIcon]="true"
+                                            [LookUpTableName]="'Currency'">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:180px;">
+                                    <SearchBox></SearchBox>
+                                </td>
+
+
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr *ngIf="AvailableTariffs.length == 0">
+        <td>
+            <div class="MediaFill">
+                <div>
+                    <img class="CenterCenter" src="./Images/PriceCheck/EmptyTariffPrice.png" />
+
+                    <span class="NoDataText MediaFillAbsolute" style="top:5px; font-size:14px;">{{NoDataMessage}}</span>
+                </div> 
+            </div>
+        </td>
+    </tr>
+
+    <!--<tr>
+        <td>
             <table>
                 <tr>
                     <td style="width:5px">
@@ -425,6 +571,7 @@
                                     </table>
                                 </td>
                             </tr>
+
                             <tr>
                                 <td>
                                     <ScrollViewer [Small]="true">
@@ -556,7 +703,7 @@
                                                                                                 </td>
                                                                                             </tr>
 
-                                                                                            <tr>     
+                                                                                            <tr>
                                                                                                 <td style="width:200px">
                                                                                                     <table>
                                                                                                         <tr>
@@ -582,7 +729,7 @@
                                                                                             <tr>
                                                                                                 <td>
                                                                                                     <div>
-                                                                                                        <button class="Button"  style="height:60px;width:100px;font-size:14px;font-weight:bold; border: 1px solid" (click)="GeneratePayablesClicked(item)">Choose</button>
+                                                                                                        <button class="Button" style="height:60px;width:100px;font-size:14px;font-weight:bold; border: 1px solid" (click)="GeneratePayablesClicked(item)">Choose</button>
                                                                                                     </div>
                                                                                                 </td>
                                                                                             </tr>
@@ -647,7 +794,7 @@
                                                                                                         </tr>
                                                                                                     </table>
                                                                                                 </td>
-                                                                                                
+
                                                                                                 <td style="width:10px">
                                                                                                     <div></div>
                                                                                                 </td>
@@ -714,13 +861,13 @@
                                                                                                             <td style="width:3px;">
                                                                                                                 <div></div>
                                                                                                             </td>
-                                                                                                            <td  style="width: 18px;">
+                                                                                                            <td style="width: 18px;">
                                                                                                                 <img *ngIf="surcharge.IsMinIconVisible" src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Min Price'" />
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                     </table>
                                                                                                 </td>
-                                                                                              
+
                                                                                             </tr>
                                                                                             <tr style="height:1px;background-color:#D1D1D1">
                                                                                                 <td colspan="3"></td>
@@ -780,13 +927,15 @@
                             </tr>
                         </table>
                     </td>
+
                     <td style="width:5px">
                         <div></div>
                     </td>
                 </tr>
             </table>
         </td>
-    </tr>
+    </tr>-->
+
     <tr style="height: 32px;min-height:32px">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
@@ -794,15 +943,9 @@
                     <td>
                         <div></div>
                     </td>
+
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">
-                            {{
-'General.B.Close' | TextCodeTranslationPipe
-                            }}
-                        </button>
-                    </td>
-                    <td style="width: 5px;">
-                        <div></div>
+                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
