@@ -14,17 +14,22 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
         public InterestEntityResult GetInterestEntity(string Id, int Tenant)
         {
             ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(Tenant);
-            ARPaymentPM aRPaymentPM = aRPaymentQuery.GetSinglePM(Id, Tenant);
+            ARPaymentPM aRPaymentPM = aRPaymentQuery.GetSinglePMForInterest(Id, Tenant);
             InterestEntityResult result = new InterestEntityResult();
-            result.EntityId = aRPaymentPM.Id;
-            result.EntityNumber = aRPaymentPM.PaymentNo;
-            result.JournalId = aRPaymentPM.JournalId;
-            result.EntityCode = aRPaymentPM.JournalId;
-            result.AccountCode = "3";
-            result.EntityCode = "2";
-            result.EntityType = "ARPayment";
-            result.EntityTypeCode = "PY";
 
+            if (aRPaymentPM!=null)
+            {
+                result.EntityId = aRPaymentPM.Id;
+                result.EntityNumber = aRPaymentPM.PaymentNo;
+                result.JournalId = aRPaymentPM.JournalId;
+                result.JournalNumber = aRPaymentPM.JournalNumber;
+                result.AccountCode = "3";
+                result.EntityCode = "2";
+                result.EntityType = "ARPayment";
+                result.EntityTypeCode = "PY";
+
+            }
+  
             return result;
         }
     }

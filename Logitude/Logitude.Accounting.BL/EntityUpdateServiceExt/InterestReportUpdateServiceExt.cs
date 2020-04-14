@@ -26,7 +26,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
         public void CancelledInterestTransactionsByARPayment(string EntityId, int Tenant)
         {
             InterestReportService interestReportService = new InterestReportService();
-            interestReportService.CancelledInterestTransactionsByARPayment(EntityId, Tenant);
+            interestReportService.CancelInterestTransactionsByARPayment(EntityId, Tenant);
         }
     }
 }
