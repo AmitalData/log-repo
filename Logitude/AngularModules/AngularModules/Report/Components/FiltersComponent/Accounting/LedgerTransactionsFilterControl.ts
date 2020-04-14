@@ -9,6 +9,11 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
+import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { GLAccountExtendedListService } from '../../../../Accounting/Services/ExtendedLists/GLAccountExtendedListService';
+import { ReportsPreviewComponent } from '../../ReportsPreviewComponent';
+import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
 
 @Component({
     moduleId: module.id,
@@ -17,6 +22,7 @@ import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 
 export class LedgerTransactionsFilterControl extends BaseComponent implements OnInit {
     ObjectTableName: string = "LedgerTransaction";
+    public ReportsPreview: ReportsPreviewComponent;
     public RunReportTitle: string;
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
@@ -50,6 +56,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
 
 
+    }
+
+    InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
+        this.ReportsPreview = myReportsPreview;
     }
 
     ngOnInit() {
@@ -414,7 +424,21 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
 
     PrepareContactList() {
-        //for report scheduler
+        var gLAccountExtendedListService = new GLAccountExtendedListService();
+        var glAccountId = this.GetLookUpFieldValue(this.GLAccountId);
+        if (glAccountId != null) {
+            gLAccountExtendedListService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var allContacts = response.Result;
+                    if (allContacts != null && allContacts.length > 0) {
+                        allContacts.forEach(contact => {
+                            if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
+                        });
+                        this.ReportsPreview.PartnersObslist.reverse();
+                    }
+                }
+            });
+        }
     }
 
     RunButtonClicked() {
