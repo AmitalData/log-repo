@@ -459,7 +459,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             var tariffType = "";
-            if (QuoteUtilities.IsLCLQuote(this.EntityPM)){
+            if (this.EntityPM.TransportModeId == "O" && QuoteUtilities.IsLCLQuote(this.EntityPM)){
                 tariffType = "OLC";
             }
 

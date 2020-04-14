@@ -1034,7 +1034,8 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
     AssignTariffChargesToQuote() {
         this.TariffList_Quote.forEach(item => {
-            var chargeItem = new QuoteChargeItem(item, this.FatherComponent, false);
+            this.FatherComponent.EntityPM.AddQuoteChargePM(item);
+            var chargeItem: QuoteChargeItem = new QuoteChargeItem(item, this.FatherComponent, false);
             chargeItem.ChargesTypeId = item.ChargesTypeId;
             chargeItem.CostMeasurementId = item.CostMeasurementId;
             chargeItem.CostCurrencyId = item.CostCurrencyId;
@@ -1045,19 +1046,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             chargeItem.SaleCurrencyId = item.SaleCurrencyId;
             chargeItem.SaleExchangeRate = item.SaleExchangeRate;
             chargeItem.ChargesGroupCode = item.ChargesGroupCode;
-            this.FatherComponent.ItemsSource.Insert(chargeItem);       
-           
+            var amount: number = item.CostTotalAmount;
             chargeItem.SetCostQuantity();
-            chargeItem.CostUnitPrice = chargeItem.CostTotalAmount / chargeItem.CostQuantity;
-
-            chargeItem.ComputeCostInSalePrice();
+            var quantity: number = chargeItem.CostQuantity;
+            chargeItem.CostUnitPrice = (amount / quantity);
             chargeItem.SetSaleQuantity();
             chargeItem.ComputeSalePrice();
             chargeItem.SetUIProperties_AllIn();
-             this.FatherComponent.EntityPM.AddQuoteChargePM(item);
+            this.FatherComponent.ItemsSource.Insert(chargeItem);
         });
         this.ReloadTariffCharges();
-
     }
     ReloadTariffCharges() {
         this.FatherComponent.BuildItemsSource();
