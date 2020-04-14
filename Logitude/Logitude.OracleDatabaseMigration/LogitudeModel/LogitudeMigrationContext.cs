@@ -82,6 +82,9 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         }
 
         #region Common Context
+        public IDbSet<INTTRASetting> INTTRASettings { get; set; }
+        public IDbSet<INTTRASettingMode> INTTRASettingModes { get; set; }
+        public IDbSet<INTTRABranchRegisteredCarrier> INTTRABranchRegisteredCarriers { get; set; }
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<SharedUserQuery> SharedUserQueries { get; set; }
         public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
@@ -1423,9 +1426,36 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<DWCategories> DWCategories
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DWObjectFieldCategories> DWObjectFieldCategories
+        {
+            get;
+            set;
+        }
+        public IDbSet<INTTRAStatus> INTTRAStatuses
+        {
+            get;
+            set;
+        }
+        public IDbSet<INTTRASIStatus> INTTRASIStatus
+        {
+            get;
+            set;
+        }
+       
         #endregion
 
         #region Shipment Context
+        public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
+        public IDbSet<INTTRABookingStatus> INTTRABookingStatuses { get; }
+        public IDbSet<INTTRABookingTransStatus> INTTRABookingTransStatuses { get; }
+        public IDbSet<HarmonizeCode> HarmonizeCodes { get; }
         public IDbSet<Shipment> Shipments
         {
             get;
@@ -3034,6 +3064,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         public IDbSet<TicketCreatedByType> TicketCreatedByTypes { get; set; }
         public IDbSet<TicketSource> TicketSources { get; set; }
+
+        public IDbSet<Occasion> Occasions { get; set; }
+        public IDbSet<OccasionType> OccasionTypes { get; set; }
+        public IDbSet<OccasionStatus> OccasionStatuses { get; set; }
+        public IDbSet<OccasionInvitee> OccasionInvitees { get; set; }
+        public IDbSet<SupportMailbox> SupportMailboxes { get; set; }
         #endregion
 
         #region Social Context
@@ -3519,6 +3555,15 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new INTTRASettingMap());
+            modelBuilder.Configurations.Add(new INTTRASettingModeMap());
+            modelBuilder.Configurations.Add(new INTTRABranchRegisteredCarrierMap());
+            modelBuilder.Configurations.Add(new INTTRAStatusMap());
+            modelBuilder.Configurations.Add(new INTTRASIStatusMap());
+
+            modelBuilder.Configurations.Add(new INTTRADocumentTypeMap());
+            modelBuilder.Configurations.Add(new INTTRABookingStatusMap());
+            modelBuilder.Configurations.Add(new INTTRABookingTransStatusMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             #region Social
             modelBuilder.Configurations.Add(new ConversationHeaderMap());
@@ -3534,6 +3579,10 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             #endregion
 
             #region CRM
+            modelBuilder.Configurations.Add(new OccasionMap());
+            modelBuilder.Configurations.Add(new OccasionStatusMap());
+            modelBuilder.Configurations.Add(new OccasionTypeMap());
+            modelBuilder.Configurations.Add(new OccasionInviteeMap());
             modelBuilder.Configurations.Add(new ActivityMap());
             modelBuilder.Configurations.Add(new ActivityEmailRecipientMap());
             modelBuilder.Configurations.Add(new ActivityInviteeMap());
@@ -4213,6 +4262,9 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TMLocationMap());
             modelBuilder.Configurations.Add(new TMProjectMap());
             #endregion
+
+            modelBuilder.Configurations.Add(new DWCategoriesMap());
+            modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             //modelBuilder.Configurations.Add(new DWHSettingMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
@@ -4765,6 +4817,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Configurations.Add(new MetodoPagoMap());
+
+            modelBuilder.Configurations.Add(new HarmonizeCodeMap());
 
             #region Infrastructure Generated
             modelBuilder.Configurations.Add(new ToggleMap());

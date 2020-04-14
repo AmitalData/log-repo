@@ -4,7 +4,7 @@
   ObjectTableName="&quot;General&quot;"
   IsNew="false"
   DBTableName="&quot;Generals&quot;"
-  OldDBTableName="&quot;Generals&quot;"
+  DBTableOldNames="Generals"
   ObjectTableSingular="&quot;General&quot;"
   ObjectTablePlural="&quot;Generals&quot;"
   HasCustomFilter="false"
@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;cb3d&quot;"
+  Code="&quot;657b&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -2949,7 +2949,7 @@
       Code="&quot;Accounting.General.O.GeneralInvoice&quot;"
       DefaultText="&quot;Invoices&quot;"
       LocalDefaultText="&quot; החשבוניות&quot;"
-      TextCodeTypeCode="&quot;O &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.Payments&quot;"

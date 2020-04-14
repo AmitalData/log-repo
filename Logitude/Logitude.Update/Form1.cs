@@ -4141,6 +4141,43 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
+
+        private void button49_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => LoadClosedTables());
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void LoadClosedTables()
+        {
+            //LoadClosedTablesLabel
+            SetControlPropertyValue(LoadClosedTablesLabel, "Text", "Updating...");
+            SetControlPropertyValue(LoadClosedTablesLabel, "ForeColor", Color.Black);
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            // for timer
+            if (generalLabel != null) SetControlPropertyValue(generalLabel, "Text", "Updating...");
+            globalStopwatch = stopWatch;
+            generalLabel = LoadClosedTablesLabel;
+            timer1.Enabled = true;
+            timer1.Start();
+
+            IWebFreightContext context = WebFreightContext.GetContext(0);
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.UpgradeClosedTablesForTenantZero();
+
+            globalStopwatch = null;
+            generalLabel = null;
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(LoadClosedTablesLabel, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue(LoadClosedTablesLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(LoadClosedTablesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
     }
 
     public class TenantMailBox

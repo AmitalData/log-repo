@@ -545,6 +545,22 @@
     <Compile Include="Migrations\202004090758246_missing09042020Main.Designer.cs">
       <DependentUpon>202004090758246_missing09042020Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004121153387_missingDWStuff.cs" />
+    <Compile Include="Migrations\202004121153387_missingDWStuff.Designer.cs">
+      <DependentUpon>202004121153387_missingDWStuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004121352492_missingoccasionStuff.cs" />
+    <Compile Include="Migrations\202004121352492_missingoccasionStuff.Designer.cs">
+      <DependentUpon>202004121352492_missingoccasionStuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004131310343_missingHarmonizeCode.cs" />
+    <Compile Include="Migrations\202004131310343_missingHarmonizeCode.Designer.cs">
+      <DependentUpon>202004131310343_missingHarmonizeCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004131343093_missingINTRA.cs" />
+    <Compile Include="Migrations\202004131343093_missingINTRA.Designer.cs">
+      <DependentUpon>202004131343093_missingINTRA.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -943,6 +959,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004090758246_missing09042020Main.resx">
       <DependentUpon>202004090758246_missing09042020Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004121153387_missingDWStuff.resx">
+      <DependentUpon>202004121153387_missingDWStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004121352492_missingoccasionStuff.resx">
+      <DependentUpon>202004121352492_missingoccasionStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004131310343_missingHarmonizeCode.resx">
+      <DependentUpon>202004131310343_missingHarmonizeCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004131343093_missingINTRA.resx">
+      <DependentUpon>202004131343093_missingINTRA.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

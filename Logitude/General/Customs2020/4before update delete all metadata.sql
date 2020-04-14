@@ -35,8 +35,3 @@ delete from Features where tenant = 0 or NameTextCodeCode is null;--and (NameTex
 
 
 delete from Screens where code='Customs.AccountingPartner.HeaderScreen';
--------------
-select count(*) from queries where userid is not null --748
-select * from queries where userid is not null
-select * from queries where Uniquecode is null
-select count (*) from queries where userid is null--285
