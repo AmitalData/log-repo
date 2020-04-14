@@ -2420,6 +2420,7 @@
     <Content Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseReleaseRoutingsTabComponent.html" />
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.html" />
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseReleaseFiltersMenuComponent.html" />
+    <Content Include="Warehouse\Components\Helpers\WarehouseEntryHelperComponent.html" />
     <Content Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.html" />
     <Content Include="Warehouse\Components\NewEntity\NewFullWarehouseReleaseComponent.html" />
     <Content Include="Warehouse\Components\Templates\FieldTemplateComponent.html" />
@@ -6874,6 +6875,8 @@
     <TypeScriptCompile Include="Warehouse\Components\EditWarehouseReleaseComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\FiltersMenu\WarehouseReleaseFiltersMenuComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\Helpers\WarehouseEntryHelperComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\MenuButtons\WarehouseEntryMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Warehouse\Components\MenuButtons\WarehouseReleaseMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseReleaseComponent.ts" />
