@@ -182,22 +182,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-        //public List<ShippingDeclarationCharges> ShippingChargesList { get; set; }
-
-        //public class ShippingDeclarationPackageLine
-        //{
-        //    public string PackageMarksAndNumbers { get; set; }
-        //    public string PackageQuantity { get; set; }
-        //    public string PackageDescriptionOfGoods { get; set; }
-        //    public string PackageGrossWeight { get; set; }
-        //    public string PackageVolume { get; set; }
-        //}
-
-        //public class ShippingDeclarationCharges
-        //{
-        //    public string DescriptionOfCharges { get; set; }
-        //    public string Collect { get; set; }
-        //}
         public string FromLocation { get; set; }
         public string ToLocation { get; set; }
         public string FromLocation_Label { get; set; }
@@ -456,5 +440,7 @@ namespace WebFreight.Web.DataProviders
         public string DischargePortStateCode { get; set; }
         public string TotalContainers { get; set; }
         public DateTime? FirstPickupETA { get; set; }
+        public string MasterPreCarriageCarrierNumber { get; set; }
+        public string MasterPreCarriageVesselName { get; set; }
     }
 }
