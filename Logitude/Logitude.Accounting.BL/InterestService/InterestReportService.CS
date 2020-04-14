@@ -63,7 +63,7 @@ namespace Logitude.Accounting.BL.InterestService
             return interestReportPM;
         }
 
-        public void CancelledInterestTransactionsByARPayment(string EntityId, int Tenant)
+        public void CancelInterestTransactionsByARPayment(string EntityId, int Tenant)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
             InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(MyContext);
