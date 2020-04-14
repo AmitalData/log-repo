@@ -293,12 +293,12 @@ namespace Logitude.Accounting.Data.Repositories
 
         public List<string> GetJournalNumbersByTransactionsList(List<InterestTransactionList> interestTransactionLists, int tenant)
         {
-            List<string> entityIdsWithCodes = interestTransactionLists.Select(d => d.EntityId+ "," +( d.InterestEntityTypeCode == "1" ? "2" :
-                                                                                                      d.InterestEntityTypeCode == "2" ? "3" : "1")).ToList();
+            List<string> entityIdsWithCodes = interestTransactionLists.Select(d => d.EntityId+ "," +( d.InterestEntityTypeCode == InterestEntities.ARInvoice ? AccountingEntities.ARInvoice :
+                                                                                                      d.InterestEntityTypeCode == InterestEntities.ARPayment ? AccountingEntities.ARPayment : AccountingEntities.Journal)).ToList();
             List<string> JournalNumbers = (from a in context.Journals
                                      where entityIdsWithCodes.Contains(a.AccountingEntityId+","+a.AccountingEntityCode)  && a.Tenant == tenant
-                                     select a.JournalNumber+","+ a.AccountingEntityId + ","  +(a.AccountingEntityCode == "2" ? "1" :
-                                                                                               a.AccountingEntityCode == "3" ? "2" : "3")).ToList();
+                                     select a.JournalNumber+","+ a.AccountingEntityId + ","  +(a.AccountingEntityCode == AccountingEntities.ARInvoice ? InterestEntities.ARInvoice :
+                                                                                               a.AccountingEntityCode == AccountingEntities.ARPayment ? InterestEntities.ARPayment : InterestEntities.Journal)).ToList();
             return JournalNumbers;
         }
 

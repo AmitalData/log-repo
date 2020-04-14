@@ -15,11 +15,12 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
         public InterestEntityResult GetInterestEntity(string Id, int Tenant)
         {
             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(Tenant);
-            ARInvoicePM aRInvoice = aRInvoiceQuery.GetSinglePM(Id, Tenant);
+            ARInvoicePM aRInvoice = aRInvoiceQuery.GetSinglePMForInterest(Id, Tenant);
             InterestEntityResult result = new InterestEntityResult();
             result.EntityId = aRInvoice.Id;
             result.EntityNumber = aRInvoice.InvoiceNumber;
             result.JournalId = aRInvoice.JournalId;
+            result.JournalNumber = aRInvoice.JournalNumber;
             result.AccountCode = "2";
             result.EntityCode = "1";
             result.EntityType = "ARInvoice";

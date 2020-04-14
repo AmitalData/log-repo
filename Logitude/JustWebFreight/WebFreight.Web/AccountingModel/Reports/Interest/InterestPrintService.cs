@@ -1,11 +1,6 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Helpers;
-using Logitude.BL.Interfaces;
-using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;

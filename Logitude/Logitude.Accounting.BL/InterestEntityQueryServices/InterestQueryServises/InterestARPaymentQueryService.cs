@@ -19,7 +19,7 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
             result.EntityId = aRPaymentPM.Id;
             result.EntityNumber = aRPaymentPM.PaymentNo;
             result.JournalId = aRPaymentPM.JournalId;
-            result.EntityCode = aRPaymentPM.JournalId;
+            result.JournalNumber = aRPaymentPM.JournalNumber;
             result.AccountCode = "3";
             result.EntityCode = "2";
             result.EntityType = "ARPayment";
