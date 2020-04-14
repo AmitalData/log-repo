@@ -289,7 +289,6 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             item.Instock += entryPackagesRelease.Quantity;
                         }
 
-                        item.Quantity = 0;
                         item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
                         entryPackagesRelease.IsCanceled = true;

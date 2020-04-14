@@ -450,12 +450,14 @@
     ForeignKeyColumn="HeaderScreenId"
     ReferencedTable="Screens"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="DescriptionTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="MainTipCode"
     ReferencedTable="Tips"
@@ -470,7 +472,8 @@
     ForeignKeyColumn="NewButtonTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <UniqueConstraint
     Columns="Name,Tenant" />
 </Table>

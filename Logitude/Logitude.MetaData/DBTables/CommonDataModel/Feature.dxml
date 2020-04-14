@@ -100,7 +100,8 @@
     ForeignKeyColumn="NameTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="FeatureTypeCode"
     ReferencedTable="FeatureTypes"

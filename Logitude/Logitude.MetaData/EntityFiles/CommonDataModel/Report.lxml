@@ -189,7 +189,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="Feature"
-    DontBuildRelationOnDB="false"
+    DontBuildRelationOnDB="true"
     NavigationPropertyName="Feature"
     IsPrimaryKey="false"
     HasDataBaseField="true"

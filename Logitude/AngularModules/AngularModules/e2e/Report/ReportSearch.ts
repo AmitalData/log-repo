@@ -12,7 +12,7 @@ export class ReportSearch {
   }
 
   QuickSearch(reportName) {
-    this.logitudeTab.GoToMainMenu('General.MH.Reports');
+    this.logitudeTab.GoToMainMenu2('General.MH.Reports');
     this.UseSearchBox('null_Search', reportName);
 
 

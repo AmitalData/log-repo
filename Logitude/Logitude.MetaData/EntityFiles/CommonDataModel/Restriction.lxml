@@ -499,6 +499,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false"
     ForeignEntity="ObjectField"
+    DontBuildRelationOnDB="true"
     NavigationPropertyName="ObjectField" />
   <field
     Id="&quot;b757b54b-1c17-48f9-9f7d-d3f2eec443cb&quot;"
