@@ -39,7 +39,7 @@ export class EditTabsComponent {
         this.ShipmentsTabScenario = new ShipmentsTabComponent();
     }
     GoToShipment() {
-        this.Operation.GoToMainMenu('General.MH.Operations');
+        this.Operation.GoToMainMenu2('General.MH.Operations');
         this.Operation.SelectMenuWorkSpaceTabs('SHIP');
         // this.QuickSearch.UseQuickSearch('SR1545342');
     }
