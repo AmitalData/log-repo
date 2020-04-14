@@ -48,5 +48,6 @@
     ForeignKeyColumn="ScreenId"
     ReferencedTable="Screens"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
 </Table>
