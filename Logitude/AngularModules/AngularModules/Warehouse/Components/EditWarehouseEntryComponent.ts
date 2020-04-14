@@ -77,33 +77,32 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
 
     }
 
-    CancelEntryChangedEvent: any;
     SaveCompletedEvent: any;
     LoadCompletedEvent: any;
     
-    SetEnableProperties() {
-        if (this.warehouseEntryPM.StatusCode == "CAEA") {
-            this.warehouseEntryPM.UIProperties.SetEnabled("ReceivedBy", "WarehouseEntry", false);
-            this.warehouseEntryPM.UIProperties.SetEnabled("CreatedByUserId", "WarehouseEntry", false);
-            this.warehouseEntryPM.UIProperties.SetEnabled("EntryReference", "WarehouseEntry", false);
-            this.warehouseEntryPM.UIProperties.SetEnabled("Manufacturer", "WarehouseEntry", false);
-            this.warehouseEntryPM.UIProperties.SetEnabled("ExpectedEntryDate", "WarehouseEntry", false);
-            this.warehouseEntryPM.UIProperties.SetEnabled("SpecialInstruction", "WarehouseEntry", false);
-            this.warehouseEntryPM.UIProperties.SetEnabled("Notes", "WarehouseEntry", false);
-            this.UIProperties.SetEnabled("ActualEntryDate", "WarehouseEntry", false);
-            this.UIProperties.SetEnabled("WarehouseId", "WarehouseEntry", false);
+    SetUIProperties() {
+        var isCanceledEntry = this.warehouseEntryPM.StatusCode == "CAEA";
+        this.warehouseEntryPM.UIProperties.SetEnabled("ReceivedBy", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("EntryReference", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("Manufacturer", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("ExpectedEntryDate", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("SpecialInstruction", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("Notes", this.ObjectTableName, !isCanceledEntry);
+        this.UIProperties.SetEnabled("ActualEntryDate", this.ObjectTableName, !isCanceledEntry);
+        this.UIProperties.SetEnabled("WarehouseId", this.ObjectTableName, !isCanceledEntry);
 
-        }
     }
 
     Listen() {
 
+        this.SetUIProperties();
 
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             if (this.SaveCompletedEvent == null) {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
+                        this.SetUIProperties();
                         this.CurrentSession.FireEvent("LoadEventTabData");
                     }
 
@@ -118,13 +117,6 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
                 });
             }
 
-            if (!this.CancelEntryChangedEvent) {
-                this.CancelEntryChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-                    if (s == "CancelEntry") {
-                        this.SetEnableProperties();
-                    }
-                });
-            }
         }
 
     }
@@ -132,7 +124,6 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
 
 
     ngOnDestroy() {
-        AppTool.KillEventEmitter(this.CancelEntryChangedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
 
@@ -152,7 +143,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
      
             this.ExpectedEntryDateOldValue = this.warehouseEntryPM.ExpectedEntryDate;
             this.ActualEntryDateOldValue = this.warehouseEntryPM.ActualEntryDate;
-            this.SetUIProperties();
+            this.SetCustomerUIProperties();
             this.IsLoadPage = true;
         }
 
@@ -249,7 +240,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
 
 
 
-    SetUIProperties() {
+    SetCustomerUIProperties() {
         this.warehouseEntryPM.UIProperties.SetEnabled("CustomerId", "WarehouseEntry", false);
         //this.warehouseEntryPM.UIProperties.SetEnabled("WarehouseId", "WarehouseEntry", false);
 

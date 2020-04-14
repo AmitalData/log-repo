@@ -102,7 +102,6 @@ export class WarehouseEntryMenuButtonsHandler {
 
                         if (!pmResponse.HasError) {
                             this.EntityPM = pmResponse.Result;
-                            this.CurrentSession.FireEvent("CancelEntry");
                             this.entityArgs.EditComponent.SaveChanges();
                             this.entityArgs.EditComponent.ReloadEntityPM();
 
