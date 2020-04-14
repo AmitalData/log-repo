@@ -45,6 +45,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <UniqueConstraint
     Columns="Code,Tenant" />
 </Table>
