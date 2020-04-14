@@ -462,7 +462,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  JournalNumber = a.JournalNumber,
                                                  AccountingDate = a.AccountingDate,
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
-
+                                                TaxReportJournalLineNumber = groupJoinData.Line,
                                                  Id = a.Id,
                                                  LineCreditAccountTypeCode = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.AccountTypeCode : null,
                                                  LineCreditAccountId = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.Id : null,

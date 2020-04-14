@@ -87,7 +87,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         QueueId, 
 	         StatusLocalName, 
 	         IsLedgerCreated, 
-	         LineCreditAccountTypeCode,
+	         LineCreditAccountTypeCode, 
+	         TaxReportJournalLineNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

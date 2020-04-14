@@ -1140,6 +1140,7 @@ on record.JournalId equals j.Id
                         LocalAmountCredit = a.LocalAmountCredit,
                         OppositGLAccount = a.OppositeAccountId,
                         AccountingEntityId= j.AccountingEntityId,
+                        JournalLineNumber = a.JournalLineNumber
                     }
                     
                     ).ToList();
