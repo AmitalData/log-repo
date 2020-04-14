@@ -25,6 +25,19 @@ export class GLAccountExtendedListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/glaccountviews';
      }
 
+    GetAllConnectedPartnersByGLAccountId(glAccountId: string) {
+
+        var url = this._apiUrl + '/GetAllConnectedPartnersByGLAccountId?glAccountId=' + glAccountId;
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
 
     GetRecentGLAccounts(accountTypeCode: string) {
      

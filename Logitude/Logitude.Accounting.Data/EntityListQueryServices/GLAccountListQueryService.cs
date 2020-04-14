@@ -18,6 +18,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.CustomFilters;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
@@ -354,8 +355,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return accountListQuery;
         }
 
+        public List<ShortPartnersDetails> GetAllConnectedPartnersByGLAccountId(string glAccountId, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            List<ShortPartnersDetails> shortConnectedPartnersDetails = cardQuery.GetConnectedPartnerIdsByGLAccountId(glAccountId, tenant);
+            return shortConnectedPartnersDetails;
+        }
+
     }
-
-
 }
 	
