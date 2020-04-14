@@ -2,10 +2,14 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/App",
-    "baseUrl": "./",
-    "module": "es2015",
     "types": []
   },
+  "files": [
+    "polyfills.ts"
+  ],
+  "include": [
+    "**/*.d.ts"
+  ],
   "exclude": [
     "test.ts",
     "**/*.spec.ts",
@@ -21,7 +25,7 @@
     "Stimulsoft",
     "_Resources",
 
-    ".angular-cli.json",
+
     ".editorconfig",
     ".gitignore",
     "karma.conf.js",
@@ -32,8 +36,6 @@
     "tsconfig.json",
     "tslint.json",
 
-    "webpack.config.js",
-    "webpack.config-prod.js",
 
     "Customs",
     "CustomsModule",

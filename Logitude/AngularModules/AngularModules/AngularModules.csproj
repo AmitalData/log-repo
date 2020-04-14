@@ -303,7 +303,9 @@
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
     <Content Include="e2e\dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js" />
+    <Content Include="e2e\protractor.conf.js" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdStaging.bat" />
+    <Content Include="e2e\tsconfig.json" />
     <Content Include="Images\Buttons\copy.report.png" />
     <Content Include="Images\Buttons\downarrow.png" />
     <Content Include="Images\Buttons\uparrow.png" />
@@ -1857,8 +1859,6 @@
     <Content Include="Js\system.src.js" />
     <Content Include="Js\zone.js" />
     <Content Include="karma.conf.js" />
-    <Content Include="Notes.txt" />
-    <Content Include="protractor.conf.js" />
     <Content Include="QuoteModules\QuoteCharges\Components\AddEditFCLChargeComponent.html" />
     <Content Include="QuoteModules\QuoteCharges\Components\AddEditLCLChargeComponent.html" />
     <Content Include="QuoteModules\QuoteCharges\Components\AddEditPriceStepComponent.html" />
@@ -2424,11 +2424,8 @@
     <Content Include="Warehouse\Components\NewEntity\NewFullWarehouseReleaseComponent.html" />
     <Content Include="Warehouse\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="Warehouse\Components\WarehouseReleasePackagesDetailsComponent.html" />
-    <Content Include="webpack.config-prod-Cust.js" />
     <Content Include="Warehouse\Components\WarehouseEntryPackagesDetailsComponent.html" />
     <Content Include="Warehouse\Components\Workspaces\WarehouseWorkspaceComponent.html" />
-    <Content Include="webpack.config-prod.js" />
-    <Content Include="webpack.config.js" />
     <Content Include="_Resources\Froala\css\codemirror.min.css" />
     <Content Include="_Resources\Froala\css\font-awesome.min.css" />
     <Content Include="_Resources\Froala\css\fonts\fontawesome\fontawesome-webfont.svg" />
@@ -6856,7 +6853,6 @@
     <TypeScriptCompile Include="TimeManagement\Services\StandardPMs\TMReleasePMService.ts" />
     <TypeScriptCompile Include="TimeManagement\Services\TimeManagementDomainService.ts" />
     <TypeScriptCompile Include="TimeManagement\Services\TimeOfficeHourDomainService.ts" />
-    <TypeScriptCompile Include="typings.d.ts" />
     <TypeScriptCompile Include="Warehouse\Components\AddEditWarehouseEntryPackagesAndContainers.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CutsomerTenantAccessManagementComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\DataContracts\CustomerTenantAccessRequestStatusCount.ts" />
@@ -6925,11 +6921,8 @@
   <ItemGroup>
     <Content Include="package.json" />
     <Content Include="tsconfig.json" />
-    <Content Include=".angular-cli.json" />
     <Content Include=".editorconfig" />
     <Content Include=".gitignore" />
-    <None Include="angular.pubxml" />
-    <Content Include="logitude.appcache" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\ViewModel\AutomationConditionViewModel.js.map" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\ViewModel\AutomationItemViewModel.js.map" />
     <Content Include="Infrastructure\Components\Maintenance\Automation\ViewModel\AutomationSetValueViewModel.js.map" />
@@ -6944,7 +6937,6 @@
     <Content Include="README.md" />
     <Content Include="tslint.json" />
     <Content Include="assets\.gitkeep" />
-    <Content Include="e2e\tsconfig.e2e.json" />
     <Content Include="tsconfig.app.json" />
     <Content Include="tsconfig.spec.json" />
     <Content Include="tsconfig.app-Cust.json" />
@@ -6958,7 +6950,6 @@
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js.map" />
     <Content Include="e2e\LogBox\tsconfig.e2e.json" />
     <Content Include="e2e\.vscode\launch.json" />
-    <Content Include="InfrastructureModules.zip" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdFullCollection.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Ayman\ProtractorMasterAfterSwap.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCases.bat" />
@@ -7602,6 +7593,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDatesValidationComponent.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="angular.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="browserslist" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
