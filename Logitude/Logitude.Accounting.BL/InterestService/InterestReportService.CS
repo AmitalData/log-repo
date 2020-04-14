@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.InterestService
 
             if (InterestCalculationDate!=null)
             {
-              interestTransactionLists = IQueryable_InterestTransactionLists.Where(a => DbFunctions.TruncateTime(a.InterestValueDate) == InterestCalculationDate.Value.Date).ToList();
+              interestTransactionLists = IQueryable_InterestTransactionLists.Where(a => DbFunctions.TruncateTime(a.InterestValueDate) == DbFunctions.TruncateTime(InterestCalculationDate)).ToList();
             }
  
 

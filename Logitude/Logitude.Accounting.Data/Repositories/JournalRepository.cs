@@ -340,6 +340,22 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
+
+        public JournalEntity GetJournalByARInvoiceEntity(string entityId, int tenant)
+        {
+            var entity = (from a in context.Journals
+                          where a.Tenant == tenant
+                          where a.AccountingEntityId == entityId && a.AccountingEntityCode == AccountingEntities.ARInvoice
+                          select new JournalEntity
+                          {
+                              JournalId = a.Id,
+                              JournalNumber = a.JournalNumber,
+
+                          }).FirstOrDefault();
+
+            return entity;
+        }
+
         public JournalEntity GetJournalByAccountingEntityId(string entityId, int tenant)
         {
             var entity = (from a in context.Journals

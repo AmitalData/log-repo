@@ -17,14 +17,19 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(Tenant);
             ARInvoicePM aRInvoice = aRInvoiceQuery.GetSinglePMForInterest(Id, Tenant);
             InterestEntityResult result = new InterestEntityResult();
-            result.EntityId = aRInvoice.Id;
-            result.EntityNumber = aRInvoice.InvoiceNumber;
-            result.JournalId = aRInvoice.JournalId;
-            result.JournalNumber = aRInvoice.JournalNumber;
-            result.AccountCode = "2";
-            result.EntityCode = "1";
-            result.EntityType = "ARInvoice";
-            result.EntityTypeCode = "IN";
+
+            if (aRInvoice!=null)
+            {
+                result.EntityId = aRInvoice.Id;
+                result.EntityNumber = aRInvoice.InvoiceNumber;
+                result.JournalId = aRInvoice.JournalId;
+                result.JournalNumber = aRInvoice.JournalNumber;
+                result.AccountCode = "2";
+                result.EntityCode = "1";
+                result.EntityType = "ARInvoice";
+                result.EntityTypeCode = "IN";
+            }
+           
 
             return result;
         }

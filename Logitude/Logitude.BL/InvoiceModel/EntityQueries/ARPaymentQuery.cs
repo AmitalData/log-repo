@@ -44,10 +44,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                    {
                                        Id = a.Id,
                                        PaymentNo = a.PaymentNo,
+                                       Tenant = a.Tenant,
 
                                    }).FirstOrDefault();
-         
-            payment = SetJournalFields(payment);
+            if (payment!=null)
+            {
+                payment = SetJournalFields(payment);
+            }
 
             return payment;
 

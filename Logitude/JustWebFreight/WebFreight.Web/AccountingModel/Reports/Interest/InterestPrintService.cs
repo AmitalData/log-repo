@@ -44,8 +44,8 @@ using WebFreight.Web.Helpers;
                 CreditInterestPercentage = d.CreditInterestPercentage,
                 CalculationDetails = d.CalculationDetails,
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
-                TotalLocalAmount = interestTransactionLists.Sum(s => s.LocalAmount),
-                InterestTransactionList = interestTransactionLists.Where(s=> DbFunctions.TruncateTime(s.InterestValueDate) == s.InterestValueDate.Date).Select (a =>
+                TotalLocalAmount = interestTransactionLists ==null ? 0: interestTransactionLists.Sum(s => s.LocalAmount),
+                InterestTransactionList = interestTransactionLists ==null ?null: interestTransactionLists.Where(s=> s.InterestValueDate.Date == d.FromDate.Date).Select (a =>
                 new InterestTransactionProvider
                 {
                     EntityType = a.InterestEntityIconCode,

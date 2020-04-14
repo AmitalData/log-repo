@@ -64,9 +64,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 {
                     Id = a.Id,
                     InvoiceNumber = a.InvoiceNumber,
+                    Tenant = a.Tenant,
                 }).FirstOrDefault();
+            if (entityPM!=null)
+            {
+                entityPM = SetJournalFields(entityPM);
 
-            entityPM = SetJournalFields(entityPM);
+            }
 
             return entityPM;
         }
@@ -74,7 +78,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         private ARInvoicePM SetJournalFields(ARInvoicePM entityPM)
         {
             JournalRepository rep = new JournalRepository(entityPM.Tenant);
-            JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+            JournalEntity journal = rep.GetJournalByARInvoiceEntity(entityPM.Id, entityPM.Tenant);
             if (journal != null)
             {
                 entityPM.JournalId = journal.JournalId;

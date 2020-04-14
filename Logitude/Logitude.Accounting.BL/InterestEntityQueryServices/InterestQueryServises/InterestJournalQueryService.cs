@@ -16,14 +16,18 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
             JournalQueryService journalQueryService = new JournalQueryService(Tenant);
             JournalPM journalPM = journalQueryService.GetSinglePMForInterest(Id, Tenant);
             InterestEntityResult result = new InterestEntityResult();
-            result.EntityId = journalPM.Id;
-            result.EntityNumber = journalPM.JournalNumber;
-            result.JournalId = journalPM.Id;
-            result.JournalNumber = journalPM.JournalNumber;
-            result.AccountCode = "1";
-            result.EntityCode = "3";
-            result.EntityType = "Journal";
-            result.EntityTypeCode = "JR";
+            if (journalPM!=null)
+            {
+                result.EntityId = journalPM.Id;
+                result.EntityNumber = journalPM.JournalNumber;
+                result.JournalId = journalPM.Id;
+                result.JournalNumber = journalPM.JournalNumber;
+                result.AccountCode = "1";
+                result.EntityCode = "3";
+                result.EntityType = "Journal";
+                result.EntityTypeCode = "JR";
+            }
+           
 
             return result;
         }
