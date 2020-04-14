@@ -23,7 +23,7 @@ namespace Logitude.Accounting.BL.InterestService
 {
     public class InterestReportService
     {
-        public InterestTransactionsWithTotal GetAllInterestTransactionByDate(string ReportId, DateTime InterestCalculationDate, int Tenant, IAccountingContext MyContext=null)
+        public InterestTransactionsWithTotal GetAllInterestTransactionByDate(string ReportId, DateTime? InterestCalculationDate, int Tenant, IAccountingContext MyContext=null)
         {
             if (MyContext == null)
             {
@@ -31,7 +31,15 @@ namespace Logitude.Accounting.BL.InterestService
             }
             InterestTransactionsWithTotal interestTransactionsWithTotal = new InterestTransactionsWithTotal();
 
-            List<InterestTransactionList> interestTransactionLists = GetIQueryableInterestTransactionLists(ReportId, Tenant, MyContext).Where(a=> DbFunctions.TruncateTime(a.InterestValueDate) == InterestCalculationDate.Date && a.IsCancelled == false).ToList();
+            IQueryable<InterestTransactionList> IQueryable_InterestTransactionLists = GetIQueryableInterestTransactionLists(ReportId, Tenant, MyContext);
+
+            List<InterestTransactionList> interestTransactionLists = IQueryable_InterestTransactionLists.ToList();
+
+            if (InterestCalculationDate!=null)
+            {
+              interestTransactionLists = IQueryable_InterestTransactionLists.Where(a => DbFunctions.TruncateTime(a.InterestValueDate) == InterestCalculationDate.Value.Date).ToList();
+            }
+ 
 
             interestTransactionsWithTotal = MappingDataInterestTransaction(interestTransactionLists,Tenant);
 
@@ -297,10 +305,15 @@ namespace Logitude.Accounting.BL.InterestService
 
         }
 
-        private IQueryable<InterestTransactionList> GetIQueryableInterestTransactionLists(string ReportId,int Tenant, IAccountingContext MyContext)
+        public IQueryable<InterestTransactionList> GetIQueryableInterestTransactionLists(string ReportId,int Tenant, IAccountingContext MyContext)
         {
+            if (MyContext==null)
+            {
+                MyContext = AccountingContext.GetContext(Tenant);
+            }
+
             IQueryable<InterestTransactionList> interestTransactionLists = (from a in MyContext.InterestReportLines
-                                                                            where a.Tenant == Tenant && a.InterestReportId == ReportId
+                                                                            where a.Tenant == Tenant && a.InterestReportId == ReportId && a.InterestTransaction.IsCancelled==false
                                                                             select new InterestTransactionList()
                                                                             {
                                                                                 Tenant = a.Tenant,
