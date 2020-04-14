@@ -2,6 +2,7 @@
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -50,27 +51,38 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             dataProvider.CustomerFilterValue = GetCustomerFilterTitle();
             dataProvider.AgingPeriods = BuildAgingPeriods(resultedPeriods);
 
-            //CreateAndAppendTotalBalanceColumn(resultedPeriods, dataProvider);
-
             AddTotalBalancePeriods(resultedPeriods, dataProvider);
             AddTotalLocalBalancePeriods(resultedPeriods, dataProvider);
-            //AddTotalSummationFooterPeriod(resultedPeriods, dataProvider);
-            
+            CalculateReportLocalBalanceTotal(dataProvider);
+            SetLocalCurrency(dataProvider);
+
             FilterCustomerPeriodsOnBalance(dataProvider);
+            FixSplitAccountData(dataProvider);
 
             SetOrderForPeriods(resultedPeriods, dataProvider);
-
-
-
             SetPeriodsTotal(resultedPeriods, dataProvider);
 
             ResharpPeriodsName(dataProvider);
 
-            //SetPeriodSummery(dataProvider);
             return dataProvider;
         }
 
-
+        private void FixSplitAccountData(AccountingAgingDataProvider totalData)
+        {
+            bool showDetailedCurrencyAccounts = GetFilterValue<bool>("Detailed");
+            if (showDetailedCurrencyAccounts)
+            {
+                foreach (var period in totalData.AgingPeriods)
+                {
+                    if (period.CurrencyCode != null)
+                    {
+                        if (period.CurrencyCode != period.AccountCurrencyCode)
+                            period.AccountDisplayNumber += "/" + period.CurrencyCode;
+                        period.AccountCurrencyCode = period.CurrencyCode;
+                    }
+                }
+            }
+        }
         private void FilterCustomerPeriodsOnBalance(AccountingAgingDataProvider totalData)
         {
             List<AgingPeriod> totalBalances = GetTotalBalancePeriods(totalData, showLocals);
@@ -121,8 +133,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                             AccountName = (sumValue.Key.AccountLocalName != null ? sumValue.Key.AccountLocalName : sumValue.Key.AccountEnglishName) + " / " + sumValue.Key.CurrencyCode,
                             AccountLocalName = sumValue.Key.AccountLocalName + " / " + sumValue.Key.CurrencyCode,
                             AccountEnglishName = sumValue.Key.AccountEnglishName + " / " + sumValue.Key.CurrencyCode,
-                            AccountCurrencyCode = sumValue.Key.AccountCurrencyCode,
-                            AccountDisplayNumber = sumValue.Key.AccountDisplayNumber,
+                            AccountCurrencyCode = sumValue.Key.CurrencyCode,
+                            AccountDisplayNumber = sumValue.Key.AccountCurrencyCode != sumValue.Key.CurrencyCode ? 
+                                sumValue.Key.AccountDisplayNumber + "/" + sumValue.Key.CurrencyCode : sumValue.Key.AccountDisplayNumber,
 
                         });
                     else
@@ -159,8 +172,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
                     AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
-                    AccountCurrencyCode = d.First().AccountCurrencyCode,
-                    AccountDisplayNumber = d.First().AccountDisplayNumber,
+                    AccountCurrencyCode = d.Where(x=>x.CurrencyCode != null).First().CurrencyCode,
+                    AccountDisplayNumber = d.First().AccountCurrencyCode != d.First().CurrencyCode ?
+                                d.First().AccountDisplayNumber + "/" + d.First().CurrencyCode : d.First().AccountDisplayNumber,
 
                 }).ToList();
             else
@@ -194,6 +208,24 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 PeriodName = pname,
                 OrderIndex = 99999999,
             });
+
+        }
+        private void CalculateReportLocalBalanceTotal (AccountingAgingDataProvider totalData)
+        {
+            string pname = showLocals ? "סיכום בש''ח" : "Total Local Balance";
+            decimal? summation = totalData.AgingPeriods.Where(d => d.PeriodName == pname).Sum(d => d.Total);
+
+            totalData.ReportLocalBalanceTotal = summation ?? 0;
+
+        }
+        private void SetLocalCurrency(AccountingAgingDataProvider totalData)
+        {
+            TenantQuery tenantQuery = new TenantQuery();
+            var tenantPM = tenantQuery.GetSinglePM(tenant);
+
+            totalData.TenantCurrencyCode = tenantPM.CurrencyCode;
+            totalData.TenantCurrencySign = tenantPM.CurrencySign;
+
 
         }
 

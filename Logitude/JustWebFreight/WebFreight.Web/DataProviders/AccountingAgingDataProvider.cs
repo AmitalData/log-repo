@@ -14,6 +14,9 @@ namespace WebFreight.Web.DataProviders
         public string CustomerFilterValue { get; set; }
         public DateTime? Month { get; set; }
         public string PrintedByUser { get; set; }
+        public string TenantCurrencyCode { get; set; }
+        public string TenantCurrencySign { get; set; }
+        public decimal ReportLocalBalanceTotal { get; set; }
 
         public List<AgingPeriod> AgingPeriods { get; set; }
     }
