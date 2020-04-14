@@ -2044,9 +2044,19 @@ namespace MeatadataGeneratorTool
                         int? fieldDigitsAfterPoint = field.DigitsAfterPoint;
 
                         string dxmlColumnDataType = GetDataTypeForDXMLColumn(fieldDataType, fieldIsFixedLength);
-                        bool dxmlColumnNullable = GetNullableForDXMLColumn(fieldIsRequired, fieldIsNullable, fieldIsPrimaryKey, dxmlColumnDataType);
-                        int dxmlColumnSize = new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
+                        bool dxmlColumnNullable;
 
+                        if(entityName.ToLower() == "Address".ToLower() && (fieldName.ToLower() == "City".ToLower() || fieldName.ToLower() == "CountryId".ToLower()))
+                        {
+                            dxmlColumnNullable = true;
+                        }
+                        else
+                        {
+                            dxmlColumnNullable = GetNullableForDXMLColumn(fieldIsRequired, fieldIsNullable, fieldIsPrimaryKey, dxmlColumnDataType);
+                        }
+
+
+                        int dxmlColumnSize = new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
 
                         columnElement.SetAttribute("Name", fieldName);
 
