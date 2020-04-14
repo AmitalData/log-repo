@@ -342,7 +342,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="ObjectField"
-    DontBuildRelationOnDB="false"
+    DontBuildRelationOnDB="true"
     NavigationPropertyName="ObjectField"
     IsPrimaryKey="false"
     HasDataBaseField="true"

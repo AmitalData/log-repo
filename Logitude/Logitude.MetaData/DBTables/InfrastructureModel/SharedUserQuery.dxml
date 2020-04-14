@@ -48,5 +48,6 @@
     ForeignKeyColumn="QueryId"
     ReferencedTable="Queries"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
 </Table>

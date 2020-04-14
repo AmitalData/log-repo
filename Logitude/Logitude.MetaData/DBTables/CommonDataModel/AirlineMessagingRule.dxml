@@ -95,7 +95,8 @@
     ForeignKeyColumn="RuleFieldId"
     ReferencedTable="ObjectFields"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="AirlineId"
     ReferencedTable="Cards"
