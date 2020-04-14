@@ -40,7 +40,7 @@ export class WarehouseEntryPMExtendedService {
                 var mappedEntity: WarehouseEntryPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl + '/PutCancelWarehouseReleasePM', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                return this._http.put(this._apiUrl + '/PutCancelWarehouseEntry', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var pm = response;
                     if (pm) {
                         var mappedResult: WarehouseEntryPM;
