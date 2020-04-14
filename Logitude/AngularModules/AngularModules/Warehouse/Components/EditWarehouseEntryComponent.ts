@@ -77,9 +77,24 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
 
     }
 
+    CancelEntryChangedEvent: any;
     SaveCompletedEvent: any;
     LoadCompletedEvent: any;
     
+    SetEnableProperties() {
+        if (this.warehouseEntryPM.StatusCode == "CAEA") {
+            this.warehouseEntryPM.UIProperties.SetEnabled("ReceivedBy", "WarehouseEntry", false);
+            this.warehouseEntryPM.UIProperties.SetEnabled("CreatedByUserId", "WarehouseEntry", false);
+            this.warehouseEntryPM.UIProperties.SetEnabled("EntryReference", "WarehouseEntry", false);
+            this.warehouseEntryPM.UIProperties.SetEnabled("Manufacturer", "WarehouseEntry", false);
+            this.warehouseEntryPM.UIProperties.SetEnabled("ExpectedEntryDate", "WarehouseEntry", false);
+            this.warehouseEntryPM.UIProperties.SetEnabled("SpecialInstruction", "WarehouseEntry", false);
+            this.warehouseEntryPM.UIProperties.SetEnabled("Notes", "WarehouseEntry", false);
+            this.UIProperties.SetEnabled("ActualEntryDate", "WarehouseEntry", false);
+            this.UIProperties.SetEnabled("WarehouseId", "WarehouseEntry", false);
+
+        }
+    }
 
     Listen() {
 
@@ -102,6 +117,14 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
                     }
                 });
             }
+
+            if (!this.CancelEntryChangedEvent) {
+                this.CancelEntryChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                    if (s == "CancelEntry") {
+                        this.SetEnableProperties();
+                    }
+                });
+            }
         }
 
     }
@@ -109,6 +132,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
 
 
     ngOnDestroy() {
+        AppTool.KillEventEmitter(this.CancelEntryChangedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
 

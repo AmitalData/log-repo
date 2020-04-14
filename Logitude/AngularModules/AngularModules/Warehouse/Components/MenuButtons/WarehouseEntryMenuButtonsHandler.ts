@@ -89,34 +89,36 @@ export class WarehouseEntryMenuButtonsHandler {
         confirmWindow.Title = "Cancel Entry";
         if (this.IsNoConnectedReleaseEntity) {
             confirmWindow.Show("Confirm cancelling this entry");
+            confirmWindow.YesButtonText = "Confirm";
+            confirmWindow.NoButtonText = "Cancel";
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.CurrentSession.StartBusyIndicator("Cancel Entry");
+                    var warehouseEntryPMExtendedService: WarehouseEntryPMExtendedService = new WarehouseEntryPMExtendedService();
+                    warehouseEntryPMExtendedService.CancelEntry(this.EntityPM).subscribe((response: ServiceResponse) => {
+                        var pmResponse: ServiceResponse = response;
+
+                        this.CurrentSession.StopBusyIndicator();
+
+                        if (!pmResponse.HasError) {
+                            this.EntityPM = pmResponse.Result;
+                            this.CurrentSession.FireEvent("CancelEntry");
+                            this.entityArgs.EditComponent.SaveChanges();
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+
+                        }
+                        else {
+                            this.entityArgs.EditComponent.ValidationErrorsList = pmResponse.ErrorsArray;
+                        }
+
+                    });
+                }
+            });
         }
         else {
-            confirmWindow.Show("Please confirm disconnecting all connected releases to cancel your entry");
+            confirmWindow.Show("You should cancel all connected releases first.");
+            confirmWindow.YesButtonText = "Ok";
+            confirmWindow.ShowNoButton = false;
         }
-        confirmWindow.YesButtonText = "Confirm";
-        confirmWindow.NoButtonText = "Cancel";
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CurrentSession.StartBusyIndicator("Cancel Entry");
-                var warehouseEntryPMExtendedService: WarehouseEntryPMExtendedService = new WarehouseEntryPMExtendedService();
-                warehouseEntryPMExtendedService.CancelEntry(this.EntityPM).subscribe((response: ServiceResponse) => {
-                    var pmResponse: ServiceResponse = response;
-
-                    this.CurrentSession.StopBusyIndicator();
-
-                    if (!pmResponse.HasError) {
-                        this.EntityPM = pmResponse.Result;
-                        this.entityArgs.EditComponent.SaveChanges();
-                        this.entityArgs.EditComponent.ReloadEntityPM();
-
-                    }
-                    else {
-                        this.entityArgs.EditComponent.ValidationErrorsList = pmResponse.ErrorsArray;
-                    }
-
-                });
-            }
-
-        });
     }
 }
