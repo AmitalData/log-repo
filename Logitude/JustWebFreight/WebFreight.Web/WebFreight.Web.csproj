@@ -2376,11 +2376,8 @@
     <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryLabelDataProviderHelper.cs" />
-
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryShipmentService.cs" />
-
     <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseShipmentService.cs" />
-
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
@@ -3055,7 +3052,8 @@
     <Content Include="Integration Test\FullAccounting\FullAccountingTesting.postman_collection.json" />
     <Content Include="Integration Test\FullAccounting\PostmanDataCloud.csv" />
     <Content Include="Integration Test\FullAccounting\PrepareFullAccountingVars.postman_collection.json" />
-    <Content Include="Integration Test\LoginVars\CloudLoginVars.csv" />
+    <Content Include="Integration Test\LoginVars\Production\Cloud\TeamAyman\CloudLoginVars.csv" />
+    <Content Include="Integration Test\LoginVars\Production\Logitude\TeamIslam\LoginVars.csv" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
