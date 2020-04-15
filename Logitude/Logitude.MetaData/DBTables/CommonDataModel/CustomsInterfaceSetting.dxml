@@ -13,6 +13,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ActivateCustomsManagementInShipments"
+    ShortName="ActivateCustManagInShipments"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="LocalCustomsInterfaceCode"
     Type="varchar"
     Size="4">
@@ -53,12 +60,6 @@
     Size="25">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="ActivateCustomsManagementInShipments"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="ArtemusOutSettingsId"

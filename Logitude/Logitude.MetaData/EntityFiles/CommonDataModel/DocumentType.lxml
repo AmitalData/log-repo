@@ -364,7 +364,8 @@
   <field
     Id="&quot;7f937119-9eec-4e57-8957-14db11367a1a&quot;"
     FieldName="&quot;DocumentTypeDefaultReportTemplateId&quot;"
-    OldNames="DocumentTypeDefaultReportTemplateId"
+    ShortName="DocTypeDefaultReportTempId"
+    OldNames="DocumentTypeDefaultReportTemplateId,DocTypeDefaultReportTempId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -438,7 +439,8 @@
   <field
     Id="&quot;74129b80-f6d1-426e-8a7a-772d20d92508&quot;"
     FieldName="&quot;DocumentTypeDefaultHTMLTemplateId&quot;"
-    OldNames="DocumentTypeDefaultHTMLTemplateId"
+    ShortName="DocTypeDefaultHTMLTempId"
+    OldNames="DocumentTypeDefaultHTMLTemplateId,DocTypeDefaultHTMLTempId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2397,7 +2399,8 @@
   <field
     Id="&quot;ff61d853-0f7e-400a-b7fd-39f5205dba8e&quot;"
     FieldName="&quot;IsSystemAdditionalPrintingFields&quot;"
-    OldNames="IsSystemAdditionalPrintingFields"
+    ShortName="IsSysAdditionalPrintingFields"
+    OldNames="IsSystemAdditionalPrintingFields,IsSysAdditionalPrintingFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

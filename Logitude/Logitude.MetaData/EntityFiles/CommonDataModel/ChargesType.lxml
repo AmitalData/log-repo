@@ -602,7 +602,8 @@
   <field
     Id="&quot;ac4bb28f-6705-4db7-8248-ae6b836c0e00&quot;"
     FieldName="&quot;ReceivablesChargesTypeExternalCode&quot;"
-    OldNames="ReceivablesChargesTypeExternalCode"
+    ShortName="ReceivablesChargesTypeExtCode"
+    OldNames="ReceivablesChargesTypeExternalCode,ReceivablesChargesTypeExtCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -677,7 +678,8 @@
   <field
     Id="&quot;ac4bb28f-6705-4db7-8248-ae6b836c0e00&quot;"
     FieldName="&quot;PayablesChargesTypeExternalCode&quot;"
-    OldNames="PayablesChargesTypeExternalCode"
+    ShortName="PayablesChargesTypeExtCode"
+    OldNames="PayablesChargesTypeExternalCode,PayablesChargesTypeExtCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

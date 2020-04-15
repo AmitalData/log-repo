@@ -175,6 +175,7 @@
   </Column>
   <Column
     Name="PreviousChartOfAccountsChangeDate"
+    ShortName="PreviousChartOfAccountsChangeD"
     Type="datetime">
     <Constraints
       Nullable="true" />

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="AutomationResultEmailRecipients"
+  ShortName="AutomationResultEmailRecips"
   Schema="dbo"
-  DBType="Main"
-  Module="Common">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
