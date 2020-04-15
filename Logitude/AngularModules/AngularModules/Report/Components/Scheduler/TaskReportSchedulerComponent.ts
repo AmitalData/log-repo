@@ -161,6 +161,18 @@ export class TaskReportSchedulerComponent implements OnInit {
         });
 
         this.Taskscolumns.push({
+            FieldName: "Recepients",
+            DataTypeCode: 'String',
+            Display: 'Recepients',
+            Styles: { width: '160px' },
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
+            HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+            
+        });
+
+        this.Taskscolumns.push({
             FieldName: "LastRunEndTime",
             DataTypeCode: 'String',
             Display: 'Last Run Date',
@@ -175,7 +187,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.Taskscolumns.push({
             FieldName: "InActive",
             DataTypeCode: 'Boolean',
-            Display: 'In Active',
+            Display: 'InActive',
             Styles: { width: '90px' },
             HtmlListComponentName: 'ReportSchedulerDateListTemplate',
             HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
@@ -343,6 +355,13 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
     set TriggerType(newValue: string) {
         if (this.EntityPM.TriggerType != newValue) {
             this.EntityPM.TriggerType = newValue;
+        }
+    }
+
+    get Recepients() { return this.EntityPM.Recepients; }
+    set Recepients(newValue: string) {
+        if (this.EntityPM.Recepients != newValue) {
+            this.EntityPM.Recepients = newValue;
         }
     }
 
