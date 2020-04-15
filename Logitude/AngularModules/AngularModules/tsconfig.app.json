@@ -5,6 +5,7 @@
     "types": []
   },
   "files": [
+    "App/Bootstraper.ts",
     "polyfills.ts"
   ],
   "include": [
@@ -36,6 +37,38 @@
     "tsconfig.json",
     "tslint.json",
 
+    "Accounting",
+    "Booking",
+    "Common",
+    "CommonModules",
+    //"Controls",
+    "CRM",
+    "CRMModules",
+    "Customs",
+    "CustomsModules",
+    "Dashboard",
+    "Infrastructure",
+    "InfrastructureModules",
+    "Invoice",
+    "InvoiceModules",
+    "Logitude",
+    "Logitude_Modules",
+    "Quote",
+    "QuoteModules", // function is too long 716
+    "Report",
+    "SharedLogistics",
+    "Shipment",
+    "ShipmentModules",
+    "Social",
+    "TariffModule",
+    "TimeManagement",
+    "Warehouse",
+
+    "Js/zone/ng_zone.d.ts",
+    "Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/ListHeaderTemplateComponent.ts",
+    "App/AppComponent_Cust.ts",
+    "App/Module_APP_CUST.ts",
+    "Infrastructure/Utilities/DynamicLoader_Cust.ts",
 
     "Customs",
     "CustomsModule",

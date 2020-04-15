@@ -3,15 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "protractor ./protractor.conf.js",
-    "start": "node --max_old_space_size=8000 node_modules\\webpack-dev-server\\bin\\webpack-dev-server --port=4200",
-    "build": "node --max_old_space_size=8000 node_modules\\webpack\\bin\\webpack --env=prod",
-    "pree2e": "webdriver-manager update --standalone false --gecko false --versions.chrome=80.0.3987.149",
-    "startAOT": "node --max_old_space_size=17500 node_modules\\webpack-dev-server\\bin\\webpack-dev-server.js --port=4200 --config webpack.config-prod.js",
-    "buildAOT": "node --max_old_space_size=17500 node_modules\\webpack\\bin\\webpack --config webpack.config-prod.js --env=prod",
-    "buildCustAOT": "node --max_old_space_size=17500 node_modules\\webpack\\bin\\webpack --config webpack.config-prod-Cust.js --env=prod"
+    "e2e": "ng e2e",
+    "do-e2e": "protractor e2e/protractor.conf.js",
+    "do-serve": "node --max_old_space_size=2500 node_modules/@angular/cli/bin/ng serve",
+    "do-build": "node --max_old_space_size=2500 node_modules/@angular/cli/bin/ng build",
+    "do-serve-AOT": "node --max_old_space_size=15000 node_modules/@angular/cli/bin/ng serve --prod --optimization=false",
+    "do-build-AOT": "node --max_old_space_size=15000 node_modules/@angular/cli/bin/ng build --prod --optimization=false --show-circular-dependencies=false"
   },
   "private": true,
   "dependencies": {

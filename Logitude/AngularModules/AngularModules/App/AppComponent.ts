@@ -1,6 +1,5 @@
 
 import { Component, OnInit, ViewChild, ViewContainerRef, Compiler, ComponentFactoryResolver, Injector, SystemJsNgModuleLoader, NgModuleFactory, isDevMode } from '@angular/core';
-import { Http } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 
@@ -18,7 +17,7 @@ import { environment } from '../environments/environment';
 
 export class AppComponent implements OnInit {
     @ViewChild("Child", { read: ViewContainerRef }) location: ViewContainerRef;
-    constructor(private compiler: Compiler, private resolver: ComponentFactoryResolver, private http: Http, private moduleLoader: SystemJsNgModuleLoader, private injector: Injector, private httpClient: HttpClient) {
+    constructor(private compiler: Compiler, private resolver: ComponentFactoryResolver, private moduleLoader: SystemJsNgModuleLoader, private injector: Injector, private httpClient: HttpClient) {
         //console.log("isDevMode: " + isDevMode);
         //console.log("environment: " + environment.production);
     }
@@ -35,7 +34,7 @@ export class AppComponent implements OnInit {
                 const moduleRef = moduleFactory.create(this.injector);
                 const compFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(Component);
                 let cmpRef: any = this.location.createComponent(compFactory);
-                cmpRef.instance.Boot({ Compiler: this.compiler, Resolver: this.resolver, Injector: this.injector, ModuleLoader: this.moduleLoader, Http: this.http, HttpClient: this.httpClient });
+                cmpRef.instance.Boot({ Compiler: this.compiler, Resolver: this.resolver, Injector: this.injector, ModuleLoader: this.moduleLoader, HttpClient: this.httpClient });
             }         
         });
     }
