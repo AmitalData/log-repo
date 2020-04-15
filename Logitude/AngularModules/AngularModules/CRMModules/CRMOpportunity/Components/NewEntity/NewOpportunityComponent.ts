@@ -24,7 +24,7 @@ import {OpportunityArgs} from '../../../../CRM/Args';
 
 @Component({
     selector: 'NewOpportunityComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewOpportunityComponent.html',
 })
 

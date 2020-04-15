@@ -19,7 +19,7 @@ import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './RulesMainComponent.html',
 })
 

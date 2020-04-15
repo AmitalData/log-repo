@@ -9,7 +9,7 @@ import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 import {Cloner} from '../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedLogisticsSetting',
     templateUrl: './SharedLogisticsSettingComponent.html',
     inputs: ['TenantPM', 'OnCloseWindowEvent'],

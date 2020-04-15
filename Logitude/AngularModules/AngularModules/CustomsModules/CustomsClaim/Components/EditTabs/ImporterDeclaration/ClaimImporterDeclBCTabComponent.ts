@@ -13,7 +13,7 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimImporterDeclBCTabComponent.html',
 })
 

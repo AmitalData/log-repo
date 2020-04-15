@@ -6,7 +6,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SystemInfo',
     templateUrl: './SystemInfoComponent.html',   
     providers: [ExportDocumentService],

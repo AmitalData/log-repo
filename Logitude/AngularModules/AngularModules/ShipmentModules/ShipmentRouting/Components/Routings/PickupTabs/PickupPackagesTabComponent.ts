@@ -14,7 +14,7 @@ import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PickupPackagesTabComponent.html',
 })
 

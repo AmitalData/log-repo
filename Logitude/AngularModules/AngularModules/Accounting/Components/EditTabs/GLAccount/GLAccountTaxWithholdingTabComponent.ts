@@ -13,7 +13,7 @@ import { DateTool, AppTool} from '../../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountTaxWithholdingTabComponent.html',
  
 })

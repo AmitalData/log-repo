@@ -5,7 +5,7 @@ import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
 import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./ARInvoiceHelperComponent.html",
 })
 

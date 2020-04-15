@@ -9,7 +9,7 @@ import { TariffCarrierTranslationPMService } from '../../../../../Common/Service
 import { TranslationItemClass } from './TariffTranslationsTabComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditTariffTranslationComponent.html',
 })
 

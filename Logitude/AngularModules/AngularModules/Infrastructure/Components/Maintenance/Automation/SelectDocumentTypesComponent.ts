@@ -13,7 +13,7 @@ import {FollowUpDocumentTypeList} from '../../../../Infrastructure/DataContracts
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SelectDocumentTypesComponent',
     templateUrl: './SelectDocumentTypesComponent.html',
 

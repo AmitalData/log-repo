@@ -33,7 +33,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'LogBoxDocuments',
-    moduleId: module.id,
+    
     templateUrl: './LogBoxDocumentsComponent.html',
     //providers: [ EntityListService, DocumentsFilingExtendedPMService],
     inputs: ['ShipmentSelectedEvent', 'OnImporterShipmentsFilterChanged', 'SearchText'],

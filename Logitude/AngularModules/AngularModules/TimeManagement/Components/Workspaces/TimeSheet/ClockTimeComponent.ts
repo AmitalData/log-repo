@@ -11,7 +11,7 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 
 @Component({
     selector: 'ClockTimeComponent',
-    moduleId: module.id,
+    
     templateUrl: './ClockTimeComponent.html',
 })
 

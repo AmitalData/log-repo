@@ -38,7 +38,7 @@ import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirectiv
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewWarehouseReleaseComponent',
     templateUrl: './NewWarehouseReleaseComponent.html',
     providers: [WarehouseReleasePMExtendedService, WarehouseEntryPackagePMExtendedService],

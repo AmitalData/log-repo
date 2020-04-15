@@ -11,7 +11,7 @@ import { PaymentChequePM } from '../../../../Accounting/EntityPMs/PaymentChequeP
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditPaymentChequeComponent.html',
 })
 

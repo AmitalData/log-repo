@@ -20,7 +20,7 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 
 @Component({
     selector: 'MasterBOLQueryComponent',
-    moduleId: module.id,
+    
     templateUrl: './MasterBOLQueryComponent.html',
 })
 

@@ -44,7 +44,7 @@ import { CustomsSettingExtendedListService } from '../../../../../Customs/Servic
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditSupplierInvoiceComponent.html',
 })
 export class AddEditSupplierInvoiceComponent extends BaseComponent {

@@ -10,7 +10,7 @@ import { ARInvoiceStockInputTemplate } from '../ARInvoiceStockInputTemplate';
 import { InvoiceStockInputArgs } from '../../../../Invoice/Args';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewARInvoiceStockComponent.html',
 })
 

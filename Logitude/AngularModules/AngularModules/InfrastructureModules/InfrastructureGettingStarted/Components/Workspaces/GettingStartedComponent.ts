@@ -21,7 +21,7 @@ import { UserArgs} from '../../../../Infrastructure/Args';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GettingStartedComponent.html',
 })
 

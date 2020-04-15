@@ -31,7 +31,7 @@ import { DocumentsFilingExtendedPMService } from '../../../Common/Services/Exten
 declare var window, SetHtmlToFrame: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FilingInboxWorkspaceComponent.html',
 })
 

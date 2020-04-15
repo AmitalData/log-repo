@@ -54,7 +54,7 @@ import { CustomsCountryListService } from '../../../../../Customs/Services/Stand
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceGeneralTabComponent.html',
 })
 

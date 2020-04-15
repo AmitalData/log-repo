@@ -20,7 +20,7 @@ import { ConfirmationTypeList } from '../../../../../Customs/EntityLists/Confirm
 
 import { ConfirmationTypeListService } from '../../../../../Customs/Services/StandardLists/ConfirmationTypeListService';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CreateEditTicketComponent.html',
 })
 

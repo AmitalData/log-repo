@@ -16,7 +16,7 @@ import { ProceduralFaultPMService } from '../../../../../Customs/Services/Standa
 import { ProceduralFaultPM } from '../../../../../Customs/EntityPMs/ProceduralFaultPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ProceduralFaultsGeneralTabComponent.html',
     providers: [EntityArgs],
 }) 

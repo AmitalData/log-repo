@@ -17,7 +17,7 @@ import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
 
 @Component({
     selector: 'WarehouseEntryRoutingsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './WarehouseEntryRoutingsTabComponent.html',
 })
 

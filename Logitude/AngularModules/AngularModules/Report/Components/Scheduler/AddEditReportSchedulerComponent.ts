@@ -8,7 +8,7 @@ import { ReportsTemplateListExtendedService } from '../../../Common/Services/Ext
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ReportSchedulerRecepients } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditReportSchedulerComponent.html',
 })
 

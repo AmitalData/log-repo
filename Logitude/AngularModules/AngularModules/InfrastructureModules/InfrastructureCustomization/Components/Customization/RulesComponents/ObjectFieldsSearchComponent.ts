@@ -11,7 +11,7 @@ import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelp
 import {AppTool} from '../../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ObjectFieldsSearch',
     templateUrl: './ObjectFieldsSearchComponent.html',
 })

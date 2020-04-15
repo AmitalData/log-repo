@@ -15,7 +15,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { DWObjectTableExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/DWObjectTableExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewBIReport.html',
 })
 

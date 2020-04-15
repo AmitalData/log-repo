@@ -13,7 +13,7 @@ import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'IATAStatisticsFilterComponent',
     templateUrl: './IATAStatisticsFilterComponent.html',
     inputs: ['ReportsPreview']

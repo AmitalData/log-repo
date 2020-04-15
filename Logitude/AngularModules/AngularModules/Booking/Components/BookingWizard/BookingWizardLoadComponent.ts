@@ -9,7 +9,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BookingWizardLoadComponent.html',
 })
 

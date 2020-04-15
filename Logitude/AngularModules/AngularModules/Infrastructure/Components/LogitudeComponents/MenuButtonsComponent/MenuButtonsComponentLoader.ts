@@ -11,7 +11,7 @@ import {AppTool} from '../../../Tools'
 
 
 @Component({
-    moduleId: module.id,   
+       
     selector: 'MenuButtonsComponentLoader',
     templateUrl: "./MenuButtonsComponentLoader.html", 
 })

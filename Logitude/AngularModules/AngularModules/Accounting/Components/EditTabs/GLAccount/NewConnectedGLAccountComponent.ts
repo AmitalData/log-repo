@@ -22,7 +22,7 @@ import {GLAccountCurrencyPM} from '../../../EntityPMs/GLAccountCurrencyPM';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewConnectedGLAccountComponent.html',
 
 })

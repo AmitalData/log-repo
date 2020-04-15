@@ -7,7 +7,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AgentGeneralTabComponent.html',
 })
 

@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'RacingQuotesComponent',
     templateUrl: './RacingQuotesComponent.html',
     inputs: ['ReportsPreview']

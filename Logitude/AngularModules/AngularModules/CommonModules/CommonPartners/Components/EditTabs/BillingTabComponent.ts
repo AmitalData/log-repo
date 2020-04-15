@@ -5,7 +5,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BillingTabComponent.html',
 })
 

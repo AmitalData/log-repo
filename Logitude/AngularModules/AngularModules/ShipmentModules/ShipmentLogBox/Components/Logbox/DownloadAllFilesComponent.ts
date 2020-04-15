@@ -8,7 +8,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './DownloadAllFilesComponent.html',
     //pipes: [TextCodeTranslationPipe],

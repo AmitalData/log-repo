@@ -18,7 +18,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'WarehouseEntryPartnersTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './WarehouseEntryPartnersTabComponent.html',
 })
 

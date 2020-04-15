@@ -23,7 +23,7 @@ import { AttachmentTypeListService } from  '../../../../../../Customs/Services/S
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceItemCertificatesComponent.html',
 })
 

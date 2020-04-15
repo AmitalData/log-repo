@@ -17,7 +17,7 @@ import {CodeNameClass} from './CodeNameClass';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'InvoicesByPartnerFilterComponent',
     templateUrl: './InvoicesByPartnerFilterComponent.html',
     inputs: ['ReportsPreview']

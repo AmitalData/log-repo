@@ -16,7 +16,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 
 @Component({
     selector: 'DatabaseBackup',
-    moduleId: module.id,
+    
 
     templateUrl: './DatabaseBackupComponent.html',
 

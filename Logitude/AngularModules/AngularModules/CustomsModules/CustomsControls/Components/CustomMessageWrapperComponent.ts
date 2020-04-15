@@ -23,7 +23,7 @@ export interface IMassagingViewModel {
 }
 @Component({
     selector: 'custom-message-wrapper',
-    moduleId: module.id,
+    
     templateUrl: '././CustomMessageWrapperComponent.html',
 })
 

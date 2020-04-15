@@ -33,7 +33,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 
 @Component({
     selector: 'LCLChargesComponent',
-    moduleId: module.id,
+    
     templateUrl: './LCLChargesComponent.html',
 })
 

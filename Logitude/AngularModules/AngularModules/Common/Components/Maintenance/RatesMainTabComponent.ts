@@ -12,7 +12,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'RatesMainTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './RatesMainTabComponent.html',
 })
 

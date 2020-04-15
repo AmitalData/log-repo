@@ -10,7 +10,7 @@ import { TenantAdditionalDataPMServiceExtended } from '../../../../Common/Servic
 
 @Component({
     selector: 'PaymentGatewayComponent',
-    moduleId: module.id,
+    
     templateUrl: './PaymentGatewayComponent.html',
 })
 

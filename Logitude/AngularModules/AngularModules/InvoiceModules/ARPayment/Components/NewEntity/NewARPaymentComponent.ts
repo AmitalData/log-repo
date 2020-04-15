@@ -32,7 +32,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 declare var window: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewARPaymentComponent.html',
 })
 

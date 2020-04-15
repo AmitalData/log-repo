@@ -26,7 +26,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewConsolidationComponent.html',
 })
 

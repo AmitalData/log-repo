@@ -11,7 +11,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContainersFUsComponent.html',
 })
 

@@ -38,7 +38,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'NewViewComponent',
-    moduleId: module.id,
+    
 
     templateUrl: './NewViewComponent.html',
     inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'QueryCode', 'Filterchangeevent', 'rabaia'],

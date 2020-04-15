@@ -6,7 +6,7 @@ import {StimulsoftViewerComponent} from '../../../Infrastructure/Components/Stim
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'ExportSettingAdvanceComponent',
     templateUrl: './ExportSettingAdvanceComponent.html',

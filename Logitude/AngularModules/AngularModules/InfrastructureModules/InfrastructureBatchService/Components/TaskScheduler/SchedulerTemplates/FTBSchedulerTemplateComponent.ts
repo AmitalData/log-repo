@@ -6,7 +6,7 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 import { AppTool } from '../../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'FTBSchedulerTemplateComponent',
     templateUrl: './FTBSchedulerTemplateComponent.html',

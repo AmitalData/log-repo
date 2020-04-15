@@ -10,7 +10,7 @@ import {HybridPartnerPM} from '../../../../Common/EntityPMs/HybridPartnerPM';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewHybridPartnerComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

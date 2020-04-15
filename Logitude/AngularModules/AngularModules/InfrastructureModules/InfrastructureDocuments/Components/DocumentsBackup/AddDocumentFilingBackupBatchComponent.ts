@@ -11,7 +11,7 @@ import {DocumentFilingBackupBatchPMService} from '../../../../Common/Services/St
 import {DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AddDocumentFilingBackupBatchComponent',
     templateUrl: './AddDocumentFilingBackupBatchComponent.html',
 })

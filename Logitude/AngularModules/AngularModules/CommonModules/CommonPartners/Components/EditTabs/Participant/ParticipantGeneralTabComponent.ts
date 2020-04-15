@@ -6,7 +6,7 @@ import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs
 
 @Component({
     selector: 'NewCurrencyComponent',
-    moduleId: module.id,
+    
     templateUrl: './ParticipantGeneralTabComponent.html',
 })
 

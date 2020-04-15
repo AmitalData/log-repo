@@ -12,7 +12,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './RevaluationDetailsComponent.html',
 })
 

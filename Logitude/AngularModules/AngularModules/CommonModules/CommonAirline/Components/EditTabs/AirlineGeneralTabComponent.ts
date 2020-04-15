@@ -5,7 +5,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AirlineGeneralTabComponent.html',
 })
 

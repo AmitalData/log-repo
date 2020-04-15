@@ -27,7 +27,7 @@ import { QuoteTool } from '../../../Quote/Tools';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffSearchAirFreightPricesComponent.html',
 })
 

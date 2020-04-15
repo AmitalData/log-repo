@@ -15,7 +15,7 @@ import {ClassLevelValidator} from '../../../../Infrastructure/Validators/ClassLe
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditProductComponent.html',
 })
 

@@ -38,7 +38,7 @@ import { GITITEMExtendedPMService } from '../../../../../Customs/Services/Extend
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationClassificationComponent.html',
 })
 //

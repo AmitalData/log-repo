@@ -27,7 +27,7 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './HomeComponent.html',
 })
 

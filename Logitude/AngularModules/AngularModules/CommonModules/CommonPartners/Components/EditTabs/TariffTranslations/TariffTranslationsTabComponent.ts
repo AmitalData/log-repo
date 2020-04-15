@@ -15,7 +15,7 @@ import { PortList } from '../../../../../Common/EntityLists/PortList';
 import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffTranslationsTabComponent.html',
 })
 

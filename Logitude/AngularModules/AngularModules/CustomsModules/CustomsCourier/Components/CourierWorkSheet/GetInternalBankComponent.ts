@@ -24,7 +24,7 @@ import {CustomBankList} from '../../../../Customs/EntityLists/CustomBankList';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'GetInternalBankComponent',
     templateUrl: './GetInternalBankComponent.html',
 })

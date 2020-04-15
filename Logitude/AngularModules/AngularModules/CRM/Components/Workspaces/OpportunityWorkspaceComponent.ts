@@ -23,7 +23,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 declare var makeChart, FunnelClick, ResetItem;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './OpportunityWorkspaceComponent.html',
 })
 

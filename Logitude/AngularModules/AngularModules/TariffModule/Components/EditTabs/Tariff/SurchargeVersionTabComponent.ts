@@ -27,7 +27,7 @@ import { UpdateTariffArgs } from '../../../Args';
 import { AirSurchargeTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SurchargeVersionTabComponent.html',
 })
 

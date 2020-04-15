@@ -10,7 +10,7 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import { PortListService } from '../../../../../Common/Services/StandardLists/PortListService';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'AWBHouseRoutingsTabComponent',
     templateUrl: './AWBHouseRoutingsTabComponent.html',

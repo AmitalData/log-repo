@@ -31,7 +31,7 @@ import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/De
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetComponent.html',
     providers: [CourierWorksheetSharedDataService],
 })

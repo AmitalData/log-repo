@@ -7,7 +7,7 @@ import {HybridTenantStateListExtendedService} from '../../../../Common/Services/
 import {HybridTenantStateList} from '../../../../Common/EntityLists/HybridTenantStateList';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'HybridTenantStateComponent',
     templateUrl: './HybridTenantStateComponent.html',
 })

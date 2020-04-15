@@ -13,7 +13,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'NewTaskComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewTaskComponent.html',
 })
 

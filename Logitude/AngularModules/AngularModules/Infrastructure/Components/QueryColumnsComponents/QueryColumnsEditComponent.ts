@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'QueryColumnEdit',
     templateUrl: './QueryColumnsEditComponent.html',

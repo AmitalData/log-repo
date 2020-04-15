@@ -20,7 +20,7 @@ import {ServiceLocator} from '../../../Locators/ServiceLocator';
 import { filter } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'logitude-grid',
     templateUrl: './LogGridComponent.html',

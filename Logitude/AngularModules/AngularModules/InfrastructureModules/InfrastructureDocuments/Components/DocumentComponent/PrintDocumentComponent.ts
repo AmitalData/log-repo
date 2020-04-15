@@ -38,7 +38,7 @@ import 'rxjs/add/operator/map';
 import {DocumentsExecutionLogList} from '../../../../Common/EntityLists/DocumentsExecutionLogList';
 import {DocumentsExecutionLogListExtendedService} from '../../../../Common/Services/ExtendedLists/DocumentsExecutionLogListExtendedService';
 @Component({
-    moduleId: module.id,
+    
     selector: 'PrintDocument',
     templateUrl: './PrintDocumentView.html',
     providers: [DocumentTypePMExtendedService, DocumentTypeCustomFieldService, DocumentOutPMService, ExportDocumentService, DocumentTypeTemplateListExtendedService, HtmlEditorService],

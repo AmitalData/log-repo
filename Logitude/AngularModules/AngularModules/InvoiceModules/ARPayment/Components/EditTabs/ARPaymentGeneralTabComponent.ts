@@ -6,7 +6,7 @@ import {ARPaymentPM} from '../../../../Invoice/EntityPMs/ARPaymentPM';
 import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARPaymentGeneralTabComponent.html',
 })
 export class ARPaymentGeneralTabComponent extends BaseComponent implements OnInit {

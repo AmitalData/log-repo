@@ -18,7 +18,7 @@ import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImagePara
 declare var UploadLogoFile, base64ToArrayBuffer, saveByteArray, ArrayBufferToBase64: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './UserRolesTabComponent.html',
 })
 

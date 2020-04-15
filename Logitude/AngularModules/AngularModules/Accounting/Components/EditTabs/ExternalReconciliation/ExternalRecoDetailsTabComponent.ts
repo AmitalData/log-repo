@@ -41,7 +41,7 @@ import {ReconcileExternalPageExtendedListService} from '../../../Services/Extend
 import {CurrencyPMService} from '../../../../Common/Services/StandardPMs/CurrencyPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExternalRecoDetailsTabComponent.html',
 })
 

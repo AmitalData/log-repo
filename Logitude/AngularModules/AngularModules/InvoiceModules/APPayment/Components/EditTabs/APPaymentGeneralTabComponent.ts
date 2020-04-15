@@ -8,7 +8,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 declare var window: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './APPaymentGeneralTabComponent.html',
 })
 export class APPaymentGeneralTabComponent extends BaseComponent implements OnInit {

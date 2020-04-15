@@ -10,7 +10,7 @@ import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilter
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EmailSearchTextBox.html',
     selector: "EmailSearchTextBox",
     inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive'],

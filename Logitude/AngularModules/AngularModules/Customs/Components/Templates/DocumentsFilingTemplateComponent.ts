@@ -7,7 +7,7 @@ import {DocumentsFilingPM}  from '../../../Common/EntityPMs/DocumentsFilingPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DocumentsFilingTemplateComponent.html',
 })
 

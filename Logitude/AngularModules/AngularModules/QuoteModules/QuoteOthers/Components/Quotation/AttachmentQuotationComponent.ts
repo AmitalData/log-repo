@@ -7,7 +7,7 @@ import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadMana
 import {AttachmentsArgs} from '../../../../CRMModules/CRMTickets/Components/EditTabs/MainTab/SendEmailComponent';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AttachmentQuotationComponent',
     templateUrl: './AttachmentQuotationComponent.html',
 })

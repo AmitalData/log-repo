@@ -32,7 +32,7 @@ import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMServi
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: "DocsInTabControl",
     templateUrl: './DocsInTabComponent.html',
     inputs: ['EntityPM' , 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference'],

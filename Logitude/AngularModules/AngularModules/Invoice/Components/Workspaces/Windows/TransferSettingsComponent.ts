@@ -17,7 +17,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TransferSettingsComponent.html',
 })
 

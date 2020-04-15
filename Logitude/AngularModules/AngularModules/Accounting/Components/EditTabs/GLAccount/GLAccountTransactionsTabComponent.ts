@@ -27,7 +27,7 @@ import {RatesTableListService} from '../../../../Infrastructure/Services/Standar
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountTransactionsTabComponent.html',
     providers: [LedgerTransactionListService, LedgerTransactionExtendedListService, GLAccountExtendedListService]
 })

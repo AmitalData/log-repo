@@ -4,7 +4,7 @@ import {SessionLocator} from '../../Utilities/SessionLocator';
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'ChooseDatesComponent',
     templateUrl: './ChooseDatesComponent.html',

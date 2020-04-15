@@ -9,7 +9,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ModulesService} from '../../../Infrastructure/Services/ModulesService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EntityFollowComponent',
     templateUrl: './EntityFollowComponent.html',
     inputs: ['EntityId',  'ObjectTableName'],

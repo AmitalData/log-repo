@@ -16,7 +16,7 @@ import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChild, ViewContaine
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditTaskSchedulerComponent.html',
 })
 

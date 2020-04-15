@@ -17,7 +17,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'communication-steps',
     templateUrl: './CommunicationStepsComponent.html',

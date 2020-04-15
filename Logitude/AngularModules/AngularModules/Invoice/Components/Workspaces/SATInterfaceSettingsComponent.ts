@@ -11,7 +11,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'SATInterfaceSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './SATInterfaceSettingsComponent.html',
 })
 

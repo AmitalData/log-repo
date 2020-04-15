@@ -9,7 +9,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {TeamPM} from '../../../../Infrastructure/EntityPMs/TeamPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TasksWorkspaceComponent.html',
 })
 

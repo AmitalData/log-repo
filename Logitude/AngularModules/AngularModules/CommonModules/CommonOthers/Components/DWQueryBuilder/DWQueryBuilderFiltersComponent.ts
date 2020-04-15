@@ -11,7 +11,7 @@ declare var window: any;
 
 @Component({
     selector: 'DWQueryBuilderFilters',
-    moduleId: module.id,
+    
     templateUrl: './DWQueryBuilderFiltersComponent.html',
     inputs: ['SelectedFiltersDataSource', 'DataContext', 'SelectedFiltersDataSourceChanged']
 })

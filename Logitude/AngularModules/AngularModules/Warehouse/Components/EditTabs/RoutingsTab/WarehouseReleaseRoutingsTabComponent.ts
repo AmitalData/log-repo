@@ -17,7 +17,7 @@ import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
 import {CitySelectionArgs} from '../../../../Common/Args';
 @Component({
     selector: 'WarehouseReleaseRoutingsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './WarehouseReleaseRoutingsTabComponent.html',
 })
 

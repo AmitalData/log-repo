@@ -12,7 +12,7 @@ import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'NewCurrencyComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewCurrencyComponent.html',
 })
 

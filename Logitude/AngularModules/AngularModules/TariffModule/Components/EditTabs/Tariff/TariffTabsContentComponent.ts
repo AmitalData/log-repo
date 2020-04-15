@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import { max } from 'rxjs/operator/max';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffTabsContentComponent.html',
 })
 

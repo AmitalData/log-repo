@@ -5,7 +5,7 @@ import {APInvoicePM} from '../../EntityPMs/APInvoicePM';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./APInvoiceShortTitleComponent.html",
 })
 

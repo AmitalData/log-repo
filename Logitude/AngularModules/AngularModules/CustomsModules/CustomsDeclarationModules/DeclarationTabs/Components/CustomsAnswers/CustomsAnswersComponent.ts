@@ -34,7 +34,7 @@ import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsAnswersComponent.html',
 })
 

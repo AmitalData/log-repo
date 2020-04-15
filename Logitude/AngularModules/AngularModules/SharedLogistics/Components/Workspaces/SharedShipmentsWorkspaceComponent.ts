@@ -7,7 +7,7 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { AppTool, DateTool, DateFormats } from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SharedShipmentsWorkspaceComponent.html',
 })
 

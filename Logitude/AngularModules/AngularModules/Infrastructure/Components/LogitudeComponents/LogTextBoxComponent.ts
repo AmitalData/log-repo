@@ -44,7 +44,7 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
 }
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'LogTextBox',
     templateUrl: "./LogTextBoxComponent.html",
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext',

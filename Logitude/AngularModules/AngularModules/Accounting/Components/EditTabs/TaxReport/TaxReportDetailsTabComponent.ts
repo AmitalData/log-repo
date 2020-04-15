@@ -20,7 +20,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import {TaxReportExtendedPMService} from '../../../Services/ExtendedPMs/TaxReportExtendedPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TaxReportDetailsTabComponent.html',
 })
 

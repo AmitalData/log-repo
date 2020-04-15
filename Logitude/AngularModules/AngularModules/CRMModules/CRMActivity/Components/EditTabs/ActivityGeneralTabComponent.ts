@@ -16,7 +16,7 @@ import {DocsOutDataViewModel} from '../../../../InfrastructureModules/Infrastruc
 import {CommunicationLogPMViewModel} from '../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/CommunicationLogPMViewModel';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ActivityGeneralTabComponent.html',
 })
 

@@ -23,7 +23,7 @@ declare var window: any;
 declare var insertAtSubject;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditRuleComponent.html',
 })
 export class AddEditRuleComponent extends BaseComponent {

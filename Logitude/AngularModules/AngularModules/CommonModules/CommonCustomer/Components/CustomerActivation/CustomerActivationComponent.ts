@@ -20,7 +20,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerActivationComponent.html',
 })
 

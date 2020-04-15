@@ -8,7 +8,7 @@ import { ReportsPreviewComponent } from '../../../Components/ReportsPreviewCompo
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VendorChargesAnalysisFilterComponent.html',
 })
 

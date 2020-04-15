@@ -30,7 +30,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'QueryList',
     templateUrl: './QueryListComponent.html',

@@ -36,7 +36,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'AddEditImporterDocument',
-    moduleId: module.id,
+    
     templateUrl: './AddEditImporterDocumentComponent.html',
     providers: [Http, ServiceArgs, DocumentsFilingExtendedPMService],
 })

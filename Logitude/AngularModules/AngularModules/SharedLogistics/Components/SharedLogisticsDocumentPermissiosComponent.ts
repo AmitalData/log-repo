@@ -12,7 +12,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {DocumentPermissiosViewModel} from './ViewModel/DocumentPermissiosViewModel';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedLogisticsDocumentPermissios',
     templateUrl: './SharedLogisticsDocumentPermissiosComponent.html',
     inputs: ['OnCloseWindowEvent'],

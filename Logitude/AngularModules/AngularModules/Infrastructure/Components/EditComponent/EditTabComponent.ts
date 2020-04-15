@@ -2,7 +2,7 @@ import {Component, ViewChild, ViewContainerRef, ChangeDetectorRef}  from '@angul
 import {SessionLocator} from '../../Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditTabComponent.html',
 })
 

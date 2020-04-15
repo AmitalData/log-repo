@@ -21,7 +21,7 @@ import {WarehouseReleaseListExtendedService} from '../../Services/ExtendedLists/
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'WarehouseWorkspaceComponent',
     templateUrl: './WarehouseWorkspaceComponent.html',
 

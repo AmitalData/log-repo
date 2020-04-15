@@ -16,7 +16,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AdvanceDocumentTypeTemplate',
     templateUrl: './AdvanceDocumentTypeTemplateComponent.html', 
     providers: [ DocumentTypeTemplatePMService]

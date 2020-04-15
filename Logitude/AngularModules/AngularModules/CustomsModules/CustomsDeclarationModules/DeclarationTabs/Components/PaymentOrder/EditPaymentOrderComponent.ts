@@ -19,7 +19,7 @@
 //import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 //@Component({
-//    moduleId: module.id,
+//    
 //    templateUrl: './EditPaymentOrderComponent.html',
 //})
 //export class EditPaymentOrderComponent extends BaseComponent {

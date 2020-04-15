@@ -19,7 +19,7 @@ import {EntityArgs} from '../../../DataContracts/EntityArgs';
 
 @Component({
     selector: "HelperFollowups",
-    moduleId: module.id,
+    
     templateUrl: './HelperFollowups.html',
     inputs: ['QuotePM', 'ShipmentPM', 'IsEnabled'],
 })

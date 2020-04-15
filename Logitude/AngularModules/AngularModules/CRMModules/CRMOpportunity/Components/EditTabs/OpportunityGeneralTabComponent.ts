@@ -23,7 +23,7 @@ import {ContactList} from '../../../../Common/EntityLists/ContactList';
 import {ContactListService} from '../../../../Common/Services/StandardLists/ContactListService';
 @Component({
     selector: 'OpportunityGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OpportunityGeneralTabComponent.html',
 })
 

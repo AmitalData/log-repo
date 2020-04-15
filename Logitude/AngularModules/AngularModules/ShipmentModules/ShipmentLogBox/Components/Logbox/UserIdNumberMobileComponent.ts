@@ -39,7 +39,7 @@ import { DatePipe } from '@angular/common';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './UserIdNumberMobileComponent.html'
 })
 

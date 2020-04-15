@@ -37,7 +37,7 @@ import { retry } from 'rxjs/operator/retry';
 import { forEach } from "@angular/router/src/utils/collection";
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetListTemplate.html',
 })
 

@@ -13,7 +13,7 @@ import {EventPermissiosViewModel} from './ViewModel/EventPermissiosViewModel';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedLogisticsEventPermissios',
     templateUrl: './SharedLogisticsEventPermissiosComponent.html',
     inputs: ['OnCloseWindowEvent'],

@@ -12,7 +12,7 @@ import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContainerFollowupWindowComponent.html',
 })
 

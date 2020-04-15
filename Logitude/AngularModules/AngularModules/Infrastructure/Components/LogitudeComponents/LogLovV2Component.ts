@@ -43,7 +43,7 @@ import { SessionInfo } from '../../Utilities/SessionInfo';
 
 @Component({
     selector: 'LogLov',
-    moduleId: module.id,
+    
     templateUrl: './LogLovV2Component.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath',

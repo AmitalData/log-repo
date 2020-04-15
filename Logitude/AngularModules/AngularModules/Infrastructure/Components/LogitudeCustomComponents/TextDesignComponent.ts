@@ -12,7 +12,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 declare var insertAtSubject : any;
 @Component({
-    moduleId: module.id,
+    
     selector: 'TextDesignComponent',
     templateUrl: './TextDesignComponent.html',
     inputs: ['QuoteTemplateTextDesignPM', 'QuoteTemplateTableDesignPM', 'QuoteTemplateSettingPM', 'SectionType']

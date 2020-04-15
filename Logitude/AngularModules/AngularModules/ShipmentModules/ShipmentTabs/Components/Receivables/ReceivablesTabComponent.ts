@@ -34,7 +34,7 @@ import {QuotePMService} from '../../../../Quote/Services/StandardPMs/QuotePMServ
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReceivablesTabComponent.html',
 })
 

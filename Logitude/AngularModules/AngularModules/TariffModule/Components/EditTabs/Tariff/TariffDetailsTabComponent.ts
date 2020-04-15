@@ -6,7 +6,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffDetailsTabComponent.html',
 })
 

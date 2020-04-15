@@ -11,7 +11,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {CardList} from '../../../Common/EntityLists/CardList';
 import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'btnComponent',
     templateUrl: './btnComponent.html',

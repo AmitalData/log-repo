@@ -46,7 +46,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 @Component({
-    moduleId: module.id,
+    
     selector: 'AddEditAutomationsComponent',
     templateUrl: './AddEditAutomationsComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService, AutomationResultEmailRecipientExtendedService, AutomationExtendedPMService, AutomationHistoryExtendedPMService, EntityArgs],

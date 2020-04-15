@@ -20,7 +20,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AdvSearchComponent',
     templateUrl: './AdvanceSearchComponent.html',
     inputs: ['ObjectTableName', 'QueryChangeEvent', 'isWindowViewMode', 'isNewViewMode', 'QueryId','QueryCode', 'Filterchangeevent', 'rabaia'],

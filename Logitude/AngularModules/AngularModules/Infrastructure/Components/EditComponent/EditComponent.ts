@@ -25,7 +25,7 @@ import { Subscription, TeardownLogic } from 'rxjs/Subscription';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditComponent.html',
     providers: [EntityArgs],
 })

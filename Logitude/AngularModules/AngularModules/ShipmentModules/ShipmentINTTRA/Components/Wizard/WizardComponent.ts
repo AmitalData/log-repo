@@ -15,7 +15,7 @@ import { CardListService } from '../../../../Common/Services/StandardLists/CardL
 import { ShipmentTool } from '../../../../Shipment/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './WizardComponent.html',
 })
 

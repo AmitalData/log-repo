@@ -7,7 +7,7 @@ import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs'
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewContactComponent.html',
 })
 

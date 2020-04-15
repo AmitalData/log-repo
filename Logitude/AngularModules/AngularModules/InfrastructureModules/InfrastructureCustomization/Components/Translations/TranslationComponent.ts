@@ -8,7 +8,7 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TranslationComponent.html',
 })
 

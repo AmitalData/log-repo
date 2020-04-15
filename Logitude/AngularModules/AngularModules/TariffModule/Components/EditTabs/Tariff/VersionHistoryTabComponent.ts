@@ -25,7 +25,7 @@ import { PackageTypeListService } from '../../../../Common/Services/StandardList
 import { TariffLinesContainersPricePM } from '../../../EntityPMs/TariffLinesContainersPricePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VersionHistoryTabComponent.html',
 })
 

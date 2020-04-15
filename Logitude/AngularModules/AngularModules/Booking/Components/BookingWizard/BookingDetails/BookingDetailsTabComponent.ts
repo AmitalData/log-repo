@@ -28,7 +28,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'BookingDetailsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './BookingDetailsTabComponent.html',
 })
 

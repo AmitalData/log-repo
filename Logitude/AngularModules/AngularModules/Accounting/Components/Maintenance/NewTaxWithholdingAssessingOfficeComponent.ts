@@ -11,7 +11,7 @@ import {TaxWithholdingAssessOfficePMService} from '../../Services/StandardPMs/Ta
 
 @Component({
     selector: 'NewTaxWithholdingAssessingOfficeComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewTaxWithholdingAssessingOfficeComponent.html',
 })
 

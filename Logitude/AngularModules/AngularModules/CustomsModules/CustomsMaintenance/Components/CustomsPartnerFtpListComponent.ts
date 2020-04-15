@@ -29,7 +29,7 @@ import { retry } from 'rxjs/operators';
 import { Jsonp } from '@angular/http';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsPartnerFtpListComponent.html',
 })
 /// itzik:  bad pattren - Due Design paper - How to copy from  CustomsDocumentsDefinitionComponent - DING DING DING SHAME SHAME!!!

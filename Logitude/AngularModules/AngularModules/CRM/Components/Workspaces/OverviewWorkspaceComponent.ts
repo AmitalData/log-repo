@@ -29,7 +29,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 declare var makeChart, FunnelClick, ResetItemFunnel;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './OverviewWorkspaceComponent.html',
 })
 

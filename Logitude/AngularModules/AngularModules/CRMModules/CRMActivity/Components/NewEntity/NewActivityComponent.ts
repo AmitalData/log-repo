@@ -10,7 +10,7 @@ import {ActivityPMInitService} from '../../../../CRM/EntityPMInitServices/Activi
 import {AppTool} from '../../../../Infrastructure/Tools'; 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewActivityComponent.html',
 })
 

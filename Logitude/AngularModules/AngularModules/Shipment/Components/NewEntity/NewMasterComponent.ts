@@ -31,7 +31,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewMasterComponent.html',
 })
 

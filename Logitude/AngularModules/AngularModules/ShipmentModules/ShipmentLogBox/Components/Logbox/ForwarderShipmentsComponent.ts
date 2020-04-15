@@ -26,7 +26,7 @@ import {PackageTypeListService} from '../../../../Common/Services/StandardLists/
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ForwarderShipmentsComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

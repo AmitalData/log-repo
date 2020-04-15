@@ -15,7 +15,7 @@ import {ParameterComponentArgs} from '../../../../Infrastructure/DataContracts/P
 import {UserExtendedPMService} from '../../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './UserSearchComponent.html',
 })
 

@@ -13,7 +13,7 @@ import { TextCodeTranslator } from              '../../../Infrastructure/Utiliti
 
 @Component({
     selector: 'dropdown-button',
-    moduleId: module.id,
+    
     //templateUrl: './CustomsRequestsComponent.html',
     host: {
         '(document:click)': 'handleClick($event)',

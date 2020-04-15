@@ -19,7 +19,7 @@ import { CommonDomainService } from '../../../Common/Services/CommonDomainServic
 
 @Component({
     selector: 'NewAirFreightCostComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewAirFreightCostComponent.html',
 })
 

@@ -31,7 +31,7 @@ import { BankDepositPMService } from '../../../Services/StandardPMs/BankDepositP
 import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BankDepositDetailsTabComponent.html',
 })
 

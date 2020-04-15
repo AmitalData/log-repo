@@ -20,7 +20,7 @@ import { CustomsRequierdFieldsWebService } from '../../../../Customs/Services/We
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AddEditRequiredFieldsComponent',
     templateUrl: './AddEditRequiredFieldsComponent.html',
 })

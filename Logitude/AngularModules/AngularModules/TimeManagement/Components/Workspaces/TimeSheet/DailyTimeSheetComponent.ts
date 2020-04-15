@@ -19,7 +19,7 @@ import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelpe
 
 @Component({
     selector: 'DailyTimeSheetComponent',
-    moduleId: module.id,
+    
     templateUrl: './DailyTimeSheetComponent.html',
 })
 

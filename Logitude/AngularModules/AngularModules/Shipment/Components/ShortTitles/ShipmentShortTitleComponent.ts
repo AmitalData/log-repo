@@ -4,7 +4,7 @@ import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "ShipmentShortTitleComponent.html",
 })
 

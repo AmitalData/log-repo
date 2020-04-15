@@ -9,7 +9,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 declare var window: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MiscPageComponent.html',
 })
 

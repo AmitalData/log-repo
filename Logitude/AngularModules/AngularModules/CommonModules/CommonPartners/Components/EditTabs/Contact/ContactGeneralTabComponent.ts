@@ -5,7 +5,7 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {ContactInputTemplate, ContactInputTemplateArgs} from '../../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContactGeneralTabComponent.html',
 })
 

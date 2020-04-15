@@ -19,7 +19,7 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'LogTextBoxV2',
     templateUrl: "./LogTextBoxV2Component.html",

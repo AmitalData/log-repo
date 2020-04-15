@@ -15,7 +15,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'NewDeclarationCargoSplitComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewDeclarationCargoSplitComponent.html',
 })
 

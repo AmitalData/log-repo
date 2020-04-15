@@ -19,7 +19,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ObjectFieldPMExtendedService} from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'AutomationsSettingsComponent',
     templateUrl: './AutomationsSettingsComponent.html',

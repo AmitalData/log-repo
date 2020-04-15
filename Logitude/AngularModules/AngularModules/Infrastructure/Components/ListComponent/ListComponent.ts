@@ -52,7 +52,7 @@ import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/Accoun
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './ListComponent.html',
     //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],

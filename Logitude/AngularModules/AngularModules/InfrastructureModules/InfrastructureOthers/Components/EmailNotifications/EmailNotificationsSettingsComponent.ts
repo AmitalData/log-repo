@@ -17,7 +17,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 
 @Component({
     selector: 'EmailNotificationsSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './EmailNotificationsSettingsComponent.html',
     providers: [EmailAlertSettingPMService],
 })

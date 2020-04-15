@@ -6,7 +6,7 @@ import { InvoiceStockInputArgs } from '../../../../Invoice/Args';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceStockGeneralTabComponent.html',
 })
 

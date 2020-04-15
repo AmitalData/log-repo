@@ -22,7 +22,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import { ShipmentDeliveryValidator } from '../../../../Shipment/Validators/ShipmentDeliveryValidator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditDeliveryComponent.html',
 })
 

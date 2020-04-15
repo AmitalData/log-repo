@@ -61,7 +61,7 @@ import { DateTimeFormat } from '../../../../../Infrastructure/Utilities/DateTime
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationPaymentComponent.html',
 })
 

@@ -6,7 +6,7 @@ import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {AppTool} from '../../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
     selector: 'OpenShipmentsByCustomerFilterComponent',
     templateUrl: './OpenShipmentsByCustomerFilterComponent.html',
     inputs: ['ReportsPreview']

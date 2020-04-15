@@ -7,7 +7,7 @@ import {ARInvoiceTransferTemplate} from '../NewEntity/ARInvoiceTransferTemplate'
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceTransferTabComponent.html',
 })
 

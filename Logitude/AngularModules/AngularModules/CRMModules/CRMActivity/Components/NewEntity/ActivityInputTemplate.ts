@@ -33,7 +33,7 @@ import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM'
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ActivityInputTemplate.html',
 })
 

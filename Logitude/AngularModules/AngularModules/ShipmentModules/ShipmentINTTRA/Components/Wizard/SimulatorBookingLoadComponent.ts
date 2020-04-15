@@ -9,7 +9,7 @@ import { AWBWizardArgs, FSRWizardArgs } from '../../../../Shipment/Args';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './SimulatorBookingLoadComponent.html',
 })

@@ -11,7 +11,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {CodeNameClass} from './CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'StatisticsByAgentFilterComponent',
     templateUrl: './StatisticsByAgentFilterComponent.html',
     inputs: ['ReportsPreview']

@@ -38,7 +38,7 @@ import { DatePipe } from '@angular/common';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ECommercePaymentRequestMobileComponent.html'
 })
 

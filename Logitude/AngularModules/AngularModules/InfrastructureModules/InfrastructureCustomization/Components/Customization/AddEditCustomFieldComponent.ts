@@ -20,7 +20,7 @@ import {Headers} from '@angular/http';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditCustomFieldComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

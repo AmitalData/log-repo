@@ -24,7 +24,7 @@ import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/E
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LogBoxMainComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

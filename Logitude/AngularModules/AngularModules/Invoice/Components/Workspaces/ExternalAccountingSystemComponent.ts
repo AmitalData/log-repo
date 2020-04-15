@@ -12,7 +12,7 @@ import {ObjectsUpdater} from '../../../Infrastructure/Locators/ObjectsUpdater';
 
 @Component({
     selector: 'AccountingTransferComponent',
-    moduleId: module.id,
+    
     templateUrl: './ExternalAccountingSystemComponent.html',
 })
 

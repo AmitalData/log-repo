@@ -13,7 +13,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 
 @Component({
     selector: 'OrdersTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OrdersTabComponent.html',
 })
 

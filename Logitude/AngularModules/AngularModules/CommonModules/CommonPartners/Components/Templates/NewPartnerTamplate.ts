@@ -19,7 +19,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewPartnerTamplate.html',    
 })
 

@@ -15,7 +15,7 @@ import {GetStackWindowArgs} from '../../../../Common/Args';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'FBLStockFieldComponent',
     templateUrl: './FBLStockFieldComponent.html',
 })

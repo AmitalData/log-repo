@@ -13,7 +13,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {IdGeneratorPipe} from '../../../Controls/Pipes/IdGeneratorPipe';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'ToComponent',
     templateUrl: './ToComponent.html',

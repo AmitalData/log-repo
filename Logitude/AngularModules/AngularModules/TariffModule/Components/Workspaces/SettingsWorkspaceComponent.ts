@@ -16,7 +16,7 @@ declare var ResultAsArray: any;
 
 @Component({
     selector: 'SettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './SettingsWorkspaceComponent.html',
     providers: [EntityResourceService, TariffDomainService],
 })

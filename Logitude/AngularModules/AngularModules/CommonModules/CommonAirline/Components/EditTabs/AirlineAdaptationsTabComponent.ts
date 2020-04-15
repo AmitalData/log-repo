@@ -33,7 +33,7 @@ import {AirlineMessagingRulePMService} from '../../../../Common/Services/Standar
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AirlineAdaptationsTabComponent.html',
 })
 

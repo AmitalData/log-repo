@@ -21,7 +21,7 @@ import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 @Component({
     selector: 'QuoteTemplatePricingSettingComponent',
-    moduleId: module.id,
+    
     templateUrl: './QuoteTemplatePricingSettingComponent.html',
 })
 

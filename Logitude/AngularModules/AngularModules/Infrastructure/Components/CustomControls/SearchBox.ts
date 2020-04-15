@@ -15,7 +15,7 @@ import {KeyCode} from '../../../Infrastructure/DataContracts/KeyCode';
 import {IdGeneratorPipe} from '../../../Controls/Pipes/IdGeneratorPipe';
 @Component({
     selector: "SearchBox",
-    moduleId: module.id,
+    
     templateUrl: './SearchBox.html',
 
     inputs:

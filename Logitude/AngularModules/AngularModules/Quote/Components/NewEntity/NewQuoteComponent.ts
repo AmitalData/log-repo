@@ -28,7 +28,7 @@ import { EntityListService } from '../../../Infrastructure/Services/EntityListSe
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewQuoteComponent.html',
 })
 

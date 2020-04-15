@@ -5,7 +5,7 @@ import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: 'SendButton',
-    moduleId: module.id,
+    
     templateUrl: './SendButton.html',
     inputs: ['ItemsSource', 'SelectedItem', 'Binding'],
 })

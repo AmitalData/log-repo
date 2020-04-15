@@ -16,7 +16,7 @@ import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'ObjectFieldComponent',
     template: `<div #ComponentContent></div>`,

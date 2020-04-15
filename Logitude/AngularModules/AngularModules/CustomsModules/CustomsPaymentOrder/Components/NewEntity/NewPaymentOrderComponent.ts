@@ -21,7 +21,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'NewPaymentOrderComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewPaymentOrderComponent.html',
 })
 

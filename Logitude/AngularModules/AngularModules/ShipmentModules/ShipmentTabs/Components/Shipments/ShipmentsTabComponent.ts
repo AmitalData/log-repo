@@ -16,7 +16,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ShipmentsTabComponent.html',
 })
   // islam: merge test

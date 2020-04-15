@@ -10,7 +10,7 @@ import {HybridPartnerExtendedListService} from '../../../../Common/Services/Exte
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PermissionsHybridPartnerTabComponent.html',
 })
 

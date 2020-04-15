@@ -7,7 +7,7 @@ import {ARPaymentTransferTemplate} from '../NewEntity/ARPaymentTransferTemplate'
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARPaymentTransferTabComponent.html',
 })
 

@@ -28,7 +28,7 @@ import {GLAccountListService} from '../../../Services/StandardLists/GLAccountLis
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './JournalDetailsTabComponent.html',
     providers:
         [CurrencyListService,

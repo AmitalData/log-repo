@@ -29,7 +29,7 @@ import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow'
 
 @Component({
     selector: 'ConsigmentTabContent',
-    moduleId: module.id,
+    
     templateUrl: './ConsigmentTabContentComponent.html',
 })
 

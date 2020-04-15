@@ -9,7 +9,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewAgentComponent.html',
 })
 

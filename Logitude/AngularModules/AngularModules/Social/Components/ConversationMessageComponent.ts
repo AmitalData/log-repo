@@ -21,7 +21,7 @@ declare var HTMLID: any;
 import {ConversationHeaderMessagePMService} from '../Services/StandardPMs/ConversationHeaderMessagePMService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ConversationMessageComponent',
     templateUrl: './ConversationMessageComponent.html',
     inputs: ['SocialMessagesComponent', 'ConversationHeader', 'Area'],

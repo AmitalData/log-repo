@@ -18,7 +18,7 @@ import { CommunicationLogList } from '../../../../Common/EntityLists/Communicati
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'communication-steps',
     templateUrl: './CommunicationMoreComponent.html',

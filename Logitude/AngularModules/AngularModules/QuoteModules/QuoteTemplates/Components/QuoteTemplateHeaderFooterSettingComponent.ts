@@ -20,7 +20,7 @@ import {QuoteTemplateSectionExtendedPMService} from '../../../Quote/Services/Ext
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'QuoteTemplateHeaderFooterSettingComponent',
-    moduleId: module.id,
+    
     templateUrl: './QuoteTemplateHeaderFooterSettingComponent.html',
 })
 

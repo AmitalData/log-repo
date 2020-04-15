@@ -18,7 +18,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedManifestComponent',
     templateUrl: './SharedManifestComponent.html',
     providers: [SharedAgentManifestService, AgentSharedManifestPMService, EntityResourceService],

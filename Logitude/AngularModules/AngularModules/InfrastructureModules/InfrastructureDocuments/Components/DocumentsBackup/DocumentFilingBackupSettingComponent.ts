@@ -11,7 +11,7 @@ import {DocumentFilingBackupSettingPMService} from '../../../../Common/Services/
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentFilingBackupSettingComponent',
     templateUrl: './DocumentFilingBackupSettingComponent.html',
 })

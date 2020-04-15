@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'TenantImportComponent',
     templateUrl: './TenantImportComponent.html',
 })

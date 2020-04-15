@@ -14,7 +14,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './HybridPartnerTabComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

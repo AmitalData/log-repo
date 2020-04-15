@@ -27,7 +27,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReadyForActivationComponent.html',
 })
 

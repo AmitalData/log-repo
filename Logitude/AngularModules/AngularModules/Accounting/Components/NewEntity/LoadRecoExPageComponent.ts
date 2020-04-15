@@ -30,7 +30,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
     selector: 'LoadRecoExPageComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './LoadRecoExPageComponent.html',
 })

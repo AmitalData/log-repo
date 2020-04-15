@@ -16,7 +16,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {CustomerProductLocationPM} from '../../../../Common/EntityPMs/CustomerProductLocationPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditProductPotentialComponent.html',
 })
 

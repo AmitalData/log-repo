@@ -5,7 +5,7 @@ import { } from "@angular/platform-browser/src/dom";
 
 @Component({
     selector: 'ComboBoxWithInCheckBox',
-    moduleId: module.id,
+    
     templateUrl: './ComboBoxWithInCheckBox.html',
     inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'WithinImage', 'SelectionType', 'CheckBoxOnly', 'IsAreasMenu'],
 })

@@ -24,7 +24,7 @@ import { ClaimRelatedEntReasonExpLineComponent } from './ClaimRelatedEntReasonEx
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimRelatedEntityReasonsTabComponent.html',
 })
 

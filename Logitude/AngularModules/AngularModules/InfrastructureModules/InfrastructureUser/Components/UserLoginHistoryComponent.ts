@@ -12,7 +12,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'UserLoginHistory',
     templateUrl: './UserLoginHistoryComponent.html',

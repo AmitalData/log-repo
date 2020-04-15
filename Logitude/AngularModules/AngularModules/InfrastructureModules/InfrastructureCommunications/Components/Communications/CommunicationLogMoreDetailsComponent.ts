@@ -6,7 +6,7 @@ import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'communication-log-more-details',
     templateUrl: './CommunicationLogMoreDetailsComponent.html',

@@ -36,7 +36,7 @@ import { CardListService } from '../../../../Common/Services/StandardLists/CardL
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PayablesTabComponent.html',
 })
 

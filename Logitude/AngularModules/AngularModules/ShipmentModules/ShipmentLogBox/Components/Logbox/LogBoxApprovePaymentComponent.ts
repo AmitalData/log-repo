@@ -38,7 +38,7 @@ import { HybridPartnerPMService } from '../../../../Common/Services/StandardPMs/
 
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LogBoxApprovePaymentComponent.html'
 })
 

@@ -22,7 +22,7 @@ import { DeclarationCargoSplitPMService } from '../../../../Customs/Services/Sta
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DecCargoSplitConsPackDetComponent.html',
 })
 

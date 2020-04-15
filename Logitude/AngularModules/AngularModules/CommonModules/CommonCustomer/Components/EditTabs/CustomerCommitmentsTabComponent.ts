@@ -30,7 +30,7 @@ import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerCommitmentsTabComponent.html',
 })
 

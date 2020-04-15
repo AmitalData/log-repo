@@ -15,7 +15,7 @@ import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'MenuButtonsComponent',
     templateUrl: "./MenuButtonsComponent.html",
 })

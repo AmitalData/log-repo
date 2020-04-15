@@ -7,7 +7,7 @@ import {APPaymentTransferTemplate} from '../NewEntity/APPaymentTransferTemplate'
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './APPaymentTransferTabComponent.html',
 })
 

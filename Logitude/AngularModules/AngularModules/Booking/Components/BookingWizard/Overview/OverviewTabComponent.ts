@@ -14,7 +14,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'OverviewTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OverviewTabComponent.html',
 })
 

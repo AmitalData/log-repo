@@ -17,7 +17,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'DropBoxConnection',
-    moduleId: module.id,
+    
     templateUrl: './DropBoxConnectionComponent.html',
 })
 

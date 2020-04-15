@@ -21,7 +21,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { CustomEntityArgs } from './LogSearchWindowComponent';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'LogLov_Old',
     templateUrl: './LogLovComponent.html',

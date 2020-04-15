@@ -10,7 +10,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {FieldValueResolver} from '../../../../Infrastructure/Utilities/FieldValueResolver';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AutomationsConditionAreaComponent',
     templateUrl: './AutomationsConditionAreaComponent.html',
     inputs: ['AutomationCondationLists', 'Title', 'TiggerComponent', 'CondationListType', 'IsDisabled', 'ListHeight', 'NoEntity'],

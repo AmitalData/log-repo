@@ -5,7 +5,7 @@ import {Component, OnInit }  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'MainMenuAutomationComponent',
     templateUrl: './MainMenuAutomationComponent.html',

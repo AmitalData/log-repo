@@ -7,7 +7,7 @@ import {APInvoiceTransferTemplate} from '../NewEntity/APInvoiceTransferTemplate'
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './APInvoiceTransferTabComponent.html',
 })
 

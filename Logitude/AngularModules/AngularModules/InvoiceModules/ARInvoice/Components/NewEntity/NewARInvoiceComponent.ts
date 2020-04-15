@@ -35,7 +35,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { error } from 'util';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewARInvoiceComponent.html',
 })
 

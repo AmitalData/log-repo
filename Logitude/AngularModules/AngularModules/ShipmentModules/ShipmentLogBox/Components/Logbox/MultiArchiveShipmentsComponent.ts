@@ -23,7 +23,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MultiArchiveShipmentsComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

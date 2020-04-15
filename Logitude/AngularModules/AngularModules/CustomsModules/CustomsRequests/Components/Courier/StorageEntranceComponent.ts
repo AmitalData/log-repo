@@ -22,7 +22,7 @@ import {DeclarationConsAcceptancePM} from '../../../../Customs/EntityPMs/Declara
 
 @Component({
     selector: 'StorageEntranceComponent',
-    moduleId: module.id,
+    
     templateUrl: './StorageEntranceComponent.html',
 })
 

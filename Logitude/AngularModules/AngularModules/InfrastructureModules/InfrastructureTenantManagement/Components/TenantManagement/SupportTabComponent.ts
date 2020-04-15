@@ -5,7 +5,7 @@ import {TenantManagementPM} from '../../../../Infrastructure/EntityPMs/TenantMan
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SupportTabComponent',
     templateUrl: './SupportTabComponent.html',
 })

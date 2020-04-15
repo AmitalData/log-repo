@@ -43,7 +43,7 @@ import {DWQueryBuilderService} from '../../Services/ExtendedPMs/DWQueryBuilderSe
 
 @Component({
     selector: 'DWLov',
-    moduleId: module.id,
+    
     templateUrl: './DWLovComponent.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'DisplayMemberPath', 'SelectedValuePath',

@@ -5,7 +5,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FieldTemplateComponent.html',
 })
 

@@ -18,7 +18,7 @@ import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/Requ
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClosedTableNotExistedComponent.html',
 })
 

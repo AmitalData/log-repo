@@ -18,7 +18,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsDocumentsDefinitionComponent.html',
 })
 

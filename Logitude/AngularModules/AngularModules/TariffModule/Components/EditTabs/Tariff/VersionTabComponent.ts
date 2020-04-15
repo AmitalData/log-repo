@@ -24,7 +24,7 @@ import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDa
 declare var ResultAsArray: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VersionTabComponent.html',
 })
 

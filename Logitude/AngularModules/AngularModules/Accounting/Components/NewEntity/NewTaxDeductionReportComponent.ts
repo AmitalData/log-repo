@@ -15,7 +15,7 @@ import { UIProperties } from '../../../Infrastructure/Components/LogitudeCompone
 
 @Component({
     selector: 'NewTaxDeductionReportComponent',
-    moduleId: module.id,
+    
 
     templateUrl: './NewTaxDeductionReportComponent.html',
 })

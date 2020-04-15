@@ -17,7 +17,7 @@ import { ResponseDataBase } from '../../../Customs/DataContract/ResponseData/Res
 import { CustomsRequestsSheetPM } from '../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsRequestsSheetsListTemplate.html',
 })
 

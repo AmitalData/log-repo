@@ -24,7 +24,7 @@ import {WarehouseHelper} from '../Helpers/WarehouseHelper';
 import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewWarehouseEntryComponent',
     templateUrl: './NewWarehouseEntryComponent.html',
  

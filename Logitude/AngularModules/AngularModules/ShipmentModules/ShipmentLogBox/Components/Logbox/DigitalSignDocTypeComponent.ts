@@ -33,7 +33,7 @@ import {DocumentTypePMService} from '../../../../Common/Services/StandardPMs/Doc
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DigitalSignDocTypeComponent.html'
 })
 

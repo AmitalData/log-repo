@@ -17,7 +17,7 @@ import { AccountingIntegrityCheckPMService } from '../../../Services/StandardPMs
 import { builder } from "xmlbuilder";
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './IntegrityCheckTabComponent.html',
 })
 

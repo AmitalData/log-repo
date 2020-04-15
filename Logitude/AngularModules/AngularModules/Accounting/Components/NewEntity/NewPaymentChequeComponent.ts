@@ -20,7 +20,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'NewPaymentChequeComponent',
-    moduleId: module.id,
+    
  
     templateUrl: './NewPaymentChequeComponent.html',
 })

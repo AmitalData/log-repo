@@ -11,7 +11,7 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CMConnectedDeclarationTabComponent.html',
 })
 

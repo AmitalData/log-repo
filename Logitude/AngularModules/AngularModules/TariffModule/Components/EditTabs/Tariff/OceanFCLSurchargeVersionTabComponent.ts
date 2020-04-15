@@ -31,7 +31,7 @@ import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList'
 import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './OceanFCLSurchargeVersionTabComponent.html',
 })
 

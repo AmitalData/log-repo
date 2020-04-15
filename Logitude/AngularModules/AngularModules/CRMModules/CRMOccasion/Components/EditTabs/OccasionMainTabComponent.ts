@@ -20,7 +20,7 @@ import { ContactPM } from '../../../../Common/EntityPMs/ContactPM';
 
 @Component({
     selector: 'OccasionMainTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OccasionMainTabComponent.html',
 })
 

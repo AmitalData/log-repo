@@ -5,7 +5,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceGeneralTabComponent.html',
 })
 export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnInit {

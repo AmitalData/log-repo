@@ -18,7 +18,7 @@ import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirectiv
 import {CardListService} from '../../Common/Services/StandardLists/CardListService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EditWarehouseEntryComponent',
     templateUrl: './EditWarehouseEntryComponent.html',
 })

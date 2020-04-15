@@ -12,7 +12,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './Export2ExcelControl.html',
     //pipes: [TextCodeTranslationPipe],

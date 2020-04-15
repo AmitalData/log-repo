@@ -36,7 +36,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
     selector: 'BookingWizardComponent',
-    moduleId: module.id,
+    
     templateUrl: './BookingWizardComponent.html',
     providers: [EntityArgs]
 })

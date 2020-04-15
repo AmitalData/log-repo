@@ -5,7 +5,7 @@ import { SessionLocator } from '../../Utilities/SessionLocator';
 
 @Component({
     selector: 'RatioBox',
-    moduleId: module.id,
+    
     templateUrl: './RatioBoxComponent.html',
     inputs: ['EntityPM', 'ObjectFieldName', 'ObjectTableName', 'DataContext', 'IsEnabled'],
 })

@@ -26,7 +26,7 @@ import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 
 import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
 @Component({
-    moduleId: module.id,
+    
     selector: 'SocialPostsComponent',
     templateUrl: './SocialPostsComponent.html',
 

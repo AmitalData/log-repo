@@ -30,7 +30,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {CommonDomainService} from'../../../../Common/Services/CommonDomainService'; 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerProductsTabComponent.html',
 })
 

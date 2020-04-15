@@ -18,7 +18,7 @@ import {BusinessRoleExtendedListService} from '../../../../Infrastructure/Servic
 
 @Component({
     selector: 'TeamGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './TeamGeneralTabComponent.html',
 })
 

@@ -24,7 +24,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 declare var querySelection, StringToBase64, resultToUnitArray: any;
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewReportTemplate',
     templateUrl: './NewReportTemplateComponent.html',
     providers: [DocumentTypeTemplateListExtendedService, DocumentTypeTemplatePMService, DocumentTypeTemplatePMExtendedService]

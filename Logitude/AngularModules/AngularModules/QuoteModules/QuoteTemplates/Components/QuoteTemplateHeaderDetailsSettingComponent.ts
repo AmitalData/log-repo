@@ -28,7 +28,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'QuoteTemplateHeaderDetailsSettingComponent',
-    moduleId: module.id,
+    
     templateUrl: './QuoteTemplateHeaderDetailsSettingComponent.html',
 })
 

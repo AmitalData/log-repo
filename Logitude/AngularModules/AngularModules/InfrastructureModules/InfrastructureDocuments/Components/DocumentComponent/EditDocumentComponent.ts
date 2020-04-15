@@ -38,7 +38,7 @@ declare var window: any;
 declare var insertAtSubject, StringToBase64, querySelection, resultToUnitArray, Base64ToString: any;
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EditDocumentComponent',
     templateUrl: './EditDocumentView.html',
     providers: [HtmlEditorService, DocumentTypeTemplatePMService, DocumentTypeTemplateListExtendedService, DocumentTypeTemplatePMExtendedService, ExportDocumentService, DocumentTypePMExtendedService, DocumentOutPMService]

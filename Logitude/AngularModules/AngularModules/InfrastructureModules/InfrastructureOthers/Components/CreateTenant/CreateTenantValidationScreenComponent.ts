@@ -9,7 +9,7 @@ import {Component, OnInit }  from '@angular/core';
 
 import {AppTool} from '../../../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'CreateTenantValidationScreenComponent',
     templateUrl: './CreateTenantValidationScreenComponent.html',

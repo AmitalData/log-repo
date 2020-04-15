@@ -18,7 +18,7 @@ declare var window: any;
 
 @Component({
     selector: 'AccountingSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './AddEditCustomerFieldsUpdateSettingComponent.html',
 })
 

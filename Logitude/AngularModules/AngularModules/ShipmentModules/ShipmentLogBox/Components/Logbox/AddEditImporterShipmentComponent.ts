@@ -25,7 +25,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import {PortExtendedPMService} from '../../../../Common/Services/ExtendedPMs/PortExtendedPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditImporterShipmentComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

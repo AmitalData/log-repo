@@ -11,7 +11,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MainSchedulerComponent.html',
 })
 

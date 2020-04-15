@@ -35,7 +35,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 
 @Component({
     selector: 'FCLChargesComponent',
-    moduleId: module.id,
+    
     templateUrl: './FCLChargesComponent.html',
 })
 

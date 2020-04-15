@@ -38,7 +38,7 @@ import { reject } from 'q';
 
 @Component({
     selector: 'NewGeneralARInvoiceComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewGeneralARInvoiceComponent.html',
 })
 

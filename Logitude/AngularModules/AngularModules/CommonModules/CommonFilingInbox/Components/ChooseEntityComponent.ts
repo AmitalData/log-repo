@@ -10,7 +10,7 @@ import {QuoteListService} from '../../../Quote/Services/StandardLists/QuoteListS
 import {QuoteList} from '../../../Quote/EntityLists/QuoteList'; 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ChooseEntityComponent.html',
 })
 

@@ -30,7 +30,7 @@ import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibra
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LogBoxPackagesComponent.html'
 })
 

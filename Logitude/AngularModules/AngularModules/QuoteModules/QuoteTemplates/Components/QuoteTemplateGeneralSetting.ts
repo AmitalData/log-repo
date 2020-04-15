@@ -16,7 +16,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'QuoteTemplateGeneralSetting',
-    moduleId: module.id,
+    
     templateUrl: './QuoteTemplateGeneralSetting.html',
 })
 

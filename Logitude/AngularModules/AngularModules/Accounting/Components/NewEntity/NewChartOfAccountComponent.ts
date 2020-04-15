@@ -10,7 +10,7 @@ import {EntityListService} from '../../../Infrastructure/Services/EntityListServ
 
 @Component({
     selector: 'NewChartOfAccountComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewChartOfAccountComponent.html',
 })

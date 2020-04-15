@@ -2,7 +2,7 @@
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FieldTemplateComponent.html',
 })
 

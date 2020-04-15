@@ -44,7 +44,7 @@ import {CustomerFieldsUpdateSettingList} from '../../../../Common/EntityLists/Cu
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerGeneralTabComponent.html',
     providers: [ImageLibraryService, EntityPMService]
 })

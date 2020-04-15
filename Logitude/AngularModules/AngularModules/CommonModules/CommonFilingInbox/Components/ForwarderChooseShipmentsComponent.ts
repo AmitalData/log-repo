@@ -23,7 +23,7 @@ import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ForwarderChooseShipmentsComponent.html',
 })
 

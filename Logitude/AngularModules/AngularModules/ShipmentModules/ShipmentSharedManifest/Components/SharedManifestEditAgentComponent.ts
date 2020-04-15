@@ -12,7 +12,7 @@ import { SharedManifestStarted } from './SharedManifestStarted';
 import { SharedAgentManifestService } from '../../../Shipment/Services/Others/SharedAgentManifestService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedManifestEditAgentComponent',
     templateUrl: './SharedManifestEditAgentComponent.html',
     providers: [SharedAgentManifestService],

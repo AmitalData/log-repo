@@ -11,7 +11,7 @@ import {UserListService} from '../../../Common/Services/StandardLists/UserListSe
 import {CodeNameClass} from './CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'CustomerAdditionalServicesFilterComponent',
     templateUrl: './CustomerAdditionalServicesFilterComponent.html',
     inputs: ['ReportsPreview']

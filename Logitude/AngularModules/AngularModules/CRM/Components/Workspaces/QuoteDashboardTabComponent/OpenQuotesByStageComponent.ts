@@ -12,7 +12,7 @@ import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelpe
 declare var makeChart, FunnelClick, ResetItemFunnel;
 @Component({
     selector: 'open-quote-by-stage',
-    moduleId: module.id,
+    
     templateUrl: './OpenQuotesByStageComponent.html'
 })
 

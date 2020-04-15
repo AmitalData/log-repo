@@ -14,7 +14,7 @@ import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditFCLChargeComponent.html',
 })
 

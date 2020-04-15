@@ -12,7 +12,7 @@ import {AutomationHistoryPM} from '../../../../Common/EntityPMs/AutomationHistor
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
-    moduleId: module.id,
+    
     selector: 'ViewAutomationHistoryComponent',
     templateUrl: './ViewAutomationHistoryComponent.html',
     providers: [AutomationHistoryExtendedPMService],

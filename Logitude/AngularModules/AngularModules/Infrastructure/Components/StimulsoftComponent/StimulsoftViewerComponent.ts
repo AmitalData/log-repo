@@ -26,7 +26,7 @@ import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'StimulsoftViewer',
     templateUrl: './StimulsoftViewerComponent.html',

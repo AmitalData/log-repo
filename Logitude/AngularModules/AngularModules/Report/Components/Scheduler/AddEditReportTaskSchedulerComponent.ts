@@ -12,7 +12,7 @@ import { QueryFilterItem } from '../Filters/QueryFilterItem';
 import { SchedulerDetails, ReportSchedulerDetails, ReportSchedulerRecepients } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditReportTaskSchedulerComponent.html',
 })
 

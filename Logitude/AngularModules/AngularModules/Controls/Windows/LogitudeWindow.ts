@@ -231,7 +231,7 @@ export class LogitudeWindow {
 }
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./LogitudeWindow.html",
 })
 

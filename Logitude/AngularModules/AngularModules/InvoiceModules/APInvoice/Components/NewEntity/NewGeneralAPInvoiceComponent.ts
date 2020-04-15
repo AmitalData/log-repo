@@ -33,7 +33,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewGeneralAPInvoiceComponent.html',
 })
 

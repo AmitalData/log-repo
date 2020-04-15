@@ -35,7 +35,7 @@ declare var changeFavicon: any;
 declare var changeTitle: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DSVMobileLoginProcessComponent.html',
     providers: [ApplicationTimersManager, LogitudeApplicationService, UserLastLoginPMService]
 })

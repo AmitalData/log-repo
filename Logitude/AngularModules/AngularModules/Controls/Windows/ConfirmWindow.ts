@@ -82,7 +82,7 @@ export class ConfirmWindow {
 
 @Component({
     selector: 'ConfirmWindow',
-    moduleId: module.id,
+    
     templateUrl: "./ConfirmWindow.html",
 })
 

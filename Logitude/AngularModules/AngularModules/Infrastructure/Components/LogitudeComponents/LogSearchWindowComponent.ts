@@ -31,7 +31,7 @@ import {CachedDataManager} from '../../Utilities/CachedDataManager';
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'LogSearchWindow',
     templateUrl: './LogSearchWindowComponent.html',

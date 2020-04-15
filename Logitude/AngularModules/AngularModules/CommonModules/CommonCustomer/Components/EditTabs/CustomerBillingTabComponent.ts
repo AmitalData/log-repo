@@ -12,7 +12,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerBillingTabComponent.html',
 })
 

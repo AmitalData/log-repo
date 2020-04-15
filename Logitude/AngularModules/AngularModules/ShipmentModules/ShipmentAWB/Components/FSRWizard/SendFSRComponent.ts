@@ -10,7 +10,7 @@ import {AWBOverviewTabComponent} from '../AWBWizard/Overview/AWBOverviewTabCompo
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './SendFSRComponent.html',
 })

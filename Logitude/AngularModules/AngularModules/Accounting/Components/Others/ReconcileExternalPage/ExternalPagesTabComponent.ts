@@ -23,7 +23,7 @@ import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMS
 import { reject } from 'q';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExternalPagesTabComponent.html'
 })
 

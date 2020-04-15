@@ -11,7 +11,7 @@ import {ImageParameter} from '../../../Infrastructure/DataContracts/ImageParamet
 declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, ArrayBufferToBase64: any;
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'ImageComponent',
     templateUrl: './ImageComponent.html',

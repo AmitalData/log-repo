@@ -10,7 +10,7 @@ import {BatchServicesDefinitionPM} from '../../../../Infrastructure/EntityPMs/Ba
 import {BatchServicesLogList} from '../../../../Infrastructure/EntityLists/BatchServicesLogList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BatchServicesComponent.html',
 })
 

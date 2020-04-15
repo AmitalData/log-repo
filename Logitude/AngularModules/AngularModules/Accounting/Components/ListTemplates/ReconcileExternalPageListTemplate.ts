@@ -14,7 +14,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReconcileExternalPageListTemplate.html',
 })
 

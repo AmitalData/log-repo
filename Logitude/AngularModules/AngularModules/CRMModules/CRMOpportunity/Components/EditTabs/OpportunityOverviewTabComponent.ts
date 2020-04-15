@@ -43,7 +43,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 
 @Component({
     selector: 'OpportunityOverviewTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OpportunityOverviewTabComponent.html',
 })
 

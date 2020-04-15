@@ -17,7 +17,7 @@ import { CommunicationLogStepListService } from '../../../../Common/Services/Ext
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'communication-LogField',
     templateUrl: './LogFieldComponent.html',

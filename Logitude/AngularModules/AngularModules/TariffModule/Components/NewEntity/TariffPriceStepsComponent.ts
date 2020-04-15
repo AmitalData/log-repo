@@ -6,7 +6,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffPriceStepsComponent.html',
 })
 

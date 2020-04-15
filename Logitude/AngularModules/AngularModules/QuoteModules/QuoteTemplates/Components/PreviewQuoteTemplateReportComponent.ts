@@ -10,7 +10,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
     selector: 'PreviewQuoteTemplateReportComponent',
-    moduleId: module.id,
+    
     templateUrl: './PreviewQuoteTemplateReportComponent.html',
 })
 

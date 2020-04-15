@@ -13,7 +13,7 @@ import {CustomerTenantAccessRequestExtendedPMService} from '../../../../Common/S
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
     selector: 'ActivationWizard',
-    moduleId: module.id,
+    
     templateUrl: './ActivationWizardComponent.html',
 })
 

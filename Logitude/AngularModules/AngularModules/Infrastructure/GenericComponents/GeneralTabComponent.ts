@@ -3,7 +3,7 @@ import {EntityArgs} from '../DataContracts/EntityArgs';
 import {SessionLocator} from '../Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GeneralTabComponent.html',
 })
 

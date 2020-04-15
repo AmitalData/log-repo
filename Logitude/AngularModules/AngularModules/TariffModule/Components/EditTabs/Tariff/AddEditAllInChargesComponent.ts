@@ -12,7 +12,7 @@ import { DateTool } from '../../../../Infrastructure/Tools';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAllInChargesComponent.html',
 })
 

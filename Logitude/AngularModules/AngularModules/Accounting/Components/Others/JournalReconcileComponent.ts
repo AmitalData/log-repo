@@ -33,7 +33,7 @@ import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMServic
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './JournalReconcileComponent.html',
     
 })

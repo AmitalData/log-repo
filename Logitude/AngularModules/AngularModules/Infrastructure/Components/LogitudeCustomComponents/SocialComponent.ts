@@ -9,7 +9,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {PostsArgs} from '../../../Infrastructure/DataContracts/PostsArgs';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'SocialComponent',
     templateUrl: './SocialComponent.html', 

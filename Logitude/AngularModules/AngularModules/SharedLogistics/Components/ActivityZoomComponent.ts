@@ -12,7 +12,7 @@ import {TenantPMService} from '../../Common/Services/StandardPMs/TenantPMService
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ActivityZoomControl',
     templateUrl: './ActivityZoomComponent.html',
     inputs: ['PartnerTypeId', 'DateParameter', 'DataContext', 'OnCloseWindowEvent'],

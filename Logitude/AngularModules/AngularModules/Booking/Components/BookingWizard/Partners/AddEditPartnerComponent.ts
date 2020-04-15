@@ -27,7 +27,7 @@ import {AddEditPartnerArgs} from '../../../Args';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPartnerComponent.html',
 })
 

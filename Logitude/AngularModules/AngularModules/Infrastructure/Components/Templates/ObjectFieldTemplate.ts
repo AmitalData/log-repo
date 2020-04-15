@@ -9,7 +9,7 @@ import {FieldValueResolver} from '../../Utilities/FieldValueResolver';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./ObjectFieldTemplate.html",
     selector: 'ObjectFieldTemplate',
     inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate','SpotlightDataTemplate'],

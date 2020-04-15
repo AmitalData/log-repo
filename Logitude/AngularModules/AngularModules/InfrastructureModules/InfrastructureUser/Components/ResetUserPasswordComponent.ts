@@ -14,7 +14,7 @@ import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'ResetUserPassword',
     templateUrl: './ResetUserPasswordComponent.html',

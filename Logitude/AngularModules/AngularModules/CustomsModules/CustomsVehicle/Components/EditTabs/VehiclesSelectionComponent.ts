@@ -26,7 +26,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 //import { VehicleMessagesService } from '../../../Services/WebServices/VehicleMessagesService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VehiclesSelectionComponent.html',
 })
 

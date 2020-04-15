@@ -17,7 +17,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'StimulsoftDesigner',
     templateUrl: './StimulsoftDesignerComponent.html',

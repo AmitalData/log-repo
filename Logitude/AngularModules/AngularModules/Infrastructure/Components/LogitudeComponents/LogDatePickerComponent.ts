@@ -36,7 +36,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
 
 @Component({
     selector: "LogDatePicker",
-    moduleId: module.id,
+    
     templateUrl: "./LogDatePickerComponent.html",
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, LogCalendarComponent, TimeSelectComponent, FixedPositionDirective],
     inputs: [

@@ -5,7 +5,7 @@ import { AgentSharedManifestList } from '../../../Common/EntityLists/AgentShared
 import { AgentSharedManifestPM } from '../../../Common/EntityPMs/AgentSharedManifestPM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedManifestHeaderComponent',
     templateUrl: './SharedManifestHeaderComponent.html',
 })

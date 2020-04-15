@@ -27,7 +27,7 @@ import { CustomsVendorPM } from '../../../Customs/EntityPMs/CustomsVendorPM';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsRequestsComponent.html',
 })
 

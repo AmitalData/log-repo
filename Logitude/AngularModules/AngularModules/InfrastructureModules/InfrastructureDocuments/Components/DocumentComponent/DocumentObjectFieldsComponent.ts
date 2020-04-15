@@ -12,7 +12,7 @@ import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTransl
 import {FormControl}   from '@angular/forms'; 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentObjectFields',
     templateUrl: './DocumentObjectFieldsComponent.html',
 })

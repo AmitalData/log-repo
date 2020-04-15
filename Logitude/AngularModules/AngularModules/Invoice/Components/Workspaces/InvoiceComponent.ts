@@ -9,7 +9,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'OperationsComponent',
-    moduleId: module.id,
+    
     templateUrl: './InvoiceComponent.html',
 })
 

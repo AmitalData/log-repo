@@ -16,7 +16,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 
 @Component({
     selector: 'DropBoxTestFile',
-    moduleId: module.id,
+    
     templateUrl: './DropBoxTestFileComponent.html',
 })
 

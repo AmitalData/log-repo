@@ -45,7 +45,7 @@ import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/User
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LoginComponent.html',
     providers: [ApplicationTimersManager, LogitudeApplicationService, UserLastLoginPMService]
 })

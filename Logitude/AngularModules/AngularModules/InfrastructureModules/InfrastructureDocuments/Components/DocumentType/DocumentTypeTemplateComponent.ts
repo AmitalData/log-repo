@@ -16,7 +16,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import {AppTool, DateTool, FileLoader} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentTypeTemplate',
     templateUrl: './DocumentTypeTemplateComponent.html',
     inputs: ['DocumentType','DocumentTypeTemplates', 'TypeTab'],

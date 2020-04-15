@@ -17,7 +17,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'NewQuoteTemplateComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewQuoteTemplateComponent.html',
 })
 

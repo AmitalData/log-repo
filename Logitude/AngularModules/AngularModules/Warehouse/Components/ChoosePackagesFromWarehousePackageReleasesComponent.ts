@@ -14,7 +14,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {WarehouseReleasePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 @Component({
-    moduleId: module.id,
+    
     selector: 'ChoosePackagesFromWarehousePackageReleasesComponent',
     templateUrl: './ChoosePackagesFromWarehousePackageReleasesComponent.html',
 })

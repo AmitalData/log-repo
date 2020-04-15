@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 declare var styleDisplay, EditgriditemStyling;
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'logitude-edit-grid',
     templateUrl: './EditableLogGridComponent.html',

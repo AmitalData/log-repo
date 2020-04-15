@@ -8,7 +8,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {CardList} from '../../../Common/EntityLists/CardList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./QuoteShortTitleComponent.html",
 })
 

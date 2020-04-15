@@ -16,7 +16,7 @@ import { Observable } from 'rxjs/Rx';
 import { DateTool } from '../../Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExportBI2ExcelControl.html',
 })
 

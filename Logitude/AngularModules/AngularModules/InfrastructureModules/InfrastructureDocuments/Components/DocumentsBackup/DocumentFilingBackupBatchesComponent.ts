@@ -9,7 +9,7 @@ import {DocumentFilingBackupBatchPM} from '../../../../Common/EntityPMs/Document
 import {DocumentFilingBackupBatchPMExtendedService} from '../../../../Common/Services/ExtendedPMs/DocumentFilingBackupBatchPMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentFilingBackupBatchesComponent',
     templateUrl: './DocumentFilingBackupBatchesComponent.html',
 })

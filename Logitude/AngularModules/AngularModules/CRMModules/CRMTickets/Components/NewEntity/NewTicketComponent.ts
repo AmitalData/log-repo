@@ -34,7 +34,7 @@ declare var window: any;
 
 @Component({
     selector: 'NewTicketComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewTicketComponent.html',
 })
 

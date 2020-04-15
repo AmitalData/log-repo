@@ -20,7 +20,7 @@ import {Headers} from '@angular/http';
 
 declare var window;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ScreenLayoutComponent.html',
 })
 

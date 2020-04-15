@@ -38,7 +38,7 @@ import { AnalyzeUnifreightInsuranceService } from '../../../DeclarationSupplierI
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendDeclarationComponent',
     templateUrl: "SendDeclarationComponent.html",
 })

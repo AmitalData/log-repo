@@ -13,7 +13,7 @@ import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditLastRateComponent.html',
 })
 

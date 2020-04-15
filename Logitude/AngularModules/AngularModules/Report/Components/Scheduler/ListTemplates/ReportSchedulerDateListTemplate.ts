@@ -6,7 +6,7 @@ import { ReportList } from '../../../../Report/EntityLists/ReportList';
 import { TaskReportSchedulerItemClass } from '../TaskReportSchedulerComponent';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ReportSchedulerDateListTemplate',
     templateUrl: './ReportSchedulerDateListTemplate.html',
 })

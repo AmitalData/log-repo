@@ -15,7 +15,7 @@ import {TenantManagementLicensePM} from '../../../Infrastructure/EntityPMs/Tenan
 import { filter } from 'rxjs/operator/filter';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LicensesManagementComponent.html',
 })
 

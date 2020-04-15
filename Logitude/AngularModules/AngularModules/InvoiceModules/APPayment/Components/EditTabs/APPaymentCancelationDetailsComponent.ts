@@ -9,7 +9,7 @@ import { APPaymentPM } from '../../../../Invoice/EntityPMs/APPaymentPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './APPaymentCancelationDetailsComponent.html',
 })
 

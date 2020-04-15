@@ -17,7 +17,7 @@ import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {RoutingHelper} from '../../../../../Shipment/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContainerFollowupWizardComponent.html',
 })
 

@@ -12,7 +12,7 @@ import { HomeComponent } from '../HomeComponent/HomeComponent';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BlockScreenComponent.html',
 })
 

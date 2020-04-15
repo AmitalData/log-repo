@@ -18,7 +18,7 @@ import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceRespo
 import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EditWarehouseReleaseComponent',
     templateUrl: './EditWarehouseReleaseComponent.html',
 

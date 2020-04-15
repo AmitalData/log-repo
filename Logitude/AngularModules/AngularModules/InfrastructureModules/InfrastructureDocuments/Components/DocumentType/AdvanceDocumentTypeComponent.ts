@@ -6,7 +6,7 @@ import {Component, OnInit }  from '@angular/core';
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'advancedocumentType',
     templateUrl: './AdvanceDocumentTypeComponent.html',
 })

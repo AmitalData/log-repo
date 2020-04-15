@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../Infrastructure/Services/EntityResourc
 
 @Component({
   selector: 'split-button',
-  moduleId: module.id,
+  
   //templateUrl: 'CustomsRequestsComponent.html',
   host: {
     '(document:click)': 'handleClick($event)',

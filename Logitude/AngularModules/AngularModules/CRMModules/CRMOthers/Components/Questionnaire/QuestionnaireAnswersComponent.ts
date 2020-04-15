@@ -24,7 +24,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './QuestionnaireAnswersComponent.html',
     providers: [QuestionnairePMService, QuestionnaireAnswerPMService],
 })

@@ -23,7 +23,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import { JournalOpService } from '../../Services/Others/JournalOpService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AccountingLoadTestComponent',
     templateUrl: './AccountingLoadTestComponent.html',
     //providers: [EntityArgs],

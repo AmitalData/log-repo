@@ -15,7 +15,7 @@ import {EntityResourceService} from '../../Services/EntityResourceService';
 
 @Component({
     selector: 'SessionComponent',
-    moduleId: module.id,
+    
     templateUrl: "./SessionComponent.html",
     providers: [PubSubFiltersChangeEventService],
 })

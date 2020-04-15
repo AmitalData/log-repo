@@ -7,7 +7,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditTariffLineComponent.html',
 })
 

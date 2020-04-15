@@ -15,7 +15,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TaxReportListTemplate.html',
 })
 

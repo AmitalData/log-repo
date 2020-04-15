@@ -22,7 +22,7 @@ import {ListComponentArgs} from '../../../../Infrastructure/Args';
 declare var makeAmBarChart, BarClick, PieClick, makePieChart, ResetItem, ResetItemPie: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ByInProgressComponent.html',
     encapsulation: ViewEncapsulation.None,
 })

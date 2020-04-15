@@ -24,7 +24,7 @@ import { filter } from 'rxjs/operator/filter';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './RuleUpdateHistoryComponent.html',
 })
 export class RuleUpdateHistoryComponent {

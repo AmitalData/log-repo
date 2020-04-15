@@ -11,7 +11,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewCustomerComponent.html',
 })
 

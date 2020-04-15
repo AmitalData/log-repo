@@ -17,7 +17,7 @@ declare var HTMLID: any;
 declare var System: any;
 declare var window: any;
 @Component({
-    moduleId: module.id,
+    
     selector: 'SocialMessagesComponent',
     templateUrl: './SocialMessagesComponent.html',
 

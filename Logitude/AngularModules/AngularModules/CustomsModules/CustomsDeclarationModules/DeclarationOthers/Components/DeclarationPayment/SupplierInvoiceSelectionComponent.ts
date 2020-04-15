@@ -12,7 +12,7 @@ import {DeclarationPaymentProtestPM} from '../../../../../Customs/EntityPMs/Decl
 import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceSelectionComponent.html',
 })
 

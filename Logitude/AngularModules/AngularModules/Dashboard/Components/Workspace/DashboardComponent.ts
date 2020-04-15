@@ -24,7 +24,7 @@ declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
     selector: 'DashBoard',
-    moduleId: module.id,
+    
     templateUrl: './DashBoardComponent.html',
     encapsulation: ViewEncapsulation.None,
 })

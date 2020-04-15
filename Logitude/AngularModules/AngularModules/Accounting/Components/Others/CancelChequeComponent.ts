@@ -12,7 +12,7 @@ import { JournalExtendedPMService } from '../../Services/ExtendedPMs/JournalExte
 
 @Component({
     selector: 'CancelChequeComponent',
-    moduleId: module.id,
+    
     templateUrl: './CancelChequeComponent.html',
 })
 export class CancelChequeComponent extends BaseComponent {

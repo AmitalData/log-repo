@@ -28,7 +28,7 @@ import {UserListService} from '../../Common/Services/StandardLists/UserListServi
 import {UserList} from '../../Common/EntityLists/UserList';
 declare var window;
 @Component({
-    moduleId: module.id,
+    
     selector: 'RelatedCustomerComponent',
     templateUrl: './RelatedCustomerComponent.html',
 })

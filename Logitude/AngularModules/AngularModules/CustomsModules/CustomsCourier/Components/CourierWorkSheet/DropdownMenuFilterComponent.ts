@@ -7,7 +7,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 
 @Component({
     selector: 'courier-filter-button',
-    moduleId: module.id,
+    
     host: { '(document:click)': 'handleClick($event)', },
     templateUrl: 'DropdownMenuFilterComponent.html',
 })

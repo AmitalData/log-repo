@@ -29,7 +29,7 @@ import {ContactListService} from '../../../Common/Services/StandardLists/Contact
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AddressPM} from '../../../Common/EntityPMs/AddressPM';
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedManifestStarted',
     templateUrl: './SharedManifestStarted.html',
     providers: [SharedAgentManifestService, AgentSharedLogisticsKeyPMService],

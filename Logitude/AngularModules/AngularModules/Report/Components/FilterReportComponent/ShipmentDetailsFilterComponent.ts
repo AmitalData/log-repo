@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 import { DateTool } from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ShipmentDetailsFilterComponent',
     templateUrl: './ShipmentDetailsFilterComponent.html',
     inputs: ['ReportsPreview']

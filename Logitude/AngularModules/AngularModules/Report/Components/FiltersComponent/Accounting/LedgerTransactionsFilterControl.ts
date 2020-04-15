@@ -11,7 +11,7 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LedgerTransactionsFilterControl.html',
 })
 

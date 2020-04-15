@@ -18,7 +18,7 @@ import { PackageTypeListService } from '../../Common/Services/StandardLists/Pack
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AddEditWarehouseEntryPackagesAndContainers',
     templateUrl: './AddEditWarehouseEntryPackagesAndContainers.html',
     providers: [WarehouseEntryPackagePMExtendedService],

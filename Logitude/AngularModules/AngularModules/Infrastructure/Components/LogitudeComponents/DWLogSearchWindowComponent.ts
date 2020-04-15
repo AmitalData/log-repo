@@ -36,7 +36,7 @@ import { filter } from 'rxjs/operators';
 ;
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'DWLogSearchWindow',
     templateUrl: './DWLogSearchWindowComponent.html',

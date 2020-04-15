@@ -26,7 +26,7 @@ import { LastRunDetailPM } from '../../../../Infrastructure/EntityPMs/LastRunDet
 import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/LastRunDetailExtendedPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: 'BIReportPreviewComponent.html',
 })
 

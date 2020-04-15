@@ -19,7 +19,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DepositionRequestComponent.html',
 
 })

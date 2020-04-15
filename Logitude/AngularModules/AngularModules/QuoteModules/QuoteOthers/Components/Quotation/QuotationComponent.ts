@@ -44,7 +44,7 @@ import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadMana
 
 @Component({
     selector: 'QuotationComponent',
-    moduleId: module.id,
+    
     templateUrl: './QuotationComponent.html',
 })
 export class QuotationComponent extends BaseComponent implements OnInit {

@@ -38,7 +38,7 @@ import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAMLineChart,window: any;  
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerOverviewTabComponent.html',
     providers: [ImageLibraryService]
 })

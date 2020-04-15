@@ -19,7 +19,7 @@ import { DeclarationExtendedListService } from '../../../Customs/Services/Extend
 
 @Component({
     selector: 'CourierBOLQueryComponent',
-    moduleId: module.id,
+    
     templateUrl: './CourierBOLQueryComponent.html',
 })
 

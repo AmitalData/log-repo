@@ -16,7 +16,7 @@ import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { retry } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MainMenuComponent.html',
 })
 

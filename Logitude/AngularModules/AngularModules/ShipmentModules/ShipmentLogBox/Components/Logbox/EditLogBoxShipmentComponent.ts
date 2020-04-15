@@ -25,7 +25,7 @@ import {PortExtendedPMService} from '../../../../Common/Services/ExtendedPMs/Por
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditLogBoxShipmentComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

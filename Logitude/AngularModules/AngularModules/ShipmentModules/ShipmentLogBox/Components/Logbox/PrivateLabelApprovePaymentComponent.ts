@@ -34,7 +34,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PrivateLabelApprovePaymentComponent.html'
 })
 
