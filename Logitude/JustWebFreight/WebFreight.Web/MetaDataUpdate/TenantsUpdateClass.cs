@@ -839,7 +839,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AccountingUpdate updateClass = new AccountingUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
             updateClass.LoadUpdateTenantZero(context);
-            performanceTimerLogger.LogMessage("Manual" + ",LoadObjectTablesToTenantZero");
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadObjectTablesToTenantZero");
 
             updateClass.LoadOtherFields(context);
             performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadOtherFields");
@@ -989,7 +989,7 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             
             updateClass.LoadObjectTablesToTenantZero(context);
-            performanceTimerLogger.LogMessage("Manual" + ",LoadObjectTablesToTenantZero");
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
             //updateClass.UpgradeClosedTablesForTenantZero();
 
             InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
