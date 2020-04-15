@@ -112,7 +112,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 GLAccountListQueryService glAccountQuery = new GLAccountListQueryService(MyContext);
-                var connectedPartners = glAccountQuery.GetAllConnectedPartnersByGLAccountId(glAccountId, tenant);
+                List<ShortPartnersDetails> connectedPartners = null;// glAccountQuery.GetAllConnectedPartnersByGLAccountId(glAccountId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, connectedPartners);
             }
