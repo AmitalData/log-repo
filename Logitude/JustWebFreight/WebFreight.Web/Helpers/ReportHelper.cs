@@ -100,6 +100,8 @@ namespace WebFreight.Web.Helpers
                                     FeatureId = report.FeatureId,
                                     FeatureUniqeCode = report.FeatureUniqeCode,
                                     AvailableForScheduling = report.AvailableForScheduling,
+                                    ExcelOnly = report.ExcelOnly,
+                                    
                                 };
                                 reportRepository.Add(newReport);
                                 myReports.Add(newReport);
@@ -233,27 +235,22 @@ namespace WebFreight.Web.Helpers
         }
 
    
-       private bool IsUsingFileStreamAndTiffImage(int tenant)
-        {
-            return (tenant == 1526 || tenant == 1) ? true : false;
-        }
+       //private bool IsUsingFileStreamAndTiffImage(int tenant)
+       // {
+       //     return (tenant == 1526 || tenant == 1) ? true : false;
+       // }
 
         public string GetSpecificPageFromStimulReportAsBase64(ReportFliter reportFliter)
         {
             string url = "";
-            string extension = "mdc"; //IsUsingFileStreamAndTiffImage(reportFliter.tenant) ? "tiff" : "mdc";
+            string extension = "tiff"; //IsUsingFileStreamAndTiffImage(reportFliter.tenant) ? "tiff" : "mdc";
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, extension, reportFliter.tenant);
             byte[] result = storageservice.Read(fileInfo);
             if (result != null)
             {
-               // if (IsUsingFileStreamAndTiffImage(reportFliter.tenant)) url = GetSpecificPageFromTiffImageAsBase64(reportFliter, result);
-               // else
-               // {
-                    StiReport stiReport = new StiReport();
-                    stiReport.LoadDocument(result);
-                    url = ExportStimulaImage(stiReport, reportFliter);
-               // }
+                url = GetSpecificPageFromTiffImageAsBase64(reportFliter, result);
+
             }
             return url;
         }
@@ -1926,15 +1923,7 @@ namespace WebFreight.Web.Helpers
 
         private string WriteReportToStorage(ReportFliter reportFliter, StiReport report)
         {
-            if (IsUsingFileStreamAndTiffImage(reportFliter.tenant))
-            {
-                SaveStimulReportUsingFileStream(reportFliter, report);
-            }
-            else
-            {
-                SaveReportMdcFileOnStorgeUsingMemoryStream(reportFliter, report);
-            }
-
+            SaveStimulReport(reportFliter, report);
             string url = "";
             if (!reportFliter.ReportsRunUsingWR)
             {
@@ -1943,38 +1932,51 @@ namespace WebFreight.Web.Helpers
             return url;
         }
 
-        private void SaveStimulReportUsingFileStream(ReportFliter reportFliter, StiReport report)
+        private void SaveStimulReport(ReportFliter reportFliter, StiReport report)
+        {
+            SaveStimulReportUsingFileStreamByFileType(reportFliter, report, "mdc");
+            SaveStimulReportUsingFileStreamByFileType(reportFliter, report, reportFliter.ExcelOnly ? "xlsx" : "tiff");
+        }
+
+
+        private void SaveStimulReportUsingFileStreamByFileType(ReportFliter reportFliter, StiReport report , string fileType)
         {
             try
             {
-                SaveStimulReportToMdcUsingFileStream(reportFliter, report);//mdc
-               // SaveStimulReportToTiffImageUsingFileStream(reportFliter, report);//tiff
-
+                string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + "." + fileType);
+                var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
+                if (fileType == "mdc") report.SaveDocument(fileStream);
+                else if (fileType == "tiff") report.ExportDocument(StiExportFormat.ImageTiff, fileStream, new StiTiffExportSettings() { PageRange = StiPagesRange.All , ImageResolution = 200 });
+                else if (fileType == "xlsx") new StiExcel2007ExportService().ExportExcel(report, fileStream, new StiExcel2007ExportSettings() { UseOnePageHeaderAndFooter = true });
+                fileStream.Close();
+                ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, fileType);
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SaveStimulReportUsingFileStream", null, null);
-                SaveReportMdcFileOnStorgeUsingMemoryStream(reportFliter, report);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SaveStimulReportUsingFileStream to "+ fileType + "file", null, null);
+                SaveStimulReportUsingMemoryStreamByFileType(reportFliter, report, fileType);
             }
         }
 
-
-        private void SaveStimulReportToMdcUsingFileStream(ReportFliter reportFliter, StiReport report)
+        private void SaveStimulReportUsingMemoryStreamByFileType(ReportFliter reportFliter, StiReport report, string fileType)
         {
-            string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + ".mdc");
-            var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
-            report.SaveDocument(fileStream);
-            fileStream.Close();
-            ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, "mdc");
-        }
+            var stream = new MemoryStream();
+            if (fileType == "mdc") report.SaveDocument(stream);
+            else if (fileType == "tiff") report.ExportDocument(StiExportFormat.ImageTiff, stream, new StiTiffExportSettings() { PageRange = StiPagesRange.All , ImageResolution = 200 });
+            else if (fileType == "xlsx") new StiExcel2007ExportService().ExportExcel(report, stream, new StiExcel2007ExportSettings() { UseOnePageHeaderAndFooter = true });
+            if (stream != null)
+            {
+                byte[] reportData = stream.ToArray();
+                if (reportData != null)
+                {
+                    if (string.IsNullOrEmpty(reportFliter.ReportKey) || !reportFliter.ReportsRunUsingWR) reportFliter.ReportKey = Guid.NewGuid().ToString();
+                    BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, fileType, reportFliter.tenant);
+                    fileInfo.FileSize = reportData.Length;
 
-        private void SaveStimulReportToTiffImageUsingFileStream(ReportFliter reportFliter, StiReport report)
-        {
-            string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + ".tiff");
-            var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);
-            report.ExportDocument(StiExportFormat.ImageTiff, fileStream, new StiTiffExportSettings() { PageRange = StiPagesRange.All});
-            fileStream.Close();
-            ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, "tiff");
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    storageservice.Write(reportData, fileInfo);
+                }
+            }
         }
 
         private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
@@ -1982,50 +1984,31 @@ namespace WebFreight.Web.Helpers
             BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, extension, reportFliter.tenant);
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             List<string> blockIdsList = new List<string>();
-            int bufferNumber = 0;
-            const int chunkSize = 1000000; // 1 MB
-            long sendSize = 0;
+            int bufferNumber = 0; long sendSize = 0;
             using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Open, FileAccess.Read))
             {
                 int bytesRead;
                 fileInfo.FileSize = fileStream.Length;
-                var buffer = new byte[chunkSize];
+                var buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
                 while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    sendSize += buffer.Length;
+                {  sendSize += buffer.Length;
                     var blockId = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
                     blockIdsList.Add(blockId);
                     storageservice.WriteBlock(buffer, sendSize, blockIdsList.ToArray(), bufferNumber, fileInfo);
                     bufferNumber += 1;
+                    buffer = new byte[GetChunkSize(fileStream.Length, sendSize)];
                 }
                 fileStream.Close();
             }
             File.Delete(tempFilePath);
         }
 
-
-
-        private void SaveReportMdcFileOnStorgeUsingMemoryStream(ReportFliter reportFliter, StiReport report)
+        private long GetChunkSize(long fileSize ,long sendSize)
         {
-            MemoryStream stream = new MemoryStream();
-            report.SaveDocument(stream);
-            if (stream != null)
-            {
-                byte[] reportData = stream.ToArray();
-                if (reportData != null)
-                {
-                    if (string.IsNullOrEmpty(reportFliter.ReportKey) || !reportFliter.ReportsRunUsingWR)
-                    {
-                        reportFliter.ReportKey = Guid.NewGuid().ToString();
-                    }
+            long chunkSize = 1000000;
+            if ((fileSize - sendSize) < chunkSize) chunkSize = fileSize - sendSize;
 
-                    BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@" + reportFliter.ReportName, "mdc",reportFliter.tenant);
-                    fileInfo.FileSize = reportData.Length;
-
-                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                    storageservice.Write(reportData, fileInfo);
-                }
-            }
+            return chunkSize;
         }
 
         private BlobFileInfo GetNewBlobFileInfo(string fileName,  string extension ,int tenant)
@@ -2192,6 +2175,8 @@ namespace WebFreight.Web.Helpers
                             LocalName = report.LocalName,
                             FeatureUniqeCode = report.FeatureUniqeCode,
                             AvailableForScheduling = report.AvailableForScheduling,
+                            ExcelOnly = report.ExcelOnly,
+                            
                         };
                         reportRepository.Add(newReport);
                         myReports.Add(newReport);

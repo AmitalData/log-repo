@@ -48,6 +48,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.DefaultTemplateId).HasColumnName("DefaultTemplateId");
             this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
             this.Property(t => t.AvailableForScheduling).HasColumnName("AvailableForScheduling");
+            this.Property(t => t.ExcelOnly).HasColumnName("ExcelOnly");
+            
+
 
             //this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);
             this.HasOptional(d => d.ReportGroup).WithMany().HasForeignKey(d => d.ReportGroupId);
