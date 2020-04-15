@@ -354,13 +354,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return accountListQuery;
         }
 
-        //public List<ShortPartnersDetails> GetAllConnectedPartnersByGLAccountId(string glAccountId, int tenant)
-        //{
-        //    CardQuery cardQuery = new CardQuery(tenant);
-        //    List<ShortPartnersDetails> shortConnectedPartnersDetails = cardQuery.GetConnectedPartnerIdsByGLAccountId(glAccountId, tenant);
-        //    return shortConnectedPartnersDetails;
-        //}
-
     }
 }
 	
