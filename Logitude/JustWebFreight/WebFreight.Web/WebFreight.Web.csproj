@@ -5051,6 +5051,7 @@
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.QuoteModel.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.ShipmentModel.cs" />
     <Compile Include="MetaDataUpdate\ObjectTablesKeys.cs" />
+    <Compile Include="MetaDataUpdate\PerformanceTimerLogger.cs" />
     <Compile Include="MetaDataUpdate\SendBox\DocumentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\AccountingUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\BookingUpdate.cs" />

@@ -1489,7 +1489,7 @@ namespace <#= UpdateClassnamespacestring #>
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -1532,11 +1532,14 @@ namespace <#= UpdateClassnamespacestring #>
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -1676,6 +1679,22 @@ public void GenerateAllTableMethods(string sourceFilePath)
 				<#=classname #>.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
 <#+
+
+	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
+	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
+	 string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	string IsCLosed = entity.Attribute(XName.Get("IsClosed")) != null ? entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'):"false"; 
+			string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
+   
+      	 
+	     
+    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs.") && IsMetadataOnlyTable == "false")
+    {
+#>
+				<#=classname #>.Fill<#= tableName.Trim('"') #>();
+<#+
+    }
+    
 			if(tableName == "General")
 				{
 #>
@@ -2055,56 +2074,7 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 	#>
 
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   <#+
-   foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
-    {
-	 
-	 var path= Host.ResolvePath(file);
-     XElement entity = XDocument.Load(path).Root; 
- 
-	    
-	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
-	 string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
-	if(tableName.Contains("."))
-    {
-		tableName = tableName.ToString().Split('.')[1];
-		dBTableName = dBTableName.ToString().Split('.')[1];
-          
-    }
-	string classname = tableName + "UpdateClass";
-	 
-	 
-		 #><#=""#>
-	   <#+
-	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
-	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
-	 string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
-	string IsCLosed = entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'); 
-			string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
-   
-      	 
-	    	if(IsMetadataOnlyTable == "true")
-	    	{
-                continue;
-	    	}
-    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs."))
-    {
-    #>
-			if(MetadataUpdateUtility.IsChangedMetadataTable("<#=tableName #>", ObjectTables, <#=classname #>.HashString))
-				<#=classname #>.Fill<#= tableName.Trim('"') #>();
-	<#+
-    }
-    }
-	#>
-
-        }
-
-  
-
-   <#+
+ <#+
 
 }
  

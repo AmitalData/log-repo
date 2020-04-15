@@ -174,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -214,11 +214,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -502,6 +505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 				this.ObjectContext.SaveChanges();
 				DWCategoriesUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				DWCategoriesUpdateClass.FillDWCategories();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("DWObjectField", ObjectTables, DWObjectFieldUpdateClass.HashString))
@@ -640,6 +644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 				this.ObjectContext.SaveChanges();
 				EventTypeCategoryUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				EventTypeCategoryUpdateClass.FillEventTypeCategory();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FollowUp", ObjectTables, FollowUpUpdateClass.HashString))
@@ -852,6 +857,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 				this.ObjectContext.SaveChanges();
 				PrepaidCollectUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				PrepaidCollectUpdateClass.FillPrepaidCollect();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QueueMessageMoreDetails", ObjectTables, QueueMessageMoreDetailsUpdateClass.HashString))
@@ -944,6 +950,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 				this.ObjectContext.SaveChanges();
 				SchedulerProcedureUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				SchedulerProcedureUpdateClass.FillSchedulerProcedure();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("SharedLogisticsInvitationStatus", ObjectTables, SharedLogisticsInvitationStatusUpdateClass.HashString))
@@ -1105,6 +1112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 				this.ObjectContext.SaveChanges();
 				VolumeUnitUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				VolumeUnitUpdateClass.FillVolumeUnit();
 			}
 
         }
@@ -1828,60 +1836,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel
 	   	   VolumeUnitUpdateClass.FillVolumeUnit();
 	
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("DWCategories", ObjectTables, DWCategoriesUpdateClass.HashString))
-				DWCategoriesUpdateClass.FillDWCategories();
-	
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("EventTypeCategory", ObjectTables, EventTypeCategoryUpdateClass.HashString))
-				EventTypeCategoryUpdateClass.FillEventTypeCategory();
-	
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("PrepaidCollect", ObjectTables, PrepaidCollectUpdateClass.HashString))
-				PrepaidCollectUpdateClass.FillPrepaidCollect();
-	
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("SchedulerProcedure", ObjectTables, SchedulerProcedureUpdateClass.HashString))
-				SchedulerProcedureUpdateClass.FillSchedulerProcedure();
-	
-	   
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("VolumeUnit", ObjectTables, VolumeUnitUpdateClass.HashString))
-				VolumeUnitUpdateClass.FillVolumeUnit();
-	
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }

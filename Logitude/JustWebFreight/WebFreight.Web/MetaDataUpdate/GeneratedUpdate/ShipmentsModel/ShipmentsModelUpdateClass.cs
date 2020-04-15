@@ -186,7 +186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -226,11 +226,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -342,6 +345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				AccountingInformationIdentifierUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				AccountingInformationIdentifierUpdateClass.FillAccountingInformationIdentifier();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AWBAdditionalHandlingInfo", ObjectTables, AWBAdditionalHandlingInfoUpdateClass.HashString))
@@ -388,6 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				AWBChargesCodeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				AWBChargesCodeUpdateClass.FillAWBChargesCode();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AWBCustomsInformation", ObjectTables, AWBCustomsInformationUpdateClass.HashString))
@@ -411,6 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				AWBCustomsInformationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				AWBCustomsInformationUpdateClass.FillAWBCustomsInformation();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AWBInformation", ObjectTables, AWBInformationUpdateClass.HashString))
@@ -434,6 +440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				AWBInformationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				AWBInformationUpdateClass.FillAWBInformation();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AWBOCI", ObjectTables, AWBOCIUpdateClass.HashString))
@@ -595,6 +602,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				CustomsTransferTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				CustomsTransferTypeUpdateClass.FillCustomsTransferType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsTransmissionsStatus", ObjectTables, CustomsTransmissionsStatusUpdateClass.HashString))
@@ -618,6 +626,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				CustomsTransmissionsStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				CustomsTransmissionsStatusUpdateClass.FillCustomsTransmissionsStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FBLStock", ObjectTables, FBLStockUpdateClass.HashString))
@@ -664,6 +673,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				HarmonizeCodeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				HarmonizeCodeUpdateClass.FillHarmonizeCode();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("InsideShipmentPackage", ObjectTables, InsideShipmentPackageUpdateClass.HashString))
@@ -710,6 +720,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				INTTRABookingStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				INTTRABookingStatusUpdateClass.FillINTTRABookingStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("INTTRABookingTransStatus", ObjectTables, INTTRABookingTransStatusUpdateClass.HashString))
@@ -733,6 +744,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				INTTRABookingTransStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				INTTRABookingTransStatusUpdateClass.FillINTTRABookingTransStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("INTTRADocumentType", ObjectTables, INTTRADocumentTypeUpdateClass.HashString))
@@ -756,6 +768,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				INTTRADocumentTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				INTTRADocumentTypeUpdateClass.FillINTTRADocumentType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ManifestStatus", ObjectTables, ManifestStatusUpdateClass.HashString))
@@ -779,6 +792,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				ManifestStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ManifestStatusUpdateClass.FillManifestStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("MessagingStock", ObjectTables, MessagingStockUpdateClass.HashString))
@@ -848,6 +862,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				OBLTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				OBLTypeUpdateClass.FillOBLType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("OtherParticipantId", ObjectTables, OtherParticipantIdUpdateClass.HashString))
@@ -871,6 +886,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				OtherParticipantIdUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				OtherParticipantIdUpdateClass.FillOtherParticipantId();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PickUpDeliveryPackageHarmonize", ObjectTables, PickUpDeliveryPackageHarmonizeUpdateClass.HashString))
@@ -917,6 +933,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				PickUpDeliveryTransportModeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				PickUpDeliveryTransportModeUpdateClass.FillPickUpDeliveryTransportMode();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Shipment", ObjectTables, ShipmentUpdateClass.HashString))
@@ -1055,6 +1072,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				ShipmentCustomerTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ShipmentCustomerTypeUpdateClass.FillShipmentCustomerType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentCustomsMessageType", ObjectTables, ShipmentCustomsMessageTypeUpdateClass.HashString))
@@ -1078,6 +1096,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				ShipmentCustomsMessageTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ShipmentCustomsMessageTypeUpdateClass.FillShipmentCustomsMessageType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentCustomsTransmission", ObjectTables, ShipmentCustomsTransmissionUpdateClass.HashString))
@@ -1124,6 +1143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				ShipmentLevelUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ShipmentLevelUpdateClass.FillShipmentLevel();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentOrderPackage", ObjectTables, ShipmentOrderPackageUpdateClass.HashString))
@@ -1262,6 +1282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				ShipmentPayableStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ShipmentPayableStatusUpdateClass.FillShipmentPayableStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentPickUpDelivery", ObjectTables, ShipmentPickUpDeliveryUpdateClass.HashString))
@@ -1354,6 +1375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 				this.ObjectContext.SaveChanges();
 				ShipmentReceivableStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ShipmentReceivableStatusUpdateClass.FillShipmentReceivableStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentType", ObjectTables, ShipmentTypeUpdateClass.HashString))
@@ -2365,100 +2387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 	   
 	   
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("AccountingInformationIdentifier", ObjectTables, AccountingInformationIdentifierUpdateClass.HashString))
-				AccountingInformationIdentifierUpdateClass.FillAccountingInformationIdentifier();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("AWBChargesCode", ObjectTables, AWBChargesCodeUpdateClass.HashString))
-				AWBChargesCodeUpdateClass.FillAWBChargesCode();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("AWBCustomsInformation", ObjectTables, AWBCustomsInformationUpdateClass.HashString))
-				AWBCustomsInformationUpdateClass.FillAWBCustomsInformation();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("AWBInformation", ObjectTables, AWBInformationUpdateClass.HashString))
-				AWBInformationUpdateClass.FillAWBInformation();
-	
-	   
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsTransferType", ObjectTables, CustomsTransferTypeUpdateClass.HashString))
-				CustomsTransferTypeUpdateClass.FillCustomsTransferType();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("CustomsTransmissionsStatus", ObjectTables, CustomsTransmissionsStatusUpdateClass.HashString))
-				CustomsTransmissionsStatusUpdateClass.FillCustomsTransmissionsStatus();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("HarmonizeCode", ObjectTables, HarmonizeCodeUpdateClass.HashString))
-				HarmonizeCodeUpdateClass.FillHarmonizeCode();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("INTTRABookingStatus", ObjectTables, INTTRABookingStatusUpdateClass.HashString))
-				INTTRABookingStatusUpdateClass.FillINTTRABookingStatus();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("INTTRABookingTransStatus", ObjectTables, INTTRABookingTransStatusUpdateClass.HashString))
-				INTTRABookingTransStatusUpdateClass.FillINTTRABookingTransStatus();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("INTTRADocumentType", ObjectTables, INTTRADocumentTypeUpdateClass.HashString))
-				INTTRADocumentTypeUpdateClass.FillINTTRADocumentType();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ManifestStatus", ObjectTables, ManifestStatusUpdateClass.HashString))
-				ManifestStatusUpdateClass.FillManifestStatus();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("OBLType", ObjectTables, OBLTypeUpdateClass.HashString))
-				OBLTypeUpdateClass.FillOBLType();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("OtherParticipantId", ObjectTables, OtherParticipantIdUpdateClass.HashString))
-				OtherParticipantIdUpdateClass.FillOtherParticipantId();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("PickUpDeliveryTransportMode", ObjectTables, PickUpDeliveryTransportModeUpdateClass.HashString))
-				PickUpDeliveryTransportModeUpdateClass.FillPickUpDeliveryTransportMode();
-	
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentCustomerType", ObjectTables, ShipmentCustomerTypeUpdateClass.HashString))
-				ShipmentCustomerTypeUpdateClass.FillShipmentCustomerType();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentCustomsMessageType", ObjectTables, ShipmentCustomsMessageTypeUpdateClass.HashString))
-				ShipmentCustomsMessageTypeUpdateClass.FillShipmentCustomsMessageType();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentLevel", ObjectTables, ShipmentLevelUpdateClass.HashString))
-				ShipmentLevelUpdateClass.FillShipmentLevel();
-	
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentPayableStatus", ObjectTables, ShipmentPayableStatusUpdateClass.HashString))
-				ShipmentPayableStatusUpdateClass.FillShipmentPayableStatus();
-	
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ShipmentReceivableStatus", ObjectTables, ShipmentReceivableStatusUpdateClass.HashString))
-				ShipmentReceivableStatusUpdateClass.FillShipmentReceivableStatus();
-	
-	   
-	   
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }
