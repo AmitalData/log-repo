@@ -230,6 +230,7 @@ namespace WebFreight.Web.DataProviders
         public string AccountManagerName { get; set; }
         public string AgentNameAddress { get; set; }
         public string OpenedBy { get; set; }
+        public byte[] AirlineLogo { get; set; }
     }
 
     public class CommodityLine
