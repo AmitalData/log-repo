@@ -14,6 +14,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { GLAccountExtendedListService } from '../../../../Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 import { ReportsPreviewComponent } from '../../ReportsPreviewComponent';
 import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
+import { CardExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CardExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -424,10 +425,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     }
 
     PrepareContactList() {
-        var gLAccountExtendedListService = new GLAccountExtendedListService();
+        var cardExtendedPMService = new CardExtendedPMService();
         var glAccountId = this.GetLookUpFieldValue(this.GLAccountId);
         if (glAccountId != null) {
-            gLAccountExtendedListService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
+            cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     var allContacts = response.Result;
                     if (allContacts != null && allContacts.length > 0) {
