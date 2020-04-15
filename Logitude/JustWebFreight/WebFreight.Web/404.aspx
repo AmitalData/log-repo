@@ -116,18 +116,19 @@ body {
 </head>
 
 <body>
-
-	<div id="notfound">
-		<div class="notfound">
-			<div class="notfound-404">
-				<h1>404</h1>
-			</div>
-			<h2>Oops! This Page Could Not Be Found</h2>
-			<p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable</p>
-			<a runat="server" onclick="GoToLoginPage()">Go To Homepage</a>
-		</div>
-	</div>
-
+     <form id="form1" runat="server"> 
+	            <div id="notfound">
+		            <div class="notfound">
+			            <div class="notfound-404">
+				            <h1>404</h1>
+			            </div>
+			            <h2>Oops! This Page Could Not Be Found</h2>
+			            <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable</p>
+                       <%-- <asp:LinkButton ID="LinkButton1" runat="server" OnClick="GoToHomeClick">Go To Homepage</asp:LinkButton>--%>
+                      
+		            </div>
+	            </div>
+           </form>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
 </html>

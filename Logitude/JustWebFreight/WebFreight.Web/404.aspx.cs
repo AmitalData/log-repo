@@ -14,25 +14,37 @@ namespace WebFreight.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var IsAngularURL = Request.RawUrl.Contains("/Angular");//.QueryString["Menu"];
-            if (IsAngularURL)
-            { 
-                IGlobalContext objectContext = GlobalContext.GetContext();
-                SettingRepository MySettingRepository = new SettingRepository(objectContext);
-                SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
-                var MySettings = MySettingQuery.GetSinglePM();
-                string RedirectUrl = "Angular" + MySettings.HtmlVersion + "/index.html";//?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
-                Response.Redirect("~/" + RedirectUrl);
-            }
-            else
+            if (!IsPostBack)
             {
-                HttpContext.Current.Response.StatusCode = 404;
-            }
+                var IsAngularURL = Request.RawUrl.Contains("/Angular");//.QueryString["Menu"];
+                if (IsAngularURL)
+                {
+                    IGlobalContext objectContext = GlobalContext.GetContext();
+                    SettingRepository MySettingRepository = new SettingRepository(objectContext);
+                    SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
+                    var MySettings = MySettingQuery.GetSinglePM();
+                    string RedirectUrl = "Angular" + MySettings.HtmlVersion + "/index.html";//?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
+                    Response.Redirect("~/" + RedirectUrl);
+                }
+                else
+                {
+                    HttpContext.Current.Response.StatusCode = 404;
+                }
+            } 
         }
+ 
 
-        protected void GoToLoginPage(object sender, EventArgs e)
+        protected void GoToHomeClick(object sender, EventArgs e)
         {
-            Response.Redirect("~");
+            try
+            {
+                HttpContext.Current.Response.Redirect("~");
+            }
+            catch (Exception)
+            {
+                 
+            }
+           
         }
     }
 }
