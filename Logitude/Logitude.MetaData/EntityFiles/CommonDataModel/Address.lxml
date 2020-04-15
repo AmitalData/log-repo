@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Address&quot;"
-  Code="&quot;01c1&quot;"
+  Code="&quot;ffd0&quot;"
   Name="&quot;Address&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -3490,7 +3490,7 @@
         IsCompositKey="false" />
       <DCField
         DCFieldName="&quot;City&quot;"
-        DCVersion="&quot;ApiV1&quot;"
+        DCVersion="&quot;&quot;"
         FieldName="&quot;City&quot;"
         IsKey="false"
         IsManualMapping="false"
@@ -3498,7 +3498,7 @@
         FieldsDataType="&quot;City&quot;"
         IsNullable="false"
         IsSpecialField="false"
-        IsCustomType="true"
+        IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
