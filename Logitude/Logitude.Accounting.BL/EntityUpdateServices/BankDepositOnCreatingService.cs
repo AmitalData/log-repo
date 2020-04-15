@@ -40,9 +40,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CashBookPM cashBookPM = GetCashbookById(depositPM.Tenant, depositPM.CashBookId);
             CheckCashbookAmount(depositPM, depositPM.Tenant, cashBookPM);
 
-            BankDepositingService depositor = new BankDepositingService(depositPM);
-            depositor.CreateJounal();
-            depositor.Deposit();
+            BankDepositJournalCreator depositJournalCreator = new BankDepositJournalCreator(depositPM);
+            depositJournalCreator.CreateJounal();
+
+            if (!depositPM.IsCashDeposit)
+            {
+                BankDepositingService depositor = new BankDepositingService(depositPM);
+                depositor.DepositCheques();
+            }
 
             UpdateCashbookTotals(depositPM, cashBookPM);
             SubmitCashbook(depositPM.Tenant, cashBookPM);

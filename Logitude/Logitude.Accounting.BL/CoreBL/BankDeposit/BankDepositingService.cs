@@ -41,29 +41,11 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
 
         }
 
-        public void Deposit()
+        public void DepositCheques()
         {
-            if (!DepositPM.IsCashDeposit)
-            {
                 DepositCashbookCheques();
                 UpdateChequesStatuses();
                 SetChequesFieldsForBankDepositLines();
-            }
-
-        }
-
-        public void CreateJounal()
-        {
-            journal = InitJournal();
-            CreateJournalLines();
-            SubmitJournal();
-        }
-       
-        private void CreateJournalLines()
-        {
-            List<ARPaymentChequePM> cheques = GetDepositCheques();
-            CreateCreditLinesForCashbook(cheques);
-            CreateDebitLinesForBank(cheques);
         }
 
 
@@ -81,20 +63,6 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             CashbookGLAccount = GetGLAccountById(CashbookPM.AccountId, true);
         }
 
-        private void SubmitJournal()
-        {
-            IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
-            var myJournalUpdateService = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), Tenant);
-            myJournalUpdateService.Update(journal, true);
-        }
-
-        private void CheckCashbookAmount()
-        {
-            if (DepositPM.ForeignAmount > CashbookPM.TotalAmount)
-            {
-                throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook", 0, ShowLocals));
-            }
-        }
         private void SubmitCashbook()
         {
             CashbookPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -111,52 +79,6 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             return cashBook;
         }
 
-        private JournalPM InitJournal()
-        {
-            JournalPM newJournal = new JournalPM
-            {
-                ChangeSetOp = ChangeSetOperation.Insert,
-                Tenant = DepositPM.Tenant,
-                CreateDate = GetCurrentDateTime(),
-                CreatedByUserId = DepositPM.CreatedByUserId,
-                UpdateDate = GetCurrentDateTime(),
-                UpdatedByUserId = DepositPM.UpdatedByUserId,
-                AccountingDate = DepositPM.AccountingDate,
-                TypeCode = "0", //Manual
-                StatusCode = "2", // Approved
-                AccountingEntityId = DepositPM.Id,
-                AccountingEntityReference = DepositPM.DepositNumber.ToString(),
-                ExternalNo = null,
-                ApproveDate = DepositPM.CreateDate,
-                ApprovedByUserId = DepositPM.CreatedByUserId,
-                AccountingEntityCode = DepositPM.IsCashDeposit ? "7" : "6"
-            };
-
-            return newJournal;
-        }
-        private void CreateCreditLinesForCashbook(List<ARPaymentChequePM> cheques)
-        {
-
-            if (DepositPM.IsCashDeposit)
-            {
-                JournalLinePM newCreditJournalLine = CreateLineForCashCashbook();
-                journal.JournalLines.Add(newCreditJournalLine);
-            }
-            else
-            {
-                int lineNumber = 0;
-
-                foreach (BankDepositLinePM depositLine in DepositPM.BankDepositLines)
-                {
-
-                    ARPaymentChequePM cheque = cheques.FirstOrDefault(d => d.Id == depositLine.ARPaymentChequeId);
-
-                    JournalLinePM newCreditJournalLine = CreateLineForCheque(ref lineNumber, depositLine, cheque);
-                    journal.JournalLines.Add(newCreditJournalLine);
-                }
-
-            }
-        }
         private void SetChequesFieldsForBankDepositLines()
         {
             List<ARPaymentChequePM> cheques = GetDepositCheques();
@@ -205,26 +127,6 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             return cashBookLinesPMs;
         }
 
-        private void CreateDebitLinesForBank(List<ARPaymentChequePM> cheques)
-        {
-            int lineNumber = journal.JournalLines.Max(d => d.Line);
-
-            if (DepositPM.IsCashDeposit)
-            {
-                JournalLinePM debitLine = CreateDebitLineForCashCashbook(lineNumber);
-                journal.JournalLines.Add(debitLine);
-            }
-            else
-            {
-                foreach (BankDepositLinePM depositLine in DepositPM.BankDepositLines)
-                {
-                    ARPaymentChequePM cheque = cheques.FirstOrDefault(d => d.Id == depositLine.ARPaymentChequeId);
-                    JournalLinePM chequeDebitLine = CreateDebitLineForChequeDeposit(ref lineNumber, depositLine, cheque);
-                    journal.JournalLines.Add(chequeDebitLine);
-                }
-            }
-        }
-
         private List<ARPaymentChequePM> GetDepositCheques()
         {
             List<string> chequeIds = DepositPM.BankDepositLines.Select(d => d.ARPaymentChequeId).ToList();
@@ -239,12 +141,6 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             cheque.ChangeSetOp = ChangeSetOperation.Update;
         }
 
-        private void SubmitCheque(ARPaymentChequePM cheque)
-        {
-            IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
-            var myChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), Tenant);
-            myChequeUpdateService.Update(cheque, false);
-        }
         private void SubmitCheques(List<ARPaymentChequePM> cheques)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(Tenant);
@@ -252,12 +148,6 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             myChequeUpdateService.UpdateMulti(cheques, new List<ARPaymentChequePM>(), new ARPaymentChequePM() , true);
         }
 
-        private ARPaymentChequePM GetARPaymentChequeById(string id)
-        {
-            ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(Tenant);
-            ARPaymentChequePM cheque = arpChequeQueryService.GetSingle(id, false, false);
-            return cheque;
-        }
         private List<ARPaymentChequePM> GetARPaymentChequesById(List<string> ids)
         {
             ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(Tenant);
@@ -290,77 +180,11 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             cashBookLineUpdateService.Update(cashBookLinePM, true);
         }
 
-        private CashBookLinePM GetCashbookLineConnectedToDepositLine(BankDepositLinePM depositLine)
-        {
-            CashBookLineQueryService cashBookLineQueryService = new CashBookLineQueryService(Tenant);
-            CashBookLinePM cashBookLinePM = cashBookLineQueryService.GetSingle(CashbookPM.Id, depositLine.ARPaymentChequeId, false, false);
-            return cashBookLinePM;
-        }
         private List<CashBookLinePM> GetCashbookLinesByChequesIds(List<string> chequeIds)
         {
             CashBookLineQueryService cashBookLineQueryService = new CashBookLineQueryService(Tenant);
             List<CashBookLinePM> cashBookLines = cashBookLineQueryService.GetLinesByChequesIds(chequeIds, CashbookPM.Id, Tenant);
             return cashBookLines;
-        }
-
-        private JournalLinePM CreateLineForCheque(ref int LineNumber,BankDepositLinePM depositLine, ARPaymentChequePM cheque)
-        {
-            JournalLinePM newCreditJournalLine = new JournalLinePM
-            {
-                ChangeSetOp = ChangeSetOperation.Insert,
-                Tenant = journal.Tenant,
-                Line = ++LineNumber,
-                ActionCode = "1", //Credit
-                DueDate = cheque.ValueDate,
-                LocalAmount = depositLine.LocalAmount,
-                ForeignAmount = depositLine.ForeignAmount,
-                CurrencyId = DepositPM.DepositCurrencyId,
-                DocumentDate = DepositPM.AccountingDate,
-                AccountingDate = DepositPM.AccountingDate,
-                ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount,
-
-                CreditAccountId = CashbookPM.AccountId
-            };
-
-            newCreditJournalLine.CreditControlAccountId = CashbookGLAccount?.ControlAccountId;
-
-
-            // opposit account
-            newCreditJournalLine.DebitAccountId
-                = cheque.ValueDate <= TenantServerConfigration.GetCurrentDateTime(DepositPM.Tenant)
-                                    ? BankGLAccount.Id : BankDeferedGLAccount.Id;
-
-            newCreditJournalLine.Reference1 = cheque.ChequeNumber;
-            newCreditJournalLine.Reference2 = DepositPM.DepositNumber.ToString();
-            return newCreditJournalLine;
-        }
-
-        private JournalLinePM CreateLineForCashCashbook()
-        {
-            JournalLinePM newCreditJournalLine = new JournalLinePM
-            {
-                ChangeSetOp = ChangeSetOperation.Insert,
-                Tenant = journal.Tenant,
-                Line = 1,
-                ActionCode = "1", //Credit
-                DueDate = DepositPM.CreateDate,
-                LocalAmount = DepositPM.LocalDepositAmount,
-                ForeignAmount = DepositPM.ForeignAmount,
-                CurrencyId = DepositPM.DepositCurrencyId,
-                DocumentDate = DepositPM.CreateDate,
-                AccountingDate = DepositPM.AccountingDate,
-                ExchangeRate = DepositPM.LocalDepositAmount / DepositPM.ForeignAmount,
-
-                CreditAccountId = CashbookPM.AccountId
-            };
-
-            newCreditJournalLine.CreditControlAccountId = CashbookGLAccount?.ControlAccountId;
-
-            // opposit account
-            newCreditJournalLine.DebitAccountId = BankGLAccount.Id;
-
-            newCreditJournalLine.Reference1 = DepositPM.DepositNumber.ToString();
-            return newCreditJournalLine;
         }
 
         private GLAccountPM GetGLAccountById(string id, bool getFromCache = false)
