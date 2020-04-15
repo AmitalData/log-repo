@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="ChargesExternalAccountsByProducts"
+  ShortName="ChargesExtAccountsByProducts"
   Schema="dbo"
   DBType="Main"
   Module="Common">
@@ -47,12 +48,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="UpdateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="ChargesTypeId"
     Type="varchar"
     Size="15">
@@ -65,6 +60,12 @@
     Size="2">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="UpdatedByUserId"

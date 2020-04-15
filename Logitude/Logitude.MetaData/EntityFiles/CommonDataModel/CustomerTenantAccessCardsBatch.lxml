@@ -4,7 +4,8 @@
   ObjectTableName="&quot;CustomerTenantAccessCardsBatch&quot;"
   IsNew="false"
   DBTableName="&quot;CustomerTenantAccessCardsBatches&quot;"
-  DBTableOldNames="CustomerTenantAccessCardsBatches"
+  DBTableShortName="&quot;CustomerTenantAccessCardBatchs&quot;"
+  DBTableOldNames="CustomerTenantAccessCardsBatches,CustomerTenantAccessCardBatchs"
   ObjectTableSingular="&quot;Customer Tenant Access Cards Batch&quot;"
   ObjectTablePlural="&quot;Customer Tenant Access Cards Batches&quot;"
   HasCustomFilter="false"
@@ -34,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customer Tenant Access Cards Batch&quot;"
-  Code="&quot;f8a6&quot;"
+  Code="&quot;1733&quot;"
   Name="&quot;CustomerTenantAccessCardsBatch&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -975,6 +976,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;CustomerTenantAccessCardsBatchHeaderScreen&quot;"
+    ObjectTableName="&quot;CustomerTenantAccessCardsBatch&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

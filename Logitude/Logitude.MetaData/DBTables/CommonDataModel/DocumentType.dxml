@@ -13,26 +13,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Code"
-    Type="varchar"
-    Size="7">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Name"
-    Type="nvarchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Notes"
     Type="nvarchar"
     Size="250">
@@ -40,37 +20,90 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsAir"
+    Name="Subject"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentTypeDefaultReportTemplateId"
+    ShortName="DocTypeDefaultReportTempId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentTypeDefaultHTMLTemplateId"
+    ShortName="DocTypeDefaultHTMLTempId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentTypeDefaultEditorTool"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomControl"
+    Type="varchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerRoleId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AgentRoleId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentsDataProviderCode"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SharedDocumentTypeCopyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsAirDigitalSignRequired"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="IsOcean"
+    Name="IsOceanDigitalSignRequired"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="IsInland"
+    Name="IsInlandDigitalSignRequired"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="IsDocIn"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsDocOut"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="InActive"
+    Name="IsReadOnly"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -101,109 +134,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ObjectTableId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Subject"
-    Type="nvarchar"
-    Size="500">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DocumentTypeDefaultReportTemplateId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DocumentTypeDefaultHTMLTemplateId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DocumentTypeDefaultEditorTool"
-    Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="TemplateFormatCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CustomControl"
-    Type="varchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CustomerRoleId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AgentRoleId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsDocumentOneTimePrintLimited"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LimitedPrintCopyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsEnabledForCustomers"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsCopiedAtSignup"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CountryCode"
-    Type="char"
-    Size="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DocumentsDataProviderCode"
-    Type="varchar"
-    Size="10">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsAgentSharedInMaster"
+    Name="IsAgentSharedInHouse"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -215,48 +146,10 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsAgentSharedInHouse"
+    Name="IsAgentSharedInMaster"
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="SharedDocumentTypeCopyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsAirDigitalSignRequired"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsOceanDigitalSignRequired"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsInlandDigitalSignRequired"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsSystemAdditionalPrintingFields"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="PrintingFieldsScreenCode"
-    Type="varchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="IsCustomerView"
@@ -265,13 +158,14 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsAgentView"
-    Type="bit">
+    Name="FileName"
+    Type="nvarchar"
+    Size="200">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="IsReadOnly"
+    Name="IsAgentView"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -284,11 +178,75 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="FileName"
-    Type="nvarchar"
-    Size="200">
+    Name="IsCopiedAtSignup"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PrintingFieldsScreenCode"
+    Type="varchar"
+    Size="60">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsSystemAdditionalPrintingFields"
+    ShortName="IsSysAdditionalPrintingFields"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsEnabledForCustomers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CountryCode"
+    Type="char"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsDocumentOneTimePrintLimited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsOcean"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAir"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="DocumentTypeCategoryCode"
@@ -298,16 +256,51 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
-    ForeignKeyColumn="ObjectTableId"
-    ReferencedTable="ObjectTables"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="TemplateFormatCode"
-    ReferencedTable="TemplateFormats"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
+  <Column
+    Name="TemplateFormatCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LimitedPrintCopyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsDocOut"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsDocIn"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsInland"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerRoleId"
     ReferencedTable="Roles"
@@ -327,6 +320,16 @@
     ForeignKeyColumn="DocumentTypeCategoryCode"
     ReferencedTable="DocumentTypeCategories"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TemplateFormatCode"
+    ReferencedTable="TemplateFormats"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
