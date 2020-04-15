@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="ShipmentPackage"
   DefaultText="&quot;Inside Shipment Package&quot;"
-  Code="&quot;4f6b&quot;"
+  Code="&quot;11a2&quot;"
   Name="&quot;InsideShipmentPackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -282,7 +282,8 @@
   <field
     Id="&quot;987181e7-3771-4046-93ad-0abcf2fa16b7&quot;"
     FieldName="&quot;OriginalInsideShipmentPackageId&quot;"
-    OldNames="OriginalInsideShipmentPackageId"
+    ShortName="OriginInsideShipmentPackageId"
+    OldNames="OriginalInsideShipmentPackageId,OriginInsideShipmentPackageId"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

@@ -296,6 +296,7 @@
   </Column>
   <Column
     Name="Transshipment1AdditionalMAWBOBLBL"
+    ShortName="Via1AdditionalMAWBOBLBL"
     Type="varchar"
     Size="20">
     <Constraints
@@ -303,6 +304,7 @@
   </Column>
   <Column
     Name="Transshipment2AdditionalMAWBOBLBL"
+    ShortName="Via2AdditionalMAWBOBLBL"
     Type="varchar"
     Size="20">
     <Constraints
@@ -310,6 +312,7 @@
   </Column>
   <Column
     Name="Transshipment3AdditionalMAWBOBLBL"
+    ShortName="Via3AdditionalMAWBOBLBL"
     Type="varchar"
     Size="20">
     <Constraints
@@ -317,6 +320,7 @@
   </Column>
   <Column
     Name="MainCarriageFinalDestinationPortId"
+    ShortName="MainCarriageFinalPortId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -324,12 +328,14 @@
   </Column>
   <Column
     Name="MainCarriageFinalDestinationETA"
+    ShortName="MainCarriageFinalDestETA"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="MainCarriageFinalDestinationATA"
+    ShortName="MainCarriageFinalDestATA"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -594,6 +600,7 @@
   </Column>
   <Column
     Name="AWBPrintingSecurityStatusEdited"
+    ShortName="AWBPrintSecurityStatusEdited"
     Type="bit">
     <Constraints
       Nullable="false" />

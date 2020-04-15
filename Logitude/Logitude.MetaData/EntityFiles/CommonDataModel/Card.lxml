@@ -44,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Card&quot;"
-  Code="&quot;d910&quot;"
+  Code="&quot;7e1e&quot;"
   Name="&quot;Card&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -1565,7 +1565,8 @@
   <field
     Id="&quot;db8bde12-bfaf-4f7b-8858-449dd37f8548&quot;"
     FieldName="&quot;SharedLogisticsInvitationStatusCode&quot;"
-    OldNames="SharedLogisticsInvitationStatusCode"
+    ShortName="SharedLogInvitationStatCode"
+    OldNames="SharedLogisticsInvitationStatusCode,SharedLogInvitationStatCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

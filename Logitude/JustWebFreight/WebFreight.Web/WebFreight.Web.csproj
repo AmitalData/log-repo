@@ -606,6 +606,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.aspx" />
     <Content Include="AccountingWebServices\Testers\AccountingBalanceTester.aspx" />
     <Content Include="AccountingWebServices\Testers\Reconcile.aspx" />
     <Content Include="AccountingWebServices\Testers\RevaluationWorkerRoleTester.aspx" />
@@ -927,6 +928,13 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AccountingModel\AccountingRegistrations.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.ReconcileExternalPageStatus.CS" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountTotalDateType.CS" />
@@ -3070,11 +3078,11 @@
     <Content Include="Integration Test\FullAccounting\FullAccountingTesting.postman_collection.json" />
     <Content Include="Integration Test\FullAccounting\PostmanDataCloud.csv" />
     <Content Include="Integration Test\FullAccounting\PrepareFullAccountingVars.postman_collection.json" />
-    <Content Include="Integration Test\LoginVars\CloudLoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Master\TeamAyman\LoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Master\TeamIslam\LoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamAyman\CloudLoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Logitude\TeamIslam\LoginVars.csv" />
+
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -6528,7 +6536,6 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
-    <Folder Include="Integration Test\LoginVars\Master\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />

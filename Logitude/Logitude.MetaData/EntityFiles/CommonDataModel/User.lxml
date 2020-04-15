@@ -2452,7 +2452,8 @@
   <field
     Id="&quot;09f97dcf-e190-4aea-b756-049e3474ff55&quot;"
     FieldName="&quot;IsShowContactDetailsInTheMobileApp&quot;"
-    OldNames="IsShowContactDetailsInTheMobileApp"
+    ShortName="IsShowContactDetailsInMobile"
+    OldNames="IsShowContactDetailsInTheMobileApp,IsShowContactDetailsInMobile"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -4880,7 +4881,8 @@
   <field
     Id="&quot;09f97dcf-e190-4aea-b756-049e3474ff55&quot;"
     FieldName="&quot;IsTwoFactorAuthenticationEnabled&quot;"
-    OldNames="IsTwoFactorAuthenticationEnabled"
+    ShortName="IsTwoFactorAuthenticateEnabled"
+    OldNames="IsTwoFactorAuthenticationEnabled,IsTwoFactorAuthenticateEnabled"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -6013,6 +6015,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AutomaticLastUpdateDate&quot;"
     ListPropertyPath="&quot;AutomaticLastUpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"

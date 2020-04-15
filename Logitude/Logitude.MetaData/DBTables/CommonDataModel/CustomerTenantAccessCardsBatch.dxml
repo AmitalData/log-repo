@@ -1,9 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="CustomerTenantAccessCardsBatches"
+  ShortName="CustomerTenantAccessCardBatchs"
   Schema="dbo"
   DBType="Main"
   Module="Common">
+  <Column
+    Name="Tenant"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Column
     Name="CustomerId"
     Type="varchar"
@@ -21,17 +29,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="BatchNumber"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int"
-    DefaultValue="0">
+    Name="CreateDateTime"
+    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
@@ -49,22 +48,18 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CreateDateTime"
-    Type="datetime">
+    Name="BatchNumber"
+    Type="varchar"
+    Size="15">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
-    Name="FromDatetime"
-    Type="datetime">
+    Name="TotalFailed"
+    Type="int">
     <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ToDatetime"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="TotalShipment"
@@ -81,10 +76,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="TotalFailed"
-    Type="int">
+    Name="FromDateTime"
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToDateTime"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CustomerId"

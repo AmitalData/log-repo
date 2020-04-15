@@ -444,6 +444,7 @@
   </Column>
   <Column
     Name="AccountedReceivablesInLocalCurrency"
+    ShortName="AccountedReceivablesInLocal"
     Type="float">
     <Constraints
       Nullable="false" />
@@ -1193,12 +1194,14 @@
   </Column>
   <Column
     Name="AccountedPayablesInLocalCurrency"
+    ShortName="AccountedPayablesInLocal"
     Type="float">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="AccountedPayablesInProfitCurrency"
+    ShortName="AccountedPayablesInProfit"
     Type="float">
     <Constraints
       Nullable="true" />
@@ -1249,12 +1252,14 @@
   </Column>
   <Column
     Name="OpenReceivablesInProfitCurrency"
+    ShortName="OpenReceivablesInProfit"
     Type="float">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="AccountedReceivablesInProfitCurrency"
+    ShortName="AccountedReceivablesInProfit"
     Type="float">
     <Constraints
       Nullable="true" />
@@ -1662,6 +1667,7 @@
   </Column>
   <Column
     Name="SupplementaryShipmentInformation1"
+    ShortName="SupplementaryShipmentInfo1"
     Type="varchar"
     Size="12">
     <Constraints
@@ -1669,6 +1675,7 @@
   </Column>
   <Column
     Name="SupplementaryShipmentInformation2"
+    ShortName="SupplementaryShipmentInfo2"
     Type="varchar"
     Size="12">
     <Constraints
@@ -1718,6 +1725,7 @@
   </Column>
   <Column
     Name="AccountingInformationIdentifierCode1"
+    ShortName="AccountingInfoIdentifierCode1"
     Type="varchar"
     Size="3">
     <Constraints
@@ -1725,6 +1733,7 @@
   </Column>
   <Column
     Name="AccountingInformationIdentifierCode2"
+    ShortName="AccountingInfoIdentifierCode2"
     Type="varchar"
     Size="3">
     <Constraints
@@ -1732,6 +1741,7 @@
   </Column>
   <Column
     Name="AccountingInformationIdentifierCode3"
+    ShortName="AccountingInfoIdentifierCode3"
     Type="varchar"
     Size="3">
     <Constraints
@@ -1739,6 +1749,7 @@
   </Column>
   <Column
     Name="AccountingInformationIdentifierCode4"
+    ShortName="AccountingInfoIdentifierCode4"
     Type="varchar"
     Size="3">
     <Constraints
@@ -1746,6 +1757,7 @@
   </Column>
   <Column
     Name="AccountingInformationIdentifierCode5"
+    ShortName="AccountingInfoIdentifierCode5"
     Type="varchar"
     Size="3">
     <Constraints
@@ -1753,6 +1765,7 @@
   </Column>
   <Column
     Name="AccountingInformationIdentifierCode6"
+    ShortName="AccountingInfoIdentifierCode6"
     Type="varchar"
     Size="3">
     <Constraints
@@ -1767,6 +1780,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationName1"
+    ShortName="OtherParticipantInfoName1"
     Type="varchar"
     Size="35">
     <Constraints
@@ -1774,6 +1788,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationName2"
+    ShortName="OtherParticipantInfoName2"
     Type="varchar"
     Size="35">
     <Constraints
@@ -1781,6 +1796,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationName3"
+    ShortName="OtherParticipantInfoName3"
     Type="varchar"
     Size="35">
     <Constraints
@@ -1788,6 +1804,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationReference1"
+    ShortName="OtherParticipantInfoReference1"
     Type="varchar"
     Size="15">
     <Constraints
@@ -1795,6 +1812,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationReference2"
+    ShortName="OtherParticipantInfoReference2"
     Type="varchar"
     Size="15">
     <Constraints
@@ -1802,6 +1820,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationReference3"
+    ShortName="OtherParticipantInfoReference3"
     Type="varchar"
     Size="15">
     <Constraints
@@ -1877,6 +1896,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationCode1"
+    ShortName="OtherParticipantInfoCode1"
     Type="varchar"
     Size="17">
     <Constraints
@@ -1884,6 +1904,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationCode2"
+    ShortName="OtherParticipantInfoCode2"
     Type="varchar"
     Size="17">
     <Constraints
@@ -1891,6 +1912,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationCode3"
+    ShortName="OtherParticipantInfoCode3"
     Type="varchar"
     Size="17">
     <Constraints
@@ -1898,6 +1920,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationPortCode1"
+    ShortName="OtherParticipantInfoPortCode1"
     Type="varchar"
     Size="3">
     <Constraints
@@ -1905,6 +1928,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationPortCode2"
+    ShortName="OtherParticipantInfoPortCode2"
     Type="varchar"
     Size="3">
     <Constraints
@@ -1912,6 +1936,7 @@
   </Column>
   <Column
     Name="OtherParticipantInformationPortCode3"
+    ShortName="OtherParticipantInfoPortCode3"
     Type="varchar"
     Size="3">
     <Constraints
@@ -2060,6 +2085,7 @@
   </Column>
   <Column
     Name="OtherParticipantIdCode1"
+    ShortName="OtherParticipantIdCode1"
     Type="varchar"
     Size="3">
     <Constraints
@@ -2067,6 +2093,7 @@
   </Column>
   <Column
     Name="OtherParticipantIdCode2"
+    ShortName="OtherParticipantIdCode2"
     Type="varchar"
     Size="3">
     <Constraints
@@ -2074,6 +2101,7 @@
   </Column>
   <Column
     Name="OtherParticipantIdCode3"
+    ShortName="OtherParticipantIdCode3"
     Type="varchar"
     Size="3">
     <Constraints
@@ -2350,6 +2378,7 @@
   </Column>
   <Column
     Name="ComputedForwarderShipmentNumber"
+    ShortName="ComputedForwarderShipmentNum"
     Type="varchar"
     Size="20">
     <Constraints
@@ -2438,6 +2467,7 @@
   </Column>
   <Column
     Name="WarehouseLegExpectedReleaseDate"
+    ShortName="WarehouseExpectedReleaseDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -2510,6 +2540,7 @@
   </Column>
   <Column
     Name="LocalCustomsTransmissionsStatusCode"
+    ShortName="LocalCustomsTransStatusCode"
     Type="varchar"
     Size="4">
     <Constraints
@@ -2517,6 +2548,7 @@
   </Column>
   <Column
     Name="LocalCustomsTransmissionsStatusError"
+    ShortName="LocalCustomsTransStatusError"
     Type="varchar"
     Size="250">
     <Constraints
@@ -2524,6 +2556,7 @@
   </Column>
   <Column
     Name="LocalCustomsTransmissionsStatusDate"
+    ShortName="LocalCustomsTransStatusDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -2609,6 +2642,7 @@
   </Column>
   <Column
     Name="OnCarriageAdditionalTransportModeCode"
+    ShortName="OnCarriageAddTransportModeCode"
     Type="varchar"
     Size="4">
     <Constraints
