@@ -146,7 +146,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -186,11 +186,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -331,6 +334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				WarehouseEntryStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				WarehouseEntryStatusUpdateClass.FillWarehouseEntryStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("WarehouseRelease", ObjectTables, WarehouseReleaseUpdateClass.HashString))
@@ -400,6 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				WarehouseReleaseStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				WarehouseReleaseStatusUpdateClass.FillWarehouseReleaseStatus();
 			}
 
         }
@@ -588,26 +593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   WarehouseReleaseStatusUpdateClass.FillWarehouseReleaseStatus();
 	
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("WarehouseEntryStatus", ObjectTables, WarehouseEntryStatusUpdateClass.HashString))
-				WarehouseEntryStatusUpdateClass.FillWarehouseEntryStatus();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("WarehouseReleaseStatus", ObjectTables, WarehouseReleaseStatusUpdateClass.HashString))
-				WarehouseReleaseStatusUpdateClass.FillWarehouseReleaseStatus();
-	
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }

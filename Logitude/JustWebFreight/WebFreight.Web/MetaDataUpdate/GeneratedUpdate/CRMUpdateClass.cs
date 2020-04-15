@@ -190,7 +190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -230,11 +230,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -465,6 +468,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				ActivityPriorityUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ActivityPriorityUpdateClass.FillActivityPriority();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ActivityStatus", ObjectTables, ActivityStatusUpdateClass.HashString))
@@ -488,6 +492,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				ActivityStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ActivityStatusUpdateClass.FillActivityStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ActivityTimeType", ObjectTables, ActivityTimeTypeUpdateClass.HashString))
@@ -511,6 +516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				ActivityTimeTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ActivityTimeTypeUpdateClass.FillActivityTimeType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ActivityType", ObjectTables, ActivityTypeUpdateClass.HashString))
@@ -534,6 +540,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				ActivityTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ActivityTypeUpdateClass.FillActivityType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("CallType", ObjectTables, CallTypeUpdateClass.HashString))
@@ -557,6 +564,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				CallTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				CallTypeUpdateClass.FillCallType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Correspondence", ObjectTables, CorrespondenceUpdateClass.HashString))
@@ -695,6 +703,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				EscalationActionTimeIndicatorUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				EscalationActionTimeIndicatorUpdateClass.FillEscalationActionTimeIndicator();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("EscalationPreDefinition", ObjectTables, EscalationPreDefinitionUpdateClass.HashString))
@@ -718,6 +727,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				EscalationPreDefinitionUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				EscalationPreDefinitionUpdateClass.FillEscalationPreDefinition();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Occasion", ObjectTables, OccasionUpdateClass.HashString))
@@ -810,6 +820,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				OccasionStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				OccasionStatusUpdateClass.FillOccasionStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("OccasionType", ObjectTables, OccasionTypeUpdateClass.HashString))
@@ -1362,6 +1373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				TicketCreatedByTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				TicketCreatedByTypeUpdateClass.FillTicketCreatedByType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TicketEscalation", ObjectTables, TicketEscalationUpdateClass.HashString))
@@ -1431,6 +1443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				TicketSourceUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				TicketSourceUpdateClass.FillTicketSource();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TicketStage", ObjectTables, TicketStageUpdateClass.HashString))
@@ -1500,6 +1513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				TimeUnitUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				TimeUnitUpdateClass.FillTimeUnit();
 			}
 
         }
@@ -2533,88 +2547,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   TimeUnitUpdateClass.FillTimeUnit();
 	
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ActivityPriority", ObjectTables, ActivityPriorityUpdateClass.HashString))
-				ActivityPriorityUpdateClass.FillActivityPriority();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ActivityStatus", ObjectTables, ActivityStatusUpdateClass.HashString))
-				ActivityStatusUpdateClass.FillActivityStatus();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ActivityTimeType", ObjectTables, ActivityTimeTypeUpdateClass.HashString))
-				ActivityTimeTypeUpdateClass.FillActivityTimeType();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ActivityType", ObjectTables, ActivityTypeUpdateClass.HashString))
-				ActivityTypeUpdateClass.FillActivityType();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("CallType", ObjectTables, CallTypeUpdateClass.HashString))
-				CallTypeUpdateClass.FillCallType();
-	
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("EscalationActionTimeIndicator", ObjectTables, EscalationActionTimeIndicatorUpdateClass.HashString))
-				EscalationActionTimeIndicatorUpdateClass.FillEscalationActionTimeIndicator();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("EscalationPreDefinition", ObjectTables, EscalationPreDefinitionUpdateClass.HashString))
-				EscalationPreDefinitionUpdateClass.FillEscalationPreDefinition();
-	
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("OccasionStatus", ObjectTables, OccasionStatusUpdateClass.HashString))
-				OccasionStatusUpdateClass.FillOccasionStatus();
-	
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("TicketCreatedByType", ObjectTables, TicketCreatedByTypeUpdateClass.HashString))
-				TicketCreatedByTypeUpdateClass.FillTicketCreatedByType();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("TicketSource", ObjectTables, TicketSourceUpdateClass.HashString))
-				TicketSourceUpdateClass.FillTicketSource();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("TimeUnit", ObjectTables, TimeUnitUpdateClass.HashString))
-				TimeUnitUpdateClass.FillTimeUnit();
-	
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }

@@ -148,7 +148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -188,11 +188,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -312,6 +315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				TMDayOffTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				TMDayOffTypeUpdateClass.FillTMDayOffType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TMEmployeeTime", ObjectTables, TMEmployeeTimeUpdateClass.HashString))
@@ -358,6 +362,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				TMLocationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				TMLocationUpdateClass.FillTMLocation();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TMOfficeHour", ObjectTables, TMOfficeHourUpdateClass.HashString))
@@ -676,28 +681,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("TMDayOffType", ObjectTables, TMDayOffTypeUpdateClass.HashString))
-				TMDayOffTypeUpdateClass.FillTMDayOffType();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("TMLocation", ObjectTables, TMLocationUpdateClass.HashString))
-				TMLocationUpdateClass.FillTMLocation();
-	
-	   
-	   
-	   
-	   
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }

@@ -158,7 +158,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -198,11 +198,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -332,6 +335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 				this.ObjectContext.SaveChanges();
 				AWBMessagesCCSTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				AWBMessagesCCSTypeUpdateClass.FillAWBMessagesCCSType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BatchServicesDefinition", ObjectTables, BatchServicesDefinitionUpdateClass.HashString))
@@ -401,6 +405,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 				this.ObjectContext.SaveChanges();
 				BluesnapContractTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				BluesnapContractTypeUpdateClass.FillBluesnapContractType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BluesnapTransaction", ObjectTables, BluesnapTransactionUpdateClass.HashString))
@@ -493,6 +498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 				this.ObjectContext.SaveChanges();
 				PaymentChannelUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				PaymentChannelUpdateClass.FillPaymentChannel();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentCurrency", ObjectTables, PaymentCurrencyUpdateClass.HashString))
@@ -516,6 +522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 				this.ObjectContext.SaveChanges();
 				PaymentCurrencyUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				PaymentCurrencyUpdateClass.FillPaymentCurrency();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentMethod", ObjectTables, PaymentMethodUpdateClass.HashString))
@@ -539,6 +546,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 				this.ObjectContext.SaveChanges();
 				PaymentMethodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				PaymentMethodUpdateClass.FillPaymentMethod();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("RecurringPeriod", ObjectTables, RecurringPeriodUpdateClass.HashString))
@@ -562,6 +570,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 				this.ObjectContext.SaveChanges();
 				RecurringPeriodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				RecurringPeriodUpdateClass.FillRecurringPeriod();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TenantAddOn", ObjectTables, TenantAddOnUpdateClass.HashString))
@@ -677,6 +686,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 				this.ObjectContext.SaveChanges();
 				TenantTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				TenantTypeUpdateClass.FillTenantType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("WebhookKeys", ObjectTables, WebhookKeysUpdateClass.HashString))
@@ -1121,48 +1131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("AWBMessagesCCSType", ObjectTables, AWBMessagesCCSTypeUpdateClass.HashString))
-				AWBMessagesCCSTypeUpdateClass.FillAWBMessagesCCSType();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("BluesnapContractType", ObjectTables, BluesnapContractTypeUpdateClass.HashString))
-				BluesnapContractTypeUpdateClass.FillBluesnapContractType();
-	
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentChannel", ObjectTables, PaymentChannelUpdateClass.HashString))
-				PaymentChannelUpdateClass.FillPaymentChannel();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentCurrency", ObjectTables, PaymentCurrencyUpdateClass.HashString))
-				PaymentCurrencyUpdateClass.FillPaymentCurrency();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentMethod", ObjectTables, PaymentMethodUpdateClass.HashString))
-				PaymentMethodUpdateClass.FillPaymentMethod();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("RecurringPeriod", ObjectTables, RecurringPeriodUpdateClass.HashString))
-				RecurringPeriodUpdateClass.FillRecurringPeriod();
-	
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("TenantType", ObjectTables, TenantTypeUpdateClass.HashString))
-				TenantTypeUpdateClass.FillTenantType();
-	
-	   
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }

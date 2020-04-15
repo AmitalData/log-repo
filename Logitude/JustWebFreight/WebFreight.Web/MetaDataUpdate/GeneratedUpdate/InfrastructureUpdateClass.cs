@@ -155,7 +155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -195,11 +195,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -303,6 +306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				BatchTaskExecutionStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				BatchTaskExecutionStatusUpdateClass.FillBatchTaskExecutionStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BIReport", ObjectTables, BIReportUpdateClass.HashString))
@@ -395,6 +399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				BIReportsTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				BIReportsTypeUpdateClass.FillBIReportsType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BusinessProcessQueue", ObjectTables, BusinessProcessQueueUpdateClass.HashString))
@@ -625,6 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				ToggleUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ToggleUpdateClass.FillToggle();
 			}
 
         }
@@ -985,37 +991,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   ToggleUpdateClass.FillToggle();
 	
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("BatchTaskExecutionStatus", ObjectTables, BatchTaskExecutionStatusUpdateClass.HashString))
-				BatchTaskExecutionStatusUpdateClass.FillBatchTaskExecutionStatus();
-	
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("BIReportsType", ObjectTables, BIReportsTypeUpdateClass.HashString))
-				BIReportsTypeUpdateClass.FillBIReportsType();
-	
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("Toggle", ObjectTables, ToggleUpdateClass.HashString))
-				ToggleUpdateClass.FillToggle();
-	
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }
