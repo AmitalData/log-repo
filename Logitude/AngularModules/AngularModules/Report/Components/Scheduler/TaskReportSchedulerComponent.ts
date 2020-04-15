@@ -163,7 +163,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.Taskscolumns.push({
             FieldName: "Recepients",
             DataTypeCode: 'String',
-            Display: 'Recepients',
+            Display: 'Recipients',
             Styles: { width: '160px' },
             HtmlListComponentName: 'ReportSchedulerDateListTemplate',
             HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
