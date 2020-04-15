@@ -114,14 +114,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 if (MyEntity.MainAddress != null)
                 {
                     AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant);
-                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City.Code))
+                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City))
                     {
                         address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
                     }
 
-                    else if(!string.IsNullOrEmpty(MyEntity.MainAddress.City.Name))
+                    else if(!string.IsNullOrEmpty(MyEntity.MainAddress.City))
                     {                        
-                        address.City = MyEntity.MainAddress.City.Name;
+                        address.City = MyEntity.MainAddress.City;
                     }
                     
                     address.AddressTypeId = "M";
@@ -149,14 +149,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 if (MyEntity.BillingAddress != null)
                 {
                     AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.BillingAddress, Tenant);
-                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City.Code))
+                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
                     {
                         address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
                     }
 
-                    else if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City.Name))
+                    else if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
                     {
-                        address.City = MyEntity.BillingAddress.City.Name;
+                        address.City = MyEntity.BillingAddress.City;
                     }
 
                     address.AddressTypeId = "B";
