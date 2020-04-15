@@ -94,31 +94,46 @@ namespace WebFreight.Web.Helpers
                             }
                         }
 
-                        // save body with correct image links to body.html
-                        // then you can try to open body.html in browser, it should workd fine.
-                        // all body html and attachment are save to current winmail.dat folder\temp
-                        string htmlFile = string.Format("{0}\\body.html", folder);
-                        using (var htmlFs = new FileStream(htmlFile, FileMode.Create))
-                        {
-                            htmlFs.Seek(0, SeekOrigin.Begin);
-                            byte[] htmlData = Encoding.UTF8.GetBytes(bodyHtml);
-                            htmlFs.Write(htmlData, 0, htmlData.Length);
-                            htmlFs.Close();
-                        }
-
+                        
                         int y = attachments.Length;
                         for (int x = 0; x < y; x++)
                         {
                             Attachment tatt = attachments[x];
                             if (tatt != null && tatt.Name != null && !tatt.Name.ToLower().Contains(".rtf"))
                             {
-                                attachmentsFiles.Add(new FileAttachment()
+                                byte[]  intputStream = tatt.Content;
+                                if (tatt.Name == "BODY000.HTM")
                                 {
-                                    ContentLength = tatt.Content.Length,
-                                    ContentType = tatt.ContentType,
-                                    FileName = tatt.Name,
-                                    InputStream = tatt.Content,
-                                });
+                                    // save body with correct image links to body.html
+                                    // then you can try to open body.html in browser, it should workd fine.
+                                    // all body html and attachment are save to current winmail.dat folder\temp
+                                    string htmlFile = string.Format("{0}\\body.html", folder);
+                                    using (var htmlFs = new FileStream(htmlFile, FileMode.Create))
+                                    {
+                                        htmlFs.Seek(0, SeekOrigin.Begin);
+                                        intputStream = Encoding.UTF8.GetBytes(bodyHtml);
+                                        attachmentsFiles.Add(new FileAttachment()
+                                        {
+                                            ContentLength = intputStream.Length,
+                                            ContentType = tatt.ContentType,
+                                            FileName = tatt.Name,
+                                            InputStream = intputStream,
+                                        });
+                                        htmlFs.Write(intputStream, 0, intputStream.Length);
+                                        htmlFs.Close();
+                                    }
+                                }
+                                else
+                                {
+                                    attachmentsFiles.Add(new FileAttachment()
+                                    {
+                                        ContentLength = intputStream.Length,
+                                        ContentType = tatt.ContentType,
+                                        FileName = tatt.Name,
+                                        InputStream = intputStream,
+                                    });
+                                }
+                               
                             }
                         }
                     }
