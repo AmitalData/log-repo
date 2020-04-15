@@ -1,11 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Helpers;
-using Logitude.BL.Interfaces;
-using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -14,6 +10,7 @@ using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,7 +29,9 @@ using WebFreight.Web.Helpers;
             InterestDataProvider InterestReportDP = new InterestDataProvider();
             InterestReportQueryService InterestReportQuery = new InterestReportQueryService(tenant);
             InterestReportPM InteerstReportPM = InterestReportQuery.GetSingle(entityId, true, false);
-            InterestReportService interestTransactionQuery = new InterestReportService();
+            InterestReportService interestReportService = new InterestReportService();
+            List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
+
             List<InterestReportLinesByDateProvider> InterestReportLines = InteerstReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
             {
                 FromDate = d.FromDate,
@@ -45,8 +44,8 @@ using WebFreight.Web.Helpers;
                 CreditInterestPercentage = d.CreditInterestPercentage,
                 CalculationDetails = d.CalculationDetails,
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
-                TotalLocalAmount = interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant).TotalLocalAmount,
-                InterestTransactionList = interestTransactionQuery.GetAllInterestTransactionByDate(entityId, d.FromDate, tenant).interestTransactionLists.Select (a =>
+                TotalLocalAmount = interestTransactionLists ==null ? 0: interestTransactionLists.Sum(s => s.LocalAmount),
+                InterestTransactionList = interestTransactionLists ==null ?null: interestTransactionLists.Where(s=> s.InterestValueDate.Date == d.FromDate.Date).Select (a =>
                 new InterestTransactionProvider
                 {
                     EntityType = a.InterestEntityIconCode,

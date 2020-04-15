@@ -118,6 +118,7 @@
   </Column>
   <Column
     Name="IsShowContactDetailsInTheMobileApp"
+    ShortName="IsShowContactDetailsInMobile"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -145,6 +146,7 @@
   </Column>
   <Column
     Name="IsTwoFactorAuthenticationEnabled"
+    ShortName="IsTwoFactorAuthenticateEnabled"
     Type="bit">
     <Constraints
       Nullable="false" />

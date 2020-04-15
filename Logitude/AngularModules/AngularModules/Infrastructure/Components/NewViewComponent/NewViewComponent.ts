@@ -79,7 +79,7 @@ export class NewViewComponent {
     ValidationErrorsList: string[] = []; 
     CreateBtnText: string = TextCodeTranslator.Translate("General.B.Create");
     public serviceArgs: ServiceArgs;
-    public _http: Http;
+    public _http: HttpClient;
     public BooleanValues = ["True", "False", "No Filter"];
     public ShareTabIsVisible: boolean = false;
     public IsSharedByMessageVisible: boolean = false;
@@ -89,7 +89,7 @@ export class NewViewComponent {
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this.serviceArgs.http = ServiceHelper.HttpClient;
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this.removedQueryFilters = [];
         if (this.GeneralEntitiesArgs == null) {
             this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
@@ -333,14 +333,14 @@ export class NewViewComponent {
 
             this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
                 .subscribe((response: any) => {
-                    this.queryColumnsList = response.json();
+                    this.queryColumnsList = response;
                     this.queryColumnsList = this.queryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
                     if (this.queryColumnsList.length == 0) {
                         var zeroColumnsList: any[] = [];
                         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
-                            .subscribe((response) => {
-                                zeroColumnsList = response.json();
+                            .subscribe((response: any) => {
+                                zeroColumnsList = response;
                                 zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
                                 zeroColumnsList.forEach((querycolumn, key) => {
                                     var newcolumn = new QueryColumnPM();

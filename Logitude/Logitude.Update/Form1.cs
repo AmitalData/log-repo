@@ -3847,6 +3847,13 @@ User/Pass",
                 thread.IsBackground = true;
                 thread.Start();
             }
+
+            else if(this.AirlineLogosCheckBox.Checked == true)
+            {
+                Thread thread = new Thread(() => UpdateLogosForAllTenants());
+                thread.IsBackground = true;
+                thread.Start();
+            }
         }
 
         private void UpdateLogos()
@@ -3896,6 +3903,98 @@ User/Pass",
                 cardRepository.SubmitChanges();
             }
 
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+
+        private void UpdateLogosForAllTenants()
+        {
+            SetControlPropertyValue(UpdateLogosLabel, "Text", "Updating...");
+            SetControlPropertyValue(UpdateLogosLabel, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            timer1.Enabled = true;
+            timer1.Start();
+
+            Uploader uploaderService = new Uploader();
+            DirectoryInfo di = new DirectoryInfo(@FilePathTextBox.Text);
+            FileInfo[] images = di.GetFiles("*.png");
+
+            if(images.Count() > 0)
+            {
+                List<string> imagesNames = images.Select(d => d.Name).ToList();
+                List<string> airlineCodes = new List<string>();
+                foreach(string name in imagesNames)
+                {
+                    string[] namesArray = name.Split('.');
+                    airlineCodes.Add(namesArray[0]);
+                }
+
+                ICommonDataContext context = CommonDataContext.GetContext(0);
+                CardRepository cardRepository = new CardRepository(context);
+                List<Card> airlines = context.Cards.Where(d => d.PartnerTypeId == "AL" && airlineCodes.Contains(d.Code)).ToList();
+
+                int myCount = 0;
+                var isUpdated = false;
+                foreach (Card airline in airlines)
+                {
+                    string result = "";
+                    FileInfo image = images.Where(d => d.Name == airline.Code + ".png").FirstOrDefault();
+
+                    if (image != null)
+                    {
+                        byte[] bytesData = File.ReadAllBytes(FilePathTextBox.Text + "\\" + airline.Code + ".png");
+
+                        if (bytesData != null)
+                        {
+                            string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+                            result = this.UploadImage(image.Name, bytesData, image.Length, image.Length, blockIdlist, 0, airline.Tenant, image.Extension, airline.Id, null);
+
+                            if (!string.IsNullOrEmpty(result))
+                            {
+                                if (airline.Tenant == 0)
+                                {
+                                    airline.ImageDetailId = result;
+                                    isUpdated = true;
+                                }
+                                else
+                                {
+                                    if (string.IsNullOrEmpty(airline.ImageDetailId))
+                                    {
+                                        airline.ImageDetailId = result;
+                                        isUpdated = true;
+                                    }
+                                }
+
+                                if (isUpdated)
+                                {
+                                    cardRepository.Update(airline);
+                                }
+                            }
+                        }
+                    }
+
+                    if (myCount == 1000)
+                    {
+                        if (isUpdated)
+                        {
+                            cardRepository.SubmitChanges();
+                        }
+                        myCount = 0;
+                        isUpdated = false;
+                    }
+
+                    myCount++;
+                }
+
+                cardRepository.SubmitChanges();
+            }
+            
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
 
@@ -3961,9 +4060,7 @@ User/Pass",
             BatchTaskTester batchTaskTester = new BatchTaskTester();
             batchTaskTester.Show();
         }
-
-
-
+        
         private void button48_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(() => UpdateRules());

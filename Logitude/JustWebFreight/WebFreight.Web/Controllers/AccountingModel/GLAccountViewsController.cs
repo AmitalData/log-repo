@@ -98,6 +98,31 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage GetAllConnectedPartnersByGLAccountId(string glAccountId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                GLAccountListQueryService glAccountQuery = new GLAccountListQueryService(MyContext);
+                List<ShortPartnersDetails> connectedPartners = null;// glAccountQuery.GetAllConnectedPartnersByGLAccountId(glAccountId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, connectedPartners);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetInsertControlAccount(string ControlAccountId,string ChartOfAccountsId)
         {
             try
@@ -716,10 +741,5 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public decimal Total { get; set; }
         public string PeriodName { get; set; }
     }
-
-    
-
-
-
 }
 	 

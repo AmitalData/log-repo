@@ -176,7 +176,7 @@ namespace WarehouseDataViews
                     if (dataTypeCode == "PickList") fieldDisplay = fieldDisplay + "Key";
                     if (dataTypeCode == "Date")
                     {
-                        result += ",CASE WHEN " + fieldCode + " ='1-1-1' or  " + fieldCode + " ='2-2-2' or  " + fieldCode + " ='3-3-3'  THEN null ELSE CONVERT(" + GetDataWarehouseSqlFieldType(customField) + "," + fieldCode + ")" + " END as " + "[c_" + fieldDisplay + "]";
+                        result += ",CASE WHEN CONVERT(date," + fieldCode + ")  ='1-1-1' or  CONVERT(date," + fieldCode + ") ='2-2-2' or  CONVERT(date," + fieldCode + ") ='3-3-3'  THEN null ELSE CONVERT(" + GetDataWarehouseSqlFieldType(customField) + "," + fieldCode + ")" + " END as " + "[c_" + fieldDisplay + "]";
                     }
                     else
                     {

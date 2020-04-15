@@ -13,13 +13,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="FieldCode"
-    Type="varchar"
-    Size="200">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -31,13 +24,6 @@
     Size="30">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="ObjectTableId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="FieldName"
@@ -233,6 +219,7 @@
   </Column>
   <Column
     Name="DisplayInSearchWindowFiltersIndex"
+    ShortName="SearchWindowFiltersIndex"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -431,25 +418,14 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="AllowedinAutomationConditions"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="AutomationEmailRecipient"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="CanAutomateSetValue"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="AllowedInCustomerFieldsSettings"
+    ShortName="AllowedInCustFieldsSettings"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -472,59 +448,6 @@
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="CopyToDW"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DisplayOnLookUpLocal"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="FullNameTextCodeCode"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="HelpTextCodeCode"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ListTextCodeCode"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ShortNameTextCodeCode"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DisplayInAutomationAsEnitity"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="RecordType"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="ConverterName"
@@ -582,21 +505,102 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CanAutomateSetValue"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AllowedinAutomationConditions"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="HelpTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FullNameTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ListTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShortNameTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CopyToDW"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DisplayOnLookUpLocal"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RecordType"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DisplayInAutomationAsEnitity"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FieldCode"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="EnableFullscreenTextBox"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ObjectTableId"
-    ReferencedTable="ObjectTables"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="DataTypeCode"
     ReferencedTable="FieldDataTypes"
@@ -606,7 +610,8 @@
     ForeignKeyColumn="HelpTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="LookUpTableId"
     ReferencedTable="ObjectTables"
@@ -616,12 +621,14 @@
     ForeignKeyColumn="ListTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="ShortNameTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="MultiTableId"
     ReferencedTable="ObjectTables"
@@ -636,6 +643,11 @@
     ForeignKeyColumn="AgentPermissionTypeCode"
     ReferencedTable="PermissionTypes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />

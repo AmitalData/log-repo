@@ -407,6 +407,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return journalPM;
         }
 
+        public JournalPM GetSinglePMForInterest(string id, int tenant)
+        {
+     
+ 
+            JournalPM pm  = (from a in context.Journals
+                             where a.Id == id && a.Tenant == tenant
+                              select new JournalPM()
+                              {
+                                  Id = a.Id,
+                                  JournalNumber = a.JournalNumber,
+
+                              }).FirstOrDefault();
+
+
+            return pm;
+        }
         public JournalPM GetSinglePM(string id, int tenant)
         {
             Journal poco = null;

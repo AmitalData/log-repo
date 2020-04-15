@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ImageLibraryService} from '../../../Common/Services/Others/ImageLibraryService';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -184,11 +184,13 @@ export class ImageComponent implements AfterViewInit, OnInit {
         var file: any = UploadLogoFile(this.ImageFileHtmlId);
 
         if (file) {
-
             var imageType: string = file.type ? file.type.toLowerCase() : "";
-            if (imageType == "image/jpeg" || imageType == "image/jpg") {
+
+            if (imageType == "image/jpeg" || imageType == "image/jpg" || imageType == "image/png") {
                 this.ArrayBufferToBase64(file, "images", width, height, this);
-            } else if (this.EntityName == "Quotation" && file.type && imageType == "image/png") {
+            }
+
+            else if (this.EntityName == "Quotation" && file.type && imageType == "image/png") {
                 this.ArrayBufferToBase64(file, "images", width, height, this);
             }
         }

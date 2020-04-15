@@ -36,7 +36,25 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             repository = arPaymentRepository;
         }
+        public ARPaymentPM GetSinglePMForInterest(string id, int tenant)
+        {
+            ARPaymentPM payment = (from a in repository.context.ARPayments 
+                                   where a.Id == id && a.Tenant == tenant
+                                   select new ARPaymentPM()
+                                   {
+                                       Id = a.Id,
+                                       PaymentNo = a.PaymentNo,
+                                       Tenant = a.Tenant,
 
+                                   }).FirstOrDefault();
+            if (payment!=null)
+            {
+                payment = SetJournalFields(payment);
+            }
+
+            return payment;
+
+        }
         public ARPaymentPM GetSinglePM(string id, int tenant)
         {
             ARPaymentPM payment = (from a in repository.context.ARPayments.Include("LocalCurrency").Include("Status").Include("TransferStatus").Include("PaymentCurrency").Include("BillToCard").Include("TransferStatus").Include("SATTransferStatus").Include("AccountingPaymentMethod").Include("Branch")

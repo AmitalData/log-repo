@@ -15,7 +15,6 @@ export class WarehouseEntryMenuButtonsHandler {
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
-        this.Listen();
     }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
@@ -31,6 +30,9 @@ export class WarehouseEntryMenuButtonsHandler {
                                 if (this.EntityPM.StatusCode == "CAEA") {
                                     button.IsDisabled = true;
                                 }
+                                else {
+                                    button.IsDisabled = false;
+                                }
                                 break;
                             }
                     }
@@ -39,10 +41,9 @@ export class WarehouseEntryMenuButtonsHandler {
         }
     }
 
-    isButtonClicked: boolean = false;
     public MenuButtonClick(menuButton: MenuButtonPM) {
-        if (!this.isButtonClicked) {
-            this.isButtonClicked = true;
+        var errors = [];
+        if (errors.length == 0) {
 
             switch (menuButton.EventCode) {
                 case "CancelEntry":
@@ -56,21 +57,12 @@ export class WarehouseEntryMenuButtonsHandler {
                     }
             }
         }
-    }
-
-    Listen() {
-        if (this.entityArgs.EditComponent != null) {
-            this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                this.isButtonClicked = false;
-                if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                }
-
-            });
-
-
+        else {
+            this.entityArgs.EditComponent.ValidationErrorsList = [];
+            this.entityArgs.EditComponent.ValidationErrorsList = errors;
         }
     }
+
     IsNoConnectedReleaseEntity: boolean;
     IsThereConnectedWarehouses() {
         var warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
@@ -92,41 +84,40 @@ export class WarehouseEntryMenuButtonsHandler {
     }
     
     CancelEntry() {
-        this.isButtonClicked = false;
-
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 400;
         confirmWindow.Title = "Cancel Entry";
         if (this.IsNoConnectedReleaseEntity) {
             confirmWindow.Show("Confirm cancelling this entry");
+            confirmWindow.YesButtonText = "Confirm";
+            confirmWindow.NoButtonText = "Cancel";
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.CurrentSession.StartBusyIndicator("Cancel Entry");
+                    var warehouseEntryPMExtendedService: WarehouseEntryPMExtendedService = new WarehouseEntryPMExtendedService();
+                    warehouseEntryPMExtendedService.CancelEntry(this.EntityPM).subscribe((response: ServiceResponse) => {
+                        var pmResponse: ServiceResponse = response;
+
+                        this.CurrentSession.StopBusyIndicator();
+
+                        if (!pmResponse.HasError) {
+                            this.EntityPM = pmResponse.Result;
+                            this.entityArgs.EditComponent.SaveChanges();
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+
+                        }
+                        else {
+                            this.entityArgs.EditComponent.ValidationErrorsList = pmResponse.ErrorsArray;
+                        }
+
+                    });
+                }
+            });
         }
         else {
-            confirmWindow.Show("Please confirm disconnecting all connected releases to cancel your entry");
+            confirmWindow.Show("You should cancel all connected releases first.");
+            confirmWindow.YesButtonText = "Ok";
+            confirmWindow.ShowNoButton = false;
         }
-        confirmWindow.YesButtonText = "Confirm";
-        confirmWindow.NoButtonText = "Cancel";
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CurrentSession.StartBusyIndicator("Cancel Entry");
-                var warehouseEntryPMExtendedService: WarehouseEntryPMExtendedService = new WarehouseEntryPMExtendedService();
-                warehouseEntryPMExtendedService.CancelEntry(this.EntityPM).subscribe((response: ServiceResponse) => {
-                    var pmResponse: ServiceResponse = response;
-
-                    this.CurrentSession.StopBusyIndicator();
-
-                    if (!pmResponse.HasError) {
-                        this.EntityPM = pmResponse.Result;
-                        this.CurrentSession.FireEvent("CancelEntry");
-                        this.entityArgs.EditComponent.SaveChanges();
-
-                    }
-                    else {
-                        this.entityArgs.EditComponent.ValidationErrorsList = pmResponse.ErrorsArray;
-                    }
-
-                });
-            }
-
-        });
     }
 }

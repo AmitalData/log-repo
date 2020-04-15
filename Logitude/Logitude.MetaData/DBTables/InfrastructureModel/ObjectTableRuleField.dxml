@@ -63,7 +63,8 @@
     ForeignKeyColumn="ObjectFieldId"
     ReferencedTable="ObjectFields"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="ObjectTableRuleId"
     ReferencedTable="ObjectTableRules"

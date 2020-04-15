@@ -11,6 +11,7 @@ using WebFreight.Web.Helpers.TicketAnalyzer;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using EAGetMail;
+using System.Text;
 
 namespace WebFreight.Web.Helpers
 {
@@ -40,31 +41,108 @@ namespace WebFreight.Web.Helpers
                 }
                 if (fileName != null && fileName.ToLower().Contains("winmail.dat"))
                 {
-                    Attachment[] tatts = null;
+                    Attachment[] attachments = null;
                     try
                     {
                         Mail oMail = new Mail("EG-C1508812802-00231-D7D3CB86FA99TU25-C22U9T5EED9826FF");
-                        tatts = Mail.ParseTNEF(ReadFully(request.Files[i].InputStream), true);
+                        attachments = Mail.ParseTNEF(ReadFully(request.Files[i].InputStream), true);
+
+                        // make a folder to store attachments.
+                        string folder = string.Format("{0}\\temp", Path.GetDirectoryName(fileName));
+                        if (!Directory.Exists(folder))
+                        {
+                            Directory.CreateDirectory(folder);
+                        }
+
+
+                        string bodyHtml = "";
+                        // find html body.
+                        for (int m = 0; m < attachments.Length; m++)
+                        {
+                            var attachment = attachments[m];
+                            string extension = Path.GetExtension(attachment.Name);
+                            if (string.Compare(attachment.Name, 0, "body00", 0, "body00".Length, true) == 0 &&
+                                string.Compare(extension, ".htm", true) == 0)
+                            {
+                                bodyHtml = Encoding.UTF8.GetString(attachment.Content);
+                                break;
+                            }
+                        }
+
+                        // parse all attachments except body
+                        for (int k = 0; k < attachments.Length; k++)
+                        {
+                            var attachment = attachments[k];
+                            if (string.Compare(attachment.Name, 0, "body00", 0, "body00".Length, true) == 0)
+                            {
+                                continue;
+                            }
+
+                            string contentId = attachment.ContentID;
+                            string attachmentPath = string.Format("{0}\\{1}", folder, attachment.Name);
+                            attachment.SaveAs(attachmentPath, true);
+
+                            // in email html body, the image link syntax is: <img src="cid:[attachment content id]">
+                            // but it is not working in normal web browser, so we need to replace cid link to real attachment file path.
+                            if (contentId.Length > 0)
+                            {
+                                string cidLink = string.Format("cid:{0}", contentId);
+                                if (bodyHtml.IndexOf(cidLink) != -1)
+                                {
+                                    bodyHtml = bodyHtml.Replace(cidLink, attachmentPath);
+                                }
+                            }
+                        }
+
+                        
+                        int y = attachments.Length;
+                        for (int x = 0; x < y; x++)
+                        {
+                            Attachment tatt = attachments[x];
+                            if (tatt != null && tatt.Name != null && !tatt.Name.ToLower().Contains(".rtf"))
+                            {
+                                byte[]  intputStream = tatt.Content;
+                                if (tatt.Name == "BODY000.HTM")
+                                {
+                                    // save body with correct image links to body.html
+                                    // then you can try to open body.html in browser, it should workd fine.
+                                    // all body html and attachment are save to current winmail.dat folder\temp
+                                    string htmlFile = string.Format("{0}\\body.html", folder);
+                                    using (var htmlFs = new FileStream(htmlFile, FileMode.Create))
+                                    {
+                                        htmlFs.Seek(0, SeekOrigin.Begin);
+                                        intputStream = Encoding.UTF8.GetBytes(bodyHtml);
+                                        attachmentsFiles.Add(new FileAttachment()
+                                        {
+                                            ContentLength = intputStream.Length,
+                                            ContentType = tatt.ContentType,
+                                            FileName = tatt.Name,
+                                            InputStream = intputStream,
+                                        });
+                                        htmlFs.Write(intputStream, 0, intputStream.Length);
+                                        htmlFs.Close();
+                                    }
+                                }
+                                else
+                                {
+                                    attachmentsFiles.Add(new FileAttachment()
+                                    {
+                                        ContentLength = intputStream.Length,
+                                        ContentType = tatt.ContentType,
+                                        FileName = tatt.Name,
+                                        InputStream = intputStream,
+                                    });
+                                }
+                               
+                            }
+                        }
                     }
+
                     catch (Exception ep)
                     {
 
                     }
-                    int y = tatts.Length;
-                    for (int x = 0; x < y; x++)
-                    {
-                        Attachment tatt = tatts[x];
-                        if (tatt != null && tatt.Name != null && !tatt.Name.ToLower().Contains(".rtf"))
-                        {
-                            attachmentsFiles.Add(new FileAttachment()
-                            {
-                                ContentLength = tatt.Content.Length,
-                                ContentType = tatt.ContentType,
-                                FileName = tatt.Name,
-                                InputStream = tatt.Content,
-                            });
-                        }
-                    }
+
                 }
                 else
                 {

@@ -27,12 +27,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InActive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="IsExternalCodesFromTable"
     Type="bit">
     <Constraints
@@ -40,12 +34,6 @@
   </Column>
   <Column
     Name="IsExternalCodesSyncEnabled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsExternalCodesFromAPI"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -81,6 +69,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="AllowMinusInvoiceLines"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="ShowDownloadScreen"
     Type="bit">
     <Constraints
@@ -99,19 +93,26 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="AllowARPaymentsTransfer"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AllowMinusInvoiceLines"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="AllowPositiveAmountsInTheCreditNote"
+    ShortName="AllowPstvAmountsInCrdtNote"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsExternalCodesFromAPI"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AllowARPaymentsTransfer"
     Type="bit">
     <Constraints
       Nullable="false" />

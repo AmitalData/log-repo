@@ -38,6 +38,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string AccountCurrencyId  { get; set; }
        [DataMember]
        public bool IsCancelled  { get; set; }
+       [DataMember]
+       public string AccountLocalName  { get; set; }
    }
 
 }

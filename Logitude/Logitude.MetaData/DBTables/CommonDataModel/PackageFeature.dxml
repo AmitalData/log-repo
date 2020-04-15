@@ -48,5 +48,6 @@
     ForeignKeyColumn="FeatureId"
     ReferencedTable="Features"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
 </Table>

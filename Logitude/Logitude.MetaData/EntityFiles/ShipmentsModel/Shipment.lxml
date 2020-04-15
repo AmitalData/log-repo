@@ -6299,7 +6299,8 @@
   <field
     Id="&quot;e130c43c-619b-4a1a-b7db-8e78324de50b&quot;"
     FieldName="&quot;AccountedReceivablesInLocalCurrency&quot;"
-    OldNames="AccountedReceivablesInLocalCurrency"
+    ShortName="AccountedReceivablesInLocal"
+    OldNames="AccountedReceivablesInLocalCurrency,AccountedReceivablesInLocal"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -18879,7 +18880,8 @@
   <field
     Id="&quot;274c3c3a-caf1-4589-9859-b99d2257fa3e&quot;"
     FieldName="&quot;AccountedPayablesInLocalCurrency&quot;"
-    OldNames="AccountedPayablesInLocalCurrency"
+    ShortName="AccountedPayablesInLocal"
+    OldNames="AccountedPayablesInLocalCurrency,AccountedPayablesInLocal"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -18958,7 +18960,8 @@
   <field
     Id="&quot;1e92877d-d411-44f3-99a3-5fe129425daa&quot;"
     FieldName="&quot;AccountedPayablesInProfitCurrency&quot;"
-    OldNames="AccountedPayablesInProfitCurrency"
+    ShortName="AccountedPayablesInProfit"
+    OldNames="AccountedPayablesInProfitCurrency,AccountedPayablesInProfit"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -20277,7 +20280,8 @@
   <field
     Id="&quot;ac750193-bd47-4f69-bb6d-1d58ad525352&quot;"
     FieldName="&quot;OpenReceivablesInProfitCurrency&quot;"
-    OldNames="OpenReceivablesInProfitCurrency"
+    ShortName="OpenReceivablesInProfit"
+    OldNames="OpenReceivablesInProfitCurrency,OpenReceivablesInProfit"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -20356,7 +20360,8 @@
   <field
     Id="&quot;cbd62179-6d71-470c-b23c-7705403c658f&quot;"
     FieldName="&quot;AccountedReceivablesInProfitCurrency&quot;"
-    OldNames="AccountedReceivablesInProfitCurrency"
+    ShortName="AccountedReceivablesInProfit"
+    OldNames="AccountedReceivablesInProfitCurrency,AccountedReceivablesInProfit"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -31673,7 +31678,8 @@
   <field
     Id="&quot;4acc5c66-51d5-43cb-ac01-05e8aa2eea69&quot;"
     FieldName="&quot;SupplementaryShipmentInformation1&quot;"
-    OldNames="SupplementaryShipmentInformation1"
+    ShortName="SupplementaryShipmentInfo1"
+    OldNames="SupplementaryShipmentInformation1,SupplementaryShipmentInfo1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -31748,7 +31754,8 @@
   <field
     Id="&quot;a2ab2dfd-4dc1-4609-a072-888f796f38e8&quot;"
     FieldName="&quot;SupplementaryShipmentInformation2&quot;"
-    OldNames="SupplementaryShipmentInformation2"
+    ShortName="SupplementaryShipmentInfo2"
+    OldNames="SupplementaryShipmentInformation2,SupplementaryShipmentInfo2"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -32273,7 +32280,8 @@
   <field
     Id="&quot;4751120f-f6fe-4180-a04c-e48c4976b416&quot;"
     FieldName="&quot;AccountingInformationIdentifierCode1&quot;"
-    OldNames="AccountingInformationIdentifierCode1"
+    ShortName="AccountingInfoIdentifierCode1"
+    OldNames="AccountingInformationIdentifierCode1,AccountingInfoIdentifierCode1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -32351,7 +32359,8 @@
   <field
     Id="&quot;74a8fe8f-2ab6-40c2-b0eb-3c5c03ad0072&quot;"
     FieldName="&quot;AccountingInformationIdentifierCode2&quot;"
-    OldNames="AccountingInformationIdentifierCode2"
+    ShortName="AccountingInfoIdentifierCode2"
+    OldNames="AccountingInformationIdentifierCode2,AccountingInfoIdentifierCode2"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -32429,7 +32438,8 @@
   <field
     Id="&quot;b427a4b2-9624-49ac-bcbd-03e73e86c1e2&quot;"
     FieldName="&quot;AccountingInformationIdentifierCode3&quot;"
-    OldNames="AccountingInformationIdentifierCode3"
+    ShortName="AccountingInfoIdentifierCode3"
+    OldNames="AccountingInformationIdentifierCode3,AccountingInfoIdentifierCode3"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -32507,7 +32517,8 @@
   <field
     Id="&quot;d0831d64-9276-44f2-a6f6-db7897226b99&quot;"
     FieldName="&quot;AccountingInformationIdentifierCode4&quot;"
-    OldNames="AccountingInformationIdentifierCode4"
+    ShortName="AccountingInfoIdentifierCode4"
+    OldNames="AccountingInformationIdentifierCode4,AccountingInfoIdentifierCode4"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -32585,7 +32596,8 @@
   <field
     Id="&quot;6e9b31b5-41a6-4f5b-8ff6-42ed43bd4bee&quot;"
     FieldName="&quot;AccountingInformationIdentifierCode5&quot;"
-    OldNames="AccountingInformationIdentifierCode5"
+    ShortName="AccountingInfoIdentifierCode5"
+    OldNames="AccountingInformationIdentifierCode5,AccountingInfoIdentifierCode5"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -32663,7 +32675,8 @@
   <field
     Id="&quot;c3542e9a-8770-4d06-bfe2-fce5194b3905&quot;"
     FieldName="&quot;AccountingInformationIdentifierCode6&quot;"
-    OldNames="AccountingInformationIdentifierCode6"
+    ShortName="AccountingInfoIdentifierCode6"
+    OldNames="AccountingInformationIdentifierCode6,AccountingInfoIdentifierCode6"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -32819,7 +32832,8 @@
   <field
     Id="&quot;82bd5475-1c9a-4e77-9920-ecdb03bc7d6a&quot;"
     FieldName="&quot;OtherParticipantInformationName1&quot;"
-    OldNames="OtherParticipantInformationName1"
+    ShortName="OtherParticipantInfoName1"
+    OldNames="OtherParticipantInformationName1,OtherParticipantInfoName1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -32894,7 +32908,8 @@
   <field
     Id="&quot;1871de22-1072-49ce-8fcd-ec09b2bd5b62&quot;"
     FieldName="&quot;OtherParticipantInformationName2&quot;"
-    OldNames="OtherParticipantInformationName2"
+    ShortName="OtherParticipantInfoName2"
+    OldNames="OtherParticipantInformationName2,OtherParticipantInfoName2"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -32969,7 +32984,8 @@
   <field
     Id="&quot;da426d01-5484-496c-b780-08aa4113320f&quot;"
     FieldName="&quot;OtherParticipantInformationName3&quot;"
-    OldNames="OtherParticipantInformationName3"
+    ShortName="OtherParticipantInfoName3"
+    OldNames="OtherParticipantInformationName3,OtherParticipantInfoName3"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -33044,7 +33060,8 @@
   <field
     Id="&quot;15ad0647-8a7b-47e8-8404-00c039cf2af2&quot;"
     FieldName="&quot;OtherParticipantInformationReference1&quot;"
-    OldNames="OtherParticipantInformationReference1"
+    ShortName="OtherParticipantInfoReference1"
+    OldNames="OtherParticipantInformationReference1,OtherParticipantInfoReference1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -33119,7 +33136,8 @@
   <field
     Id="&quot;ebba0110-e7b0-47da-a4a8-276146aea2d2&quot;"
     FieldName="&quot;OtherParticipantInformationReference2&quot;"
-    OldNames="OtherParticipantInformationReference2"
+    ShortName="OtherParticipantInfoReference2"
+    OldNames="OtherParticipantInformationReference2,OtherParticipantInfoReference2"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -33194,7 +33212,8 @@
   <field
     Id="&quot;13ba34a2-fbfd-411c-95fb-2019cbc78bed&quot;"
     FieldName="&quot;OtherParticipantInformationReference3&quot;"
-    OldNames="OtherParticipantInformationReference3"
+    ShortName="OtherParticipantInfoReference3"
+    OldNames="OtherParticipantInformationReference3,OtherParticipantInfoReference3"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -34660,7 +34679,8 @@
   <field
     Id="&quot;1d30bee6-7ba8-46aa-a9a5-4678fe06e4cd&quot;"
     FieldName="&quot;OtherParticipantInformationCode1&quot;"
-    OldNames="OtherParticipantInformationCode1"
+    ShortName="OtherParticipantInfoCode1"
+    OldNames="OtherParticipantInformationCode1,OtherParticipantInfoCode1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -34735,7 +34755,8 @@
   <field
     Id="&quot;0efdf0b9-8eb3-4314-aac3-351e61153341&quot;"
     FieldName="&quot;OtherParticipantInformationCode2&quot;"
-    OldNames="OtherParticipantInformationCode2"
+    ShortName="OtherParticipantInfoCode2"
+    OldNames="OtherParticipantInformationCode2,OtherParticipantInfoCode2"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -34810,7 +34831,8 @@
   <field
     Id="&quot;cc0038b8-7bb4-4caa-aee9-3ee4a2748d2e&quot;"
     FieldName="&quot;OtherParticipantInformationCode3&quot;"
-    OldNames="OtherParticipantInformationCode3"
+    ShortName="OtherParticipantInfoCode3"
+    OldNames="OtherParticipantInformationCode3,OtherParticipantInfoCode3"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -34885,7 +34907,8 @@
   <field
     Id="&quot;08fbe45c-a6fc-4c56-b231-42f25abea539&quot;"
     FieldName="&quot;OtherParticipantInformationPortCode1&quot;"
-    OldNames="OtherParticipantInformationPortCode1"
+    ShortName="OtherParticipantInfoPortCode1"
+    OldNames="OtherParticipantInformationPortCode1,OtherParticipantInfoPortCode1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -34960,7 +34983,8 @@
   <field
     Id="&quot;b8f26353-d024-4d74-bd78-37fefeb6f3cd&quot;"
     FieldName="&quot;OtherParticipantInformationPortCode2&quot;"
-    OldNames="OtherParticipantInformationPortCode2"
+    ShortName="OtherParticipantInfoPortCode2"
+    OldNames="OtherParticipantInformationPortCode2,OtherParticipantInfoPortCode2"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -35035,7 +35059,8 @@
   <field
     Id="&quot;fd99e265-74ce-43fe-8e6a-533b0cfaba9e&quot;"
     FieldName="&quot;OtherParticipantInformationPortCode3&quot;"
-    OldNames="OtherParticipantInformationPortCode3"
+    ShortName="OtherParticipantInfoPortCode3"
+    OldNames="OtherParticipantInformationPortCode3,OtherParticipantInfoPortCode3"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -38799,6 +38824,7 @@
   <field
     Id="&quot;21c27e2c-e060-4162-8a09-ca7cf0a971ab&quot;"
     FieldName="&quot;OtherParticipantIdCode1&quot;"
+    ShortName="OtherParticipantIdCode1"
     OldNames="OtherParticipantIdCode1"
     IsNew="false"
     IsChecked="false"
@@ -38876,6 +38902,7 @@
   <field
     Id="&quot;49f2f241-5c5d-47f3-994e-06a1b497bb84&quot;"
     FieldName="&quot;OtherParticipantIdCode2&quot;"
+    ShortName="OtherParticipantIdCode2"
     OldNames="OtherParticipantIdCode2"
     IsNew="false"
     IsChecked="false"
@@ -38953,6 +38980,7 @@
   <field
     Id="&quot;6c1d5753-832b-4323-a0dd-bb63b581cad9&quot;"
     FieldName="&quot;OtherParticipantIdCode3&quot;"
+    ShortName="OtherParticipantIdCode3"
     OldNames="OtherParticipantIdCode3"
     IsNew="false"
     IsChecked="false"
@@ -65726,7 +65754,8 @@
   <field
     Id="&quot;d994f58f-19b1-410e-be40-10df35b26ba2&quot;"
     FieldName="&quot;ComputedForwarderShipmentNumber&quot;"
-    OldNames="ComputedForwarderShipmentNumber"
+    ShortName="ComputedForwarderShipmentNum"
+    OldNames="ComputedForwarderShipmentNumber,ComputedForwarderShipmentNum"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -67173,7 +67202,8 @@
   <field
     Id="&quot;0bef4f80-8ea3-4f09-b0e2-fdf76ecf5bcc&quot;"
     FieldName="&quot;WarehouseLegExpectedReleaseDate&quot;"
-    OldNames="WarehouseLegExpectedReleaseDate"
+    ShortName="WarehouseExpectedReleaseDate"
+    OldNames="WarehouseLegExpectedReleaseDate,WarehouseExpectedReleaseDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -68409,7 +68439,8 @@
   <field
     Id="&quot;8b3b832a-bde2-4ddb-88d9-647fe1f589e8&quot;"
     FieldName="&quot;LocalCustomsTransmissionsStatusCode&quot;"
-    OldNames="LocalCustomsTransmissionsStatusCode"
+    ShortName="LocalCustomsTransStatusCode"
+    OldNames="LocalCustomsTransmissionsStatusCode,LocalCustomsTransStatusCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -68566,7 +68597,8 @@
   <field
     Id="&quot;cfb6bb0d-b424-4f0a-9b37-bb90656d8466&quot;"
     FieldName="&quot;LocalCustomsTransmissionsStatusError&quot;"
-    OldNames="LocalCustomsTransmissionsStatusError"
+    ShortName="LocalCustomsTransStatusError"
+    OldNames="LocalCustomsTransmissionsStatusError,LocalCustomsTransStatusError"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -68644,7 +68676,8 @@
   <field
     Id="&quot;8d0d52a5-46e9-43d2-844a-c22f7a5624c9&quot;"
     FieldName="&quot;LocalCustomsTransmissionsStatusDate&quot;"
-    OldNames="LocalCustomsTransmissionsStatusDate"
+    ShortName="LocalCustomsTransStatusDate"
+    OldNames="LocalCustomsTransmissionsStatusDate,LocalCustomsTransStatusDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -69878,7 +69911,8 @@
   <field
     Id="&quot;c27161de-0e8d-4333-919b-a1e37b7cf093&quot;"
     FieldName="&quot;OnCarriageAdditionalTransportModeCode&quot;"
-    OldNames="OnCarriageAdditionalTransportModeCode"
+    ShortName="OnCarriageAddTransportModeCode"
+    OldNames="OnCarriageAdditionalTransportModeCode,OnCarriageAddTransportModeCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

@@ -181,8 +181,9 @@ export class SendToContactsComponent implements OnInit {
             window.BccEmailLists = this.BccEmailLists;
         }
 
-
-        this.BuildColumns();
+        if (!args.isReloaded) {
+            this.BuildColumns();
+        }
 
     }
 

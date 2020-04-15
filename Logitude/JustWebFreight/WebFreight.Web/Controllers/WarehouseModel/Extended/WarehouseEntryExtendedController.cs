@@ -28,7 +28,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
 {
     public class WarehouseEntryExtendedController : ApiController
     {
-        public HttpResponseMessage PutCancelWarehouseReleasePM(WarehouseEntryPM entityPM)
+        public HttpResponseMessage PutCancelWarehouseEntry(WarehouseEntryPM entityPM)
         {
             if (ModelState.IsValid)
             {

@@ -122,6 +122,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entity;
         }
 
+
         public Currency GetSingleCurrencyByCode(string code, int tenant)
         {
 

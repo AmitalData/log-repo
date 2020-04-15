@@ -5,6 +5,20 @@
         </td>
     </tr>
 
+    <tr style="height: 1px;">
+        <td>
+            <div class="MultiLinesText NoDataTextStyle" style="text-align: left;">
+                Screen enables registering external payment against AP payments without connecting an AR Payment (you have to register the payment manually in the external accounting system)
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
     <tr>
         <td>
             <table>
@@ -37,12 +51,18 @@
                     </td>
                 </tr>
 
+                <tr style="height: 5px;">
+                    <td colspan="3">
+                        <div></div>
+                    </td>
+                </tr>
+
                 <tr class="FormFieldRow" style="height: 85px;">
-                    <td style="vertical-align: top; padding-top: 5px;">
+                    <td>
                         <LogLabel [ObjectFieldName]="'ExternalPaymentNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td style="height: 85px; vertical-align: top;">
+                    <td style="height: 85px;">
                         <div style="height: 100%;">
                             <LogTextBox [ObjectFieldName]="'ExternalPaymentNotes'" [Text]="DataContext.ExternalPaymentNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                         </div>
@@ -79,7 +99,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

@@ -386,7 +386,7 @@
                                             <tr style="height:22px;">
                                                 <td>
                                                     <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;margin-right: 5px;direction: rtl;">
-                                                        <LogCheckBox [Checked]="IsAgreed" (ValueChanged)="IsAggreeChicked($event)" [ObjectFieldName]="'IsAggree'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
+                                                        <LogCheckBox [IsDisabled]="ShowFinalMessage" [Checked]="IsAgreed" (ValueChanged)="IsAggreeChicked($event)" [ObjectFieldName]="'IsAggree'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
                                                         <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">אני מאשר את הסכם<span style="color:lightskyblue;text-decoration: underline;" (click)="ViewAggreement()"> השירות</span> </label><br />
                                                     </div>
                                                 </td>
@@ -422,6 +422,18 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <tr *ngIf="ShowFinalMessage == true">
+                                                <td style="height: 10px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="ShowFinalMessage == true">
+                                                <td style="direction:rtl;text-align:center;">
+                                                    <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;word-wrap: break-word;white-space: normal;">
+                                                        {{FinalMessage}}
+                                                    </span>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
                                 </tr>
@@ -449,22 +461,6 @@
         </tr>
     </table>
 </div>
-<table class="LogitudeWindow" style="direction:rtl;border: 1px solid #BCBEC0;" *ngIf="ShowFinalMessage == true">
-    <tr>
-        <td>
-            <table style="direction:rtl;border: 1px solid #BCBEC0;">
-                <tr>
-                    <td style="text-align:center;" *ngIf="ShowFinalMessage == true">
-                        <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;word-wrap: break-word;white-space: normal;">
-                            {{FinalMessage}}
-                        </span>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-</table>
 
 <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == true" style="direction:rtl;">
     <tr>
