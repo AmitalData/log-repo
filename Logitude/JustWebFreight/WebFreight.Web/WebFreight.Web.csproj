@@ -3052,7 +3052,6 @@
     <Content Include="Integration Test\FullAccounting\FullAccountingTesting.postman_collection.json" />
     <Content Include="Integration Test\FullAccounting\PostmanDataCloud.csv" />
     <Content Include="Integration Test\FullAccounting\PrepareFullAccountingVars.postman_collection.json" />
-    <Content Include="Integration Test\LoginVars\CloudLoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamAyman\CloudLoginVars.csv" />
     <Content Include="Integration Test\LoginVars\Production\Logitude\TeamIslam\LoginVars.csv" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
@@ -6506,7 +6505,6 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
-    <Folder Include="Integration Test\LoginVars\Master\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
