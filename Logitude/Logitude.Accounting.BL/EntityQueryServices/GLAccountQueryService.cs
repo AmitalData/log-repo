@@ -81,10 +81,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<string> GetGLAccountsWithoutLedgerTransactions(List<string> glAccountIds,OpenFormatReportPM openFormatReport, int tenant)
         {
-            return (from l in context.LedgerTransactions
+            List<string> accountIds = (from l in context.LedgerTransactions
 
-                    where !glAccountIds.Contains(l.AccountId) && l.Tenant == tenant && l.AccountingDate >= openFormatReport.FromDate  && l.AccountingDate <= openFormatReport.ToDate
-                    select l.AccountId).ToList();
+                                       where glAccountIds.Contains(l.AccountId) && l.Tenant == tenant && l.AccountingDate >= openFormatReport.FromDate && l.AccountingDate <= openFormatReport.ToDate
+                                       select l.AccountId).ToList();
+
+            return glAccountIds.Where(d => !accountIds.Contains(d)).ToList();
+
 
         }
 

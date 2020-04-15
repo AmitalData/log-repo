@@ -4036,18 +4036,15 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<string> GetIncludedGLAccounts(List<TrailReportM> result,OpenFormatReportPM openFormatReport, int tenant)
         {
             var zeroVlauesList = result.Where(d => d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0).ToList();
-            var account = result.Where(d => d.GLAccountId == "1-2422").FirstOrDefault();
             List<string> zeroVlauesGLAccounts = new List<string>();
             if (zeroVlauesList != null)
             {
                 zeroVlauesGLAccounts = zeroVlauesList.Select(d => d.GLAccountId).ToList();
             }
-             account = zeroVlauesList.Where(d => d.GLAccountId == "1-2422").FirstOrDefault();
 
             List<string> exceptedGLAccounts = new List<string>();
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             exceptedGLAccounts = gLAccountQueryService.GetGLAccountsWithoutLedgerTransactions(zeroVlauesGLAccounts,openFormatReport, tenant);
-            bool exist = exceptedGLAccounts.Contains("1-2422");//.Where(d => d.GLAccountId == "1-2422").FirstOrDefault();
 
             result = result.Where(d => !exceptedGLAccounts.Contains(d.GLAccountId)).ToList();
             List<string> includedGLAccounts = new List<string>();
@@ -4055,7 +4052,6 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 includedGLAccounts = result.Select(d => d.GLAccountId).ToList();
             }
-             account = result.Where(d => d.GLAccountId == "1-2422").FirstOrDefault();
 
             return includedGLAccounts;
         }
