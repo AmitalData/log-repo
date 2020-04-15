@@ -274,8 +274,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     TaxReportDate = taxReport.TaxReportMonth
                 };
 
-                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId && d.TaxReportJournalLineNumber == a.JournalLineNumber ).FirstOrDefault();              
-               
+                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId && d.TaxReportJournalLineNumber == a.JournalLineNumber ).FirstOrDefault();
+              //   card = cards.Where(d => d.GLAccountId == a.AccountId).FirstOrDefault();
                     if (aPInvoice != null && (aPInvoice.VATNumber == tenantPM.VatNumber))
                     {
                         taxReportLine.LineTypeCode = "C";
