@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customs Requests Sheet&quot;"
-  Code="&quot;b628&quot;"
+  Code="&quot;015b&quot;"
   Name="&quot;Customs.CustomsRequestsSheet Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1912,12 +1912,6 @@
       Code="&quot;Customs.RequestSheet.O.All&quot;"
       DefaultText="&quot;All&quot;"
       LocalDefaultText="&quot;כל&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.RequestSheet.O.RequestCreateDate&quot;"
-      DefaultText="&quot;To Date shouldn't be smaller than From Date&quot;"
-      LocalDefaultText="&quot;הערך בשדה &quot;עד תאריך&quot; צריך להיות קטן או שווה לערך בשדה &quot;מ תאריך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

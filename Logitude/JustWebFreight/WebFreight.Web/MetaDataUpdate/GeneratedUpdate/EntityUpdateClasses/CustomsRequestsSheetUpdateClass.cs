@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Requests Sheet",
-			      				    Code =  "b628",
+			      				    Code =  "015b",
 			      				    Name =  "Customs.CustomsRequestsSheet Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1605,8 +1605,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsRequestsSheetTextCode_CustomsRequestSheetOAddRemove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RequestSheet.O.AddRemove", DefaultText = "Add / Remove",LocalDefaultText = @"הוספה / הסרה", ObjectTableId = CustomsRequestsSheetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsRequestsSheetTextCode_CustomsRequestSheetOAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RequestSheet.O.All", DefaultText = "All",LocalDefaultText = @"כל", ObjectTableId = CustomsRequestsSheetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CustomsRequestsSheetTextCode_CustomsRequestSheetORequestCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RequestSheet.O.RequestCreateDate", DefaultText = "To Date shouldn't be smaller than From Date",LocalDefaultText = "הערך בשדה ''עד תאריך'' צריך להיות קטן או שווה לערך בשדה ''מ תאריך", ObjectTableId = CustomsRequestsSheetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsRequestsSheetTextCode_CustomsRequestSheetOMine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RequestSheet.O.Mine", DefaultText = "Mine",LocalDefaultText = @"שלי", ObjectTableId = CustomsRequestsSheetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

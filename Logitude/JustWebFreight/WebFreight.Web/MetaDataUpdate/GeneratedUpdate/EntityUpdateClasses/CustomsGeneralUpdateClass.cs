@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "c8e3",
+			      				    Code =  "b166",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1897,6 +1897,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CommunicationLogStepsOCommunicationLogSteps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogSteps.O.CommunicationLogSteps", DefaultText = "Communication Log Steps",LocalDefaultText = @"תקשורת התחבר צעדים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Documents", DefaultText = "Documents",LocalDefaultText = @"מסמכים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsRequestSheetORequestCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RequestSheet.O.RequestCreateDate", DefaultText = "To Date shouldn't be smaller than From Date",LocalDefaultText = "הערך בשדה ''עד תאריך'' צריך להיות קטן או שווה לערך בשדה ''מ תאריך", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsCustomsVendorTHEvents = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsVendor.TH.Events", DefaultText = "Events",LocalDefaultText = @"אירועים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsCustomsVendorTHCommunications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsVendor.TH.Communications", DefaultText = "Communications",LocalDefaultText = @"תקשורת", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsSupplierInvioceItemsCertificate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvioceItemsCertificate", DefaultText = "Supplier Invioce Items Certificate",LocalDefaultText = null, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Payments", DefaultText = "Declaration Payment",LocalDefaultText = @"Declaration Payment", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CommunicationLogStepsOStepNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogSteps.O.StepNumber", DefaultText = "Step Number",LocalDefaultText = @"שלב מספר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMCCustomsCustomsSignStation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.CustomsSignStation", DefaultText = "Sign Stations",LocalDefaultText = @"עמדות חתימה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsCouriersVatTHEvents = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CouriersVat.TH.Events", DefaultText = "Events",LocalDefaultText = @"אירועים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOInterfaceManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.InterfaceManagement", DefaultText = "Interface Managements",LocalDefaultText = @"ממשק ניהול", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsInterfaceManagementOSystemDefinitions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.InterfaceManagement.O.SystemDefinitions", DefaultText = "System Definitions",LocalDefaultText = @"הגדרות מערכת", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsSupplierInvoiceItemsQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsQuantity", DefaultText = "Supplier Invoice Items Quantity",LocalDefaultText = null, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsCustomsItemsFSearchFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsItems.F.SearchFields", DefaultText = "SearchFields",LocalDefaultText = null, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_tableFSearchFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "table.F.SearchFields", DefaultText = "SearchFields",LocalDefaultText = null, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMCCustomsDocumentsDefinition = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customs.DocumentsDefinition", DefaultText = "Documents Definition",LocalDefaultText = @"הגדרת סוגי מסמך למסך צרופות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsClaimTHRefundIsraelBankDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.RefundIsraelBankDetails", DefaultText = "Local Bank Details",LocalDefaultText = @"פרטי בנק ישראלי", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsClaimTHRefundForeignBankDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.RefundForeignBankDetails", DefaultText = "Foreign Bank Details",LocalDefaultText = @"פרטי בנק זר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsClaimTHCancelOrObjection = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.CancelOrObjection", DefaultText = "Cancel Or Objection",LocalDefaultText = @"ביטול תביעה/ערר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsClaimORelatedEntites = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.RelatedEntites", DefaultText = "Related Entites",LocalDefaultText = @"ישויות תביעה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

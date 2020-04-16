@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;c8e3&quot;"
+  Code="&quot;b166&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -4866,6 +4866,110 @@
       Code="&quot;Customs.Declaration.TH.Documents&quot;"
       DefaultText="&quot;Documents&quot;"
       LocalDefaultText="&quot;מסמכים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.RequestSheet.O.RequestCreateDate&quot;"
+      DefaultText="&quot;To Date shouldn't be smaller than From Date&quot;"
+      LocalDefaultText="&quot;הערך בשדה &quot;עד תאריך&quot; צריך להיות קטן או שווה לערך בשדה &quot;מ תאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsVendor.TH.Events&quot;"
+      DefaultText="&quot;Events&quot;"
+      LocalDefaultText="&quot;אירועים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsVendor.TH.Communications&quot;"
+      DefaultText="&quot;Communications&quot;"
+      LocalDefaultText="&quot;תקשורת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SupplierInvioceItemsCertificate&quot;"
+      DefaultText="&quot;Supplier Invioce Items Certificate&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.TH.Payments&quot;"
+      DefaultText="&quot;Declaration Payment&quot;"
+      LocalDefaultText="&quot;Declaration Payment&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CommunicationLogSteps.O.StepNumber&quot;"
+      DefaultText="&quot;Step Number&quot;"
+      LocalDefaultText="&quot;שלב מספר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Customs.CustomsSignStation&quot;"
+      DefaultText="&quot;Sign Stations&quot;"
+      LocalDefaultText="&quot;עמדות חתימה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CouriersVat.TH.Events&quot;"
+      DefaultText="&quot;Events&quot;"
+      LocalDefaultText="&quot;אירועים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.General.O.InterfaceManagement&quot;"
+      DefaultText="&quot;Interface Managements&quot;"
+      LocalDefaultText="&quot;ממשק ניהול&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.InterfaceManagement.O.SystemDefinitions&quot;"
+      DefaultText="&quot;System Definitions&quot;"
+      LocalDefaultText="&quot;הגדרות מערכת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SupplierInvoiceItemsQuantity&quot;"
+      DefaultText="&quot;Supplier Invoice Items Quantity&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CustomsItems.F.SearchFields&quot;"
+      DefaultText="&quot;SearchFields&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;table.F.SearchFields&quot;"
+      DefaultText="&quot;SearchFields&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Customs.DocumentsDefinition&quot;"
+      DefaultText="&quot;Documents Definition&quot;"
+      LocalDefaultText="&quot;הגדרת סוגי מסמך למסך צרופות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Claim.TH.RefundIsraelBankDetails&quot;"
+      DefaultText="&quot;Local Bank Details&quot;"
+      LocalDefaultText="&quot;פרטי בנק ישראלי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Claim.TH.RefundForeignBankDetails&quot;"
+      DefaultText="&quot;Foreign Bank Details&quot;"
+      LocalDefaultText="&quot;פרטי בנק זר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Claim.TH.CancelOrObjection&quot;"
+      DefaultText="&quot;Cancel Or Objection&quot;"
+      LocalDefaultText="&quot;ביטול תביעה/ערר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Claim.O.RelatedEntites&quot;"
+      DefaultText="&quot;Related Entites&quot;"
+      LocalDefaultText="&quot;ישויות תביעה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
