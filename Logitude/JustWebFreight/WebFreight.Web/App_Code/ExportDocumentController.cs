@@ -145,7 +145,7 @@ namespace WebFreight.Web.App_Code
         bool IsDisplayOnly = false;
 
 
-  
+
 
         private DocumentsExecutionLog GetNewInStanceFromDocumentsExecutionLog(ExportDocumentArgs exportDocumentArgs)
         {
@@ -185,7 +185,7 @@ namespace WebFreight.Web.App_Code
                 long theA1 = new long();
                 long theA2 = new long();
 
-                BuildStimulReportResult buildStimulReportResult = new BuildStimulReportResult() { EditableFieldPositionLists = new List<EditableFieldPosition>()};
+                BuildStimulReportResult buildStimulReportResult = new BuildStimulReportResult() { EditableFieldPositionLists = new List<EditableFieldPosition>() };
                 List<string> result = new List<string>();
 
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
@@ -280,7 +280,7 @@ namespace WebFreight.Web.App_Code
 
         }
 
-        private BuildStimulReportResult GetBuildStimulReportResult(ExportDocumentArgs filter ,  List<string> stimulReportResult)
+        private BuildStimulReportResult GetBuildStimulReportResult(ExportDocumentArgs filter, List<string> stimulReportResult)
         {
             BuildStimulReportResult buildStimulReportResult = new BuildStimulReportResult() { EditableFieldPositionLists = new List<EditableFieldPosition>() };
             buildStimulReportResult.StimulImageBase64 = stimulReportResult != null && stimulReportResult.Count > 0 ? stimulReportResult[0] : null;
@@ -288,7 +288,7 @@ namespace WebFreight.Web.App_Code
             buildStimulReportResult.PageCount = PageCount;
             if (!filter.IsDisplayOnly)
             {
-                buildStimulReportResult.EditableFieldPositionLists = BulidEditableFieldPositionList( stimulReportResult, filter.PageNumber);
+                buildStimulReportResult.EditableFieldPositionLists = BulidEditableFieldPositionList(stimulReportResult, filter.PageNumber);
             }
 
             return buildStimulReportResult;
@@ -298,45 +298,45 @@ namespace WebFreight.Web.App_Code
         {
 
             List<EditableFieldPosition> editableFieldPositionList = new List<EditableFieldPosition>();
-       
-                if (result != null && result.Count > 1)
+
+            if (result != null && result.Count > 1)
+            {
+                string xmal = "";
+                string reportunit = "";
+                string editablefield = "";
+
+                if (result.Count > 1) xmal = result[1];
+                if (result.Count > 2) reportunit = result[2];
+                if (result.Count > 3) editablefield = result[3];
+
+
+                XmlNodeList childFieldNodes = null;
+
+
+
+                if (!string.IsNullOrEmpty(editablefield))
                 {
-                    string xmal = "";
-                    string reportunit = "";
-                    string editablefield = "";
-
-                    if (result.Count > 1) xmal = result[1];
-                    if (result.Count > 2) reportunit = result[2];
-                    if (result.Count > 3) editablefield = result[3];
-
-
-                    XmlNodeList childFieldNodes = null;
-
-
-
-                    if (!string.IsNullOrEmpty(editablefield))
+                    try
                     {
-                        try
-                        {
-                            XmlReader readerfield = XmlReader.Create(new StringReader(editablefield));
-                            XmlDataDocument messageFieldDoc = new XmlDataDocument();
-                            messageFieldDoc.Load(readerfield);
-                            XmlNodeList ItemsFieldList = messageFieldDoc.GetElementsByTagName("Items");
-                            if (ItemsFieldList != null && ItemsFieldList.Count > 0) childFieldNodes = ItemsFieldList[0].ChildNodes;
+                        XmlReader readerfield = XmlReader.Create(new StringReader(editablefield));
+                        XmlDataDocument messageFieldDoc = new XmlDataDocument();
+                        messageFieldDoc.Load(readerfield);
+                        XmlNodeList ItemsFieldList = messageFieldDoc.GetElementsByTagName("Items");
+                        if (ItemsFieldList != null && ItemsFieldList.Count > 0) childFieldNodes = ItemsFieldList[0].ChildNodes;
 
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
+                    }
+                    catch (Exception ex)
+                    {
 
                     }
 
-                    int numberOfEditedField = 0;
-
-                    editableFieldPositionList = GetEditableFieldPosition(xmal, reportunit, childFieldNodes, pagenumber, ref numberOfEditedField);
-                    editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "NumberOfEditedField", FieldValue = numberOfEditedField.ToString()});
                 }
+
+                int numberOfEditedField = 0;
+
+                editableFieldPositionList = GetEditableFieldPosition(xmal, reportunit, childFieldNodes, pagenumber, ref numberOfEditedField);
+                editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "NumberOfEditedField", FieldValue = numberOfEditedField.ToString() });
+            }
 
             return editableFieldPositionList;
         }
@@ -874,7 +874,25 @@ namespace WebFreight.Web.App_Code
         }
 
 
+
+        public HttpResponseMessage GetIsRunStimulDocumentViaWorkerRole()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                bool isUsedWorkerRole = exportDocumentHelper.IsRunStimulDocumentViaWorkerRole();
+                return Request.CreateResponse(HttpStatusCode.OK, isUsedWorkerRole);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+
+            }
+        }
+
     }
 
- 
 }

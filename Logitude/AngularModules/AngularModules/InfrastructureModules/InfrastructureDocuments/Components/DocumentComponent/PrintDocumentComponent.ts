@@ -96,10 +96,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
 
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BDW" && d.TenantNumber == SessionLocator.Tenant)[0];
-        if (featureToggle) {
-            this.IsBuildDocumentViaWorkerRole = true;
-        }
+        //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BDW" && d.TenantNumber == SessionLocator.Tenant)[0];
+        //if (featureToggle) {
+        //    this.IsBuildDocumentViaWorkerRole = true;
+        //}
 
 
     }
@@ -1252,24 +1252,32 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     public setArguments(item: DocsOutDataViewModel) {
 
+        this._exportDocumentService.GetIsRunStimulDocumentViaWorkerRole().subscribe((res: any) => {
+
+            var serviceResponse: ServiceResponse = res;
+            if (!serviceResponse.HasError) this.IsBuildDocumentViaWorkerRole = serviceResponse.Result;
+
         this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe((response:any) => {
 
-            if (!item.DocumentTypePM) {
-                this.CurrentSession.StartBusyIndicator("Loading...");
+
+                if (!item.DocumentTypePM) {
+                    this.CurrentSession.StartBusyIndicator("Loading...");
+
                 this._documentTypePMService.GetSinglePMWithOutInclude(item.Id, SessionLocator.Tenant).subscribe((res:any) => {
-                    var pmResponse: ServiceResponse = res;
-                    if (!pmResponse.HasError) {
-                        item.DocumentTypePM = pmResponse.Result;
-                    }
-                    this.CurrentSession.StopBusyIndicator();
-                    this.Start(item);
-                });
 
-            }
-            else this.Start(item);
+                        var pmResponse: ServiceResponse = res;
+                        if (!pmResponse.HasError) {
+                            item.DocumentTypePM = pmResponse.Result;
+                        }
+                        this.CurrentSession.StopBusyIndicator();
+                        this.Start(item);
+                    });
 
+                }
+                else this.Start(item);
+
+            });
         });
-
 
     }
 

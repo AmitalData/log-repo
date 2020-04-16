@@ -124,5 +124,19 @@ export class ExportDocumentService {
 
     }
 
+
+
+    GetIsRunStimulDocumentViaWorkerRole() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + "/GetIsRunStimulDocumentViaWorkerRole", { headers: authHeader }).map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response.json();
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+    }
+
+
 }
 
