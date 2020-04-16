@@ -27,13 +27,13 @@ export class SendButton implements OnInit {
         this._CD.detectChanges();
     }
     public IsMouseOver: boolean = false;
-    private _DropdownDisplay: string = 'none';
+    _DropdownDisplay: string = 'none';
     private _ElementRef: any;
 
     static MyId: number = 0;
-    private _CustomSendOptionsComponentId: string;
-    private _CustomSendOptionsComponentMenuId: string;
-    private ListControlId: string;
+    _CustomSendOptionsComponentId: string;
+    _CustomSendOptionsComponentMenuId: string;
+    ListControlId: string;
     public ControlId: string = null;
 
     _IsLoaded: boolean = false;

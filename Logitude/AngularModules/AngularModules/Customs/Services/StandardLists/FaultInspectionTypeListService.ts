@@ -174,7 +174,7 @@ export class FaultInspectionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.FaultInspectionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FaultInspectionTypeList> = [];
 
@@ -240,7 +240,7 @@ export class FaultInspectionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.FaultInspectionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FaultInspectionTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class SignatureTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SignatureType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SignatureTypeList> = [];
 
@@ -240,7 +240,7 @@ export class SignatureTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SignatureType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SignatureTypeList> = [];
 					if (cachedJson) {

@@ -17,7 +17,7 @@ declare var window: any;
 })
 
 export class DWQueryBuilderFiltersComponent implements OnInit {
-
+  public Types: any[] = [];
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
     //allFieldsWithChildrenDataSource: DWObjectFieldsDetails[] = [];
     public AndOrOps = ["And", "Or"];

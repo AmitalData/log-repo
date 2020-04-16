@@ -174,7 +174,7 @@ export class SpecializationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SpecializationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SpecializationTypeList> = [];
 
@@ -240,7 +240,7 @@ export class SpecializationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SpecializationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SpecializationTypeList> = [];
 					if (cachedJson) {

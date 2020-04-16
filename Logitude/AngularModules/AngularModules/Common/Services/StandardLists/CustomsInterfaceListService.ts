@@ -174,7 +174,7 @@ export class CustomsInterfaceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CustomsInterface").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsInterfaceList> = [];
 
@@ -240,7 +240,7 @@ export class CustomsInterfaceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CustomsInterface").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsInterfaceList> = [];
 					if (cachedJson) {

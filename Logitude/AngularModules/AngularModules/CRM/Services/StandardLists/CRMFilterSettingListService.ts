@@ -174,7 +174,7 @@ export class CRMFilterSettingListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CRMFilterSetting").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CRMFilterSettingList> = [];
 
@@ -240,7 +240,7 @@ export class CRMFilterSettingListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CRMFilterSetting").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CRMFilterSettingList> = [];
 					if (cachedJson) {

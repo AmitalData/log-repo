@@ -174,7 +174,7 @@ export class HarmonizeCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("HarmonizeCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<HarmonizeCodeList> = [];
 
@@ -240,7 +240,7 @@ export class HarmonizeCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("HarmonizeCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<HarmonizeCodeList> = [];
 					if (cachedJson) {

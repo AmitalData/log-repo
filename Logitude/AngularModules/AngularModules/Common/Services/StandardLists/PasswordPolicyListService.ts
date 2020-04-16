@@ -174,7 +174,7 @@ export class PasswordPolicyListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PasswordPolicy").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PasswordPolicyList> = [];
 
@@ -240,7 +240,7 @@ export class PasswordPolicyListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PasswordPolicy").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PasswordPolicyList> = [];
 					if (cachedJson) {

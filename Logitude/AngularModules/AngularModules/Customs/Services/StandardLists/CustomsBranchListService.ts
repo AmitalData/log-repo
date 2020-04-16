@@ -174,7 +174,7 @@ export class CustomsBranchListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsBranch").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsBranchList> = [];
 
@@ -240,7 +240,7 @@ export class CustomsBranchListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsBranch").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsBranchList> = [];
 					if (cachedJson) {

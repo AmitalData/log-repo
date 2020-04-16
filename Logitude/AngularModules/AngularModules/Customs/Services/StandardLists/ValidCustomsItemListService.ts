@@ -174,7 +174,7 @@ export class ValidCustomsItemListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ValidCustomsItem").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ValidCustomsItemList> = [];
 
@@ -240,7 +240,7 @@ export class ValidCustomsItemListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ValidCustomsItem").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ValidCustomsItemList> = [];
 					if (cachedJson) {

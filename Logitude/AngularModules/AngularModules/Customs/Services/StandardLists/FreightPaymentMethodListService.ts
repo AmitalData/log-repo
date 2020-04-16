@@ -174,7 +174,7 @@ export class FreightPaymentMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.FreightPaymentMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FreightPaymentMethodList> = [];
 
@@ -240,7 +240,7 @@ export class FreightPaymentMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.FreightPaymentMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FreightPaymentMethodList> = [];
 					if (cachedJson) {

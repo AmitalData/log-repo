@@ -174,7 +174,7 @@ export class CargoIdentifireTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CargoIdentifireType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CargoIdentifireTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CargoIdentifireTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CargoIdentifireType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CargoIdentifireTypeList> = [];
 					if (cachedJson) {

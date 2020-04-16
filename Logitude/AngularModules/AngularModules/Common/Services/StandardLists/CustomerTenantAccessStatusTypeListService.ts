@@ -174,7 +174,7 @@ export class CustomerTenantAccessStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CustomerTenantAccessStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomerTenantAccessStatusTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CustomerTenantAccessStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CustomerTenantAccessStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomerTenantAccessStatusTypeList> = [];
 					if (cachedJson) {

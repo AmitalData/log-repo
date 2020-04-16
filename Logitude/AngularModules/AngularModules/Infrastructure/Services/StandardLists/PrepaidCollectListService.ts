@@ -174,7 +174,7 @@ export class PrepaidCollectListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PrepaidCollect").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PrepaidCollectList> = [];
 
@@ -240,7 +240,7 @@ export class PrepaidCollectListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PrepaidCollect").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PrepaidCollectList> = [];
 					if (cachedJson) {

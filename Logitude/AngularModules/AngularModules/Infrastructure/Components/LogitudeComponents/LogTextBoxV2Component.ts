@@ -9,11 +9,12 @@ import {AppTool} from '../../Tools';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
 import {FieldValidator} from '../../Validators/FieldValidator';
-import {Observable} from 'rxjs/Observable';
 import {FormGroup} from '@angular/forms';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
+import { fromEvent, timer } from 'rxjs';
+import { debounceTime, take } from 'rxjs/operators';
 
 @Component({
     
@@ -85,7 +86,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
     private show: boolean;
-    private IsDisabled: boolean;
+    IsDisabled: boolean;
     private timerToken: any;
 
     private textValue;

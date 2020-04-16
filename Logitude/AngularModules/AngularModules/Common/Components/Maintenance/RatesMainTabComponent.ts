@@ -17,7 +17,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 })
 
 export class RatesMainTabComponent extends BaseComponent {
-
+  public imgNgStyle: any = null;
     //Props 
     public TodayDate: Date = DateTool.GetCurrentDateAsUtc();
     public ItemsSource: RatesItem[] = [];

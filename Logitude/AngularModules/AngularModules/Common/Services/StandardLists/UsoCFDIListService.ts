@@ -174,7 +174,7 @@ export class UsoCFDIListService {
 
         else {
             return CachedDataManager.GetClosedTableData("UsoCFDI").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<UsoCFDIList> = [];
 
@@ -240,7 +240,7 @@ export class UsoCFDIListService {
 
         else {
             return CachedDataManager.GetClosedTableData("UsoCFDI").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<UsoCFDIList> = [];
 					if (cachedJson) {

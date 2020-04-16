@@ -174,7 +174,7 @@ export class CollateralAnswerStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CollateralAnswerStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CollateralAnswerStatusList> = [];
 
@@ -240,7 +240,7 @@ export class CollateralAnswerStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CollateralAnswerStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CollateralAnswerStatusList> = [];
 					if (cachedJson) {

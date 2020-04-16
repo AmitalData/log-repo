@@ -174,7 +174,7 @@ export class AuthorityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.Authority").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AuthorityList> = [];
 
@@ -240,7 +240,7 @@ export class AuthorityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.Authority").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AuthorityList> = [];
 					if (cachedJson) {

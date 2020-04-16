@@ -174,7 +174,7 @@ export class WeightUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("WeightUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<WeightUnitList> = [];
 
@@ -240,7 +240,7 @@ export class WeightUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("WeightUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<WeightUnitList> = [];
 					if (cachedJson) {

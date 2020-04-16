@@ -174,7 +174,7 @@ export class AuthorizedSignerPermitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AuthorizedSignerPermit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AuthorizedSignerPermitList> = [];
 
@@ -240,7 +240,7 @@ export class AuthorizedSignerPermitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AuthorizedSignerPermit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AuthorizedSignerPermitList> = [];
 					if (cachedJson) {

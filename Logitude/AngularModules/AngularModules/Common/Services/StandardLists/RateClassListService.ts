@@ -174,7 +174,7 @@ export class RateClassListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RateClass").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RateClassList> = [];
 
@@ -240,7 +240,7 @@ export class RateClassListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RateClass").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RateClassList> = [];
 					if (cachedJson) {

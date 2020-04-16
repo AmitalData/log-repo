@@ -174,7 +174,7 @@ export class CheckEssenceLookupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckEssenceLookup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckEssenceLookupList> = [];
 
@@ -240,7 +240,7 @@ export class CheckEssenceLookupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckEssenceLookup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckEssenceLookupList> = [];
 					if (cachedJson) {

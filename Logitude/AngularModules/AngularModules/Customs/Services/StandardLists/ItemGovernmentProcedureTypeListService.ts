@@ -174,7 +174,7 @@ export class ItemGovernmentProcedureTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ItemGovernmentProcedureType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ItemGovernmentProcedureTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ItemGovernmentProcedureTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ItemGovernmentProcedureType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ItemGovernmentProcedureTypeList> = [];
 					if (cachedJson) {

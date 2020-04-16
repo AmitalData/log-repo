@@ -174,7 +174,7 @@ export class BookingSpaceAllocationListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BookingSpaceAllocation").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BookingSpaceAllocationList> = [];
 
@@ -240,7 +240,7 @@ export class BookingSpaceAllocationListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BookingSpaceAllocation").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BookingSpaceAllocationList> = [];
 					if (cachedJson) {

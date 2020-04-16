@@ -174,7 +174,7 @@ export class SubCountryListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SubCountry").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SubCountryList> = [];
 
@@ -240,7 +240,7 @@ export class SubCountryListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SubCountry").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SubCountryList> = [];
 					if (cachedJson) {

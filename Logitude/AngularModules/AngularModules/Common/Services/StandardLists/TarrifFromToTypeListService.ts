@@ -174,7 +174,7 @@ export class TarrifFromToTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TarrifFromToType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TarrifFromToTypeList> = [];
 
@@ -240,7 +240,7 @@ export class TarrifFromToTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TarrifFromToType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TarrifFromToTypeList> = [];
 					if (cachedJson) {

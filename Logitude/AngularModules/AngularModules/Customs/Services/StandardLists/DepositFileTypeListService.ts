@@ -174,7 +174,7 @@ export class DepositFileTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DepositFileType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DepositFileTypeList> = [];
 
@@ -240,7 +240,7 @@ export class DepositFileTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DepositFileType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DepositFileTypeList> = [];
 					if (cachedJson) {

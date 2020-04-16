@@ -174,7 +174,7 @@ export class CustomDocumentTypeMetaDataListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomDocumentTypeMetaData").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomDocumentTypeMetaDataList> = [];
 
@@ -240,7 +240,7 @@ export class CustomDocumentTypeMetaDataListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomDocumentTypeMetaData").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomDocumentTypeMetaDataList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class BookingAnswerStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BookingAnswerStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BookingAnswerStatusList> = [];
 
@@ -240,7 +240,7 @@ export class BookingAnswerStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BookingAnswerStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BookingAnswerStatusList> = [];
 					if (cachedJson) {

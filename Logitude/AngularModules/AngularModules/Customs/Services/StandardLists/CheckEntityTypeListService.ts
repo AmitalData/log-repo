@@ -174,7 +174,7 @@ export class CheckEntityTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckEntityType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckEntityTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CheckEntityTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckEntityType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckEntityTypeList> = [];
 					if (cachedJson) {

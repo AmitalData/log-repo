@@ -174,7 +174,7 @@ export class LeadDocumentExceptionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.LeadDocumentExceptionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<LeadDocumentExceptionTypeList> = [];
 
@@ -240,7 +240,7 @@ export class LeadDocumentExceptionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.LeadDocumentExceptionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<LeadDocumentExceptionTypeList> = [];
 					if (cachedJson) {

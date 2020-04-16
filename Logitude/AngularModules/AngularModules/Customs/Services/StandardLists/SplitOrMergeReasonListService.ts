@@ -174,7 +174,7 @@ export class SplitOrMergeReasonListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SplitOrMergeReason").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SplitOrMergeReasonList> = [];
 
@@ -240,7 +240,7 @@ export class SplitOrMergeReasonListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SplitOrMergeReason").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SplitOrMergeReasonList> = [];
 					if (cachedJson) {

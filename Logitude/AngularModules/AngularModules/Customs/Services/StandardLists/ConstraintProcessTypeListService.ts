@@ -174,7 +174,7 @@ export class ConstraintProcessTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConstraintProcessType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConstraintProcessTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ConstraintProcessTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConstraintProcessType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConstraintProcessTypeList> = [];
 					if (cachedJson) {

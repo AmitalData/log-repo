@@ -174,7 +174,7 @@ export class INTTRABookingTransStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("INTTRABookingTransStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<INTTRABookingTransStatusList> = [];
 
@@ -240,7 +240,7 @@ export class INTTRABookingTransStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("INTTRABookingTransStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<INTTRABookingTransStatusList> = [];
 					if (cachedJson) {

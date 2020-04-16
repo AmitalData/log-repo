@@ -174,7 +174,7 @@ export class CustomMetaDataTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomMetaDataType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomMetaDataTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CustomMetaDataTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomMetaDataType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomMetaDataTypeList> = [];
 					if (cachedJson) {

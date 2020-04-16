@@ -174,7 +174,7 @@ export class CustomsVerificationStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsVerificationStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsVerificationStatusTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CustomsVerificationStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsVerificationStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsVerificationStatusTypeList> = [];
 					if (cachedJson) {

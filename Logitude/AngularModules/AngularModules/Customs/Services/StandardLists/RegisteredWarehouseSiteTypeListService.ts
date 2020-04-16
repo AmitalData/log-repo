@@ -174,7 +174,7 @@ export class RegisteredWarehouseSiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.RegisteredWarehouseSiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RegisteredWarehouseSiteTypeList> = [];
 
@@ -240,7 +240,7 @@ export class RegisteredWarehouseSiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.RegisteredWarehouseSiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RegisteredWarehouseSiteTypeList> = [];
 					if (cachedJson) {

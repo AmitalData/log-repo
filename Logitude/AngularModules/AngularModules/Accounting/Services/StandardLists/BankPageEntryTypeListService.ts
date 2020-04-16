@@ -174,7 +174,7 @@ export class BankPageEntryTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BankPageEntryType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BankPageEntryTypeList> = [];
 
@@ -240,7 +240,7 @@ export class BankPageEntryTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BankPageEntryType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BankPageEntryTypeList> = [];
 					if (cachedJson) {

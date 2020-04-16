@@ -174,7 +174,7 @@ export class ConstraintTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConstraintType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConstraintTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ConstraintTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConstraintType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConstraintTypeList> = [];
 					if (cachedJson) {

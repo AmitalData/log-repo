@@ -174,7 +174,7 @@ export class QuoteClosingReasonListService {
 
         else {
             return CachedDataManager.GetClosedTableData("QuoteClosingReason").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<QuoteClosingReasonList> = [];
 
@@ -240,7 +240,7 @@ export class QuoteClosingReasonListService {
 
         else {
             return CachedDataManager.GetClosedTableData("QuoteClosingReason").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<QuoteClosingReasonList> = [];
 					if (cachedJson) {

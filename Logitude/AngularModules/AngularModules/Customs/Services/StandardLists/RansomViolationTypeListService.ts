@@ -174,7 +174,7 @@ export class RansomViolationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.RansomViolationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RansomViolationTypeList> = [];
 
@@ -240,7 +240,7 @@ export class RansomViolationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.RansomViolationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RansomViolationTypeList> = [];
 					if (cachedJson) {

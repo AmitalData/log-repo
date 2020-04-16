@@ -174,7 +174,7 @@ export class VatUniqueTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("VatUniqueType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VatUniqueTypeList> = [];
 
@@ -240,7 +240,7 @@ export class VatUniqueTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("VatUniqueType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VatUniqueTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class PaymentChequeStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PaymentChequeStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentChequeStatusList> = [];
 
@@ -240,7 +240,7 @@ export class PaymentChequeStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PaymentChequeStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentChequeStatusList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class CustomsPaymentTermListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsPaymentTermList> = [];
 
@@ -240,7 +240,7 @@ export class CustomsPaymentTermListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsPaymentTerm").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsPaymentTermList> = [];
 					if (cachedJson) {

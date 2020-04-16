@@ -24,6 +24,8 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 })
 
 export class NewUserComponent extends BaseComponent implements OnInit {
+  public AdditionalPackagesOnly: boolean = false;
+
     ReTypePassword: string = "";
     UserId: string;
     validator: ClassLevelValidator;

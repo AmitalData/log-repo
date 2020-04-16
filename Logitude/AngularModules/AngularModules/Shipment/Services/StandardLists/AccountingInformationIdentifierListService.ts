@@ -174,7 +174,7 @@ export class AccountingInformationIdentifierListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AccountingInformationIdentifier").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AccountingInformationIdentifierList> = [];
 
@@ -240,7 +240,7 @@ export class AccountingInformationIdentifierListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AccountingInformationIdentifier").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AccountingInformationIdentifierList> = [];
 					if (cachedJson) {

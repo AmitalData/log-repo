@@ -174,7 +174,7 @@ export class SpecialActionDescriptionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SpecialActionDescriptionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SpecialActionDescriptionTypeList> = [];
 
@@ -240,7 +240,7 @@ export class SpecialActionDescriptionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SpecialActionDescriptionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SpecialActionDescriptionTypeList> = [];
 					if (cachedJson) {

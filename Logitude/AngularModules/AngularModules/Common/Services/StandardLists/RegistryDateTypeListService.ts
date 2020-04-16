@@ -174,7 +174,7 @@ export class RegistryDateTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RegistryDateType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RegistryDateTypeList> = [];
 
@@ -240,7 +240,7 @@ export class RegistryDateTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RegistryDateType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RegistryDateTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class ContactDoneMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ContactDoneMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ContactDoneMethodList> = [];
 
@@ -240,7 +240,7 @@ export class ContactDoneMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ContactDoneMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ContactDoneMethodList> = [];
 					if (cachedJson) {

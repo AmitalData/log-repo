@@ -174,7 +174,7 @@ export class ConfirmationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConfirmationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConfirmationTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ConfirmationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConfirmationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConfirmationTypeList> = [];
 					if (cachedJson) {

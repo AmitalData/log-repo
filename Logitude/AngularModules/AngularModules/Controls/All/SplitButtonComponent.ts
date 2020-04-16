@@ -57,15 +57,15 @@ export class SplitButtonComponent implements OnInit {
 
 
 
-  private _DropdownDisplay: string = 'none';
+  _DropdownDisplay: string = 'none';
   private _ElementRef: any;
 
   static MyCounterId: number = 0;
   static LastSplitButtonClickedId: number = 0;
   MyCurrentSplitButtonComponentId: number = 0;
 
-  private _SplitButtonComponentId: string;
-  private _SplitButtonComponentMenuId: string;
+  _SplitButtonComponentId: string;
+  _SplitButtonComponentMenuId: string;
   _IsLoaded: boolean = false;
   private EntityResourceService: EntityResourceService;
 

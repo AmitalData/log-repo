@@ -174,7 +174,7 @@ export class SeizureFactorTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SeizureFactorType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SeizureFactorTypeList> = [];
 
@@ -240,7 +240,7 @@ export class SeizureFactorTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SeizureFactorType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SeizureFactorTypeList> = [];
 					if (cachedJson) {

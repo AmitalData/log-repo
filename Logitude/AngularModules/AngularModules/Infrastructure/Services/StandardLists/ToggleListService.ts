@@ -174,7 +174,7 @@ export class ToggleListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Toggle").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ToggleList> = [];
 
@@ -240,7 +240,7 @@ export class ToggleListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Toggle").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ToggleList> = [];
 					if (cachedJson) {

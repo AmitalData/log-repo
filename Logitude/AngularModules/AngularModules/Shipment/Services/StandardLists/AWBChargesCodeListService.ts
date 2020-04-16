@@ -174,7 +174,7 @@ export class AWBChargesCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AWBChargesCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AWBChargesCodeList> = [];
 
@@ -240,7 +240,7 @@ export class AWBChargesCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AWBChargesCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AWBChargesCodeList> = [];
 					if (cachedJson) {

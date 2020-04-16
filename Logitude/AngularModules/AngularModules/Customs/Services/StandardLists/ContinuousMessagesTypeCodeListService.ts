@@ -174,7 +174,7 @@ export class ContinuousMessagesTypeCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ContinuousMessagesTypeCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ContinuousMessagesTypeCodeList> = [];
 
@@ -240,7 +240,7 @@ export class ContinuousMessagesTypeCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ContinuousMessagesTypeCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ContinuousMessagesTypeCodeList> = [];
 					if (cachedJson) {

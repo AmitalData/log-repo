@@ -15,32 +15,53 @@ import { AppComponent } from './AppComponent';
         provideRoutes([
             { loadChildren: () => import('../Controls/Module_CTRL').then(m => m.ControlsModule), path: 'Controls' },
 
-            // Infrastructure
-            //{ loadChildren: 'Infrastructure/Module_INFR#InfrastructureModule' },            
-            //{ loadChildren: 'InfrastructureModules/InfrastructureAutomation/ModuleInfrastructureAutomation#ModuleInfrastructureAutomation' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureBatchService/ModuleInfrastructureBatchService#ModuleInfrastructureBatchService' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureCommunications/ModuleInfrastructureCommunications#ModuleInfrastructureCommunications' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureCustomization/ModuleInfrastructureCustomization#ModuleInfrastructureCustomization' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureDocuments/ModuleInfrastructureDocuments#ModuleInfrastructureDocuments' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureGettingStarted/ModuleInfrastructureGettingStarted#ModuleInfrastructureGettingStarted' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureHybrid/ModuleInfrastructureHybrid#ModuleInfrastructureHybrid' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureOthers/ModuleInfrastructureOthers#ModuleInfrastructureOthers' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureStimulsoft/ModuleInfrastructureStimulsoft#ModuleInfrastructureStimulsoft' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureTenantManagement/ModuleInfrastructureTenantManagement#ModuleInfrastructureTenantManagement' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureUser/ModuleInfrastructureUser#ModuleInfrastructureUser' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureComputingPartner/ModuleInfrastructureComputingPartner#ModuleInfrastructureComputingPartner' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureBusinessProcess/ModuleInfrastructureBusinessProcess#ModuleInfrastructureBusinessProcess' },
-            //{ loadChildren: 'InfrastructureModules/InfrastructureBIReport/ModuleInfrastructureBIReport#ModuleInfrastructureBIReport' },
+          // Infrastructure
+          { loadChildren: () => import('../Infrastructure/Module_INFR').then(m => m.InfrastructureModule), path: 'Infrastructure' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureAutomation/ModuleInfrastructureAutomation').then(m => m.ModuleInfrastructureAutomation), path: 'InfrastructureAutomation' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureBatchService/ModuleInfrastructureBatchService').then(m => m.ModuleInfrastructureBatchService), path: 'InfrastructureBatchService' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureCommunications/ModuleInfrastructureCommunications').then(m => m.ModuleInfrastructureCommunications), path: 'InfrastructureCommunications' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureCustomization/ModuleInfrastructureCustomization').then(m => m.ModuleInfrastructureCustomization), path: 'InfrastructureCustomization' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureDocuments/ModuleInfrastructureDocuments').then(m => m.ModuleInfrastructureDocuments), path: 'InfrastructureDocuments' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureGettingStarted/ModuleInfrastructureGettingStarted').then(m => m.ModuleInfrastructureGettingStarted), path: 'InfrastructureGettingStarted' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureHybrid/ModuleInfrastructureHybrid').then(m => m.ModuleInfrastructureHybrid), path: 'InfrastructureHybrid' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureOthers/ModuleInfrastructureOthers').then(m => m.ModuleInfrastructureOthers), path: 'InfrastructureOthers' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureStimulsoft/ModuleInfrastructureStimulsoft').then(m => m.ModuleInfrastructureStimulsoft), path: 'InfrastructureStimulsoft' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureTenantManagement/ModuleInfrastructureTenantManagement').then(m => m.ModuleInfrastructureTenantManagement), path: 'InfrastructureTenantManagement' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureUser/ModuleInfrastructureUser').then(m => m.ModuleInfrastructureUser), path: 'InfrastructureUser' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureComputingPartner/ModuleInfrastructureComputingPartner').then(m => m.ModuleInfrastructureComputingPartner), path: 'InfrastructureComputingPartner' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureBusinessProcess/ModuleInfrastructureBusinessProcess').then(m => m.ModuleInfrastructureBusinessProcess), path: 'InfrastructureBusinessProcess' },
+          { loadChildren: () => import('../InfrastructureModules/InfrastructureBIReport/ModuleInfrastructureBIReport').then(m => m.ModuleInfrastructureBIReport), path: 'InfrastructureBIReport' },
 
-            //Common Modules
-            //{ loadChildren: 'Common/Module_COMN#LogitudeCommonModule' },
-            //{ loadChildren: 'CommonModules/CommonAgent/ModuleCommonAgent#ModuleCommonAgent' },
-            //{ loadChildren: 'CommonModules/CommonAirline/ModuleCommonAirline#ModuleCommonAirline' },
-            //{ loadChildren: 'CommonModules/CommonCustomer/ModuleCommonCustomer#ModuleCommonCustomer' },
-            //{ loadChildren: 'CommonModules/CommonFilingInbox/ModuleCommonFilingInbox#ModuleCommonFilingInbox' },
-            //{ loadChildren: 'CommonModules/CommonFlightsSchedules/ModuleCommonFlightsSchedules#ModuleCommonFlightsSchedules' },
-            //{ loadChildren: 'CommonModules/CommonOthers/ModuleCommonOthers#ModuleCommonOthers' },
-            //{ loadChildren: 'CommonModules/CommonPartners/ModuleCommonPartners#ModuleCommonPartners' },
+          //Common Modules
+          { loadChildren: () => import('../Common/Module_COMN').then(m => m.LogitudeCommonModule), path: 'Common' },
+          { loadChildren: () => import('../CommonModules/CommonAgent/ModuleCommonAgent').then(m => m.ModuleCommonAgent), path: 'CommonAgent' },
+          { loadChildren: () => import('../CommonModules/CommonAirline/ModuleCommonAirline').then(m => m.ModuleCommonAirline), path: 'CommonAirline' },
+          { loadChildren: () => import('../CommonModules/CommonCustomer/ModuleCommonCustomer').then(m => m.ModuleCommonCustomer), path: 'CommonCustomer' },
+          { loadChildren: () => import('../CommonModules/CommonFilingInbox/ModuleCommonFilingInbox').then(m => m.ModuleCommonFilingInbox), path: 'CommonFilingInbox' },
+          { loadChildren: () => import('../CommonModules/CommonFlightsSchedules/ModuleCommonFlightsSchedules').then(m => m.ModuleCommonFlightsSchedules), path: 'CommonFlightsSchedules' },
+          { loadChildren: () => import('../CommonModules/CommonOthers/ModuleCommonOthers').then(m => m.ModuleCommonOthers), path: 'CommonOthers' },
+          { loadChildren: () => import('../CommonModules/CommonPartners/ModuleCommonPartners').then(m => m.ModuleCommonPartners), path: 'CommonPartners' },
+
+          // Shipment Modules
+          { loadChildren: () => import('../Shipment/Module_SHIP').then(m => m.Shipment_Module), path: 'Shipment' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentAWB/ModuleShipmentAWB').then(m => m.ModuleShipmentAWB), path: 'ShipmentAWB' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentINTTRA/ModuleShipmentINTTRA').then(m => m.ModuleShipmentINTTRA), path: 'ShipmentINTTRA' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentOthers/ModuleShipmentOthers').then(m => m.ModuleShipmentOthers), path: 'ShipmentOthers' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentStock/ModuleShipmentStock').then(m => m.ModuleShipmentStock), path: 'ShipmentStock' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentTabs/ModuleShipmentTabs').then(m => m.ModuleShipmentTabs), path: 'ShipmentTabs' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentPackages/ModuleShipmentPackages').then(m => m.ModuleShipmentPackages), path: 'ShipmentPackages' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentRouting/ModuleShipmentRouting').then(m => m.ModuleShipmentRouting), path: 'ShipmentRouting' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentLogBox/ModuleShipmentLogBox').then(m => m.ModuleShipmentLogBox), path: 'ShipmentLogBox' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest').then(m => m.ModuleShipmentSharedManifest), path: 'ShipmentSharedManifest' },
+          { loadChildren: () => import('../ShipmentModules/ShipmentAMANAC/ModuleShipmentAMANAC').then(m => m.ModuleShipmentAMANAC), path: 'ShipmentAMANAC' },
+
+
+                      //Shipment Modules
+
+
+
+
+
 
             //{ loadChildren: 'Accounting/Module_ACCT#AccountingModule' },
             //{ loadChildren: 'Booking/Module_BOOK#BookingModule' },
@@ -76,18 +97,7 @@ import { AppComponent } from './AppComponent';
             //{ loadChildren: 'Report/Module_REPO#ReportModule' },
             //{ loadChildren: 'SharedLogistics/Module_SHRD#SharedLogisticsModule' },
 
-            //Shipment Modules
-            //{ loadChildren: 'Shipment/Module_SHIP#Shipment_Module' },
-            //{ loadChildren: 'ShipmentModules/ShipmentAWB/ModuleShipmentAWB#ModuleShipmentAWB' },
-            //{ loadChildren: 'ShipmentModules/ShipmentINTTRA/ModuleShipmentINTTRA#ModuleShipmentINTTRA' },
-            //{ loadChildren: 'ShipmentModules/ShipmentOthers/ModuleShipmentOthers#ModuleShipmentOthers' },
-            //{ loadChildren: 'ShipmentModules/ShipmentStock/ModuleShipmentStock#ModuleShipmentStock' },
-            //{ loadChildren: 'ShipmentModules/ShipmentTabs/ModuleShipmentTabs#ModuleShipmentTabs' },
-            //{ loadChildren: 'ShipmentModules/ShipmentPackages/ModuleShipmentPackages#ModuleShipmentPackages' },
-            //{ loadChildren: 'ShipmentModules/ShipmentRouting/ModuleShipmentRouting#ModuleShipmentRouting' },
-            //{ loadChildren: 'ShipmentModules/ShipmentLogBox/ModuleShipmentLogBox#ModuleShipmentLogBox' },
-            //{ loadChildren: 'ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest#ModuleShipmentSharedManifest' },
-            //{ loadChildren: 'ShipmentModules/ShipmentAMANAC/ModuleShipmentAMANAC#ModuleShipmentAMANAC' },
+
 
             //{ loadChildren: 'Social/Module_SOCL#SocialModule' },
             //{ loadChildren: 'TimeManagement/Module_TIME#TimeManagementModule' },

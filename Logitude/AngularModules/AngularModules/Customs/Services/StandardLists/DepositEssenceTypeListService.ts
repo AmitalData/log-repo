@@ -174,7 +174,7 @@ export class DepositEssenceTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DepositEssenceType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DepositEssenceTypeList> = [];
 
@@ -240,7 +240,7 @@ export class DepositEssenceTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DepositEssenceType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DepositEssenceTypeList> = [];
 					if (cachedJson) {

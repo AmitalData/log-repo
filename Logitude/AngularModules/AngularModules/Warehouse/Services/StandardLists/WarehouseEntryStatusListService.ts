@@ -174,7 +174,7 @@ export class WarehouseEntryStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("WarehouseEntryStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<WarehouseEntryStatusList> = [];
 
@@ -240,7 +240,7 @@ export class WarehouseEntryStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("WarehouseEntryStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<WarehouseEntryStatusList> = [];
 					if (cachedJson) {

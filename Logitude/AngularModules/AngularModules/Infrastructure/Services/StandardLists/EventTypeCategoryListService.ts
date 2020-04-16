@@ -174,7 +174,7 @@ export class EventTypeCategoryListService {
 
         else {
             return CachedDataManager.GetClosedTableData("EventTypeCategory").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EventTypeCategoryList> = [];
 
@@ -240,7 +240,7 @@ export class EventTypeCategoryListService {
 
         else {
             return CachedDataManager.GetClosedTableData("EventTypeCategory").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EventTypeCategoryList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class SATInterfaceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("SATInterface").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SATInterfaceList> = [];
 
@@ -240,7 +240,7 @@ export class SATInterfaceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("SATInterface").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SATInterfaceList> = [];
 					if (cachedJson) {

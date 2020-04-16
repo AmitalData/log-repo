@@ -174,7 +174,7 @@ export class AmendmentFieldReasonTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AmendmentFieldReasonType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AmendmentFieldReasonTypeList> = [];
 
@@ -240,7 +240,7 @@ export class AmendmentFieldReasonTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AmendmentFieldReasonType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AmendmentFieldReasonTypeList> = [];
 					if (cachedJson) {

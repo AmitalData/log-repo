@@ -174,7 +174,7 @@ export class SiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SiteTypeList> = [];
 
@@ -240,7 +240,7 @@ export class SiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SiteTypeList> = [];
 					if (cachedJson) {

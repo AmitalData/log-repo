@@ -174,7 +174,7 @@ export class InterestReportStatuseListService {
 
         else {
             return CachedDataManager.GetClosedTableData("InterestReportStatuse").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<InterestReportStatuseList> = [];
 
@@ -240,7 +240,7 @@ export class InterestReportStatuseListService {
 
         else {
             return CachedDataManager.GetClosedTableData("InterestReportStatuse").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<InterestReportStatuseList> = [];
 					if (cachedJson) {

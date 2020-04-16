@@ -174,7 +174,7 @@ export class ClosedTableStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ClosedTableStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ClosedTableStatusList> = [];
 
@@ -240,7 +240,7 @@ export class ClosedTableStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ClosedTableStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ClosedTableStatusList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class FeaturePackageTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("FeaturePackageType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FeaturePackageTypeList> = [];
 
@@ -240,7 +240,7 @@ export class FeaturePackageTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("FeaturePackageType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FeaturePackageTypeList> = [];
 					if (cachedJson) {

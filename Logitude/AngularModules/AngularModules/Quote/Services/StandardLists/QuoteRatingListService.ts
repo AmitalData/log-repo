@@ -174,7 +174,7 @@ export class QuoteRatingListService {
 
         else {
             return CachedDataManager.GetClosedTableData("QuoteRating").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<QuoteRatingList> = [];
 
@@ -240,7 +240,7 @@ export class QuoteRatingListService {
 
         else {
             return CachedDataManager.GetClosedTableData("QuoteRating").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<QuoteRatingList> = [];
 					if (cachedJson) {

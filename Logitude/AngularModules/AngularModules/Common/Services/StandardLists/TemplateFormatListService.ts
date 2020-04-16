@@ -174,7 +174,7 @@ export class TemplateFormatListService {
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("TemplateFormat").pipe(map(cachedJson => {
+            return CachedDataManager.GetClosedTableData("TemplateFormat").pipe(map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<TemplateFormatList> = [];
                 if (cachedJson) {
@@ -238,7 +238,7 @@ export class TemplateFormatListService {
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("TemplateFormat").pipe(map(cachedJson => {
+            return CachedDataManager.GetClosedTableData("TemplateFormat").pipe(map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<TemplateFormatList> = [];
                 if (cachedJson) {

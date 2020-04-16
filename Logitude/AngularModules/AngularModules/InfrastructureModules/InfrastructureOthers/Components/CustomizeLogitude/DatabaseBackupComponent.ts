@@ -1,16 +1,12 @@
-
-declare var System: any;
 declare var window: any;
 import {Component, OnInit, Output}  from '@angular/core';
 import {BackUpService} from '../../../../Infrastructure/Services/WebServices/BackUpService';
-
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
 
 @Component({
     selector: 'DatabaseBackup',
@@ -50,8 +46,8 @@ export class DatabaseBackupComponent implements OnInit {
 
     }
 
-    BackUpTimer() {
-        return Observable.interval(10000).timeInterval();
+  BackUpTimer() {
+    return interval(10000).pipe(timeInterval());
     }
 
   

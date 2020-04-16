@@ -174,7 +174,7 @@ export class CashBookTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CashBookType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CashBookTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CashBookTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CashBookType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CashBookTypeList> = [];
 					if (cachedJson) {

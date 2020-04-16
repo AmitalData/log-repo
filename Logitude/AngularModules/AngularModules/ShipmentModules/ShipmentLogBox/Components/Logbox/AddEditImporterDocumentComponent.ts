@@ -4,7 +4,7 @@ import {DocumentsFilingPM} from '../../../../Common/EntityPMs/DocumentsFilingPM'
 import {DocumentTypeList} from '../../../../Common/EntityLists/DocumentTypeList';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {UIProperties, UIProperty} from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {Http} from '@angular/http';
+
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {FormGroup, FormBuilder} from '@angular/forms';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';

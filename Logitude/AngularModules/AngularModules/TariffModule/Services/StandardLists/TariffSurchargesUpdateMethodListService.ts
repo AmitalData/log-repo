@@ -174,7 +174,7 @@ export class TariffSurchargesUpdateMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TariffSurchargesUpdateMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TariffSurchargesUpdateMethodList> = [];
 
@@ -240,7 +240,7 @@ export class TariffSurchargesUpdateMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TariffSurchargesUpdateMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TariffSurchargesUpdateMethodList> = [];
 					if (cachedJson) {

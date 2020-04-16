@@ -174,7 +174,7 @@ export class ActivityStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ActivityStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ActivityStatusList> = [];
 
@@ -240,7 +240,7 @@ export class ActivityStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ActivityStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ActivityStatusList> = [];
 					if (cachedJson) {

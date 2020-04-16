@@ -44,6 +44,7 @@ declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAMLine
 })
 
 export class CustomerOverviewTabComponent extends BaseComponent implements OnInit {
+    public RankName: any;
     public EntityPM: CustomerPM;
     public ObjectTableName: string = "Customer";
     private CD: ChangeDetectorRef;

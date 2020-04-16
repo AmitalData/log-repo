@@ -174,7 +174,7 @@ export class TMLocationListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TMLocation").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TMLocationList> = [];
 
@@ -240,7 +240,7 @@ export class TMLocationListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TMLocation").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TMLocationList> = [];
 					if (cachedJson) {

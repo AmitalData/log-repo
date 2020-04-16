@@ -174,7 +174,7 @@ export class PaymentTermDateTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PaymentTermDateType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentTermDateTypeList> = [];
 
@@ -240,7 +240,7 @@ export class PaymentTermDateTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PaymentTermDateType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentTermDateTypeList> = [];
 					if (cachedJson) {

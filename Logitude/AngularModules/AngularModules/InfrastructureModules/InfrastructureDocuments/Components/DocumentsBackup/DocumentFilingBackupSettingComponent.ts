@@ -16,6 +16,7 @@ import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 })
 
 export class DocumentFilingBackupSettingComponent extends BaseComponent implements OnInit {
+    public ObjectTableName: string = null;
     IsLoad: boolean = false;
     documentFilingBackupSettingPMService: DocumentFilingBackupSettingPMService;
     DataContext: any = this;

@@ -174,7 +174,7 @@ export class AmendmentRequestStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AmendmentRequestStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AmendmentRequestStatusList> = [];
 
@@ -240,7 +240,7 @@ export class AmendmentRequestStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AmendmentRequestStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AmendmentRequestStatusList> = [];
 					if (cachedJson) {

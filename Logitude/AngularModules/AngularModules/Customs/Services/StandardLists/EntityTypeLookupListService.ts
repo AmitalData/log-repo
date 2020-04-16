@@ -174,7 +174,7 @@ export class EntityTypeLookupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.EntityTypeLookup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EntityTypeLookupList> = [];
 
@@ -240,7 +240,7 @@ export class EntityTypeLookupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.EntityTypeLookup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EntityTypeLookupList> = [];
 					if (cachedJson) {

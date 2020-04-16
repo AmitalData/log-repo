@@ -27,6 +27,13 @@ declare var insertAtSubject;
     templateUrl: './AddEditRuleComponent.html',
 })
 export class AddEditRuleComponent extends BaseComponent {
+  public ObjectTableName: string = null;
+  public CurrentObjectTable: string = null;
+  public ActiveForNew: boolean = false;
+  public ActiveForUpdate: boolean = false;
+  public AdvancedCondition: boolean = false;
+  public InActive: boolean = false;
+
     FieldsLovQueryFilters: ApiQueryFilters;
     public DataContext: ObjectTableRulePM;
     public ValidationErrorsList: string[] = [];
@@ -36,7 +43,7 @@ export class AddEditRuleComponent extends BaseComponent {
 
     public IsResourcesReady: boolean = false;
     private ObjectTableId: string;
-    private IsNewEntity: boolean = false;
+    IsNewEntity: boolean = false;
     private IsCopyFromSystemRule: boolean = false;
     public ConditionTXTAreaId: string;
 

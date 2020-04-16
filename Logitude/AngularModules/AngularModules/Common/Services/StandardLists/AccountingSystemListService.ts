@@ -174,7 +174,7 @@ export class AccountingSystemListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AccountingSystem").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AccountingSystemList> = [];
 
@@ -240,7 +240,7 @@ export class AccountingSystemListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AccountingSystem").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AccountingSystemList> = [];
 					if (cachedJson) {

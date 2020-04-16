@@ -174,7 +174,7 @@ export class PaymentMethodTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PaymentMethodType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentMethodTypeList> = [];
 
@@ -240,7 +240,7 @@ export class PaymentMethodTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PaymentMethodType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentMethodTypeList> = [];
 					if (cachedJson) {

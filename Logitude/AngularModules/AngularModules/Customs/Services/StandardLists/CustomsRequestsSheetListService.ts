@@ -174,7 +174,7 @@ export class CustomsRequestsSheetListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsRequestsSheet").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
 
@@ -240,7 +240,7 @@ export class CustomsRequestsSheetListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsRequestsSheet").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
 					if (cachedJson) {

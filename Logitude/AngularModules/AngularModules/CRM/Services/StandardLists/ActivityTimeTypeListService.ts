@@ -174,7 +174,7 @@ export class ActivityTimeTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ActivityTimeType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ActivityTimeTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ActivityTimeTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ActivityTimeType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ActivityTimeTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class ImporterPeriodicDeclarStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ImporterPeriodicDeclarStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ImporterPeriodicDeclarStatusList> = [];
 
@@ -240,7 +240,7 @@ export class ImporterPeriodicDeclarStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ImporterPeriodicDeclarStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ImporterPeriodicDeclarStatusList> = [];
 					if (cachedJson) {

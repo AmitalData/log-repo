@@ -174,7 +174,7 @@ export class SATPaymentMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("SATPaymentMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SATPaymentMethodList> = [];
 
@@ -240,7 +240,7 @@ export class SATPaymentMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("SATPaymentMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SATPaymentMethodList> = [];
 					if (cachedJson) {

@@ -175,7 +175,7 @@ export class AWBDescriptionOfGoodsListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AWBDescriptionOfGoods").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AWBDescriptionOfGoodsList> = [];
 
@@ -241,7 +241,7 @@ export class AWBDescriptionOfGoodsListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AWBDescriptionOfGoods").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AWBDescriptionOfGoodsList> = [];
 					if (cachedJson) {

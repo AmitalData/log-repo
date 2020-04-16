@@ -174,7 +174,7 @@ export class ModificationAndDiscountTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ModificationAndDiscountType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ModificationAndDiscountTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ModificationAndDiscountTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ModificationAndDiscountType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ModificationAndDiscountTypeList> = [];
 					if (cachedJson) {

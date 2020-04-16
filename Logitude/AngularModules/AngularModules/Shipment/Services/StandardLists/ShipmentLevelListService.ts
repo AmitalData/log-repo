@@ -174,7 +174,7 @@ export class ShipmentLevelListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ShipmentLevel").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ShipmentLevelList> = [];
 
@@ -240,7 +240,7 @@ export class ShipmentLevelListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ShipmentLevel").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ShipmentLevelList> = [];
 					if (cachedJson) {

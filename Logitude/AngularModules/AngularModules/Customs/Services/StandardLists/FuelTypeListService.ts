@@ -174,7 +174,7 @@ export class FuelTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.FuelType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FuelTypeList> = [];
 
@@ -240,7 +240,7 @@ export class FuelTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.FuelType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FuelTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class NotificationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.NotificationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<NotificationTypeList> = [];
 
@@ -240,7 +240,7 @@ export class NotificationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.NotificationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<NotificationTypeList> = [];
 					if (cachedJson) {

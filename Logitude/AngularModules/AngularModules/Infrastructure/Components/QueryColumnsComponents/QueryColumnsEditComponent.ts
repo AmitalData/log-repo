@@ -3,7 +3,7 @@ declare var window: any;
 import {Component, ViewContainerRef, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import {LogitudeListBoxComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
-import {Http} from '@angular/http';
+
 //import {ObjectFieldPM} from '../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {QueryColumnPM} from '../../../Infrastructure/EntityPMs/QueryColumnPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';

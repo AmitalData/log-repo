@@ -174,7 +174,7 @@ export class TradeLevyExamptTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TradeLevyExamptType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TradeLevyExamptTypeList> = [];
 
@@ -240,7 +240,7 @@ export class TradeLevyExamptTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TradeLevyExamptType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TradeLevyExamptTypeList> = [];
 					if (cachedJson) {

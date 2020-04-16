@@ -174,7 +174,7 @@ export class BatchTaskExecutionStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BatchTaskExecutionStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BatchTaskExecutionStatusList> = [];
 
@@ -240,7 +240,7 @@ export class BatchTaskExecutionStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BatchTaskExecutionStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BatchTaskExecutionStatusList> = [];
 					if (cachedJson) {

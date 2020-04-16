@@ -174,7 +174,7 @@ export class MorningMessageTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MorningMessageType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MorningMessageTypeList> = [];
 
@@ -240,7 +240,7 @@ export class MorningMessageTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MorningMessageType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MorningMessageTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class BluesnapContractTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BluesnapContractType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BluesnapContractTypeList> = [];
 
@@ -240,7 +240,7 @@ export class BluesnapContractTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BluesnapContractType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BluesnapContractTypeList> = [];
 					if (cachedJson) {

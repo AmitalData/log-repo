@@ -249,7 +249,7 @@ export class GettingStartedComponent extends BaseComponent {
     }
 
     // Data Management 
-    private New(entity: string) {
+    public New(entity: string) {
         switch (entity) {
             case "User": { this.RunNewEntity(entity, "./InfrastructureModules/InfrastructureUser/Components/NewUserComponent"); break; }
             case "Agent": { this.RunNewEntity(entity, "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent"); break; }
@@ -552,7 +552,7 @@ export class GettingStartedComponent extends BaseComponent {
         });
     }
 
-    private ViewAllResources() {
+    ViewAllResources() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "View All");
         var uri = 'TrainingResourcesHTML/TrainingResourcesMainPage.aspx?tempId=' + SessionInfo.DocumentDownloadToken;
         var navigate = ServiceHelper.GetLogitudeURL() + uri;

@@ -174,7 +174,7 @@ export class CheckRepresentativeTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckRepresentativeType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckRepresentativeTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CheckRepresentativeTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckRepresentativeType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckRepresentativeTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class CheckDigitControlAlgorithmListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CheckDigitControlAlgorithm").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckDigitControlAlgorithmList> = [];
 
@@ -240,7 +240,7 @@ export class CheckDigitControlAlgorithmListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CheckDigitControlAlgorithm").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckDigitControlAlgorithmList> = [];
 					if (cachedJson) {

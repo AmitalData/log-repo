@@ -10,14 +10,11 @@ import { AppTool } from '../../Tools';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 import { ControlsIdCounter } from '../../Utilities/ControlsIdCounter';
 import { FieldValidator } from '../../Validators/FieldValidator';
-import { Observable } from 'rxjs/Observable';
 import { FormGroup } from '@angular/forms';
 import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
-import { timer } from 'rxjs/observable/timer';
-//import { timer } from 'rxjs';
-import { timeInterval, pluck, take } from 'rxjs/operators';
-import { Dictionary } from '../../GenericTypes/Dictionary';
+import { fromEvent, timer } from 'rxjs';
+import { debounceTime, take } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithSeparators, numberWithCommas: any;
 
@@ -77,7 +74,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
     private show: boolean;
-    private IsDisabled: boolean;
+    IsDisabled: boolean;
     private timerToken: any;
     private textValue;
     public get TextValue() {
@@ -430,9 +427,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }
         this.ngzone.runOutsideAngular(() => {
             var input = document.getElementById(this.InputId);
-            this._debounceTimeSub =
-                Observable.fromEvent(input, 'keydown')
-                    .debounceTime(this.DebounceTime)
+          this._debounceTimeSub =
+            fromEvent(input, 'keydown').pipe(
+                    debounceTime(this.DebounceTime))
                     .subscribe(keyboardEvent => {
                         var which = keyBoardWhich(keyboardEvent);
                         var key = keyBoardKey(keyboardEvent);

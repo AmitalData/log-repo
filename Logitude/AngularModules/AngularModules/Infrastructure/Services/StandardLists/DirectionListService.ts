@@ -174,7 +174,7 @@ export class DirectionListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Direction").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DirectionList> = [];
 
@@ -240,7 +240,7 @@ export class DirectionListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Direction").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DirectionList> = [];
 					if (cachedJson) {

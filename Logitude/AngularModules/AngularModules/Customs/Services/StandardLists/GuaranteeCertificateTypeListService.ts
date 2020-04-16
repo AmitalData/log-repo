@@ -174,7 +174,7 @@ export class GuaranteeCertificateTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.GuaranteeCertificateType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<GuaranteeCertificateTypeList> = [];
 
@@ -240,7 +240,7 @@ export class GuaranteeCertificateTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.GuaranteeCertificateType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<GuaranteeCertificateTypeList> = [];
 					if (cachedJson) {

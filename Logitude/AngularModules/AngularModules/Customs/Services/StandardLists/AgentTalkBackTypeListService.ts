@@ -174,7 +174,7 @@ export class AgentTalkBackTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AgentTalkBackType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AgentTalkBackTypeList> = [];
 
@@ -240,7 +240,7 @@ export class AgentTalkBackTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AgentTalkBackType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AgentTalkBackTypeList> = [];
 					if (cachedJson) {

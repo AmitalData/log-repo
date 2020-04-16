@@ -174,7 +174,7 @@ export class PassportTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PassportType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PassportTypeList> = [];
 
@@ -240,7 +240,7 @@ export class PassportTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PassportType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PassportTypeList> = [];
 					if (cachedJson) {

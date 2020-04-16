@@ -174,7 +174,7 @@ export class UnloadingSiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.UnloadingSiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<UnloadingSiteTypeList> = [];
 
@@ -240,7 +240,7 @@ export class UnloadingSiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.UnloadingSiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<UnloadingSiteTypeList> = [];
 					if (cachedJson) {

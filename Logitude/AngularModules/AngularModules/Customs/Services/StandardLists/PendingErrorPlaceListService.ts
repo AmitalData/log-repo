@@ -174,7 +174,7 @@ export class PendingErrorPlaceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PendingErrorPlace").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PendingErrorPlaceList> = [];
 
@@ -240,7 +240,7 @@ export class PendingErrorPlaceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PendingErrorPlace").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PendingErrorPlaceList> = [];
 					if (cachedJson) {

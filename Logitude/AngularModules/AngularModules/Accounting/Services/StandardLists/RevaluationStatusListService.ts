@@ -174,7 +174,7 @@ export class RevaluationStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RevaluationStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RevaluationStatusList> = [];
 
@@ -240,7 +240,7 @@ export class RevaluationStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RevaluationStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RevaluationStatusList> = [];
 					if (cachedJson) {

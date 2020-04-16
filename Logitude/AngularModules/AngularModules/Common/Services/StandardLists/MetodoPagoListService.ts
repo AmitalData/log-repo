@@ -174,7 +174,7 @@ export class MetodoPagoListService {
 
         else {
             return CachedDataManager.GetClosedTableData("MetodoPago").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MetodoPagoList> = [];
 
@@ -240,7 +240,7 @@ export class MetodoPagoListService {
 
         else {
             return CachedDataManager.GetClosedTableData("MetodoPago").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MetodoPagoList> = [];
 					if (cachedJson) {

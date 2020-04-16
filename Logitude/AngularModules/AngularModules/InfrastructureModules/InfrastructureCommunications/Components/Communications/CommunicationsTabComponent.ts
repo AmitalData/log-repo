@@ -22,7 +22,7 @@ export class CommunicationsTabComponent implements OnDestroy {
     public IsTitleHidden: boolean = false;
     public IsForINTTRA: boolean = false;
     public ItemsSource: Array<CommunicationLogList>;
-    private EntityPM: any;
+    public EntityPM: any;
     public IsResourcesReady: boolean = false;
     public TabHeaderTextCode: string;
     private CurrentSession = SessionLocator.SelectedSession;

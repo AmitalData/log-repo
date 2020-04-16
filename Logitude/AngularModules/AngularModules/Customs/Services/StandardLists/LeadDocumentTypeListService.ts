@@ -174,7 +174,7 @@ export class LeadDocumentTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.LeadDocumentType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<LeadDocumentTypeList> = [];
 
@@ -240,7 +240,7 @@ export class LeadDocumentTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.LeadDocumentType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<LeadDocumentTypeList> = [];
 					if (cachedJson) {

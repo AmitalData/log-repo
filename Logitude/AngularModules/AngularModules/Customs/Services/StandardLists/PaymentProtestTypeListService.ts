@@ -174,7 +174,7 @@ export class PaymentProtestTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PaymentProtestType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentProtestTypeList> = [];
 
@@ -240,7 +240,7 @@ export class PaymentProtestTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PaymentProtestType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentProtestTypeList> = [];
 					if (cachedJson) {

@@ -1,6 +1,6 @@
 declare var window: any;
 declare var System: any;
-import { Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
 import { BaseComponent } from './BaseComponent';
 import { EntityListService } from '../../Services/EntityListService';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
@@ -19,7 +19,6 @@ import { FieldValidator } from '../../Validators/FieldValidator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomEntityArgs } from './LogSearchWindowComponent';
-import { Observable } from 'rxjs/Observable';
 import { UIProperty, UIProperties, UIPropertyArgs } from './UIProperties';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
@@ -34,6 +33,8 @@ import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { PartnerTypeList } from '../../../Common/EntityLists/PartnerTypeList';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { SessionInfo } from '../../Utilities/SessionInfo';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'LogLov',
@@ -92,7 +93,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public IgnoreCustomFieldCheck: boolean = false;
     LayoutDirection: string = 'ltr';
     private dataContext: BaseComponent;
-    private uiProperty: UIProperty;
+    uiProperty: UIProperty;
     private show: boolean;
     private LookUp1: string;
     private LookUp2: string;
@@ -158,7 +159,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     ClosedByBlur: boolean;
     DisplayValue: string;
     MouseInArea: boolean;
-    private headerColumns: any[];
+    headerColumns: any[];
     private dataColumns: any[];
     DivLogLovId: string;
     ToolTipId: string;
@@ -218,7 +219,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     FocusOnSelect: boolean = true;
     @Input() DisplayFieldsFromList: string;
     public isRTL: boolean = false;
-    private LovPartnerTypes: Array<PartnerTypeList> = [];
+    LovPartnerTypes: Array<PartnerTypeList> = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityListService: EntityListService, private entityPMService: EntityPMService,
         private _entityResourceService: EntityResourceService) {
@@ -344,8 +345,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.AfterViewInitialized) {
             this._KeyDownSubscribe =
-                Observable.fromEvent(input, 'keydown')
-                    .debounceTime(400)
+                fromEvent(input, 'keydown').pipe(
+                    debounceTime(400))
                     .subscribe(keyboardEvent => {
                         var TABKEY = 9;
                         var ENTERKEY = 13;

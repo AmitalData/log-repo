@@ -1,6 +1,6 @@
 declare var window: any;
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Headers } from '@angular/http';
+
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { InfraSettings } from '../../Utilities/InfraSettings';

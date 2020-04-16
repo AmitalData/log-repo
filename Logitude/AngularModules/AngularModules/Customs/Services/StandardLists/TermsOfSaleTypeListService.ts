@@ -174,7 +174,7 @@ export class TermsOfSaleTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TermsOfSaleType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TermsOfSaleTypeList> = [];
 
@@ -240,7 +240,7 @@ export class TermsOfSaleTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TermsOfSaleType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TermsOfSaleTypeList> = [];
 					if (cachedJson) {

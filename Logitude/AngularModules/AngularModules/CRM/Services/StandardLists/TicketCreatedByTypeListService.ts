@@ -174,7 +174,7 @@ export class TicketCreatedByTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TicketCreatedByType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TicketCreatedByTypeList> = [];
 
@@ -240,7 +240,7 @@ export class TicketCreatedByTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TicketCreatedByType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TicketCreatedByTypeList> = [];
 					if (cachedJson) {

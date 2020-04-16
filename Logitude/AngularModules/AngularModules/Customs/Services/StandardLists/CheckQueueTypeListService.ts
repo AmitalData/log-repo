@@ -174,7 +174,7 @@ export class CheckQueueTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckQueueType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckQueueTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CheckQueueTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckQueueType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckQueueTypeList> = [];
 					if (cachedJson) {

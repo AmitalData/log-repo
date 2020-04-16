@@ -174,7 +174,7 @@ export class VendorTransactionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.VendorTransactionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VendorTransactionTypeList> = [];
 
@@ -240,7 +240,7 @@ export class VendorTransactionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.VendorTransactionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VendorTransactionTypeList> = [];
 					if (cachedJson) {

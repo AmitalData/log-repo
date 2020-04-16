@@ -174,7 +174,7 @@ export class ReconcileExternalPageStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ReconcileExternalPageStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ReconcileExternalPageStatusList> = [];
 
@@ -240,7 +240,7 @@ export class ReconcileExternalPageStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ReconcileExternalPageStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ReconcileExternalPageStatusList> = [];
 					if (cachedJson) {

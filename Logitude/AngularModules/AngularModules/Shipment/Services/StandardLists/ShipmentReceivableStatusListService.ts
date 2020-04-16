@@ -174,7 +174,7 @@ export class ShipmentReceivableStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ShipmentReceivableStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ShipmentReceivableStatusList> = [];
 
@@ -240,7 +240,7 @@ export class ShipmentReceivableStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ShipmentReceivableStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ShipmentReceivableStatusList> = [];
 					if (cachedJson) {

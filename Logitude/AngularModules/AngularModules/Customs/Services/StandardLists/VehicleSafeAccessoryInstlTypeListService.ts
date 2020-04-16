@@ -174,7 +174,7 @@ export class VehicleSafeAccessoryInstlTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.VehicleSafeAccessoryInstlType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VehicleSafeAccessoryInstlTypeList> = [];
 
@@ -240,7 +240,7 @@ export class VehicleSafeAccessoryInstlTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.VehicleSafeAccessoryInstlType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VehicleSafeAccessoryInstlTypeList> = [];
 					if (cachedJson) {

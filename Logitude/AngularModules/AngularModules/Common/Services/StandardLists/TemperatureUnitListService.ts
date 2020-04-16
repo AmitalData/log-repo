@@ -174,7 +174,7 @@ export class TemperatureUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TemperatureUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TemperatureUnitList> = [];
 
@@ -240,7 +240,7 @@ export class TemperatureUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TemperatureUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TemperatureUnitList> = [];
 					if (cachedJson) {

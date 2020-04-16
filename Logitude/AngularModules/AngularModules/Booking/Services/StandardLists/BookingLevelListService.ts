@@ -174,7 +174,7 @@ export class BookingLevelListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BookingLevel").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BookingLevelList> = [];
 
@@ -240,7 +240,7 @@ export class BookingLevelListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BookingLevel").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BookingLevelList> = [];
 					if (cachedJson) {

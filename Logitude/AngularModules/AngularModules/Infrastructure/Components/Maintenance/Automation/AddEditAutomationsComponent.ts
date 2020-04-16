@@ -950,7 +950,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
     ExsitCode: string = "";
-    AutomationCodeValueChange(value) {
+    AutomationCodeValueChange() {
         if (this.Code && this.ExsitCode != this.Code) {
             this.ExsitCode = this.Code;
             this._automationExtendedPMService.GetDoesAutomationCodeExist(this.Code).subscribe((res:any) => {

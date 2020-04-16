@@ -174,7 +174,7 @@ export class PayerActivityTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PayerActivityType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PayerActivityTypeList> = [];
 
@@ -240,7 +240,7 @@ export class PayerActivityTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PayerActivityType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PayerActivityTypeList> = [];
 					if (cachedJson) {

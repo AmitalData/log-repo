@@ -174,7 +174,7 @@ export class SchedulerProcedureListService {
 
         else {
             return CachedDataManager.GetClosedTableData("SchedulerProcedure").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SchedulerProcedureList> = [];
 
@@ -240,7 +240,7 @@ export class SchedulerProcedureListService {
 
         else {
             return CachedDataManager.GetClosedTableData("SchedulerProcedure").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SchedulerProcedureList> = [];
 					if (cachedJson) {

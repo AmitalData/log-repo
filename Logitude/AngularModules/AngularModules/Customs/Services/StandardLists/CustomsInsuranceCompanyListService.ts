@@ -174,7 +174,7 @@ export class CustomsInsuranceCompanyListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsInsuranceCompany").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsInsuranceCompanyList> = [];
 
@@ -240,7 +240,7 @@ export class CustomsInsuranceCompanyListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsInsuranceCompany").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsInsuranceCompanyList> = [];
 					if (cachedJson) {

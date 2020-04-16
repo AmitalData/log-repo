@@ -174,7 +174,7 @@ export class MeasureQualifierListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MeasureQualifier").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MeasureQualifierList> = [];
 
@@ -240,7 +240,7 @@ export class MeasureQualifierListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MeasureQualifier").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MeasureQualifierList> = [];
 					if (cachedJson) {

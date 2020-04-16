@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
-import {Http} from '@angular/http';
+
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 //import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -10,6 +10,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {AmitalGatewayUtil} from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     
@@ -27,9 +28,8 @@ export class Export2ExcelControl {
     url: string;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private http: Http) {
-        ServiceHelper.Http = http;
-        //serviceArgs.http = http;
+  constructor(private http: HttpClient) {
+
     }
     ObjectTableName: string;
     FileName: string;

@@ -174,7 +174,7 @@ export class TaxReportLineTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TaxReportLineType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TaxReportLineTypeList> = [];
 
@@ -240,7 +240,7 @@ export class TaxReportLineTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TaxReportLineType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TaxReportLineTypeList> = [];
 					if (cachedJson) {

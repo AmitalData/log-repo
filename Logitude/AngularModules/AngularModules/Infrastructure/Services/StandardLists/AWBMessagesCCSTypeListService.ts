@@ -174,7 +174,7 @@ export class AWBMessagesCCSTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AWBMessagesCCSType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AWBMessagesCCSTypeList> = [];
 
@@ -240,7 +240,7 @@ export class AWBMessagesCCSTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AWBMessagesCCSType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AWBMessagesCCSTypeList> = [];
 					if (cachedJson) {

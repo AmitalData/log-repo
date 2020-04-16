@@ -12,7 +12,6 @@ import { ObjectsLocator } from "../../../../Infrastructure/Locators/ObjectsLocat
 import { ConfirmWindow } from "../../../../Controls/Windows/ConfirmWindow";
 
 @Component({
-    moduleId: module.id,
     templateUrl: "./GLAccountSelectComponent.html"
 })
 export class GLAccountSelectComponent extends BaseComponent implements OnInit

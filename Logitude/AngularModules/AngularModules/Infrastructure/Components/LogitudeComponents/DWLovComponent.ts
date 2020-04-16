@@ -13,19 +13,15 @@ import {SessionLocator} from '../../Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {FormControl} from '@angular/forms';
 import {CustomEntityArgs} from './DWLogSearchWindowComponent';
-import { Observable } from 'rxjs/Observable';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {InfraSettings} from '../../Utilities/InfraSettings';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import { NewEntityArgs} from '../../Args';
 import {EntityPMService} from '../../Services/EntityPMService';
-import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
-import {CachedDataManager} from '../../Utilities/CachedDataManager';
-declare var logLoveReturnWhich, Selection: any;
-import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-import {DWQueryBuilderService} from '../../Services/ExtendedPMs/DWQueryBuilderService';
+import { DWQueryBuilderService } from '../../Services/ExtendedPMs/DWQueryBuilderService';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+declare var logLoveReturnWhich, Selection: any;
 
 @Component({
     selector: 'DWLov',
@@ -276,8 +272,8 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.AfterViewInitialized) {
             this._KeyDownSubscribe =
-                Observable.fromEvent(input, 'keydown')
-                    .debounceTime(400)
+                fromEvent(input, 'keydown').pipe(
+                    debounceTime(400))
                     .subscribe(keyboardEvent => {
                         var TABKEY = 9;
                         var ENTERKEY = 13;

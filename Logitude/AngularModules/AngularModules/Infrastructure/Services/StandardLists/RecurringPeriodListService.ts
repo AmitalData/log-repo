@@ -174,7 +174,7 @@ export class RecurringPeriodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RecurringPeriod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RecurringPeriodList> = [];
 
@@ -240,7 +240,7 @@ export class RecurringPeriodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RecurringPeriod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RecurringPeriodList> = [];
 					if (cachedJson) {

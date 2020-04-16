@@ -174,7 +174,7 @@ export class SiteLookupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SiteLookup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SiteLookupList> = [];
 
@@ -240,7 +240,7 @@ export class SiteLookupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SiteLookup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SiteLookupList> = [];
 					if (cachedJson) {

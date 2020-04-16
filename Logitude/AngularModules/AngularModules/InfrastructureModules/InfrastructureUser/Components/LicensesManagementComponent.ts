@@ -12,7 +12,6 @@ import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {CommonDomainService, UserLicenseUpdateHelper} from '../../../Common/Services/CommonDomainService';
 import {UserExtendedPMService} from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import {TenantManagementLicensePM} from '../../../Infrastructure/EntityPMs/TenantManagementLicensePM';
-import { filter } from 'rxjs/operator/filter';
 
 @Component({
     
@@ -20,6 +19,8 @@ import { filter } from 'rxjs/operator/filter';
 })
 
 export class LicensesManagementComponent implements OnDestroy {
+  public Items: any[] = [];
+
     @Output() SearchFieldChangeEvent = new EventEmitter();
     public Columns: any[] = [];
     private dirtyItem: UserLicensePM;

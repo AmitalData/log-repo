@@ -174,7 +174,7 @@ export class NumberFormatListService {
 
         else {
             return CachedDataManager.GetClosedTableData("NumberFormat").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<NumberFormatList> = [];
 
@@ -240,7 +240,7 @@ export class NumberFormatListService {
 
         else {
             return CachedDataManager.GetClosedTableData("NumberFormat").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<NumberFormatList> = [];
 					if (cachedJson) {

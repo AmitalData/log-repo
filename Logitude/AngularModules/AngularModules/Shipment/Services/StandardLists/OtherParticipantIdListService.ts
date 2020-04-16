@@ -174,7 +174,7 @@ export class OtherParticipantIdListService {
 
         else {
             return CachedDataManager.GetClosedTableData("OtherParticipantId").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OtherParticipantIdList> = [];
 
@@ -240,7 +240,7 @@ export class OtherParticipantIdListService {
 
         else {
             return CachedDataManager.GetClosedTableData("OtherParticipantId").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OtherParticipantIdList> = [];
 					if (cachedJson) {

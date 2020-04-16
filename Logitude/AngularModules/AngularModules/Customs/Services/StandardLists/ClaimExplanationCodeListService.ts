@@ -174,7 +174,7 @@ export class ClaimExplanationCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ClaimExplanationCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ClaimExplanationCodeList> = [];
 
@@ -240,7 +240,7 @@ export class ClaimExplanationCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ClaimExplanationCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ClaimExplanationCodeList> = [];
 					if (cachedJson) {

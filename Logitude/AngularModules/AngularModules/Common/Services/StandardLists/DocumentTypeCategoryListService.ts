@@ -174,7 +174,7 @@ export class DocumentTypeCategoryListService {
 
         else {
             return CachedDataManager.GetClosedTableData("DocumentTypeCategory").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DocumentTypeCategoryList> = [];
 
@@ -240,7 +240,7 @@ export class DocumentTypeCategoryListService {
 
         else {
             return CachedDataManager.GetClosedTableData("DocumentTypeCategory").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DocumentTypeCategoryList> = [];
 					if (cachedJson) {

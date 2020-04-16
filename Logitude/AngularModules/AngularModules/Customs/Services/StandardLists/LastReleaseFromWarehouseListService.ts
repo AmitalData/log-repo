@@ -174,7 +174,7 @@ export class LastReleaseFromWarehouseListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.LastReleaseFromWarehouse").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<LastReleaseFromWarehouseList> = [];
 
@@ -240,7 +240,7 @@ export class LastReleaseFromWarehouseListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.LastReleaseFromWarehouse").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<LastReleaseFromWarehouseList> = [];
 					if (cachedJson) {

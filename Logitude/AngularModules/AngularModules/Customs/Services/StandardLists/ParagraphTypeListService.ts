@@ -174,7 +174,7 @@ export class ParagraphTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ParagraphType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ParagraphTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ParagraphTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ParagraphType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ParagraphTypeList> = [];
 					if (cachedJson) {

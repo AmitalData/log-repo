@@ -174,7 +174,7 @@ export class PhysicalCheckOperationListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PhysicalCheckOperation").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PhysicalCheckOperationList> = [];
 
@@ -240,7 +240,7 @@ export class PhysicalCheckOperationListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PhysicalCheckOperation").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PhysicalCheckOperationList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class CourierPaymentStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CourierPaymentStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CourierPaymentStatusList> = [];
 
@@ -240,7 +240,7 @@ export class CourierPaymentStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CourierPaymentStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CourierPaymentStatusList> = [];
 					if (cachedJson) {

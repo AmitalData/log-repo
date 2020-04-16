@@ -174,7 +174,7 @@ export class AccountingTransferTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AccountingTransferType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AccountingTransferTypeList> = [];
 
@@ -240,7 +240,7 @@ export class AccountingTransferTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AccountingTransferType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AccountingTransferTypeList> = [];
 					if (cachedJson) {

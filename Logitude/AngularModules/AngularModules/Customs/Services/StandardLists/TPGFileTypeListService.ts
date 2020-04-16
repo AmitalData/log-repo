@@ -174,7 +174,7 @@ export class TPGFileTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TPGFileType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TPGFileTypeList> = [];
 
@@ -240,7 +240,7 @@ export class TPGFileTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TPGFileType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TPGFileTypeList> = [];
 					if (cachedJson) {

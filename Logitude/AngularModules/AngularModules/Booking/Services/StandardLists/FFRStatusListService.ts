@@ -174,7 +174,7 @@ export class FFRStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("FFRStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FFRStatusList> = [];
 
@@ -240,7 +240,7 @@ export class FFRStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("FFRStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FFRStatusList> = [];
 					if (cachedJson) {

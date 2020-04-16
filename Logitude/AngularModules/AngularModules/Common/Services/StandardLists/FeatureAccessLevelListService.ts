@@ -174,7 +174,7 @@ export class FeatureAccessLevelListService {
 
         else {
             return CachedDataManager.GetClosedTableData("FeatureAccessLevel").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FeatureAccessLevelList> = [];
 
@@ -240,7 +240,7 @@ export class FeatureAccessLevelListService {
 
         else {
             return CachedDataManager.GetClosedTableData("FeatureAccessLevel").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FeatureAccessLevelList> = [];
 					if (cachedJson) {

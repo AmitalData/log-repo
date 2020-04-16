@@ -174,7 +174,7 @@ export class OrganizationUnitTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.OrganizationUnitType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OrganizationUnitTypeList> = [];
 
@@ -240,7 +240,7 @@ export class OrganizationUnitTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.OrganizationUnitType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OrganizationUnitTypeList> = [];
 					if (cachedJson) {

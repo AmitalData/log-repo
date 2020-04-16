@@ -174,7 +174,7 @@ export class IntegrityCheckStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("IntegrityCheckStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<IntegrityCheckStatusList> = [];
 
@@ -240,7 +240,7 @@ export class IntegrityCheckStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("IntegrityCheckStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<IntegrityCheckStatusList> = [];
 					if (cachedJson) {

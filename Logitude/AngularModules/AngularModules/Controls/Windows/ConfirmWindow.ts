@@ -102,7 +102,7 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     public CancelButtonId: string = null;
     public NoButtonText: string = "No";
     public YesButtonText: string = "Yes";
-    private CancelButtonText: string = "Cancel";
+    public CancelButtonText: string = "Cancel";
     public IsOverAll: boolean = false;
     public ShowWarningImage: boolean = false;
     LayoutDirection: string = 'ltr';

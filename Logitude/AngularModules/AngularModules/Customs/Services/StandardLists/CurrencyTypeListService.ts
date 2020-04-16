@@ -174,7 +174,7 @@ export class CurrencyTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CurrencyType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CurrencyTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CurrencyTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CurrencyType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CurrencyTypeList> = [];
 					if (cachedJson) {

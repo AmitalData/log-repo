@@ -174,7 +174,7 @@ export class ImporterTypeForClaimListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ImporterTypeForClaim").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ImporterTypeForClaimList> = [];
 
@@ -240,7 +240,7 @@ export class ImporterTypeForClaimListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ImporterTypeForClaim").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ImporterTypeForClaimList> = [];
 					if (cachedJson) {

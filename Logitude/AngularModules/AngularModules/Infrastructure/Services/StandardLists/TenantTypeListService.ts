@@ -174,7 +174,7 @@ export class TenantTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TenantType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TenantTypeList> = [];
 
@@ -240,7 +240,7 @@ export class TenantTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TenantType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TenantTypeList> = [];
 					if (cachedJson) {

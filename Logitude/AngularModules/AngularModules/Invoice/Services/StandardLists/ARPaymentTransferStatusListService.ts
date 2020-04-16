@@ -174,7 +174,7 @@ export class ARPaymentTransferStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ARPaymentTransferStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ARPaymentTransferStatusList> = [];
 
@@ -240,7 +240,7 @@ export class ARPaymentTransferStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ARPaymentTransferStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ARPaymentTransferStatusList> = [];
 					if (cachedJson) {

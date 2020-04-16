@@ -174,7 +174,7 @@ export class DeliverySiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DeliverySiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DeliverySiteTypeList> = [];
 
@@ -240,7 +240,7 @@ export class DeliverySiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DeliverySiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DeliverySiteTypeList> = [];
 					if (cachedJson) {

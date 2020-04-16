@@ -174,7 +174,7 @@ export class InterestEntityTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("InterestEntityType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<InterestEntityTypeList> = [];
 
@@ -240,7 +240,7 @@ export class InterestEntityTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("InterestEntityType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<InterestEntityTypeList> = [];
 					if (cachedJson) {

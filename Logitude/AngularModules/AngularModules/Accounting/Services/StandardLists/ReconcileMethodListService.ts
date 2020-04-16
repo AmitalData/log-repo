@@ -174,7 +174,7 @@ export class ReconcileMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ReconcileMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ReconcileMethodList> = [];
 
@@ -240,7 +240,7 @@ export class ReconcileMethodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ReconcileMethod").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ReconcileMethodList> = [];
 					if (cachedJson) {

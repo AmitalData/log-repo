@@ -174,7 +174,7 @@ export class CustomsCountryListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsCountry").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsCountryList> = [];
 
@@ -240,7 +240,7 @@ export class CustomsCountryListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsCountry").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsCountryList> = [];
 					if (cachedJson) {

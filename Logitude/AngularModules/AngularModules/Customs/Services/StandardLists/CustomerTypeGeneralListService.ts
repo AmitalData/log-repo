@@ -174,7 +174,7 @@ export class CustomerTypeGeneralListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomerTypeGeneral").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomerTypeGeneralList> = [];
 
@@ -240,7 +240,7 @@ export class CustomerTypeGeneralListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomerTypeGeneral").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomerTypeGeneralList> = [];
 					if (cachedJson) {

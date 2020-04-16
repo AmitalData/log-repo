@@ -174,7 +174,7 @@ export class INTTRADocumentTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("INTTRADocumentType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<INTTRADocumentTypeList> = [];
 
@@ -240,7 +240,7 @@ export class INTTRADocumentTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("INTTRADocumentType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<INTTRADocumentTypeList> = [];
 					if (cachedJson) {

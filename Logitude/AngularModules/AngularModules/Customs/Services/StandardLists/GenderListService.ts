@@ -174,7 +174,7 @@ export class GenderListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.Gender").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<GenderList> = [];
 
@@ -240,7 +240,7 @@ export class GenderListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.Gender").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<GenderList> = [];
 					if (cachedJson) {

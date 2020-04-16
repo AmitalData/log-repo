@@ -174,7 +174,7 @@ export class SeizureMethodTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SeizureMethodType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SeizureMethodTypeList> = [];
 
@@ -240,7 +240,7 @@ export class SeizureMethodTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SeizureMethodType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SeizureMethodTypeList> = [];
 					if (cachedJson) {

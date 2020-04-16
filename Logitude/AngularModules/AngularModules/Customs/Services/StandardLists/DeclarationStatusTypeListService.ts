@@ -174,7 +174,7 @@ export class DeclarationStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DeclarationStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DeclarationStatusTypeList> = [];
 
@@ -240,7 +240,7 @@ export class DeclarationStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DeclarationStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DeclarationStatusTypeList> = [];
 					if (cachedJson) {

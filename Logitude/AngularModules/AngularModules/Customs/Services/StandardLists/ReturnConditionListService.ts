@@ -174,7 +174,7 @@ export class ReturnConditionListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ReturnCondition").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ReturnConditionList> = [];
 
@@ -240,7 +240,7 @@ export class ReturnConditionListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ReturnCondition").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ReturnConditionList> = [];
 					if (cachedJson) {

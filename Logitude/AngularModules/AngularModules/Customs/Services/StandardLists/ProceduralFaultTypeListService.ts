@@ -174,7 +174,7 @@ export class ProceduralFaultTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ProceduralFaultType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ProceduralFaultTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ProceduralFaultTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ProceduralFaultType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ProceduralFaultTypeList> = [];
 					if (cachedJson) {

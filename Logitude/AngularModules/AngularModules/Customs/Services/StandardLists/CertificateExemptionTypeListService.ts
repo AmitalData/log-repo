@@ -174,7 +174,7 @@ export class CertificateExemptionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CertificateExemptionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CertificateExemptionTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CertificateExemptionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CertificateExemptionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CertificateExemptionTypeList> = [];
 					if (cachedJson) {

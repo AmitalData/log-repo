@@ -174,7 +174,7 @@ export class BIReportsTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BIReportsType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BIReportsTypeList> = [];
 
@@ -240,7 +240,7 @@ export class BIReportsTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("BIReportsType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BIReportsTypeList> = [];
 					if (cachedJson) {

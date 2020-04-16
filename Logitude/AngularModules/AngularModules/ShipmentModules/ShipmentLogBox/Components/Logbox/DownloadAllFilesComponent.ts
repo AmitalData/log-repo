@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTranslationPipe';
-import {Http} from '@angular/http';
+
 import {WebFreightDomainService} from '../../../../Infrastructure/Services/WebFreightDomainService';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';

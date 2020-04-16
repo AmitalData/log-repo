@@ -1,6 +1,6 @@
-﻿declare var window: any;
+declare var window: any;
  
-import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
+import {Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
@@ -13,7 +13,6 @@ import {ApiQueryFilters, FilterItem} from '../../DataContracts/ApiQueryFilters';
 import {EntityResourceService} from '../../Services/EntityResourceService';
 import {EntityListService} from '../../Services/EntityListService';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
     

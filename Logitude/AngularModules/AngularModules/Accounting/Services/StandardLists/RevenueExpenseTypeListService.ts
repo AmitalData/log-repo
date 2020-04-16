@@ -174,7 +174,7 @@ export class RevenueExpenseTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RevenueExpenseType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RevenueExpenseTypeList> = [];
 
@@ -240,7 +240,7 @@ export class RevenueExpenseTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("RevenueExpenseType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RevenueExpenseTypeList> = [];
 					if (cachedJson) {

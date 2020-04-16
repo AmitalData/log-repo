@@ -3,7 +3,6 @@ declare var SelectingElement: any;
 import {
     Directive,
     ElementRef,
-    Renderer,
     Input,
     Output,
     Component,

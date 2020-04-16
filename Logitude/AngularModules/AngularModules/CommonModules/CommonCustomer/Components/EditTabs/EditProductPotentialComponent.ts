@@ -21,6 +21,9 @@ import {CustomerProductLocationPM} from '../../../../Common/EntityPMs/CustomerPr
 })
 
 export class EditProductPotentialComponent extends BaseComponent {
+    setToggleButtonMenu() { }
+    setToggleButtonMenuTemp() { }
+
     private myCurrencyCode: string = "";
     public ObjectTableName = "CustomerProduct";
     public EntityPM: ProductViewModelData = null;

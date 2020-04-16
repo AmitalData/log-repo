@@ -174,7 +174,7 @@ export class OpenFormatReportStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("OpenFormatReportStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OpenFormatReportStatusList> = [];
 
@@ -240,7 +240,7 @@ export class OpenFormatReportStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("OpenFormatReportStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OpenFormatReportStatusList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class CertificatesStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CertificatesStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CertificatesStatusList> = [];
 
@@ -240,7 +240,7 @@ export class CertificatesStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CertificatesStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CertificatesStatusList> = [];
 					if (cachedJson) {

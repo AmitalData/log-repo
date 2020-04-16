@@ -1,5 +1,4 @@
 import {Injectable, Injector, Inject} from '@angular/core';
-import { ConnectionBackend, BaseRequestOptions} from '@angular/http';
 import { defer, of } from 'rxjs';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {PortList} from '../../EntityLists/PortList';
@@ -7,6 +6,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
+
 @Injectable()
 
 export class PortService {

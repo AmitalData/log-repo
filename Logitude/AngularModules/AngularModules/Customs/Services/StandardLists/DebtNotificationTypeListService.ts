@@ -174,7 +174,7 @@ export class DebtNotificationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DebtNotificationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DebtNotificationTypeList> = [];
 
@@ -240,7 +240,7 @@ export class DebtNotificationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DebtNotificationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DebtNotificationTypeList> = [];
 					if (cachedJson) {

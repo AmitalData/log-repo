@@ -174,7 +174,7 @@ export class PickUpDeliveryTransportModeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PickUpDeliveryTransportMode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PickUpDeliveryTransportModeList> = [];
 
@@ -240,7 +240,7 @@ export class PickUpDeliveryTransportModeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PickUpDeliveryTransportMode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PickUpDeliveryTransportModeList> = [];
 					if (cachedJson) {

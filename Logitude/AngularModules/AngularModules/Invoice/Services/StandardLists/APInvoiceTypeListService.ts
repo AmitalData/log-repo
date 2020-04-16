@@ -174,7 +174,7 @@ export class APInvoiceTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("APInvoiceType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<APInvoiceTypeList> = [];
 
@@ -240,7 +240,7 @@ export class APInvoiceTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("APInvoiceType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<APInvoiceTypeList> = [];
 					if (cachedJson) {

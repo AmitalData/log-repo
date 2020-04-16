@@ -2,7 +2,6 @@ declare var window: any;
 declare var logLoveReturnWhich, Selection: any;
 import {Input, Output, Component, OnInit, EventEmitter, AfterViewInit, OnDestroy} from '@angular/core';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
-import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {AppTool} from '../../Tools';
@@ -13,9 +12,10 @@ import {ApiQueryFilters, FilterItem} from '../../DataContracts/ApiQueryFilters';
 import {EntityResourceService} from '../../Services/EntityResourceService';
 import {EntityListService} from '../../Services/EntityListService';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {Observable} from 'rxjs/Observable';
 import {FieldValidator} from '../../Validators/FieldValidator';
 import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
+import { fromEvent, timer } from 'rxjs';
+import { debounceTime, take } from 'rxjs/operators';
 
 @Component({
     selector: 'PickList',
@@ -24,7 +24,9 @@ import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
 })
 
 export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
-    
+  public IsAllDataVisible: boolean = false;
+  public ShowSearchButton: boolean = false;
+
     @Input() ObjectFieldName: string;
     @Input() ObjectTableName: string;
     @Input() DataContext: any;
@@ -54,7 +56,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
     SelectedValuePath: string;
     QueryFilterItems: ApiQueryFilters;
     LookUpTableName: string;
-    private uiProperty: UIProperty;
+    uiProperty: UIProperty;
     public ItemsSource: any[];
     public ItemsSourceCount: number = -1;
     public ItemsSourceStatic: any[];
@@ -333,9 +335,9 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
         var input = document.getElementById(this.ElementId);
         if (input != null && input != undefined) {
             this.AfterViewInitialized = true;
-        }
-        Observable.fromEvent(input, 'keydown')
-            .debounceTime(400)
+      }
+      fromEvent(input, 'keydown').pipe(
+            debounceTime(400))
             .subscribe(keyboardEvent => {
                 var TABKEY = 9;
                 var ENTERKEY = 13;

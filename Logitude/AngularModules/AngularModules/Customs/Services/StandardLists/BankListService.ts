@@ -174,7 +174,7 @@ export class BankListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.Bank").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BankList> = [];
 
@@ -240,7 +240,7 @@ export class BankListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.Bank").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<BankList> = [];
 					if (cachedJson) {

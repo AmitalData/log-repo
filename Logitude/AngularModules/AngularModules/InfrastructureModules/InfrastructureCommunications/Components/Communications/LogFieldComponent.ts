@@ -1,25 +1,11 @@
-﻿declare var window: any;
-import { Directive, ChangeDetectorRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
-
+declare var window: any;
+import { Directive, ChangeDetectorRef, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogTab } from '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
-import { CommunicationLogStepDataViewModel } from '../CommunicationLog/ViewModel/CommunicationLogStepDataViewModel';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-
-import { CommunicationLogStepListService } from '../../../../Common/Services/ExtendedLists/CommunicationLogStepListService';
-
-
-
 
 @Component({
-    
-
-    selector: 'communication-LogField',
+  selector: 'communication-LogField',
     templateUrl: './LogFieldComponent.html',
 })
 

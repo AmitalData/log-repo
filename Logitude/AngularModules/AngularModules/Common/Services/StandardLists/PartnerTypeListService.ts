@@ -174,7 +174,7 @@ export class PartnerTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PartnerType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PartnerTypeList> = [];
 
@@ -240,7 +240,7 @@ export class PartnerTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PartnerType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PartnerTypeList> = [];
 					if (cachedJson) {

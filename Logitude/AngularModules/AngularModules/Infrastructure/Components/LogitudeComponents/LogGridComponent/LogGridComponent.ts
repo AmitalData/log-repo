@@ -1,6 +1,6 @@
 declare var System: any;
 declare var window: any;
-import {Component, OnDestroy, ElementRef, Renderer, OnInit, AfterViewInit, AfterContentInit, OnChanges, Output, SimpleChange, EventEmitter, RenderComponentType, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
+import {Component, OnDestroy, ElementRef, OnInit, AfterViewInit, AfterContentInit, OnChanges, Output, SimpleChange, EventEmitter, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 //import {TextCodeTranslationPipe} from '../../../../Controls/Pipes/TextCodeTranslationPipe';
@@ -139,7 +139,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     private removedItemsTemp: any[] = [];
     private addedItems: any[] = [];
 
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer, private cd: ChangeDetectorRef) {
+    constructor(private _elementRef: ElementRef, private cd: ChangeDetectorRef) {
         //setTimeout(() => this.cd.markForCheck(), 10); 
         if (this.CurrentSession == null) {
             this.LogGridId = "LogGrid_-1_-1";

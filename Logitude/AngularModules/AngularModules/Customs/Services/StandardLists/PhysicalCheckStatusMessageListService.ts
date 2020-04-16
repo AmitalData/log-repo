@@ -174,7 +174,7 @@ export class PhysicalCheckStatusMessageListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PhysicalCheckStatusMessage").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PhysicalCheckStatusMessageList> = [];
 
@@ -240,7 +240,7 @@ export class PhysicalCheckStatusMessageListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PhysicalCheckStatusMessage").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PhysicalCheckStatusMessageList> = [];
 					if (cachedJson) {

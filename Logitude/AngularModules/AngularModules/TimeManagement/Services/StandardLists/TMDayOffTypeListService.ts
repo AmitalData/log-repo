@@ -174,7 +174,7 @@ export class TMDayOffTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TMDayOffType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TMDayOffTypeList> = [];
 
@@ -240,7 +240,7 @@ export class TMDayOffTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TMDayOffType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TMDayOffTypeList> = [];
 					if (cachedJson) {

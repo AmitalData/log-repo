@@ -174,7 +174,7 @@ export class StorageMessageTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.StorageMessageType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<StorageMessageTypeList> = [];
 
@@ -240,7 +240,7 @@ export class StorageMessageTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.StorageMessageType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<StorageMessageTypeList> = [];
 					if (cachedJson) {

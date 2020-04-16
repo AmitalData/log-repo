@@ -174,7 +174,7 @@ export class TicketSourceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TicketSource").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TicketSourceList> = [];
 
@@ -240,7 +240,7 @@ export class TicketSourceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TicketSource").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TicketSourceList> = [];
 					if (cachedJson) {

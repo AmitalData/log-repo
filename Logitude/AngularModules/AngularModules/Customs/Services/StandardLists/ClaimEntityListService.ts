@@ -174,7 +174,7 @@ export class ClaimEntityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ClaimEntity").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ClaimEntityList> = [];
 
@@ -240,7 +240,7 @@ export class ClaimEntityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ClaimEntity").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ClaimEntityList> = [];
 					if (cachedJson) {

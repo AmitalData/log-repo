@@ -68,7 +68,7 @@ export class EntityFollowComponent implements OnInit {
 
     }
 
-    AddFollowEntity(user: any) {
+    AddFollowEntity() {
  
         this.CurrentSession.StartBusyIndicatorSaving();
         this.myModulesService.AddFollowEntity(this.EntityId, this.ObjectTableId, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
@@ -84,7 +84,7 @@ export class EntityFollowComponent implements OnInit {
 
     }
  
-    DeleteFollowEntity(user: any) {
+    DeleteFollowEntity() {
         this.CurrentSession.StartBusyIndicatorSaving();
         this.myModulesService.DeleteFollowEntity(SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;

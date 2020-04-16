@@ -174,7 +174,7 @@ export class InternalBorderSiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.InternalBorderSiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<InternalBorderSiteTypeList> = [];
 
@@ -240,7 +240,7 @@ export class InternalBorderSiteTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.InternalBorderSiteType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<InternalBorderSiteTypeList> = [];
 					if (cachedJson) {

@@ -15,7 +15,6 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 
 @Component({
     selector: 'VATSettingsComponent',
-    moduleId: module.id,
     templateUrl: './VATSettingsComponent.html',
 })
 

@@ -174,7 +174,7 @@ export class DepositCustomerActivityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DepositCustomerActivity").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DepositCustomerActivityList> = [];
 
@@ -240,7 +240,7 @@ export class DepositCustomerActivityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DepositCustomerActivity").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DepositCustomerActivityList> = [];
 					if (cachedJson) {

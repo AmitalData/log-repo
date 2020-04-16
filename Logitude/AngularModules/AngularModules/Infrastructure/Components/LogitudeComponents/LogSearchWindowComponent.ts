@@ -1,9 +1,6 @@
 declare var window: any;
 declare var System: any;
 import {Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit} from '@angular/core';
-//import {NgForm, NgStyle, NgFormControl, CORE_DIRECTIVES, FORM_DIRECTIVES,  FormBuilder, ControlGroup, Validators, Control} from '@angular/common';
-//import {Http, HTTP_PROVIDERS, Response} from '@angular/http';
-import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -35,7 +32,7 @@ import {CachedDataManager} from '../../Utilities/CachedDataManager';
 
     selector: 'LogSearchWindow',
     templateUrl: './LogSearchWindowComponent.html',
-    providers: [Http, ServiceArgs, EntityListService, EntityPMService],
+    providers: [ServiceArgs, EntityListService, EntityPMService],
     inputs: ['DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value',
         "DependencyFilter1IsList", "DependencyFilter2IsList", "DependencyFilter3IsList",
         "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",

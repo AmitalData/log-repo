@@ -174,7 +174,7 @@ export class VehicleManufacturerListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.VehicleManufacturer").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VehicleManufacturerList> = [];
 
@@ -240,7 +240,7 @@ export class VehicleManufacturerListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.VehicleManufacturer").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VehicleManufacturerList> = [];
 					if (cachedJson) {

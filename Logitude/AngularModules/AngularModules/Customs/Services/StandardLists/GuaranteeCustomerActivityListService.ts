@@ -174,7 +174,7 @@ export class GuaranteeCustomerActivityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.GuaranteeCustomerActivity").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<GuaranteeCustomerActivityList> = [];
 
@@ -240,7 +240,7 @@ export class GuaranteeCustomerActivityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.GuaranteeCustomerActivity").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<GuaranteeCustomerActivityList> = [];
 					if (cachedJson) {

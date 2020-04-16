@@ -174,7 +174,7 @@ export class AttachmentTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AttachmentType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AttachmentTypeList> = [];
 
@@ -240,7 +240,7 @@ export class AttachmentTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AttachmentType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AttachmentTypeList> = [];
 					if (cachedJson) {

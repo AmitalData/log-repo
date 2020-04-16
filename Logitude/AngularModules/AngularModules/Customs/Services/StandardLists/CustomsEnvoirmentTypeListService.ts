@@ -174,7 +174,7 @@ export class CustomsEnvoirmentTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsEnvoirmentType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsEnvoirmentTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CustomsEnvoirmentTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsEnvoirmentType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsEnvoirmentTypeList> = [];
 					if (cachedJson) {

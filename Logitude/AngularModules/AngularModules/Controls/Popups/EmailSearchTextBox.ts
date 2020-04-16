@@ -18,6 +18,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 })
 
 export class EmailSearchTextBox implements OnInit, AfterViewInit {
+    public ContainerId: string = null;
     public ComponentId: string = null;
     public SeparatorId: string = null;
     public InputId: string = null;

@@ -174,7 +174,7 @@ export class AccumalationStateListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AccumalationState").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AccumalationStateList> = [];
 
@@ -240,7 +240,7 @@ export class AccumalationStateListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AccumalationState").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AccumalationStateList> = [];
 					if (cachedJson) {

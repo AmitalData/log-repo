@@ -174,7 +174,7 @@ export class CommunicationStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CommunicationStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CommunicationStatusTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CommunicationStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CommunicationStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CommunicationStatusTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class ConstraintApprovalDecisionListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConstraintApprovalDecision").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConstraintApprovalDecisionList> = [];
 
@@ -240,7 +240,7 @@ export class ConstraintApprovalDecisionListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConstraintApprovalDecision").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConstraintApprovalDecisionList> = [];
 					if (cachedJson) {

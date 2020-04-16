@@ -174,7 +174,7 @@ export class ConverterTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConverterType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConverterTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ConverterTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConverterType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConverterTypeList> = [];
 					if (cachedJson) {

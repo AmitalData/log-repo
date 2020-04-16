@@ -174,7 +174,7 @@ export class MarkUpTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("MarkUpType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MarkUpTypeList> = [];
 
@@ -240,7 +240,7 @@ export class MarkUpTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("MarkUpType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MarkUpTypeList> = [];
 					if (cachedJson) {

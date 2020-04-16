@@ -174,7 +174,7 @@ export class OBLTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("OBLType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OBLTypeList> = [];
 
@@ -240,7 +240,7 @@ export class OBLTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("OBLType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OBLTypeList> = [];
 					if (cachedJson) {

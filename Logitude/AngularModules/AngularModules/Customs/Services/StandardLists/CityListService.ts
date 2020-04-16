@@ -174,7 +174,7 @@ export class CityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.City").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CityList> = [];
 
@@ -240,7 +240,7 @@ export class CityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.City").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CityList> = [];
 					if (cachedJson) {

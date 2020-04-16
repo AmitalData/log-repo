@@ -1,8 +1,7 @@
-﻿declare var window: any;
-import { Directive, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+declare var window: any;
+import { Component, OnInit } from '@angular/core';
 import { LogTab } from '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
-import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({

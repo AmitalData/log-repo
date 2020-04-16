@@ -174,7 +174,7 @@ export class AutonomyTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AutonomyType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AutonomyTypeList> = [];
 
@@ -240,7 +240,7 @@ export class AutonomyTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AutonomyType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AutonomyTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class ManifestStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ManifestStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ManifestStatusList> = [];
 
@@ -240,7 +240,7 @@ export class ManifestStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ManifestStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ManifestStatusList> = [];
 					if (cachedJson) {

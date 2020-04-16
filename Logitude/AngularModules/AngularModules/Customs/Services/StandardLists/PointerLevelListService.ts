@@ -174,7 +174,7 @@ export class PointerLevelListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PointerLevel").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PointerLevelList> = [];
 
@@ -240,7 +240,7 @@ export class PointerLevelListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.PointerLevel").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PointerLevelList> = [];
 					if (cachedJson) {

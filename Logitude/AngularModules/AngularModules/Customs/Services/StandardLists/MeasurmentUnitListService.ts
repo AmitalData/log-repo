@@ -174,7 +174,7 @@ export class MeasurmentUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MeasurmentUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MeasurmentUnitList> = [];
 
@@ -240,7 +240,7 @@ export class MeasurmentUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.MeasurmentUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<MeasurmentUnitList> = [];
 					if (cachedJson) {

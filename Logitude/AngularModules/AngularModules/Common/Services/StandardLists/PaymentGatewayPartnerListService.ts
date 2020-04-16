@@ -174,7 +174,7 @@ export class PaymentGatewayPartnerListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PaymentGatewayPartner").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentGatewayPartnerList> = [];
 
@@ -240,7 +240,7 @@ export class PaymentGatewayPartnerListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PaymentGatewayPartner").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PaymentGatewayPartnerList> = [];
 					if (cachedJson) {

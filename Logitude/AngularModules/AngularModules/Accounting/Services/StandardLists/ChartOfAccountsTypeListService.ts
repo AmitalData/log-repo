@@ -174,7 +174,7 @@ export class ChartOfAccountsTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ChartOfAccountsType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ChartOfAccountsTypeList> = [];
 
@@ -240,7 +240,7 @@ export class ChartOfAccountsTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ChartOfAccountsType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ChartOfAccountsTypeList> = [];
 					if (cachedJson) {

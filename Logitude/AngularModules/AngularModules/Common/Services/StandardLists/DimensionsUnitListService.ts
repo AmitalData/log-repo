@@ -174,7 +174,7 @@ export class DimensionsUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("DimensionsUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DimensionsUnitList> = [];
 
@@ -240,7 +240,7 @@ export class DimensionsUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("DimensionsUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DimensionsUnitList> = [];
 					if (cachedJson) {

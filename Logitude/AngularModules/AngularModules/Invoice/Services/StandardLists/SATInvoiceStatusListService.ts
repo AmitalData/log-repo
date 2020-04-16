@@ -174,7 +174,7 @@ export class SATInvoiceStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("SATInvoiceStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SATInvoiceStatusList> = [];
 
@@ -240,7 +240,7 @@ export class SATInvoiceStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("SATInvoiceStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SATInvoiceStatusList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class CountryGroupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CountryGroup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CountryGroupList> = [];
 
@@ -240,7 +240,7 @@ export class CountryGroupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CountryGroup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CountryGroupList> = [];
 					if (cachedJson) {

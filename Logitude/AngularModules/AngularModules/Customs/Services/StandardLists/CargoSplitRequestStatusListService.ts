@@ -174,7 +174,7 @@ export class CargoSplitRequestStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CargoSplitRequestStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CargoSplitRequestStatusList> = [];
 
@@ -240,7 +240,7 @@ export class CargoSplitRequestStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CargoSplitRequestStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CargoSplitRequestStatusList> = [];
 					if (cachedJson) {

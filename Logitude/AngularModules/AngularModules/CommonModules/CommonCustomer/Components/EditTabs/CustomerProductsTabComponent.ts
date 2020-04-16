@@ -35,6 +35,7 @@ import {CommonDomainService} from'../../../../Common/Services/CommonDomainServic
 })
 
 export class CustomerProductsTabComponent extends BaseComponent implements OnInit{
+    public imgNgStyle: any = null;
     public ItemsSource: ObservableCollection;
     public ActualObsList: ObservableCollection;
     public EntityPM: CustomerPM;

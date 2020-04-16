@@ -174,7 +174,7 @@ export class CallTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CallType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CallTypeList> = [];
 
@@ -240,7 +240,7 @@ export class CallTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("CallType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CallTypeList> = [];
 					if (cachedJson) {

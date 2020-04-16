@@ -212,7 +212,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             });
         }
     }
-    CloseToolTipArea(arg: boolean) {
+    CloseToolTipArea() {
         this.DontShowInboxToolTip = true;
     }
     OpenToolTipArea() {

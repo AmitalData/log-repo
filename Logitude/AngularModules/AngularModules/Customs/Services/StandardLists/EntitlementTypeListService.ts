@@ -174,7 +174,7 @@ export class EntitlementTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.EntitlementType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EntitlementTypeList> = [];
 
@@ -240,7 +240,7 @@ export class EntitlementTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.EntitlementType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EntitlementTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class JournalStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("JournalStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<JournalStatusTypeList> = [];
 
@@ -240,7 +240,7 @@ export class JournalStatusTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("JournalStatusType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<JournalStatusTypeList> = [];
 					if (cachedJson) {

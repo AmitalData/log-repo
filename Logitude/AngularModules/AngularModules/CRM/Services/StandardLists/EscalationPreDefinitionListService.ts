@@ -174,7 +174,7 @@ export class EscalationPreDefinitionListService {
 
         else {
             return CachedDataManager.GetClosedTableData("EscalationPreDefinition").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EscalationPreDefinitionList> = [];
 
@@ -240,7 +240,7 @@ export class EscalationPreDefinitionListService {
 
         else {
             return CachedDataManager.GetClosedTableData("EscalationPreDefinition").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EscalationPreDefinitionList> = [];
 					if (cachedJson) {

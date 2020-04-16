@@ -3,8 +3,8 @@ import { TipsVisibilityPM } from '../../EntityPMs/TipsVisibilityPM';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import {Injectable} from '@angular/core';
+import { defer, of } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TipsVisibilityService {

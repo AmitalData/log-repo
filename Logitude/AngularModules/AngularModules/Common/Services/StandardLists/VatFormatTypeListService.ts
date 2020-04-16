@@ -174,7 +174,7 @@ export class VatFormatTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("VatFormatType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VatFormatTypeList> = [];
 
@@ -240,7 +240,7 @@ export class VatFormatTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("VatFormatType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VatFormatTypeList> = [];
 					if (cachedJson) {

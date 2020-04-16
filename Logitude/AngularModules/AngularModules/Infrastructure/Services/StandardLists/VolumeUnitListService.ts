@@ -174,7 +174,7 @@ export class VolumeUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("VolumeUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VolumeUnitList> = [];
 
@@ -240,7 +240,7 @@ export class VolumeUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("VolumeUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VolumeUnitList> = [];
 					if (cachedJson) {

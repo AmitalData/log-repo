@@ -174,7 +174,7 @@ export class CheckTypeLookupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckTypeLookup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckTypeLookupList> = [];
 
@@ -240,7 +240,7 @@ export class CheckTypeLookupListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CheckTypeLookup").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CheckTypeLookupList> = [];
 					if (cachedJson) {

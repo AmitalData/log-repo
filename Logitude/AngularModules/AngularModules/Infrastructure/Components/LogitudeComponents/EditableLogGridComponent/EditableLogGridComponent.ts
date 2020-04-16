@@ -1,6 +1,6 @@
 declare var System: any;
 declare var window: any;
-import {Component, OnDestroy, ElementRef, Renderer, OnInit, AfterViewInit, AfterContentInit, OnChanges, Output, EventEmitter, RenderComponentType, ContentChildren, ContentChild, ViewChildren, QueryList, ChangeDetectorRef, TemplateRef, DoCheck, IterableDiffers} from '@angular/core';
+import {Component, OnDestroy, ElementRef, OnInit, AfterViewInit, AfterContentInit, OnChanges, Output, EventEmitter, ContentChildren, ContentChild, ViewChildren, QueryList, ChangeDetectorRef, TemplateRef, DoCheck, IterableDiffers} from '@angular/core';
 //import {CORE_DIRECTIVES} from '@angular/common';
 import {LogColumnComponent} from './LogColumnComponent';
 import {LogRowDetailsComponent} from './LogRowDetailsComponent';
@@ -241,7 +241,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     WindowResizeSub: any;
     EndOfRowReachedSub: any;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private _elementRef: ElementRef, private _renderer: Renderer, private cd: ChangeDetectorRef, differs: IterableDiffers) {
+    constructor(private _elementRef: ElementRef, private cd: ChangeDetectorRef, differs: IterableDiffers) {
         this.differ = differs.find([]).create(null);
         if (this.CurrentSession == null) {
             this.LogGridId = "LogGrid_-1_-1";
@@ -1730,15 +1730,14 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     }
     OrigionalSortingData: any[];
     ServerSortTimer: any;
-    ServerSort(colDef, i, LogGridId) {
+    ServerSort(colDef, i) {
         if (this.ServerSortTimer) {
             clearTimeout(this.ServerSortTimer);
         }
-        this.ServerSortTimer = setTimeout(() => this.DoServerSort(colDef, i, LogGridId), 200);
-       
+        this.ServerSortTimer = setTimeout(() => this.DoServerSort(colDef, i), 200);       
     }
 
-    DoServerSort(colDef, i, LogGridId) {
+    DoServerSort(colDef, i) {
         if (colDef.SortFieldName) {
             this.OrigionalSortingData = this.ItemSource.Collection;
             if (colDef.SortFieldName != this.sortingCol) {

@@ -180,7 +180,7 @@ export class SharedLogisticsInvitationStatusListService {
         else {
 
             return CachedDataManager.GetClosedTableData("SharedLogisticsInvitationStatus").pipe(
-                map(cachedJson => {
+                map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<SharedLogisticsInvitationStatusList> = [];
                 if (cachedJson) {
@@ -248,7 +248,7 @@ export class SharedLogisticsInvitationStatusListService {
         else {
 
             return CachedDataManager.GetClosedTableData("SharedLogisticsInvitationStatus").pipe(
-                map(cachedJson => {
+                map((cachedJson:any) => {
 
                 var _mappedListsArray: Array<SharedLogisticsInvitationStatusList> = [];
                 if (cachedJson) {

@@ -174,7 +174,7 @@ export class CargoIdentityQualifierListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CargoIdentityQualifier").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CargoIdentityQualifierList> = [];
 
@@ -240,7 +240,7 @@ export class CargoIdentityQualifierListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CargoIdentityQualifier").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CargoIdentityQualifierList> = [];
 					if (cachedJson) {

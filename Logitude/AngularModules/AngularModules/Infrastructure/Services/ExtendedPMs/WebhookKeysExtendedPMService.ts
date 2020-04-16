@@ -1,6 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
 import {Guid} from '../../Utilities/Guid';
@@ -12,7 +10,8 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 
 import {WebhookKeysPM} from '../../EntityPMs/WebhookKeysPM';
 import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/common/http';
-import { tap, map, catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 
 
 @Injectable()

@@ -174,7 +174,7 @@ export class TapagTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TapagType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TapagTypeList> = [];
 
@@ -240,7 +240,7 @@ export class TapagTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.TapagType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TapagTypeList> = [];
 					if (cachedJson) {

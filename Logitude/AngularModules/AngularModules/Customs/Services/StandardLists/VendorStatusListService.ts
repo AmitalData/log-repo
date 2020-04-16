@@ -174,7 +174,7 @@ export class VendorStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.VendorStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VendorStatusList> = [];
 
@@ -240,7 +240,7 @@ export class VendorStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.VendorStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<VendorStatusList> = [];
 					if (cachedJson) {

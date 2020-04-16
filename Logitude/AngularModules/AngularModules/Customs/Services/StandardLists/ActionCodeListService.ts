@@ -174,7 +174,7 @@ export class ActionCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ActionCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ActionCodeList> = [];
 
@@ -240,7 +240,7 @@ export class ActionCodeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ActionCode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ActionCodeList> = [];
 					if (cachedJson) {

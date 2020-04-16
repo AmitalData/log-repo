@@ -174,7 +174,7 @@ export class CourtInstanceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CourtInstance").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CourtInstanceList> = [];
 
@@ -240,7 +240,7 @@ export class CourtInstanceListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CourtInstance").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CourtInstanceList> = [];
 					if (cachedJson) {

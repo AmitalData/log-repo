@@ -174,7 +174,7 @@ export class SalesTaxExemptionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SalesTaxExemptionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SalesTaxExemptionTypeList> = [];
 
@@ -240,7 +240,7 @@ export class SalesTaxExemptionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.SalesTaxExemptionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<SalesTaxExemptionTypeList> = [];
 					if (cachedJson) {

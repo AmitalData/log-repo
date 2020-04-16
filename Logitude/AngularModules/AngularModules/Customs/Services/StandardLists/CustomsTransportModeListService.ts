@@ -174,7 +174,7 @@ export class CustomsTransportModeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsTransportMode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsTransportModeList> = [];
 
@@ -240,7 +240,7 @@ export class CustomsTransportModeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.CustomsTransportMode").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<CustomsTransportModeList> = [];
 					if (cachedJson) {

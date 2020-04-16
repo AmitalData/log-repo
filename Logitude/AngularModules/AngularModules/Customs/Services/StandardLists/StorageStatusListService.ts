@@ -174,7 +174,7 @@ export class StorageStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.StorageStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<StorageStatusList> = [];
 
@@ -240,7 +240,7 @@ export class StorageStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.StorageStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<StorageStatusList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class AssigneeNotificationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AssigneeNotificationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AssigneeNotificationTypeList> = [];
 
@@ -240,7 +240,7 @@ export class AssigneeNotificationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AssigneeNotificationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AssigneeNotificationTypeList> = [];
 					if (cachedJson) {

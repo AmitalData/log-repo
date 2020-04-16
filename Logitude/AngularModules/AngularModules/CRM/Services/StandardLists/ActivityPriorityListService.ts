@@ -174,7 +174,7 @@ export class ActivityPriorityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ActivityPriority").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ActivityPriorityList> = [];
 
@@ -240,7 +240,7 @@ export class ActivityPriorityListService {
 
         else {
             return CachedDataManager.GetClosedTableData("ActivityPriority").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ActivityPriorityList> = [];
 					if (cachedJson) {

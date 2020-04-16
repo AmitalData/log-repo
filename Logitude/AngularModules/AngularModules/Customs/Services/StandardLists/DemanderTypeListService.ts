@@ -174,7 +174,7 @@ export class DemanderTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DemanderType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DemanderTypeList> = [];
 
@@ -240,7 +240,7 @@ export class DemanderTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DemanderType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DemanderTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class AddressContactStateListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AddressContactState").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AddressContactStateList> = [];
 
@@ -240,7 +240,7 @@ export class AddressContactStateListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.AddressContactState").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<AddressContactStateList> = [];
 					if (cachedJson) {

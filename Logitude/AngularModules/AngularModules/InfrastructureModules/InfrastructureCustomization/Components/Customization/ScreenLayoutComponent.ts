@@ -15,7 +15,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {ScreenLayoutArgs} from '../../../../Infrastructure/DataContracts/ScreenLayoutArgs';
 import {LoginService} from '../../../../Infrastructure/Services/LoginService';
-import {Headers} from '@angular/http';
+
 
 
 declare var window;

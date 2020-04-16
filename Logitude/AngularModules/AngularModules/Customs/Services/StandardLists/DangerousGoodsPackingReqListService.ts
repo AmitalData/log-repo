@@ -174,7 +174,7 @@ export class DangerousGoodsPackingReqListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DangerousGoodsPackingReq").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DangerousGoodsPackingReqList> = [];
 
@@ -240,7 +240,7 @@ export class DangerousGoodsPackingReqListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DangerousGoodsPackingReq").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DangerousGoodsPackingReqList> = [];
 					if (cachedJson) {

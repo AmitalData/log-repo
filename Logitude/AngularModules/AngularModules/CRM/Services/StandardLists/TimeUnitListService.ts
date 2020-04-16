@@ -174,7 +174,7 @@ export class TimeUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TimeUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TimeUnitList> = [];
 
@@ -240,7 +240,7 @@ export class TimeUnitListService {
 
         else {
             return CachedDataManager.GetClosedTableData("TimeUnit").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<TimeUnitList> = [];
 					if (cachedJson) {

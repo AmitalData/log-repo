@@ -174,7 +174,7 @@ export class FacilitationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.FacilitationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FacilitationTypeList> = [];
 
@@ -240,7 +240,7 @@ export class FacilitationTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.FacilitationType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<FacilitationTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class ProcessingReasonListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ProcessingReason").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ProcessingReasonList> = [];
 
@@ -240,7 +240,7 @@ export class ProcessingReasonListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ProcessingReason").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ProcessingReasonList> = [];
 					if (cachedJson) {

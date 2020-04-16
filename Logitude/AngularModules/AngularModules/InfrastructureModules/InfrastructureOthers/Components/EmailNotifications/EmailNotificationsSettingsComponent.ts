@@ -22,6 +22,8 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
     providers: [EmailAlertSettingPMService],
 })
 export class EmailNotificationsSettingsComponent extends BaseComponent{
+  public imgNgStyle: any = null;
+
     //public EntityPM: EmailAlertSettingPM;
     public DataContext = this;
     public ObjectTableName: string = "EmailAlertSetting";

@@ -174,7 +174,7 @@ export class PeriodTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PeriodType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PeriodTypeList> = [];
 
@@ -240,7 +240,7 @@ export class PeriodTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("PeriodType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<PeriodTypeList> = [];
 					if (cachedJson) {

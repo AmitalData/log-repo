@@ -174,7 +174,7 @@ export class DecisionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DecisionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DecisionTypeList> = [];
 
@@ -240,7 +240,7 @@ export class DecisionTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.DecisionType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DecisionTypeList> = [];
 					if (cachedJson) {

@@ -174,7 +174,7 @@ export class EscalationActionTimeIndicatorListService {
 
         else {
             return CachedDataManager.GetClosedTableData("EscalationActionTimeIndicator").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EscalationActionTimeIndicatorList> = [];
 
@@ -240,7 +240,7 @@ export class EscalationActionTimeIndicatorListService {
 
         else {
             return CachedDataManager.GetClosedTableData("EscalationActionTimeIndicator").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<EscalationActionTimeIndicatorList> = [];
 					if (cachedJson) {

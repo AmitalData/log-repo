@@ -9,10 +9,10 @@ import {SessionInfo} from './Utilities/SessionInfo'
 import {ServiceResponse} from './DataContracts/ServiceResponse';
 import {TermsofUseArgs} from './DataContracts/TermsofUseArgs';
 import { environment } from '../environments/environment';
-
 import {LoginService} from './Services/LoginService';
 import {AppTool} from './Tools'
 declare var IsMobileDetected;
+
 @Component({
     selector: 'RootComponent',
     template:
@@ -37,7 +37,6 @@ export class RootComponent implements OnInit {
     }
 
     Boot(args: any) {
-        ServiceHelper.Http = args["Http"];
         ServiceHelper.HttpClient = args["HttpClient"];
         DynamicLoader.Compiler = args["Compiler"];
         DynamicLoader.Resolver = args["Resolver"];

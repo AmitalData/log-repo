@@ -174,7 +174,7 @@ export class DWCategoriesListService {
 
         else {
             return CachedDataManager.GetClosedTableData("DWCategories").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DWCategoriesList> = [];
 
@@ -240,7 +240,7 @@ export class DWCategoriesListService {
 
         else {
             return CachedDataManager.GetClosedTableData("DWCategories").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<DWCategoriesList> = [];
 					if (cachedJson) {

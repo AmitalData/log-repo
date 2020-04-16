@@ -174,7 +174,7 @@ export class ConstraintStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConstraintStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConstraintStatusList> = [];
 
@@ -240,7 +240,7 @@ export class ConstraintStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.ConstraintStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ConstraintStatusList> = [];
 					if (cachedJson) {

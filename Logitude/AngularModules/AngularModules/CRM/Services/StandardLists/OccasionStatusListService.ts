@@ -174,7 +174,7 @@ export class OccasionStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("OccasionStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OccasionStatusList> = [];
 
@@ -240,7 +240,7 @@ export class OccasionStatusListService {
 
         else {
             return CachedDataManager.GetClosedTableData("OccasionStatus").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<OccasionStatusList> = [];
 					if (cachedJson) {

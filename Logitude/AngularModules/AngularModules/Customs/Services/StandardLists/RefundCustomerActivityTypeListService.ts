@@ -174,7 +174,7 @@ export class RefundCustomerActivityTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.RefundCustomerActivityType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RefundCustomerActivityTypeList> = [];
 
@@ -240,7 +240,7 @@ export class RefundCustomerActivityTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("Customs.RefundCustomerActivityType").pipe(
-				map(cachedJson => {
+				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<RefundCustomerActivityTypeList> = [];
 					if (cachedJson) {
