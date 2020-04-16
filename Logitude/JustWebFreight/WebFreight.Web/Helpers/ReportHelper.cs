@@ -2286,6 +2286,7 @@ namespace WebFreight.Web.Helpers
                 StatusCode = "W",
                 ReportId = reportFliter.ReportId,
                 ReportTemplateId = reportFliter.DefaultTemplateId,
+                ExcelOnly = reportFliter.ExcelOnly,
 
             };
 

@@ -2307,6 +2307,10 @@
     <Compile Include="Migrations\202004150910268_AbedAddExcelOnlyToReportTable.Designer.cs">
       <DependentUpon>202004150910268_AbedAddExcelOnlyToReportTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs" />
+    <Compile Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.Designer.cs">
+      <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4170,6 +4174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004150910268_AbedAddExcelOnlyToReportTable.resx">
       <DependentUpon>202004150910268_AbedAddExcelOnlyToReportTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.resx">
+      <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
