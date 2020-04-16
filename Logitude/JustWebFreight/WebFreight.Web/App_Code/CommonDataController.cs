@@ -202,7 +202,7 @@ namespace WebFreight.Web
                     result = data.Where(d => d.IsAgentView).ToList();
                 }
 
-                else if (partnerType == "CS")
+                else //if (partnerType == "CS") commented: if view from external link there will be no partner type and we want to show customer view events
                 {
                     result = data.Where(d => d.IsCustomerView).ToList();
                 }
