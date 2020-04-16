@@ -127,14 +127,13 @@ export class ExportDocumentService {
 
 
     GetIsRunStimulDocumentViaWorkerRole() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetIsRunStimulDocumentViaWorkerRole", { headers: authHeader }).map(response => {
+ 
+        return this._http.get(this._apiUrl + "/GetIsRunStimulDocumentViaWorkerRole", ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 
 
