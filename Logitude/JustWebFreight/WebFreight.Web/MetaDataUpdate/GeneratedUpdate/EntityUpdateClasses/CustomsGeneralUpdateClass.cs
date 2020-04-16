@@ -1896,6 +1896,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOPreSendValidations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.PreSendValidations", DefaultText = "Validations before sending request",LocalDefaultText = @"בדיקות לפני שליחת מסר", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode CustomsGeneralTextCode_CommunicationLogStepsOCommunicationLogSteps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogSteps.O.CommunicationLogSteps", DefaultText = "Communication Log Steps",LocalDefaultText = @"תקשורת התחבר צעדים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationTHDocuments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.Documents", DefaultText = "Documents",LocalDefaultText = @"מסמכים", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

@@ -4856,6 +4856,18 @@
       LocalDefaultText="&quot;בדיקות לפני שליחת מסר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CommunicationLogSteps.O.CommunicationLogSteps&quot;"
+      DefaultText="&quot;Communication Log Steps&quot;"
+      LocalDefaultText="&quot;תקשורת התחבר צעדים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.TH.Documents&quot;"
+      DefaultText="&quot;Documents&quot;"
+      LocalDefaultText="&quot;מסמכים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
