@@ -110,14 +110,15 @@ namespace WebFreight.Web.MetaDataUpdate
                                 performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.UpdateShipmentLogboxAuomationObjectFields");
                             }
 
-                            MetadataUpdateUtility.RunPostDeleteProcedure();
-                            performanceTimerLogger.LogMessage("Manual" + ",MetadataUpdateUtility.RunPostDeleteProcedure");
-
+                          
 
                             updateClass.LoadObjectTableRulesANDFieldsValidations();
                             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableRulesANDFieldsValidations");
 
-                           
+                            MetadataUpdateUtility.RunPostDeleteProcedure();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetadataUpdateUtility.RunPostDeleteProcedure");
+
+
                             performanceTimerLogger.WriteLogToCSVFile();
 
                             break;
