@@ -272,26 +272,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     Tenant = tenant,
                     TransmitStatusCode = transmitStatusCode,
                     TaxReportDate = taxReport.TaxReportMonth
-
                 };
 
-
-
-
-                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId).FirstOrDefault();
-                string CreditAccountId = null;
-                string accountTypeCode = null;
-                //if (journal.JournalLines.Count > 0)
-                //{
-                //    CreditAccountId = journal.JournalLines.FirstOrDefault().CreditAccountId;
-                //    accountTypeCode = journal.JournalLines.FirstOrDefault().AccountTypeCode;
-                //}
-
-
-
-                //  GLAccountPM account = gLAccountQueryService.GetSingle(CreditAccountId, false, false);
-
-               
+                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId && d.TaxReportJournalLineNumber == a.JournalLineNumber ).FirstOrDefault();
+              //   card = cards.Where(d => d.GLAccountId == a.AccountId).FirstOrDefault();
                     if (aPInvoice != null && (aPInvoice.VATNumber == tenantPM.VatNumber))
                     {
                         taxReportLine.LineTypeCode = "C";
@@ -308,7 +292,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxReportLine.LineTypeCode = "P";
                     }
 
-                    else if (journal.LineCreditAccountTypeCode != "3" || (journal.LineCreditAccountTypeCode == "3" && (gLAccountPM!= null && gLAccountPM.Smallcashbook==true)))
+                    else if ((journal.LineCreditAccountTypeCode == "3" && (gLAccountPM!= null && gLAccountPM.Smallcashbook==true)))
                     {
                         taxReportLine.LineTypeCode = "K";
                     }
