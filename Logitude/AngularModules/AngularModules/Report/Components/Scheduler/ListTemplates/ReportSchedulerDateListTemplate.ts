@@ -106,6 +106,7 @@ export class ReportSchedulerDateListTemplate {
             toRecepients += rec.split('@')[0] + ", ";
         });
 
+        toRecepients = toRecepients.substring(0, toRecepients.length-2); //Remove last ', '
         this.Recepients = toRecepients;
     }
 

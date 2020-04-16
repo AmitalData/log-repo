@@ -415,10 +415,19 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     AddPartner(partnerType: string, partnerId: string) {
-        var entityPartner: EntityPartner = new EntityPartner(partnerType, partnerId, false);
+        var partnerExist: boolean = false;
+        this.PartnersObslist.forEach(partner => {
+            if (!AppTool.IsNullOrEmpty(partner))
+                if (partner.PartnerType == partnerType) {
+                    partnerExist = true;
+                    partner.PartnerId += ',' + partnerId;
+                }
+        });
+        if (!partnerExist) {
+            var entityPartner: EntityPartner = new EntityPartner(partnerType, partnerId, false);
 
-        this.PartnersObslist.push(entityPartner);
-
+            this.PartnersObslist.push(entityPartner);
+        }
     }
 
     SetReportFilterConmponent(reportFilterConmponent) {
