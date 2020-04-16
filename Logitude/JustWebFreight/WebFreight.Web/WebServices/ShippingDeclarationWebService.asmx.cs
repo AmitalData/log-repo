@@ -150,7 +150,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ARInvoices = shipment.ARInvoices;
                 myDataProvider.IsDangerous = shipment.IsDangerous;
                 myDataProvider.SpecialServicesTypeName = shipment.SpecialServicesTypeName;
-
+                
                 if (shipment.DocumentsClosingDate != null)
                 {
                     myDataProvider.DocumentsClosingDate = shipment.DocumentsClosingDate;
@@ -403,6 +403,39 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TransportationType = shipment.TransportModeName;
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
 
+                if (shipment.ShipmentLevelCode == "C")
+                {
+                    myDataProvider.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+
+                    if (!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
+                    {
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == shipment.PreCarriageVesselId
+                                               select a).FirstOrDefault();
+                        if (vessel != null)
+                        {
+                            myDataProvider.MasterPreCarriageVesselName = vessel.EnglishName;
+                        }
+                    }
+                }
+
+                else if (shipment.ShipmentLevelCode == "H")
+                {
+                    Shipment masterData = (from a in shipmentsContext.Shipments
+                                           where a.Id == shipment.MasterShipmentDataId
+                                           select a).FirstOrDefault();
+                    
+                    myDataProvider.MasterPreCarriageCarrierNumber = masterData != null ? masterData.PreCarriageCarrierNumber : null;
+
+                    if (masterData != null && !string.IsNullOrEmpty(masterData.PreCarriageVesselId))
+                    {
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == masterData.PreCarriageVesselId
+                                         select a).FirstOrDefault();
+
+                        myDataProvider.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
+                    }
+                }
 
                 #region MasterAMSBL
                 var aMSBL_FromHouse = "";
@@ -411,7 +444,18 @@ namespace WebFreight.Web.WebServices
                     Shipment masterData = (from a in shipmentsContext.Shipments
                                            where a.Id == shipment.MasterShipmentDataId
                                            select a).FirstOrDefault();
+
                     aMSBL_FromHouse = masterData != null ? masterData.AMSBL : null;
+                    myDataProvider.MasterPreCarriageCarrierNumber = masterData != null ? masterData.PreCarriageCarrierNumber : null;
+                    
+                    if(masterData != null && !string.IsNullOrEmpty(masterData.PreCarriageVesselId))
+                    {
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == masterData.PreCarriageVesselId
+                                         select a).FirstOrDefault();
+
+                        myDataProvider.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
+                    }
                 }
                 else
                 {

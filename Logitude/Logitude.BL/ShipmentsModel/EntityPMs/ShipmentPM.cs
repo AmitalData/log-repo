@@ -2452,5 +2452,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SLAC { get; set; }
+
+        public string MasterPreCarriageCarrierNumber { get; set; }
+        public string MasterPreCarriageVesselName { get; set; }
     }
 }
