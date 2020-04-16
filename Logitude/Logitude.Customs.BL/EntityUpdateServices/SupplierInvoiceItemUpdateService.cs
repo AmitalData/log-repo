@@ -140,33 +140,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(SupplierInvoiceItemPM entityPM, SupplierInvoiceItem entityPOCO)
         {
-            if(entityPM.ItemDescription != entityPOCO.ItemDescription || entityPM.ItemCode != entityPOCO.ItemCode)
-            {
-                if (entityPM.ItemDescription == null && entityPM.ItemCode == null)
-                {
-                    entityPM.MarksAndNumbers = null;
-                }
-                else
-                {
-                    if (entityPM.ItemDescription == null)
-                    {
-                        entityPM.MarksAndNumbers = entityPM.ItemCode;
-                    }
-                    else if (entityPM.ItemCode == null)
-                    {
-                        entityPM.MarksAndNumbers = entityPM.ItemDescription;
-                    }
-                    else
-                    {
-                        entityPM.MarksAndNumbers = string.Concat(entityPM.ItemCode, "-", entityPM.ItemDescription);
-                    }
-                    if (entityPM.MarksAndNumbers != null && entityPM.MarksAndNumbers.Length > 30)
-                    {
-                        entityPM.MarksAndNumbers = entityPM.MarksAndNumbers.Substring(0, 30);
-                    }
-                }
-            }
-
             DateTime stopLogAt = new DateTime(2020, 06, 01);
             string logData = "";
             if (entityPM.ClassificationCode != entityPOCO.ClassificationCode)
