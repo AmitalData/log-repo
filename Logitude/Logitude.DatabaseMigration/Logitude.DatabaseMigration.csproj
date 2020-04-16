@@ -2303,6 +2303,10 @@
     <Compile Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.Designer.cs">
       <DependentUpon>202004111256429_AddTransitTimeFieldToTariff_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004160804388_JournalFieldsMigration.cs" />
+    <Compile Include="Migrations\202004160804388_JournalFieldsMigration.Designer.cs">
+      <DependentUpon>202004160804388_JournalFieldsMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4163,6 +4167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.resx">
       <DependentUpon>202004111256429_AddTransitTimeFieldToTariff_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004160804388_JournalFieldsMigration.resx">
+      <DependentUpon>202004160804388_JournalFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

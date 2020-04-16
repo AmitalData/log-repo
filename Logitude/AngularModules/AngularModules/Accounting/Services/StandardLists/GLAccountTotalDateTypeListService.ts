@@ -174,7 +174,7 @@ export class GLAccountTotalDateTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("GLAccountTotalDateType").pipe(
-				map((cachedJson:any) => {
+				map(cachedJson => {
 
 					var _mappedListsArray: Array<GLAccountTotalDateTypeList> = [];
 
@@ -240,7 +240,7 @@ export class GLAccountTotalDateTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("GLAccountTotalDateType").pipe(
-				map((cachedJson:any) => {
+				map(cachedJson => {
 
 					var _mappedListsArray: Array<GLAccountTotalDateTypeList> = [];
 					if (cachedJson) {
