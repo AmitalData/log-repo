@@ -33,6 +33,8 @@ using System.Data.Entity.Core.EntityClient;
 using System.Configuration;
 using Simplog.Server.Infrastructure;
 using System.Data.Common;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
@@ -234,25 +236,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
    
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Master", ObjectTables, MasterUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("Master");
-				MasterUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				MasterUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				MasterUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				MasterUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				MasterUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				MasterUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				MasterUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				MasterUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				MasterUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("Master");
+					MasterUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					MasterUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					MasterUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					MasterUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					MasterUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					MasterUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					MasterUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					MasterUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					MasterUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
         }

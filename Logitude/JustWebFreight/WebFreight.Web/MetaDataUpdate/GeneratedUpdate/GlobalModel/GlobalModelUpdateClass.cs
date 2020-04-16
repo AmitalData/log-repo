@@ -33,6 +33,8 @@ using System.Data.Entity.Core.EntityClient;
 using System.Configuration;
 using Simplog.Server.Infrastructure;
 using System.Data.Common;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
@@ -270,446 +272,522 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
    
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AnalyzeQueue", ObjectTables, AnalyzeQueueUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("AnalyzeQueue");
-				AnalyzeQueueUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				AnalyzeQueueUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				AnalyzeQueueUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				AnalyzeQueueUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				AnalyzeQueueUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				AnalyzeQueueUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				AnalyzeQueueUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				AnalyzeQueueUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				AnalyzeQueueUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("AnalyzeQueue");
+					AnalyzeQueueUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					AnalyzeQueueUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					AnalyzeQueueUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					AnalyzeQueueUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					AnalyzeQueueUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					AnalyzeQueueUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					AnalyzeQueueUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					AnalyzeQueueUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					AnalyzeQueueUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ApiCredintials", ObjectTables, ApiCredintialsUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("ApiCredintials");
-				ApiCredintialsUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				ApiCredintialsUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				ApiCredintialsUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				ApiCredintialsUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				ApiCredintialsUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				ApiCredintialsUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				ApiCredintialsUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				ApiCredintialsUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				ApiCredintialsUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("ApiCredintials");
+					ApiCredintialsUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					ApiCredintialsUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					ApiCredintialsUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					ApiCredintialsUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					ApiCredintialsUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					ApiCredintialsUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					ApiCredintialsUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					ApiCredintialsUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					ApiCredintialsUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AWBMessagesCCSType", ObjectTables, AWBMessagesCCSTypeUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("AWBMessagesCCSType");
-				AWBMessagesCCSTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				AWBMessagesCCSTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				AWBMessagesCCSTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				AWBMessagesCCSTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				AWBMessagesCCSTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				AWBMessagesCCSTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				AWBMessagesCCSTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				AWBMessagesCCSTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				AWBMessagesCCSTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				AWBMessagesCCSTypeUpdateClass.FillAWBMessagesCCSType();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("AWBMessagesCCSType");
+					AWBMessagesCCSTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					AWBMessagesCCSTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					AWBMessagesCCSTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					AWBMessagesCCSTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					AWBMessagesCCSTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					AWBMessagesCCSTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					AWBMessagesCCSTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					AWBMessagesCCSTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					AWBMessagesCCSTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+				   AWBMessagesCCSTypeUpdateClass.FillAWBMessagesCCSType();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BatchServicesDefinition", ObjectTables, BatchServicesDefinitionUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("BatchServicesDefinition");
-				BatchServicesDefinitionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				BatchServicesDefinitionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				BatchServicesDefinitionUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				BatchServicesDefinitionUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BatchServicesDefinitionUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BatchServicesDefinitionUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				BatchServicesDefinitionUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BatchServicesDefinitionUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BatchServicesDefinitionUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("BatchServicesDefinition");
+					BatchServicesDefinitionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					BatchServicesDefinitionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					BatchServicesDefinitionUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					BatchServicesDefinitionUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BatchServicesDefinitionUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BatchServicesDefinitionUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					BatchServicesDefinitionUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BatchServicesDefinitionUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BatchServicesDefinitionUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BluesnapContract", ObjectTables, BluesnapContractUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("BluesnapContract");
-				BluesnapContractUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("BluesnapContract");
+					BluesnapContractUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BluesnapContractType", ObjectTables, BluesnapContractTypeUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("BluesnapContractType");
-				BluesnapContractTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapContractTypeUpdateClass.FillBluesnapContractType();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("BluesnapContractType");
+					BluesnapContractTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapContractTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+				   BluesnapContractTypeUpdateClass.FillBluesnapContractType();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BluesnapTransaction", ObjectTables, BluesnapTransactionUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("BluesnapTransaction");
-				BluesnapTransactionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				BluesnapTransactionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				BluesnapTransactionUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				BluesnapTransactionUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapTransactionUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapTransactionUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				BluesnapTransactionUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapTransactionUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				BluesnapTransactionUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("BluesnapTransaction");
+					BluesnapTransactionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					BluesnapTransactionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					BluesnapTransactionUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					BluesnapTransactionUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapTransactionUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapTransactionUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					BluesnapTransactionUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapTransactionUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					BluesnapTransactionUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("HelpResource", ObjectTables, HelpResourceUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("HelpResource");
-				HelpResourceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				HelpResourceUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				HelpResourceUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				HelpResourceUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				HelpResourceUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				HelpResourceUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				HelpResourceUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				HelpResourceUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				HelpResourceUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("HelpResource");
+					HelpResourceUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					HelpResourceUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					HelpResourceUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					HelpResourceUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					HelpResourceUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					HelpResourceUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					HelpResourceUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					HelpResourceUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					HelpResourceUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("LogitudeLead", ObjectTables, LogitudeLeadUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("LogitudeLead");
-				LogitudeLeadUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				LogitudeLeadUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				LogitudeLeadUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				LogitudeLeadUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				LogitudeLeadUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				LogitudeLeadUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				LogitudeLeadUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				LogitudeLeadUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				LogitudeLeadUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("LogitudeLead");
+					LogitudeLeadUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					LogitudeLeadUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					LogitudeLeadUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					LogitudeLeadUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					LogitudeLeadUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					LogitudeLeadUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					LogitudeLeadUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					LogitudeLeadUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					LogitudeLeadUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentChannel", ObjectTables, PaymentChannelUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("PaymentChannel");
-				PaymentChannelUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				PaymentChannelUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				PaymentChannelUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				PaymentChannelUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentChannelUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentChannelUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				PaymentChannelUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentChannelUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentChannelUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentChannelUpdateClass.FillPaymentChannel();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentChannel");
+					PaymentChannelUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					PaymentChannelUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					PaymentChannelUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					PaymentChannelUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentChannelUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentChannelUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					PaymentChannelUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentChannelUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentChannelUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+				   PaymentChannelUpdateClass.FillPaymentChannel();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentCurrency", ObjectTables, PaymentCurrencyUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("PaymentCurrency");
-				PaymentCurrencyUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				PaymentCurrencyUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				PaymentCurrencyUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				PaymentCurrencyUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentCurrencyUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentCurrencyUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				PaymentCurrencyUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentCurrencyUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentCurrencyUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentCurrencyUpdateClass.FillPaymentCurrency();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentCurrency");
+					PaymentCurrencyUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					PaymentCurrencyUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					PaymentCurrencyUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					PaymentCurrencyUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentCurrencyUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentCurrencyUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					PaymentCurrencyUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentCurrencyUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentCurrencyUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+				   PaymentCurrencyUpdateClass.FillPaymentCurrency();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentMethod", ObjectTables, PaymentMethodUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("PaymentMethod");
-				PaymentMethodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				PaymentMethodUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				PaymentMethodUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				PaymentMethodUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentMethodUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentMethodUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				PaymentMethodUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentMethodUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentMethodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				PaymentMethodUpdateClass.FillPaymentMethod();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("PaymentMethod");
+					PaymentMethodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					PaymentMethodUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					PaymentMethodUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					PaymentMethodUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentMethodUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentMethodUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					PaymentMethodUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentMethodUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					PaymentMethodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+				   PaymentMethodUpdateClass.FillPaymentMethod();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("RecurringPeriod", ObjectTables, RecurringPeriodUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("RecurringPeriod");
-				RecurringPeriodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				RecurringPeriodUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				RecurringPeriodUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				RecurringPeriodUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				RecurringPeriodUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				RecurringPeriodUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				RecurringPeriodUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				RecurringPeriodUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				RecurringPeriodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				RecurringPeriodUpdateClass.FillRecurringPeriod();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("RecurringPeriod");
+					RecurringPeriodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					RecurringPeriodUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					RecurringPeriodUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					RecurringPeriodUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					RecurringPeriodUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					RecurringPeriodUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					RecurringPeriodUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					RecurringPeriodUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					RecurringPeriodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+				   RecurringPeriodUpdateClass.FillRecurringPeriod();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TenantAddOn", ObjectTables, TenantAddOnUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("TenantAddOn");
-				TenantAddOnUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantAddOnUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantAddOnUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				TenantAddOnUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantAddOnUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantAddOnUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				TenantAddOnUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantAddOnUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantAddOnUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("TenantAddOn");
+					TenantAddOnUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantAddOnUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantAddOnUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					TenantAddOnUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantAddOnUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantAddOnUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					TenantAddOnUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantAddOnUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantAddOnUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TenantManagement", ObjectTables, TenantManagementUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("TenantManagement");
-				TenantManagementUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantManagementUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantManagementUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				TenantManagementUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagementUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagementUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				TenantManagementUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagementUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagementUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("TenantManagement");
+					TenantManagementUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantManagementUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantManagementUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					TenantManagementUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagementUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagementUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					TenantManagementUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagementUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagementUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TenantManagementLicense", ObjectTables, TenantManagementLicenseUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("TenantManagementLicense");
-				TenantManagementLicenseUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantManagementLicenseUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantManagementLicenseUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				TenantManagementLicenseUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagementLicenseUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagementLicenseUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				TenantManagementLicenseUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagementLicenseUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagementLicenseUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("TenantManagementLicense");
+					TenantManagementLicenseUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantManagementLicenseUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantManagementLicenseUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					TenantManagementLicenseUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagementLicenseUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagementLicenseUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					TenantManagementLicenseUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagementLicenseUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagementLicenseUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TenantManagmentPrivateLabels", ObjectTables, TenantManagmentPrivateLabelsUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("TenantManagmentPrivateLabels");
-				TenantManagmentPrivateLabelsUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantManagmentPrivateLabelsUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantManagmentPrivateLabelsUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				TenantManagmentPrivateLabelsUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagmentPrivateLabelsUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagmentPrivateLabelsUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				TenantManagmentPrivateLabelsUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagmentPrivateLabelsUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantManagmentPrivateLabelsUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("TenantManagmentPrivateLabels");
+					TenantManagmentPrivateLabelsUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantManagmentPrivateLabelsUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantManagmentPrivateLabelsUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					TenantManagmentPrivateLabelsUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagmentPrivateLabelsUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagmentPrivateLabelsUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					TenantManagmentPrivateLabelsUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagmentPrivateLabelsUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantManagmentPrivateLabelsUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TenantType", ObjectTables, TenantTypeUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("TenantType");
-				TenantTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				TenantTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				TenantTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				TenantTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				TenantTypeUpdateClass.FillTenantType();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("TenantType");
+					TenantTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					TenantTypeUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					TenantTypeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantTypeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantTypeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					TenantTypeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantTypeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					TenantTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+				   TenantTypeUpdateClass.FillTenantType();
+					scope.Complete();
+				}
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("WebhookKeys", ObjectTables, WebhookKeysUpdateClass.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("WebhookKeys");
-				WebhookKeysUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				WebhookKeysUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				WebhookKeysUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				WebhookKeysUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				WebhookKeysUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				WebhookKeysUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				WebhookKeysUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				WebhookKeysUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				WebhookKeysUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("WebhookKeys");
+					WebhookKeysUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					WebhookKeysUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					WebhookKeysUpdateClass.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					WebhookKeysUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					WebhookKeysUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					WebhookKeysUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					WebhookKeysUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					WebhookKeysUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					WebhookKeysUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
 			}
 
         }
