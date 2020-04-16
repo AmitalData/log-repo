@@ -710,6 +710,7 @@
     <Content Include="Main Branch\2020\03 - 2020\Day 23 [Bisan] Fill default product values in AFC Tariff.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 19 [Bisan] Fill default values in TariffProducts table.sql" />
     <Content Include="Main Branch\2020\03 - 2020\Day 26 [Ayman] Delete Airline Logo ObjectField.sql" />
+    <Content Include="Main Branch\2020\04 - 2020\Day 16 [Wesam] DeleteOldCommunicationLogs Procedure.sql" />
     <Content Include="Main Branch\2020\04 - 2020\Day 14 [Wesam] Enable Report Scheduleing For GLAccount Report.sql" />
     <Content Include="Main Branch\2020\04 - 2020\Day 07 [Wesam] Remove QRR Feature Toggle.sql" />
     <Content Include="Main Branch\2020\1 - 2020\Day 12 [Mutaz] Delete Constraint between SharedUserQueries and Query.sql" />

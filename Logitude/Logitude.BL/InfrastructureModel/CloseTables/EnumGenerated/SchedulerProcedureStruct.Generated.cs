@@ -12,6 +12,7 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
     {   
        public const string DeleteDoneQueueMessagesTask = "DeleteDoneQueueMessagesTask";  
        public const string DeleteOldAPILogsTask = "DeleteOldAPILogsTask";  
+       public const string DeleteOldCommunicationLogsTask = "DeleteOldCommunicationLogsTask";  
        public const string DeleteOldAuthenticationTokensTask = "DeleteOldAuthenticationTokensTask";  
        public const string DeleteOldErrorLogsQueueMessagesTask = "DeleteOldErrorLogsQueueMessagesTask";  
        public const string DeleteOldQueueMessageMoreDetailsTask = "DeleteOldQueueMessageMoreDetailsTask";  
