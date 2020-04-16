@@ -561,6 +561,14 @@
     <Compile Include="Migrations\202004131343093_missingINTRA.Designer.cs">
       <DependentUpon>202004131343093_missingINTRA.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004141312023_missingAccounting.cs" />
+    <Compile Include="Migrations\202004141312023_missingAccounting.Designer.cs">
+      <DependentUpon>202004141312023_missingAccounting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004141418235_missingAccounting2.cs" />
+    <Compile Include="Migrations\202004141418235_missingAccounting2.Designer.cs">
+      <DependentUpon>202004141418235_missingAccounting2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -971,6 +979,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004131343093_missingINTRA.resx">
       <DependentUpon>202004131343093_missingINTRA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004141312023_missingAccounting.resx">
+      <DependentUpon>202004141312023_missingAccounting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004141418235_missingAccounting2.resx">
+      <DependentUpon>202004141418235_missingAccounting2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

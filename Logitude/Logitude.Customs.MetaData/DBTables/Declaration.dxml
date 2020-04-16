@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="Declarations"
+  Name="Customs.Declarations"
   Schema="Customs"
-  DBType="Main">
+  DBType="Main"
+  Module="Customs">
   <Column
     Name="Id"
     Type="varchar"
@@ -221,6 +222,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="DeclarationTaxes"
+    Type="varchar">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="FileState"
     Type="varchar"
     Size="2">
@@ -265,15 +272,14 @@
   <Column
     Name="StorageSiteCode"
     Type="varchar"
-    Size="20">
+    Size="17">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="PlatformFee"
     Type="decimal"
-    Precision="18"
-    Scale="2">
+    Scale="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -564,8 +570,8 @@
   </Column>
   <Column
     Name="CourierCustomStatusCode"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
@@ -621,7 +627,7 @@
   <Column
     Name="AcceptanceStatusCode"
     Type="varchar"
-    Size="3">
+    Size="1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -682,20 +688,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="MamanStatusCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MamanErrorXml"
-    Type="varchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="ItemsProcessTypesList"
     Type="varchar"
     Size="-1">
@@ -722,164 +714,272 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsPaymentProtested"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AmendmentRequestNumber"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmendmentStatus"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmendmentissueDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmendmentRemarks"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmendmentDeficitInitiated"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmendDeficitInitiatedReasTo"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmendmentCorrectedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmendmentRejectionReason"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsAmendment"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AmendmentOriginalDeclartation"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsDiamondDeclaration"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AmendmentDontDisplayInList"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsMissMandatoryDiamond"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsValidTicketsDiamond"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AvailabilityDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="ImporterId"
     ReferencedTable="Clients"
     ReferencedColumn="Id"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="DeclarationOfficeCode"
     ReferencedTable="CustomsHouseTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="ProcedureCurrentCode"
     ReferencedTable="GovernmentProcedureTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="AutonomyRegionTypeCode"
     ReferencedTable="AutonomyTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="ImporterPassCountryCode"
     ReferencedTable="CustomsCountries"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="TransferImporterId"
     ReferencedTable="Clients"
     ReferencedColumn="Id"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="TransferImporterCountryCode"
     ReferencedTable="CustomsCountries"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="EntitleImporterId"
     ReferencedTable="Clients"
     ReferencedColumn="Id"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="ImporterEntitlementTypeCode"
     ReferencedTable="EntitlementTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="EntitleImporterCountryCode"
     ReferencedTable="CustomsCountries"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="DeclarationDocumentTypeCode"
     ReferencedTable="LeadDocumentTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="DeclarationStatusTypeCode"
     ReferencedTable="DeclarationStatusTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="TransportModeId"
     ReferencedTable="CustomsTransportModes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="DepartmentId"
     ReferencedTable="Departments"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="ReferentUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="StorageSiteCode"
     ReferencedTable="DeliverySiteTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="ImporterTypeCode"
     ReferencedTable="CustomerIdentifyTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="TransferImporterTypeCode"
     ReferencedTable="CustomerIdentifyTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="EntitleImporterTypeCode"
     ReferencedTable="CustomerIdentifyTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="PaymentStatusCode"
     ReferencedTable="PaymentOrderStatus"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="SignedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="MainImporterEntitlemntTypeCode"
     ReferencedTable="EntitlementTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="StorageStatusCode"
     ReferencedTable="StorageStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="ManifestCargoStatusCode"
     ReferencedTable="ManifestCargoStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="CourierCustomStatusCode"
-    ReferencedTable="CourierCustomStatus"
+    ReferencedTable="CourierCustomStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="CourierSuspentionReasonCode"
     ReferencedTable="AgentTalkBackTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="WeightValue"
     ReferencedTable="FreightPaymentMethods"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="AcceptanceStatusCode"
     ReferencedTable="AcceptanceStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="MamanStatusCode"
-    ReferencedTable="MamanStatuses"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
   <Relation
     ForeignKeyColumn="CourierSuspentionCode"
     ReferencedTable="DeclarationStatusTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="" />
+  <Relation
+    ForeignKeyColumn="AmendmentStatus"
+    ReferencedTable="AmendmentStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="" />
+  <Relation
+    ForeignKeyColumn="AmendmentCorrectedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="" />
 </Table>

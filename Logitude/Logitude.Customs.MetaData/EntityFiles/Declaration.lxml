@@ -13789,7 +13789,7 @@
   <field
     Id="&quot;99d78578-8e13-4113-a5d3-db75c98ba1aa&quot;"
     FieldName="&quot;IsDiamondDeclaration&quot;"
-    OldFieldName="&quot;DeclarationType&quot;"
+    OldFieldName="&quot;IsDiamondDeclaration&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -14141,7 +14141,7 @@
   <field
     Id="&quot;70b85803-4f00-42b9-a65f-2202130ba123&quot;"
     FieldName="&quot;IsValidTicketsDiamond&quot;"
-    OldFieldName="&quot;DocumentStatusDiamond&quot;"
+    OldFieldName="&quot;IsValidTicketsDiamond&quot;"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -15519,7 +15519,7 @@
     Code="&quot;DeclarationAmendments&quot;"
     TextCode="&quot;Declaration Amendments In Process&quot;"
     LocalTextCode="&quot;תיקוני הצהרה בתהליך&quot;"
-    QueryGroupCode="&quot;33c9&quot;"
+    QueryGroupCode="&quot;DECL&quot;"
     IndexOrder="12"
     ObjectTableName="&quot;Customs.Declaration&quot;"
     QuerySection="&quot;Customs.Declaration&quot;"
@@ -15528,7 +15528,7 @@
     IsPackagable="true"
     DefaultSortName="&quot;AmendmentissueDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
-    QueryGroupName="&quot;Customs.Declaration Query Group&quot;"
+    QueryGroupName="&quot;Customs.Declaration&quot;"
     TextCodeCode="&quot;Declaration.Q.DeclarationAmendments&quot;"
     FeatureCode="&quot;Declaration.Q.DeclarationAmendments&quot;"
     FeatureTextCodeCode="&quot;Declaration.Features.DeclarationAmendments&quot;"
@@ -17019,8 +17019,7 @@
       IsPackagable="false"
       TextCodeCode="&quot;Customs.Declaration.B.SendDeclaration&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.SendDeclaration&quot;"
-      FeatureDefaultText="&quot;Send Declarations&quot;"
-      HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent&quot;" />
+      FeatureDefaultText="&quot;Send Declarations&quot;" />
     <MenuButton
       EventCode="&quot;SendManifest&quot;"
       DefaultText="&quot;Send Manifest&quot;"
@@ -17031,8 +17030,7 @@
       IsPackagable="true"
       TextCodeCode="&quot;Customs.Declaration.B.SendManifest&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.SendManifest&quot;"
-      FeatureDefaultText="&quot;Send Manifest&quot;"
-      HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent&quot;" />
+      FeatureDefaultText="&quot;Send Manifest&quot;" />
     <MenuButton
       EventCode="&quot;Forms&quot;"
       DefaultText="&quot;Forms&quot;"
@@ -17221,9 +17219,7 @@
       IsPackagable="true"
       TextCodeCode="&quot;Customs.Declaration.B.DocumentsPanel&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.DocumentsPanel&quot;"
-      FeatureDefaultText="&quot;Declaration Documents Panel&quot;"
-      HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DocumentsPanel/DocumentsPanelComponent&quot;"
-      Width="30" />
+      FeatureDefaultText="&quot;Declaration Documents Panel&quot;" />
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>
