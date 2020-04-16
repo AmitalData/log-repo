@@ -385,5 +385,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool AllowCustomersInAgentsLOV { get; set; }
+
+        public bool DisplayDocumentsAndEvents { get; set; }
     }
 }

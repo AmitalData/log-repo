@@ -670,6 +670,11 @@ export class TenantPM {
     public set AllowCustomersInAgentsLOV(newValue: boolean) { if (this.allowCustomersInAgentsLOV != newValue) { this.allowCustomersInAgentsLOV = newValue; this.MarkAsDirty("AllowCustomersInAgentsLOV"); } }
        
 	 
+    private displayDocumentsAndEvents: boolean;
+    public get DisplayDocumentsAndEvents() { return this.displayDocumentsAndEvents; }
+    public set DisplayDocumentsAndEvents(newValue: boolean) { if (this.displayDocumentsAndEvents != newValue) { this.displayDocumentsAndEvents = newValue; this.MarkAsDirty("DisplayDocumentsAndEvents"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

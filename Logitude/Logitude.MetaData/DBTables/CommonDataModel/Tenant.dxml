@@ -179,6 +179,7 @@
   <Column
     Name="MasterExportFreightPrepaidCollectId"
     ShortName="MasterExportFreightPCId"
+    OldNames="MasterExportFreightPCId"
     Type="varchar"
     Size="1">
     <Constraints
@@ -187,6 +188,7 @@
   <Column
     Name="MasterImportFreightPrepaidCollectId"
     ShortName="MasterImportFreightPCId"
+    OldNames="MasterImportFreightPCId"
     Type="varchar"
     Size="1">
     <Constraints
@@ -195,6 +197,7 @@
   <Column
     Name="MasterExportOtherPrepaidCollectId"
     ShortName="MasterExportOtherPCId"
+    OldNames="MasterExportOtherPCId"
     Type="varchar"
     Size="1">
     <Constraints
@@ -203,6 +206,7 @@
   <Column
     Name="MasterImportOtherPrepaidCollectId"
     ShortName="MasterImportOtherPCId"
+    OldNames="MasterImportOtherPCId"
     Type="varchar"
     Size="1">
     <Constraints
@@ -397,6 +401,7 @@
   <Column
     Name="VatMandatoryForPotentialCustomers"
     ShortName="VaTMandatoryPotentialCustomers"
+    OldNames="VaTMandatoryPotentialCustomers"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -499,6 +504,7 @@
   <Column
     Name="ExportQuotationsToIntegratedSystem"
     ShortName="ExportQuotationsToIntegrated"
+    OldNames="ExportQuotationsToIntegrated"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -571,6 +577,7 @@
   <Column
     Name="IsCorrespondenceRightToLeftEnabled"
     ShortName="IsCorrespondenceRTLEnabled"
+    OldNames="IsCorrespondenceRTLEnabled"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -584,6 +591,7 @@
   <Column
     Name="AllowAgentInCustomersLOV"
     ShortName="AllowAgentInShipCustomersLOV"
+    OldNames="AllowAgentInShipCustomersLOV"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -679,6 +687,12 @@
     Type="datetime">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="DisplayDocumentsAndEvents"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="AddressId"

@@ -1,5 +1,5 @@
-﻿import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -66,21 +66,19 @@ export class ReportService {
     }
     
     GenerateReportMethod(filter: ReportFliter) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
+
         return Observable.defer(() => {
-            return this._http.put(this._apiUrl, JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
+            return this._http.put(this._apiUrl, JSON.stringify(filter), ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pmresponse: ServiceResponse = new ServiceResponse();
 
-                pmresponse.Result = response;
-                return pmresponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        }
+                        pmresponse.Result = response.body;
+                        return pmresponse;
+                }),
 
-        );
-
+                catchError(ServiceHelper.HandleServiceError));
+        });
     }
 
     GenerateReportForCustomerPotentialActual(filter: ReportFliter) {
