@@ -264,6 +264,11 @@ export class JournalPM {
     public set LineCreditAccountTypeCode(newValue: string) { if (this.lineCreditAccountTypeCode != newValue) { this.lineCreditAccountTypeCode = newValue; this.MarkAsDirty("LineCreditAccountTypeCode"); } }
        
 	 
+    private taxReportJournalLineNumber: number;
+    public get TaxReportJournalLineNumber() { return this.taxReportJournalLineNumber; }
+    public set TaxReportJournalLineNumber(newValue: number) { if (this.taxReportJournalLineNumber != newValue) { this.taxReportJournalLineNumber = newValue; this.MarkAsDirty("TaxReportJournalLineNumber"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		

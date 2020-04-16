@@ -1,52 +1,32 @@
-﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Azure;
-using Simplog.Server.Infrastructure.DataContracts;
 using Stimulsoft.Report;
-using Stimulsoft.Report.Components;
-using Stimulsoft.Report.Dictionary;
 using Stimulsoft.Report.Export;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
-using System.Web;
 using System.Web.Http;
-using System.Xml.Serialization;
-using WebFreight.Web.CommonDataModel.DomainServices;
-using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Helpers.DataProviderHelpers;
-using WebFreight.Web.ReportsWebServices;
-using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.Security;
-using WebFreight.Web.ShipmentPackageModel;
-using WebFreight.Web.TaxesApprovalModel;
-using WebFreight.Web.WebServices;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code
+namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class ReportController : ApiController
     {
-
         public HttpResponseMessage GetReportListsByGroupId(string groupId, int tenant)
         {
             try
@@ -69,7 +49,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
         public HttpResponseMessage PutBuildStimulReport(ReportFliter reportFliter)
         {
             try
@@ -77,7 +56,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-              
+
                 ReportHelper reportHelper = new ReportHelper();
                 reportHelper.ReportAuthentication(reportFliter, authToken.Tenant);
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -89,16 +68,20 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, reportHelper.BuildCustomerPotentialActualDataProvider(reportFliter));
                     }
+
                     else
                     {
                         if (reportFliter.ReportsRunUsingWR)
                         {
                             return Request.CreateResponse(HttpStatusCode.OK, reportHelper.BuildReportDataViewWorkerRole(reportFliter));
                         }
+
                         else
                         {
                             string urlImage = reportHelper.BuildStimulReport(reportFliter);
-                            return Request.CreateResponse(HttpStatusCode.OK, GetBuildStimulReportResult(reportFliter, urlImage));
+                            BuildStimulReportResult myResult = GetBuildStimulReportResult(reportFliter, urlImage);
+
+                            return Request.CreateResponse(HttpStatusCode.OK, myResult);
                         }
                     }
                 }
@@ -117,28 +100,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-    
-
-
-
-        private static BuildStimulReportResult GetBuildStimulReportResult(ReportFliter reportFliter, string urlImage)
-        {
-            BuildStimulReportResult resultBuildStimulReportArgs = new BuildStimulReportResult();
-            resultBuildStimulReportArgs.StimulImageBase64 = urlImage;
-            resultBuildStimulReportArgs.PageCount = reportFliter.PageCount;
-            resultBuildStimulReportArgs.ReportKey = reportFliter.ReportKey;
-            return resultBuildStimulReportArgs;
-        }
-
-        public HttpResponseMessage GetPrepareSendReport(string type , string fileName , int tenant)
+        public HttpResponseMessage GetPrepareSendReport(string type, string fileName, int tenant)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+
                 string extension = "";
                 MemoryStream memoryStream = new MemoryStream();
                 Document document = null;
@@ -168,7 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                     if (type == "Excel")
                     {
-                      
+
                         extension = "xlsx";
                         StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
                         setting.UseOnePageHeaderAndFooter = true;
@@ -224,27 +193,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        private BlobFileInfo GetNewBlobFileInfo(string fileName, int tenant)
-        {
-            BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = fileName,
-                FolderName = "others",
-                Extension = "mdc",
-                Tenant = tenant,
-
-            };
-            return fileInfo;
-        }
-
-
-      
-
-
-       
-
-
         public HttpResponseMessage GetCheckIfStimulSoftReportIsBliud(string reportKey, int tenant)
         {
             try
@@ -258,7 +206,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ReportBuildResult result = new ReportBuildResult();
                 if (reportExecutionLog != null)
                 {
-                  //  UpdateStatusReportExecutionLog(authToken, reportExecutionLogRepository, reportExecutionLog);
+                    //  UpdateStatusReportExecutionLog(authToken, reportExecutionLogRepository, reportExecutionLog);
 
                     result.StatusCode = reportExecutionLog.StatusCode;
                     if (result.StatusCode == "F")
@@ -282,34 +230,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        private string GetUnderStandableMessageFromMessageException(string exceptionMessage)
-        {
-            string result = string.Empty;
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                string[] lines = exceptionMessage.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                result = lines[0];
-            }
-            return result;
-        }
-
-        private static void UpdateStatusReportExecutionLog(AuthenticationToken authToken, ReportExecutionLogRepository reportExecutionLogRepository, ReportExecutionLog reportExecutionLog)
-        {
-            if (reportExecutionLog.StatusCode == "W")
-            {
-                var nowDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
-                if (reportExecutionLog.CreateDate.AddMinutes(10) < nowDate)
-                {
-                    reportExecutionLog.StatusCode = "F";
-                    reportExecutionLog.ExceptionMessage = "the request has timed out";
-                    reportExecutionLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
-                    //reportExecutionLogRepository.Update(reportExecutionLog);
-                    //reportExecutionLogRepository.SubmitChanges();
-                }
-            }
-        }
-
         public HttpResponseMessage GetCheckIfReportsRunUsingWR()
         {
             try
@@ -330,11 +250,54 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
 
+
+        private static BuildStimulReportResult GetBuildStimulReportResult(ReportFliter reportFliter, string urlImage)
+        {
+            BuildStimulReportResult resultBuildStimulReportArgs = new BuildStimulReportResult();
+            resultBuildStimulReportArgs.StimulImageBase64 = urlImage;
+            resultBuildStimulReportArgs.PageCount = reportFliter.PageCount;
+            resultBuildStimulReportArgs.ReportKey = reportFliter.ReportKey;
+            return resultBuildStimulReportArgs;
+        }
+        private BlobFileInfo GetNewBlobFileInfo(string fileName, int tenant)
+        {
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = fileName,
+                FolderName = "others",
+                Extension = "mdc",
+                Tenant = tenant,
+
+            };
+            return fileInfo;
+        }
+        private string GetUnderStandableMessageFromMessageException(string exceptionMessage)
+        {
+            string result = string.Empty;
+            if (!string.IsNullOrEmpty(exceptionMessage))
+            {
+                string[] lines = exceptionMessage.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                result = lines[0];
+            }
+            return result;
+        }
+        private static void UpdateStatusReportExecutionLog(AuthenticationToken authToken, ReportExecutionLogRepository reportExecutionLogRepository, ReportExecutionLog reportExecutionLog)
+        {
+            if (reportExecutionLog.StatusCode == "W")
+            {
+                var nowDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                if (reportExecutionLog.CreateDate.AddMinutes(10) < nowDate)
+                {
+                    reportExecutionLog.StatusCode = "F";
+                    reportExecutionLog.ExceptionMessage = "the request has timed out";
+                    reportExecutionLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                    //reportExecutionLogRepository.Update(reportExecutionLog);
+                    //reportExecutionLogRepository.SubmitChanges();
+                }
+            }
+        }
     }
-
-
 
     public class ReportBuildResult
     {

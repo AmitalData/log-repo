@@ -512,9 +512,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
             else {
                 this.StopBusyIndicator();
+                var messageError: string;
                 if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                    this.ShowMessage(pmResponse.ErrorsArray[0]);
+                    messageError = pmResponse.ErrorsArray[0];
                 }
+                this.ShowMessage(messageError);
             }
 
 
@@ -974,10 +976,15 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                             else this.StopBusyIndicator();
 
 
+
+
                         } else {
+                            var messageError: string;
                             if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                                this.ShowMessage(pmResponse.ErrorsArray[0]);
+                                messageError = pmResponse.ErrorsArray[0];
                             }
+
+                            this.ShowMessage(messageError);
                             this.StopBusyIndicator();
                         }
 
@@ -1115,9 +1122,13 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 } else {
 
                     this.StopBusyIndicator();
-                    if (myResponse.HasError && myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
-                        this.ShowMessage(myResponse.ErrorsArray[0]);
+
+
+                    var messageError: string;
+                    if (myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
+                        messageError = myResponse.ErrorsArray[0];
                     }
+                    this.ShowMessage(messageError);
                 }
 
             });
@@ -1193,9 +1204,17 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
                         }
                         else {
-                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {;
-                                this.ShowMessage(pmResponse.ErrorsArray[0]);
+
+                            var messageError: string;
+                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                                messageError = pmResponse.ErrorsArray[0];
                             }
+                            this.ShowMessage(messageError);
+
+
+
+
+
                         }
 
                     }
@@ -1420,7 +1439,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public ShowMessage(message: string) {
 
         var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show(message);
+        messageWindow.Show(message? message:"error");
         this.IsDocumentBuildFailed = true;
     }
     private SetSelectedAsDefaultBtnClick() {

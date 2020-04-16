@@ -84,6 +84,7 @@
   <ItemGroup>
     <Content Include="WarehouseViewsScript\DIM_Branches.sql" />
     <Content Include="WarehouseViewsScript\DIM_Currencies.sql" />
+    <Content Include="WarehouseViewsScript\DIM_Customer.sql" />
     <Content Include="WarehouseViewsScript\DIM_CustomPickLists.sql" />
     <Content Include="WarehouseViewsScript\DIM_Dates.sql" />
     <Content Include="WarehouseViewsScript\DIM_Departments.sql" />

@@ -36,7 +36,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using System.IdentityModel.Protocols.WSTrust;
+//using System.IdentityModel.Protocols.WSTrust;
 using Logitude.SystemLogs;
 using WebFreight.Web.App_Code;
 using Logitude.Infrastructure.Data.EntityPOCOs;
