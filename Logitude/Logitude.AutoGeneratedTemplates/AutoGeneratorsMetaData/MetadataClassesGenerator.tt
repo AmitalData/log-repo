@@ -1381,6 +1381,8 @@ using System.Data.Entity.Core.EntityClient;
 using System.Configuration;
 using Simplog.Server.Infrastructure;
 using System.Data.Common;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
 using <#= UpdateClassnamespacestring #>.EntityUpdateClasses;
 
 namespace <#= UpdateClassnamespacestring #>
@@ -1650,7 +1652,9 @@ public void GenerateAllTableMethods(string sourceFilePath)
 #>
 			if(MetadataUpdateUtility.IsChangedMetadataTable("<#=tableName #>", ObjectTables, <#=classname #>.HashString))
 			{
-				MetadataUpdateUtility.DeleteAllTableMetadata("<#=tableName #>");
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("<#=tableName #>");
 <#+
 			if(tableName == "General")
 				{
@@ -1660,24 +1664,24 @@ public void GenerateAllTableMethods(string sourceFilePath)
 <#+
 }
 #>
-				<#=classname #>.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				<#=classname #>.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
-				this.ObjectContext.SaveChanges();
-				<#=classname #>.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
-				this.ObjectContext.SaveChanges();
-				<#=classname #>.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				<#=classname #>.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				<#=classname #>.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
-				this.ObjectContext.SaveChanges();
-				<#=classname #>.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				<#=classname #>.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
-				this.ObjectContext.SaveChanges();
-				<#=classname #>.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
-				this.ObjectContext.SaveChanges();
+					<#=classname #>.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					<#=classname #>.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
 <#+
 
 	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
@@ -1691,7 +1695,7 @@ public void GenerateAllTableMethods(string sourceFilePath)
     if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs.") && IsMetadataOnlyTable == "false")
     {
 #>
-				<#=classname #>.Fill<#= tableName.Trim('"') #>();
+				   <#=classname #>.Fill<#= tableName.Trim('"') #>();
 <#+
     }
     
@@ -1704,6 +1708,8 @@ public void GenerateAllTableMethods(string sourceFilePath)
 <#+
 				}
 #>
+					scope.Complete();
+				}
 			}
 <#+
     }
