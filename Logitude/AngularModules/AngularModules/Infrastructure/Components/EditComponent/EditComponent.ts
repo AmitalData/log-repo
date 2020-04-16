@@ -1,7 +1,6 @@
 import { BankDepositExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/BankDepositExtendedPMService';
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
-import { Settings } from './../../Settings';
 declare var window: any;
 import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
@@ -21,11 +20,11 @@ import { TotangoService } from '../../Services/WebServices/TotangoService';
 import { CachedDataManager } from '../../Utilities/CachedDataManager';
 import { LastFilterClass } from '../../Utilities/LastFilterClass';
 import { EditTabComponent } from './EditTabComponent';
-import { Subscription, TeardownLogic } from 'rxjs/Subscription';//itzik
+import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
-@Component({
-    
+
+@Component({    
     templateUrl: './EditComponent.html',
     providers: [EntityArgs],
 })

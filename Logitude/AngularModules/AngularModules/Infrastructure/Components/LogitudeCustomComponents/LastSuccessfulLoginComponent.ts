@@ -1,4 +1,3 @@
-/// <reference path="../../../common/services/standardpms/userlastloginpmservice.ts" />
 declare var System: any;
 declare var window: any;
 import {AppTool} from '../../../Infrastructure/Tools';

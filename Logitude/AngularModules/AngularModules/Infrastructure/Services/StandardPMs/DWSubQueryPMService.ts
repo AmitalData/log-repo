@@ -7,7 +7,7 @@ import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/Ent
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 import {DWSubQueryPM} from '../../EntityPMs/DWSubQueryPM';
 import { DWQueryData } from '../../../Common/DataContracts/DWQueryData';
@@ -27,7 +27,7 @@ export class DWSubQueryPMService {
 
     insertDWQueryData(entityPM: DWQueryData) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -70,7 +70,7 @@ export class DWSubQueryPMService {
             }
             else {
 
-                return null;//Observable.of(response);
+                return null;//of(response);
 
             }
         });
@@ -78,7 +78,7 @@ export class DWSubQueryPMService {
 
     UpdateDWQueryData(entityPM: DWQueryData) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -119,7 +119,7 @@ export class DWSubQueryPMService {
             }
             else {
 
-                return null;//Observable.of(response);
+                return null;//of(response);
 
             }
         }
@@ -184,7 +184,7 @@ export class DWSubQueryPMService {
     }
     insert(entityPM: DWSubQueryPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -224,7 +224,7 @@ export class DWSubQueryPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -232,7 +232,7 @@ export class DWSubQueryPMService {
 
     update(entityPM: DWSubQueryPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -272,7 +272,7 @@ export class DWSubQueryPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -280,7 +280,7 @@ export class DWSubQueryPMService {
 
     delete(entityPM: DWSubQueryPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -320,7 +320,7 @@ export class DWSubQueryPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -333,7 +333,7 @@ export class DWSubQueryPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -368,7 +368,7 @@ export class DWSubQueryPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getByQueryId?' + 'id=' + Queryid, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -403,7 +403,7 @@ export class DWSubQueryPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingleFromTenant?' + 'id=' + id + '&copyFromTenant=' + copyFromTenant, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -438,7 +438,7 @@ export class DWSubQueryPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getByQueryIdFromTenant?' + 'id=' + Queryid + '&copyFromTenant=' + copyFromTenant, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {

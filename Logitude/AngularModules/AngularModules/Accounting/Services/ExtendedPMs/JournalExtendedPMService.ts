@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';

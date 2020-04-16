@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -36,7 +36,7 @@ export class QuoteTemplateExtendedPMService {
     insert(entityPM: QuoteTemplatePM): Observable<ServiceResponse> {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();

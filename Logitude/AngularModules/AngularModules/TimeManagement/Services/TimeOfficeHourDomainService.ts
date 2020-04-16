@@ -1,14 +1,11 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {TMOfficeHourPM} from '../EntityPMs/TMOfficeHourPM';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import {TMEmployeeTimePM} from '../EntityPMs/TMEmployeeTimePM'; 
 
 @Injectable()
 
@@ -23,7 +20,7 @@ export class TimeOfficeHourDomainService {
     GetTimeOfficeClock(employeeUserId: string, FromDate: Date, ToDate: Date) {
 
         var url = this._apiUrl + '/GetTimeOfficeClock?employeeUserId=' + employeeUserId + "&FromDate=" + ServiceHelper.GetDateString(FromDate) + "&ToDate=" + ServiceHelper.GetDateString(ToDate);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                var list:any = response;                
@@ -42,7 +39,7 @@ export class TimeOfficeHourDomainService {
     }
 
     UpdateOfficeHourList(entityPMList: any[]) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             return this._http.post(this._apiUrl, JSON.stringify(entityPMList), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;

@@ -8,7 +8,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -35,7 +35,7 @@ export class InterestReportLinesByDateListService {
 	   
         
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var list = response.body;
@@ -61,7 +61,7 @@ export class InterestReportLinesByDateListService {
     getAll() {
         
         var callTime = new Date();
-       return Observable.defer(() => {
+       return defer(() => {
            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
               var allLists = response.body;
@@ -121,7 +121,7 @@ export class InterestReportLinesByDateListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return Observable.defer(() => {
+	   return defer(() => {
            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var serviceResponse: ServiceResponse;

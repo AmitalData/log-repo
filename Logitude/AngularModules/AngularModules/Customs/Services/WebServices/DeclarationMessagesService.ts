@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -24,10 +24,10 @@ import {CargoSplitRequestParams} from '../../DataContract/RequestParams/CargoSpl
 @Injectable()
 
 export class DeclarationMessagesService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarartionRestore';
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationRestore';
         
@@ -35,7 +35,7 @@ export class DeclarationMessagesService {
 
     PostDeclarationRequest(entity: DeclarationRestoreRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -51,11 +51,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(entity),
                     { headers: authHeader }).map((res) => {
                   
-                        serviceResponse.Result = res.json();
+                        serviceResponse.Result = res;
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
            
         }
 
@@ -64,7 +64,7 @@ export class DeclarationMessagesService {
 
     PostDeclarationStatusRequest(entity: DeclarationStatusRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -78,11 +78,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -90,7 +90,7 @@ export class DeclarationMessagesService {
 
     PostWarehouseBlockBalanceRequest(entity: WarehouseBlockBalanceRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -104,11 +104,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -116,7 +116,7 @@ export class DeclarationMessagesService {
 
     PostPrintRequestRequest(entity: PrintRequestRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -130,11 +130,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -142,7 +142,7 @@ export class DeclarationMessagesService {
 
     PostSendDeclarationConstraint(params: ConstraintApprovalRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -158,11 +158,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(params),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -170,7 +170,7 @@ export class DeclarationMessagesService {
 
     PostSendCollateralAnswers(params: CollateralRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -186,11 +186,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(params),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -198,7 +198,7 @@ export class DeclarationMessagesService {
 
     PostSendDeclarationConstraintAgentObjection(params: ConstraintAgentObjectionRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -214,11 +214,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(params),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -226,7 +226,7 @@ export class DeclarationMessagesService {
 
     PostSendPaymentWithCheckCustomFileCredit(params: CustomFileCreditRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -242,11 +242,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(params),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -254,7 +254,7 @@ export class DeclarationMessagesService {
 
     PostSendTransferRequest(params: CustomFileCreditRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -270,11 +270,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(params),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -282,7 +282,7 @@ export class DeclarationMessagesService {
 
     PostCheckCustomFileCreditOnly(params: CustomFileCreditRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -298,11 +298,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(params),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -310,7 +310,7 @@ export class DeclarationMessagesService {
 
     PostSendPaymentOnly(params: CustomFileCreditRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -326,11 +326,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(params),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -338,7 +338,7 @@ export class DeclarationMessagesService {
 
     PostExportDeclarationDataRequest(entity: ExportDeclarationDataRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -352,15 +352,15 @@ export class DeclarationMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     PostStorageEntranceUnloadingRequest(params: StorageEntranceUnloadingRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -374,15 +374,15 @@ export class DeclarationMessagesService {
                 JSON.stringify(params),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     PostSendCargoSplit(params: CargoSplitRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -398,11 +398,11 @@ export class DeclarationMessagesService {
                 JSON.stringify(params),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );

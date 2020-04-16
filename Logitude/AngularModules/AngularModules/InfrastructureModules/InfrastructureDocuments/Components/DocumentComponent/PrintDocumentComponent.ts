@@ -33,8 +33,6 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {ExportDocumentArgs} from '../../../../Infrastructure/DataContracts/ExportDocumentArgs';
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
 import {DocumentsExecutionLogList} from '../../../../Common/EntityLists/DocumentsExecutionLogList';
 import {DocumentsExecutionLogListExtendedService} from '../../../../Common/Services/ExtendedLists/DocumentsExecutionLogListExtendedService';
 @Component({

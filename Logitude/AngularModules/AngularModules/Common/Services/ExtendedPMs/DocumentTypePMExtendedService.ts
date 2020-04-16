@@ -4,7 +4,7 @@
 import {Injectable, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {DocumentTypeTemplatePM} from '../../EntityPMs/DocumentTypeTemplatePM';
@@ -217,7 +217,7 @@ export class DocumentTypePMExtendedService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + '/putdocumenttype', JSON.stringify(entityPM),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
                 var entity: DocumentTypePM;
@@ -235,7 +235,7 @@ export class DocumentTypePMExtendedService {
     }
 
     update(eventTypePMLists: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
             authHeader.append('Content-Type', 'application/json');

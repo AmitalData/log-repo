@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -35,7 +35,7 @@ export class ShipmentListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, { headers: authHeader }).map(response => {
 
                 var list = response.json();
@@ -63,7 +63,7 @@ export class ShipmentListService {
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-       return Observable.defer(() => {
+       return defer(() => {
             return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
               var allLists = response.json();
@@ -125,7 +125,7 @@ export class ShipmentListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return Observable.defer(() => {
+	   return defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {

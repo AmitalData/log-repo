@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';

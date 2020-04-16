@@ -837,6 +837,7 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\AcceptanceStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPaymentStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPendingReasonListService.ts" />
@@ -848,11 +849,13 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\RefundCustomerActivityTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureFactorTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureMethodTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierDeclarationPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAirlinePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\GITITEMCacheService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\DeficitsPMService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.ts" />

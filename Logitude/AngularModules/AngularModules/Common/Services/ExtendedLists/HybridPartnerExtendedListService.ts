@@ -1,11 +1,7 @@
-/// <reference path="../../../infrastructure/datacontracts/serviceresponse.ts" />
-
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-//import 'rxjs/add/operator/map';
-//import Rx from 'rxjs/Rx';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ViewResponse} from '../../../Infrastructure/DataContracts/ViewResponse';
@@ -35,7 +31,7 @@ export class HybridPartnerExtendedListService {
     GetHybridPartnerLists(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetHybridPartnerLists/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -59,7 +55,7 @@ export class HybridPartnerExtendedListService {
     GetHybridPartnerListWithNoRequest(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetHybridPartnerListWithNoRequest/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -84,7 +80,7 @@ export class HybridPartnerExtendedListService {
     GetAllowdHybridPartnerLists(hybridPartnerId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetAllowdHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var pmresponse: ServiceResponse;
@@ -100,7 +96,7 @@ export class HybridPartnerExtendedListService {
     GetAllowingHybridPartnerLists(hybridPartnerId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetAllowingHybridPartnerLists/?' + 'hybridPartnerId=' + hybridPartnerId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;

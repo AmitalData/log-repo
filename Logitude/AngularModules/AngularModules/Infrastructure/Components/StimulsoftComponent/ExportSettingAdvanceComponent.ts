@@ -1,5 +1,3 @@
-/// <reference path="stimulsoftviewercomponent.ts" />
-
 import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {StimulsoftViewerComponent} from '../../../Infrastructure/Components/StimulsoftComponent/StimulsoftViewerComponent';

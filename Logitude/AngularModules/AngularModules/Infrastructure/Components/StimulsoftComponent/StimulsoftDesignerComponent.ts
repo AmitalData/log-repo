@@ -1,4 +1,3 @@
-/// <reference path="../../tools.ts" />
 declare var Stimulsoft: any;
 declare var jQuery: any;
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';

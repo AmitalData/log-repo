@@ -1,8 +1,6 @@
 
 declare var System: any;
 declare var window: any;
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
 import {Component, OnInit, Output}  from '@angular/core';
 import {BackUpService} from '../../../../Infrastructure/Services/WebServices/BackUpService';
 

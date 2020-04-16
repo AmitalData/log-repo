@@ -1,4 +1,3 @@
-/// <reference path="../../../infrastructure/utilities/featurelocator.ts" />
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';

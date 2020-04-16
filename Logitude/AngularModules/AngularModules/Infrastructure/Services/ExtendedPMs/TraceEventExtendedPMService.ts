@@ -17,7 +17,7 @@ export class TraceEventExtendedPMService {
     PutTraceEventGroup(eventTypeArgs: any) {
         var url = this._apiUrl + '/puttraceeventgroup';
 
-        return Observable.defer(() => {
+        return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 

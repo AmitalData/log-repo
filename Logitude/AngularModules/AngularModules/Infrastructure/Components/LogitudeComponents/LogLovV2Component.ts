@@ -20,13 +20,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomEntityArgs } from './LogSearchWindowComponent';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/observable/fromEvent';
 import { UIProperty, UIProperties, UIPropertyArgs } from './UIProperties';
-//import {PartnerTypeListService} from '../../../Common/Services/StandardLists/PartnerTypeListService';
-//import {PartnerTypeList} from '../../../Common/EntityLists/PartnerTypeList';
-
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { InfraSettings } from '../../Utilities/InfraSettings';

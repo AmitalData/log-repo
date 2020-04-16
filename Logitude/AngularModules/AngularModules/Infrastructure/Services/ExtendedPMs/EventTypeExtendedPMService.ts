@@ -52,7 +52,7 @@ export class EventTypeExtendedPMService {
     }
 
     update(eventTypePMLists: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 

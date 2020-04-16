@@ -2,7 +2,7 @@
 declare var System: any;
 import {Injectable} from '@angular/core';
 import {SessionLocator} from '../Utilities/SessionLocator';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 

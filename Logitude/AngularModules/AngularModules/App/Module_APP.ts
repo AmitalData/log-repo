@@ -13,7 +13,6 @@ import { AppComponent } from './AppComponent';
         SystemJsNgModuleLoader,
 
         provideRoutes([
-            //{ loadChildren: 'Controls/Module_CTRL#ControlsModule' },
             { loadChildren: () => import('../Controls/Module_CTRL').then(m => m.ControlsModule), path: 'Controls' },
 
             // Infrastructure

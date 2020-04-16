@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -32,7 +32,7 @@ export class TariffPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
                 headers: authHeader
             }).map(response => {
@@ -59,7 +59,7 @@ export class TariffPMService {
     insert(entityPM: TariffPM) {
         var callTime = new Date();
 
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -105,7 +105,7 @@ export class TariffPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         }
@@ -116,7 +116,7 @@ export class TariffPMService {
     update(entityPM: TariffPM) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -163,7 +163,7 @@ export class TariffPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         }
         );

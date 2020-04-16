@@ -1,4 +1,3 @@
-/// <reference path="../../../controls/pipes/idgeneratorpipe.ts" />
 declare var window: any;
 import {Component, ViewContainerRef, OnInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';

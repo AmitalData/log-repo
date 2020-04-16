@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {TMOfficeHourPM} from '../EntityPMs/TMOfficeHourPM';
@@ -23,7 +21,7 @@ export class TimeManagementDomainService {
     GetWeeklyTimeSheetList(employeeUserId: string, locationCode: string, periodStartDate: Date) {
 
         var url = this._apiUrl + '/GetWeeklyTimeSheetList?employeeUserId=' + employeeUserId + "&locationCode=" + locationCode + "&periodStartDate=" + ServiceHelper.GetDateString(periodStartDate);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
 
@@ -40,7 +38,7 @@ export class TimeManagementDomainService {
     GetPeriodTimeSheetList(employeeUserId: string, locationCode: string, startDate: Date, endDate: Date) {
 
         var url = this._apiUrl + '/GetDataEntryTimeSheetList?employeeUserId=' + employeeUserId + "&locationCode=" + locationCode + "&startDate=" + ServiceHelper.GetDateString(startDate) + "&endDate=" + ServiceHelper.GetDateString(endDate);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 //var args = new TimeManagementAPIHelper();
@@ -55,7 +53,7 @@ export class TimeManagementDomainService {
     GetTMProjects(employeeUserId: string, locationCode: string, periodStartDate: Date) {
 
         var url = this._apiUrl + '/GetTMProjects?employeeUserId=' + employeeUserId + "&locationCode=" + locationCode + "&periodStartDate=" + ServiceHelper.GetDateString(periodStartDate);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
 
@@ -73,7 +71,7 @@ export class TimeManagementDomainService {
     GetTMProjectsByBatchTask(employeeUserId: string, fromDate: Date, toDate: Date) {
 
         var url = this._apiUrl + '/GetTMProjectsByBatchTask?employeeUserId=' + employeeUserId + "&fromDate=" + ServiceHelper.GetDateString(fromDate) + "&toDate=" + ServiceHelper.GetDateString(toDate);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var myResponse = new ServiceResponse();
@@ -86,7 +84,7 @@ export class TimeManagementDomainService {
     GetTMProjectsByBatchProject(employeeUserId: string , fromProject: string, toProject: string, fromDate: Date, toDate: Date) {
 
         var url = this._apiUrl + '/GetTMProjectsByBatchProject?employeeUserId=' + employeeUserId + "&fromProject=" + fromProject + "&toProject=" + toProject +"&fromDate=" + ServiceHelper.GetDateString(fromDate) +"&toDate=" + ServiceHelper.GetDateString(toDate);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var myResponse = new ServiceResponse();
@@ -98,7 +96,7 @@ export class TimeManagementDomainService {
 
     GetNewTMProjectConnect(MainId: string, ConnectedId: string) {
         var url = this._apiUrl + '/GetNewTMProjectConnect?MainId=' + MainId + "&id=" + ConnectedId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;               
                 var serviceResponse: ServiceResponse;
@@ -127,7 +125,7 @@ export class TimeManagementDomainService {
         return entityPM;
     }
     UpdateTimeSheetList(helper: TimeManagementAPIHelper) {
-        return Observable.defer(() => 
+        return defer(() => 
         {
             var mappedEntity: TimeManagementAPIHelper = this.MapJsonToTimeManagementAPIHelper(helper, false);
 
@@ -145,7 +143,7 @@ export class TimeManagementDomainService {
     }
     GetProjectsCounts(loggedUserId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetProjectsCounts?loggedUserId=' + loggedUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 return allLists;
@@ -156,7 +154,7 @@ export class TimeManagementDomainService {
     DeleteTimeSheetItem(Id: string, employeeUserId: string, locationCode: string, periodStartDate: Date, exitDate:Date) {
 
         var url = this._apiUrl + '/GetUpdatedTimeSheetList?Id=' + Id + "&employeeUserId=" + employeeUserId + " &locationCode=" + locationCode + "&periodStartDate=" + ServiceHelper.GetDateString(periodStartDate) + "&exitDate=" + ServiceHelper.GetDateString(exitDate);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var mappedResult: TimeManagementAPIHelper = this.MapJsonToTimeManagementAPIHelper(myJsonResult, true, new TimeManagementAPIHelper());
@@ -170,7 +168,7 @@ export class TimeManagementDomainService {
     GetCalculationCompleteWork() {
 
         var url = this._apiUrl + '/GetCalculationCompleteWork?';
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var myResponse = new ServiceResponse();
@@ -198,7 +196,7 @@ export class TimeManagementDomainService {
 
     Prorate(EmployeeUserId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetProrate?EmployeeUserId=' + EmployeeUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var iResponse = response;
 
@@ -212,7 +210,7 @@ export class TimeManagementDomainService {
     GetVacationsSummary(Year: number) {
 
         var url = this._apiUrl + '/GetVacationsSummary?Year=' + Year;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var myResponse = new ServiceResponse();
@@ -224,7 +222,7 @@ export class TimeManagementDomainService {
     GetVacationsDetails(Year: number, Type:string) {
 
         var url = this._apiUrl + '/GetVacationsDetails?Year=' + Year + '&Type=' + Type;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var myResponse = new ServiceResponse();
@@ -237,7 +235,7 @@ export class TimeManagementDomainService {
     DownloadEmployeesTimesToExcel(employeeUserId: string, locationCode: string, startDate: Date, endDate: Date) {
 
         var url = this._apiUrl + '/GetDownloadEmployeesTimesToExcel?employeeUserId=' + employeeUserId + "&locationCode=" + locationCode + "&startDate=" + ServiceHelper.GetDateString(startDate) + "&endDate=" + ServiceHelper.GetDateString(endDate);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();

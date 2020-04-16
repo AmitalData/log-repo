@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -26,7 +25,7 @@ export class CustomerListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -48,7 +47,7 @@ export class CustomerListService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -104,7 +103,7 @@ export class CustomerListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -139,7 +138,7 @@ export class CustomerListService {
         serviceResponse = new ServiceResponse();
 
         if (exists === 0) {
-            return Observable.defer(() => {
+            return defer(() => {
                 return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
                     .pipe(
                         map((response: HttpResponse<any>) => {
@@ -159,7 +158,7 @@ export class CustomerListService {
         else {
             var filteredData = this.CachedData.filter(a => a.Id === id)[0];
             serviceResponse.Result = filteredData;
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 
@@ -194,7 +193,7 @@ export class CustomerListService {
 
         var exists = this.CachedData.length;
         if (exists === 0) {
-            return Observable.defer(() => {
+            return defer(() => {
                 return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                     .pipe(
                         map((response: HttpResponse<any>) => {
@@ -223,7 +222,7 @@ export class CustomerListService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
             serviceResponse.Result = filteredData;
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 

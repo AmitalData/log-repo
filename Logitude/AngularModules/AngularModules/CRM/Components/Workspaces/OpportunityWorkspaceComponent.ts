@@ -1,4 +1,3 @@
-/// <reference path="../../../infrastructure/Utilities/featurelocator.ts" />
 import {Component, Output, EventEmitter} from '@angular/core';
 import {CRMDomainService, CRMSummary} from '../../Services/CRMDomainService';
 import {OpportunityList} from '../../EntityLists/OpportunityList';

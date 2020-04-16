@@ -1,4 +1,3 @@
-﻿/// <reference path="../../../tools.ts" />
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';

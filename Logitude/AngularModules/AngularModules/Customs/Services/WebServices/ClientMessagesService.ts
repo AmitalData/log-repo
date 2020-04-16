@@ -1,6 +1,7 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -18,17 +19,17 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 @Injectable()
 
 export class ClientMessagesService {
-    private _http: Http
+  private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Client';
 
     }
 
     PostUpdateDeleteClientAddressContactRequest(entity: AddAddressContactForClientRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -44,11 +45,11 @@ export class ClientMessagesService {
                 hahahah,
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -57,7 +58,7 @@ export class ClientMessagesService {
 
     PostClientRequest(entity: ClientSearchRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -75,11 +76,11 @@ export class ClientMessagesService {
                 hahahahah,
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -88,7 +89,7 @@ export class ClientMessagesService {
 
     PostClientSearchByIDRequest(entity: ClientSearchRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -102,16 +103,16 @@ export class ClientMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     CreateClientRequest(entity: CreateClientRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -125,11 +126,11 @@ export class ClientMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -139,11 +140,11 @@ export class ClientMessagesService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         code = encodeURIComponent(code);
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleClientPMByCode?' + 'code=' + code + "&isIncludeAll=" + isIncludeAll,
                 { headers: authHeader }).map(response => {
 
-                var pm = response.json();
+                var pm = response;
 
 
                 var entity: ClientPM;
@@ -155,7 +156,7 @@ export class ClientMessagesService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });
@@ -165,19 +166,19 @@ export class ClientMessagesService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + '/PutRecallClientsForCutomsRequest', JSON.stringify(fileUploadParamerter), {
                 headers: authHeader,
 
             }).map(response => {
-                var result = response.json();
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
                 pmresponse.Result = result;
                 return pmresponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
 

@@ -2,7 +2,6 @@ import {Component, OnInit}  from '@angular/core';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SignUpService} from '../../../../Infrastructure/Services/ExtendedPMs/SignUpService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';

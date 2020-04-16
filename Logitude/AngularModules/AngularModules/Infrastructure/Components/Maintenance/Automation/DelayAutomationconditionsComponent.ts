@@ -1,6 +1,5 @@
 
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 
 import {AutomationCondition} from '../../../../Infrastructure/DataContracts/AutomationCondition';

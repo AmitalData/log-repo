@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import { HttpClient } from '@angular/common/http';
@@ -19,7 +19,7 @@ export class INTRAWebService {
 
         var url = this._apiUrl + '/GetMessageResult?myShipmentId=' + myShipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -44,7 +44,7 @@ export class INTRAWebService {
 
         var url = this._apiUrl + '/GetMessageResultValidate?myShipmentId=' + myShipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -69,7 +69,7 @@ export class INTRAWebService {
 
         var url = this._apiUrl + '/GetContainerStatuses?ShipmentId=' + ShipmentId + '&ContainerId=' + ContainerId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -85,7 +85,7 @@ export class INTRAWebService {
 
         var url = this._apiUrl + '/GetReadFTPFolder';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -102,7 +102,7 @@ export class INTRAWebService {
         });
     }
     Simulate(entity: INTTRASimulator) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var mappedEntity: INTTRASimulator = this.MapJsonToINTTRASimulator(entity, false);
 
@@ -123,7 +123,7 @@ export class INTRAWebService {
 
         var url = this._apiUrl + '/GetSendEBooking?myShipmentId=' + myShipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -148,7 +148,7 @@ export class INTRAWebService {
 
         var url = this._apiUrl + '/GetBookingMessageResultValidate?myShipmentId=' + myShipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;

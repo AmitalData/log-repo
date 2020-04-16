@@ -14,9 +14,6 @@ import {EntityResourceService} from '../../Services/EntityResourceService';
 import {EntityListService} from '../../Services/EntityListService';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/throttleTime';
-import 'rxjs/add/observable/fromEvent';
 import {FieldValidator} from '../../Validators/FieldValidator';
 import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
 

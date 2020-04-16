@@ -1,6 +1,5 @@
 
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';

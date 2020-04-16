@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {CounterPM} from '../EntityPMs/CounterPM';
@@ -22,7 +22,7 @@ export class CountersDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTenantCounters',ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -46,7 +46,7 @@ export class CountersDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCounterDefinitions?CounterId=' + CounterId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -72,7 +72,7 @@ export class CountersDomainService {
 
         var url = this._apiUrl + '/GetCounterAPIHelper?CounterId=' + CounterId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
 
@@ -91,7 +91,7 @@ export class CountersDomainService {
 
         var url = this._apiUrl + '/GetCounterProperties?counterCode=' + counterCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
 
@@ -104,7 +104,7 @@ export class CountersDomainService {
         });
     }
     Post(args: CounterAPIHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

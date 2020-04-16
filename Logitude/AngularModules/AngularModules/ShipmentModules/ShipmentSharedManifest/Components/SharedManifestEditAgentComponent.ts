@@ -1,6 +1,3 @@
-/// <reference path="sharedmanifeststarted.ts" />
-
-
 import {Component, OnInit} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {PartnerItem} from './SharedManifestStarted';

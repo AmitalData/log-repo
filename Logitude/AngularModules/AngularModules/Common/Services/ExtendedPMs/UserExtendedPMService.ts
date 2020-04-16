@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 
 
-import {Observable} from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse'; 
@@ -135,7 +134,7 @@ export class UserExtendedPMService {
 
         var url = this._apiUrl + '/GetUserLicenses';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -151,7 +150,7 @@ export class UserExtendedPMService {
     update(entityPM: any) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

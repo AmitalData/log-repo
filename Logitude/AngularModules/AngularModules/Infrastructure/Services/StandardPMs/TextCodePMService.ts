@@ -5,7 +5,7 @@ import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 
 import {TextCodePM} from '../../EntityPMs/TextCodePM';
@@ -33,7 +33,7 @@ export class TextCodePMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 		
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
@@ -58,7 +58,7 @@ export class TextCodePMService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingleByCode?' + 'code=' + code + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
@@ -76,7 +76,7 @@ export class TextCodePMService {
 
     insert(entityPM: TextCodePM) {
         console.log('--------------------------------------> calling updateEntityPM:');
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -116,7 +116,7 @@ export class TextCodePMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -125,7 +125,7 @@ export class TextCodePMService {
     update(entityPM: TextCodePM) {
 
         console.log('--------------------------------------> calling updateEntityPM:');
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -164,7 +164,7 @@ export class TextCodePMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });

@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';

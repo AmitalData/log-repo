@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/map';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';

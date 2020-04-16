@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -29,7 +29,7 @@ export class ProductTypeListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -58,7 +58,7 @@ export class ProductTypeListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -120,7 +120,7 @@ export class ProductTypeListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -162,7 +162,7 @@ export class ProductTypeListService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
         if (exists === 0) {
-            return Observable.defer(() => {
+            return defer(() => {
                 var cacheKey = "ProductType_CachedData_" + SessionLocator.Tenant;
                 var _mappedListsArray: Array<ProductTypeList> = [];
                 var cachedString = LocalStorageManager.GetItem(cacheKey);
@@ -185,7 +185,7 @@ export class ProductTypeListService {
                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ProductType", "GetSingleListFromCache", 'code=' + code);
 
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
 
 
                 }
@@ -217,7 +217,7 @@ export class ProductTypeListService {
             var filteredData = ProductTypeListService.CachedData.filter(a => a.Code === code)[0];
             serviceResponse.Result = filteredData;
             serviceResponse.CallTime = callTime;
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 
@@ -295,10 +295,10 @@ export class ProductTypeListService {
                 }
             }
             if (serviceResponse) {
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
             else {
-                return Observable.defer(() => {
+                return defer(() => {
                     return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                         .pipe(
                             map((response: HttpResponse<any>) => {
@@ -345,7 +345,7 @@ export class ProductTypeListService {
             serviceResponse.Result = filteredData;
             serviceResponse.CallTime = callTime;
 
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 

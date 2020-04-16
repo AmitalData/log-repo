@@ -7,7 +7,7 @@ import { TraceEventPM } from '../EntityPMs/TraceEventPM';
 import { BIReportPM } from '../EntityPMs/BIReportPM';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class WebFreightDomainService {
@@ -21,7 +21,7 @@ export class WebFreightDomainService {
     GetTraceEventsForEntity(objectTableId: string, entityId: string) {
         var url = ServiceHelper.GetLogitudeURL() + 'api/TraceEventsDomain/GetTraceEventsForEntity?objectTableId=' + objectTableId + '&entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -50,7 +50,7 @@ export class WebFreightDomainService {
         var mappedArgs: TraceEventsServiceArgs = this.MapJsonTraceEventArgs(args);
         var url = ServiceHelper.GetLogitudeURL() + 'api/TraceEventsDomain';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(url, JSON.stringify(mappedArgs), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
                 var myJason = response;
                 var myResult: NewTraceEventResult = this.MapNewTraceEventResult(myJason);
@@ -72,7 +72,7 @@ export class WebFreightDomainService {
         var mappedArgs: TraceEventsServiceArgs = this.MapJsonTraceEventArgs(args);
         var url = ServiceHelper.GetLogitudeURL() + 'api/TraceEventsDomain';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(url + "/PutDeleteTraceEvent", JSON.stringify(mappedArgs), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
                 var myResult = response;
 
@@ -174,7 +174,7 @@ export class WebFreightDomainService {
 
         var url = this._apiUrl.concat(urlparameters);
         
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
                 if (response instanceof HttpResponse) {
                     if (response.ok == true) {
@@ -195,7 +195,7 @@ export class WebFreightDomainService {
     }
 
     GetExportBIReportToExcel(QueryData: BIReportXMLData) {
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             var url = this._apiUrl + "/PutExportBIReportToExcelByWR";
             var response: ServiceResponse;
@@ -224,7 +224,7 @@ export class WebFreightDomainService {
     GetBIReportLogStatus(reportId: string) {
         var url = this._apiUrl + '/GetBIReportLogStatus?reportId=' + reportId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var report = response;
                 var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -298,7 +298,7 @@ export class WebFreightDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl.concat(urlparameters);//
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 
                     return response;
@@ -310,7 +310,7 @@ export class WebFreightDomainService {
         var urlparameters = '/DownLoadAllFilesForShipments?ShipmentId=' + ShipmentId + "&&ObjectTableId=" + ObjectTableId + "&&Tenant=" + tenant;
         var url = this._apiUrl.concat(urlparameters);
         
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 return response;

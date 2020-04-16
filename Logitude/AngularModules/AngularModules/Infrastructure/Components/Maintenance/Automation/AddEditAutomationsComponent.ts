@@ -1,6 +1,4 @@
-/// <reference path="../../../datacontracts/automationargs.ts" />
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {AppTool, DateTool, FileLoader} from '../../../../Infrastructure/Tools';

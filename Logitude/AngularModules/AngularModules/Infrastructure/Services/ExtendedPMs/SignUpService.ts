@@ -16,7 +16,7 @@ export class SignUpService {
 
     SendMessageToQueue(signupInfo: any) {
         var url = this._apiUrl + '/PutSendMessageToQueue';
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(url, JSON.stringify(signupInfo), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -31,7 +31,7 @@ export class SignUpService {
     
     CreateTenant(signupInfo: any) {
         var url = this._apiUrl + '/PostCreateTenant';
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(url, JSON.stringify(signupInfo), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;

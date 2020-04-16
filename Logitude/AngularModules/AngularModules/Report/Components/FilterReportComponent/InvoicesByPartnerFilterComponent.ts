@@ -1,6 +1,3 @@
-﻿/// <reference path="codenameclass.ts" />
-
-
 declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';

@@ -16,7 +16,7 @@ export class ErrorsLogPMService {
     }
 
     insert(entityPM: ErrorLogPM) {
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             var entityPMServiceResponse: EntityPMServiceResponse;
             entityPMServiceResponse = new EntityPMServiceResponse();
@@ -40,7 +40,7 @@ export class ErrorsLogPMService {
                 entityPMServiceResponse.HasError = true;
                 entityPMServiceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(entityPMServiceResponse);
+                return of(entityPMServiceResponse);
             }
         });
     }

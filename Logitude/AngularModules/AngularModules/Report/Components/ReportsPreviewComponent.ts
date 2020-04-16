@@ -14,11 +14,7 @@ import {ReportsTemplateList} from '../../Common/EntityLists/ReportsTemplateList'
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {ReportBuildResult} from '../DataContracts/ReportBuildResult';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
-
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
 import { ReportsTemplateListExtendedService } from '../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
-import { List } from '../../Infrastructure/DataContracts/Dashboard/List';
 import { QueryFilterItem } from './Filters/QueryFilterItem';
 
 @Component({

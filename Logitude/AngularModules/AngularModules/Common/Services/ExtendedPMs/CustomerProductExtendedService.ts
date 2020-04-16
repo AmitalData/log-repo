@@ -1,10 +1,9 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import {CustomerProductPM} from '../../EntityPMs/CustomerProductPM';
 
-import {Observable} from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';

@@ -1,9 +1,7 @@
-﻿/// <reference path="../../../infrastructure/datacontracts/automationargs.ts" />
-
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -58,7 +56,7 @@ export class AutomationResultEmailRecipientExtendedService {
 
 
     update(items: AutomationArgs[]) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
             authHeader.append('Content-Type', 'application/json');

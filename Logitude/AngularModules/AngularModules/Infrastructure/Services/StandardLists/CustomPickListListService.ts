@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../Utilities/InfraGenericFilter';
@@ -28,7 +28,7 @@ export class CustomPickListListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -59,7 +59,7 @@ export class CustomPickListListService {
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-       return Observable.defer(() => {
+       return defer(() => {
            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
                .pipe(
                    map((response: HttpResponse<any>) => {
@@ -124,7 +124,7 @@ export class CustomPickListListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -168,7 +168,7 @@ export class CustomPickListListService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse(); 
         if (exists === 0) {
-        return Observable.defer(() => {
+        return defer(() => {
             var cacheKey = "CustomPickList_CachedData_" + SessionLocator.Tenant;
             var _mappedListsArray: Array<CustomPickListList> = [];
             var cachedString = LocalStorageManager.GetItem(cacheKey);
@@ -191,7 +191,7 @@ export class CustomPickListListService {
                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomPickList", "GetSingleListFromCache", 'id=' + id); 
 
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
 
                     
                 }
@@ -224,7 +224,7 @@ export class CustomPickListListService {
 		{
 		   var filteredData = CustomPickListListService.CachedData.filter(a => a.Id === id)[0];
 		    serviceResponse.Result = filteredData;
-		   return Observable.of(serviceResponse);
+		   return of(serviceResponse);
 		}
     }
 
@@ -303,10 +303,10 @@ export class CustomPickListListService {
                 }
             }
             if (serviceResponse) {
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
             else {
-                return Observable.defer(() => {
+                return defer(() => {
                     return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                         .pipe(
                             map((response: HttpResponse<any>) => {
@@ -354,7 +354,7 @@ export class CustomPickListListService {
             serviceResponse = new ServiceResponse();
             serviceResponse.Result = filteredData;
 
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 	

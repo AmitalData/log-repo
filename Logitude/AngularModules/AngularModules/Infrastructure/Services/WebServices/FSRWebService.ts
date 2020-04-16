@@ -4,8 +4,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class FSRWebService {
@@ -19,7 +18,7 @@ export class FSRWebService {
     SendFSR(shipmentId: string, objectTableId: string, myRecipient: string) {
         var url = this._apiUrl + '/GetSendFSR?shipmentId=' + shipmentId + '&objectTableId=' + objectTableId + '&myRecipient=' + myRecipient;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var mappedResult: FSRResultClass = new FSRResultClass();
@@ -44,7 +43,7 @@ export class FSRWebService {
         var mappedEntity: ShipmentPM;
         mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;
 
@@ -69,7 +68,7 @@ export class FSRWebService {
     SendBookingFSR(bookingId: string, objectTableId: string, myRecipient: string) {
         var url = this._apiUrl + '/GetSendBookingFSR?bookingId=' + bookingId + '&objectTableId=' + objectTableId + '&myRecipient=' + myRecipient;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var mappedResult: FSRResultClass = new FSRResultClass();

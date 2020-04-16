@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -23,10 +23,10 @@ import { GuaranteePM } from '../../EntityPMs/GuaranteePM';
 @Injectable()
 
 export class TapagMessagesService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TapagMessages';
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TapagMessages';
 
@@ -34,7 +34,7 @@ export class TapagMessagesService {
 
     PostGuaranteeCertificateRequest(entity: GuaranteeCertificateRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -48,11 +48,11 @@ export class TapagMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -60,7 +60,7 @@ export class TapagMessagesService {
 
     PostFaultQueryRequest(entity: FaultProceduralRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -74,11 +74,11 @@ export class TapagMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -86,7 +86,7 @@ export class TapagMessagesService {
 
     PostGuaranteeFileFilterQueryRequest(entity: GuaranteeFileFilterRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -100,18 +100,18 @@ export class TapagMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
 
     GetDeclarationTapagsLists(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -123,16 +123,16 @@ export class TapagMessagesService {
                 headers: authHeader
             }).map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     GetDepositPMByPaymentOrderNumberOrTapagId(paymentNumber: string, tapagId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -147,7 +147,7 @@ export class TapagMessagesService {
                     headers: authHeader
                 }).map(response => {
 
-                    var pm = response.json();
+                    var pm = response;
                     var entity: DepositPM;
                     if (pm) {
                         entity = depositPMService.MapJsonToEntityPM(pm);
@@ -156,13 +156,13 @@ export class TapagMessagesService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     GetDeficitPMByPaymentOrderNumberOrTapagId(paymentNumber: string, tapagId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -177,7 +177,7 @@ export class TapagMessagesService {
                     headers: authHeader
                 }).map(response => {
 
-                    var pm = response.json();
+                    var pm = response;
                     var entity: DeficitPM;
                     if (pm) {
                         entity = deficitPMService.MapJsonToEntityPM(pm);
@@ -186,13 +186,13 @@ export class TapagMessagesService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     GetSingleTapagList(tapagId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -204,16 +204,16 @@ export class TapagMessagesService {
                 headers: authHeader
             }).map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     GetGuaranteeByTapagId(tapagId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -228,7 +228,7 @@ export class TapagMessagesService {
                     headers: authHeader
                 }).map(response => {
 
-                    var pm = response.json();
+                    var pm = response;
                     var entity: GuaranteePM;
                     if (pm) {
                         entity = guaranteePMService.MapJsonToEntityPM(pm);
@@ -237,13 +237,13 @@ export class TapagMessagesService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     GetDeficitConnectedFileParagraphTypeList(declarationId: string, deficitId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -258,7 +258,7 @@ export class TapagMessagesService {
                     headers: authHeader
                 }).map(response => {
 
-                    //var pm = response.json();
+                    //var pm = response;
                     //var entity: DeficitConnFileParagraphTypeList;
                     //if (pm) {
                     //    entity = deficitConnFileParagraphTypeListService.MapJsonToEntityList(pm);
@@ -266,17 +266,17 @@ export class TapagMessagesService {
 
                     //var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse.Result = entity;
-                    var res = response.json();
+                    var res = response;
                     serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     PostDeclarationFilterRequestParams(entity: DeclarationFilterRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -290,11 +290,11 @@ export class TapagMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -302,7 +302,7 @@ export class TapagMessagesService {
 
     PostBankAccountToRefundQueryRequest(entity: BankAccountToRefundRequestParams) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -316,11 +316,11 @@ export class TapagMessagesService {
                 JSON.stringify(entity),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );

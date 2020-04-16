@@ -2,7 +2,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -26,7 +26,7 @@ export class WarehouseEntryPMExtendedService {
 
     CancelEntry(entityPM: WarehouseEntryPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var validator: ClassLevelValidator;
 
@@ -56,7 +56,7 @@ export class WarehouseEntryPMExtendedService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }

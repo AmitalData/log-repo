@@ -1,7 +1,7 @@
 ﻿import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse'; 
 import {ReportFliter} from '../../../Report/Components/Filters/ReportFliter';
@@ -69,7 +69,7 @@ export class ReportService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl, JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
@@ -87,7 +87,7 @@ export class ReportService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl, JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;

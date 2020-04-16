@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
 import {Guid} from '../../Utilities/Guid';
@@ -29,7 +29,7 @@ export class WebhookKeysExtendedPMService {
     get(id: string) {
         var callTime = new Date();
         var url = this.apiUrl + '/getsingle?' + 'id=' + id;
-        return Observable.defer(() => {
+        return defer(() => {
             return this.httpClient.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
                 if (response instanceof HttpResponse) {
                     var pm = response.body;
@@ -52,7 +52,7 @@ export class WebhookKeysExtendedPMService {
 
     insert(entityPM: WebhookKeysPM) {
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
             var errorsArray = validator.Validate("WebhookKeys", entityPM);
@@ -83,14 +83,14 @@ export class WebhookKeysExtendedPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }
 
     update(entityPM: WebhookKeysPM)  {
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
             var errorsArray = validator.Validate("WebhookKeys", entityPM);
@@ -122,13 +122,13 @@ export class WebhookKeysExtendedPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }
 
     PushHookContent(DataToPush: any)  {
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
@@ -154,7 +154,7 @@ export class WebhookKeysExtendedPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -26,7 +26,7 @@ export class AccountingOpService {
     Generate1000(email: string): any {
  
         var url = this._apiUrl + '/GetGenerate1000?email=' + email;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var result = response;
@@ -46,7 +46,7 @@ export class AccountingOpService {
     
     PutSystem1000File(fileUploadParamerter: ImageParameter) {
          
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + '/PutSystem1000File', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;
@@ -63,7 +63,7 @@ export class AccountingOpService {
 
     PutFunctionalTestXLS(fileUploadParamerter: ImageParameter) {
          
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + '/PutFunctionalTestXLS', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;

@@ -8,7 +8,7 @@ import { LocationDirective } from '../../../../Infrastructure/Utilities/Location
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
+
 import { max } from 'rxjs/operator/max';
 @Component({
     
