@@ -280,6 +280,8 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.CurrentEntityPM.Value = this.FieldValue = this.isChecked ? "true" : "false";
         this.AddEditAutomationsViewModel.IsChangeCondition = true;
     }
+
+
     //set IsChecked(newValue: boolean) {
     //    this.isChecked = newValue;
     //    this.CurrentEntityPM.Value = this.FieldValue = this.isChecked ? "true" : "false";
@@ -382,7 +384,9 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                     if (item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime") {
                         var todayDate = DateTool.GetCurrentDateTimeAsUtc();
                         this.CurrentEntityPM.Value = this.SelectedDateType.Name + "*" + this.FieldValue + "*" + FieldValueResolver.ConvertUTCDateToString(todayDate, "Automation");
-                    } else this.CurrentEntityPM.Value = "";
+                    }
+
+                    else this.CurrentEntityPM.Value = "";
 
                    
                     this.AddEditAutomationsViewModel.IsChangeCondition = true;
@@ -403,6 +407,10 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                         this.CurrentEntityPM.ObjectFieldCode = this.SelectedCustomField.FieldCode;
                         this.ChosenOperatorList(this.SelectedCustomField.DataTypeCode, true, this.SelectedCustomField);
                         this.SelectedOperator = this.OperatorList[0];
+
+
+
+                
                      
                     }
                     
