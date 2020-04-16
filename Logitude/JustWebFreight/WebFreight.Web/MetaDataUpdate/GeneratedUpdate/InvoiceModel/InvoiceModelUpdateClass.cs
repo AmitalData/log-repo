@@ -180,7 +180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -220,11 +220,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -468,6 +471,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				AccountingTransferTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				AccountingTransferTypeUpdateClass.FillAccountingTransferType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AccountType", ObjectTables, AccountTypeUpdateClass.HashString))
@@ -491,6 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				AccountTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				AccountTypeUpdateClass.FillAccountType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("APInvoice", ObjectTables, APInvoiceUpdateClass.HashString))
@@ -583,6 +588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				APInvoiceStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				APInvoiceStatusUpdateClass.FillAPInvoiceStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("APInvoiceTotalVAT", ObjectTables, APInvoiceTotalVATUpdateClass.HashString))
@@ -629,6 +635,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				APInvoiceTransferStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				APInvoiceTransferStatusUpdateClass.FillAPInvoiceTransferStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("APInvoiceType", ObjectTables, APInvoiceTypeUpdateClass.HashString))
@@ -652,6 +659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				APInvoiceTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				APInvoiceTypeUpdateClass.FillAPInvoiceType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("APPayment", ObjectTables, APPaymentUpdateClass.HashString))
@@ -721,6 +729,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				APPaymentStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				APPaymentStatusUpdateClass.FillAPPaymentStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("APPaymentTransferStatus", ObjectTables, APPaymentTransferStatusUpdateClass.HashString))
@@ -744,6 +753,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				APPaymentTransferStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				APPaymentTransferStatusUpdateClass.FillAPPaymentTransferStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ARInvoice", ObjectTables, ARInvoiceUpdateClass.HashString))
@@ -836,6 +846,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				ARInvoiceStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ARInvoiceStatusUpdateClass.FillARInvoiceStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ARInvoiceStock", ObjectTables, ARInvoiceStockUpdateClass.HashString))
@@ -905,6 +916,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				ARInvoiceStocksStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ARInvoiceStocksStatusUpdateClass.FillARInvoiceStocksStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ARInvoiceTotalVAT", ObjectTables, ARInvoiceTotalVATUpdateClass.HashString))
@@ -951,6 +963,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				ARInvoiceTransferStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ARInvoiceTransferStatusUpdateClass.FillARInvoiceTransferStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ARInvoiceType", ObjectTables, ARInvoiceTypeUpdateClass.HashString))
@@ -974,6 +987,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				ARInvoiceTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ARInvoiceTypeUpdateClass.FillARInvoiceType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ARPayment", ObjectTables, ARPaymentUpdateClass.HashString))
@@ -1043,6 +1057,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				ARPaymentStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ARPaymentStatusUpdateClass.FillARPaymentStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ARPaymentTransferStatus", ObjectTables, ARPaymentTransferStatusUpdateClass.HashString))
@@ -1066,6 +1081,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				ARPaymentTransferStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				ARPaymentTransferStatusUpdateClass.FillARPaymentTransferStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BankAccountLite", ObjectTables, BankAccountLiteUpdateClass.HashString))
@@ -1158,6 +1174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				SATInterfaceUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				SATInterfaceUpdateClass.FillSATInterface();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("SATInterfaceSetting", ObjectTables, SATInterfaceSettingUpdateClass.HashString))
@@ -1204,6 +1221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				SATInvoiceStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				SATInvoiceStatusUpdateClass.FillSATInvoiceStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("SATPaymentMethod", ObjectTables, SATPaymentMethodUpdateClass.HashString))
@@ -1227,6 +1245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				SATPaymentMethodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				SATPaymentMethodUpdateClass.FillSATPaymentMethod();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("SATTransferStatus", ObjectTables, SATTransferStatusUpdateClass.HashString))
@@ -1250,6 +1269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 				this.ObjectContext.SaveChanges();
 				SATTransferStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				SATTransferStatusUpdateClass.FillSATTransferStatus();
 			}
 
         }
@@ -2099,90 +2119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 	   	   SATTransferStatusUpdateClass.FillSATTransferStatus();
 	
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("AccountingTransferType", ObjectTables, AccountingTransferTypeUpdateClass.HashString))
-				AccountingTransferTypeUpdateClass.FillAccountingTransferType();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("AccountType", ObjectTables, AccountTypeUpdateClass.HashString))
-				AccountTypeUpdateClass.FillAccountType();
-	
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("APInvoiceStatus", ObjectTables, APInvoiceStatusUpdateClass.HashString))
-				APInvoiceStatusUpdateClass.FillAPInvoiceStatus();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("APInvoiceTransferStatus", ObjectTables, APInvoiceTransferStatusUpdateClass.HashString))
-				APInvoiceTransferStatusUpdateClass.FillAPInvoiceTransferStatus();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("APInvoiceType", ObjectTables, APInvoiceTypeUpdateClass.HashString))
-				APInvoiceTypeUpdateClass.FillAPInvoiceType();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("APPaymentStatus", ObjectTables, APPaymentStatusUpdateClass.HashString))
-				APPaymentStatusUpdateClass.FillAPPaymentStatus();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("APPaymentTransferStatus", ObjectTables, APPaymentTransferStatusUpdateClass.HashString))
-				APPaymentTransferStatusUpdateClass.FillAPPaymentTransferStatus();
-	
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ARInvoiceStatus", ObjectTables, ARInvoiceStatusUpdateClass.HashString))
-				ARInvoiceStatusUpdateClass.FillARInvoiceStatus();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ARInvoiceStocksStatus", ObjectTables, ARInvoiceStocksStatusUpdateClass.HashString))
-				ARInvoiceStocksStatusUpdateClass.FillARInvoiceStocksStatus();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ARInvoiceTransferStatus", ObjectTables, ARInvoiceTransferStatusUpdateClass.HashString))
-				ARInvoiceTransferStatusUpdateClass.FillARInvoiceTransferStatus();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ARInvoiceType", ObjectTables, ARInvoiceTypeUpdateClass.HashString))
-				ARInvoiceTypeUpdateClass.FillARInvoiceType();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ARPaymentStatus", ObjectTables, ARPaymentStatusUpdateClass.HashString))
-				ARPaymentStatusUpdateClass.FillARPaymentStatus();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("ARPaymentTransferStatus", ObjectTables, ARPaymentTransferStatusUpdateClass.HashString))
-				ARPaymentTransferStatusUpdateClass.FillARPaymentTransferStatus();
-	
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("SATInterface", ObjectTables, SATInterfaceUpdateClass.HashString))
-				SATInterfaceUpdateClass.FillSATInterface();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("SATInvoiceStatus", ObjectTables, SATInvoiceStatusUpdateClass.HashString))
-				SATInvoiceStatusUpdateClass.FillSATInvoiceStatus();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("SATPaymentMethod", ObjectTables, SATPaymentMethodUpdateClass.HashString))
-				SATPaymentMethodUpdateClass.FillSATPaymentMethod();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("SATTransferStatus", ObjectTables, SATTransferStatusUpdateClass.HashString))
-				SATTransferStatusUpdateClass.FillSATTransferStatus();
-	
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }

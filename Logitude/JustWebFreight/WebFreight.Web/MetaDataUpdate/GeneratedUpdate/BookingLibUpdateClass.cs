@@ -152,7 +152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -192,11 +192,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -320,6 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				BookingAnswerStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				BookingAnswerStatusUpdateClass.FillBookingAnswerStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingLastRequest", ObjectTables, BookingLastRequestUpdateClass.HashString))
@@ -366,6 +370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				BookingLevelUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				BookingLevelUpdateClass.FillBookingLevel();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingPackage", ObjectTables, BookingPackageUpdateClass.HashString))
@@ -435,6 +440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				BookingSpaceAllocationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				BookingSpaceAllocationUpdateClass.FillBookingSpaceAllocation();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingStatus", ObjectTables, BookingStatusUpdateClass.HashString))
@@ -458,6 +464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				BookingStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				BookingStatusUpdateClass.FillBookingStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FFRStatus", ObjectTables, FFRStatusUpdateClass.HashString))
@@ -481,6 +488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				FFRStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				FFRStatusUpdateClass.FillFFRStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FlightsSchedulesRequest", ObjectTables, FlightsSchedulesRequestUpdateClass.HashString))
@@ -527,6 +535,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				this.ObjectContext.SaveChanges();
 				FlightsSchedulesRequestStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				FlightsSchedulesRequestStatusUpdateClass.FillFlightsSchedulesRequestStatus();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FlightsSchedulesResponse", ObjectTables, FlightsSchedulesResponseUpdateClass.HashString))
@@ -856,40 +865,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingAnswerStatus", ObjectTables, BookingAnswerStatusUpdateClass.HashString))
-				BookingAnswerStatusUpdateClass.FillBookingAnswerStatus();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingLevel", ObjectTables, BookingLevelUpdateClass.HashString))
-				BookingLevelUpdateClass.FillBookingLevel();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingSpaceAllocation", ObjectTables, BookingSpaceAllocationUpdateClass.HashString))
-				BookingSpaceAllocationUpdateClass.FillBookingSpaceAllocation();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("BookingStatus", ObjectTables, BookingStatusUpdateClass.HashString))
-				BookingStatusUpdateClass.FillBookingStatus();
-	
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("FFRStatus", ObjectTables, FFRStatusUpdateClass.HashString))
-				FFRStatusUpdateClass.FillFFRStatus();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("FlightsSchedulesRequestStatus", ObjectTables, FlightsSchedulesRequestStatusUpdateClass.HashString))
-				FlightsSchedulesRequestStatusUpdateClass.FillFlightsSchedulesRequestStatus();
-	
-	   
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }

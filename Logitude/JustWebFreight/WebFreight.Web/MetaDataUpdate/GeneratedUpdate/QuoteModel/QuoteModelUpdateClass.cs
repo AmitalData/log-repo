@@ -163,7 +163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 
         }
 
-		public void LoadObjectTablesMetadata(IWebFreightContext context)
+		public void LoadObjectTablesMetadata(IWebFreightContext context, bool runPostDeleteProcedure)
         {
 		    ICommonDataContext commonContext =  CommonDataContext.GetContext(0);
             ObjectContext = context;
@@ -203,11 +203,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 			 MetadataUpdateUtility.RunPreDeleteProcedure();
 
 			 CreateAllObjectTablesMetadata();
-			 CreateAllClosedTablesByHash();
+			 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
-
-			 MetadataUpdateUtility.RunPostDeleteProcedure();
+			 if(runPostDeleteProcedure)
+			 {
+				MetadataUpdateUtility.RunPostDeleteProcedure();
+			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();
 			//
@@ -319,6 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 				this.ObjectContext.SaveChanges();
 				MarkUpTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				MarkUpTypeUpdateClass.FillMarkUpType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Quote", ObjectTables, QuoteUpdateClass.HashString))
@@ -388,6 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 				this.ObjectContext.SaveChanges();
 				QuoteClosingReasonUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteCostCharge", ObjectTables, QuoteCostChargeUpdateClass.HashString))
@@ -434,6 +439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 				this.ObjectContext.SaveChanges();
 				QuoteCustomerTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuotePackage", ObjectTables, QuotePackageUpdateClass.HashString))
@@ -503,6 +509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 				this.ObjectContext.SaveChanges();
 				QuoteRatingUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				QuoteRatingUpdateClass.FillQuoteRating();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteSaleCharge", ObjectTables, QuoteSaleChargeUpdateClass.HashString))
@@ -802,6 +809,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 				this.ObjectContext.SaveChanges();
 				QuoteTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 				this.ObjectContext.SaveChanges();
+				QuoteTypeUpdateClass.FillQuoteType();
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteVATsTotal", ObjectTables, QuoteVATsTotalUpdateClass.HashString))
@@ -1339,49 +1347,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 	
 	   
         }
-
-		public void CreateAllClosedTablesByHash()
-		{
-   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("MarkUpType", ObjectTables, MarkUpTypeUpdateClass.HashString))
-				MarkUpTypeUpdateClass.FillMarkUpType();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteClosingReason", ObjectTables, QuoteClosingReasonUpdateClass.HashString))
-				QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
-	
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteCustomerType", ObjectTables, QuoteCustomerTypeUpdateClass.HashString))
-				QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
-	
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteRating", ObjectTables, QuoteRatingUpdateClass.HashString))
-				QuoteRatingUpdateClass.FillQuoteRating();
-	
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteType", ObjectTables, QuoteTypeUpdateClass.HashString))
-				QuoteTypeUpdateClass.FillQuoteType();
-	
-	   
-        }
-
-  
-
-   	 
+ 	 
 	 
 
    }
