@@ -11590,7 +11590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsDiamondDeclaration",
-					  						OldFieldName =  "DeclarationType",
+					  						OldFieldName =  "IsDiamondDeclaration",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11887,7 +11887,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsValidTicketsDiamond",
-					  						OldFieldName =  "DocumentStatusDiamond",
+					  						OldFieldName =  "IsValidTicketsDiamond",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -12696,7 +12696,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DeclarationAmendmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_12.Id, NameTextCodeCode = DeclarationTextCode_12.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationAmendments",  QueryGroupCode = "33c9", IndexOrder = 12, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_12.Id,FeatureUniqeCode= DeclarationFeature_12.FeatureUniqeCode, DefaultSortName = "AmendmentissueDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+			  Query DeclarationAmendmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_12.Id, NameTextCodeCode = DeclarationTextCode_12.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationAmendments",  QueryGroupCode = "DECL", IndexOrder = 12, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_12.Id,FeatureUniqeCode= DeclarationFeature_12.FeatureUniqeCode, DefaultSortName = "AmendmentissueDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DeclarationAmendmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationAmendmentsQuery.Id,QueryCode = DeclarationAmendmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldId = DeclarationObjectFields.Where(d => d.FieldName == "AmendmentissueDate" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DeclarationObjectFields.Where(d => d.FieldName == "AmendmentissueDate" && d.ObjectTableId == DeclarationObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -14270,7 +14270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "שלח הצהרה",
 						FeatureUniqeCode = DeclarationFeature_MB0.FeatureUniqeCode,
-						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendDeclarationComponent",
+						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
@@ -14290,7 +14290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "שלח מצהר",
 						FeatureUniqeCode = DeclarationFeature_MB1.FeatureUniqeCode,
-						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/SendDeclaration/SendManifestComponent",
+						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
        
@@ -14670,8 +14670,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "רשימת מסמכים",
 						FeatureUniqeCode = DeclarationFeature_MB5.FeatureUniqeCode,
-						HtmlComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DocumentsPanel/DocumentsPanelComponent",
-						Width = 30,
+						HtmlComponentPath = null,
+						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 	    }

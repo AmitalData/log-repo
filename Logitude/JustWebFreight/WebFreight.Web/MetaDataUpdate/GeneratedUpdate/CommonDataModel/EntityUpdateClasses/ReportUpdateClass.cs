@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "Report",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Reports",
-			      				    OldDBTableName =  "Reports",
+			      				    
 			      				    ObjectTableSingular =  "Report",
 			      				    ObjectTablePlural =  "Reports",
 			      				    DescriptionDefaultText =  "Maintain all the reports you can use in the system.",
@@ -129,6 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Report,Reports,,Id,",
+			      			
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -140,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -182,6 +183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Id",
 					  						DefaultText =  "Id",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -202,7 +204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -245,6 +247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Tenant",
 					  						DefaultText =  "Tenant",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -265,7 +268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -312,6 +315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ListFieldLable =  "NameListLable",
 					  						ListLableDefaultText =  "Name",
 					  						ListLocalDefaultText =  "שם",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -332,7 +336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FilterControlName",
-					  						OldFieldName =  "FilterControlName",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -377,6 +381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "FilterControlName",
 					  						ListFieldLable =  "FilterControlNameListLable",
 					  						ListLableDefaultText =  "FilterControlName",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -397,7 +402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -442,6 +447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "Description",
 					  						ListFieldLable =  "DescriptionListLable",
 					  						ListLableDefaultText =  "Description",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -462,7 +468,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -508,6 +514,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "Search Tenant / Name / Description",
 					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: Tenant \n2: Name \n3: Description",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -527,7 +534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -571,6 +578,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "Code",
 					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "Code",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -591,7 +599,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -636,6 +644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "InActive",
 					  						ListFieldLable =  "InActiveListLable",
 					  						ListLableDefaultText =  "InActive",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -656,7 +665,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FilterHtmlComponentUrl",
-					  						OldFieldName =  "FilterHtmlComponentUrl",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -698,6 +707,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FilterHtmlComponentUrl",
 					  						DefaultText =  "FilterHtmlComponentUrl",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -718,7 +728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AvailableForScheduling",
-					  						OldFieldName =  "AvailableForScheduling",
+					  						
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -759,6 +769,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DefaultText =  "Available For Scheduling",
 					  						ListFieldLable =  "AvailableForSchedulingListLable",
 					  						ListLableDefaultText =  "Available For Scheduling",
+					  						
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -990,7 +1001,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature ReportFeature_SHEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHEL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.SHEL", NameTextCodeDefaultText = @"Shipments Events List" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_ATRE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATRE", FeatureTypeCode = "Area", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.AutomationTestReport", NameTextCodeDefaultText = @"Automation Test Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_ATRE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATRE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.AutomationTestReport", NameTextCodeDefaultText = @"Automation Test Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ReportFeature_WORKDAYSPERGATEGORY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WORKDAYSPERGATEGORY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.WORKDAYSPERGATEGORY", NameTextCodeDefaultText = @"Work Days Per Category" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 

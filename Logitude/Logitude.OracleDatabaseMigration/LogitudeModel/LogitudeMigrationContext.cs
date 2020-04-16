@@ -3173,7 +3173,21 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         //public IDbSet<GLAccountType> GLAccountTypes { get; set; }
         //public IDbSet<RevenueExpenseType> RevenueExpenseTypes { get; set; }
         //public IDbSet<GLAccount> GLAccounts { get; set; }
+        public IDbSet<VatReportStatus> VatReportStatuses { get; set; }
+        public IDbSet<TaxReportStatus> TaxReportStatuses { get; set; }
+        public IDbSet<TaxReportLineType> TaxReportLineType { get; set; }
+        public IDbSet<TaxReportLineTransmitStatus> TaxReportLineTransmitStatuses { get; set; }
+        public IDbSet<TaxReportLineStatus> TaxReportLineStatuses { get; set; }
+        public IDbSet<TaxDeductionReportStatus> TaxDeductionReportStatuses { get; set; }
+        public IDbSet<RevaluationStatus> RevaluationStautses { get; set; }
+        public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses { get; set; }
+        public IDbSet<InterestReportStatuse> InterestReportStatuses
+        {
+            get; set;
 
+        }
+        public IDbSet<InterestEntityType> InterestEntityTypes { get; set; }
+        public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; set; }
         public IDbSet<PaymentChequeStatus> PaymentChequeStatuses
         {
             get;
@@ -4834,7 +4848,17 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
             #endregion
-
+            modelBuilder.Configurations.Add(new InterestReportStatuseMap());
+            modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
+            modelBuilder.Configurations.Add(new InterestEntityTypeMap());
+            modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
+            modelBuilder.Configurations.Add(new RevaluationStatusMap());
+            modelBuilder.Configurations.Add(new TaxDeductionReportStatusMap());
+            modelBuilder.Configurations.Add(new TaxReportLineStatusMap());
+            modelBuilder.Configurations.Add(new TaxReportLineTransmitStatusMap());
+            modelBuilder.Configurations.Add(new TaxReportLineTypeMap());
+            modelBuilder.Configurations.Add(new TaxReportStatusMap());
+            modelBuilder.Configurations.Add(new VatReportStatusMap());
             base.OnModelCreating(modelBuilder);
         }
     }

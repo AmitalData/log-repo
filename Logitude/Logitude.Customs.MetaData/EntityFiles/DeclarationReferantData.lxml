@@ -2266,34 +2266,6 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
-    <EventType
-      Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
-      EnglishName="&quot;Created&quot;"
-      LocalName="&quot;Created&quot;"
-      IsManualEntry="false"
-      ShortView="true"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
-    <EventType
-      Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;Customs.DeclarationReferantData&quot;"
-      EnglishName="&quot;Updated&quot;"
-      LocalName="&quot;Updated&quot;"
-      IsManualEntry="false"
-      ShortView="false"
-      EventTypeCategoryCode="&quot;OPE&quot;"
-      IsAgentView="false"
-      IsCustomerView="false"
-      IsSharedLogisticsEnabled="false"
-      AllowedInAutomation="false"
-      ManualActivatedFollowUp="false"
-      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <DataContracts />

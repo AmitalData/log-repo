@@ -230,6 +230,15 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     case "customs":
                         {
+                            GlobalModelUpdateClass modelUpdateClass = new GlobalModelUpdateClass();
+                            modelUpdateClass.LoadObjectsTenantZero(context);
+
+                            UpdateInfrasturtureAndLogModules(context);
+
+                            UpdateCRMModule(context);
+
+                            UpdateAllOldModules(context);
+
                             CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
                             customUpdate.LoadObjectsTenantZero(context);//generated
 

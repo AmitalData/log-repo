@@ -1962,44 +1962,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "CREV",
-                EnglishName =  "Created",
-                LocalName =  "Created",
-                IsManualEntry =  false,
-                ShortView =  true,
-                EventTypeCategoryCode =  "OPE",
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = DeclarationReferantDataObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "UPEV",
-                EnglishName =  "Updated",
-                LocalName =  "Updated",
-                IsManualEntry =  false,
-                ShortView =  false,
-                EventTypeCategoryCode =  "OPE",
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = DeclarationReferantDataObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
