@@ -38,7 +38,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
     selector: 'AddEditImporterDocument',
     
     templateUrl: './AddEditImporterDocumentComponent.html',
-    providers: [Http, ServiceArgs, DocumentsFilingExtendedPMService],
+    providers: [ServiceArgs, DocumentsFilingExtendedPMService],
 })
 
 export class AddEditImporterDocumentComponent implements OnInit {
@@ -740,7 +740,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Title = "File Uploading";
                     logitudeWindow.DataContext = this;
-                    logitudeWindow.Show("./ShipmentModules/ShipmentLogBox/Components/Logbox/LogboxUploaderComponent");
+                  logitudeWindow.Show("./ShipmentModules/ShipmentLogBox/Components/Logbox/LogboxUploaderComponent");
                 }
 
 

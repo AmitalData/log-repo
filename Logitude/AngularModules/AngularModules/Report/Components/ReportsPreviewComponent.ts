@@ -16,9 +16,10 @@ import {ReportBuildResult} from '../DataContracts/ReportBuildResult';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 import { ReportsTemplateListExtendedService } from '../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { QueryFilterItem } from './Filters/QueryFilterItem';
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
 
 @Component({
-    moduleId: './Report/Components/',
     selector: 'ReportsPreviewComponent',
     templateUrl: 'ReportsPreviewComponent.html',
     providers: [ReportService],
@@ -455,8 +456,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     //Stimul Soft Report Timer
 
-    initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
-        return Observable.interval(2000).timeInterval();
+  initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
+    return interval(2000).pipe(timeInterval());
     }
 
 
@@ -530,7 +531,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     //Wait Result Stimul Timer
     IsStartTimerWaitingFirstStimulReportBuildRunning: boolean = false;
     initializeStartTimerWaitingFirstStimulReportBuild() {
-        return Observable.interval(50000).timeInterval();
+      return interval(50000).pipe(timeInterval());
+
     }
     private StartTimerWaitingFirstStimulReportBuildsub: any = null;
     StartTimerWaitingFirststimulReportBuild() {
@@ -564,7 +566,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     //Wait Result Stimul Timer
     IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning: boolean = false;
     initializeStartTimerChangeBusyIndicatorMessageAfter50Sec() {
-        return Observable.interval(50000).timeInterval();
+      return interval(50000).pipe(timeInterval());
+
     }
     private StartTimerChangeBusyIndicatorMessageAfter50Secsub: any = null;
     StartTimerChangeBusyIndicatorMessageAfter50Sec() {

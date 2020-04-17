@@ -1,4 +1,4 @@
-﻿
+
 import {Component,ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
@@ -10,7 +10,6 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './ReconciliationLineListTemplate.html',
 })
 

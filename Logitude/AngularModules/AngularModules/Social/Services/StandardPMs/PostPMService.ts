@@ -209,10 +209,10 @@ export class PostPMService {
             entityPM.OldEntityPM.PostLikes = [];
             for (var item in entityPM.PostLikes) {
             var myPostLikePM = entityPM.PostLikes[item];
-            var newPostLikePM: PostLikePM = this.clone(myPostLikePM);
+            var newPostLikePM2: PostLikePM = this.clone(myPostLikePM);
 						
 							 
-            entityPM.OldEntityPM.PostLikes.push(newPostLikePM);
+            entityPM.OldEntityPM.PostLikes.push(newPostLikePM2);
             }
 			   
 		}

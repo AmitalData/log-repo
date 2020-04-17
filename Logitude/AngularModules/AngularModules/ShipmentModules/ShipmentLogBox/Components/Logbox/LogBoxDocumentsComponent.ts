@@ -488,7 +488,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
             logitudeWindow.Width = 960;
             logitudeWindow.Height = 620;
             logitudeWindow.Title = "";
-            logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
+          logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
             logitudeWindow.WindowClosed.subscribe(($event: any) => {
                 this.ReloadDocuments();
             });
@@ -511,7 +511,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                 logitudeWindow.Width = 960;
                 logitudeWindow.Height = 620;
                 logitudeWindow.Title = "";
-                logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
+              logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterDocumentComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
                     this.ReloadDocuments();
                 });
@@ -945,7 +945,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         logitudeWindow.Width = 570;
         logitudeWindow.Height = 200;
         logitudeWindow.Title = "Exporting All Documents To ZIP File";
-        logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DownloadAllFilesComponent');
+      logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DownloadAllFilesComponent');
 
     }
     DisableAddDocumentButton: boolean = true;
@@ -1106,6 +1106,6 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         logitudeWindow.Width = 690;
         logitudeWindow.Height = 200;
         logitudeWindow.Title = Title;
-        logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxPackagesComponent');
+      logitudeWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxPackagesComponent');
     }
 }

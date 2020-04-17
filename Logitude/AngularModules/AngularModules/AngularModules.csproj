@@ -33,6 +33,7 @@
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankDeposit\BankDepositDetailsTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\CashBook\CashBookGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\AddEditTaxWithholdingLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountAdditionalDataTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountInterestComponent.html" />
@@ -61,10 +62,12 @@
     <Content Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\EditTaxReportLine\EditTaxReportLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\TaxReportDetailsTabComponent.html" />
+    <Content Include="Accounting\Components\ListTemplates\CashBookLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\InterestReportLinesByDateListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ManageReconciliationListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageListTemplate.html" />
+    <Content Include="Accounting\Components\ListTemplates\ReconciliationLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\TaxReportListTemplate.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingFunctionalTestComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.html" />
@@ -107,6 +110,7 @@
     <Content Include="Accounting\Components\Others\ExternalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.html" />
+    <Content Include="Accounting\Components\Others\ReconcileExternalPage\ManageExternalReconciliationTabComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankDepositShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.html" />
@@ -119,6 +123,7 @@
     <Content Include="Accounting\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.html" />
     <Content Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.html" />
+    <Content Include="Accounting\Components\Workspaces\Main\MainPageComponent.html" />
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
@@ -169,11 +174,13 @@
     <Content Include="Common\Components\Maintenance\TransmissionLogs\TransmissionLogAuditTabComponent.html" />
     <Content Include="Common\Components\Maintenance\VATSettingsComponent.html" />
     <Content Include="Controls\All\SplitButtonComponent.html" />
+    <Content Include="CRMModules\CRMEmployeeGroup\Components\EditTabs\EmployeeGroupGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMEmployeeGroup\Components\NewEntity\NewEmployeeComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\AddEdit\AddEditOccasionContactComponent.html" />
+    <Content Include="CRMModules\CRMOccasion\Components\AddEdit\CheckAllInviteeCheckBoxComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionDocsInTabComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionMainTabComponent.html" />
@@ -436,6 +443,7 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\BankPageEventsComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\CashBook\CashBookGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\GLAccountInterestComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\InterestReport\GeneralTab\InterestReportLineByDateDetails\InterestReportLineByDateDetailsComponent.ts" />
@@ -444,7 +452,9 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\ListTemplates\CashBookLineListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\InterestReportLinesByDateListTemplate.ts" />
+    <TypeScriptCompile Include="Accounting\Components\ListTemplates\ReconciliationLineListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingFunctionalTestComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.ts" />
@@ -461,12 +471,14 @@
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\ReconcileExternalPage\ManageExternalReconciliationTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestReportShortTitleComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ReconcileExternalPage\ExternalPagesTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Workspaces\Main\MainPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -630,11 +642,13 @@
     <TypeScriptCompile Include="Controls\InvitedFilter.ts" />
     <TypeScriptCompile Include="Controls\ParticipatedFilter.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMEmployeeGroup\Components\EditTabs\EmployeeGroupGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMEmployeeGroup\Components\NewEntity\NewEmployeeComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\AddEdit\AddEditOccasionContactComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\AddEdit\CheckAllInviteeCheckBoxComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionMainTabComponent.ts" />
@@ -1272,9 +1286,12 @@
     <Content Include="QuoteModules\QuoteCharges\Components\SelectBreaksComponent.html" />
     <Content Include="QuoteModules\QuoteOthers\Components\Quotation\AttachmentQuotationComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\AutomationTestReportFilterComponent.html" />
+    <Content Include="Report\Components\FilterReportComponent\TasksOfNoProjectsFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\VDKFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.html" />
+    <Content Include="Report\Components\FilterReportComponent\WorkDaysPerCategoryFilterComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Accounting\CustomerStatusReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
@@ -1284,6 +1301,7 @@
     <Content Include="Report\Components\FiltersComponent\Operational\FlightBookingsManifestFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Operational\ShipperReturnsReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.html" />
     <Content Include="Report\Components\Scheduler\AddEditReportTaskSchedulerComponent.html" />
@@ -1300,6 +1318,7 @@
     <Content Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.html" />
     <Content Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\BlockedShipmentsComponent.html" />
+    <Content Include="ShipmentModules\ShipmentAMANAC\Components\EditTabs\CustomsTransferGeneralTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.html" />
     <Content Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.html" />
     <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.html" />
@@ -1325,7 +1344,6 @@
     <Content Include="Controls\Popups\QuickSearchTextBox.html" />
     <Content Include="Controls\Popups\SalesNotes.html" />
     <Content Include="Controls\Popups\ToggleButton.html" />
-    <Content Include="CRM\Components\EditTabs\EmployeeGroup\EmployeeGroupGeneralTabComponent.html" />
     <Content Include="CRM\Components\EditTabs\InboundEmail\InboundEmailGeneralTabComponent.html" />
     <Content Include="CRM\Components\EditTabs\InboundEmail\ViewInboundLineBodyComponent.html" />
     <Content Include="CRM\Components\EditTabs\Opportunity\EditProductComponent.html" />
@@ -2402,8 +2420,11 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.html" />
     <Content Include="TariffModule\Components\Helpers\TariffHelperComponent.html" />
+    <Content Include="TariffModule\Components\NewEntity\AddTariffContainersComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
+    <Content Include="TariffModule\Components\NewEntity\NewTariffProductsComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.html" />
+    <Content Include="TariffModule\Components\ShortTitles\TariffShortTitleComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\ContainerDefaultsComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\SettingsWorkspaceComponent.html" />
@@ -2445,6 +2466,7 @@
     <Content Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseReleaseRoutingsTabComponent.html" />
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.html" />
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseReleaseFiltersMenuComponent.html" />
+    <Content Include="Warehouse\Components\Helpers\WarehouseEntryHelperComponent.html" />
     <Content Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.html" />
     <Content Include="Warehouse\Components\NewEntity\NewFullWarehouseReleaseComponent.html" />
     <Content Include="Warehouse\Components\Templates\FieldTemplateComponent.html" />
@@ -3735,9 +3757,12 @@
     <TypeScriptCompile Include="Quote\Services\StandardLists\QuoteFollowUpListService.ts" />
     <TypeScriptCompile Include="Quote\Services\StandardPMs\QuoteTemplateSectionPMService.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\AutomationTestReportFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FilterReportComponent\TasksOfNoProjectsFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\VDKFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FilterReportComponent\WorkDaysPerCategoryFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\CustomerStatusReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
@@ -3747,6 +3772,7 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\FlightBookingsManifestFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\ShipmentsEventsListFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\ShipperReturnsReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Scheduler\AddEditReportTaskSchedulerComponent.ts" />
@@ -3764,6 +3790,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\BlockedShipmentsComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\EditTabs\CustomsTransferGeneralTabComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\AMANACExportTransferComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\Components\NewEntity\NewTransferComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentAMANAC\ModuleDeclarations.ts" />
@@ -3917,7 +3944,6 @@
     <TypeScriptCompile Include="Controls\Services\CRMControlsService.ts" />
     <TypeScriptCompile Include="Controls\UserFilter.ts" />
     <TypeScriptCompile Include="CRM\Args.ts" />
-    <TypeScriptCompile Include="CRM\Components\EditTabs\EmployeeGroup\EmployeeGroupGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\EditTabs\InboundEmail\InboundEmailGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\EditTabs\InboundEmail\ViewInboundLineBodyComponent.ts" />
     <TypeScriptCompile Include="CRM\Components\EditTabs\Opportunity\EditProductComponent.ts" />
@@ -6782,8 +6808,11 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Helpers\TariffHelperComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\NewEntity\AddTariffContainersComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewTariffProductsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\TariffPriceStepsComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\ShortTitles\TariffShortTitleComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\ContainerDefaultsComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\CostWorkspaceComponent.ts" />
@@ -6895,6 +6924,7 @@
     <TypeScriptCompile Include="Warehouse\Components\EditWarehouseReleaseComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\FiltersMenu\WarehouseReleaseFiltersMenuComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\Helpers\WarehouseEntryHelperComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\MenuButtons\WarehouseReleaseMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseReleaseComponent.ts" />
@@ -7580,6 +7610,7 @@
     <Folder Include="Accounting\EntityPMInitServices\" />
     <Folder Include="Booking\DataContracts\" />
     <Folder Include="Booking\EntityPMInitServices\" />
+    <Folder Include="CRM\Components\EditTabs\EmployeeGroup\" />
     <Folder Include="CRM\Components\Tickets\MainTab\" />
     <Folder Include="CustomsModules\PaymentOrder\" />
     <Folder Include="Customs\Components\CouriersVat\" />

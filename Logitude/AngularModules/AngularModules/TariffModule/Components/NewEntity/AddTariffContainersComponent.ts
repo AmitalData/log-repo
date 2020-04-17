@@ -7,7 +7,6 @@ import { TariffPM } from '../../EntityPMs/TariffPM';
 
 @Component({
     selector: 'AddTariffContainersComponent',
-    moduleId: module.id,
     templateUrl: './AddTariffContainersComponent.html',
 })
 

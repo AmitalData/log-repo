@@ -10,7 +10,6 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './CustomerStatusReportFilterComponent.html',
 })
 

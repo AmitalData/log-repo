@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -17,26 +15,28 @@ import { TariffLineExpirationDatePM } from '../../EntityPMs/TariffLineExpiration
 import { TariffPMInitService } from '../../EntityPMInitServices/TariffPMInitService';
 import { TariffValidator } from '../../Validators/TariffValidator';
 import { TariffLinesContainersPricePM } from '../../EntityPMs/TariffLinesContainersPricePM';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 
 export class TariffPMService {
-    private _http: Http;
+  private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+      this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tariffs';
     }
 
     get(id: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var callTime = new Date();
         return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
+          return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+            .pipe(
+              map((response: HttpResponse<any>) => {
+                var pm = response.body;
                 var entity: TariffPM;
                 if (pm) {
                     entity = this.MapJsonToEntityPM(pm);
@@ -52,7 +52,7 @@ export class TariffPMService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Tariff", "GetSinglePM", 'id=' + id);
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -60,9 +60,6 @@ export class TariffPMService {
         var callTime = new Date();
 
         return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
@@ -81,10 +78,11 @@ export class TariffPMService {
                 var mappedEntity: TariffPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
+              return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                  map((response: HttpResponse<any>) => {
 
-                        var pm = response.json();
+                        var pm = response.body;
                         if (pm) {
                             var mappedResult: TariffPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -98,7 +96,7 @@ export class TariffPMService {
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
@@ -118,10 +116,6 @@ export class TariffPMService {
         var callTime = new Date();
         return defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
             var validator: ClassLevelValidator;
 
             validator = new ClassLevelValidator();
@@ -140,11 +134,12 @@ export class TariffPMService {
                 var mappedEntity: TariffPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
+              return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                  map((response: HttpResponse<any>) => {
 
 
-                        var pm = response.json();
+                        var pm = response.body;
                         if (pm) {
                             var mappedResult: TariffPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -156,7 +151,7 @@ export class TariffPMService {
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 

@@ -17,7 +17,7 @@ import { AgentSharedLogisticsKey } from '../../../Common/EntityPMs/AgentSharedLo
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {UIProperty, UIProperties}  from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 
-import {LogitudeWindow} from '../../../Controls/Windows/logitudewindow';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';

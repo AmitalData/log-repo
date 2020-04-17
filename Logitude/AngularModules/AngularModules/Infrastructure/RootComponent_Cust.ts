@@ -250,7 +250,7 @@ export class RootComponent_Cust implements OnInit {
 
     VieUserIdNumberMobileComponent() {
         this.ClearLocation();
-        SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.location)
+      SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.location)
             .then(cmpRef => {
                 cmpRef.instance.RunComponent();
             });

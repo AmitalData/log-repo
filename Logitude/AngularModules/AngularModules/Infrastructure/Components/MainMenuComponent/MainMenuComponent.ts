@@ -332,7 +332,7 @@ export class MainMenuComponent {
                     }
                     case "General.MH.Importers": {
                         ServiceLocator.SendTotangoUserActivity("Importers", "Main View");
-                        myComponentPath = "./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxMainComponent";
+                    myComponentPath = "./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxMainComponent";
                         break;
                     }
                     case "General.MH.Accounting": {

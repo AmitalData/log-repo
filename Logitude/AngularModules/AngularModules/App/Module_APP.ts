@@ -55,76 +55,43 @@ import { AppComponent } from './AppComponent';
           { loadChildren: () => import('../ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest').then(m => m.ModuleShipmentSharedManifest), path: 'ShipmentSharedManifest' },
           { loadChildren: () => import('../ShipmentModules/ShipmentAMANAC/ModuleShipmentAMANAC').then(m => m.ModuleShipmentAMANAC), path: 'ShipmentAMANAC' },
 
+          // Invoice Modules
+          { loadChildren: () => import('../Invoice/Module_INVC').then(m => m.InvoiceModule), path: 'Invoice' },
+          { loadChildren: () => import('../InvoiceModules/APInvoice/ModuleAPInvoice').then(m => m.ModuleAPInvoice), path: 'APInvoice' },
+          { loadChildren: () => import('../InvoiceModules/APPayment/ModuleAPPayment').then(m => m.ModuleAPPayment), path: 'APPayment' },
+          { loadChildren: () => import('../InvoiceModules/ARInvoice/ModuleARInvoice').then(m => m.ModuleARInvoice), path: 'ARInvoice' },
+          { loadChildren: () => import('../InvoiceModules/ARPayment/ModuleARPayment').then(m => m.ModuleARPayment), path: 'ARPayment' },
+          { loadChildren: () => import('../InvoiceModules/Transfer/ModuleTransfer').then(m => m.ModuleTransfer), path: 'Transfer' },
+          { loadChildren: () => import('../InvoiceModules/InvoiceStocks/ModuleInvoiceStocks').then(m => m.ModuleInvoiceStocks), path: 'InvoiceStocks' },
 
-                      //Shipment Modules
+          // CRM
+          { loadChildren: () => import('../CRM/Module_CRM').then(m => m.CRMModule), path: 'CRM' },
+          { loadChildren: () => import('../CRMModules/CRMActivity/ModuleCRMActivity').then(m => m.ModuleCRMActivity), path: 'CRMActivity' },
+          { loadChildren: () => import('../CRMModules/CRMEmployeeGroup/ModuleCRMEmployeeGroup').then(m => m.ModuleCRMEmployeeGroup), path: 'CRMEmployeeGroup' },
+          { loadChildren: () => import('../CRMModules/CRMInboundEmail/ModuleCRMInboundEmail').then(m => m.ModuleCRMInboundEmail), path: 'CRMInboundEmail' },
+          { loadChildren: () => import('../CRMModules/CRMOpportunity/ModuleCRMOpportunity').then(m => m.ModuleCRMOpportunity), path: 'CRMOpportunity' },
+          { loadChildren: () => import('../CRMModules/CRMOthers/ModuleCRMOthers').then(m => m.ModuleCRMOthers), path: 'CRMOthers' },
+          { loadChildren: () => import('../CRMModules/CRMStages/ModuleCRMStages').then(m => m.ModuleCRMStages), path: 'CRMStages' },
+          { loadChildren: () => import('../CRMModules/CRMTickets/ModuleCRMTickets').then(m => m.ModuleCRMTickets), path: 'CRMTickets' },
+          { loadChildren: () => import('../CRMModules/CRMOccasion/ModuleCRMOccasion').then(m => m.ModuleCRMOccasion), path: 'CRMOccasion' },
 
+          // Quote Modules
+          { loadChildren: () => import('../Quote/Module_QUOT').then(m => m.QuoteModule), path: 'Quote' },
+          { loadChildren: () => import('../QuoteModules/QuoteCharges/ModuleQuoteCharges').then(m => m.ModuleQuoteCharges), path: 'QuoteCharges' },
+          { loadChildren: () => import('../QuoteModules/QuoteOthers/ModuleQuoteOthers').then(m => m.ModuleQuoteOthers), path: 'QuoteOthers' },
+          { loadChildren: () => import('../QuoteModules/QuoteTabs/ModuleQuoteTabs').then(m => m.ModuleQuoteTabs), path: 'QuoteTabs' },
+          { loadChildren: () => import('../QuoteModules/QuoteTemplates/ModuleQuoteTemplates').then(m => m.ModuleQuoteTemplates), path: 'QuoteTemplates' },
 
-
-
-
-
-            //{ loadChildren: 'Accounting/Module_ACCT#AccountingModule' },
-            //{ loadChildren: 'Booking/Module_BOOK#BookingModule' },
-
-            //CRM
-            //{ loadChildren: 'CRM/Module_CRM#CRMModule' },
-            //{ loadChildren: 'CRMModules/CRMActivity/ModuleCRMActivity#ModuleCRMActivity' },
-            //{ loadChildren: 'CRMModules/CRMEmployeeGroup/ModuleCRMEmployeeGroup#ModuleCRMEmployeeGroup' },
-            //{ loadChildren: 'CRMModules/CRMInboundEmail/ModuleCRMInboundEmail#ModuleCRMInboundEmail' },
-            //{ loadChildren: 'CRMModules/CRMOpportunity/ModuleCRMOpportunity#ModuleCRMOpportunity' },
-            //{ loadChildren: 'CRMModules/CRMOthers/ModuleCRMOthers#ModuleCRMOthers' },
-            //{ loadChildren: 'CRMModules/CRMStages/ModuleCRMStages#ModuleCRMStages' },
-            //{ loadChildren: 'CRMModules/CRMTickets/ModuleCRMTickets#ModuleCRMTickets' },
-            //{ loadChildren: 'CRMModules/CRMOccasion/ModuleCRMOccasion#ModuleCRMOccasion' },
-            //{ loadChildren: 'Dashboard/Module_DASH#DashboardModule' },
-
-            // Invoice Modules
-            //{ loadChildren: 'Invoice/Module_INVC#InvoiceModule' },
-            //{ loadChildren: 'InvoiceModules/APInvoice/ModuleAPInvoice#ModuleAPInvoice' },
-            //{ loadChildren: 'InvoiceModules/APPayment/ModuleAPPayment#ModuleAPPayment' },
-            //{ loadChildren: 'InvoiceModules/ARInvoice/ModuleARInvoice#ModuleARInvoice' },
-            //{ loadChildren: 'InvoiceModules/ARPayment/ModuleARPayment#ModuleARPayment' },
-            //{ loadChildren: 'InvoiceModules/Transfer/ModuleTransfer#ModuleTransfer' },
-            //{ loadChildren: 'InvoiceModules/InvoiceStocks/ModuleInvoiceStocks#ModuleInvoiceStocks' },
-
-            //Quote Modules
-            //{ loadChildren: 'Quote/Module_QUOT#QuoteModule' },
-            //{ loadChildren: 'QuoteModules/QuoteCharges/ModuleQuoteCharges#ModuleQuoteCharges' },
-            //{ loadChildren: 'QuoteModules/QuoteOthers/ModuleQuoteOthers#ModuleQuoteOthers' },
-            //{ loadChildren: 'QuoteModules/QuoteTabs/ModuleQuoteTabs#ModuleQuoteTabs' },
-            //{ loadChildren: 'QuoteModules/QuoteTemplates/ModuleQuoteTemplates#ModuleQuoteTemplates' },
-
-            //{ loadChildren: 'Report/Module_REPO#ReportModule' },
-            //{ loadChildren: 'SharedLogistics/Module_SHRD#SharedLogisticsModule' },
-
-
-
-            //{ loadChildren: 'Social/Module_SOCL#SocialModule' },
-            //{ loadChildren: 'TimeManagement/Module_TIME#TimeManagementModule' },
-            //{ loadChildren: 'Warehouse/Module_WARH#WarehouseModule' },
-            //{ loadChildren: 'TariffModule/Module_Tariff#Tariff_Module' },
-
-            // Customs Module
-            // { loadChildren: 'Customs/Module_CUST#CustomsModule' }, //this should be only on customs.
-            // { loadChildren: 'CustomsModules/CustomsClaim/ModuleCustomsClaim#ModuleCustomsClaim' },
-            // { loadChildren: 'CustomsModules/CustomsControls/ModuleCustomsControls#ModuleCustomsControls' },
-            // { loadChildren: 'CustomsModules/CustomsClient/ModuleCustomsClient#ModuleCustomsClient' },
-            // { loadChildren: 'CustomsModules/CustomsDeclarationModules/DeclarationTabs/ModuleDeclarationTabs#ModuleDeclarationTabs' },
-            // { loadChildren: 'CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/ModuleDeclarationSupplierInvoice#ModuleDeclarationSupplierInvoice' },
-            // { loadChildren: 'CustomsModules/CustomsDeclarationModules/DeclarationOthers/ModuleDeclarationOthers#ModuleDeclarationOthers' },
-            // { loadChildren: 'CustomsModules/CustomsCourier/ModuleCustomsCourier#ModuleCustomsCourier' },
-            // { loadChildren: 'CustomsModules/CustomsDeclarationCargoSplit/ModuleCustomsDeclarationCargoSplit#ModuleCustomsDeclarationCargoSplit' },
-            // { loadChildren: 'CustomsModules/CustomsMaintenance/ModuleCustomsMaintenance#ModuleCustomsMaintenance' },
-            // { loadChildren: 'CustomsModules/CustomsCollateral/ModuleCustomsCollateral#ModuleCustomsCollateral' },
-            // { loadChildren: 'CustomsModules/CustomsPhysicalCheck/ModulePhysicalCheck#ModulePhysicalCheck' },
-            // { loadChildren: 'CustomsModules/CustomsProceduralFault/ModuleProceduralFault#ModuleProceduralFault' },
-            // { loadChildren: 'CustomsModules/CustomsVehicle/ModuleCustomsVehicle#ModuleCustomsVehicle' },
-            // { loadChildren: 'CustomsModules/CustomsPaymentOrder/ModuleCustomsPaymentOrder#ModuleCustomsPaymentOrder' },
-            // { loadChildren: 'CustomsModules/CustomsListTemplates/ModuleCustomsListTemplates#ModuleCustomsListTemplates' },
-            // { loadChildren: 'CustomsModules/CustomsDocuments/ModuleCustomsDocuments#ModuleCustomsDocuments' },
-            // { loadChildren: 'CustomsModules/CustomsRequests/ModuleCustomsRequests#ModuleCustomsRequests' },
-            // { loadChildren: 'CustomsModules/CustomsGeneralRequests/ModuleCustomsGeneralRequests#ModuleCustomsGeneralRequests' },
-            // { loadChildren: 'CustomsModules/CustomsVendor/ModuleCustomsVendor#ModuleCustomsVendor'},
+          // Others
+          { loadChildren: () => import('../Accounting/Module_ACCT').then(m => m.AccountingModule), path: 'Accounting' },
+          { loadChildren: () => import('../Booking/Module_BOOK').then(m => m.BookingModule), path: 'Booking' },
+          { loadChildren: () => import('../Dashboard/Module_DASH').then(m => m.DashboardModule), path: 'Dashboard' },
+          { loadChildren: () => import('../Report/Module_REPO').then(m => m.ReportModule), path: 'Report' },
+          { loadChildren: () => import('../SharedLogistics/Module_SHRD').then(m => m.SharedLogisticsModule), path: 'SharedLogistics' },
+          { loadChildren: () => import('../Social/Module_SOCL').then(m => m.SocialModule), path: 'Social' },
+          { loadChildren: () => import('../TariffModule/Module_Tariff').then(m => m.Tariff_Module), path: 'TariffModule' },
+          { loadChildren: () => import('../TimeManagement/Module_TIME').then(m => m.TimeManagementModule), path: 'TimeManagement' },
+          { loadChildren: () => import('../Warehouse/Module_WARH').then(m => m.WarehouseModule), path: 'Warehouse' },           
 
         ])
     ],

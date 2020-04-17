@@ -1,5 +1,4 @@
 import {Component, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
-import {Response} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LogLabelComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogLabelComponent';

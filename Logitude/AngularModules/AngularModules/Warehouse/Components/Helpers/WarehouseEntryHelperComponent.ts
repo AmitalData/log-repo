@@ -4,7 +4,6 @@ import { WarehouseEntryPM } from '../../EntityPMs/WarehouseEntryPM';
 import { Component } from '@angular/core';
 
 @Component({
-    moduleId: module.id,
     templateUrl: "WarehouseEntryHelperComponent.html",
 })
 

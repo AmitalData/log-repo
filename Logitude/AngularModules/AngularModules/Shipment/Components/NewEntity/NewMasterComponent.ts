@@ -86,7 +86,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
     }
 
-    private SourceEntityPM: ShipmentPM;
+    SourceEntityPM: ShipmentPM;
     public IsBuildFromQuote: boolean = false;
     public IsCopyFromShipment: boolean = false;
     public IsMasterCreatedFromHouse: boolean = false;

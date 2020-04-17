@@ -5,7 +5,6 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { SearchTextBox } from '../../../../Controls/SearchTextBox';
 import { IconButton } from '../../../../Controls/IconButton';
 import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import { Http, Response } from '@angular/http';
 import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -148,7 +147,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                                     windowArgs.AdditionalData = AdditionalResult.Result
                                     newWindow.WindowArgs = windowArgs;
                                     //newWindow.Add(control); 
-                                    newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
+                                  newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovePaymentComponent');
                                     newWindow.WindowClosed.subscribe(($event: any) => {
                                         this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                                         //if ($event == "MyShipmentAdded") {
@@ -785,10 +784,10 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //newWindow.Add(control);
         if (SessionLocator.PrivateLableSettings) {
             newWindow.Height = 376;
-            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
+          newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
         }
         else {
-            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
+          newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
         }
         newWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "MyShipmentAdded") {
@@ -831,7 +830,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control);
 
-        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DigitalSignDocTypeComponent');
+      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DigitalSignDocTypeComponent');
 
         newWindow.WindowClosed.subscribe(($event: any) => {
             //if ($event == "MyShipmentAdded") {
@@ -861,7 +860,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //windowArgs.SourceEntity = myResult.Result;//this.rowData;
         //windowArgs.HasSharedDocs = this.HasSharedDocs;
         newWindow.WindowArgs = windowArgs;
-        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/MultiArchiveShipmentsComponent');
+      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/MultiArchiveShipmentsComponent');
         newWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
         });

@@ -9,7 +9,6 @@ import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 
 @Component({
     selector: 'NewTariffProductsComponent',
-    moduleId: module.id,
     templateUrl: './NewTariffProductsComponent.html',
 })
 

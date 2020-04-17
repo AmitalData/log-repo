@@ -17,7 +17,6 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMService';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './ManageExternalReconciliationTabComponent.html'
 })
 

@@ -245,7 +245,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
                 windowArgs.AdditionalData = entity;
                 newWindow.WindowArgs = windowArgs;
                 //newWindow.Add(control); 
-                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
+              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
                 newWindow.WindowClosed.subscribe(($event: any) => {
                     if ($event == "Denied") {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Deny Declaration");
@@ -374,7 +374,7 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control); 
-        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
+      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
 
     }
 

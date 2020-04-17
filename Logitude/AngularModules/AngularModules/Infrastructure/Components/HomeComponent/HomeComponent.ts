@@ -1711,7 +1711,7 @@ export class HomeComponent implements OnDestroy{
         //newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control);
 
-        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DigitalSignDocTypeComponent');
+      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DigitalSignDocTypeComponent');
 
         newWindow.WindowClosed.subscribe(($event: any) => {
             //if ($event == "MyShipmentAdded") {

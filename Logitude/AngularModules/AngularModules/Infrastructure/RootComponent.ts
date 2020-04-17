@@ -217,7 +217,7 @@ export class RootComponent implements OnInit {
 
         this.ClearLocation();
 
-        SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.location)
+      SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.location)
             .then(cmpRef => {
                 cmpRef.instance.RunComponent();
 
@@ -237,7 +237,7 @@ export class RootComponent implements OnInit {
 
         this.ClearLocation();
 
-        SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/ECommercePaymentRequestMobileComponent", this.location)
+      SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/ECommercePaymentRequestMobileComponent", this.location)
             .then(cmpRef => {
                 cmpRef.instance.RunComponent();
 
@@ -256,7 +256,7 @@ export class RootComponent implements OnInit {
 
     VieUserIdNumberMobileComponent() {
         this.ClearLocation();
-        SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.location)
+      SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.location)
             .then(cmpRef => {
                 cmpRef.instance.RunComponent(); 
             });
