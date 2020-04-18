@@ -953,7 +953,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
         this.firstVersion.TariffAllInCharges.forEach((item: TariffVersionAllInChargePM) => {
             if (AppTool.IsNullOrEmpty(myText)) {
-                //myText = item
+                myText = item.ChargesTypeCode;
+            }
+
+            else {
+                myText = myText + ", " + item.ChargesTypeCode;
             }
         });
 
