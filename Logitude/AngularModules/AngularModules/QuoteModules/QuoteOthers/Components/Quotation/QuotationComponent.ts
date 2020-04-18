@@ -50,7 +50,7 @@ import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadMana
 export class QuotationComponent extends BaseComponent implements OnInit {
     IsShowDownloadTemplateButton: boolean = false;
     public IsDataReady: boolean = false;
-    private QuotePM: QuotePM;
+    QuotePM: QuotePM;
     quoteTemplatePMService: QuoteTemplatePMService;
     quoteTemplateSettingPMService: QuoteTemplateSettingPMService;
     quoteTemplateExtendedPMService: QuoteTemplateExtendedPMService;

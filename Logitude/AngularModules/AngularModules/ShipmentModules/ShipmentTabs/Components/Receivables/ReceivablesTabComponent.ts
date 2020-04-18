@@ -1398,6 +1398,8 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
     }
 }
 export class ShipmentReceivableItem extends BaseComponent {
+  public IsMinFromQuoteIconVisible: boolean = false; // fix angular 9
+
     public EntityPM: ShipmentReceivablePM;
     public ShipmentPM: ShipmentPM;
     public ObjectTableName: string = "ShipmentReceivable";

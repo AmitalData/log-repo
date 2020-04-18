@@ -35,6 +35,9 @@ declare var window: any;
 })
 
 export class TicketDetailsTabComponent extends BaseComponent implements AfterViewInit {
+  public Filters: any;
+  public QuickSearchItems: any;
+
     public EntityPM: TicketPM;
     public LabelColumnWidth: number = 153;
     public ControlColumnWidth: number = 180;

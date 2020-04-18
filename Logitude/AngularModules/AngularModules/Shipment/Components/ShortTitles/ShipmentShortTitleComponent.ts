@@ -9,6 +9,8 @@ import { AppTool } from '../../../Infrastructure/Tools';
 })
 
 export class ShipmentShortTitleComponent {
+  public CustomerRankName: string = null;
+
     public EntityPM: ShipmentPM;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;

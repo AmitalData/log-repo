@@ -20,6 +20,7 @@ import {EventPermissiosViewModel} from './ViewModel/EventPermissiosViewModel';
     providers: [EventTypeExtendedPMService],
 })
 export class SharedLogisticsEventPermissiosComponent implements OnInit {
+  public EventPermissiosSelectedViewModel: any;
 
 
      myTenantZeroList: EventTypePM[];

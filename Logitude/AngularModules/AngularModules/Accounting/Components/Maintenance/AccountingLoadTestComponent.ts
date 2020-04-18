@@ -30,6 +30,8 @@ import { JournalOpService } from '../../Services/Others/JournalOpService';
 })
 
 export class AccountingLoadTestComponent extends BaseComponent implements AfterViewInit {
+  public SelectedIndexEveryMinuteItem: any;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 
     public DataContext: AccountingLoadTestComponent = this;

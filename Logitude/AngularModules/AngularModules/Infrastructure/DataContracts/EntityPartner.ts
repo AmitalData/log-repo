@@ -1,4 +1,4 @@
-﻿
+
 import {Injectable} from '@angular/core';
 
 @Injectable()
@@ -6,11 +6,11 @@ import {Injectable} from '@angular/core';
 export class EntityPartner {
     PartnerType: string;
     PartnerId: string;
-    IsUser: boolean;
+  IsUser: boolean;
     PartnerContactName: string;
     PartnerContactMail: string;
     PartnerTypeCode: string;
-    constructor(partnerType: string, partnerId: string, isUser: boolean) {
+  constructor(partnerType: string, partnerId: string, isUser: boolean) {
         this.PartnerType = partnerType;
         this.PartnerId = partnerId;
 

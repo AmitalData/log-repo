@@ -31,8 +31,10 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 })
 
 export class BIReportPreviewComponent extends BaseComponent implements OnInit {
-    @ViewChild('agGrid') agGrid: AgGridNg2;
-    public ComponentRef: ComponentRef<BIReportPreviewComponent>;
+
+  @ViewChild('agGrid', { static: false }) agGrid: AgGridNg2;
+
+  public ComponentRef: ComponentRef<BIReportPreviewComponent>;
     public EntityPM: BIReportPM = null;
     public EntityId: string;
     public DWQueryId: string;

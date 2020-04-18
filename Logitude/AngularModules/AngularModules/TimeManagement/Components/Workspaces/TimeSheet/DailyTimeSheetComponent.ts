@@ -24,6 +24,8 @@ import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelpe
 })
 
 export class DailyTimeSheetComponent extends BaseComponent {
+  public LeftCenter: any;
+  public itemLocationCode: any;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 

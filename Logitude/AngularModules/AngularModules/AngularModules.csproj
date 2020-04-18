@@ -542,6 +542,9 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportLinePMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
+    <TypeScriptCompile Include="App\DynamicLoader\DynamicLoader.ts" />
+    <TypeScriptCompile Include="App\DynamicLoader\LazyWidgets.ts" />
+    <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsTokens.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerOccasionsTabComponent.ts" />
@@ -7228,7 +7231,6 @@
     <TypeScriptCompile Include="Infrastructure\Utilities\DateAgeHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\DateTimeZone.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\DecimalFormatter.ts" />
-    <TypeScriptCompile Include="Infrastructure\Utilities\DynamicLoader.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\events\ApiFiltersChangeEvent.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\events\ApiFiltersEvent1.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\events\ApiFiltersEvent.ts" />

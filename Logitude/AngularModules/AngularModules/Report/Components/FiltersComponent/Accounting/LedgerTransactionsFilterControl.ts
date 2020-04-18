@@ -16,6 +16,8 @@ import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 })
 
 export class LedgerTransactionsFilterControl extends BaseComponent implements OnInit {
+  public CurrencyFilters: any;
+
     ObjectTableName: string = "LedgerTransaction";
     public RunReportTitle: string;
     public DataContext = this;

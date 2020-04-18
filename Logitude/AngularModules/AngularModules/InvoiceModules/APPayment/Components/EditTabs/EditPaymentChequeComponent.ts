@@ -19,6 +19,12 @@ import { PaymentChequePM } from '../../../../Accounting/EntityPMs/PaymentChequeP
 
 
 export class EditPaymentChequeComponent extends BaseComponent{
+  public filterAgrs: any;
+  public BankName: any;
+  public LocalAmountFieldLabel: any;
+  public Account: any;
+  public BankAccount: any;
+  public Currency: any;
 
 
     public EntityPM: PaymentChequePM = null;

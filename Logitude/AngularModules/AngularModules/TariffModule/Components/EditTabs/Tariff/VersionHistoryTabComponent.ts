@@ -30,6 +30,11 @@ import { TariffLinesContainersPricePM } from '../../../EntityPMs/TariffLinesCont
 })
 
 export class VersionHistoryTabComponent implements OnDestroy {
+  public IsDraftVersion: any;
+  public EditTariffButtonClicked(item: any) { }
+  public DeleteTariffButtonClicked(item: any) { }
+
+
     public EntityPM: TariffPM;
     public VersionPM: TariffVersionPM;
     public VersionLinesSource: ObservableCollection;

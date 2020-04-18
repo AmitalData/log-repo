@@ -21,6 +21,9 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 
 export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
+  public DeductionType: any;
+  public DeductionFileType: any;
+  public AssessingOffice: any;
 
     public  ObjectTableName:string= "GLAccount";
     public DataContext: any = this;

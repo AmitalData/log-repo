@@ -1,4 +1,4 @@
-﻿
+
 
 <style>
   .TemplateSection {
@@ -92,8 +92,8 @@
                 <tr style="height:15px;">
                     <td style="vertical-align:top">
                         <div *ngIf="ShowAreaButton">
-                            <button *ngIf="IsShowEditButon" class="Button" style="float:right;width:55px;" (click)="EditShipment()"><span>Edit</span></button>
-                            <button [disabled]="!IsEnableCreateMasterButton || IsDisableEdit" *ngIf="!IsShowEditButon" class="GreenButton" style="float:right;width:55px" (click)="OpenSharedManifestAdditionalComponent()"><span>Create</span></button>
+                            <button *ngIf="IsShowEditButon" class="Button" style="float:right;width:55px;" (click)="EditShipment(null)"><span>Edit</span></button>
+                            <button [disabled]="!IsEnableCreateMasterButton || IsDisableEdit" *ngIf="!IsShowEditButon" class="GreenButton" style="float:right;width:55px" (click)="OpenSharedManifestAdditionalComponent(null)"><span>Create</span></button>
                         </div>
 
 

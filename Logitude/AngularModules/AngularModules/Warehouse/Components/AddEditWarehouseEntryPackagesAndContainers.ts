@@ -25,6 +25,9 @@ import { PackageTypeListService } from '../../Common/Services/StandardLists/Pack
 })
 
 export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
+  public IsDependencyFilter2Value: any;
+  public WarehouseEntryPackage: any;
+
     private _entityResourceService: EntityResourceService = new EntityResourceService();
    
     public ValidationErrorsList: string[];

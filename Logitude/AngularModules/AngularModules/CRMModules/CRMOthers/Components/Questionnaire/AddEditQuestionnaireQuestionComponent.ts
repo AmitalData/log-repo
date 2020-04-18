@@ -23,6 +23,8 @@ import {CustomPickListListService} from '../../../../Infrastructure/Services/Sta
     templateUrl: './AddEditQuestionnaireQuestionComponent.html',
 })
 export class AddEditQuestionnaireQuestionComponent {
+  public IsAddOther: any;
+
     private _customPickListListService = new CustomPickListListService();
     public LabelColumnWidth: number = 170;
     public ControlColumnWidth: number = 220;

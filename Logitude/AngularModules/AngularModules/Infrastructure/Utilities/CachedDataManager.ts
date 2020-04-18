@@ -28,7 +28,7 @@ export class CachedDataManager {
         if (CachedDataManager.TablesLoadQueue[objectTableName]) {
 
             // if already exists in the load stack return the same obs
-            return CachedDataManager.TablesLoadQueue[objectTableName].share();
+            return CachedDataManager.TablesLoadQueue[objectTableName].pipe(share());
         }
         var observable: any;
         console.time("Unzipping ClosedTable Data from local cache for: " + objectTableName);
@@ -74,7 +74,7 @@ export class CachedDataManager {
             observer.next(0);
           }
 
-        }).share();
+        }).pipe(share());
       } else {
         console.log("couldn't find closed table data for " + objectTableName + ".zip file in the cache!");
         observable = defer(() => {

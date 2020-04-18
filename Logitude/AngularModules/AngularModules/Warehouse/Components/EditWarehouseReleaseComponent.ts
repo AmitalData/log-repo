@@ -24,6 +24,9 @@ import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirectiv
 
 })
 export class EditWarehouseReleaseComponent extends BaseComponent implements OnInit {
+  public ExpectedReleaseDate: any;
+  public SpecialInstruction: any;
+  public Notes: any;
 
     DataContext: any = this;
     public ValidationErrorsList: string[];
@@ -255,7 +258,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
 
 
-    SetActualDateClicked(fieldName: string) {
+    SetActualDateClicked() {
         this.ActualReleaseDate = DateTool.GetDateParts(this.warehouseReleasePM.ExpectedReleaseDate).DateObject;
     }
 

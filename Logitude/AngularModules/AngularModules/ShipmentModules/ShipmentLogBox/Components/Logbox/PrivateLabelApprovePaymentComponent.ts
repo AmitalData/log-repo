@@ -39,6 +39,8 @@ import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadMana
 })
 
 export class PrivateLabelApprovePaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
+  public SearchText: string = null;
+  public DeleteDocumentClicked(item: any) { }
 
     DataContext: PrivateLabelApprovePaymentComponent = this;
     private messageWindow: MessageWindow = new MessageWindow();

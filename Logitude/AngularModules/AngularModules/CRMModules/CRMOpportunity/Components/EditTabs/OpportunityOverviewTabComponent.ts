@@ -48,6 +48,9 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 })
 
 export class OpportunityOverviewTabComponent extends BaseComponent implements OnInit {
+  public setToggleButtonMenu() { }
+  public setToggleButtonMenuTemp() { }
+
     public ObjectTableName: string = "Opportunity";
     public DataContext: OpportunityOverviewTabComponent = this;
     public EntityPM: OpportunityPM;

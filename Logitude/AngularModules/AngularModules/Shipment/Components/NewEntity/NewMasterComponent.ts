@@ -36,6 +36,8 @@ import { EntityListService } from '../../../Infrastructure/Services/EntityListSe
 })
 
 export class NewMasterComponent extends BaseComponent implements OnInit {
+  public ShipmentTypeName: string = null;
+
     public TenantPM: TenantPM;
     public EntityPM: ShipmentPM;
     public DataContext = this;

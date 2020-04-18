@@ -43,6 +43,8 @@ import { reject } from 'q';
 })
 
 export class NewGeneralARInvoiceComponent extends BaseComponent {
+  public BillToDependencyValue1IsList: any;
+
     public EntityPM: ARInvoicePM;
     public ObjectTableName: string = "ARInvoice";
     public DataContext = this;

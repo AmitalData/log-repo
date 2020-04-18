@@ -16,6 +16,9 @@ import {AppTool} from '../../../Infrastructure/Tools';
 })
 
 export class SATInterfaceSettingsComponent {
+  public ActivationDate: any;
+
+
     private _entityResourceService: EntityResourceService;
     private sATInterfaceSettingPMService: SATInterfaceSettingPMService;
     public IsResourcesReady: boolean = true;

@@ -16,6 +16,11 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 })
 
 export class SendFSRComponent {
+  public SendingCount: number = 0;
+  public StockRemainingBefore: number = 0;
+  public StockRemainingAfter: number = 0;
+  public StockResultIsVisible: boolean = false;
+
     private entityPM: ShipmentPM;
     private Tenant: number;
     private tenantZeroAirlineField: string;

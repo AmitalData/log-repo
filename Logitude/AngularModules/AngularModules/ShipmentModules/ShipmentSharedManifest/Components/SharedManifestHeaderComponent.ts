@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ManifestSL } from '../../../Common/DataContracts/ManifestSL';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import { AgentSharedManifestList } from '../../../Common/EntityLists/AgentSharedManifestList';
@@ -39,7 +39,7 @@ export class SharedManifestHeader {
     ManifestSL: ManifestSL;
     ShipmentLevelCode: string = "";
     MAWBOBLDate: Date;
-
+  MasterDate: Date; // Added by Ayman for Angular 9
     constructor(entityPM: AgentSharedManifestPM, entityList: AgentSharedManifestList) {
 
         if (entityPM) {

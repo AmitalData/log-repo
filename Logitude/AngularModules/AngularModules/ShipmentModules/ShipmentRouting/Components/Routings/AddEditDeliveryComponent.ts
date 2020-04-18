@@ -27,6 +27,8 @@ import { ShipmentDeliveryValidator } from '../../../../Shipment/Validators/Shipm
 })
 
 export class AddEditDeliveryComponent implements OnDestroy {
+  public SelectedTab: any;
+
     public EntityPM: ShipmentDeliveryPM;
     myCardListService: CardListService;
     public ShipmentPM: ShipmentPM;

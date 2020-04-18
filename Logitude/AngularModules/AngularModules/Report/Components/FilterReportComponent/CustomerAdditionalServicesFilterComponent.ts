@@ -18,6 +18,8 @@ import {CodeNameClass} from './CodeNameClass';
 })
 
 export class CustomerAdditionalServicesFilterComponent extends BaseComponent implements OnInit {
+  public SelectedITemUsers: any;
+
     public ReportsPreview: ReportsPreviewComponent;
     reportFliter: ReportFliter;
     public FilterdAdditionalService: any;

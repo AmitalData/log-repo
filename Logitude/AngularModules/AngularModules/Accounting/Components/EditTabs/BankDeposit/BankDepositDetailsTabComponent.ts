@@ -36,6 +36,8 @@ import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCo
 })
 
 export class BankDepositDetailsTabComponent extends BaseComponent {
+  public showLocal: any;
+
     public EntityPM: BankDepositPM = null;
     public ObjectTableName = "BankDeposit";
     public DataContext = this;

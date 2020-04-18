@@ -40,7 +40,7 @@ export class InfrastructureDomainService {
                 myResponse.Result = myResult;
                 return myResponse;
             }),catchError(ServiceHelper.HandleServiceError));
-        }); //.share();
+        });
     }
 
     GetMainMenuFollowups(objectTableName: string) {

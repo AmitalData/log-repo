@@ -21,6 +21,7 @@ import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
 })
 
 export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
+  public CarrierDependencyProperty1: any;
 
     public EntityPM: WarehouseEntryPM;
     public ObjectTableName: string = null;

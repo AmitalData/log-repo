@@ -20,6 +20,8 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 })
 
 export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit {
+  public IsNewEntityCall: boolean = false;
+
     quoteTemplateSettingPMService: QuoteTemplateSettingPMService;
     public DataContext: QuoteTemplateGeneralSetting = this;
     QuoteTemplatePM: QuoteTemplatePM;

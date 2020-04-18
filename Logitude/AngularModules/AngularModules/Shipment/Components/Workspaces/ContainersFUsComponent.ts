@@ -16,6 +16,9 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 })
 
 export class ContainersFUsComponent implements OnInit {
+
+  onUserQueriesBackComplete(arg: any) { }
+
     private myDomainService: ContainersFUDomainService;
     @Output() ReloadUserQueries = new EventEmitter();
     public IsResourcesReady: boolean = false;

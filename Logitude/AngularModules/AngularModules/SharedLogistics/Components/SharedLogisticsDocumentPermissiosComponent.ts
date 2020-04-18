@@ -19,7 +19,7 @@ import {DocumentPermissiosViewModel} from './ViewModel/DocumentPermissiosViewMod
     providers: [DocumentTypePMExtendedService],
 })
 export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
-
+  public DocumentPermissiosSelectedViewModel: any;
 
     myTenantZeroList: DocumentTypePM[];
     myTenantList: DocumentTypePM[];

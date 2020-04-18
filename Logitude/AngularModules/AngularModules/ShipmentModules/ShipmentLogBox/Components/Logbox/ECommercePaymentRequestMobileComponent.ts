@@ -42,6 +42,8 @@ import { DatePipe } from '@angular/common';
 })
 
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
+  public DimDenyButton: boolean = false;
+  public DimApproveButton: boolean = false;
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();
@@ -77,7 +79,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get IsAccepted() { return this.isAccepted }
     public set IsAccepted(newValue: boolean) { this.isAccepted = newValue; }
 
-    private ScreenWidth: number;
+    ScreenWidth: number;
     private MaxScreenWidth: number = 600;
 
     IsAcceptedChanged($event) {

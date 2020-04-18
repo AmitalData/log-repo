@@ -42,6 +42,8 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 })
 
 export class LogBoxApprovePaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
+  public SearchText: string = null;
+  public DeleteDocumentClicked(item: any) { }
 
     DataContext: LogBoxApprovePaymentComponent = this;
     private myCommonDomainService: CommonDomainService;

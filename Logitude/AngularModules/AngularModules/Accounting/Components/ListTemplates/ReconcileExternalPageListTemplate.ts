@@ -19,6 +19,8 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 })
 
 export class ReconcileExternalPageListTemplate {
+  public line: any;
+
 
     public rowData: any;
     public fieldName: any;

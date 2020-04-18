@@ -17,6 +17,8 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 })
 
 export class RevaluationDetailsComponent extends BaseComponent {
+  public IsJournalLinesVisibile: boolean = false;
+
 
     DataContext: any = this;
     ObjectTableName: string = "Revaluation";

@@ -12,6 +12,9 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 })
 
 export class AddEditTariffLineComponent  {
+  public StartDate: any;
+
+
     public TariffType: string;
     public EntityPM: TariffLinePM;
     public DataContext: any;

@@ -29,6 +29,8 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 export class NewPaymentChequeComponent extends BaseComponent
 {
+  public Currency: any;
+
     public DataContext = this;
     public ObjectTableName: string = "PaymentCheque";
     entityPM: PaymentChequePM = new PaymentChequePM();

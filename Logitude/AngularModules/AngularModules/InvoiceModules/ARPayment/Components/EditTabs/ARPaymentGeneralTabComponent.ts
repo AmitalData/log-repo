@@ -10,6 +10,8 @@ import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
     templateUrl: './ARPaymentGeneralTabComponent.html',
 })
 export class ARPaymentGeneralTabComponent extends BaseComponent implements OnInit {
+  public MetodoPagoCode: any;
+
     public EntityPM: ARPaymentPM;
     public ObjectTableName: string = "ARPayment";
     // public TenantPM: TenantPM;

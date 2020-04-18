@@ -14,6 +14,8 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 })
 
 export class CustomerStatusReportFilterComponent extends BaseComponent implements OnInit {
+  public IsCreditLimitSet: boolean = false;
+
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();

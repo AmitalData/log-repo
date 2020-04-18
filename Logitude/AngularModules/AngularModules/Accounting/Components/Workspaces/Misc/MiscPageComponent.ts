@@ -14,6 +14,8 @@ declare var window: any;
 })
 
 export class MiscPageComponent implements AfterViewInit {
+  public AllBankDepositsVisibility: boolean = false;
+  public ViewDepositQuery(arg: any) { }
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     @Output() ReloadUserQueries = new EventEmitter();

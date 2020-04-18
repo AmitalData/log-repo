@@ -20,6 +20,7 @@ import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 })
 
 export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseComponent implements OnInit {
+  public SelectedWarehouseEntryPackage: any;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 

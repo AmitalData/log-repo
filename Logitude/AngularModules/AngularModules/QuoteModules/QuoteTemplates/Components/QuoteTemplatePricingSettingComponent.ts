@@ -64,7 +64,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     ShowTotalPerContinerLink: boolean = false;
-    private ShowVATDetails :boolean = false;
+    ShowVATDetails :boolean = false;
 
 
     constructor() {

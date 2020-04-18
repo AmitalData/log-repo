@@ -13,6 +13,8 @@ import {CardList} from '../../../Common/EntityLists/CardList';
 })
 
 export class QuoteShortTitleComponent {
+  public CustomerRankName: any;
+
     public EntityPM: QuotePM;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {

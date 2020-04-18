@@ -25,6 +25,8 @@ import {TaxReportExtendedPMService} from '../../../Services/ExtendedPMs/TaxRepor
 })
 
 export class TaxReportDetailsTabComponent extends BaseComponent implements OnInit {
+  public Export2ExcelClicked() { }
+
 
     public EntityPM: TaxReportPM = null;
     public ObjectTableName = "TaxReport";

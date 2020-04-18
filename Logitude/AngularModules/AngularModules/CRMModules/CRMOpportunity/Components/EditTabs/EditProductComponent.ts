@@ -20,6 +20,9 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 })
 
 export class EditProductComponent extends BaseComponent {
+  public setToggleButtonMenu() { }
+  public setToggleButtonMenuTemp() { }
+
     private myCurrencyCode: string = "";
     public ObjectTableName = "OpportunityProduct";
     public EntityPM: ProductData = null;

@@ -22,6 +22,8 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 })
 
 export class TransferSettingsComponent extends BaseComponent implements OnDestroy {
+  public IsAccountingSystemNone: any;
+
     public EntityPM: AccountingSettingPM;
     public DataContext = this;
     public ObjectTableName: string = "AccountingSetting";

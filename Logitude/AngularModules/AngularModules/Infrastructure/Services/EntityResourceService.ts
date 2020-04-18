@@ -50,7 +50,7 @@ export class EntityResourceService {
       else {
         if (EntityResourceService.TablesLoadQueue[objectTableName]) {
           // if already exists in the load stack return the same obs
-          return EntityResourceService.TablesLoadQueue[objectTableName].share();
+          return EntityResourceService.TablesLoadQueue[objectTableName].pipe(share());
         }
 
         var fieldsKey = objectTableName + "_ObjectFields.zip";
@@ -89,7 +89,7 @@ export class EntityResourceService {
           //            return [];
           //        }
           //    });
-          //}).share();
+          //}).pipe(share());
 
           var observable = this.GetResourcesFile(objectTableName, tenant).pipe(flatMap((response: any) => {
             var filejson = response;
@@ -97,11 +97,11 @@ export class EntityResourceService {
               if (EntityResourceService.ServerTablesUnzipQueue[objectTableName]) {
 
                 // if already exists in the load stack return the same obs
-                return EntityResourceService.ServerTablesUnzipQueue[objectTableName].share();
+                return EntityResourceService.ServerTablesUnzipQueue[objectTableName].pipe(share());
               }
 
               var fileData = EntityResourceService.base64ToBufferConvertor(filejson);
-              var obs = this.UnZipFileAndAddToStorageUsingWebWorker(fileData, objectTableName).share();
+              var obs = this.UnZipFileAndAddToStorageUsingWebWorker(fileData, objectTableName).pipe(share());
 
               EntityResourceService.ServerTablesUnzipQueue[objectTableName] = obs;
               return obs;
@@ -343,7 +343,7 @@ export class EntityResourceService {
       }
 
 
-    }).share();//.publish().refCount();
+    }).pipe(share()); //.publish().refCount();
 
 
   }
@@ -528,7 +528,7 @@ export class EntityResourceService {
       }
       );
 
-    }).share();//.publish().refCount()
+    }).pipe(share()); //.publish().refCount()
 
   }
 

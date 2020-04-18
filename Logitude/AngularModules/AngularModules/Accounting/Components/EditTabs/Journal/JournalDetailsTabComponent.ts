@@ -37,6 +37,8 @@ import {GLAccountListService} from '../../../Services/StandardLists/GLAccountLis
 })
 
 export class JournalDetailsTabComponent extends BaseComponent implements OnInit {
+  public ActionId: any;
+
     public EntityPM: JournalPM = null;
     public ObjectTableName = "Journal";
     public DataContext = this;

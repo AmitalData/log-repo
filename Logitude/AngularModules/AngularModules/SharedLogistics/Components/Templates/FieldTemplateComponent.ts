@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 
 @Component({
@@ -7,6 +7,8 @@ import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 })
 
 export class FieldTemplateComponent {
+  public StringToColorPipe: any;
+
     public Entity: any = null;
     public FieldName: string = null;
     public FieldValue: any = null;
