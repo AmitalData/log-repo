@@ -47,7 +47,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
     private CurrentSession = SessionLocator.SelectedSession;
     public IsFirstDraft = false;
     public SelectedVersionNumber: number;    
-
+    public AllInCharges: string;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -96,9 +96,28 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             this.LoadTariffLines("currentVersion");
         }
 
+        this.BuildAllInChargesText();
         this.GetTariffSettings();
         this.SetUIProperties();
         this.SetContainersLabelsAndVisibility()
+    }
+
+    private BuildAllInChargesText() {
+        var allInCharges: string = null;
+
+        if (this.CurrentVersion != null) {
+            this.CurrentVersion.TariffAllInCharges.forEach((item: TariffVersionAllInChargePM) => {
+                if (AppTool.IsNullOrEmpty(allInCharges)) {
+                    allInCharges = item.ChargesTypeCode;
+                }
+
+                else {
+                    allInCharges = allInCharges + ", " + item.ChargesTypeCode;
+                }
+            });
+
+        }
+        this.AllInCharges = allInCharges;
     }
 
     private GetTariffSettings() {
@@ -752,7 +771,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditAllInChargesComponent");
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
-
+                this.BuildAllInChargesText();
             }
         });
     }

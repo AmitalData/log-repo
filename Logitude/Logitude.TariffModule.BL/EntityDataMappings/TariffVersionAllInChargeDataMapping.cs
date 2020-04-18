@@ -10,6 +10,8 @@ using Logitude.Server.Tools;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.EntityPMs; 
 using Logitude.TariffModule.Data;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
@@ -30,10 +32,13 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 
         public void CustomPOCOToPM(TariffVersionAllInChargePM entityPM, TariffVersionAllInCharge entityPOCO)
         {
-            //throw new NotImplementedException();
+            ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(entityPOCO.Tenant);
+            ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(entityPOCO.ChargesTypeId, entityPOCO.Tenant);
+            if(chargesType != null)
+            {
+                entityPM.ChargesTypeCode = chargesType.Code;
+            }
         }
    }
-
-
 }
    

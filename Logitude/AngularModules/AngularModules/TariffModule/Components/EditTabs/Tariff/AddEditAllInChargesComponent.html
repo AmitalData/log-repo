@@ -52,7 +52,8 @@
                                             [DataContext]="item"
                                             [LookUpTableName]="'ChargesType'"
                                             [HideLastColumn]="true"                                            
-                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                            [QueryFilterItems]="ChargeTypesQueryFilters"
+                                            (SelectedItemChanged)="item.ChargesType = $event">
                                     </LogLov>                                   
                                 </td>
 
