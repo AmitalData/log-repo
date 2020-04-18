@@ -168,12 +168,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Logitude\CommunicationWorkerRole\CommunicationWorkerRole.csproj">
-      <Project>{ba2a42b8-a348-4d44-984c-1d718cb20b6f}</Project>
-      <Name>CommunicationWorkerRole</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
@@ -184,6 +178,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Logitude\CommunicationWorkerRole\CommunicationWorkerRole.csproj">
+      <Project>{ba2a42b8-a348-4d44-984c-1d718cb20b6f}</Project>
+      <Name>CommunicationWorkerRole</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
