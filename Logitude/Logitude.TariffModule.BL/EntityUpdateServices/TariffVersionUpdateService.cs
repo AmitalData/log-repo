@@ -17,14 +17,18 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPM.CreatedByUserId = entityParentPM.CreatedByUserId;
+                entityPM.TariffId = entityParentPM.Id;
+                entityPM.SearchFields = entityPM.Version.ToString();
+
                 if (entityParentPM.TypeCode == "AFC" || entityParentPM.TypeCode == "OLC")
                 {
                     entityPM.InitialEnddate = entityPM.ExpirationDate;
                 }
-                //entityPM.ExpirationDate = null;
+                
                 if (entityParentPM != null)
                 {
-                    entityParentPM.LastVersion = entityPM.Version;
+                    entityParentPM.LastVersion = entityPM.Version;                
                 }
             }
         }

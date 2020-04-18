@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TariffVersionUpdateClass
    {  		
-		public const string HashString = "15f3c527be37c58c91c63661fea1a7e1";
+		public const string HashString = "8bfb306f0c923ce296eed8105f53fbe6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "TariffVersion",
 			      				    IsNew =  true,
 			      				    DBTableName =  "TariffVersions",
-			      				    OldDBTableName =  "Sprints",
 			      				    ObjectTableSingular =  "TariffVersion",
 			      				    ObjectTablePlural =  "TariffVersions",
 			      				    HasCustomFilter =  false,
@@ -118,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
 			      				    DefaultText =  "Tariff Version",
-			      				    Code =  "7bbf",
+			      				    Code =  "c960",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "TariffModule",
@@ -144,12 +143,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TariffId",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -204,13 +202,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -262,7 +259,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -322,7 +318,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "StartDate",
-					  						OldFieldName =  "FromDate",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -384,7 +379,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExpirationDate",
-					  						OldFieldName =  "ToDate",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -446,7 +440,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -507,7 +500,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Version",
-					  						OldFieldName =  "LastVersion",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -567,7 +559,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsDraft",
-					  						OldFieldName =  "IsDraft",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -624,7 +615,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ApproveDate",
-					  						OldFieldName =  "ApproveDate",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -681,7 +671,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ApprovedByUserId",
-					  						OldFieldName =  "ApprovedByUserId",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -739,7 +728,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TariffLines",
-					  						OldFieldName =  "TariffLines",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -797,7 +785,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ParentVersionNumber",
-					  						OldFieldName =  "ParentVersionId",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -854,7 +841,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TariffAllInCharges",
-					  						OldFieldName =  "TariffAllInCharges",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -912,7 +898,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InitialEnddate",
-					  						OldFieldName =  "InitialEnddate",
 					  						ObjectTableName =  "TariffVersion",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,

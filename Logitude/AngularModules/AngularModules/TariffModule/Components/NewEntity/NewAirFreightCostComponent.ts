@@ -16,6 +16,9 @@ import { TariffDomainService } from '../../../TariffModule/Services/TariffDomain
 import { PackageTypeList } from '../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../Common/Services/StandardLists/PackageTypeListService';
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
+import { TariffVersionPM } from '../../EntityPMs/TariffVersionPM';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { TariffVersionAllInChargePM } from '../../EntityPMs/TariffVersionAllInChargePM';
 
 @Component({
     selector: 'NewAirFreightCostComponent',
@@ -44,6 +47,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     public TariffCurrencyTextCode: string;
     public SellerDependancy: string = "AL";
     public HasAContainerTypeUOM: boolean = false;
+    private firstVersion: TariffVersionPM;
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -63,7 +67,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
     private GetBCNTMeasurementId() {
         if (this.EntityPM.TypeCode == "OFS") {
             var commonDomainService: CommonDomainService = new CommonDomainService();
-            commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res:any) => {
+            commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res: any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.BCNTmeasurementId = res.Result;
@@ -75,6 +79,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
     SetWindowArgs(args) {
         this.EntityPM.TypeCode = args.TypeCode;
+
         if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
@@ -92,10 +97,19 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             this.VisibleContainerTypeAreaInOFS = true;
             this.HasAContainerTypeUOM = false;
         }
+
         this.BuildQueryFilters();
         this.SetUIProperties();
+        this.CreateFirstVersion();
     }
-    
+
+    private CreateFirstVersion() {
+        this.firstVersion = new TariffVersionPM(this.EntityPM);
+        this.firstVersion.Tenant = InfraSettings.TenantPM.Id;
+        this.firstVersion.Version = 1;
+        this.firstVersion.IsDraft = true;
+    }
+
     SetUIProperties() {
         var isDatesVisible: boolean = true;
         if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
@@ -107,7 +121,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
         this.UIProperties.SetRequired("StartDate", this.ObjectTableName, this.StartDate == null)
         this.UIProperties.SetRequired("ExpirationDate", this.ObjectTableName, false);
-        
+
         if (this.EntityPM.TypeCode == "OFS") {
             this.UIProperties.SetVisibility("Surcharge1UOM", this.ObjectTableName, false);
             this.UIProperties.SetVisibility("Surcharge2UOM", this.ObjectTableName, false);
@@ -169,6 +183,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         if (this.EntityPM.StartDate != value) {
             this.EntityPM.StartDate = value;
 
+            this.firstVersion.StartDate = value;
             this.SetUIProperties();
         }
     }
@@ -180,6 +195,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         if (this.EntityPM.ExpirationDate != value) {
             this.EntityPM.ExpirationDate = value;
 
+            this.firstVersion.ExpirationDate = value;
             this.SetUIProperties();
         }
     }
@@ -594,7 +610,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
 
     SetDefaultUOM(index: number) {
         if (this.EntityPM.TypeCode != "OFS") {
-            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res:any) => {
+            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         var ChargesType: ChargesTypeList = res.Result;
@@ -640,7 +656,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                 var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
                 if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
                     DuplicatedChargesIds.push(this[chargresType + ""]);
-                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe((res:any) => {
+                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe((res: any) => {
                         if (!res.HasError) {
                             var chargesTypeList: ChargesTypeList = res.Result;
                             if (res) {
@@ -727,7 +743,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
                 var comparedContainer = "ContainerType" + firstIndex + "Id";
                 var targetContainer = "ContainerType" + secondIndex + "Id";
                 if (this[comparedContainer] != null && this[comparedContainer] == this[targetContainer]) {
-                    this.packageTypeListService.getSingleFromCache(this[targetContainer + ""]).subscribe((res:any) => {
+                    this.packageTypeListService.getSingleFromCache(this[targetContainer + ""]).subscribe((res: any) => {
                         if (!res.HasError) {
                             var packageTypeList: PackageTypeList = res.Result;
                             if (res) {
@@ -827,6 +843,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         }
 
         if (this.ValidationErrorsList.length == 0) {
+            this.EntityPM.AddTariffVersion(this.firstVersion);
+
             this.CurrentSession.StartBusyIndicator("Creating...");
 
             this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
@@ -915,5 +933,30 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
             var stpesWithSpaces = steps.split(',').join(', ');
             return stpesWithSpaces;
         }
+    }
+
+    EditAllInCharges() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { TariffPM: this.EntityPM, VersionPM: this.firstVersion, IsEditingEnabled: true };
+        logWindow.Title = "All-In Charges";
+        logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditAllInChargesComponent");
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.BuildAllInChargesText();
+            }
+        });
+    }
+
+    public AllInChargesText: string;
+    private BuildAllInChargesText() {
+        var myText: string = null;
+
+        this.firstVersion.TariffAllInCharges.forEach((item: TariffVersionAllInChargePM) => {
+            if (AppTool.IsNullOrEmpty(myText)) {
+                //myText = item
+            }
+        });
+
+        this.AllInChargesText = myText;
     }
 }
