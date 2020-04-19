@@ -25,7 +25,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         KeywordtypeCode, 
-	         KeywordsList,
+	         KeywordsList, 
+	         SearchFields,
 	      }
 
 
@@ -36,7 +37,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         KeywordtypeCode, 
 	         KeywordsList, 
-	         KeywordtypeLocalName,
+	         KeywordtypeLocalName, 
+	         SearchFields,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -59,7 +61,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.KeywordsList = entityPM.KeywordsList;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
 
 		public void POCOToPM(CustomsAutonomyKeywordPM entityPM, CustomsAutonomyKeyword entityPOCO)
         {
@@ -84,6 +93,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.KeywordsList = entityPOCO.KeywordsList;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsAutonomyKeywordPM entityPM, CustomsAutonomyKeywordPM oldEntityPM)
@@ -105,6 +119,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.KeywordsList = entityPM.KeywordsList;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+                oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CustomsAutonomyKeywordPM entityPM)
@@ -118,6 +137,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.KeywordsList = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.KeywordsList));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 
@@ -130,6 +153,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
         {
             CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+		
+		private void BuildSearchFieldsGenerated(CustomsAutonomyKeywordPM entityPM, CustomsAutonomyKeyword entityPOCO, bool isNewEntity)
+        {
+            string mySearchFields = "";
+			
+           
+            entityPM.SearchFields += mySearchFields;
+            entityPOCO.SearchFields += mySearchFields;
         }
 			  
    }
