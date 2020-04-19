@@ -3739,7 +3739,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -3747,8 +3747,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        QueryGroup ContainerFollowUpQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CNFL", Name = "Containers Follow Up" }, queryGroupRepository);
 						QueryGroup ContainerFollowUpQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "970c", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ContainerFollowUpObjectTable = objectTables.ContainsKey("ContainerFollowUp") ? objectTables["ContainerFollowUp"] : null;
+            if (ContainerFollowUpObjectTable == null)
+            {
+                ContainerFollowUpObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ContainerFollowUp" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable ContainerFollowUpObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ContainerFollowUp" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> ContainerFollowUpObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ContainerFollowUp").ToList();   
 
 			   TextCode ContainerFollowUpTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ContainerFollowUp.Q.ArrivedNotDelivered", DefaultText = @"Arrived Not Delivered",LocalDefaultText = null, ObjectTableId = ContainerFollowUpObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

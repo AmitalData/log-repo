@@ -25199,7 +25199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -25207,8 +25207,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        QueryGroup MasterQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MAST", Name = "Queries" }, queryGroupRepository);
 						QueryGroup MasterQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MAFU", Name = "Follow Ups" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable MasterObjectTable = objectTables.ContainsKey("Master") ? objectTables["Master"] : null;
+            if (MasterObjectTable == null)
+            {
+                MasterObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Master" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable MasterObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Master" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> MasterObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Master").ToList();   
 
 			   TextCode MasterTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Master.Q.OperationalOpen", DefaultText = @"Operational Open",LocalDefaultText = null, ObjectTableId = MasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

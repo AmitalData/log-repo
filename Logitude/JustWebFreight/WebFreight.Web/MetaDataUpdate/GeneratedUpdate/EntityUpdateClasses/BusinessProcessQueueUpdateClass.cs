@@ -859,7 +859,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -867,8 +867,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        QueryGroup BusinessProcessQueueQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "aa2e", Name = " Query Group" }, queryGroupRepository);
 						QueryGroup BusinessProcessQueueQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "43d1", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable BusinessProcessQueueObjectTable = objectTables.ContainsKey("BusinessProcessQueue") ? objectTables["BusinessProcessQueue"] : null;
+            if (BusinessProcessQueueObjectTable == null)
+            {
+                BusinessProcessQueueObjectTable = objectContext.ObjectTables.Where(d => d.Name == "BusinessProcessQueue" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable BusinessProcessQueueObjectTable = objectContext.ObjectTables.Where(d => d.Name == "BusinessProcessQueue" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> BusinessProcessQueueObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "BusinessProcessQueue").ToList();   
 
 			   TextCode BusinessProcessQueueTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessProcessQueue.Q.AllQueues", DefaultText = @"Queues",LocalDefaultText = "Queues", ObjectTableId = BusinessProcessQueueObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

@@ -712,7 +712,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -720,8 +720,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        QueryGroup InboundEmailQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "IEHI", Name = "Inbound Email Additional Info" }, queryGroupRepository);
 						QueryGroup InboundEmailQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "84a3", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable InboundEmailObjectTable = objectTables.ContainsKey("InboundEmail") ? objectTables["InboundEmail"] : null;
+            if (InboundEmailObjectTable == null)
+            {
+                InboundEmailObjectTable = objectContext.ObjectTables.Where(d => d.Name == "InboundEmail" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable InboundEmailObjectTable = objectContext.ObjectTables.Where(d => d.Name == "InboundEmail" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> InboundEmailObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InboundEmail").ToList();   
 
 			   TextCode InboundEmailTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.Q.InboundEmails", DefaultText = @"All Inbound Emails",LocalDefaultText = null, ObjectTableId = InboundEmailObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

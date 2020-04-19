@@ -372,7 +372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -380,8 +380,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        QueryGroup Category2QueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a3fd", Name = "Category2 Query Group" }, queryGroupRepository);
 						QueryGroup Category2QueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "18a2", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable Category2ObjectTable = objectTables.ContainsKey("Category2") ? objectTables["Category2"] : null;
+            if (Category2ObjectTable == null)
+            {
+                Category2ObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Category2" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable Category2ObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Category2" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> Category2ObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Category2").ToList();   
 
 			   TextCode Category2TextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Category2.Q.allcategory2", DefaultText = @"Categories 2",LocalDefaultText = null, ObjectTableId = Category2ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

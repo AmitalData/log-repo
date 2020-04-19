@@ -710,7 +710,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -718,8 +718,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	        QueryGroup WebhookKeysQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "df4d", Name = "WebhookKeys" }, queryGroupRepository);
 						QueryGroup WebhookKeysQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d33a", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable WebhookKeysObjectTable = objectTables.ContainsKey("WebhookKeys") ? objectTables["WebhookKeys"] : null;
+            if (WebhookKeysObjectTable == null)
+            {
+                WebhookKeysObjectTable = objectContext.ObjectTables.Where(d => d.Name == "WebhookKeys" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable WebhookKeysObjectTable = objectContext.ObjectTables.Where(d => d.Name == "WebhookKeys" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> WebhookKeysObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WebhookKeys").ToList();   
 
 			   TextCode WebhookKeysTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WebhookKeys.Q.WebhookKeys", DefaultText = @"All Webhook Keys",LocalDefaultText = null, ObjectTableId = WebhookKeysObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

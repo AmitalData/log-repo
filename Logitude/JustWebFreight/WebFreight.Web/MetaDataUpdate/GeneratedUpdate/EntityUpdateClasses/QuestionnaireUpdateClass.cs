@@ -761,7 +761,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -769,8 +769,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        QueryGroup QuestionnaireQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "QUQG", Name = "Questionnaires" }, queryGroupRepository);
 						QueryGroup QuestionnaireQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a5d8", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable QuestionnaireObjectTable = objectTables.ContainsKey("Questionnaire") ? objectTables["Questionnaire"] : null;
+            if (QuestionnaireObjectTable == null)
+            {
+                QuestionnaireObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Questionnaire" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable QuestionnaireObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Questionnaire" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> QuestionnaireObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Questionnaire").ToList();   
 
 			   TextCode QuestionnaireTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Questionnaire.Q.AllQuestionnaires", DefaultText = @"All Questionnaire ",LocalDefaultText = null, ObjectTableId = QuestionnaireObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

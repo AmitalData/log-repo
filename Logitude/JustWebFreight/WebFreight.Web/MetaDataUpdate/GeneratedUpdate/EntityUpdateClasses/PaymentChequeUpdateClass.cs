@@ -2933,7 +2933,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -2941,8 +2941,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        QueryGroup PaymentChequeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d25b", Name = "PaymentCheque Query Group" }, queryGroupRepository);
 						QueryGroup PaymentChequeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5eeb", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable PaymentChequeObjectTable = objectTables.ContainsKey("PaymentCheque") ? objectTables["PaymentCheque"] : null;
+            if (PaymentChequeObjectTable == null)
+            {
+                PaymentChequeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable PaymentChequeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> PaymentChequeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PaymentCheque").ToList();   
 
 			   TextCode PaymentChequeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.Q.AllPaymentCheques", DefaultText = @"Payment Cheques",LocalDefaultText = "המחאות לתשלום", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

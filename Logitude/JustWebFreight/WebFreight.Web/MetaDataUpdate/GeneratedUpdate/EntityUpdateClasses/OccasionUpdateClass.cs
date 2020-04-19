@@ -1762,7 +1762,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -1770,8 +1770,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        QueryGroup OccasionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4696", Name = " Query Group" }, queryGroupRepository);
 						QueryGroup OccasionQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0c67", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable OccasionObjectTable = objectTables.ContainsKey("Occasion") ? objectTables["Occasion"] : null;
+            if (OccasionObjectTable == null)
+            {
+                OccasionObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Occasion" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable OccasionObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Occasion" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> OccasionObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Occasion").ToList();   
 
 			   TextCode OccasionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Occasion.Q.AllOccasions", DefaultText = @"All Occasions",LocalDefaultText = null, ObjectTableId = OccasionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

@@ -794,7 +794,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -802,8 +802,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        QueryGroup CustomsTransferHeaderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "66ad", Name = " Query Group" }, queryGroupRepository);
 						QueryGroup CustomsTransferHeaderQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f4c1", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable CustomsTransferHeaderObjectTable = objectTables.ContainsKey("CustomsTransferHeader") ? objectTables["CustomsTransferHeader"] : null;
+            if (CustomsTransferHeaderObjectTable == null)
+            {
+                CustomsTransferHeaderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomsTransferHeader" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable CustomsTransferHeaderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomsTransferHeader" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> CustomsTransferHeaderObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsTransferHeader").ToList();   
 
 			   TextCode CustomsTransferHeaderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsTransferHeader.Q.ShipmentsTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = "Transfer history", ObjectTableId = CustomsTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

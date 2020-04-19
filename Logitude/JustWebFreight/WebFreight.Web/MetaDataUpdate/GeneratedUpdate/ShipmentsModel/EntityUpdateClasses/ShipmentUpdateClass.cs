@@ -39789,7 +39789,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -39797,8 +39797,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        QueryGroup ShipmentQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "SHIP", Name = "Queries" }, queryGroupRepository);
 						QueryGroup ShipmentQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "SFLU", Name = "Follow Ups" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ShipmentObjectTable = objectTables.ContainsKey("Shipment") ? objectTables["Shipment"] : null;
+            if (ShipmentObjectTable == null)
+            {
+                ShipmentObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Shipment" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable ShipmentObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Shipment" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> ShipmentObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Shipment").ToList();   
 
 			   TextCode ShipmentTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Shipments", DefaultText = @"Shipments",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

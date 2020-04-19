@@ -398,7 +398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -406,8 +406,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	        QueryGroup AWBAdditionalHandlingInfoQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ADHI", Name = "AWB Additional Handling Info" }, queryGroupRepository);
 						QueryGroup AWBAdditionalHandlingInfoQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "da39", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable AWBAdditionalHandlingInfoObjectTable = objectTables.ContainsKey("AWBAdditionalHandlingInfo") ? objectTables["AWBAdditionalHandlingInfo"] : null;
+            if (AWBAdditionalHandlingInfoObjectTable == null)
+            {
+                AWBAdditionalHandlingInfoObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AWBAdditionalHandlingInfo" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable AWBAdditionalHandlingInfoObjectTable = objectContext.ObjectTables.Where(d => d.Name == "AWBAdditionalHandlingInfo" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> AWBAdditionalHandlingInfoObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AWBAdditionalHandlingInfo").ToList();   
 
 			   TextCode AWBAdditionalHandlingInfoTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalHandlingInfo.Q.AllHandlingInfos", DefaultText = @"AWB Additional Handling Infos",LocalDefaultText = null, ObjectTableId = AWBAdditionalHandlingInfoObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

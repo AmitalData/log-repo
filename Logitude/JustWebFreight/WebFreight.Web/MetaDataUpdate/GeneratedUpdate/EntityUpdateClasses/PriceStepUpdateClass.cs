@@ -756,7 +756,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -764,8 +764,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        QueryGroup PriceStepQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ff18", Name = " Query Group" }, queryGroupRepository);
 						QueryGroup PriceStepQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ae76", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable PriceStepObjectTable = objectTables.ContainsKey("PriceStep") ? objectTables["PriceStep"] : null;
+            if (PriceStepObjectTable == null)
+            {
+                PriceStepObjectTable = objectContext.ObjectTables.Where(d => d.Name == "PriceStep" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable PriceStepObjectTable = objectContext.ObjectTables.Where(d => d.Name == "PriceStep" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> PriceStepObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PriceStep").ToList();   
 
 			   TextCode PriceStepTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PriceStep.Q.AllPricesSteps", DefaultText = @"All Prices Steps",LocalDefaultText = "All Prices Steps", ObjectTableId = PriceStepObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
