@@ -252,7 +252,7 @@ namespace <#= UpdateClassnamespacestring #>
  	 
 	 #>
 
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         <#+
 	         foreach(XElement field in entity.Elements("field"))  //get all classes
@@ -260,7 +260,7 @@ namespace <#= UpdateClassnamespacestring #>
 	         #>
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  <#+ var TableNameFull = entity.Attributes().Where(a => a.Name == "ObjectTableName").FirstOrDefault().Value;
 		  var ObjectTbl = TableNameFull;
 		if(ObjectTbl.ToString().Trim('"').Contains("."))
@@ -294,8 +294,13 @@ namespace <#= UpdateClassnamespacestring #>
 			}
 			#>
 	        queryGroupRepository.SubmitChanges();
+	        ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = objectTables.ContainsKey(<#= TableNameFull #>) ? objectTables[<#= TableNameFull #>] : null;
+            if (<#= ObjectTbl.Trim('"') #>ObjectTable == null)
+            {
+                <#= ObjectTbl.Trim('"') #>ObjectTable = objectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = objectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> <#= ObjectTbl.Trim('"') #>ObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == <#= TableNameFull #>).ToList();  <#+
 		int i = 0;
 		foreach(XElement Query in Queries) 
@@ -656,7 +661,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 			 
 		 
 	#>		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 <#+
 }
@@ -1666,9 +1671,9 @@ public void GenerateAllTableMethods(string sourceFilePath)
 #>
 					<#=classname #>.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
-					<#=classname #>.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository, TextCodeRepository);
+					<#=classname #>.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
 					this.ObjectContext.SaveChanges();
-					<#=classname #>.AddTableQueries(Queries, QueryColumns, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
+					<#=classname #>.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters);
 					this.ObjectContext.SaveChanges();
 					<#=classname #>.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
@@ -1695,7 +1700,7 @@ public void GenerateAllTableMethods(string sourceFilePath)
     if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null && !originalTableName.Contains("Customs.") && IsMetadataOnlyTable == "false")
     {
 #>
-				   <#=classname #>.Fill<#= tableName.Trim('"') #>();
+					<#=classname #>.Fill<#= tableName.Trim('"') #>();
 <#+
     }
     
@@ -1828,7 +1833,7 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 		 #><#=""#>
 	   <#+
     #>
-	   <#=classname #>.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	   <#=classname #>.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	<#+
     }
 	#>
@@ -1857,7 +1862,7 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 		 #><#=""#>
 	   <#+
     #>
-	   <#=classname #>.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	   <#=classname #>.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	<#+
     }
 	#>
