@@ -11,6 +11,36 @@ namespace WebFreight.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                var IsAngularURL = Request.RawUrl.Contains("/Angular");//.QueryString["Menu"];
+                if (IsAngularURL)
+                {
+                    //IGlobalContext objectContext = GlobalContext.GetContext();
+                    //SettingRepository MySettingRepository = new SettingRepository(objectContext);
+                    //SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
+                    //var MySettings = MySettingQuery.GetSinglePM();
+                    //string RedirectUrl = "Angular" + MySettings.HtmlVersion + "/index.html";//?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
+                    Response.Redirect("~/");
+                }
+                else
+                {
+                    HttpContext.Current.Response.StatusCode = 404;
+                }
+            }
+        }
+
+
+        protected void GoToHomeClick(object sender, EventArgs e)
+        {
+            try
+            {
+                HttpContext.Current.Response.Redirect("~");
+            }
+            catch (Exception)
+            {
+
+            }
 
         }
     }

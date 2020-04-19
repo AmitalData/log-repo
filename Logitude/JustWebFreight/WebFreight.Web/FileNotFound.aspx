@@ -55,7 +55,7 @@ body {
   font-weight: 900;
   margin: 0px;
   text-transform: uppercase;
-  background: url('../images/text.png');
+  background: url('/images/text.png');
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: cover;

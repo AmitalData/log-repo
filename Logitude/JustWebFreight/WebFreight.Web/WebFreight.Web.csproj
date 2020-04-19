@@ -713,6 +713,7 @@
     <Content Include="images\Previous.png" />
     <Content Include="images\Recent.png" />
     <Content Include="images\RecentW.png" />
+    <Content Include="images\text.png" />
     <Content Include="images\verified.png" />
     <Content Include="images\verifiedGreen.png" />
     <Content Include="images\Warning_icon.png" />
