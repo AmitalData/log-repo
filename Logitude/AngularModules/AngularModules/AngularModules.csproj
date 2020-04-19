@@ -542,6 +542,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportLinePMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
+    <TypeScriptCompile Include="App\Directives\ChildDirective.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\DynamicLoader.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgets.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsTokens.ts" />
