@@ -76,6 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate
                       
                       case "updatetenantzeronew":
                         {
+                            performanceTimerLogger = new PerformanceTimerLogger();
                             performanceTimerLogger.Start(); 
                             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
                             UpdateAllOldModules(updateClass, context);
