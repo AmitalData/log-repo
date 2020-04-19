@@ -64,7 +64,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     IsShowFroalaEditor: boolean = false;
     froalaEditorSetting: FroalaEditorSetting;
     quoteTemplatePMService: QuoteTemplatePMService;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 
     IsDisableEditButton: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;

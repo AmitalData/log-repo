@@ -22,7 +22,7 @@ export class ParticipantGeneralTabComponent extends BaseComponent {
         this.SetUIProperties();
         this.RunComponent();
     }
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("IsDirect", this.ObjectTableName, false);

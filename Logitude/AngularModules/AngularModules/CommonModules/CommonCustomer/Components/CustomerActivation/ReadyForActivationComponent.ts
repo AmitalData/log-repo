@@ -41,7 +41,7 @@ export class ReadyForActivationComponent extends BaseComponent {
     public ProductsList: Array<ProductTypeItemClass> = [];
     public ServicesList: Array<ServiceItemClass> = [];
     private _QuestionnairePMService: QuestionnairePMService
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();

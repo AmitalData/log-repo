@@ -16,7 +16,7 @@ export class ARInvoiceTransferTabComponent extends BaseComponent implements OnDe
     public ObjectTableName = "ARInvoice";
     public DataContext = this;
     public IsConstituentInvoice: boolean;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;  
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;  
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;

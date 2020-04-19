@@ -25,7 +25,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public LocalCurrencyCode: string;
     public IsAccountingActivated: boolean;
 
-    @ViewChild('BillingChild', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('BillingChild', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {

@@ -24,7 +24,7 @@ declare var IsMobileDetected;
 export class RootComponent_Cust implements OnInit {
   private isComponentBooted: boolean = false;
   private isComponentInited: boolean = false;
-  @ViewChild("Child", { read: ViewContainerRef }) location: ViewContainerRef;
+  @ViewChild("Child", { read: ViewContainerRef, static: true }) location: ViewContainerRef;
   constructor() {
 
     var data = window.sessionStorage.getItem('userdata');

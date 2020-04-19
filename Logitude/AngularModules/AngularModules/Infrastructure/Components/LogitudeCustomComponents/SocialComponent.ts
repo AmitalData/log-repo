@@ -20,7 +20,7 @@ import {PostsArgs} from '../../../Infrastructure/DataContracts/PostsArgs';
 
 export class SocialComponent implements OnInit {
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     QueryName: string = "";
     SubQueryName: string = "";
     EntityId: string = "";

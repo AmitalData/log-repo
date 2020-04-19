@@ -20,7 +20,7 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     public localCurrency: string = "(" + SessionLocator.LocalCurrencyCode + ")";
     public ProfitCurrency: string = "(" + SessionLocator.TenantPM.ProfitCurrencyCode + ")";
-    @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
+    @ViewChild('SpotLight', { read: ViewContainerRef, static: true }) SpotLightViewContainerRef: ViewContainerRef;
     constructor() {
 
     }

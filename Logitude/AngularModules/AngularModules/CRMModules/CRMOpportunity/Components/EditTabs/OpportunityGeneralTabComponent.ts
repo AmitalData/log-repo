@@ -35,7 +35,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     public SalesNotesObsList: Array<CustomerSalesNotePM> = [];
     public ValidationErrorsList: Array<String> = [];
     public ResetOpportunitiy: boolean = true;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
 
     public ScreenCode: string = "Opportunity.AdditionalFields";

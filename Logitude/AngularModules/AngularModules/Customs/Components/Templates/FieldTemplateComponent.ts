@@ -18,7 +18,7 @@ export class FieldTemplateComponent {
     public IsSpotLightTemplate: boolean = false;
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
-    @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
+    @ViewChild('SpotLight', { read: ViewContainerRef, static: true }) SpotLightViewContainerRef: ViewContainerRef;
     constructor() {
 
     }

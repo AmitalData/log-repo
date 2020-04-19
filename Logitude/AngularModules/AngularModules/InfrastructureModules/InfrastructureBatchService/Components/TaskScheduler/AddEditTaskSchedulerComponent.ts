@@ -30,7 +30,7 @@ export class AddEditTaskSchedulerComponent  {
     schedulerExtendedPMService: SchedulerExtendedPMService;
     IsEnableSaveButton: boolean = false;
 
-    @ViewChild('GeneralSectionLocation', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('GeneralSectionLocation', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 
     private CurrentSession = SessionLocator.SelectedSession;
     private GeneralTemplateComponent: any = null;

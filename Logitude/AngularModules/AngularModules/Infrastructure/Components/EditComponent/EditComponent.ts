@@ -70,12 +70,12 @@ export class EditComponent implements OnDestroy {
     WorkEnvironment: string = 'logitude';
     public NavigationIds: string[];
     public CurrentNavigatedIndex: number;
-    @ViewChild('Helper', { read: ViewContainerRef }) HelperViewContainerRef: ViewContainerRef;
-    @ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
-    @ViewChild('MenuButtons', { read: ViewContainerRef }) MenuButtonsViewContainerRef: ViewContainerRef;
-    @ViewChild('SplitComponentLocation', { read: ViewContainerRef }) SplitComponentViewContainerRef: ViewContainerRef;
-    @ViewChild('WindowLocation', { read: ViewContainerRef }) WindowLocationViewContainerRef: ViewContainerRef;
-    @ViewChild('TabControlBody', { read: ViewContainerRef }) TabControlBodyViewContainerRef: ViewContainerRef;
+    @ViewChild('Helper', { read: ViewContainerRef, static: true }) HelperViewContainerRef: ViewContainerRef;
+    @ViewChild('ShortTitle', { read: ViewContainerRef, static: true }) ShortTitleViewContainerRef: ViewContainerRef;
+    @ViewChild('MenuButtons', { read: ViewContainerRef, static: true }) MenuButtonsViewContainerRef: ViewContainerRef;
+    @ViewChild('SplitComponentLocation', { read: ViewContainerRef, static: true }) SplitComponentViewContainerRef: ViewContainerRef;
+    @ViewChild('WindowLocation', { read: ViewContainerRef, static: true }) WindowLocationViewContainerRef: ViewContainerRef;
+    @ViewChild('TabControlBody', { read: ViewContainerRef, static: true }) TabControlBodyViewContainerRef: ViewContainerRef;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;

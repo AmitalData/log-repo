@@ -38,8 +38,8 @@ export class SocialPostsComponent implements OnInit {
     PointerEventsInPutPost: string = "auto";
     OpacityAreaInPutPost: string = "1";
     IsShowAreaPost: boolean = true;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
-    @ViewChild('Child', { read: ViewContainerRef }) SocialPeopleViewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) SocialPeopleViewContainerRef: ViewContainerRef;
     IsChange: boolean = false;
     postExtendedPMService: PostExtendedPMService;
     public ComponentRef: ComponentRef<SocialPostsComponent>;

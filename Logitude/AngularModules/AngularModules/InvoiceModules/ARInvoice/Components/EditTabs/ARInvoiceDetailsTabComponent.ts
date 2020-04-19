@@ -23,7 +23,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 export class ARInvoiceDetailsTabComponent implements OnInit, OnDestroy {
     public EntityPM: ARInvoicePM = null;
     public ObjectTableName = "ARInvoice";
-    @ViewChild("Child", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild("Child", { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;

@@ -9,7 +9,7 @@ import {SessionLocator} from '../Utilities/SessionLocator';
 
 export class GeneralTabComponent {
     private ObjectTableName: string = null;   
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     IsNewEntity: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         this.IsNewEntity = entityArgs.IsNewEntity;    

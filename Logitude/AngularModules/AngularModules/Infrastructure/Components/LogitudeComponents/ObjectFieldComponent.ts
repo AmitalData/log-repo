@@ -32,7 +32,7 @@ export class ObjectFieldComponent implements OnInit, AfterViewInit, OnDestroy {
     ObjectTable: ObjectTablePM;
     //ObjectField: ObjectFieldPM;
     
-    @ViewChild("ComponentContent", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild("ComponentContent", { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 
     private ComponentRef: any = null;
     private ComponentInstance: any = null;

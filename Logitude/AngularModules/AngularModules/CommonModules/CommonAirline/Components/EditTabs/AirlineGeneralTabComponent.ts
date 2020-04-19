@@ -12,7 +12,7 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 export class AirlineGeneralTabComponent extends BaseComponent {
     public EntityPM: AirlinePM;
     public ObjectTableName: string = "Airline";
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     public ScreenCode: string = "Airline.GeneralTabScreen";
     public ImageId: string = "";

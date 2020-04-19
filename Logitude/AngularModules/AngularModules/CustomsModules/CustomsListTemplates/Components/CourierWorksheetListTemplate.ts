@@ -85,7 +85,7 @@ export class CourierWorksheetListTemplate {
     }
 
     //  @ViewChild( SplitButtonComponent)  public MySplitButtonComponent: SplitButtonComponent = new SplitButtonComponent(null,null);
-    //@ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
+    //@ViewChild('ShortTitle', { read: ViewContainerRef, static: true }) ShortTitleViewContainerRef: ViewContainerRef;
     //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {

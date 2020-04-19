@@ -18,7 +18,7 @@ export class AWBWizardLoadComponent implements AfterViewInit
 {
     public EntityId: string = null;
     public EntityPM: ShipmentPM;
-    @ViewChild('WizardView', { read: ViewContainerRef }) target: ViewContainerRef;
+    @ViewChild('WizardView', { read: ViewContainerRef, static: true }) target: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 

@@ -771,7 +771,7 @@ export class EditDocumentComponent implements OnInit {
 
 
     public ValidationErrorsList: string[];
-     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+     @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
      SaveButtonClicked() {
          var m = this.viewContainerRef;
         var item = null;

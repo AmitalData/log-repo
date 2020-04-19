@@ -29,7 +29,7 @@ export class APPaymentGeneralTabComponent extends BaseComponent implements OnIni
     private GeneratedComponent: any;	
     private additionalFieldsScreenCode = "AdditionalFields";
 public ShowAdditionalFieldsScreen: boolean = false;
-@ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+@ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 BuildAdditionalFields() {
 
 var objectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;

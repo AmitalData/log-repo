@@ -45,7 +45,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     public ObjectTableName: string = "Ticket";
     public IsFromOutSide = false;
     public IsShowConnectContact = false; 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     public EntityList: EntityClass[] = [];
     public EntityNumberTitle = "Shipment Number";

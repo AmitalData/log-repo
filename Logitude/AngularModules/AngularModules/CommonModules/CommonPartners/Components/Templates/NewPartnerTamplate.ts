@@ -43,7 +43,7 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
     public IsWarehouseTypeCodeVisible: boolean = false;
     public IsWarehouseFirmCodeVisible: boolean = false;
     public DomainService: PartnersDomainService;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         super();

@@ -16,7 +16,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 export class BookingWizardLoadComponent implements AfterViewInit {
     public EntityId: string = null;
     public EntityPM: BookingPM;
-    @ViewChild('WizardView', { read: ViewContainerRef }) target: ViewContainerRef;
+    @ViewChild('WizardView', { read: ViewContainerRef, static: true }) target: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {

@@ -26,7 +26,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 export class RoutingsTabComponent implements OnInit {
     public EntityPM: QuotePM = null;
     public ObjectTableName: string = null;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef; 
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef; 
     constructor(private entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;

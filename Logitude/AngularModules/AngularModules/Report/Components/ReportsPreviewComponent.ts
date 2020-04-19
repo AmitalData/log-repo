@@ -49,8 +49,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     ReportsTemplateLists: ReportsTemplateList[];
     ReportFilterConmponent: any;
     FilterConrolHeight: number = null;
-    @ViewChild('FiltersLocation', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
-    @ViewChild('CustomerChild', { read: ViewContainerRef }) customerViewContainerRef: ViewContainerRef;
+    @ViewChild('FiltersLocation', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('CustomerChild', { read: ViewContainerRef, static: true }) customerViewContainerRef: ViewContainerRef;
     ReportsRunUsingWR: boolean = false;
     IsUsedReportsRunUsingWR: boolean = false;
 

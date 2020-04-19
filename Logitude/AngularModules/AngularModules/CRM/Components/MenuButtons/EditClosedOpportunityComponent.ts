@@ -21,7 +21,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 
 export class EditClosedOpportunityComponent extends BaseComponent implements OnInit{
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 
     public EntityPM: OpportunityPM;
     public ObjectTableName: string = "Opportunity";

@@ -17,7 +17,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 export class PrivateLabelLoadComponent implements AfterViewInit {
     public EntityId: string = null;
     public EntityPM: TenantManagmentPrivateLabelsPM;
-    @ViewChild('WizardView', { read: ViewContainerRef }) target: ViewContainerRef;
+    @ViewChild('WizardView', { read: ViewContainerRef, static: true }) target: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {

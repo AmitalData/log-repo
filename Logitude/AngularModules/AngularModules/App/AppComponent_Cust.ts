@@ -15,7 +15,7 @@ import { environment } from '../environments/environment';
 })
 
 export class AppComponent_Cust implements OnInit {
-    @ViewChild("Child", { read: ViewContainerRef }) location: ViewContainerRef;
+    @ViewChild("Child", { read: ViewContainerRef, static: true }) location: ViewContainerRef;
     constructor(private compiler: Compiler, private resolver: ComponentFactoryResolver, private moduleLoader: SystemJsNgModuleLoader, private injector: Injector, private httpClient: HttpClient) {
         //console.log("isDevMode: " + isDevMode);
         //console.log("environment: " + environment.production);

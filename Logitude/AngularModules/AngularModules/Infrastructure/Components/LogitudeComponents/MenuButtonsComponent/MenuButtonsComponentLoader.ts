@@ -23,7 +23,7 @@ export class MenuButtonsComponentLoader implements OnInit {
     @Input() ObjectTable: ObjectTablePM;
     @Input() EntityPM: any;
     //----------------------------------------------------------------------------//
-    @ViewChild('MenuButtonComponent', { read: ViewContainerRef }) ComponentViewContainerRef: ViewContainerRef; 
+    @ViewChild('MenuButtonComponent', { read: ViewContainerRef, static: true }) ComponentViewContainerRef: ViewContainerRef; 
 
     constructor() {
     }

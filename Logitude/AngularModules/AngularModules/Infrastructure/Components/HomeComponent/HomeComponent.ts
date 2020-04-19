@@ -40,7 +40,7 @@ export class HomeComponent implements OnDestroy{
     public ChangeHeaderColor: boolean = false;
     @Output() SignoutCompleted = new EventEmitter();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    @ViewChild("ApplicationLocation", { read: ViewContainerRef }) ApplicationLocation: ViewContainerRef;
+    @ViewChild("ApplicationLocation", { read: ViewContainerRef, static: true }) ApplicationLocation: ViewContainerRef;
     SettingBtnVisibility: boolean = false;
     IsShowLastSuccessfulLoginComponent: boolean = true;
     public IfBlueSnapContracts: boolean = false;

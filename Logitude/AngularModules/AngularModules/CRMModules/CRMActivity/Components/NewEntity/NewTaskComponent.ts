@@ -21,7 +21,7 @@ export class NewTaskComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Activity";
     public DataContext: NewTaskComponent = this;
     public EntityPM: ActivityPM;    
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     private myActivityPMService: ActivityPMService;
     private entityResourceService: EntityResourceService;
     private CurrentSession = SessionLocator.SelectedSession;

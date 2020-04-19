@@ -14,7 +14,7 @@ export class ARInvoiceStockGeneralTabComponent {
     public EntityPM: ARInvoiceStockPM = new ARInvoiceStockPM();
     public ObjectTableName: string = "ARInvoiceStock";
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {        
         this.EntityPM = entityArgs.EntityPM;

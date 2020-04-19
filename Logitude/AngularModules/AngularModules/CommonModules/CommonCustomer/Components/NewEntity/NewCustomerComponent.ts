@@ -22,7 +22,7 @@ export class NewCustomerComponent {
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
     private PartnerTamplate: NewPartnerTamplate;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     private args: NewEntityArgs;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {

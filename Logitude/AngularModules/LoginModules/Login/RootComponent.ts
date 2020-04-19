@@ -27,7 +27,7 @@ declare var IsMobileDetected;
 })
 
 export class RootComponent implements OnInit {
-    @ViewChild("Child", { read: ViewContainerRef }) location: ViewContainerRef;
+    @ViewChild("Child", { read: ViewContainerRef, static: true }) location: ViewContainerRef;
     isDSV: boolean = true;
     ResetPWD: string;
     //DynamicLoader: DynamicLoaderTSC;

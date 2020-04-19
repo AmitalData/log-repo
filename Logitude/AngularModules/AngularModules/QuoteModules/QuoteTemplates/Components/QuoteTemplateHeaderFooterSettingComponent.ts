@@ -39,7 +39,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     public ValidationErrorsList: string[];
     QuoteTemplateSectionTypeName: string = "Packages";
     EditQuoteTemplateComponent: any;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 
 
 

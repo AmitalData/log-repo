@@ -23,7 +23,7 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
     HeightPdf: number;
     isFromLibrary: boolean = false;
     AreaName: string;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
