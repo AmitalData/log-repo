@@ -384,6 +384,30 @@ namespace Logitude.TariffModule.BL.Helpers
             List<int> VersionIds = TariffVersionList.Select(a => a.Version).ToList();
 
             Dictionary<string, List<TariffLine>> TariffLines = tariffRepository.GetAllTariffLinesByTariffIds(TariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= betweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= betweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
+            Dictionary<string, List<TariffLine>> TariffLinesFiltered = new Dictionary<string, List<TariffLine>>();
+
+            foreach (KeyValuePair<string, List<TariffLine>> entry in TariffLines)
+            {
+                List<TariffLine> filteredLines = new List<TariffLine>();
+                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort).ToList();
+                if (filteredLines.Count() == 0)
+                {
+                    filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.IsToAllOtherPorts == true).ToList();
+
+                    if (filteredLines.Count() == 0)
+                    {
+                        filteredLines = entry.Value.ToList().Where(p => p.DestinationPortId == toPort && p.IsFromAllOtherPorts == true).ToList();
+
+                        if (filteredLines.Count() == 0)
+                        {
+                            filteredLines = entry.Value.ToList().Where(p => p.IsToAllOtherPorts == true && p.IsFromAllOtherPorts == true).ToList();
+                        }
+                    }
+                }
+                TariffLinesFiltered.Add(entry.Key, filteredLines);
+            }
+
+            TariffLines = TariffLinesFiltered;
 
             Dictionary<string, string> Currencies = commonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
             List<TariffVersionAllInCharge> TariffVersionAllInChargesList = tariffRepository.GetAllTariffAllInOnVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), TariffVersionList.Select(p => p.Version).ToArray(), tenant).ToList();
