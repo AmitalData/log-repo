@@ -37,6 +37,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string PrepaidCollectId { get; set; }
         public string ContainerTypeId { get; set; }
         public int? Quantity { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         [ForeignKey("ForiegnCurrencyId")]
         public virtual Currency Currency { get; set; }

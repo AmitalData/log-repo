@@ -55,6 +55,7 @@
   <Column
     Name="ReceivablesChargesTypeExternalCode"
     ShortName="ReceivablesChargesTypeExtCode"
+    OldNames="ReceivablesChargesTypeExtCode"
     Type="varchar"
     Size="25">
     <Constraints
@@ -63,6 +64,7 @@
   <Column
     Name="PayablesChargesTypeExternalCode"
     ShortName="PayablesChargesTypeExtCode"
+    OldNames="PayablesChargesTypeExtCode"
     Type="varchar"
     Size="25">
     <Constraints
@@ -313,6 +315,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReceivableAccountId"
     ReferencedTable="Accounts1"
@@ -367,4 +375,6 @@
     Columns="Tenant" />
   <Index
     Columns="ChargesGroupCode" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

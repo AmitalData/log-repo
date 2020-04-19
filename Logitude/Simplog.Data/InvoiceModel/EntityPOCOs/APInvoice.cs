@@ -71,6 +71,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string Field8 { get; set; }
         public string Field9 { get; set; }
         public string Field10 { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
         public string ExternalAccountingEntityId { get; set; }
         [ForeignKey("TransferStatusCode")]
         public virtual APInvoiceTransferStatus TransferStatus { get; set; }
