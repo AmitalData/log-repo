@@ -103,7 +103,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             decimal calculatedCreditInterestAmount = 0;
             string calculationEquation = "";
             decimal creditInterestAmount = interestReportLinesByDatePM.CreditInterestAmount;
-            decimal creditInterestPercentage = interestReportLinesByDatePM.CreditInterestPercentage;
+            decimal creditInterestPercentage = interestReportLinesByDatePM.CreditInterestPercentage /100;
             int totalInterestDays = interestReportLinesByDatePM.TotalInterestDays;
             calculatedCreditInterestAmount = creditInterestAmount * (creditInterestPercentage / 365) * totalInterestDays;
             calculatedCreditInterestAmount = Math.Round(calculatedCreditInterestAmount, 4);
@@ -118,7 +118,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             decimal calculatedExceptionalInterestAmount = 0;
             string calculationEquation = "";
             decimal exceptionalInterestAmount = interestReportLinesByDatePM.ExceptionalInterestAmount;
-            decimal exceptionalInterestPercentage = interestReportLinesByDatePM.ExceptionalInterestPercentage;
+            decimal exceptionalInterestPercentage = interestReportLinesByDatePM.ExceptionalInterestPercentage / 100;
             int totalInterestDays = interestReportLinesByDatePM.TotalInterestDays;
             calculatedExceptionalInterestAmount = exceptionalInterestAmount * (exceptionalInterestPercentage / 365) * totalInterestDays;
             calculatedExceptionalInterestAmount = Math.Round(calculatedExceptionalInterestAmount, 4);
@@ -133,7 +133,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             decimal calculatedStandardInterestAmount = 0;
             string calculationEquation = "";
             decimal standardInterestAmount = interestReportLinesByDatePM.StandardInterestAmount;
-            decimal standardInterestPercentage = interestReportLinesByDatePM.StandardInterestPercentage;
+            decimal standardInterestPercentage = interestReportLinesByDatePM.StandardInterestPercentage / 100;
             int totalInterestDays = interestReportLinesByDatePM.TotalInterestDays;
             calculatedStandardInterestAmount = standardInterestAmount * (standardInterestPercentage / 365) * totalInterestDays;
             calculatedStandardInterestAmount = Math.Round(calculatedStandardInterestAmount, 4);
@@ -195,7 +195,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                             select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal creditAdditionalInterestPercentage = gLAccountInterestPeriodPM.CreditAddInterestPercent != null ? gLAccountInterestPeriodPM.CreditAddInterestPercent.Value : 0;
-            decimal percentage = (Period.InterestRate + creditAdditionalInterestPercentage)/100;
+            decimal percentage = (Period.InterestRate + creditAdditionalInterestPercentage);
             return percentage;
         }
 
@@ -210,7 +210,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                             select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal exceptionalAdditionalInterestPercentage = gLAccountInterestPeriodPM.ExceptionalAddInterestPercent != null ? gLAccountInterestPeriodPM.ExceptionalAddInterestPercent.Value : 0;
-            decimal percentage = (Period.InterestRate + exceptionalAdditionalInterestPercentage)/100;
+            decimal percentage = (Period.InterestRate + exceptionalAdditionalInterestPercentage);
             return percentage;
         }
 
@@ -226,7 +226,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                                           select a).OrderByDescending(d => d.InterestBaseStartDate).FirstOrDefault();
 
             decimal standardAdditionalInterestPercentage = gLAccountInterestPeriodPM.StandardAddInterestPercent != null ? gLAccountInterestPeriodPM.StandardAddInterestPercent.Value : 0;
-            decimal percentage = (Period.InterestRate + standardAdditionalInterestPercentage) / 100;
+            decimal percentage = (Period.InterestRate + standardAdditionalInterestPercentage);
             return percentage;
         }
 
