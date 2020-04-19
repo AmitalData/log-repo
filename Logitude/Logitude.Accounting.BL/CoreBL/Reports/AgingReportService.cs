@@ -499,8 +499,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          TotalFutureOpenCheques = moredata !=null ?(decimal)moredata.TotalOpenChequesInLocalCur:0,
                          TotalOpenCheques = moredata!=null? (decimal)moredata.TotFutureOpenChequesInLocalCur:0,
 
-                         AccountEnglishName = acc.EnglishName,
-                         AccountLocalName = acc.LocalName,
+                         //AccountEnglishName = acc.EnglishName,
+                        // AccountLocalName = acc.LocalName,
                          AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
                      }
 
