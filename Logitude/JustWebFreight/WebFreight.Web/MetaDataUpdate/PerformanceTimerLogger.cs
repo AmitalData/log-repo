@@ -24,11 +24,13 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public void Start()
         {
+            this.loggBuilder = new StringBuilder();
             this.stepTimer.Start();
             this.allProccessTimer.Start();
         }
         public void Stop()
         {
+            this.loggBuilder = new StringBuilder();
             this.stepTimer.Stop();
             this.allProccessTimer.Stop();
         }
@@ -53,13 +55,18 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public void WriteLogToCSVFile()
         {
+          
+
             var newLine = string.Format("{0},{1}", ",Total", this.allProccessTimer.Elapsed.ToString());
             this.loggBuilder.AppendLine(newLine);
 
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string filePath = Path.Combine(projectDirectory, @"performancelog.csv");
             File.WriteAllText(filePath, this.loggBuilder.ToString());
-            
+
+            this.Stop();
+
+
         }
     }
 }
