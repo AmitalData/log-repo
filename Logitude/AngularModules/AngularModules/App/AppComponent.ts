@@ -12,7 +12,7 @@ import { ChildDirective } from './Directives/ChildDirective';
     `
     <div class="MediaFillRelative">
         <img *ngIf="!IsLoginScreenLoaded" class="CenterCenter" src="./_Resources/Images/Gif/Bluespin.gif" />
-        <div #Child ChildDirective></div>
+        <div ChildDirective></div>
     </div>
     `,
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
@@ -10,7 +10,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
     templateUrl: './TariffDetailsTabComponent.html',
 })
 
-export class TariffDetailsTabComponent implements OnInit, OnDestroy {
+export class TariffDetailsTabComponent implements AfterViewInit, OnDestroy {
     public EntityPM: TariffPM;
     @ViewChild("Child", { read: ViewContainerRef, static: false }) location: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -45,7 +45,7 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     }
 
     private isComponentInited: boolean = false;
-    ngOnInit() {
+  ngAfterViewInit() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             this.isComponentInited = true;
             this.RunComponent();

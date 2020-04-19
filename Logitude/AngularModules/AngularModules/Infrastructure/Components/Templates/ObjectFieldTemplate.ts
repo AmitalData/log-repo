@@ -1,5 +1,5 @@
 declare var window: any;
-import {Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, OnDestroy} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewContainerRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {AppTool} from '../../Tools';
 import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
@@ -18,7 +18,7 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 // https://github.com/angular/angular/issues/10762
 // http://stackoverflow.com/questions/39794156/angular2-dynamically-added-elements
 
-export class ObjectFieldTemplate implements OnInit, OnDestroy  {
+export class ObjectFieldTemplate implements AfterViewInit, OnDestroy  {
     public Entity: any = null;
     public CustomField: any = null;
     public ObjectTable: ObjectTablePM = null;
@@ -45,7 +45,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
     constructor(private CD: ChangeDetectorRef) {
     }
 
-    ngOnInit() {
+  ngAfterViewInit() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         if (this.ObjectField != null && this.IsSpotLightTemplate == false) {

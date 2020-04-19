@@ -2,7 +2,6 @@ import {NgModule}      from '@angular/core';
 import {ControlsModule} from '../Controls/Module_CTRL';
 import {Pipes, Directives, Components, ControlsComponents, ModuleDeclarations} from './ModuleDeclarations';
 import {ModuleProviders} from './ModuleProviders';
-import { ChildDirective } from './Directives/ChildDirective';
 
 
 // Services
@@ -20,7 +19,7 @@ import {ErrorHandler} from '@angular/core';
 
 @NgModule({
     imports: [ControlsModule],
-  declarations: [...Pipes, ...Directives, ...Components, ...ControlsComponents, ChildDirective],
+  declarations: [...Pipes, ...Directives, ...Components, ...ControlsComponents],
     exports: [...Pipes, ...Directives, ...ControlsComponents, ControlsModule],
     entryComponents: [...Components, ...ControlsComponents],
 
