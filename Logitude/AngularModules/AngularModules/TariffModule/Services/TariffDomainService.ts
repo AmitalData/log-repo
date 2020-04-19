@@ -359,6 +359,7 @@ export class TariffSearchSummary {
     VersionId: string;
     TotalSurcharge: string;
     WholePrice: string;
+    WholePriceWithoutAllIn: string;
     SurchargesWithoutAllIn: Array<SurchargeSummary>;
     AllInSurcharges: Array<SurchargeSummary>;
     AllIn: string;
