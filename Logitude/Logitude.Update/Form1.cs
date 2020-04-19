@@ -4233,13 +4233,11 @@ User/Pass",
             {
                 lineParts = line.Split(',');
 
-                if (lineParts.Count() == 5)
+                if (lineParts.Count() == 3)
                 {
-                    string stateCode = this.GetText(lineParts, 0);
-                    string stateName = this.GetText(lineParts, 1);
-                    string logitudeStateCode = this.GetText(lineParts, 2);
-                    string cityCode = this.GetText(lineParts, 3);
-                    string cityName = this.GetText(lineParts, 4);
+                    string cityCode = this.GetText(lineParts, 0);
+                    string cityName = this.GetText(lineParts, 1);
+                    string stateCode = this.GetText(lineParts, 2);
                    
                     if (cityCode != null)
                     {
@@ -4253,11 +4251,9 @@ User/Pass",
 
                         MexicoCityDataItem mexicoCity = new MexicoCityDataItem();
                         mexicoCity.StateCode = stateCode;
-                        mexicoCity.StateName = stateName;
                         mexicoCity.CityCode = cityCode;
                         mexicoCity.CityName = cityName;
                         mexicoCity.CountryCode = "MX";
-                        mexicoCity.LogitudeStateCode = logitudeStateCode;
                         AllDataLines.Add(mexicoCity);
                     }
                 }
@@ -4285,8 +4281,7 @@ User/Pass",
 
                 foreach (Tenant tenant in tenants)
                 {
-                    this.AddMexicoCitiesByTenant(allDataLines, tenant.Id);
-
+                    this.AddMexicoCitiesByTenant(allDataLines, tenant);
                 }
 
                 stopWatch.Stop();
@@ -4299,16 +4294,17 @@ User/Pass",
             }
         }
 
-        private void AddMexicoCitiesByTenant(List<MexicoCityDataItem> allDataLines, int tenant)
+        private void AddMexicoCitiesByTenant(List<MexicoCityDataItem> allDataLines, Tenant tenantPOCO)
         {
-            List<string> statesCodes = allDataLines.GroupBy(p => p.LogitudeStateCode).Select(g => g.First().LogitudeStateCode).ToList();
-
+            int tenant = tenantPOCO.Id;
+            string addressId = tenantPOCO.AddressId;
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
-            Country mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX" && a.Tenant == tenant).FirstOrDefault();
+            Address address = myCommonContext.Addresses.Where(a => a.Id == addressId && a.AddressTypeId == "M" && a.Tenant == tenant).FirstOrDefault();
+            Country mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX"  && a.Id == address.CountryId && a.Tenant == tenant).FirstOrDefault();
 
             if (mexicoCountry != null)
             {
-                this.AddMexicoStates(myCommonContext, mexicoCountry.Id, tenant);
+                List<string> statesCodes = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First().StateCode).ToList();
                 List<State> allStates = (from d in myCommonContext.States
                                          where d.Tenant == tenant
                                          && statesCodes.Contains(d.Code)
@@ -4316,7 +4312,7 @@ User/Pass",
                 var myCount = 0;
                 foreach (MexicoCityDataItem item in allDataLines)
                 {
-                    State state = allStates.Where(a => a.Code == item.LogitudeStateCode).FirstOrDefault();
+                    State state = allStates.Where(a => a.Code == item.StateCode).FirstOrDefault();
 
                     if (state != null)
                     {
@@ -4347,7 +4343,7 @@ User/Pass",
                     }
                     else
                     {
-                        missedStates = missedStates + item.LogitudeStateCode + "/" + item.StateName + ", ";
+                        missedStates = missedStates + item.StateCode + ", ";
                     }
                 }
 
@@ -4515,12 +4511,9 @@ User/Pass",
 
     public class MexicoCityDataItem
     {
-        public string Id { get; set; }
-        public string StateCode { get; set; }
-        public string StateName { get; set; }
-        public string LogitudeStateCode { get; set; }
         public string CityCode { get; set; }
         public string CityName { get; set; }
+        public string StateCode { get; set; }
         public string CountryCode { get; set; }
     }
 }
