@@ -19,6 +19,8 @@ using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {

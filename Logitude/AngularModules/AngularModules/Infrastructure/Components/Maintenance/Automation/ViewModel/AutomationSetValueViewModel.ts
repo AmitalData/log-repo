@@ -17,6 +17,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
     CustomAutomationCondationFieldListFilterItems: ApiQueryFilters;
     AutomationSetValuebjectFieldLists: ObjectFieldPM[];
 
+    BooleanList: boolean[] = [true, false];
 
     SelectedCustomField: ObjectFieldPM;
     AddEditAutomationsViewModel: any;
@@ -150,6 +151,21 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
         }
     }
 
+
+
+    BooleanListValueChanged(newValue: boolean) {
+        this.isChecked = newValue;
+        this.CurrentEntityPM.Value = this.FieldValue = this.isChecked ? "true" : "false";
+        this.AddEditAutomationsViewModel.IsChangeCondition = true;
+    }
+
+
+
+
+
+
+
+
     BuildCustomFromFieldbjectFieldLists() {
 
         if (this.SelectedOperator != null && this.SelectedCustomField) {
@@ -194,6 +210,12 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
                 this.CurrentEntityPM.Value = "";
                 this.CustomObjectFieldCode = "";
                 this.AddEditAutomationsViewModel.IsChangeSetValue = true;
+
+
+                if (item.DataTypeCode == "Boolean") this.IsChecked = false;
+        
+
+
 
                 var ischange = false;
 

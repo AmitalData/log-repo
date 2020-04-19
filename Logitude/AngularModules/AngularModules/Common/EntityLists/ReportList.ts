@@ -24,5 +24,7 @@ export class ReportList {
 		DefaultTemplateId: string;
 		DefaultMessageTemplateId: string;
 		FeatureUniqeCode: string;
+		AvailableForScheduling: boolean;
+		ExcelOnly: boolean;
 	
 }

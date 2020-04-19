@@ -330,8 +330,8 @@ export class SendToContactsComponent implements OnInit {
         if (!AppTool.IsNullOrEmpty(searchfields)) {
             filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, false, false, "string");
         }
-
-        filters.addAdditionalFilter("CardId", this.myPartnerId, null, null, "Equals", true, true, true, "Text");
+        
+        filters.addAdditionalFilter("CardId", this.myPartnerId, null, null, "InListExact", true, true, true, "string");
         filters.addAdditionalFilter("HasEmail", "", null, null, "NotEqual", true, false, false, "String");
         filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
 

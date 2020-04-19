@@ -1358,7 +1358,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CashBookPM cashBook = cashBookQuery.GetByPaymentAndCurrencyAndBranch(theEntityPm.PaymentCurrencyId, "1", theEntityPm.BranchId, theEntityPm.Tenant);
                 if (cashBook != null)
                 {
-                    if(cashBook.TotalAmount >= (decimal)theEntityPm.AmountInPaymentCurrency)
+                    if(cashBook.TotalAmount >= ((decimal)theEntityPm.AmountInPaymentCurrency - ((decimal)theEntityPm.TaxDeductionLocalAmount / (decimal)theEntityPm.PaymentCurrencyExchangeRate)))
                     {
                         // Update Total Amount
                         ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
@@ -1366,7 +1366,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             cashBook.TotalAmount = 0;
                         }
-                        cashBook.TotalAmount -= (decimal)theEntityPm.AmountInPaymentCurrency;
+                        cashBook.TotalAmount -= ((decimal)theEntityPm.AmountInPaymentCurrency - ((decimal)theEntityPm.TaxDeductionLocalAmount / (decimal)theEntityPm.PaymentCurrencyExchangeRate));
                         cashBook.ChangeSetOp = ChangeSetOperation.Update;
                         cashBookUpdate.Update(cashBook);
                     }

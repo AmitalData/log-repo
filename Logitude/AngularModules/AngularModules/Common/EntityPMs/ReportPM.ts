@@ -130,6 +130,11 @@ export class ReportPM {
     public set AvailableForScheduling(newValue: boolean) { if (this.availableForScheduling != newValue) { this.availableForScheduling = newValue; this.MarkAsDirty("AvailableForScheduling"); } }
        
 	 
+    private excelOnly: boolean;
+    public get ExcelOnly() { return this.excelOnly; }
+    public set ExcelOnly(newValue: boolean) { if (this.excelOnly != newValue) { this.excelOnly = newValue; this.MarkAsDirty("ExcelOnly"); } }
+       
+	 
 
     public OldEntityPM: ReportPM;
 		

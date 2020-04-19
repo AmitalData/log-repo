@@ -50,7 +50,7 @@ namespace WarehouseDataViews
             foreach (DataRow row in dimensionDWobjectFieldOnFact.Rows)
             {
                 string fieldCode = row["Code"].ToString();
-                string tableCode = row["DimensionTableCode"].ToString();
+                string tableCode = fieldCode  != "[Customer]" ? row["DimensionTableCode"].ToString(): "DIM_Customer";
                 if (!string.IsNullOrEmpty(fieldCode) && fieldCode != "[Parent Tenant]" && !string.IsNullOrEmpty(tableCode))
                 {
                     if (tableCode != "DIM_Dates")
@@ -60,6 +60,9 @@ namespace WarehouseDataViews
                         string fieldName = GetFieldNameFromCode(fieldCode);
                         string viewName = GetViewName(fieldName, "Dim");
                         DropView(viewName, destinationConnectionString);
+
+
+
                         string scriptView = GenerateScriptView(viewName, fieldName, tableCode);
                         scriptView = ConvertFieldsNameToCamelCase(scriptView);
                         ExecuteSql(scriptView, destinationConnectionString); 

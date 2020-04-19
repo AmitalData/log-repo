@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SharedLogisticsSettingUpdateClass
    {  		
-		public const string HashString = "c5804d71999e2cd76b90954273c11386";
+		public const string HashString = "27a601f50e1fd0ac1632b9fa137dd3aa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "SharedLogisticsSetting",
 			      				    IsNew =  true,
 			      				    DBTableName =  "SharedLogisticsSettings",
-			      				    OldDBTableName =  "SharedLogisticsSettings",
 			      				    ObjectTableSingular =  "Shared Logistics Setting",
 			      				    ObjectTablePlural =  "Shared Logistics Settings",
 			      				    HasCustomFilter =  false,
@@ -117,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shared Logistics Setting",
-			      				    Code =  "1deb",
+			      				    Code =  "0a29",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -128,6 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    HashString =  SharedLogisticsSettingUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -140,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsAgentShared",
-					  						OldFieldName =  "IsAgentShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -185,6 +184,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -196,7 +196,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsShipperNotExporterShared",
-					  						OldFieldName =  "IsShipperNotExporterShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -241,6 +240,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -252,7 +252,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsNotify1Shared",
-					  						OldFieldName =  "IsNotify1Shared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -297,6 +296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -308,7 +308,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsNotify2Shared",
-					  						OldFieldName =  "IsNotify2Shared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -353,6 +352,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -364,7 +364,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsFreightForwarderShared",
-					  						OldFieldName =  "IsFreightForwarderShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -409,6 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -420,7 +420,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsColoaderShared",
-					  						OldFieldName =  "IsColoaderShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -465,6 +464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -476,7 +476,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsConsigneeNotImporterShared",
-					  						OldFieldName =  "IsConsigneeNotImporterShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -521,6 +520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -532,7 +532,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsMainCarrierShared",
-					  						OldFieldName =  "IsMainCarrierShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -577,6 +576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -588,7 +588,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsPickDelivCarriesShared",
-					  						OldFieldName =  "IsPickDelivCarriesShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -633,6 +632,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -644,7 +644,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsInvoicesMenuEnabled",
-					  						OldFieldName =  "IsInvoicesMenuEnabled",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -689,6 +688,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -700,7 +700,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsMoneyTabEnabled",
-					  						OldFieldName =  "IsMoneyTabEnabled",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -745,6 +744,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -756,7 +756,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsIssuingCarrierAgentShared",
-					  						OldFieldName =  "IsIssuingCarrierAgentShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -801,6 +800,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -812,7 +812,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCustomsAgentExportShared",
-					  						OldFieldName =  "IsCustomsAgentExportShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -857,6 +856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -868,7 +868,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCustomsAgentImportShared",
-					  						OldFieldName =  "IsCustomsAgentImportShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -913,6 +912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -924,7 +924,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsCustomClearancePoinShared",
-					  						OldFieldName =  "IsCustomClearancePoinShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -969,6 +968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -980,7 +980,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsConsolidatorShared",
-					  						OldFieldName =  "IsConsolidatorShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1025,6 +1024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1036,7 +1036,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsReleasingAgentShared",
-					  						OldFieldName =  "IsReleasingAgentShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1081,6 +1080,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1092,7 +1092,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsShipperShared",
-					  						OldFieldName =  "IsShipperShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1137,6 +1136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1148,7 +1148,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsConsigneeShared",
-					  						OldFieldName =  "IsConsigneeShared",
 					  						ObjectTableName =  "SharedLogisticsSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1193,6 +1192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1223,6 +1223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsShowAmountLocalCurrency",
 					  						ListPropertyPath =  "IsShowAmountLocalCurrency",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1247,6 +1248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1260,7 +1262,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable SharedLogisticsSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SharedLogisticsSetting" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> SharedLogisticsSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "SharedLogisticsSetting").ToList();
+		       
+	      
+
+	         Screen SharedLogisticsSettingSharedLogisticsSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SharedLogisticsSetting.HeaderScreen", Name = "SharedLogisticsSettingHeaderScreen", ObjectTableId = SharedLogisticsSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    SharedLogisticsSettingObjectTable.HeaderScreenId = SharedLogisticsSettingSharedLogisticsSettingHeaderScreenScreen0.Id;
+		    SharedLogisticsSettingObjectTable.HeaderScreenCode = SharedLogisticsSettingSharedLogisticsSettingHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

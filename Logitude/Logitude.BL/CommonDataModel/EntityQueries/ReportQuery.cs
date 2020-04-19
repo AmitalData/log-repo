@@ -54,6 +54,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                    FeatureUniqeCode = report.FeatureUniqeCode,
                                    AvailableForScheduling = report.AvailableForScheduling,
+                                   ExcelOnly = report.ExcelOnly,
             };
 
             ReportModificationRepository modificationRep = new ReportModificationRepository(tenant);
@@ -95,6 +96,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                DefaultMessageTemplateId = a.DefaultMessageTemplateId,
                                                FeatureUniqeCode = a.FeatureUniqeCode,
                                                AvailableForScheduling = a.AvailableForScheduling,
+                                               ExcelOnly = a.ExcelOnly,
                                            };
             return reports;
         }
@@ -125,6 +127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              DefaultMessageTemplateId = a.DefaultMessageTemplateId,
                              FeatureUniqeCode = a.FeatureUniqeCode,
                              AvailableForScheduling = a.AvailableForScheduling,
+                             ExcelOnly = a.ExcelOnly,
                          }).FirstOrDefault();
 
             return query;
@@ -151,7 +154,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 DefaultTemplateId = report.DefaultTemplateId,
                                                 DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                                 FeatureUniqeCode = report.FeatureUniqeCode,
-                                                AvailableForScheduling = report.AvailableForScheduling
+                                                AvailableForScheduling = report.AvailableForScheduling,
+                                                ExcelOnly = report.ExcelOnly,
                                             };
             return result;
         }
@@ -182,7 +186,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
-                                           AvailableForScheduling = report.AvailableForScheduling
+                                           AvailableForScheduling = report.AvailableForScheduling,
+                                           ExcelOnly = report.ExcelOnly,
 
                                        }).ToList();
 
@@ -231,7 +236,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
-                                           AvailableForScheduling = report.AvailableForScheduling
+                                           AvailableForScheduling = report.AvailableForScheduling,
+                                           ExcelOnly = report.ExcelOnly,
 
                                        }).ToList();
 
@@ -273,7 +279,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DefaultTemplateId = report.DefaultTemplateId,
                                            DefaultMessageTemplateId = report.DefaultMessageTemplateId,
                                            FeatureUniqeCode = report.FeatureUniqeCode,
-                                           AvailableForScheduling = report.AvailableForScheduling
+                                           AvailableForScheduling = report.AvailableForScheduling,
+                                           ExcelOnly = report.ExcelOnly,
 
                                        }).ToList();
 

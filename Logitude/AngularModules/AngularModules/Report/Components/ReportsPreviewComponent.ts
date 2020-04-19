@@ -318,55 +318,67 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     GenerateReportViewWorkerRole(filter: ReportFliter) {
-        this.StartBusyIndicator("Generating...");
         this.IsRunReportSucceeded = false;
         this.IsRunReportFailed = false;
-        this.ReportFliter = this.FillReportFilter(filter);
 
-        this.ValiditySelectedTemplate();
-        this.NumberOfRequests += 1;
-        this._reportService.GenerateReportMethod(this.ReportFliter).subscribe((myResponse: ServiceResponse) => {
-            this.IsUsedReportsRunUsingWR = false;
-            this.SetReportData(myResponse);
+        if (!this.Report.ExcelOnly) {
+            this.StartBusyIndicator("Generating...");
+            this.ReportFliter = this.FillReportFilter(filter);
+            this.ValiditySelectedTemplate();
+            this.NumberOfRequests += 1;
+            this._reportService.GenerateReportMethod(this.ReportFliter).subscribe((myResponse: ServiceResponse) => {
+                this.IsUsedReportsRunUsingWR = false;
+                this.SetReportData(myResponse);
+                this.StopBusyIndicator();
+            });
+
+        } else {
+
             this.StopBusyIndicator();
-        });
-
-
+            this.IsUsedReportsRunUsingWR = false;
+            this.IsRunReportSucceeded = true;
+            this.SetReportData();
+       
+        }
     }
 
 
 
 
 
-    SetReportData(myResponse: ServiceResponse) {
+    SetReportData(myResponse: ServiceResponse = null) {
+        var isSetStimualData = false;
+        this.IsRunReportFailed = false;
+        this.IsRunReportSucceeded = false;
+        this.StimulsoftArg.NumberOfPage = this.ReportFliter.NumberOfPage;
+        this.StimulsoftArg.PartnersObslist = this.PartnersObslist;
+        this.StimulsoftArg.ReportFliter = this.ReportFliter;
+        this.StimulsoftArg.ReportKey = this.ReportFliter.ReportKey;
 
-        if (myResponse.HasError) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Show(myResponse.ErrorsArray[0]);
-            this.IsRunReportFailed = true;
+        if (myResponse) {
+            if (myResponse.HasError) {
+                var messageWindow = new MessageWindow();
+                messageWindow.Show(myResponse.ErrorsArray[0]);
+                this.IsRunReportFailed = true;
 
-        }
-
-        else {
-            this.IsRunReportSucceeded = true;
-            var myResult = myResponse.Result;
-            if (myResult) {
-
-                if (this.ReportFliter != null) {
-                    this.StimulsoftArg.ReportFliter = this.ReportFliter;
-                }
-
-                this.StimulsoftArg.NumberOfPage = this.ReportFliter.NumberOfPage;
-                this.StimulsoftArg.PartnersObslist = this.PartnersObslist;
-                this.StimulsoftArg.BuildStimulReportResult = myResult;
-
-                if (this.StimulsoftArg && this.StimulsoftArg.StimulsoftViewerComponent) {
-                    this.StimulsoftArg.StimulsoftViewerComponent.SetStimualData();
-                }
-
-                this.cd.detectChanges();
+            } else {
+                this.StimulsoftArg.BuildStimulReportResult = myResponse.Result;
+                isSetStimualData = true;
             }
+        } else isSetStimualData = true;
+
+
+        if (isSetStimualData) {
+            this.IsRunReportSucceeded = true;
+
+            if (this.StimulsoftArg && this.StimulsoftArg.StimulsoftViewerComponent) {
+                this.StimulsoftArg.StimulsoftViewerComponent.SetStimualData();
+            }
+
         }
+        this.cd.detectChanges();
+
+
 
     }
 
@@ -384,6 +396,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         filter.DefaultTemplateVsersion = 1;
         filter.UserId = SessionLocator.LoggedUserId;
         filter.ReportId = this.Report.Id;
+        filter.ExcelOnly = this.Report.ExcelOnly;
 
         if (this.ReportsTemplateLists) {
             var reportTemplate: any = this.ReportsTemplateLists.filter(d => d.Id == filter.DefaultTemplateId)[0];
@@ -415,10 +428,19 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     AddPartner(partnerType: string, partnerId: string) {
-        var entityPartner: EntityPartner = new EntityPartner(partnerType, partnerId, false);
+        var partnerExist: boolean = false;
+        this.PartnersObslist.forEach(partner => {
+            if (!AppTool.IsNullOrEmpty(partner))
+                if (partner.PartnerType == partnerType) {
+                    partnerExist = true;
+                    partner.PartnerId += ',' + partnerId;
+                }
+        });
+        if (!partnerExist) {
+            var entityPartner: EntityPartner = new EntityPartner(partnerType, partnerId, false);
 
-        this.PartnersObslist.push(entityPartner);
-
+            this.PartnersObslist.push(entityPartner);
+        }
     }
 
     SetReportFilterConmponent(reportFilterConmponent) {
