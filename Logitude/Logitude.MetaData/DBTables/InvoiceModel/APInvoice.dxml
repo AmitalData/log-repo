@@ -19,6 +19,32 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="RefundAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentTermExternalId"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsGeneralInvoice"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="InternalNumber"
     Type="varchar"
     Size="20">
@@ -208,12 +234,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="RefundAmount"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="AmountDueInLocalCurrency"
     Type="float">
     <Constraints
@@ -247,20 +267,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Description"
-    Type="nvarchar"
-    Size="250">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CreditAccount"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="TransferTries"
     Type="int"
     DefaultValue="0">
@@ -281,6 +287,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="TransferStatusCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="AccountingExternalCode"
     Type="nvarchar"
     Size="25">
@@ -288,18 +301,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="PaymentTermExternalId"
+    Name="CreditAccount"
     Type="varchar"
-    Size="25">
+    Size="40">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="TransferStatusCode"
-    Type="varchar"
-    Size="2">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="IsMultipleEntities"
@@ -327,6 +333,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="VendorGLAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="AccountingDate"
     Type="datetime">
     <Constraints
@@ -339,10 +352,24 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsGeneralInvoice"
-    Type="bit">
+    Name="ExternalAccountingEntityId"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FirstApproveDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreatedByPartner"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="Field1"
@@ -415,29 +442,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ExternalAccountingEntityId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VendorGLAccountId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="FirstApproveDate"
+    Name="AutomaticLastUpdateDate"
     Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CreatedByPartner"
-    Type="varchar"
-    Size="25">
     <Constraints
       Nullable="true" />
   </Column>
@@ -500,4 +506,6 @@
     Columns="Tenant,StatusCode" />
   <Index
     Columns="VendorGLAccountId" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>

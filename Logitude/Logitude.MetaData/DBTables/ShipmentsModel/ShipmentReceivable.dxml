@@ -146,6 +146,7 @@
   <Column
     Name="ShipmentReceivableLineStatusCode"
     ShortName="StatusCode"
+    OldNames="StatusCode"
     Type="char"
     Size="4">
     <Constraints
@@ -247,6 +248,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
@@ -317,4 +324,6 @@
     ReferencedTable="ShipmentReceivables"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
 </Table>
