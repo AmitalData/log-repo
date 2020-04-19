@@ -4300,54 +4300,57 @@ User/Pass",
             string addressId = tenantPOCO.AddressId;
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
             Address address = myCommonContext.Addresses.Where(a => a.Id == addressId && a.AddressTypeId == "M" && a.Tenant == tenant).FirstOrDefault();
-            Country mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX"  && a.Id == address.CountryId && a.Tenant == tenant).FirstOrDefault();
 
-            if (mexicoCountry != null)
+            if (address != null)
             {
-                List<string> statesCodes = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First().StateCode).ToList();
-                List<State> allStates = (from d in myCommonContext.States
-                                         where d.Tenant == tenant
-                                         && statesCodes.Contains(d.Code)
-                                         select d).ToList();
-                var myCount = 0;
-                foreach (MexicoCityDataItem item in allDataLines)
+                Country mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX" && a.Id == address.CountryId && a.Tenant == tenant).FirstOrDefault();
+                if (mexicoCountry != null)
                 {
-                    State state = allStates.Where(a => a.Code == item.StateCode).FirstOrDefault();
-
-                    if (state != null)
+                    List<string> statesCodes = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First().StateCode).ToList();
+                    List<State> allStates = (from d in myCommonContext.States
+                                             where d.Tenant == tenant
+                                             && statesCodes.Contains(d.Code)
+                                             select d).ToList();
+                    var myCount = 0;
+                    foreach (MexicoCityDataItem item in allDataLines)
                     {
-                        CountryCity newCity = myCommonContext.CountryCities.Where(p => p.Code == item.CityCode && p.Tenant == tenant && p.CountryId == mexicoCountry.Id).FirstOrDefault();
-                        if (newCity == null)
+                        State state = allStates.Where(a => a.Code == item.StateCode).FirstOrDefault();
+
+                        if (state != null)
                         {
-                            newCity = new CountryCity()
+                            CountryCity newCity = myCommonContext.CountryCities.Where(p => p.Code == item.CityCode && p.Tenant == tenant && p.CountryId == mexicoCountry.Id).FirstOrDefault();
+                            if (newCity == null)
                             {
-                                Id = IdCounter.GetNumber("CountryCity", 0).ToString(),
-                                Tenant = tenant,
-                                Code = item.CityCode,
-                                EnglishName = item.CityName,
-                                LocalName = item.CityName,
-                                StateId = state.Id,
-                                CountryId = mexicoCountry.Id,
-                            };
+                                newCity = new CountryCity()
+                                {
+                                    Id = IdCounter.GetNumber("CountryCity", 0).ToString(),
+                                    Tenant = tenant,
+                                    Code = item.CityCode,
+                                    EnglishName = item.CityName,
+                                    LocalName = item.CityName,
+                                    StateId = state.Id,
+                                    CountryId = mexicoCountry.Id,
+                                };
 
-                            newCity.SearchFields = BuildCityCountrySearchFields(newCity);
-                            myCommonContext.CountryCities.Add(newCity);
-                            myCount++;
+                                newCity.SearchFields = BuildCityCountrySearchFields(newCity);
+                                myCommonContext.CountryCities.Add(newCity);
+                                myCount++;
+                            }
+
+                            if (myCount == 1000)
+                            {
+                                myCommonContext.SaveChanges();
+                                myCount = 0;
+                            }
                         }
-
-                        if (myCount == 1000)
+                        else
                         {
-                            myCommonContext.SaveChanges();
-                            myCount = 0;
+                            missedStates = missedStates + item.StateCode + ", ";
                         }
                     }
-                    else
-                    {
-                        missedStates = missedStates + item.StateCode + ", ";
-                    }
-                }
 
-                myCommonContext.SaveChanges();
+                    myCommonContext.SaveChanges();
+                }
             }
         }
 
