@@ -1,10 +1,9 @@
-
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { Injector, Compiler, Inject, NgModuleFactory, Type } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { LAZY_WIDGETS } from './DynamicLoader/LazyWidgetsTokens';
 import { DynamicLoader } from './DynamicLoader/DynamicLoader';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { ChildDirective } from './Directives/ChildDirective';
 
 @Component({
     selector: 'AppComponent',
@@ -12,16 +11,16 @@ import { environment } from '../environments/environment';
     template:
     `
     <div class="MediaFillRelative">
-        <img *ngIf="!_FinishLogin" class="CenterCenter" src="./_Resources/Images/Gif/Bluespin.gif" />
-        <div #Child></div>
+        <img *ngIf="!IsLoginScreenLoaded" class="CenterCenter" src="./_Resources/Images/Gif/Bluespin.gif" />
+        <div #Child ChildDirective></div>
     </div>
     `,
 })
 
-export class AppComponent implements OnInit {
-  _FinishLogin: boolean = false;
-
-  @ViewChild("Child", { read: ViewContainerRef, static: true }) location: ViewContainerRef;
+export class AppComponent implements AfterViewInit {
+  public IsLoginScreenLoaded: boolean = false;
+  
+  @ViewChild(ChildDirective) Child: ChildDirective;
 
   constructor(private http: HttpClient, private injector: Injector, private compiler: Compiler, @Inject(LAZY_WIDGETS) private lazyWidgets: { [key: string]: () => Promise<NgModuleFactory<any> | Type<any>> }) {
     DynamicLoader.Injector = injector;
@@ -29,14 +28,12 @@ export class AppComponent implements OnInit {
     DynamicLoader.LazyWidgets = lazyWidgets;
   }
   
-  ngOnInit() {
+  ngAfterViewInit() {
 
-    setTimeout(() => { this._FinishLogin = true; }, 30000);
-
-    DynamicLoader.Load("./Infrastructure/RootComponent", this.location)
+    DynamicLoader.Load("./Infrastructure/RootComponent", this.Child.Location)
       .then(cmpRef => {
+        this.IsLoginScreenLoaded = true;
         cmpRef.instance.Boot({ Http: this.http });
       });
   }
-
 }
