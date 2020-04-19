@@ -240,10 +240,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (VatNumber == null)
                     VatNumber = "000000000";
-
+               
                 GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
+
                 if (gLAccountPM != null)
                 {
+                   
+                    if(gLAccountPM.AccountTypeCode=="3" || gLAccountPM.AccountTypeCode == "1")
+                    {
+                        VatNumber = card != null ? card.VatNumber : null;
+                    }
                     if (gLAccountPM.IsEquipmentVendor)
                     {
                         isEquipment = true;
