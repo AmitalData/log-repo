@@ -12,7 +12,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 
 export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     public EntityPM: TariffPM;
-    @ViewChild("Child", { read: ViewContainerRef, static: true }) location: ViewContainerRef;
+    @ViewChild("Child", { read: ViewContainerRef, static: false }) location: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;

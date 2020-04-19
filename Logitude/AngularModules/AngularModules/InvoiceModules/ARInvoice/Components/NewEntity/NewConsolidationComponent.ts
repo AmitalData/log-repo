@@ -100,7 +100,7 @@ export class NewConsolidationComponent extends BaseComponent {
     private GeneratedComponent: any;
     private additionalFieldsScreenCode = "ARInvoice.AdditionalFields";
     public ShowAdditionalFieldsScreen: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     BuildAdditionalFields() {
 

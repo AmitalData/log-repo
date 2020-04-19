@@ -23,7 +23,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 export class APInvoiceDetailsTabComponent implements OnInit {
     public EntityPM: APInvoicePM = null;
     public ObjectTableName = "APInvoice";
-    @ViewChild("Child", { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild("Child", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public isRTL: boolean = false;
 
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {

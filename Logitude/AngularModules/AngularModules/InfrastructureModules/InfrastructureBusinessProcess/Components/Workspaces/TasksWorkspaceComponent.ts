@@ -15,7 +15,7 @@ import {TeamPM} from '../../../../Infrastructure/EntityPMs/TeamPM';
 
 export class TasksWorkspaceComponent {
     private businessProcessDomainService: BusinessProcessDomainService;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {         

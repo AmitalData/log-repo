@@ -17,7 +17,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 export class SimulatorBookingLoadComponent implements AfterViewInit {
     public EntityId: string = null;
     public EntityPM: ShipmentPM;
-    @ViewChild('WizardView', { read: ViewContainerRef, static: true }) target: ViewContainerRef;
+    @ViewChild('WizardView', { read: ViewContainerRef, static: false }) target: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 

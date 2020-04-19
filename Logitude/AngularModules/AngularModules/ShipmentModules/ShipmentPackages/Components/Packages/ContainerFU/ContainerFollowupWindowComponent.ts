@@ -25,7 +25,7 @@ export class ContainerFollowupWindowComponent implements OnDestroy {
     public ValidationErrorsList: string[];
     public IsNewFollowup: boolean;
     private IsNewFollowup_Totango: boolean;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) ChildViewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) ChildViewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 

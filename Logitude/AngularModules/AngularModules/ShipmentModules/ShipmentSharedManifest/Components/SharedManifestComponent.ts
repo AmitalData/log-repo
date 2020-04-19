@@ -319,7 +319,7 @@ export class SharedManifestComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private timerToken: any;
     private Retries: number = 0;
 

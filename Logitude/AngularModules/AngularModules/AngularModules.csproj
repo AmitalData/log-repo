@@ -1114,6 +1114,7 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\ParameterComponentArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\TenantManagementJS.ts" />
+    <TypeScriptCompile Include="Infrastructure\Directives\ChildDirective.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportFolderList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BIReportsTypeList.ts" />
@@ -6212,7 +6213,6 @@
     <Content Include="Infrastructure\Components\FroalaEditorComponent\FroalaEditorComponent.html" />
     <Content Include="Infrastructure\Components\HomeComponent\HomeComponent.html" />
     <Content Include="Infrastructure\Components\LoginComponent\BlockScreenComponent.html" />
-    <Content Include="Infrastructure\Components\LogitudeComponents\LogGridComponent\LogGridFunctions.js" />
     <Content Include="Infrastructure\Components\LogitudeComponents\EditableLogGridComponent\LogHeaderTemplateComponent.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\LogLovV2Component.html" />
     <Content Include="Infrastructure\Components\LogitudeComponents\LogSearchWindowComponent.html" />

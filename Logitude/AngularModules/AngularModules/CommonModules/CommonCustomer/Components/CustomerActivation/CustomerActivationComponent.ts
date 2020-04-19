@@ -31,7 +31,7 @@ export class CustomerActivationComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     private partnersDomainService: PartnersDomainService;
     private customerService: CustomerPMService;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();

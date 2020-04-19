@@ -15,7 +15,7 @@ export class APPaymentTransferTabComponent extends BaseComponent implements OnDe
     public EntityPM: APPaymentPM = null;
     public ObjectTableName = "APPayment";
     public DataContext = this;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;

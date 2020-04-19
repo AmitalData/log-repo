@@ -33,7 +33,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
     public Contact: ContactPM;
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private args: NewEntityArgs;
     public DataContext: NewPotentialCustomerComponent = this;  
     public ContactDataContext: ContactItem; 

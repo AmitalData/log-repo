@@ -57,7 +57,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
     public ValidationErrorsList: string[] = [];
     public OkButtonLabel: string;
     public SessionIndex: number;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     private PropertyChangedEvent: any = null;
     constructor() {

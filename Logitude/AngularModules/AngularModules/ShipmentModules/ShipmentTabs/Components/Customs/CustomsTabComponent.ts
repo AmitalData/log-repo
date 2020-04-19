@@ -25,7 +25,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     public IsSendToAESButtonVisible: boolean = false;
     public DeclarationNumberLabel: string = TextCodeTranslator.Translate("Shipment.F.DeclarationNumber");
     public DeclarationDateLabel: string = TextCodeTranslator.Translate("Shipment.F.DeclarationDate");
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();

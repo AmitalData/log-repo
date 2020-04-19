@@ -40,7 +40,7 @@ export class NewQuoteTemplateComponent extends BaseComponent implements OnInit {
     IsReady: boolean = false;
 
 
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();

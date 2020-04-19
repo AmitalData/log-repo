@@ -12,7 +12,7 @@ import {ContactInputTemplate, ContactInputTemplateArgs} from '../../../../../Com
 export class ContactGeneralTabComponent {
     public EntityPM: ContactPM;
     public ObjectTableName: string = "Contact";
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.RunComponent();

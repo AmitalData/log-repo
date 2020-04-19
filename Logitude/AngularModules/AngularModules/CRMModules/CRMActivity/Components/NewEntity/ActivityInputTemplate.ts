@@ -45,7 +45,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
     public Durations: ActivtyDuration[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor() {
         super();
         this.entityPM = new ActivityPM();

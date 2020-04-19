@@ -37,7 +37,7 @@ export class NewOpportunityComponent extends BaseComponent   {
     public ValidationErrorsList: Array<String> = [];
     public ScreenCode: string = "Opportunity.AdditionalFields";
     private addCustomerVisibility: boolean = true;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public get AddCustomerVisibility() { return this.addCustomerVisibility; }
     public set AddCustomerVisibility(value: boolean) { this.addCustomerVisibility = value; }
     public IsNew: boolean = true;

@@ -43,7 +43,7 @@ export class QuoteTemplateGeneralSetting extends BaseComponent implements OnInit
 
     public ValidationErrorsList: string[];
 
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();

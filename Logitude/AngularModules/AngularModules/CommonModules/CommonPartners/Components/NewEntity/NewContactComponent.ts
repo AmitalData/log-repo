@@ -15,7 +15,7 @@ export class NewContactComponent {
     public EntityPM: ContactPM;
     public ValidationErrorsList: string[] = [];
     private myService: ContactPMService;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.EntityPM = new ContactPM();

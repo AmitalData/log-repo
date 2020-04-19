@@ -17,7 +17,7 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
     public DataContext: ARInvoiceGeneralTabComponent = this;
     private ScreenCode: string = "ARInvoice.GeneralTabScreen";
     public DisplaySATSettings: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {

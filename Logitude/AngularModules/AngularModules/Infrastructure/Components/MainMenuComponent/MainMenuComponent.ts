@@ -28,7 +28,7 @@ export class MainMenuComponent {
     private MainMenuWidthOpened: number = 145;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    @ViewChild("MainMenuContainer", { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild("MainMenuContainer", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     LayoutDirection: string = 'ltr';
     @Output() SelectionChanging: EventEmitter<any> = new EventEmitter();

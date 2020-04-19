@@ -10,7 +10,7 @@ export class EditTabComponent {
     public TabCode: string;
   public ComponentPath: string;
   public ComponentRef: any;
-  @ViewChild('Child', { read: ViewContainerRef, static: true }) ViewContainerRef: ViewContainerRef;
+  @ViewChild('Child', { read: ViewContainerRef, static: false }) ViewContainerRef: ViewContainerRef;
   public ComponentInst: any;
     constructor(private ChangeDetectorRef: ChangeDetectorRef) {
 

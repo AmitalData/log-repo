@@ -49,7 +49,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
     public OkButtonLabel: string;
     public AgentDependencyProperty1: string = "AG";
     public AgentDependencyProperty1IsList: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();

@@ -71,7 +71,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     IsShowProgressLoading: boolean = false;
     IsCustomer: boolean = false;
     public ScreenCode: string = "Customer.AdditionalFields";
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef, private entityPMService: EntityPMService) {
         super();

@@ -21,7 +21,7 @@ export class NewARInvoiceStockComponent {
     public EntityPM: ARInvoiceStockPM;
     private stockPMService: ARInvoiceStockPMService;
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor() {
         this.RunComponent();
 

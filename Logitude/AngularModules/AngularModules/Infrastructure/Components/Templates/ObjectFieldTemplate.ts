@@ -39,7 +39,7 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
     public Direction: string = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
     public NumberFieldTextAlign: string = "right";
-    @ViewChild('Template', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Template', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {

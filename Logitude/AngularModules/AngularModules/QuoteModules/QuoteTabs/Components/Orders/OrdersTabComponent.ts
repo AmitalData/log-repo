@@ -22,7 +22,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     public DataContext: OrdersTabComponent = this;
     public ObjectTableName: string = "Quote";
     public QuoteSetting: QuoteSettingPM = null;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public TransportModeId: string; 
     constructor(public entityArgs: EntityArgs) {
         super();

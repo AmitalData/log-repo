@@ -29,7 +29,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     public TemplateComponent: ContainerFollowupWizardTemplate;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) ChildViewContainerRef: ViewContainerRef; 
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) ChildViewContainerRef: ViewContainerRef; 
     private entityPMService: ShipmentPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {

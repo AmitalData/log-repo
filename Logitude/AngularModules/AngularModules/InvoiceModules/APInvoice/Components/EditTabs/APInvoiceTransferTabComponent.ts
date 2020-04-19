@@ -15,7 +15,7 @@ export class APInvoiceTransferTabComponent extends BaseComponent implements OnDe
     public EntityPM: APInvoicePM = null;
     public ObjectTableName = "APInvoice";
     public DataContext = this;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     constructor(private entityArgs: EntityArgs) {
         super();

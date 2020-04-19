@@ -22,7 +22,7 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
     public DisplaySATSettings: boolean = false;
     public DisplayFechaPago: boolean = false;
 
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
 

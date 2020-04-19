@@ -61,7 +61,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     public ItemsSource: ObservableCollection;
     QuoteTemplateSectionTypeName: string = "Packages";
     IsPerContainerChange: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     ShowTotalPerContinerLink: boolean = false;
     ShowVATDetails :boolean = false;
