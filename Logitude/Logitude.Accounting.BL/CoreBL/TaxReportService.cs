@@ -281,7 +281,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxReportLine.LineTypeCode = "C";
                     }
 
-                    else if ( journal.LineCounter>0 && journal.LineCreditAccountId == setting.CustomsGLAccountId)
+                    else if ( journal.LineCounter>0 && journal.LineCreditAccountId != null && journal.LineCreditAccountId == setting.CustomsGLAccountId)
                     {
 
                         taxReportLine.LineTypeCode = "R";
