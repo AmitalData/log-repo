@@ -46,7 +46,7 @@ export class CommunicationStepsComponent
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this._communicationLogStepListService = new CommunicationLogStepListService();
-      
+        this.EntityPM = this.entityArgs.EntityPM;
         this._CommunicationLogStepDataViewModelList = new ObservableCollection([]);
     }
     ngOnInit() {
