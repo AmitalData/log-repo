@@ -48,6 +48,7 @@
   </Column>
   <Column
     Name="Index"
+    ShortName="Index_"
     Type="int">
     <Constraints
       Nullable="false" />

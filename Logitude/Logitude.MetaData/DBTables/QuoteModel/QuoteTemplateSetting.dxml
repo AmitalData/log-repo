@@ -1143,6 +1143,7 @@
   </Column>
   <Column
     Name="ShowIncludedChargesPerContainers"
+    ShortName="ShowIncludedChargesPerConts"
     Type="bit">
     <Constraints
       Nullable="false" />

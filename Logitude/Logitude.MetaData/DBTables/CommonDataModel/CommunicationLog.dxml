@@ -5,119 +5,7 @@
   DBType="Main"
   Module="Common">
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CreateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CreateDateUTC"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DoneDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DoneDateUTC"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LastStatusDate"
-    Type="datetime"
-    DefaultValue="CurrentDate">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LastStatusDateUTC"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="NextTryDateTime"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="NextTryDateTimeUTC"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CommunicationLogTypeCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CommunicationStatusTypeCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Subject"
-    Type="nvarchar"
-    Size="500">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InOut"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="EntityId"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CC"
-    Type="varchar"
-    Size="4000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ObjectTableId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DocumentOutId"
     Type="varchar"
     Size="40">
     <Constraints
@@ -131,13 +19,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CreatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="DocumentId"
     Type="varchar"
     Size="15">
@@ -145,29 +26,160 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="To"
+    Name="ExceptionMessage"
+    ShortName="ExceptionMessage_"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Logs"
+    ShortName="Logs_"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CorrelationID"
+    ShortName="CorrelationID_"
+    Type="varchar"
+    Size="64">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MessageLockId"
+    ShortName="MessageLockId_"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReplyToList"
+    ShortName="ReplyToList_"
+    Type="varchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    ShortName="CreateDate_"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Subject"
+    ShortName="Subject_"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DoneDate"
+    ShortName="DoneDate_"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InOut"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CC"
+    ShortName="CC_"
     Type="varchar"
     Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
+    Name="DocumentOutId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="To"
+    ShortName="To_"
+    Type="varchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CommunicationStatusTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CommunicationLogTypeCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Retries"
+    ShortName="Retries_"
     Type="int">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="BCC"
+    ShortName="BCC_"
     Type="varchar"
     Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="From"
+    ShortName="From_"
     Type="varchar"
     Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastStatusDate"
+    ShortName="LastStatusDate_"
+    Type="datetime"
+    DefaultValue="CurrentDate">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityReference"
+    Type="varchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
@@ -179,60 +191,63 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="EntityReference"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExceptionMessage"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Logs"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CorrelationID"
-    Type="varchar"
-    Size="64">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ResponseDocumentId"
+    Name="Id"
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Column
-    Name="Priority"
-    Type="int"
-    DefaultValue="0">
+    Name="CreateDateUTC"
+    ShortName="CreateDateUTC_"
+    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
+    Name="DoneDateUTC"
+    ShortName="DoneDateUTC_"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastStatusDateUTC"
+    ShortName="LastStatusDateUTC_"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="NextTryDateTimeUTC"
+    ShortName="NextTryDateTimeUTC_"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NextTryDateTime"
+    ShortName="NextTryDateTime_"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="QueueName"
+    ShortName="QueueName_"
     Type="varchar"
     Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="MessageLockId"
-    Type="varchar"
-    Size="40">
+    Name="Priority"
+    ShortName="Priority_"
+    Type="int"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="AWBNumber"
@@ -242,9 +257,21 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ReplyToList"
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsSecured"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ResponseDocumentId"
     Type="varchar"
-    Size="500">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -263,53 +290,27 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LogSettings"
-    Type="varchar"
-    Size="350">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsSecured"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="EmailDeliveryError"
     Type="nvarchar"
     Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="Tenant"
-    ReferencedTable="Tenants"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CommunicationLogTypeCode"
-    ReferencedTable="CommunicationLogTypes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CommunicationStatusTypeCode"
-    ReferencedTable="CommunicationStatusTypes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ObjectTableId"
-    ReferencedTable="ObjectTables"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="DocumentOutId"
-    ReferencedTable="DocumentOuts"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+  <Column
+    Name="LogSettings"
+    Type="varchar"
+    Size="350">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentsFilingId"
     ReferencedTable="DocumentsFilings"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DocumentId"
+    ReferencedTable="Documents"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -318,8 +319,28 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="DocumentId"
-    ReferencedTable="Documents"
+    ForeignKeyColumn="DocumentOutId"
+    ReferencedTable="DocumentOuts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CommunicationStatusTypeCode"
+    ReferencedTable="CommunicationStatusTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CommunicationLogTypeCode"
+    ReferencedTable="CommunicationLogTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Tenant"
+    ReferencedTable="Tenants"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation

@@ -290,7 +290,8 @@
   <field
     Id="&quot;0c7bb2ef-02dc-4373-8cce-23b6cc95925e&quot;"
     FieldName="&quot;ExceptionMessage&quot;"
-    OldNames="ExceptionMessage"
+    ShortName="ExceptionMessage_"
+    OldNames="ExceptionMessage,ExceptionMessage_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -364,7 +365,8 @@
   <field
     Id="&quot;87cd4bf8-cfa1-4863-b2cc-0f4c6d7589cf&quot;"
     FieldName="&quot;Logs&quot;"
-    OldNames="Logs"
+    ShortName="Logs_"
+    OldNames="Logs,Logs_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -438,7 +440,8 @@
   <field
     Id="&quot;9d9551fd-53db-4611-9f6f-a344cc5bbd42&quot;"
     FieldName="&quot;CorrelationID&quot;"
-    OldNames="CorrelationID"
+    ShortName="CorrelationID_"
+    OldNames="CorrelationID,CorrelationID_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -512,7 +515,8 @@
   <field
     Id="&quot;548cbf1d-c045-4653-94ad-875e236994c7&quot;"
     FieldName="&quot;MessageLockId&quot;"
-    OldNames="MessageLockId"
+    ShortName="MessageLockId_"
+    OldNames="MessageLockId,MessageLockId_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -586,7 +590,8 @@
   <field
     Id="&quot;a6422342-3781-49a1-b751-5661c7b92474&quot;"
     FieldName="&quot;ReplyToList&quot;"
-    OldNames="ReplyToList"
+    ShortName="ReplyToList_"
+    OldNames="ReplyToList,ReplyToList_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -816,7 +821,8 @@
   <field
     Id="&quot;55c18b20-a21c-4851-a29f-a9b99a117ae6&quot;"
     FieldName="&quot;CreateDate&quot;"
-    OldNames="CreateDate"
+    ShortName="CreateDate_"
+    OldNames="CreateDate,CreateDate_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -895,7 +901,8 @@
   <field
     Id="&quot;06c21a2a-f6e6-4522-9797-7f4d0aee572c&quot;"
     FieldName="&quot;Subject&quot;"
-    OldNames="Subject"
+    ShortName="Subject_"
+    OldNames="Subject,Subject_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -974,7 +981,8 @@
   <field
     Id="&quot;4efd2cc5-08fe-4e7c-9594-a1bbb0701731&quot;"
     FieldName="&quot;DoneDate&quot;"
-    OldNames="DoneDate"
+    ShortName="DoneDate_"
+    OldNames="DoneDate,DoneDate_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1131,7 +1139,8 @@
   <field
     Id="&quot;b10900ac-d997-4829-aade-b7cc5006e62c&quot;"
     FieldName="&quot;CC&quot;"
-    OldNames="CC"
+    ShortName="CC_"
+    OldNames="CC,CC_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1363,7 +1372,8 @@
   <field
     Id="&quot;55704fa8-3824-43e6-9dcb-f79f7be56246&quot;"
     FieldName="&quot;To&quot;"
-    OldNames="To"
+    ShortName="To_"
+    OldNames="To,To_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1756,7 +1766,8 @@
   <field
     Id="&quot;d01db1c2-4169-42c2-bfdb-2ad2bc6fbbe3&quot;"
     FieldName="&quot;Retries&quot;"
-    OldNames="Retries"
+    ShortName="Retries_"
+    OldNames="Retries,Retries_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -1835,7 +1846,8 @@
   <field
     Id="&quot;6afb6272-ba37-42ff-9c24-de4d5f5352d6&quot;"
     FieldName="&quot;BCC&quot;"
-    OldNames="BCC"
+    ShortName="BCC_"
+    OldNames="BCC,BCC_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2068,7 +2080,8 @@
   <field
     Id="&quot;cb09b00b-a043-4720-b794-4a06373fa7f3&quot;"
     FieldName="&quot;From&quot;"
-    OldNames="From"
+    ShortName="From_"
+    OldNames="From,From_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2147,7 +2160,8 @@
   <field
     Id="&quot;d76ce742-8edb-4295-8238-54bf8f2c1745&quot;"
     FieldName="&quot;LastStatusDate&quot;"
-    OldNames="LastStatusDate"
+    ShortName="LastStatusDate_"
+    OldNames="LastStatusDate,LastStatusDate_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2453,7 +2467,8 @@
   <field
     Id="&quot;3aaca12d-af35-4c25-af31-626c52fab78c&quot;"
     FieldName="&quot;CreateDateUTC&quot;"
-    OldNames="CreateDateUTC"
+    ShortName="CreateDateUTC_"
+    OldNames="CreateDateUTC,CreateDateUTC_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2530,7 +2545,8 @@
   <field
     Id="&quot;08a92c8d-8ff8-486d-b7f4-8cffe60e4098&quot;"
     FieldName="&quot;DoneDateUTC&quot;"
-    OldNames="DoneDateUTC"
+    ShortName="DoneDateUTC_"
+    OldNames="DoneDateUTC,DoneDateUTC_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2607,7 +2623,8 @@
   <field
     Id="&quot;a8371242-9a50-466f-9088-f68af479fce5&quot;"
     FieldName="&quot;LastStatusDateUTC&quot;"
-    OldNames="LastStatusDateUTC"
+    ShortName="LastStatusDateUTC_"
+    OldNames="LastStatusDateUTC,LastStatusDateUTC_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2684,7 +2701,8 @@
   <field
     Id="&quot;12b1cda6-464e-423b-9064-08b9899dba65&quot;"
     FieldName="&quot;NextTryDateTimeUTC&quot;"
-    OldNames="NextTryDateTimeUTC"
+    ShortName="NextTryDateTimeUTC_"
+    OldNames="NextTryDateTimeUTC,NextTryDateTimeUTC_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2761,7 +2779,8 @@
   <field
     Id="&quot;1f895a14-39df-4300-942c-024936eafca6&quot;"
     FieldName="&quot;NextTryDateTime&quot;"
-    OldNames="NextTryDateTime"
+    ShortName="NextTryDateTime_"
+    OldNames="NextTryDateTime,NextTryDateTime_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2838,7 +2857,8 @@
   <field
     Id="&quot;210fd14e-3985-4204-b469-a69a2b2d3d93&quot;"
     FieldName="&quot;QueueName&quot;"
-    OldNames="QueueName"
+    ShortName="QueueName_"
+    OldNames="QueueName,QueueName_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -2915,7 +2935,8 @@
   <field
     Id="&quot;c11744be-063c-4caa-8163-0e517b627a0d&quot;"
     FieldName="&quot;Priority&quot;"
-    OldNames="Priority"
+    ShortName="Priority_"
+    OldNames="Priority,Priority_"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

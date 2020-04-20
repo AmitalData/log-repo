@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Quote TemplateS Setting&quot;"
-  Code="&quot;4bf1&quot;"
+  Code="&quot;f20a&quot;"
   Name="&quot;QuoteTemplateSetting&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Quote&quot;"
@@ -12556,7 +12556,8 @@
   <field
     Id="&quot;96104155-4c3a-4b48-8992-e39d11f2247c&quot;"
     FieldName="&quot;ShowIncludedChargesPerContainers&quot;"
-    OldNames="ShowIncludedChargesPerContainers"
+    ShortName="ShowIncludedChargesPerConts"
+    OldNames="ShowIncludedChargesPerContainers,ShowIncludedChargesPerConts"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

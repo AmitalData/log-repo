@@ -493,7 +493,7 @@ namespace Logitude.DBMigrations.Models
                 isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnName).Any();
             }
 
-            if (!isColumnInCurrentTable && dxmlColumnShortName != null && dxmlColumnName.Length > 30)
+            if (!isColumnInCurrentTable && dxmlColumnShortName != null)
             {
                 isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnShortName).Any();
             }
@@ -524,7 +524,7 @@ namespace Logitude.DBMigrations.Models
                 isColumnInCurrentTable = true;
             }
 
-            if (!isColumnInCurrentTable && dxmlColumnShortName != null && dxmlColumnName.Length > 30 && CurrentTable.Columns.Where(c => c.Name == dxmlColumnShortName).Any())
+            if (!isColumnInCurrentTable && dxmlColumnShortName != null && CurrentTable.Columns.Where(c => c.Name == dxmlColumnShortName).Any())
             {
                 columnName = dxmlColumnShortName;
             }

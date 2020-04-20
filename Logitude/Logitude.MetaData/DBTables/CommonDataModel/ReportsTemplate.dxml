@@ -19,6 +19,25 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Description"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsSystem"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="ReportId"
     Type="varchar"
     Size="15">
@@ -26,9 +45,16 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Description"
-    Type="nvarchar"
-    Size="250">
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdatedByUserId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="false" />
   </Column>
@@ -45,34 +71,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="UpdatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CreatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="CurrentVersion"
     Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsSystem"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="InActive"
-    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
@@ -85,6 +85,7 @@
   </Column>
   <Column
     Name="From"
+    ShortName="From1"
     Type="nvarchar"
     Size="500">
     <Constraints
@@ -117,12 +118,12 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="UpdatedByUserId"
+    ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="CreatedByUserId"
+    ForeignKeyColumn="UpdatedByUserId"
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
