@@ -486,10 +486,10 @@
                                             <td>
                                                 <table>
                                                     <tr>
-                                                        <td style="width:120px;">
+                                                        <td style="width:60px;">
                                                             <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
-                                                        <td style="width:220px;">
+                                                        <td style="width:150px;">
                                                             <LogLov [ObjectFieldName]="'OriginPortId'"
                                                                     [ObjectTableName]="ObjectTableName"
                                                                     [LookUpTableName]="'Port'"
@@ -503,14 +503,13 @@
 
                                                         <td style="width:10px">
                                                             <div>
-
                                                             </div>
                                                         </td>
 
-                                                        <td style="width:82px;">
+                                                        <td style="width:60px;">
                                                             <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
-                                                        <td style="width:220px;">
+                                                        <td style="width:150px;">
                                                             <LogLov [ObjectFieldName]="'DestinationPortId'"
                                                                     [ObjectTableName]="ObjectTableName"
                                                                     [LookUpTableName]="'Port'"
@@ -520,20 +519,36 @@
                                                                     [SelectedValue]="DestinationPortId"
                                                                     [DependencyFilter1Value]="DestinationDependencyFilterValue">
                                                             </LogLov>
-
                                                         </td>
 
                                                         <td style="width:10px">
                                                             <div>
-
                                                             </div>
                                                         </td>
 
-                                                        <td style="width:130px">
+                                                        <td style="width:80px;" *ngIf="TariffType == 'AFC'">
+                                                            <LogLabel [ObjectFieldName]="'TariffProductId'" [ObjectTableName]="'Tariff'" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td style="width:180px;" *ngIf="TariffType == 'AFC'">
+                                                            <LogLov [ObjectFieldName]="'TariffProductId'"
+                                                                    [ObjectTableName]="'Tariff'"
+                                                                    [LookUpTableName]="'TariffProduct'"
+                                                                    [DataContext]="DataContext"
+                                                                    (SelectedItemChanged)="TariffProductId"
+                                                                    [SelectedValue]="TariffProductId">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width:10px" *ngIf="TariffType == 'AFC'">
+                                                            <div>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width:60px">
                                                             <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td style="width:220px">
+                                                        <td style="width:180px">
                                                             <table>
                                                                 <tr>
                                                                     <td>

@@ -501,4 +501,5 @@ export class TariffSearchArgs {
     Quantity3: number;
     Quantity4: number;
     Quantity5: number;
+    ProductId: string;
 }

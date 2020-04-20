@@ -24,6 +24,8 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { PackageTypeList } from '../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../Common/Services/StandardLists/PackageTypeListService';
 import { QuoteTool } from '../../../Quote/Tools';
+import { TariffProductListService } from '../../Services/StandardLists/TariffProductListService';
+import { TariffProductList } from '../../EntityLists/TariffProductList';
 
 
 @Component({
@@ -58,9 +60,27 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.myChargesTypeListService = new ChargesTypeListService();
         this.SetUIProperties();
         this.Date = DateTool.GetCurrentDateAsUtc();
+
         this.CalculateDefaultCurrency();
+        this.GetTariffProducts();
+
         this.dimenstionShipment = new ShipmentPM();
         this.packageTypeListService = new PackageTypeListService();
+    }
+
+    private GetTariffProducts() {
+        var service: TariffProductListService = new TariffProductListService();
+        service.getAllFromCache().subscribe((res: any) => {
+            if (!res.HasError) {
+                if (res.Result) {
+                    var myResult: TariffProductList[] = res.Result;
+
+                    var generalProduct = myResult.filter(d => d.Code == "GEN")[0];
+                    this.TariffProductId = generalProduct == null ? null : generalProduct.Id;
+                }
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     private CalculateDefaultCurrency() {
@@ -348,6 +368,17 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
+
+    private productId: string;
+    get TariffProductId() {
+        return this.productId;
+    }
+    set TariffProductId(value: string) {
+        if (this.productId != value) {
+            this.productId = value;
+        }
+    }
+
     ComputeGrossWeigh_Kg_Ton() {
         var weigh_Kg: number = null;
         var weigh_Ton: number = null;
@@ -562,6 +593,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             tariffSearchArgs.Quantity3 = this.Quantity3;
             tariffSearchArgs.Quantity4 = this.Quantity4;
             tariffSearchArgs.Quantity5 = this.Quantity5;
+            tariffSearchArgs.ProductId = this.TariffProductId;
 
             this.myDomainService.GetAvailableAirlineFreightTariffs(tariffSearchArgs).subscribe((res:any) => {
                 if (!res.HasError) {
