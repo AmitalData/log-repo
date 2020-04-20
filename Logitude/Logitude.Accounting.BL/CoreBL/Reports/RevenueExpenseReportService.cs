@@ -608,7 +608,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     );
 
             }
+            if (FromDate.Month == 1 && FromDate.Day == 1)
+            {
 
+                var myLedgerTransactionRepository = new LedgerTransactionRepository(accountingContext);
+                var qYearTransferLedgerTransaction = myLedgerTransactionRepository
+                    .GetYearTransferLedgerTransaction(null, FromDate.Year, tenant);
+
+                QBaseTranactionFROMDateTillFROMDateNextOfMonthNotInclude =
+                    QBaseTranactionFROMDateTillFROMDateNextOfMonthNotInclude
+                    .Where(r => !(qYearTransferLedgerTransaction.Select(yt => yt.Id)).Contains(r.Id));
+
+            }
             var qTempTransStart = (from r in QBaseTranactionFROMDateTillFROMDateNextOfMonthNotInclude
                                    select new TrailReportTemp()
                                    {
