@@ -2383,6 +2383,10 @@
     <Compile Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.Designer.cs">
       <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs" />
+    <Compile Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.Designer.cs">
+      <DependentUpon>202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4320,6 +4324,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.resx">
       <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.resx">
+      <DependentUpon>202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

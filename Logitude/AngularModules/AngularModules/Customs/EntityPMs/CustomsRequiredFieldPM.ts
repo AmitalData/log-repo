@@ -49,6 +49,11 @@ export class CustomsRequiredFieldPM {
     public set ObjectFieldName(newValue: string) { if (this.objectFieldName != newValue) { this.objectFieldName = newValue; this.MarkAsDirty("ObjectFieldName"); } }
        
 	 
+    private objectfieldCode: string;
+    public get ObjectfieldCode() { return this.objectfieldCode; }
+    public set ObjectfieldCode(newValue: string) { if (this.objectfieldCode != newValue) { this.objectfieldCode = newValue; this.MarkAsDirty("ObjectfieldCode"); } }
+       
+	 
 
     public OldEntityPM: CustomsRequiredFieldPM;
 		

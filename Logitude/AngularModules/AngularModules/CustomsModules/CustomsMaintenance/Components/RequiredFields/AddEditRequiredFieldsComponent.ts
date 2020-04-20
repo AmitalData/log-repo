@@ -71,6 +71,8 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
 
             var requierdField = new CustomsRequiredFieldList();
             requierdField.ObjectfieldId = objectField.Id;
+            requierdField.ObjectfieldCode = objectField.FieldCode;
+
             requierdField.ObjectFieldName = objectField.FieldName;
             requierdField.ObjectTableId = objectField.ObjectTableId
             requierdField.Tenant = SessionLocator.Tenant;
@@ -78,7 +80,7 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
             var item = new RequiredFieldItemModel(objectField, requierdField);
             item.TranslatedName = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode);
 
-            if (this.SelectedObjectFields.find(d => d.ObjectfieldId == objectField.Id)) {
+            if (this.SelectedObjectFields.find(d => d.ObjectfieldCode == objectField.FieldCode)) {
                 item.Active = true;
             }
             items.push(item);
@@ -114,6 +116,8 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
         this.OriginalFieldsList.Collection.forEach((field: RequiredFieldItemModel) => {
             var i = new RequierdFieldObject();
             i.ObjectfieldId = field.ObjectfieldId;
+            i.ObjectfieldCode = field.FieldCode;
+
             i.ObjectTableId = field.ObjectField.ObjectTableId;
             i.ObjectFieldName = field.ObjectField.FieldName;
             i.Active = field.Active;
@@ -168,15 +172,24 @@ export class RequiredFieldItemModel extends BaseComponent {
     constructor(public ObjectField: any, public RequierdField: CustomsRequiredFieldList) {
         super();
         this.ObjectfieldId = ObjectField.Id;
-    }
+        this.ObjectfieldCode = ObjectField.FieldCode;
+     }
 
-    //#region Properties
+    //#region PropertiesObjectfieldId
 
     objectfieldId: string;
     get ObjectfieldId() { return this.objectfieldId; }
     set ObjectfieldId(value: string) {
         if (this.objectfieldId != value) {
             this.objectfieldId = value;
+        }
+    }
+
+    objectfieldCode: string;
+    get ObjectfieldCode() { return this.objectfieldCode; }
+    set ObjectfieldCode(value: string) {
+        if (this.objectfieldCode != value) {
+            this.objectfieldCode = value;
         }
     }
 
@@ -210,6 +223,7 @@ export class RequiredFieldItemModel extends BaseComponent {
 
 export class RequierdFieldObject {
     ObjectfieldId: string;
+    ObjectfieldCode: string;
     ObjectTableId: string;
     ObjectFieldName: string;
     Active: boolean;

@@ -32,12 +32,12 @@ namespace Logitude.Customs.Data.Repsitories
             return requiredFields;
         }
 
-        public CustomsRequiredField GetCustomRequiredFieldsByObjectFieldId(string ObjectFieldId, int Tenant)
+        public CustomsRequiredField GetCustomRequiredFieldsByObjectFieldCode(string ObjectFieldCode, int Tenant)
         {
             CustomsRequiredField requiredFields;
 
             requiredFields = (from a in context.CustomsRequiredFields
-                              where a.ObjectfieldId == ObjectFieldId && a.Tenant == Tenant
+                              where a.ObjectfieldCode == ObjectFieldCode && a.Tenant == Tenant
                               select a).FirstOrDefault();
             return requiredFields;
         }

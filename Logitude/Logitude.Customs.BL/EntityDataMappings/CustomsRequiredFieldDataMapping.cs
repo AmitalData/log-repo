@@ -34,10 +34,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPOCOToPM(CustomsRequiredFieldPM entityPM, CustomsRequiredField entityPOCO)
         {
             CustomMappedPMProperties.Add(PMPropertyNames.ObjectFieldName);
-            if (entityPOCO.ObjectfieldId != null)
+            if (entityPOCO.ObjectfieldCode != null)
             {
                 ObjectFieldRepository objectFieldsRep = new ObjectFieldRepository(entityPM.Tenant);
-                ObjectField objectField = objectFieldsRep.GetSingleObjectField(entityPOCO.ObjectfieldId);
+                ObjectField objectField = objectFieldsRep.GetSingleObjectField(entityPOCO.ObjectfieldCode);
                 if( objectField != null)
                 entityPM.ObjectFieldName = objectField.FieldName;
             }
