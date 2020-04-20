@@ -978,7 +978,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             this.QueryCode = this.SelectedQuery.UniqueCode;
         }
         if (AppTool.IsNullOrEmpty(this.Title)) {
-          //  this.Title = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+            this.Title = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
         }
         if (this.SelectedQuery != null) {
             //console.log(this.SelectedQuery);
