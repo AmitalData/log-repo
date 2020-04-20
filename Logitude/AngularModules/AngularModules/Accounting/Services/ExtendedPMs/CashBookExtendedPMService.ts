@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -25,7 +25,7 @@ export class CashBookExtendedPMService {
     GetSingleWithoutLines(id: string) {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
-       return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id ,  ServiceHelper.GetHttpHeaders()).pipe(
+       return this.httpClient.get(this._apiUrl  + id ,  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 serviceResponse.Result = res;
                 return serviceResponse;
