@@ -965,7 +965,7 @@
                                                                                         </table>
                                                                                     </td>
 
-                                                                                    <td style="vertical-align:central">
+                                                                                    <td style="vertical-align:central; width:500px;">
                                                                                         <table>
                                                                                             <tr>
                                                                                                 <td>
@@ -974,10 +974,10 @@
                                                                                             </tr>
 
                                                                                             <tr style="height:22px;">
-                                                                                                <td class="Label" style="font-size:11px;">{{item.Remarks}}</td>
+                                                                                                <td class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;">{{item.Remarks}}</td>
                                                                                             </tr>
                                                                                             <tr style="height:22px;">
-                                                                                                <td class="Label" style="font-size:11px;">{{item.AllIn}}</td>
+                                                                                                <td class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;">{{item.AllIn}}</td>
                                                                                             </tr>
                                                                                             <tr style="height:22px;">
                                                                                                 <td class="Label" style="font-size:11px;">{{item.ValidityDate}}</td>
@@ -1134,7 +1134,7 @@
                                                                                                         <div></div>
                                                                                                     </td>
 
-                                                                                                    <td style="width:60px; font-size:11px; float:right;">
+                                                                                                    <td style="width:60px; font-size:11px; text-align:right;">
                                                                                                         {{allInItem.Price  | NumbersPipe:'N2'}}  {{item.CurrencySign}}
                                                                                                     </td>
                                                                                                 </tr>
@@ -1194,11 +1194,17 @@
                                                                                         <td>
                                                                                             <table>
                                                                                                 <tr>
-                                                                                                    <td style="width:40px;font-size:11px;">
+                                                                                                    <td style="width:35px;font-size:11px;">
                                                                                                         {{surcharge.Code}}
                                                                                                     </td>
 
-                                                                                                    <td style="width:2px; font-size:12px;"> | </td>
+                                                                                                    <td style="width:2px; height: 100%;">
+                                                                                                        <div style="width:1px; height: calc(100% - 5px); background: #aaaaaa; margin:auto;"></div>
+                                                                                                    </td>
+
+                                                                                                    <td style="width:3px;">
+                                                                                                        <div></div>
+                                                                                                    </td>
 
                                                                                                     <td style="font-size:11px; float:left; width:122px; max-width:122px;" class="TextTrimming">
                                                                                                         {{surcharge.Name}}
@@ -1208,7 +1214,7 @@
                                                                                                         <div></div>
                                                                                                     </td>
 
-                                                                                                    <td style="width:60px; float:right; font-size:11px;">
+                                                                                                    <td style="width:60px; text-align:right; font-size:11px;">
                                                                                                         {{surcharge.Price  | NumbersPipe:'N2'}}  {{item.CurrencySign}}
                                                                                                     </td>
 
@@ -1247,11 +1253,11 @@
                                                                                             </tr>
 
                                                                                             <tr style="height:28px;">
-                                                                                                <td style="font-size:16px; font-weight: 700;" class="ColorBlue">Total</td>
+                                                                                                <td style="font-size:16px; font-weight: 700; text-align:center" class="ColorBlue">Total</td>
                                                                                             </tr>
 
                                                                                             <tr style="height:28px;">
-                                                                                                <td style="font-size:16px; font-weight: 700;" class="ColorBlue">{{item.WholePrice | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
+                                                                                                <td style="font-size:16px; font-weight: 700; text-align:center" class="ColorBlue">{{item.WholePrice | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
                                                                                             </tr>
 
                                                                                             <tr>
