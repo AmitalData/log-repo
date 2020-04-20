@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -7,6 +6,7 @@ import { APPaymentPM } from '../../../../Invoice/EntityPMs/APPaymentPM';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 declare var window: any;
+
 @Component({
     
     templateUrl: './APPaymentGeneralTabComponent.html',

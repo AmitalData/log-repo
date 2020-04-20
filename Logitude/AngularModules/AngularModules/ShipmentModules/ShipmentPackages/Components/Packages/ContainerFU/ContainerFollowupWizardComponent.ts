@@ -1,4 +1,4 @@
-import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ContainerFollowupWizardTemplate} from './ContainerFollowupWizardTemplate';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
