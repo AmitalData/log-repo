@@ -42,6 +42,7 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
 using Logitude.TariffModule.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.EntityOtherServices;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -414,6 +415,7 @@ namespace WebFreight.Web.InfrastructureModel
                     {
                         tenantZeroCustomsRequiredFields = CustomsRequiredFieldRepository.GetAll(0).ToList();
                     }
+
                     #endregion
                     scope.Complete();
                 }
@@ -668,6 +670,12 @@ namespace WebFreight.Web.InfrastructureModel
 
                                         documentTypeRepository.SubmitChanges();
                                     }
+                                }
+
+                                if(countryCode == "MX")
+                                {
+                                    MexicanCountryCities mexicanCountryCities = new MexicanCountryCities();
+                                    mexicanCountryCities.AddMexicanCountryCities(tenant, countryId);     
                                 }
                             }                                                      
                         }

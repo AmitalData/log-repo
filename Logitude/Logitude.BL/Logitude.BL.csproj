@@ -341,6 +341,7 @@
     <Compile Include="CommonDataModel\EntityLists\TariffCarrierTranslationList.cs" />
     <Compile Include="CommonDataModel\EntityLists\TenantAdditionalDataList.cs" />
     <Compile Include="CommonDataModel\EntityLists\AccountingPartnerList.cs" />
+    <Compile Include="CommonDataModel\EntityOtherServices\MexicanCountryCities.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreasPortPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CarrierAreaPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CardContactAdditionalServicePM.cs" />
