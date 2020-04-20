@@ -175,6 +175,20 @@
       Nullable="false" />
   </Column>
 
+
+  <Column
+    Name="DocumentDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DueDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+
   <Relation
     ForeignKeyColumn="TypeCode"
     ReferencedTable="JournalTypes"
