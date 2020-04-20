@@ -1,7 +1,6 @@
 
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { DynamicLoader } from '../App/DynamicLoader/DynamicLoader';
-//import {DynamicLoader} from './Utilities/DynamicLoader';
 import {ServiceHelper} from './Utilities/ServiceHelper';
 import {SessionLocator} from './Utilities/SessionLocator';
 import {ExternalParams, ExternalParamsArg} from './Utilities/ExternalParams';
@@ -11,7 +10,9 @@ import {ServiceResponse} from './DataContracts/ServiceResponse';
 import {TermsofUseArgs} from './DataContracts/TermsofUseArgs';
 import { environment } from '../environments/environment';
 import {LoginService} from './Services/LoginService';
-import {AppTool} from './Tools'
+import { AppTool } from './Tools'
+import { ChildDirective } from './Directives/ChildDirective';
+
 declare var IsMobileDetected;
 
 @Component({
@@ -19,17 +20,16 @@ declare var IsMobileDetected;
   template:
     `
         <div class="MediaFillRelative">
-            <div #Child></div>
+            <div ChildDirective></div>
         </div>
     `,
 })
 
-export class RootComponent implements OnInit {
-  private isComponentBooted: boolean = false;
-  private isComponentInited: boolean = false;
-  @ViewChild("Child", { read: ViewContainerRef, static: true }) location: ViewContainerRef;
-  constructor() {
+export class RootComponent implements AfterViewInit {
 
+  @ViewChild(ChildDirective) Child: ChildDirective;
+
+  constructor() {
     var data = window.sessionStorage.getItem('userdata');
 
     if (data != "SignOut") {
@@ -51,54 +51,52 @@ export class RootComponent implements OnInit {
       SessionLocator.IsProduction = true;
     }
 
-    this.isComponentBooted = true;
-    this.RunComponent();
+    //this.isComponentBooted = true;
+    //this.RunComponent();
   }
 
-  ngOnInit() {
-    this.isComponentInited = true;
+  ngAfterViewInit() {
+    //this.isComponentInited = true;
     this.RunComponent();
   }
 
   isDSV: boolean = false;
   RunComponent() {
-    if (this.isComponentBooted && this.isComponentInited) {
-      var url = window.location.href;
+    var url = window.location.href;
 
-      this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
+    this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
 
-      var data = window.sessionStorage.getItem('userdata');
-      if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && url.indexOf('localhost') == -1)) {
-        document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+    var data = window.sessionStorage.getItem('userdata');
+    if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && url.indexOf('localhost') == -1)) {
+      document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+    }
+
+    else {
+      this.LoadLoginPage();
+      var IsPREQ = SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && (SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" || SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid");
+      if (url && IsPREQ == false && url.indexOf('localhost') == -1) {
+        window.onbeforeunload = function (e) {
+          var message = "";
+          if (SessionLocator.ExternalParams && SessionLocator.ExternalParams.OneTimePasswordId) {
+            message = "when you leave this site can't not be used the key agin";
+          }
+          else if (!SessionLocator.IsSiguOut) {
+            message = "Are you sure you want to leave this page ?";
+          }
+
+          if (!AppTool.IsNullOrEmpty(message)) {
+            e.returnValue = message;
+            return message;
+          }
+        };
       }
 
-      else {
-        this.LoadLoginPage();
-        var IsPREQ = SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && (SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" || SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "uid");
-        if (url && IsPREQ == false && url.indexOf('localhost') == -1) {
-          window.onbeforeunload = function (e) {
-            var message = "";
-            if (SessionLocator.ExternalParams && SessionLocator.ExternalParams.OneTimePasswordId) {
-              message = "when you leave this site can't not be used the key agin";
-            }
-            else if (!SessionLocator.IsSiguOut) {
-              message = "Are you sure you want to leave this page ?";
-            }
-
-            if (!AppTool.IsNullOrEmpty(message)) {
-              e.returnValue = message;
-              return message;
-            }
-          };
-        }
-
-      }
     }
   }
 
   private ClearLocation() {
-    if (this.location) {
-      this.location.clear();
+    if (this.Child.Location) {
+      this.Child.Location.clear();
     }
   }
 
@@ -140,7 +138,7 @@ export class RootComponent implements OnInit {
 
     if (this.isDSV == true) {
       if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
-        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent", this.location)
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent", this.Child.Location)
           .then(cmpRef => {
 
             cmpRef.instance.Blocking.subscribe(s => {
@@ -154,7 +152,7 @@ export class RootComponent implements OnInit {
           });
       }
       else {
-        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVLoginProcessComponent", this.location)
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVLoginProcessComponent", this.Child.Location)
           .then(cmpRef => {
 
             cmpRef.instance.Blocking.subscribe(s => {
@@ -169,7 +167,7 @@ export class RootComponent implements OnInit {
       }
     }
     else {
-      SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.location)
+      SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.Child.Location)
         .then(cmpRef => {
 
           cmpRef.instance.Blocking.subscribe(s => {
@@ -186,7 +184,7 @@ export class RootComponent implements OnInit {
   LoadBlockingScreen() {
     this.ClearLocation();
 
-    SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/BlockScreenComponent", this.location)
+    SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/BlockScreenComponent", this.Child.Location)
       .then(cmpRefBlocked => {
         cmpRefBlocked.instance.BackToLoginCompleted.subscribe(r => {
           this.SignOutCompleted();
@@ -198,7 +196,7 @@ export class RootComponent implements OnInit {
     this.ClearLocation();
 
     //SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.location)
-    SessionLocator.DynamicLoader.Load("./Infrastructure/Components/HomeComponent/HomeComponent", this.location)
+    SessionLocator.DynamicLoader.Load("./Infrastructure/Components/HomeComponent/HomeComponent", this.Child.Location)
       .then(cmpRef => {
         cmpRef.instance.RunComponent();
 
@@ -219,7 +217,7 @@ export class RootComponent implements OnInit {
 
     this.ClearLocation();
 
-    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.location)
+    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.Child.Location)
       .then(cmpRef => {
         cmpRef.instance.RunComponent();
 
@@ -239,7 +237,7 @@ export class RootComponent implements OnInit {
 
     this.ClearLocation();
 
-    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/ECommercePaymentRequestMobileComponent", this.location)
+    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/ECommercePaymentRequestMobileComponent", this.Child.Location)
       .then(cmpRef => {
         cmpRef.instance.RunComponent();
 
@@ -258,7 +256,7 @@ export class RootComponent implements OnInit {
 
   VieUserIdNumberMobileComponent() {
     this.ClearLocation();
-    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.location)
+    SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent", this.Child.Location)
       .then(cmpRef => {
         cmpRef.instance.RunComponent();
       });
@@ -285,7 +283,7 @@ export class RootComponent implements OnInit {
           if (myResult.IsTermOfUse) {
             this.ClearLocation();
             if (this.isDSV == true) {
-              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.location)
+              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.Child.Location)
                 .then(cmpRef => {
                   cmpRef.instance.ComponentRef = cmpRef;
                   cmpRef.instance.Load(myResult.Version);
@@ -302,7 +300,7 @@ export class RootComponent implements OnInit {
                 });
             }
             else {
-              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.location)
+              SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
                 .then(cmpRef => {
                   cmpRef.instance.ComponentRef = cmpRef;
                   cmpRef.instance.Load(myResult.Version);

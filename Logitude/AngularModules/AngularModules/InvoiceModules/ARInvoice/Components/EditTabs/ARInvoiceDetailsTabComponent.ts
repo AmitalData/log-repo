@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirective';
 
 @Component({
     template:
@@ -12,7 +13,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
             <tr>
                 <td>
                     <div class="MediaFill">
-                        <div #Child></div>
+                        <div ChildDirective></div>
                     </div>
                 </td>
             </tr>
@@ -20,10 +21,12 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
     `,
 })
 
-export class ARInvoiceDetailsTabComponent implements OnInit, OnDestroy {
+export class ARInvoiceDetailsTabComponent implements AfterViewInit, OnDestroy {
     public EntityPM: ARInvoicePM = null;
     public ObjectTableName = "ARInvoice";
-    @ViewChild("Child", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+  //@ViewChild("Child", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+  @ViewChild(ChildDirective) Child: ChildDirective;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
@@ -56,7 +59,7 @@ export class ARInvoiceDetailsTabComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnInit() {
+  ngAfterViewInit() {
         this.entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((res1: any) => {
             this.entityResourceService.getEntityResourceByTableName("ARInvoiceLine").subscribe((res2: any) => {
                 this.InitBaseTabComponent();                
@@ -72,19 +75,19 @@ export class ARInvoiceDetailsTabComponent implements OnInit, OnDestroy {
 
     InitBaseTabComponent() {
 
-        this.viewContainerRef.clear();
+      this.Child.Location.clear();
 
         if (this.EntityPM.IsConsolidationInvoice) {
 
             if (this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
-                SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabNormal", this.viewContainerRef)
+              SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabNormal", this.Child.Location)
                     .then(cmpRef => {
                         //cmpRef.instance
                     });
             }
 
             else {
-                SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabConsolidation", this.viewContainerRef)
+              SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabConsolidation", this.Child.Location)
                     .then(cmpRef => {
                         //cmpRef.instance
                     });
@@ -92,14 +95,14 @@ export class ARInvoiceDetailsTabComponent implements OnInit, OnDestroy {
         }
 
         else if (this.EntityPM.IsGeneralInvoice) {
-            SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabGeneral", this.viewContainerRef)
+          SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabGeneral", this.Child.Location)
                 .then(cmpRef => {
                     //cmpRef.instance
                 });
         }
 
         else {
-            SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabNormal", this.viewContainerRef)
+          SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabNormal", this.Child.Location)
                 .then(cmpRef => {
                     //cmpRef.instance
                 });
