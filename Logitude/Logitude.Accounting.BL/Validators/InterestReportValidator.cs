@@ -14,6 +14,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.BL.Validators
 {
@@ -25,11 +26,13 @@ namespace Logitude.Accounting.BL.Validators
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
 
-            ValidateIsCardHasGLAccount(entityPM, showLocals);
-            ValidateIsAlreadyHasSameValue(entityPM, showLocals);
-            ValidateIsGLAccountActiveForInterest(entityPM, showLocals);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                ValidateIsCardHasGLAccount(entityPM, showLocals);
+                ValidateIsAlreadyHasSameValue(entityPM, showLocals);
+                ValidateIsGLAccountActiveForInterest(entityPM, showLocals);
 
-
+            }
             return null;
         }
 
