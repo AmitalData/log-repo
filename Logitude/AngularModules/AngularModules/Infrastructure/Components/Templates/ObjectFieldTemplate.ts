@@ -45,7 +45,9 @@ export class ObjectFieldTemplate implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+    if (ObjectsLocator.GlobalSetting) {
+      this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+    }
 
     if (this.ObjectField != null && this.IsSpotLightTemplate == false) {
       //this.IsCustom = this.ObjectField.IsCustom;
