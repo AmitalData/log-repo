@@ -46,7 +46,7 @@ namespace WebFreight.Web.Helpers
         {
             TariffRepository tariffRepository = new TariffRepository(tenant);
             Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
-            if(tariff != null)
+            if (tariff != null)
             {
                 carrierId = tariff.SellerId;
             }
@@ -130,12 +130,12 @@ namespace WebFreight.Web.Helpers
 
                 if (StepLength > 2 && rowDataLength > 2)
                 {
-                    myLine.MinPrice = rowData[2];                    
+                    myLine.MinPrice = rowData[2];
                 }
 
                 if (StepLength > 3 && rowDataLength > 3)
                 {
-                    myLine.Price1 = rowData[3];                    
+                    myLine.Price1 = rowData[3];
                 }
 
                 if (StepLength > 4 && rowDataLength > 4)
@@ -284,7 +284,7 @@ namespace WebFreight.Web.Helpers
             {
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
-                
+
                 //From Port
                 Port fromPort = this.GetPortDetails(row.FromPort, tenant);
                 if (fromPort != null)
@@ -307,7 +307,7 @@ namespace WebFreight.Web.Helpers
                 {
                     tariffLine.FromPortText = this.TrimTo_20(row.FromPort);
                 }
-                
+
                 //To Port
                 Port toPort = this.GetPortDetails(row.ToPort, tenant);
                 if (toPort != null)
@@ -733,7 +733,7 @@ namespace WebFreight.Web.Helpers
             }
 
             return myResult;
-        }       
+        }
 
         public List<ExcelTariffLines> BuildOceanAirFreightCostExcelLines00(IWorksheet sheet)
         {
@@ -1027,7 +1027,7 @@ namespace WebFreight.Web.Helpers
 
                 if (!string.IsNullOrEmpty(transitTimecolumn))
                 {
-                    tariffLine.TransitTime  = transitTimeRowData;
+                    tariffLine.TransitTime = transitTimeRowData;
 
                     if (transitTimeRowData.Length > 100)
                     {
@@ -1931,7 +1931,7 @@ namespace WebFreight.Web.Helpers
                 }
 
                 //Search in translations
-                if(myPort == null)
+                if (myPort == null)
                 {
                     TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetCarrierTranslationByPartnerCodeAndCarrier(code, carrierId, tenant);
                     if (carrierTranslation != null)
@@ -1939,7 +1939,7 @@ namespace WebFreight.Web.Helpers
                         myPort = this.portRepository.GetSinglePort(tenant, carrierTranslation.PortId);
                     }
                 }
-                
+
                 if (myPort == null)
                 {
                     Port portZero = null;
@@ -2185,11 +2185,7 @@ namespace WebFreight.Web.Helpers
     public class ExcelSheetLine
     {
         public string FromPort { get; set; }
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
-        public string ToPort { get; set; }        
-========================================================================
         public string ToPort { get; set; }
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2020.R1.65956
         public string MinPrice { get; set; }
         public string Price1 { get; set; }
         public string Price2 { get; set; }
@@ -2198,7 +2194,7 @@ namespace WebFreight.Web.Helpers
         public string Price5 { get; set; }
         public string Price6 { get; set; }
         public string Price7 { get; set; }
-        public string Price8 { get; set; }  
+        public string Price8 { get; set; }
         public string Notes { get; set; }
         public string TransitTime { get; set; }
     }
