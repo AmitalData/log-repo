@@ -85,7 +85,7 @@ namespace WebFreight.Web.Helpers
                                     string base64String = Convert.ToBase64String(IMAGE, 0, IMAGE.Length);
                                     var imageUrl = "data:image/" + attachment.Name.Split('.')[1] + ";base64," + base64String;
                                     bodyHtml = bodyHtml.Replace(cidLink, imageUrl);
-                                }
+                                }  
                             }
                         }
 
