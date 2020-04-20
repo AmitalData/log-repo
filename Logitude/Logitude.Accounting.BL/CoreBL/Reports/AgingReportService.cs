@@ -438,7 +438,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 }
 
-                TenantQuery tenantQuery = new TenantQuery();
+                TenantQuery tenantQuery = new TenantQuery(_Param.Tenant);
                 var tenant = tenantQuery.GetSinglePM(_Param.Tenant);
 
                 IQueryable<PeriodMExtended> periodMExtendeds =
