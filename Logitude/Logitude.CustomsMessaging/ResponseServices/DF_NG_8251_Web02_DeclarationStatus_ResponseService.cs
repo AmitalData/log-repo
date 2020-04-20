@@ -209,9 +209,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (!string.IsNullOrWhiteSpace(availableStatus))
                                 {
                                     RaiseStatus(declarationPM, "", availableStatus);
-                                    if (availableStatus != "SMG")
+                                    if (availableStatus != "SMG" && declarationPM.TransportModeId=="A")
                                     {
                                         RaiseStatus(declarationPM, "", "SMG");
+                                        declarationPM.AvailabilityDate = DateTime.Now;
+                                        isAutoPayment = true;
+                                    }
+
+                                    if (availableStatus != "SMG" && declarationPM.TransportModeId == "O")
+                                    {
+                                        RaiseStatus(declarationPM, "", "SST");
                                         declarationPM.AvailabilityDate = DateTime.Now;
                                         isAutoPayment = true;
                                     }
