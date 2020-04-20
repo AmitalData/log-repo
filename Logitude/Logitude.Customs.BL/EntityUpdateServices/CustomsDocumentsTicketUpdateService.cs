@@ -387,8 +387,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             string ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");//task10676 
             string status = null;
             bool inProgress = false;
+            bool DocumentStatusCodeIsX = false;
             //  var customsRequestsSheetQuery = new CustomsRequestsSheetQueryService(context);
             //var requests=  customsRequestsSheetQuery.GetRequestInProgress(Tenant, "2715", null,null, null, null, connectedDeclarationPM.CustomFileNo);
+
 
             if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
             {
@@ -458,9 +460,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                         else
                                         {
                                             status = "X";
+
+                                            DocumentStatusCodeIsX = true;
                                         }
 
                                     }
+                                }
+
                                 }
                             }
                         }
@@ -504,8 +510,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     prevValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
                     prevValCourierDocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
                     calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
-                    if (!inProgress) calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
 
+                    if (!inProgress && !DocumentStatusCodeIsX)
+                    {
+                        calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
+                    }
                     currvValCourierDocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
                     currvValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
 
