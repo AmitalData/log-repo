@@ -16,12 +16,8 @@ import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirec
 export class AWBWizardLoadComponent implements AfterViewInit {
   public EntityId: string = null;
   public EntityPM: ShipmentPM;
-  @ViewChild(ChildDirective) Child: ChildDirective;
-
   private CurrentSession = SessionLocator.SelectedSession;
-  constructor() {
-
-  }
+  @ViewChild(ChildDirective) Child: ChildDirective;
 
   SetWindowArgs(entityId: string) {
     this.CurrentSession.StartBusyIndicatorLoading();
