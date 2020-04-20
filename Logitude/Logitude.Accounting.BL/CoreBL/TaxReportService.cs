@@ -204,22 +204,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 VatNumber = null;
                 InputVatAmount = 0;
                 InputInvoiceAmount = 0;
-                card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
-                //if (a.AccountingEntity == AccountingEntityValues.APInvoice)
-                //{
-                //  //  aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
+                card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();             
+                if (a.AccountingEntity == AccountingEntityValues.APInvoice)
+                {
+                    aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
+                    if (aPInvoice == null)
+                    {
+                        continue;
+                    }                   
+                }
 
-                //    //if (aPInvoice != null)
-                //    //{
-                //    //    SetVatFieldsForAPInvoiceTransaction(aPInvoice);
-                //    //}
-                //    //else
-                //    //{
-                //    //    continue;
-                //    //}
-                //}
-
-                 if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
+                if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
                 {
                     if (card.VatNumber == tenantPM.VatNumber)
                     {
