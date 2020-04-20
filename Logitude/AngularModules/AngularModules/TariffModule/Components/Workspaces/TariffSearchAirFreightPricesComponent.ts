@@ -51,7 +51,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
     private packageTypeListService: PackageTypeListService;
-
+    public IsFirstTime: boolean = true;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myDomainService = new TariffDomainService();
@@ -566,12 +566,26 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             this.myDomainService.GetAvailableAirlineFreightTariffs(tariffSearchArgs).subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result) {
-                        this.AvailableTariffs = res.Result;
-                        this.NoDataMessage = "No results found matching your search. Please refine your search, or enter more tariffs to the system";
+                        this.loadedResults = res.Result;
+                        this.AssignResultToItemsSource();
                     }
                 }
                 this.CurrentSession.StopBusyIndicator();
             });
+        }
+    }
+
+    private loadedResults: Array<TariffSearchSummary> = [];
+    private AssignResultToItemsSource() {
+        this.NoDataMessage = "No results found matching your search. Please refine your search, or enter more tariffs to the system";
+        this.IsFirstTime = false;
+
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            this.AvailableTariffs = this.loadedResults.filter(f => f.SellerName.toUpperCase().indexOf(this.SearchText.toUpperCase()) > -1);
+        }
+
+        else {
+            this.AvailableTariffs = this.loadedResults;
         }
     }
 
@@ -1180,5 +1194,18 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         if (this.toPrice != value) {
             this.toPrice = value;
         }
+    }
+
+    private searchText: string = null;
+    public get SearchText() { return this.searchText; }
+    public set SearchText(value: string) {
+        if (this.searchText != value) {
+            this.searchText = value;
+        }
+    }
+
+    SearchTextChanged(text: string) {
+        this.SearchText = text;
+        this.AssignResultToItemsSource();
     }
 }
