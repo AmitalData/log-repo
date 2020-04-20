@@ -40,11 +40,11 @@ export class AddEditCourierPendingReasonComponent
 
     _CourierPendingReasonPMService: CourierPendingReasonPMService = new CourierPendingReasonPMService();
     _CourierPendingReasonExtendedListService: CourierPendingReasonExtendedListService = new CourierPendingReasonExtendedListService();
-
+    private currentSession=SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
 
-        this.CurrentSession.StartBusyIndicator("");
+        this.currentSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
 
             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -64,9 +64,9 @@ export class AddEditCourierPendingReasonComponent
 
     Loaded: boolean = false;
     ngOnInit() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        this.currentSession.StartBusyIndicatorLoading();
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
-            this.CurrentSession.StopBusyIndicator();
+            this.currentSession.StopBusyIndicator();
             this.Loaded = true;
         });
     }
@@ -115,9 +115,9 @@ export class AddEditCourierPendingReasonComponent
         if (this.isFromUnifreight) {
             if (this.EntityPM != null && !AppTool.IsNullOrEmpty(this.EntityPM.Code)) {
                 this.EntityPM.UnifreightStatusCode = null;
-                this.CurrentSession.StartBusyIndicatorLoading();
+                this.currentSession.StartBusyIndicatorLoading();
                 this._CourierPendingReasonPMService.update(this.EntityPM).subscribe((myResult:any) => {
-                    this.CurrentSession.StopBusyIndicator();
+                    this.currentSession.StopBusyIndicator();
                     if (myResult.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
@@ -127,7 +127,7 @@ export class AddEditCourierPendingReasonComponent
                 });
             }
             if (newValue) {
-                this.CurrentSession.StartBusyIndicatorLoading();
+                this.currentSession.StartBusyIndicatorLoading();
                 this._CourierPendingReasonPMService.get(newValue).subscribe((response:any) => {
                     if (!response.HasError && response.Result != null) {
                         SessionLocator.SelectedSession.StopBusyIndicator();

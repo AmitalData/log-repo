@@ -401,7 +401,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
                 else {
                     if (AppTool.IsNullOrEmpty(this.collateralPM.CustomerId)) {
                         this.cardListService.getSingle(this.collateralPM.CustomerId)
-                            .subscribe(res => {
+                            .subscribe((res:any) => {
                                 let cardList: CardList = res.Result;
                                 if (!AppTool.IsNullOrEmpty(cardList)) {
                                     customerCode = cardList.Code;

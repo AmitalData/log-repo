@@ -65,6 +65,7 @@ export class CreateEditTicketComponent extends BaseComponent {
     public FilterSelectedValue: string;
     ExemptionFilterSelectedValue: string = 'other';
     IsSearchIconVisibile: boolean;
+    private currentSession=SessionLocator.SelectedSession;
     SetWindowArgs(args: any) {
 
         this.IsSearchIconVisibile = false;
@@ -338,7 +339,7 @@ export class CreateEditTicketComponent extends BaseComponent {
             return;
 
         var newTicket: CustomsDocumentsTicketPM = new CustomsDocumentsTicketPM();
-        this.documentsFilingPMService.get(documentsFilingId).subscribe(data => {
+        this.documentsFilingPMService.get(documentsFilingId).subscribe((data:any) => {
             if (data.Result == null) {
 
                 let msg = new MessageWindow();
@@ -767,7 +768,7 @@ export class CreateEditTicketComponent extends BaseComponent {
         
         this._ConfirmationTypeListService.getSingle(sResponseConfirmationTypeCode)
             .subscribe((res:any) => {
-                this.CurrentSession.StopBusyIndicator();
+                this.currentSession.StopBusyIndicator();
                 let myConfirmationTypeList :ConfirmationTypeList=res.Result;
                 if (AppTool.IsNullOrEmpty(myConfirmationTypeList)) {
                     let msg = new MessageWindow();

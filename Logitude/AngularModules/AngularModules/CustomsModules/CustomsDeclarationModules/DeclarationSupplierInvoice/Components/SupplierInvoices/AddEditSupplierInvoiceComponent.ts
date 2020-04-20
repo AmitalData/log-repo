@@ -1,8 +1,9 @@
+import { SessionLocator } from './../../../../../Infrastructure/Utilities/SessionLocator';
 import {Component, ViewChildren, EventEmitter, Output, QueryList, ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LocationDirective} from '../../../../../Infrastructure/Utilities/LocationDirective';
 import {AppTool, FontTool} from '../../../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {SupplierInvoicePMService} from '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
@@ -92,7 +93,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
    
     _SkipAutoInsurance: boolean = false;
     _IsNoIncotermCheck: string = "N";
-
+    private currentSession=SessionLocator.SelectedSession;
     constructor//(private cd: ChangeDetectorRef) {
         () {
         super();
@@ -2139,7 +2140,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
     ReloadSupplierInvoiceWithItems(skippedItems, takenItems) {
         this.loadingNextItems = false;
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
+        this.currentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
         this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, skippedItems, takenItems, this.AccumulatedFilter).subscribe((response:any) => {
             this.EntityPM = response.Result;
             this.selectedTabCode = "GENERAL";
@@ -2207,7 +2208,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     CustomerCommissionsList: VendorCommissionPM[] = [];
 
     GetCustomerCommissions() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.currentSession.CurrentWindow.StartBusyIndicator("Loading...");
         this.vendorCommissionService.GetCommissionsForCustomer(this.declarationPM.CustomerId).subscribe((response:any) => {
             console.log("[Reponse] GetCommissionsForCustomer: ", response);
             SessionLocator.SelectedSession.CurrentWindow.StopBusyIndicator();

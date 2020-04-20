@@ -1,10 +1,11 @@
+import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
 
 declare var window: any;
 import { EditComponent } from "../../../Infrastructure/Components/EditComponent/EditComponent";
 import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+//import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../../Infrastructure/Tools';
@@ -97,7 +98,7 @@ export class CourierWorksheetListTemplate {
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     private _DeclarationCourierStatusWebService: DeclarationCourierStatusWebService = new DeclarationCourierStatusWebService();
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
-    
+    private currentSession=SessionLocator.SelectedSession;
 
     FirePreventSelect() {
         SessionLocator.SelectedSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -447,7 +448,7 @@ export class CourierWorksheetListTemplate {
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
             .subscribe((res:any) => {
-                this.CurrentSession.StopBusyIndicator();
+                this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 let mess = "";
                 if (res.HasError) {

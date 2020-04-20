@@ -4275,7 +4275,7 @@ User/Pass",
             SetControlPropertyValue(LoadClosedTablesLabel, "ForeColor", Color.Green); // timer
             SetControlPropertyValue(LoadClosedTablesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
-        private void button49_Click(object sender, EventArgs e)
+        private void button50_Click(object sender, EventArgs e)
         {
             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
             updateClass.LoadDefaultReports();

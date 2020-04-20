@@ -45,18 +45,18 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
     public ClientPMService: ClientPMService = new ClientPMService;
-
+    private currentSession=SessionLocator.SelectedSession;
     IsLoaded: boolean = false;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.ClaimsRelatedEntitiesObslist = new ObservableCollection([]);
         SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.CurrentSession.StartBusyIndicator("");
+        this.currentSession.StartBusyIndicator("");
         this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
-                    this.CurrentSession.StopBusyIndicator();
+                    this.currentSession.StopBusyIndicator();
                     if (this.entityArgs.EntityPM != null) {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.BuildRelatedEntitiesList();

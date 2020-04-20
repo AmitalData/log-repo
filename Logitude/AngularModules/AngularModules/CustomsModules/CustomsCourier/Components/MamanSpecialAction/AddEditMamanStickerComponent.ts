@@ -30,13 +30,13 @@ export class AddEditMamanStickerComponent
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     private _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService;
-
+    private currentSession=SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
 
-        this.CurrentSession.StartBusyIndicator("");
+        this.currentSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
-            this.CurrentSession.StopBusyIndicator();
+            this.currentSession.StopBusyIndicator();
             this.IsLoaded = true;
         });
     }

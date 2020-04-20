@@ -197,11 +197,11 @@ namespace WebFreight.Web.MetaDataUpdate
                             GlobalModelUpdateClass modelUpdateClass = new GlobalModelUpdateClass();
                             modelUpdateClass.LoadObjectsTenantZero(context);
 
-                            UpdateInfrasturtureAndLogModules(context);
+                            UpdateInfrasturtureAndLogModules(context,true);
 
-                            UpdateCRMModule(context);
-
-                            UpdateAllOldModules(context);
+                            UpdateCRMModule(context,true);
+                            MetaDataUpdateClass metaDataUpdateClass = new MetaDataUpdateClass();
+                            UpdateAllOldModules(metaDataUpdateClass,context);
 
                             CustomsUpdateClass customUpdate = new CustomsUpdateClass();//generated
                             customUpdate.LoadObjectsTenantZero(context);//generated

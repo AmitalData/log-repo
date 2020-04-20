@@ -1,10 +1,11 @@
+import { SessionLocator } from './../../../../Infrastructure/Utilities/SessionLocator';
 declare var window: any;
 import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { AppTool } from '../../../../Infrastructure/Tools';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -33,14 +34,14 @@ export class AddCourierPendingToUnifreightStatusComponent
 
     public CourierPendingReasonList: ObservableCollection = new ObservableCollection([]);
     public DeleteCourierPendingReasonList: ObservableCollection = new ObservableCollection([]);
-
+    private currentSession=SessionLocator.SelectedSession;
     constructor() {
         super();
     }
 
     Loaded: boolean = false;
     ngOnInit() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        this.currentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             this.Loaded = true;
             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -53,9 +54,9 @@ export class AddCourierPendingToUnifreightStatusComponent
 
             if (args.FromUnifreight && !AppTool.IsNullOrEmpty(args.UnifreightStatusCode)) {
                 this.UnifreightStatusCode = args.UnifreightStatusCode;
-                this.CurrentSession.StartBusyIndicatorLoading();
+                this.currentSession.StartBusyIndicatorLoading();
                 this._CourierPendingReasonExtendedListService.GetCourierPendingReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe((response:any) => {
-                    this.CurrentSession.StopBusyIndicator();
+                    this.currentSession.StopBusyIndicator();
                     var courierPendingReasonResult: CourierPendingReasonPM[] = response.Result;
                     this.BuildCourierPendingReasonList(courierPendingReasonResult);
                 });
@@ -143,7 +144,7 @@ export class AddCourierPendingToUnifreightStatusComponent
 export class CourierPendingReasonLineComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.CourierPendingReason";
     public DataContext = this;
-
+    private currentSession=SessionLocator.SelectedSession;
     constructor(public entityPM: CourierPendingReasonPM, public isNew: boolean, private parent: AddCourierPendingToUnifreightStatusComponent) {
         super();
         if (!isNew) {
@@ -155,9 +156,9 @@ export class CourierPendingReasonLineComponent extends BaseComponent {
     public get PendingCode() { return this.entityPM.Code; }
     public set PendingCode(newValue: string) {
         if (newValue) {
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.currentSession.StartBusyIndicatorLoading();
             this.parent._CourierPendingReasonPMService.get(newValue).subscribe((response: any) => {
-                this.CurrentSession.StopBusyIndicator();
+                this.currentSession.StopBusyIndicator();
                 if (!response.HasError && response.Result != null) {
                     if (!AppTool.IsNullOrEmpty(response.Result.UnifreightStatusCode) && response.Result.UnifreightStatusCode != this.parent.UnifreightStatusCode) {
                             var confirm = new ConfirmWindow();

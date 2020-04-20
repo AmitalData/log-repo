@@ -3032,7 +3032,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CargoStatus> CargoStatuses { get; set; }
         public IDbSet<MAWBType> MAWBTypes { get; set; }
         public IDbSet<DeclarationConsAcceptance> DeclarationConsAcceptances { get; set; }
-        public IDbSet<CourierCustomStatus> CourierCustomStatuses { get; set; }
         public IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; set; }
         public IDbSet<ManifestCargoStatus> ManifestCargoStatuses { get; set; }
         public IDbSet<CourierManifestStatus> CourierManifestStatuses { get; set; }

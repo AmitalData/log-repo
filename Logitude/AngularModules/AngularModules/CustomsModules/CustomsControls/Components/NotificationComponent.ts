@@ -59,7 +59,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
     public DeclarationPM: DeclarationPM;
     IsDeclarationTab: boolean;
     public ExcludedItems: ObservableCollection;
-
+    private currentSession=SessionLocator.SelectedSession;
     constructor(entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -1660,7 +1660,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             if (this.ExcludedItems.Length > 0) {
                 this.selectedNotifications.ExcludedIds = this.ExcludedItems.Collection;
             }
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.currentSession.StartBusyIndicatorLoading();
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
                 
                 this.LoadNotifications();
@@ -1853,7 +1853,7 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             });
 
             this.selectedNotifications.dataCount = this.selectedItems.Length;
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.currentSession.StartBusyIndicatorLoading();
             this.notificationExtendedListService.PutNotificationStatus(this.selectedNotifications).subscribe((response:any) => {
                 response.Result.forEach((value, key) => {
                     var temp = this.selectedItems.Collection.filter(a => a.rowData.Id == value.Id)[0];

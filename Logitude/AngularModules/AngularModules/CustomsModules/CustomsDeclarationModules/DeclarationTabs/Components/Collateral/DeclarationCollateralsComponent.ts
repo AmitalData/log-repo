@@ -141,12 +141,12 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
-  EditButtonClicked(item: CustomsCollateralPM) {
-    if (!AppTool.IsNullOrEmpty(item)) {
-      this._CustomsCollateralPMService.get(item.Id).subscribe((response:any) => {
-        var windowArgs: any = {};
-        windowArgs.CurrentEntity = response.Result;
-        windowArgs.declarationPM = this.EntityPM;
+    EditButtonClicked(item: /*CustomsCollateralPM*/ any) {
+        if (!AppTool.IsNullOrEmpty(item)) {
+            this._CustomsCollateralPMService.get(item.Id).subscribe(response => {
+                var windowArgs: any = {};
+                windowArgs.CurrentEntity = response.Result;
+                windowArgs.declarationPM = this.EntityPM;
 
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 600;

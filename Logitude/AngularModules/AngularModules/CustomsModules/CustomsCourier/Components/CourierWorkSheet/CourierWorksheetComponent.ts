@@ -115,7 +115,7 @@ export class CourierWorksheetComponent extends BaseComponent
 
     public IsDisplayOnly: boolean = false;
     public DisplayOnlyMessage: string = "";
-
+    private currentSession=SessionLocator.SelectedSession;
     //constructor(public entityArgs: EntityArgs) {
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
@@ -373,8 +373,8 @@ export class CourierWorksheetComponent extends BaseComponent
             return;
         }
 
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe((response:any) => {
+        this.currentSession.StartBusyIndicatorLoading();
+        this.currentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe((response:any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
@@ -399,7 +399,7 @@ export class CourierWorksheetComponent extends BaseComponent
                         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
                         this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
                             .subscribe((res:any) => {
-                                this.CurrentSession.StopBusyIndicator();
+                                this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
                                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -410,7 +410,7 @@ export class CourierWorksheetComponent extends BaseComponent
                     else {
                         this._CourierMasterService.GetSendPayReadyLow2755(this.entityPM.Id, this.entityPM.HAWB, InternalBankId)
                             .subscribe((res:any) => {
-                                this.CurrentSession.StopBusyIndicator();
+                                this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
                                 myMessageWindow.Show(res.Result);
                                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -473,7 +473,7 @@ export class CourierWorksheetComponent extends BaseComponent
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
             .subscribe((res:any) => {
-                this.CurrentSession.StopBusyIndicator();
+                this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 myMessageWindow.WindowClosed.subscribe(s => {
@@ -669,7 +669,7 @@ export class CourierWorksheetComponent extends BaseComponent
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetStatistic(this.entityPM.Id)
             .subscribe((res:any) => {
-                this.CurrentSession.StopBusyIndicator();
+                this.currentSession.StopBusyIndicator();
                 var list: KeyValuePair[];
 
                 list = res.Result;
@@ -1791,7 +1791,7 @@ export class CourierWorksheetComponent extends BaseComponent
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendALLDeclarationsStatusRequest(this.entityPM.Id)
             .subscribe((res:any) => {
-                this.CurrentSession.StopBusyIndicator();
+                this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
                 //this.RefreshButtonClicked();
@@ -1803,7 +1803,7 @@ export class CourierWorksheetComponent extends BaseComponent
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendFTPMamanRequest(this.entityPM.Id)
             .subscribe((res:any) => {
-                this.CurrentSession.StopBusyIndicator();
+                this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);
             });

@@ -2363,7 +2363,6 @@
     <Compile Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.Designer.cs">
       <DependentUpon>202004111256429_AddTransitTimeFieldToTariff_Maheera.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs" />
     <Compile Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.Designer.cs">
       <DependentUpon>202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs</DependentUpon>
@@ -2376,7 +2375,6 @@
     <Compile Include="Migrations\202004100922221_AddDisplayDocumentsAndEventsToTenant.Designer.cs">
       <DependentUpon>202004100922221_AddDisplayDocumentsAndEventsToTenant.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202004150910268_AbedAddExcelOnlyToReportTable.cs" />
     <Compile Include="Migrations\202004150910268_AbedAddExcelOnlyToReportTable.Designer.cs">
       <DependentUpon>202004150910268_AbedAddExcelOnlyToReportTable.cs</DependentUpon>
@@ -2385,7 +2383,6 @@
     <Compile Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.Designer.cs">
       <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4309,7 +4306,6 @@
     <EmbeddedResource Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.resx">
       <DependentUpon>202004111256429_AddTransitTimeFieldToTariff_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.resx">
       <DependentUpon>202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -4319,14 +4315,12 @@
     <EmbeddedResource Include="Migrations\202004100922221_AddDisplayDocumentsAndEventsToTenant.resx">
       <DependentUpon>202004100922221_AddDisplayDocumentsAndEventsToTenant.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202004150910268_AbedAddExcelOnlyToReportTable.resx">
       <DependentUpon>202004150910268_AbedAddExcelOnlyToReportTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.resx">
       <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
     </EmbeddedResource>
-
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

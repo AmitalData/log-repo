@@ -52,11 +52,11 @@ export class DocumentTypeMetaDataExtendedService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '?documentsFilingId=' + documentsFilingId + '&code=' + code, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '?documentsFilingId=' + documentsFilingId + '&code=' + code, ServiceHelper.GetHttpHeaders()).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response.json();
+            pmresponse.Result = response;
             return pmresponse;
         }).catch(ServiceHelper.HandleServiceError);
     }
