@@ -41,7 +41,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ChargesTypeId, 
 	         AddedByUserId, 
 	         AddDate, 
-	         TariffId,
+	         TariffId, 
+	         ChargesTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
