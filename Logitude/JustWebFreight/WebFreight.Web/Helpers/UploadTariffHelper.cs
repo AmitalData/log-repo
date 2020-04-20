@@ -75,10 +75,8 @@ namespace WebFreight.Web.Helpers
                 excelSheetLines = this.ReadExcelSheetData_FCL(sheet);
                 tariffLinesResult = this.BuildTariffLines_FCL(excelSheetLines);
             }
-            
             return tariffLinesResult;
         }
-        
         private List<ExcelSheetLine> ReadExcelSheetData_LCL(IWorksheet sheet)
         {
             List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
@@ -90,7 +88,6 @@ namespace WebFreight.Web.Helpers
             {
                 String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelSheetLine myLine = new ExcelSheetLine();
-                
                 var rowDataLength = rowData.Length;
                 var StepLength = rowData.Length;
                 if (!string.IsNullOrEmpty(priceSteps))
@@ -736,8 +733,8 @@ namespace WebFreight.Web.Helpers
             }
 
             return myResult;
-        }        
-        
+        }       
+
         public List<ExcelTariffLines> BuildOceanAirFreightCostExcelLines00(IWorksheet sheet)
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
@@ -1919,7 +1916,7 @@ namespace WebFreight.Web.Helpers
         private Port GetPortDetails(string code, int tenant)
         {
             Port myPort = null;
-            
+
             if (!string.IsNullOrEmpty(code))
             {
                 code = code.Trim();
@@ -1942,7 +1939,7 @@ namespace WebFreight.Web.Helpers
                         myPort = this.portRepository.GetSinglePort(tenant, carrierTranslation.PortId);
                     }
                 }
-
+                
                 if (myPort == null)
                 {
                     Port portZero = null;
@@ -2188,7 +2185,11 @@ namespace WebFreight.Web.Helpers
     public class ExcelSheetLine
     {
         public string FromPort { get; set; }
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< master
         public string ToPort { get; set; }        
+========================================================================
+        public string ToPort { get; set; }
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2020.R1.65956
         public string MinPrice { get; set; }
         public string Price1 { get; set; }
         public string Price2 { get; set; }
