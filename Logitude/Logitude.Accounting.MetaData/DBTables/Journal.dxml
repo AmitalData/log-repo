@@ -44,7 +44,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-
   <Column
     Name="StatusCode"
     Type="varchar"
@@ -59,7 +58,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-
   <Column
     Name="AccountingEntityCode"
     Type="varchar"
@@ -174,8 +172,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-
-
   <Column
     Name="DocumentDate"
     Type="datetime">
@@ -188,7 +184,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-
   <Relation
     ForeignKeyColumn="TypeCode"
     ReferencedTable="JournalTypes"
@@ -230,5 +225,5 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="IsLedgerCreated" /> 
+    Columns="IsLedgerCreated" />
 </Table>

@@ -3173,7 +3173,6 @@
     DefaultText="&quot;LineCreditAccountTypeCode&quot;"
     IsNullable="true"
     IsForeignKey="false"
-
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="false"
@@ -3223,6 +3222,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TaxReportJournalLineNumber&quot;"
     ListPropertyPath="&quot;TaxReportJournalLineNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3243,9 +3243,6 @@
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
-
-    DontBuildRelationOnDB="false"
-
     IsPrimaryKey="false"
     HasDataBaseField="false"
     HasPMField="true"
@@ -3295,6 +3292,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DocumentDate&quot;"
     ListPropertyPath="&quot;DocumentDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3369,6 +3367,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DueDate&quot;"
     ListPropertyPath="&quot;DueDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
