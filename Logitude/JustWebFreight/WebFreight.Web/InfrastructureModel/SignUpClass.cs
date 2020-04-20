@@ -669,6 +669,11 @@ namespace WebFreight.Web.InfrastructureModel
                                         documentTypeRepository.SubmitChanges();
                                     }
                                 }
+
+                                if(countryCode == "MX")
+                                {
+
+                                }
                             }                                                      
                         }
                         #endregion
