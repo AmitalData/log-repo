@@ -92,6 +92,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from d in context.CardContacts.Include("Contact") where d.CardId == cardId select d.Contact);
         }
 
+        public IQueryable<Contact> GetContactsByCardIds(List<string> cardIds)
+        {
+            return (from d in context.CardContacts.Include("Contact") where cardIds.Contains(d.CardId) select d.Contact);
+        }
+
         public IQueryable<CardContact> GetCardContactsByCardId(string cardId)
         {
             return (from record in context.CardContacts.Include("Contact") where record.CardId == cardId select record);

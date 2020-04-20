@@ -58,7 +58,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
     IsChequeLinkVisibile: boolean = false;
-    public IsExternalPaymentVisible: boolean = false;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -82,14 +81,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
                 this.IsMultiCurrency = true;
             }
-        }
-
-        if (SessionLocator.AccountingSettingPM.EnableAPPaymentExternalPayment == true) {
-            this.IsExternalPaymentVisible = true;
-        }
-
-        else if (!AppTool.IsNullOrZero(this.EntityPM.ExternalPaymentAmount)) {
-            this.IsExternalPaymentVisible = true;
         }
 
         this.InitializeServices();
@@ -1392,12 +1383,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public Summary_ExternalAmount: number = 0;
     public Summary_AmountPaidColor: string = "#282E30";
     public Summary_ExternalAmountColor: string = "#1E4AC4";
+    public IsExternalPaymentVisible: boolean = false;
     UpdateSummary() {
         var Amount: number = 0;
         var AmountPaid: number = 0;
         var ExternalAmount: number = 0;
         var AmountPaidColor: string = "#282E30";
         var ExternalAmountColor: string = "#1E4AC4";
+        var isExternalPaymentVisible: boolean = false;
 
         if (this.AmountInPaymentCurrency) {
             Amount = AppTool.Round(this.AmountInPaymentCurrency, 2);
@@ -1428,6 +1421,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.Summary_ExternalAmount = ExternalAmount;
         this.Summary_AmountPaidColor = AmountPaidColor;
         this.Summary_ExternalAmountColor = ExternalAmountColor;
+
+        if (!AppTool.IsNullOrZero(this.EntityPM.ExternalPaymentAmount)) {
+            isExternalPaymentVisible = true;
+        }
+
+        this.IsExternalPaymentVisible = isExternalPaymentVisible;
     }
 
     EnterExternalPaymentClicked() {

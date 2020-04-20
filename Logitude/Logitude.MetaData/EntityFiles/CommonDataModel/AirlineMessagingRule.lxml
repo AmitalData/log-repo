@@ -730,6 +730,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false"
     ForeignEntity="ObjectField"
+    DontBuildRelationOnDB="true"
     NavigationPropertyName="RuleField" />
   <field
     Id="&quot;1736854a-68aa-4bdf-b553-3552594d376d&quot;"

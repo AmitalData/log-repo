@@ -84,15 +84,29 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
     SaveCompletedEvent: any;
     LoadCompletedEvent: any;
     
+    SetUIProperties() {
+        var isCanceledEntry = this.warehouseEntryPM.StatusCode == "CAEA";
+        this.warehouseEntryPM.UIProperties.SetEnabled("ReceivedBy", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("EntryReference", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("Manufacturer", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("ExpectedEntryDate", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("SpecialInstruction", this.ObjectTableName, !isCanceledEntry);
+        this.warehouseEntryPM.UIProperties.SetEnabled("Notes", this.ObjectTableName, !isCanceledEntry);
+        this.UIProperties.SetEnabled("ActualEntryDate", this.ObjectTableName, !isCanceledEntry);
+        this.UIProperties.SetEnabled("WarehouseId", this.ObjectTableName, !isCanceledEntry);
+
+    }
 
     Listen() {
 
+        this.SetUIProperties();
 
         if (this.CurrentSession.CurrentEditComponent != null) {
 
             if (this.SaveCompletedEvent == null) {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
+                        this.SetUIProperties();
                         this.CurrentSession.FireEvent("LoadEventTabData");
                     }
 
@@ -106,6 +120,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
                     }
                 });
             }
+
         }
 
     }
@@ -132,7 +147,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
      
             this.ExpectedEntryDateOldValue = this.warehouseEntryPM.ExpectedEntryDate;
             this.ActualEntryDateOldValue = this.warehouseEntryPM.ActualEntryDate;
-            this.SetUIProperties();
+            this.SetCustomerUIProperties();
             this.IsLoadPage = true;
         }
 
@@ -229,7 +244,7 @@ export class EditWarehouseEntryComponent extends BaseComponent implements OnInit
 
 
 
-    SetUIProperties() {
+    SetCustomerUIProperties() {
         this.warehouseEntryPM.UIProperties.SetEnabled("CustomerId", "WarehouseEntry", false);
         //this.warehouseEntryPM.UIProperties.SetEnabled("WarehouseId", "WarehouseEntry", false);
 

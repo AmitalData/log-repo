@@ -716,10 +716,5 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public decimal Total { get; set; }
         public string PeriodName { get; set; }
     }
-
-    
-
-
-
 }
 	 

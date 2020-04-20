@@ -38,7 +38,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Shipment"
   DefaultText="&quot;Shipment Receivable&quot;"
-  Code="&quot;8043&quot;"
+  Code="&quot;42a2&quot;"
   Name="&quot;ShipmentReceivable&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Shipment&quot;"
@@ -1696,7 +1696,8 @@
   <field
     Id="&quot;931e0ba2-0654-405a-a902-89e8986a5664&quot;"
     FieldName="&quot;ShipmentReceivableLineStatusCode&quot;"
-    OldNames="ShipmentReceivableLineStatusCode"
+    ShortName="StatusCode"
+    OldNames="ShipmentReceivableLineStatusCode,StatusCode"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

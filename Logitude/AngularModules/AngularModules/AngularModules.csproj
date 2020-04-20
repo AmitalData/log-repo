@@ -6929,6 +6929,7 @@
     <TypeScriptCompile Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\FiltersMenu\WarehouseReleaseFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\Helpers\WarehouseEntryHelperComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\MenuButtons\WarehouseEntryMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Warehouse\Components\MenuButtons\WarehouseReleaseMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseReleaseComponent.ts" />

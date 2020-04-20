@@ -49,7 +49,19 @@ export class CardExtendedPMService {
 
     }
 
+    GetAllConnectedPartnersByGLAccountId(glAccountId: string) {
 
+        var url = this._apiUrl + '/GetAllConnectedPartnersByGLAccountId?glAccountId=' + glAccountId;
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
 
 
 

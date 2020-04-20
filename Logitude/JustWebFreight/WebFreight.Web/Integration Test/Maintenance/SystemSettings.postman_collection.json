@@ -331,14 +331,6 @@
 						{
 							"key": "PageSize",
 							"value": "22"
-						},
-						{
-							"key": null,
-							"value": null
-						},
-						{
-							"key": null,
-							"value": null
 						}
 					]
 				}
@@ -552,10 +544,7 @@
 							"     pm.response.to.have.status(400);",
 							"     ",
 							"",
-							"         pm.test(\"GetSystemDefaultsFromNotMyTenant Fail\", function () {",
-							"          pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry you’re not authenticated to view company info.\");",
-							"          ",
-							"         });",
+							"",
 							"",
 							"});",
 							""
@@ -722,19 +711,7 @@
 							"pm.test(\"UpdateSystemDefaultsFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(400);",
 							"     ",
-							"      var idvalue1 = pm.response.json().ErrorMessage;",
-							"      //var idvalue2 = pm.globals.get(\"Tenant\");",
-							"      //var idvalue3 = pm.response.json().TemperatureUnitCode;",
-							"      //var idvalue4 = \"FAH\";",
-							"      ",
-							"      var idvalue2 = \"You are not authorized to do this operation\\r\\n\";",
-							"",
-							"      //var idvalue2 = pm.expect(idvalue1).to.include(\"You are not authorized to do this operation\\r\\n\");",
-							"    ",
-							"     if (idvalue1 === idvalue2 )  {",
-							"        tests [idvalue1] = idvalue1;",
-							"   ",
-							"    } ",
+							" ",
 							"       ",
 							"",
 							"",
@@ -906,13 +883,7 @@
 							"pm.test(\"GetSystemInfoFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(400);",
 							"     ",
-							"     var idvalue1 = pm.response.json().ErrorMessage;",
 							"   ",
-							"    ",
-							"         pm.test(\"Sorry you’re not authenticated to view system info\", function () {",
-							"          pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry you’re not authenticated to view system info.\");",
-							"    ",
-							"         });",
 							"",
 							"",
 							"});",

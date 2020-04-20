@@ -25,7 +25,6 @@ export class GLAccountExtendedListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/glaccountviews';
      }
 
-
     GetRecentGLAccounts(accountTypeCode: string) {
      
 

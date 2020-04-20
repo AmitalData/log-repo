@@ -251,19 +251,27 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
         public void PutCancelWarehouseEntry(WarehouseEntryPM entityPM)
         {
-            WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository = null;
-            WarehouseEntryPackageRepository warehouseEntryPackageRepository = null;
-            List<string> warehousePackagesReleaseIds = null;
+            IWarehouseContext MyContext = WarehouseContext.GetContext(entityPM.Tenant);
+            WarehouseEntryUpdateService service = new WarehouseEntryUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            service.InitializeEntityPM(entityPM);
 
-            if (entityPM.WarehouseEntryPackages != null && entityPM.WarehouseEntryPackages.Count > 0)
-            {
-                warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(entityPM.Tenant);
-                warehouseEntryPackagesReleaseRepository = new WarehouseEntryPackagesReleaseRepository(entityPM.Tenant);
-                warehousePackagesReleaseIds = CanceledPackagesEntryAndGetPackagesReleaseIds(entityPM, warehouseEntryPackagesReleaseRepository, warehouseEntryPackageRepository);
-            }
+            entityPM.StatusCode = "CAEA";
+            entityPM.StatusName = "Cancelled";
+            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            service.Update(entityPM, true);
+            //WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository = null;
+            //WarehouseEntryPackageRepository warehouseEntryPackageRepository = null;
+            //List<string> warehousePackagesReleaseIds = null;
 
-            EmptyconnectedWarehouseReleasePackages(warehousePackagesReleaseIds, entityPM.Tenant);
-            SubmitEntryPackagesChanges(entityPM, warehouseEntryPackagesReleaseRepository, warehouseEntryPackageRepository);
+            //if (entityPM.WarehouseEntryPackages != null && entityPM.WarehouseEntryPackages.Count > 0)
+            //{
+            //    warehouseEntryPackageRepository = new WarehouseEntryPackageRepository(entityPM.Tenant);
+            //    warehouseEntryPackagesReleaseRepository = new WarehouseEntryPackagesReleaseRepository(entityPM.Tenant);
+            //    warehousePackagesReleaseIds = CanceledPackagesEntryAndGetPackagesReleaseIds(entityPM, warehouseEntryPackagesReleaseRepository, warehouseEntryPackageRepository);
+            //}
+
+            //EmptyconnectedWarehouseReleasePackages(warehousePackagesReleaseIds, entityPM.Tenant);
+            //SubmitEntryPackagesChanges(entityPM, warehouseEntryPackagesReleaseRepository, warehouseEntryPackageRepository);
         }
 
         private List<string> CanceledPackagesEntryAndGetPackagesReleaseIds(WarehouseEntryPM entityPM, WarehouseEntryPackagesReleaseRepository warehouseEntryPackagesReleaseRepository, WarehouseEntryPackageRepository warehouseEntryPackageRepository)
@@ -289,7 +297,6 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             item.Instock += entryPackagesRelease.Quantity;
                         }
 
-                        item.Quantity = 0;
                         item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
                         entryPackagesRelease.IsCanceled = true;

@@ -175,6 +175,39 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+            if(shipment.ShipmentLevelCode == "C")
+            {
+                shipmentPM.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+
+                if(!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
+                {
+                    Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreCarriageVesselId, tenant);
+                    if (vesselEntity != null)
+                    {
+                        shipmentPM.MasterPreCarriageVesselName = vesselEntity.EnglishName;
+                    }
+                }
+            }
+
+            else if (shipment.ShipmentLevelCode == "H")
+            {
+                Shipment masterShipment = (from a in repository.context.Shipments
+                                       where a.Id == shipment.MasterShipmentDataId
+                                       select a).FirstOrDefault();
+
+                if (masterShipment != null)
+                {
+                    shipmentPM.MasterPreCarriageCarrierNumber = masterShipment.PreCarriageCarrierNumber;
+
+                    if (!string.IsNullOrEmpty(masterShipment.PreCarriageVesselId))
+                    {
+                        Vessel vessel = vesselRep.GetSingleVessel(masterShipment.PreCarriageVesselId, tenant);
+
+                        shipmentPM.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
+                    }
+                }
+            }
+
             #region if (masterData != null)
             if (masterData != null)
             {

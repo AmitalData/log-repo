@@ -77,6 +77,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="MarkForDelete"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="SmallDocumentId"
     ReferencedTable="SmallDocuments"

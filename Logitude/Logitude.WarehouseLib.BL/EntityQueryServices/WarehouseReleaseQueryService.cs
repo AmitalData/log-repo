@@ -268,7 +268,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             List<string> warehouseEntryPackagesIds = (from a in context.WarehouseEntryPackages where a.Tenant == tenant && a.WarehouseEntryId == entryId select a.Id).ToList();
             if (warehouseEntryPackagesIds.Count > 0)
             {
-                numberofConnectedWarehouseReleasePackages = (from a in context.WarehouseEntryPackagesReleases where a.Tenant == tenant && warehouseEntryPackagesIds.Contains(a.EntryPackageId) select a.ReleasePackageId).Count();
+                numberofConnectedWarehouseReleasePackages = (from a in context.WarehouseEntryPackagesReleases where a.Tenant == tenant && a.IsCanceled == false && warehouseEntryPackagesIds.Contains(a.EntryPackageId) select a.ReleasePackageId).Count();
             }
 
             return numberofConnectedWarehouseReleasePackages;

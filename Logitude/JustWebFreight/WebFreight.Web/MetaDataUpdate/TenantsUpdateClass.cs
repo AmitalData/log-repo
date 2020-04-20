@@ -57,6 +57,7 @@ namespace WebFreight.Web.MetaDataUpdate
     public class TenantsUpdateClass
     {
         private static bool runOldUpdateCode = false;
+        private static PerformanceTimerLogger performanceTimerLogger = new PerformanceTimerLogger();
         public static void UpdateDataForTenant(int tenant, string message, bool runOldCode = false)
         {
 
@@ -69,34 +70,56 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
+             
                 switch (message.ToLower())
                 {
                       
                       case "updatetenantzeronew":
                         {
+                            performanceTimerLogger.Start(); 
                             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
                             UpdateAllOldModules(updateClass, context);
 
-                            
-                            UpdateAccountingModule(context);
-                            UpdateTariffModule(context);
-                            UpdateTimeManagementModule(context);
-                            UpdateWarehouseModule(context);
-                            UpdateSocialModule(context);
-                            UpdateBookingModule(context);
-                            UpdateCRMModule(context);
+
+                            UpdateAccountingModule(context, false);
+                            UpdateTariffModule(context, false);
+                            UpdateTimeManagementModule(context, false);
+                            UpdateWarehouseModule(context, false);
+                            UpdateSocialModule(context, false);
+                            UpdateBookingModule(context, false);
+                            UpdateCRMModule(context, false);
 
                             updateClass.LoadMenustables();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMenustables");
+
                             updateClass.LoadDefaultReports();
-                            updateClass.LoadHelpResources();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadDefaultReports");
+
+                            //updateClass.LoadHelpResources();
+                            //performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadHelpResources");
+
                             updateClass.CreateMasterCounter(0);
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.CreateMasterCounter");
+
                             updateClass.LoadEmailAlertSettings();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEmailAlertSettings");
+
                             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                             {
                                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                                performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.UpdateShipmentLogboxAuomationObjectFields");
                             }
-                            updateClass.LoadObjectTableRulesANDFieldsValidations();
 
+                          
+
+                            updateClass.LoadObjectTableRulesANDFieldsValidations();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableRulesANDFieldsValidations");
+
+                            MetadataUpdateUtility.RunPostDeleteProcedure();
+                            performanceTimerLogger.LogMessage("Manual" + ",MetadataUpdateUtility.RunPostDeleteProcedure");
+
+
+                            performanceTimerLogger.WriteLogToCSVFile();
 
                             break;
                         }
@@ -161,7 +184,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                 updateClass.LoadRanks();
                                 updateClass.LoadMenustables();
                                 updateClass.LoadDefaultReports();
-                                updateClass.LoadHelpResources();
+                                //updateClass.LoadHelpResources();
                                 updateClass.CreateMasterCounter(0);
                                 updateClass.LoadEmailAlertSettings();
                             }
@@ -228,84 +251,84 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     case "crm":
                         {
-                            UpdateCRMModule(context);
+                            UpdateCRMModule(context, true);
                             break;
                         }
 
                     case "booking":
                         {
-                            UpdateBookingModule(context);
+                            UpdateBookingModule(context, true);
                             break;
                         }
 
                     case "social":
                         {
-                            UpdateSocialModule(context);
+                            UpdateSocialModule(context, true);
 
                             break;
                         }
 
                     case "warehouse":
                         {
-                            UpdateWarehouseModule(context);
+                            UpdateWarehouseModule(context, true);
                             break;
                         }
                     case "timemanagement":
                         {
-                            UpdateTimeManagementModule(context);
+                            UpdateTimeManagementModule(context, true);
                             break;
                         }
 
 
                     case "tariffmodule":
                         {
-                            UpdateTariffModule(context);
+                            UpdateTariffModule(context, true);
                             break;
                         }
 
 
                     case "accounting":
                         {
-                            UpdateAccountingModule(context);
+                            UpdateAccountingModule(context, true);
 
                             break;
                         }
                     case "shipment":
                         {
-                            UpdateShipmentAndMasterModules(context);
+                            UpdateShipmentAndMasterModules(context, true);
 
                             break;
                         }
                     case "quote":
                         {
-                            UpdateQuoteModule(context);
+                            UpdateQuoteModule(context, true);
                             break;
                         }
                     case "invoice":
                         {
-                            UpdateInvoiceModule(context);
+                            UpdateInvoiceModule(context, true);
                             break;
                         }
                     case "common":
                         {
-                            UpdateCommonModule(context);
+                            UpdateCommonModule(context, true);
                             break;
                         }
                     case "infrastructure":
                         {
-                            UpdateInfrasturtureAndLogModules(context);
+                            UpdateInfrasturtureAndLogModules(context, true);
                             break;
                         }
 
                     case "infrastructurem":
                         {
-                            UpdateBusinessInfrastrutureModule(context);
+                            UpdateBusinessInfrastrutureModule(context, true);
                             break;
                         }
                     case "global":
                         {
                             GlobalModelUpdateClass modelUpdateClass = new GlobalModelUpdateClass();
-                            modelUpdateClass.LoadObjectTablesMetadata(context);
+                            modelUpdateClass.LoadObjectTablesMetadata(context, true);
                             break;
                         }
 
@@ -396,7 +419,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadRanks();
                             updateClass.LoadMenustables();
                             updateClass.LoadDefaultReports();
-                            updateClass.LoadHelpResources();
+                            //updateClass.LoadHelpResources();
                             updateClass.CreateMasterCounter(0);
                             updateClass.LoadEmailAlertSettings();
 
@@ -418,7 +441,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             //CRM
                             
                             CRMUpdateClass cRMUpdateClass = new CRMUpdateClass();
-                            cRMUpdateClass.LoadObjectTablesMetadata(context);
+                            cRMUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             CRMUpdate cRMUpdate = new CRMUpdate();
                             cRMUpdate.UpgradeClosedTablesForTenantZero();
@@ -435,12 +458,12 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             // social
                             SocialUpdateClass socialUpdateClass = new SocialUpdateClass();
-                            socialUpdateClass.LoadObjectTablesMetadata(context);
+                            socialUpdateClass.LoadObjectTablesMetadata(context,false);
 
 
                            //warehouse
                             WarehouseLibUpdateClass warehouseLibUpdateClass = new WarehouseLibUpdateClass();
-                            warehouseLibUpdateClass.LoadObjectTablesMetadata(context);
+                            warehouseLibUpdateClass.LoadObjectTablesMetadata(context,false);
                             WarehouseUpdate warehouseUpdate = new WarehouseUpdate();
                             warehouseUpdate.LoadRolesAndFeatures(0);
                             warehouseUpdate.CreateTableCounters();
@@ -449,7 +472,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             //accounting
                             AccountingUpdateClass accountingUpdateClass = new AccountingUpdateClass();
-                            accountingUpdateClass.LoadObjectTablesMetadata(context);
+                            accountingUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             AccountingUpdate accountingUpdate = new AccountingUpdate();
                             accountingUpdate.UpgradeClosedTablesForTenantZero();
@@ -464,7 +487,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             accountingUpdate.CreateCounters(tenant);
                             //Booking
                             BookingLibUpdateClass bookingLibUpdateClass = new BookingLibUpdateClass();
-                            bookingLibUpdateClass.LoadObjectTablesMetadata(context);
+                            bookingLibUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             BookingUpdate bookingUpdateClass = new BookingUpdate();
                             bookingUpdateClass.UpgradeClosedTablesForTenantZero();
@@ -480,7 +503,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             //Time Management
 
                             TimeManagementUpdateClass timeManagementUpdateClass = new TimeManagementUpdateClass();
-                            timeManagementUpdateClass.LoadObjectTablesMetadata(context);
+                            timeManagementUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             TimeManagementUpdate timeManagementUpdate = new TimeManagementUpdate();
                             timeManagementUpdate.loadScreens();
@@ -490,14 +513,16 @@ namespace WebFreight.Web.MetaDataUpdate
                             //Tariff Module
 
                             TariffModuleUpdateClass tariffModuleUpdateClass = new TariffModuleUpdateClass();
-                            tariffModuleUpdateClass.LoadObjectTablesMetadata(context);
+                            tariffModuleUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             TariffModuleUpdate tariffModuleUpdate = new TariffModuleUpdate();
                             tariffModuleUpdate.loadScreens();
 
                             // New Infrastructure 
                             InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
-                            modelUpdateClass.LoadObjectTablesMetadata(context);
+                            modelUpdateClass.LoadObjectTablesMetadata(context,false);
+
+                            MetadataUpdateUtility.RunPostDeleteProcedure();
 
                             break;
                         }
@@ -697,206 +722,277 @@ namespace WebFreight.Web.MetaDataUpdate
             }
         }
 
-        private static void UpdateBusinessInfrastrutureModule(IWebFreightContext context)
+        private static void UpdateBusinessInfrastrutureModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
         }
 
-        private static void UpdateInfrasturtureAndLogModules(IWebFreightContext context)
+        private static void UpdateInfrasturtureAndLogModules(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             InfrastructureModelUpdateClass modelUpdateClass = new InfrastructureModelUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
-            UpdateSystemLogsModule(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
+            UpdateSystemLogsModule(context,true);
         }
 
-        private static void UpdateSystemLogsModule(IWebFreightContext context)
+        private static void UpdateSystemLogsModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             SystemLogsModelUpdateClass systemLogsModelUpdateClass = new SystemLogsModelUpdateClass();
             if (runOldUpdateCode)
                 systemLogsModelUpdateClass.LoadObjectsTenantZero(context);
             else
-                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context);
+                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",SystemLogsModelUpdateClass");
         }
 
-        private static void UpdateCommonModule(IWebFreightContext context)
+        private static void UpdateCommonModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             CommonDataModelUpdateClass modelUpdateClass = new CommonDataModelUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
         }
 
-        private static void UpdateInvoiceModule(IWebFreightContext context)
+        private static void UpdateInvoiceModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             InvoiceModelUpdateClass modelUpdateClass = new InvoiceModelUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",InvoiceModelUpdateClass");
         }
 
-        private static void UpdateQuoteModule(IWebFreightContext context)
+        private static void UpdateQuoteModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             QuoteModelUpdateClass modelUpdateClass = new QuoteModelUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",QuoteModelUpdateClass");
         }
 
-        private static void UpdateShipmentAndMasterModules(IWebFreightContext context)
+        private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadObjectTablesToTenantZero(context);
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
             //updateClass.LoadObjectTablesMetadata(context);
 
             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
             if (runOldUpdateCode)
                 shipmentModelUpdateClass.LoadObjectsTenantZero(context);
             else
-                shipmentModelUpdateClass.LoadObjectTablesMetadata(context);
+                shipmentModelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
-           
-          
+            performanceTimerLogger.LogMessage("Generated" + ",ShipmentsModelUpdateClass");
+
+
+
 
             MasterModelUpdateClass masterModelUpdateClass = new MasterModelUpdateClass();
             if (runOldUpdateCode)
                 masterModelUpdateClass.LoadObjectsTenantZero(context);
             else
-                masterModelUpdateClass.LoadObjectTablesMetadata(context);
+                masterModelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
 
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
                 //MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+
+                performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.UpdateShipmentLogboxAuomationObjectFields");
             }
 
             updateClass.LoadRolesAndFeatures(0);
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRolesAndFeatures");
 
             updateClass.LoadObjectTableRulesANDFieldsValidations();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableRulesANDFieldsValidations");
         }
 
-        private static void UpdateAccountingModule(IWebFreightContext context)
+        private static void UpdateAccountingModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             AccountingUpdateClass accountingUpdateClass = new AccountingUpdateClass();
             if (runOldUpdateCode)
                 accountingUpdateClass.LoadObjectsTenantZero(context);
             else
-                accountingUpdateClass.LoadObjectTablesMetadata(context);
+                accountingUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
+            performanceTimerLogger.LogMessage("Generated" + ",AccountingUpdateClass");
             AccountingUpdate updateClass = new AccountingUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
             updateClass.LoadUpdateTenantZero(context);
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadObjectTablesToTenantZero");
+
             updateClass.LoadOtherFields(context);
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadOtherFields");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs(); 
             updateClass.LoadObjectTableHelperControls();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadObjectTableHelperControls");
+
             updateClass.LoadMenustables();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadMenustables");
+
             updateClass.LoadEventTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadEventTypes");
+
             updateClass.FillTaxWithholdingAssessOffice();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.FillTaxWithholdingAssessOffice");
+
             updateClass.FillAccountingCompanyType();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.FillAccountingCompanyType");
+
             //updateClass.FillTaxWithholdingAssessOffice();
             updateClass.FillWithholdingTaxDeductionTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.FillWithholdingTaxDeductionTypes");
         }
 
-        private static void UpdateTariffModule(IWebFreightContext context)
+        private static void UpdateTariffModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             TariffModuleUpdateClass modelUpdateClass = new TariffModuleUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
-            TariffModuleUpdate updateClass = new TariffModuleUpdate();
+            performanceTimerLogger.LogMessage("Generated" + ",TariffModuleUpdateClass");
+
+            //TariffModuleUpdate updateClass = new TariffModuleUpdate();
             //updateClass.loadScreens();
         }
 
-        private static void UpdateTimeManagementModule(IWebFreightContext context)
+        private static void UpdateTimeManagementModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             TimeManagementUpdateClass modelUpdateClass = new TimeManagementUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
 
-            TimeManagementUpdate updateClass = new TimeManagementUpdate();
+            performanceTimerLogger.LogMessage("Generated" + ",TimeManagementUpdateClass");
+
+            //TimeManagementUpdate updateClass = new TimeManagementUpdate();
             //updateClass.loadScreens();
         }
 
-        private static void UpdateWarehouseModule(IWebFreightContext context)
+        private static void UpdateWarehouseModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             WarehouseLibUpdateClass modelUpdateClass = new WarehouseLibUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",WarehouseLibUpdateClass");
 
             WarehouseUpdate updateClass = new WarehouseUpdate();
             updateClass.LoadRolesAndFeatures(0);
+            performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadRolesAndFeatures");
+
             updateClass.CreateTableCounters();
+            performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.CreateTableCounters");
+
             updateClass.LoadOtherFields(context);
+            performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadOtherFields");
         }
 
-        private static void UpdateSocialModule(IWebFreightContext context)
+        private static void UpdateSocialModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             SocialUpdateClass socialUpdateClass = new SocialUpdateClass();
-            socialUpdateClass.LoadObjectTablesMetadata(context);
+            socialUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",SocialUpdateClass");
         }
 
-        private static void UpdateBookingModule(IWebFreightContext context)
+        private static void UpdateBookingModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             BookingLibUpdateClass modelUpdateClass = new BookingLibUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",BookingLibUpdateClass");
 
             BookingUpdate updateClass = new BookingUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
             updateClass.LoadUpdateTenantZero(context);
+            performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadUpdateTenantZero");
+
             updateClass.LoadOtherFields(context);
+            performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadOtherFields");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs();
             updateClass.LoadObjectTableHelperControls();
+            performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadObjectTableHelperControls");
+
             updateClass.LoadMenustables();
+            performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadMenustables");
             //updateClass.LoadEventTypes();
         }
 
-        private static void UpdateCRMModule(IWebFreightContext context)
+        private static void UpdateCRMModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             CRMUpdateClass modelUpdateClass = new CRMUpdateClass();
             if (runOldUpdateCode)
                 modelUpdateClass.LoadObjectsTenantZero(context);
             else
-                modelUpdateClass.LoadObjectTablesMetadata(context);
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",CRMUpdateClass");
 
             CRMUpdate updateClass = new CRMUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
             updateClass.LoadUpdateTenantZero(context);
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadUpdateTenantZero");
+
             updateClass.LoadOtherFields(context);
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOtherFields");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs();
             updateClass.LoadObjectTableHelperControls();
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadObjectTableHelperControls");
+
             updateClass.LoadMenustables();
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadMenustables");
+
             //updateClass.LoadEventTypes();
             updateClass.LoadOpportunityClosingReasons();
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOpportunityClosingReasons");
+
             updateClass.LoadOpportunityTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOpportunityTypes");
         }
 
         private static void UpdateAllOldModules(MetaDataUpdateClass updateClass, IWebFreightContext context)
         {
             
             updateClass.LoadObjectTablesToTenantZero(context);
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTablesToTenantZero");
             //updateClass.UpgradeClosedTablesForTenantZero();
 
             InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
@@ -924,33 +1020,63 @@ namespace WebFreight.Web.MetaDataUpdate
             }
             else
             {
-                inframodelUpdateClass.LoadObjectTablesMetadata(context);
-                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context);
-                shipmentModelUpdateClass.LoadObjectTablesMetadata(context);
-                masterModelUpdateClass.LoadObjectTablesMetadata(context);
-                quotemodelUpdateClass.LoadObjectTablesMetadata(context);
-                invoicemodelUpdateClass.LoadObjectTablesMetadata(context);
-                commonmodelUpdateClass.LoadObjectTablesMetadata(context);
-                globalmodelUpdateClass.LoadObjectTablesMetadata(context);
-                businessInfraUpdateClass.LoadObjectTablesMetadata(context);
+                inframodelUpdateClass.LoadObjectTablesMetadata(context,false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
+                systemLogsModelUpdateClass.LoadObjectTablesMetadata(context,false);
+                performanceTimerLogger.LogMessage("Generated" + ",SystemLogsModelUpdateClass");
+                shipmentModelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",ShipmentsModelUpdateClass");
+                masterModelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
+                quotemodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",QuoteModelUpdateClass");
+                invoicemodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InvoiceModelUpdateClass");
+                commonmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
+                globalmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",GlobalModelUpdateClass");
+                businessInfraUpdateClass.LoadObjectTablesMetadata(context, false);
+                performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
             }
+
+            //
             updateClass.LoadUpdateTenantZero(context, false);
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadUpdateTenantZero");
 
             //updateClass.LoadOtherFields(context);
             updateClass.LoadTranslationHeaders();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadTranslationHeaders");
+
             updateClass.LoadMeasurements();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMeasurements");
+
             updateClass.LoadCreditCardTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadCreditCardTypes");
+
             updateClass.LoadMoveTypes();
+            context.SaveChanges();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadMoveTypes");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs();
-            context.SaveChanges();
+           
+            //performanceTimerLogger.LogMessage("Manual" + ",context.SaveChanges()");
 
             updateClass.LoadRolesAndFeatures(0);
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRolesAndFeatures");
+
             updateClass.LoadObjectTableHelperControls();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableHelperControls");
+
             updateClass.LoadEntityStatus();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEntityStatus");
+
             updateClass.LoadEventTypes();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadEventTypes");
+
             updateClass.LoadRanks();
+            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRanks");
             //updateClass.LoadMenustables();
             //updateClass.LoadDefaultReports();
             //updateClass.LoadHelpResources();
@@ -986,7 +1112,7 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.LoadRanks();
             updateClass.LoadMenustables();
             updateClass.LoadDefaultReports();
-            updateClass.LoadHelpResources();
+            //updateClass.LoadHelpResources();
             updateClass.CreateMasterCounter(0);
             updateClass.LoadEmailAlertSettings();
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())

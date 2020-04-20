@@ -246,6 +246,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.myCloner.AddField('IsSharedLogisticsActivated');
         this.myCloner.AddField('IsMobileActivated');
         this.myCloner.AddField('SharedLogisticsMessageLink');
+        this.myCloner.AddField('DisplayDocumentsAndEvents');
         this.myCloner.AddEntity(this.TenantPM);
     }
     private RejectChanges() {
@@ -255,8 +256,18 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
 
 
+    public get DisplayDocumentsAndEvents() {
 
+        if (this.TenantPM) {
+            return this.TenantPM.DisplayDocumentsAndEvents;
+        }
+        else return false;
+    }
+    public set DisplayDocumentsAndEvents(value: boolean) {
+        if (this.TenantPM) {
+            this.TenantPM.DisplayDocumentsAndEvents = value;
+        }
 
-
+    }
 }
 

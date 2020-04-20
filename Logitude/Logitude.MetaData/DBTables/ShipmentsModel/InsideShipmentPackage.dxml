@@ -19,6 +19,27 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="OriginalShipmentPackageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OriginalInsideShipmentPackageId"
+    ShortName="OriginInsideShipmentPackageId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VolumetricWeight"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ShipmentPackageId"
     Type="varchar"
     Size="15">
@@ -39,19 +60,25 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Width"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Height"
     Type="float">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
+    Name="Width"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Length"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Volume"
     Type="float">
     <Constraints
       Nullable="true" />
@@ -66,32 +93,6 @@
     Name="Description"
     Type="varchar"
     Size="2000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Volume"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OriginalShipmentPackageId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="OriginalInsideShipmentPackageId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VolumetricWeight"
-    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -117,16 +118,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Reference4"
+    Name="CommodityNumber"
     Type="varchar"
-    Size="2000">
+    Size="20">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="CommodityNumber"
+    Name="Reference4"
     Type="varchar"
-    Size="20">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>

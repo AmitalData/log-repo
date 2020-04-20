@@ -37,6 +37,13 @@ namespace Logitude.BL.InfrastructureModel
 			 
             all.Add(new SchedulerProcedureDetails()
             {    
+                Code = "DeleteOldCommunicationLogsTask", 
+                Name = "DeleteOldCommunicationLogsTask", 
+                SearchFields = "DeleteOldCommunicationLogsTask,DeleteOldCommunicationLogsTask", 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
                 Code = "DeleteOldAuthenticationTokensTask", 
                 Name = "DeleteOldAuthenticationTokensTask", 
                 SearchFields = "DeleteOldAuthenticationTokensTask,DeleteOldAuthenticationTokensTask", 

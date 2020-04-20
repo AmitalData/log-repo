@@ -128,6 +128,8 @@ namespace WebFreight.Web.DataProviders
         public string AgentContactEmail { get; set; }
         public string TrailerNumber { get; set; }
         public string ProjectNumber { get; set; }
+        public string MasterPreCarriageCarrierNumber { get; set; }
+        public string MasterPreCarriageVesselName { get; set; }
         #endregion
 
         public List<ManifestDetailsClass> ManifestDetails { get; set; }

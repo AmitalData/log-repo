@@ -2931,7 +2931,8 @@
   <field
     Id="&quot;8519a594-1fed-4bf6-8dfa-bd5b3911ed70&quot;"
     FieldName="&quot;PreviousChartOfAccountsChangeDate&quot;"
-    OldNames="PreviousChartOfAccountsChangeDate"
+    ShortName="PreviousChartOfAccountsChangeD"
+    OldNames="PreviousChartOfAccountsChangeDate,PreviousChartOfAccountsChangeD"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -11777,7 +11778,7 @@
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
-  <TextCode
+    <TextCode
       Code="&quot;GLAccount.O.NoCreditDefined&quot;"
       DefaultText="&quot;Credit balance not defined&quot;"
       LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;"
@@ -11902,9 +11903,18 @@
       DefaultText="&quot;Preview&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-       <TextCode Code="&quot;GLAccount.O.IsCreditLimitSet&quot;" DefaultText="&quot;Credit Limit Is Set&quot;" LocalDefaultText="&quot;מוגדר מסגרת אשראי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;GLAccount.O.SortBy&quot;" DefaultText="&quot;Sort By&quot;" LocalDefaultText="&quot;מיון לפי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-  
+    <TextCode
+      Code="&quot;GLAccount.O.IsCreditLimitSet&quot;"
+      DefaultText="&quot;Credit Limit Is Set&quot;"
+      LocalDefaultText="&quot;מוגדר מסגרת אשראי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.SortBy&quot;"
+      DefaultText="&quot;Sort By&quot;"
+      LocalDefaultText="&quot;מיון לפי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

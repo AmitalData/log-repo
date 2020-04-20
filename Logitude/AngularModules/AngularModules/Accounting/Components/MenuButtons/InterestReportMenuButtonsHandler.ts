@@ -173,7 +173,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
            
-        } else {
+        } else if (this.EntityPM.InterestReportStatusCode == "2") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.CancelingInvoicedReportMessage");
         }
        
@@ -455,11 +455,6 @@ public VatTypeName:string;
                     if (!AppTool.IsNullOrEmpty(list.SATPaymentMethodCode)) {
                         this._ARInvoicePM.SATPaymentMethodCode = list.SATPaymentMethodCode;
                     }
- 
- 
-                    else {
-                      
-                    }
 
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this._ARInvoicePM.InvoiceCurrencyId = list.InvoiceCurrencyId;
@@ -472,7 +467,6 @@ public VatTypeName:string;
                     if (!AppTool.IsNullOrEmpty(list.VatNumber)) {
                         this._ARInvoicePM.VatNumber = list.VatNumber;
                     }
- 
 
                     if (!AppTool.IsNullOrEmpty(list.BillingAddressId)) {
                         this._ARInvoicePM.BillToAddressId = list.BillingAddressId;
@@ -481,7 +475,6 @@ public VatTypeName:string;
                     else if (!AppTool.IsNullOrEmpty(list.MainAddressId)) {
                         this._ARInvoicePM.BillToAddressId = list.MainAddressId;
                     }
-
  
                 }
                 resolve(myResponse.Result);

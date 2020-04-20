@@ -144,7 +144,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ValidateAirlineRestriction(entityPM.VendorId, tenant);
             ValidateFullAccounting(entityPM);
             ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
-
+            ValidateOnVoiding(entityPM);
         }
 
         private static void ValidateUnUpdateFields(APPaymentPM entityPM, APPayment entityPOCO, bool isNew)
@@ -336,6 +336,37 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             return myResult;
+        }
+
+        private static void ValidateOnVoiding(APPaymentPM entityPM)
+        {
+            if (entityPM.SetVoided)
+            {
+                bool hasConnectedInvoices = entityPM.PaymentInvoices.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Any();
+                bool hasExternalPaymentAmount = (entityPM.ExternalPaymentAmount != null && entityPM.ExternalPaymentAmount != 0) ? true : false;
+
+                if (hasConnectedInvoices || hasExternalPaymentAmount)
+                {
+                    string msg = null;
+
+                    if (hasConnectedInvoices && hasExternalPaymentAmount)
+                    {
+                        msg = "Please disconnect all invoices and external payment amount";
+                    }
+
+                    else if (hasConnectedInvoices && !hasExternalPaymentAmount)
+                    {
+                        msg = TranslateTextsClass.Translate("APPayment.M.DisconnectInvoices", entityPM.Tenant);
+                    }
+
+                    else if (!hasConnectedInvoices && hasExternalPaymentAmount)
+                    {
+                        msg = "Please disconnect external payment amount";
+                    }
+
+                    throw new ApplicationException(msg);
+                }
+            }
         }
     }
 }

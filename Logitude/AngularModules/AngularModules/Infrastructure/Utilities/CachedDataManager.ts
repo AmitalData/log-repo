@@ -257,7 +257,7 @@ export class CachedDataManager {
 
                 return ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + 'api/ObjectTableLastUpdate/GetLastTableUpdateDate/?' + 'tenant=' + SessionInfo.LoggedUserTenant, ServiceHelper.GetHttpHeaders()).subscribe((response: any) => {
 
-                    var lastdate = response.json();
+                    var lastdate = response;
                     LocalStorageManager.SetItem("CachedTableLastUpdateDate" + SessionInfo.LoggedUserTenant, JSON.stringify(lastdate));
                     console.log(lastdate);
                 });

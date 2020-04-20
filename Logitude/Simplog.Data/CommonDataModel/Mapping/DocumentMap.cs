@@ -54,6 +54,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FileName).HasColumnName("FileName");
             this.Property(t => t.CalculatedFileName).HasColumnName("CalculatedFileName");
             this.Property(t => t.IsEncrypted).HasColumnName("IsEncrypted");
+            this.Property(t => t.MarkForDelete).HasColumnName("MarkForDelete");
             //relationships
 
             this.HasOptional(t => t.SmallDocument)

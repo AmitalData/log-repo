@@ -263,7 +263,7 @@
                                         </table>
                                     </div>
                     
-                                    <div class="tabPageContent" style="width:100%; position:relative; margin:-4px 0 -1px 0;"">
+                                    <div class="tabPageContent" style="width:100%; position:relative; margin:-4px 0 -1px 0;">
                                         <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px; border:0px;">
                                             <tr>
                                                <td style="padding:0; width:1px; height:100%; vertical-align:top;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:4px; margin-top:4px;"></div></td>
@@ -421,7 +421,7 @@
                                         </table>
                                     </div>
 
-                                    <div class="tabPageContent" style="width:100%; position:relative; margin:-7px 0 -1px 0;"">
+                                    <div class="tabPageContent" style="width:100%; position:relative; margin:-7px 0 -1px 0;">
                                         <table style="width:100%; height:100%; border-collapse:collapse; border-spacing:0px; border:0px">
                                             <tr>
                                                <td style="padding:0; width:1px; height:100%; vertical-align:top;"><div style="width:1px; height:100%; background:#D1D1D1; margin-left:4px; margin-top:4px;"></div></td>

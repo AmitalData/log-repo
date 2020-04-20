@@ -212,6 +212,7 @@
   </Column>
   <Column
     Name="NotificationHubConnectionString"
+    ShortName="NotificationHubConnString"
     Type="varchar"
     Size="600">
     <Constraints

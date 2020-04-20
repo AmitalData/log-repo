@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Scheduler Procedure&quot;"
-  Code="&quot;034a&quot;"
+  Code="&quot;6c58&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -465,6 +465,10 @@
       Code="&quot;DeleteOldAPILogsTask&quot;"
       Name="&quot;DeleteOldAPILogsTask&quot;"
       SearchFields="&quot;DeleteOldAPILogsTask,DeleteOldAPILogsTask&quot;" />
+    <Record
+      Code="&quot;DeleteOldCommunicationLogsTask&quot;"
+      Name="&quot;DeleteOldCommunicationLogsTask&quot;"
+      SearchFields="&quot;DeleteOldCommunicationLogsTask,DeleteOldCommunicationLogsTask&quot;" />
     <Record
       Code="&quot;DeleteOldAuthenticationTokensTask&quot;"
       Name="&quot;DeleteOldAuthenticationTokensTask&quot;"

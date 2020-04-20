@@ -4,6 +4,7 @@ import { TasksSchedulerPMService } from '../../../../Infrastructure/Services/Sta
 import { ReportGroupList } from '../../../../Report/EntityLists/ReportGroupList';
 import { ReportList } from '../../../../Report/EntityLists/ReportList';
 import { TaskReportSchedulerItemClass } from '../TaskReportSchedulerComponent';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     
@@ -17,6 +18,7 @@ export class ReportSchedulerDateListTemplate {
     public dateValue: any;
     public Type: string;
     public Frequency: string;
+    public Recepients: string;
     SchedulerType: string = '';
     ReportGroupList: ReportGroupList;
     ReportList: ReportList;
@@ -36,6 +38,9 @@ export class ReportSchedulerDateListTemplate {
         }
         if (fieldName == "TriggerType") {
             this.SetTaskFrequency();
+        }
+        if (fieldName == "Recepients") {
+            this.SetTaskRecepients();
         }
         if (fieldName == "Duration") {
             this.SetTaskDuration();
@@ -90,6 +95,19 @@ export class ReportSchedulerDateListTemplate {
                     this.Frequency = numberOfDays + " Days in the week";
             }
         }     
+    }
+
+    SetTaskRecepients() {
+        var toRecepients = this.rowData["Recepients"];
+        var allRecepients = toRecepients.split(';');
+
+        toRecepients = "";
+        allRecepients.forEach(rec => {
+            toRecepients += rec.split('@')[0] + ", ";
+        });
+
+        toRecepients = toRecepients.substring(0, toRecepients.length-2); //Remove last ', '
+        this.Recepients = toRecepients;
     }
 
     SetTaskDuration() {
