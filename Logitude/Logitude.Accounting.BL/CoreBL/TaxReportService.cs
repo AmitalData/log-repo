@@ -105,7 +105,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                            VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                             InvoiceAmount = invoice.TotalAmountForTaxReport != null ? invoice.TotalAmountForTaxReport : 0;
-                            if (invoice.InvoiceNumber.Length == 9)
+                            if (invoice.InvoiceNumber.Length > 9)
                             {
                                 outputreference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
                             }
@@ -389,9 +389,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     Reference = Reference.Replace("-", "");
                 }
-                if (Reference.Length > 20)
+                if (Reference.Length > 9)
                 {
-                    Reference = Reference.Substring(0, 19);
+                    Reference = Reference.Substring(Reference.Length -9);
                 }
             
                 Regex isMatche = new Regex("([A-Za-z])");
