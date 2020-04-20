@@ -98,20 +98,6 @@ export class AutonomyKeywordComponent
     }
 
     SetWindowArgs(args: any) {
-        if (this.entityArgs.EntityPM != null) {
-            this.EntityPM = this.entityArgs.EntityPM;
-            if (this.EntityPM.KeywordtypeCode == "1") {
-                this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[0];
-            } else {
-                this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[1];
-            }
-        } else {
-            this.isNewRecord = true;
-            this.EntityPM = new CustomsAutonomyKeywordPM();
-            this.EntityPM.Tenant = SessionLocator.Tenant;
-            this.EntityPM.MarkAsDirty();
-        }
-
     }
 
 
