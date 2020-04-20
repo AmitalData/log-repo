@@ -875,49 +875,6 @@
     <tr *ngIf="AvailableTariffs.length > 0">
         <td>
             <table>
-                <!--<tr class="FormFieldRow">
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width:10px;">
-                                    <div></div>
-                                </td>
-
-                                <td style="width:70px;color: #45494a;font-size:16px;">Results</td>
-
-                                <td style="width:50px; font-size:12px;" class="Label">({{AvailableTariffs.length}})</td>
-
-                                <td style="width:15px;">
-                                    <img src="./Images/PriceCheck/Price.png" style="width:15px; height:11px;" />
-                                </td>
-
-                                <td style="width:5px;">
-                                    <div></div>
-                                </td>
-
-                                <td style="width:100px;">
-                                    <LogLov [ObjectFieldName]="'CurrencyId'"
-                                            [NoObjectField]="true"
-                                            [DataContext]="DataContext"
-                                            [HideLastColumn]="true"
-                                            [HideAddLink]="true"
-                                            [HideMaintenanceIcon]="true"
-                                            [LookUpTableName]="'Currency'">
-                                    </LogLov>
-                                </td>
-
-                                <td style="width:180px;">
-                                    <SearchBox [SearchText]="SearchText" (TextChanged)="SearchTextChanged($event)"></SearchBox>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>-->
-
                 <tr>
                     <td>
                         <table>
@@ -947,7 +904,7 @@
                                                                                         </div>
                                                                                     </td>
 
-                                                                                    <td style="width:150px;min-width:150px; vertical-align:central">
+                                                                                    <td style="width:180px;min-width:180px; max-width:180px; vertical-align:central">
                                                                                         <table>
                                                                                             <tr>
                                                                                                 <td>
@@ -956,7 +913,11 @@
                                                                                             </tr>
 
                                                                                             <tr style="height:22px;">
-                                                                                                <td style="font-size: 16px; text-wrap:normal; text-align:center" class="Value">{{item.SellerName}}</td>
+                                                                                                <td>
+                                                                                                    <div style="width: 100%; white-space: normal; font-size:16px; word-wrap:break-word; text-align:center" class="Value">
+                                                                                                        {{item.SellerName}}
+                                                                                                    </div>
+                                                                                                </td>
                                                                                             </tr>
 
                                                                                             <tr style="height:32px;">
@@ -1044,11 +1005,27 @@
                                                                                             </tr>
 
                                                                                             <tr style="height:20px;">
-                                                                                                <td class="Label" style="font-size:10px; float:right; right:3px;">Last Used {{item.LastUsedDate | DateTimePipe:'SD'}}</td>
+                                                                                                <td style="float:right; right:3px;">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td class="Label" style="font-size:10px;">Last Used</td>
+                                                                                                            <td style="width:2px;"><div></div></td>
+                                                                                                            <td class="Label" style="font-size:10px; width:70px;">{{item.LastUsedDate | DateTimePipe:'SD'}}</td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
                                                                                             </tr>
 
                                                                                             <tr style="height:20px;">
-                                                                                                <td class="Label" style="font-size:10px; float:right; right:3px;">Last Updated {{item.UpdateDate | DateTimePipe:'SD'}}</td>
+                                                                                                <td style="float:right; right:3px;">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td class="Label" style="font-size:10px;">Last Updated</td>
+                                                                                                            <td style="width:2px;"><div></div></td>
+                                                                                                            <td class="Label" style="font-size:10px; width:70px;">{{item.UpdateDate | DateTimePipe:'SD'}}</td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
                                                                                             </tr>
 
                                                                                             <tr>
@@ -1065,7 +1042,7 @@
                                                                                                                 <div></div>
                                                                                                             </td>
 
-                                                                                                            <td style="width:70px;" class="Label">
+                                                                                                            <td style="width:70px; color: #45494a;" class="Label">
                                                                                                                 More Details
                                                                                                             </td>
 
@@ -1141,14 +1118,23 @@
                                                                         <td style="width:220px;" class="SmallLabel">
                                                                             <ScrollViewer [Small]="true">
                                                                                 <table>
+                                                                                    <tr style="height:5px;">
+                                                                                        <td><div></div></td>
+                                                                                    </tr>
+
                                                                                     <tr *ngFor="let allInItem of item.AllInSurcharges" style="height:22px;">
                                                                                         <td>
                                                                                             <table>
                                                                                                 <tr>
-                                                                                                    <td style="font-size:11px;">
+                                                                                                    <td style="font-size:11px; width:155px; max-width:155px;" class="TextTrimming">
                                                                                                         {{allInItem.Name}}
                                                                                                     </td>
-                                                                                                    <td style="width:60px; font-size:11px;">
+
+                                                                                                    <td style="width:3px;">
+                                                                                                        <div></div>
+                                                                                                    </td>
+
+                                                                                                    <td style="width:60px; font-size:11px; float:right;">
                                                                                                         {{allInItem.Price  | NumbersPipe:'N2'}}  {{item.CurrencySign}}
                                                                                                     </td>
                                                                                                 </tr>
@@ -1200,6 +1186,10 @@
                                                                         <td style="width:250px;" class="SmallLabel">
                                                                             <ScrollViewer [Small]="true">
                                                                                 <table>
+                                                                                    <tr style="height:5px;">
+                                                                                        <td><div></div></td>
+                                                                                    </tr>
+
                                                                                     <tr *ngFor="let surcharge of item.SurchargesWithoutAllIn" style="height:22px;">
                                                                                         <td>
                                                                                             <table>
@@ -1208,10 +1198,14 @@
                                                                                                         {{surcharge.Code}}
                                                                                                     </td>
 
-                                                                                                    <td style="width:2px;"> | </td>
+                                                                                                    <td style="width:2px; font-size:12px;"> | </td>
 
-                                                                                                    <td style="font-size:11px; float:left;">
+                                                                                                    <td style="font-size:11px; float:left; width:122px; max-width:122px;" class="TextTrimming">
                                                                                                         {{surcharge.Name}}
+                                                                                                    </td>
+
+                                                                                                    <td style="width:3px;">
+                                                                                                        <div></div>
                                                                                                     </td>
 
                                                                                                     <td style="width:60px; float:right; font-size:11px;">

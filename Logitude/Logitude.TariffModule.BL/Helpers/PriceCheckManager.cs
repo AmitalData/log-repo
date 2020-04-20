@@ -653,19 +653,19 @@ namespace Logitude.TariffModule.BL.Helpers
 
                     if(result.StartDate != null)
                     {
-                        tariffsSummary.ValidityDate = result.StartDate.Value.ToShortDateString();
+                        tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", result.StartDate.Value);
                     }
 
                     if(result.ExpirationDate != null)
                     {
                         if(string.IsNullOrEmpty(tariffsSummary.ValidityDate))
                         {
-                            tariffsSummary.ValidityDate = result.ExpirationDate.Value.ToShortDateString();
+                            tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", result.ExpirationDate.Value);
                         }
 
                         else
                         {
-                            tariffsSummary.ValidityDate = tariffsSummary.ValidityDate + " - " + result.ExpirationDate.Value.ToShortDateString();
+                            tariffsSummary.ValidityDate = tariffsSummary.ValidityDate + " - " + String.Format("{0:dd/MM/yyyy}", result.ExpirationDate.Value);
                         }
                     }
 
@@ -757,19 +757,19 @@ namespace Logitude.TariffModule.BL.Helpers
 
                     if (trariff.StartDate != null)
                     {
-                        tariffsSummary.ValidityDate = trariff.StartDate.Value.ToShortDateString();
+                        tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", trariff.StartDate.Value);
                     }
 
                     if (trariff.ExpirationDate != null)
                     {
                         if (string.IsNullOrEmpty(tariffsSummary.ValidityDate))
                         {
-                            tariffsSummary.ValidityDate = trariff.ExpirationDate.Value.ToShortDateString();
+                            tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
                         }
 
                         else
                         {
-                            tariffsSummary.ValidityDate = tariffsSummary.ValidityDate + " - " + trariff.ExpirationDate.Value.ToShortDateString();
+                            tariffsSummary.ValidityDate = tariffsSummary.ValidityDate + " - " + String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
                         }
                     }
 
