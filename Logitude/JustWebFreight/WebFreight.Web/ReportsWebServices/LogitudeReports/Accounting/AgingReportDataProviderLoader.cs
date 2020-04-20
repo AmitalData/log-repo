@@ -220,7 +220,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void SetLocalCurrency(AccountingAgingDataProvider totalData)
         {
-            TenantQuery tenantQuery = new TenantQuery();
+            TenantQuery tenantQuery = new TenantQuery(tenant);
             var tenantPM = tenantQuery.GetSinglePM(tenant);
 
             totalData.TenantCurrencyCode = tenantPM.CurrencyCode;
