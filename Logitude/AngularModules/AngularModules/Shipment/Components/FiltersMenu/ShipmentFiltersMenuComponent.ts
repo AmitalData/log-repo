@@ -154,7 +154,7 @@ export class ShipmentFiltersMenuComponent implements AfterViewInit {
 
             img_A.setAttribute("src", "./Images/TransportModes/A_g.png");
             img_O.setAttribute("src", "./Images/TransportModes/O_g.png");
-            img_I.setAttribute("src", "./Images/TransportModes/I_G.png");
+            img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
 
             switch (itemValue) {
                 case "A": {
@@ -302,10 +302,10 @@ export class ShipmentFiltersMenuComponent implements AfterViewInit {
             //var img_C = document.getElementById("DirectionFilter_C");
             img_E.setAttribute("src", "./Images/Directions/E_g.png");
             img_I.setAttribute("src", "./Images/Directions/I_g.png");
-            img_R.setAttribute("src", "./Images/Directions/R_G.png");
-            img_D.setAttribute("src", "./Images/Directions/D_G.png");
+            img_R.setAttribute("src", "./Images/Directions/R_g.png");
+            img_D.setAttribute("src", "./Images/Directions/D_g.png");
             if (this.itmImportShipments)
-                img_C.setAttribute("src", "./Images/Directions/C_G.png");
+                img_C.setAttribute("src", "./Images/Directions/C_g.png");
             //img_C.setAttribute("src", "./Images/Directions/C_G.png");
 
             switch (itemValue) {
