@@ -40,19 +40,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Date"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="InternalDocumentId"
     Type="varchar"
     Size="40">
@@ -67,25 +54,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="EventTypeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="QuoteId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="OwnerUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="Area"
@@ -110,6 +83,7 @@
   </Column>
   <Column
     Name="DateEscalationActionTimeIndicatorCode"
+    ShortName="DateEscalationActionTimeCode"
     Type="varchar"
     Size="2">
     <Constraints
@@ -129,6 +103,34 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EventTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OwnerUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Date"
+    ShortName="FollowUpDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
@@ -145,18 +147,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="EventTypeId"
-    ReferencedTable="EventTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="QuoteId"
     ReferencedTable="Quotes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="OwnerUserId"
-    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -167,6 +159,16 @@
   <Relation
     ForeignKeyColumn="AutomationId"
     ReferencedTable="Automations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="EventTypeId"
+    ReferencedTable="EventTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OwnerUserId"
+    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

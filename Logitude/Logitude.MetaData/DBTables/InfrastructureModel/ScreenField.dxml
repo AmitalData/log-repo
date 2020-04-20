@@ -20,12 +20,14 @@
   </Column>
   <Column
     Name="Column"
+    ShortName="Column_"
     Type="int">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="Row"
+    ShortName="Row_"
     Type="int">
     <Constraints
       Nullable="false" />

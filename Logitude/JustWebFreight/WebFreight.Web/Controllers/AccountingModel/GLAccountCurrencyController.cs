@@ -35,6 +35,7 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.BL.EntityQueryServices;
 using System.Web.Http.ModelBinding;
+using Logitude.Accounting.Data.Repositories;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -62,6 +63,46 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         service.Update(entityPM, true);
 
                        
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        public HttpResponseMessage Put(GLAccountCurrencyPM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        GLAccountCurrencyRepository gLAccountCurrencyRepository = new GLAccountCurrencyRepository(entityPM.Tenant);
+                        GLAccountCurrency accountCurrency = gLAccountCurrencyRepository.GetEntityByCurrencyAndGLAccountId(entityPM.MainGLAccountId, entityPM.CurrencyId, entityPM.Tenant);
+                        entityPM.Id = accountCurrency.Id;
+                        IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+                        GLAccountCurrencyUpdateService service = new GLAccountCurrencyUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                        service.Update(entityPM, true);
+
+
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);

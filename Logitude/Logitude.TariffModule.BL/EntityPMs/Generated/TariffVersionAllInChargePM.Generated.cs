@@ -181,6 +181,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string chargesTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChargesTypeCode  
+	   {
+	    
+	     get
+		{
+		   return chargesTypeCode;
+		 }
+		 set
+		 {
+		   if(chargesTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeCode",OldValue=chargesTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chargesTypeCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

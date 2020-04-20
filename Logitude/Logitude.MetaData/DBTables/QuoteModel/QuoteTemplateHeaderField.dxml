@@ -27,12 +27,14 @@
   </Column>
   <Column
     Name="Column"
+    ShortName="FieldColumn"
     Type="int">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="Row"
+    ShortName="FieldRow"
     Type="int">
     <Constraints
       Nullable="false" />

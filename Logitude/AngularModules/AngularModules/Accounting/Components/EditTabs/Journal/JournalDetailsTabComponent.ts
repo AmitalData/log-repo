@@ -81,18 +81,11 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
         this.EntityPM = entityArgs.EntityPM;
 
-
-        if (this.AccountingDate == null)
-            this.AccountingDate = new Date();
-
-
-
+        this.SetDatesDefaultValues();
+      
         this.FillGrid();
         this.SetUIProperties();
-
-
-
-
+        
         // redraw
         this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
             if (isSuccess) {
@@ -108,7 +101,15 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
         this.Listen();
     }
+    private SetDatesDefaultValues() {
+        if (this.AccountingDate == null)
+            this.AccountingDate = new Date();
+        if (this.DocumentDate == null)
+            this.DocumentDate = new Date();
+        if (this.DueDate == null)
+            this.DueDate = new Date();
 
+    }
     public CurrentEditComponentId: string;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
@@ -199,6 +200,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             var journalLine: JournalLinePM = new JournalLinePM(this.EntityPM);
             journalLine.Line = 1;
             journalLine.Tenant = this.EntityPM.Tenant;
+            journalLine.DocumentDate = this.DocumentDate;
+            journalLine.DueDate = this.DueDate;
             this.EntityPM.AddJournalLine(journalLine);
             var line = new JournalLineModel(journalLine, this);
             this.JournalLines.Insert(line);
@@ -289,51 +292,32 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.currency = value;
         }
     }
+    get DocumentDate() { return this.EntityPM.DocumentDate; }
+    set DocumentDate(value: Date) {
+        if (this.EntityPM.DocumentDate != value) {
+            if (value != null) {
+                this.ValidateDates(value, "DocumentDate");
+            }
 
+            this.EntityPM.DocumentDate = value;
+        }
+    }
+
+    get DueDate() { return this.EntityPM.DueDate; }
+    set DueDate(value: Date) {
+        if (this.EntityPM.DueDate != value) {
+              if (value != null) {
+                  this.ValidateDates(value, "DueDate");
+            }
+            this.EntityPM.DueDate = value;
+        }
+    }
     get AccountingDate() { return this.EntityPM.AccountingDate; }
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
 
-
             if (value != null) {
-
-                //CLOSED MONTH VALIDATION
-                // Get Accounting Period by year
-                var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
-                if (accountingPeriod) {
-
-                    var month = value.getMonth() + 1;
-
-                    // Valid Month => (ClosedMonth < month <= OpenMonth)
-                    if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
-
-                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
-
-                    } else { // invalid (closed month)
-
-                        // push the error to errors list
-                        var msg = TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth");
-                        this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(msg);
-                        this.EntityPM.AccountingDate = value;
-                        return;
-
-                    }
-                }
-
-                //FUTURE DATE VALIDATION
-                if (value > DateTool.GetCurrentDateTimeAsUtc()) {
-                    var msg = TextCodeTranslator.Translate("Journal.M.FutureDateForbidden");
-                    this.UIProperties.SetValidity("AccountingDate", this.ObjectTableName, false, msg);
-
-                    // push the error to errors list
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(msg);
-                    this.EntityPM.AccountingDate = value;
-                    return;
-                } else {
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
-                    this.UIProperties.SetValidity("AccountingDate", this.ObjectTableName, true, "OK");
-                }
-
+                this.ValidateDates(value,"AccountingDate");                
 
             }
 
@@ -344,7 +328,47 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
 
     }
+    private ValidateDates(value:Date, fieldName:string) {
+        if (fieldName == "AccountingDate") {
+            var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
+            if (accountingPeriod) {
 
+                var month = value.getMonth() + 1;
+
+                // Valid Month => (ClosedMonth < month <= OpenMonth)
+                if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
+
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
+
+                } else { // invalid (closed month)
+
+                    // push the error to errors list
+                    var msg = TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth");
+                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, false, msg);
+
+                    this.EntityPM.AccountingDate = value;
+
+                    return;
+                }
+            }
+        }
+          else  if (fieldName != "DueDate") {
+                //FUTURE DATE VALIDATION
+                if (value > DateTool.GetCurrentDateTimeAsUtc()) {
+                    var msg = TextCodeTranslator.Translate("Journal.M.FutureDateForbidden");
+                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, false, msg);
+
+                    // push the error to errors list
+                   // this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(msg);
+                    if (fieldName == "AccountingDate") this.EntityPM.AccountingDate = value;
+                    return;
+                } else {
+                  //  this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
+                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, true, "OK");
+                }
+            }
+        
+    }
     accountingPeriod: AccountingPeriodList;
     get AccountingPeriod() { return this.accountingPeriod; }
     set AccountingPeriod(value: AccountingPeriodList) {
@@ -402,6 +426,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         line.Reference1 = this.reference1;
         line.Reference2 = this.reference2;
         line.Reference3 = this.reference3;
+        line.DocumentDate = this.DocumentDate != null ? this.DocumentDate : null;
+        line.DueDate = this.DueDate != null ? this.DueDate : null;
         line.Notes = this.notes;
         this.JournalLines.Insert(line);
     }

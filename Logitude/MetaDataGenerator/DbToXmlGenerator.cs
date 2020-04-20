@@ -171,12 +171,7 @@ namespace MetaDataGenerator
                 #region Write Xml To file
 
 
-                string tableName = table.Name;
-                if (table.Name.Contains("."))
-                {
-                    tableName = table.Name.Split('.')[1];
-                }
-                doc.Save(directoryPath + tableName + ".lxml");
+                WriteXMLToFile(directoryPath, table, doc);
 
                 #endregion
             }
@@ -237,14 +232,7 @@ namespace MetaDataGenerator
                 #region Write Xml To file
 
 
-                string tableName = table.Name;
-                if (table.Name.Contains("."))
-                {
-                    tableName = table.Name.Split('.')[1];
-                }
-
-                XmlDocument newdoc = new XmlDocument();
-                doc.Save(directoryPath + tableName + ".lxml");
+                WriteXMLToFile(directoryPath, table, doc);
 
                 #endregion
             }
@@ -320,19 +308,19 @@ namespace MetaDataGenerator
                             GenerateAdditionalTextCodes(doc, entityElement, table, fields);
                             break;
                         }
-					case "features":
-						{
-							GenerateAdditionalFeatures(doc, entityElement, table, fields);
-							break;
-						}
-					case "features and textCodes":
-						{
-							GenerateAdditionalTextCodes(doc, entityElement, table, fields);
-							GenerateAdditionalFeatures(doc, entityElement, table, fields);
+                    case "features":
+                        {
+                            GenerateAdditionalFeatures(doc, entityElement, table, fields);
+                            break;
+                        }
+                    case "features and textCodes":
+                        {
+                            GenerateAdditionalTextCodes(doc, entityElement, table, fields);
+                            GenerateAdditionalFeatures(doc, entityElement, table, fields);
 
-							break;
-						}
-					case "entity":
+                            break;
+                        }
+                    case "entity":
                         {
                             this.UpdateEntityElement(entityElement, doc, table, tableTextCodes);
                             break;
@@ -348,19 +336,44 @@ namespace MetaDataGenerator
                 #region Write Xml To file
 
 
-                string tableName = table.Name;
-                if (table.Name.Contains("."))
-                {
-                    tableName = table.Name.Split('.')[1];
-                }
-
-                XmlDocument newdoc = new XmlDocument();
-                doc.Save(directoryPath + tableName + ".lxml");
+                WriteXMLToFile(directoryPath, table, doc);
 
                 #endregion
             }
 
             return true;
+        }
+
+        private static void WriteXMLToFile(string directoryPath, ObjectTable table, XmlDocument doc)
+        {
+            string tableName = table.Name;
+            if (table.Name.Contains("."))
+            {
+                tableName = table.Name.Split('.')[1];
+            }
+
+            string dxmlFilePath = directoryPath + tableName + ".lxml";
+            //XmlDocument newdoc = new XmlDocument();
+             
+
+
+            FileStream fileStream;
+            if (File.Exists(dxmlFilePath))
+            {
+                fileStream = new FileStream(dxmlFilePath, FileMode.Truncate, FileAccess.Write);
+            }
+            else
+            {
+                fileStream = new FileStream(dxmlFilePath, FileMode.CreateNew, FileAccess.Write);
+            }
+
+            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
+            XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
+
+            doc.Save(xmlWriter);
+            xmlWriter.Close();
+            xmlWriter.Dispose();
+            fileStream.Close();
         }
 
         #region GenerateEntityElement

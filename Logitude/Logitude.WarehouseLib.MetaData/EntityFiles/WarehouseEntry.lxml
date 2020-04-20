@@ -6465,6 +6465,77 @@
       IsPackagable="false" />
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;WarehouseEntry.B.Partners.AddShipper&quot;"
+      DefaultText="&quot;Add Shipper&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.B.Partners.AddConsignee&quot;"
+      DefaultText="&quot;Add Consignee&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.B.Partners.AddPartners&quot;"
+      DefaultText="&quot;Add Partners&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.AddShipper&quot;"
+      DefaultText="&quot;Add Shipper&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.AddConsignee&quot;"
+      DefaultText="&quot;Add Consignee&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.Name&quot;"
+      DefaultText="&quot;Name&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.Address&quot;"
+      DefaultText="&quot;Address&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.Reference1&quot;"
+      DefaultText="&quot;Reference1&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.Reference2&quot;"
+      DefaultText="&quot;Reference2&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.MyCustomer&quot;"
+      DefaultText="&quot;My Customer&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.EditShipper&quot;"
+      DefaultText="&quot;Edit Shipper&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.EditConsignee&quot;"
+      DefaultText="&quot;Edit Consignee&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.S.Partners.Partners&quot;"
+      DefaultText="&quot;Partners&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;WarehouseEntry.M.DeleteThisPartner&quot;"
+      DefaultText="&quot;Delete This Partner?&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

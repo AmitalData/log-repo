@@ -174,7 +174,7 @@ export class AutomaticExternalRconcilMthodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AutomaticExternalRconcilMthod").pipe(
-				map((cachedJson:any) => {
+				map(cachedJson => {
 
 					var _mappedListsArray: Array<AutomaticExternalRconcilMthodList> = [];
 
@@ -240,7 +240,7 @@ export class AutomaticExternalRconcilMthodListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AutomaticExternalRconcilMthod").pipe(
-				map((cachedJson:any) => {
+				map(cachedJson => {
 
 					var _mappedListsArray: Array<AutomaticExternalRconcilMthodList> = [];
 					if (cachedJson) {

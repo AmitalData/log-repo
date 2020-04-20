@@ -1011,9 +1011,6 @@ namespace Simplog.Data.QuoteModel.Mapping
 
             this.Property(t => t.QuoteTemplatePDFMarginBottom).HasColumnName("QuoteTemplatePDFMarginBottom");
             this.Property(t => t.QuoteTemplatePDFMarginTop).HasColumnName("QuoteTemplatePDFMarginTop");
-
-
-            this.Property(t => t.ShowIncludedChargesPerContainers).HasColumnName("ShowIncludedChargesPerContainers");
             this.Property(t => t.ShowIncludedChargesPackages).HasColumnName("ShowIncludedChargesPackages");
             this.Property(t => t.ShowIncludedChargesContainers).HasColumnName("ShowIncludedChargesContainers");
 
@@ -1028,6 +1025,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
+                this.Property(t => t.ShowIncludedChargesPerContainers).HasColumnName("ShowIncludedChargesPerConts");
                 this.Property(t => t.ShowTotalInSaleCurrencyPackages).HasColumnName("ShowTotalSaleCurrencyPackages");
                 this.Property(t => t.ShowTotalInSaleCurrencyContainers).HasColumnName("ShowTotaInSaleCurrContainers");
                 this.Property(t => t.ShowTotalInLocalCurrencyPackages).HasColumnName("ShowTotalLocalCurrencyPackages");
@@ -1072,6 +1070,7 @@ namespace Simplog.Data.QuoteModel.Mapping
 
             else
             {
+                this.Property(t => t.ShowIncludedChargesPerContainers).HasColumnName("ShowIncludedChargesPerContainers");
                 this.Property(t => t.ShowTotalInSaleCurrencyPackages).HasColumnName("ShowTotalInSaleCurrencyPackages");
                 this.Property(t => t.ShowTotalInSaleCurrencyContainers).HasColumnName("ShowTotalInSaleCurrencyContainers");
                 this.Property(t => t.ShowTotalInLocalCurrencyPackages).HasColumnName("ShowTotalInLocalCurrencyPackages");

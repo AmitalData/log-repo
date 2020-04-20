@@ -25,6 +25,7 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string VersionId { get; set; }
         public string TotalSurcharge { get; set; }
         public string WholePrice { get; set; }
+        public string WholePriceWithoutAllIn { get; set; }
         public string AllIn { get; set; }
         public string AllInIds { get; set; }
         public string UnitOfMesurmentCode { get; set; }
