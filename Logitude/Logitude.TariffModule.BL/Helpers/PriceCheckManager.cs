@@ -669,7 +669,6 @@ namespace Logitude.TariffModule.BL.Helpers
                         }
                     }
 
-                    tariffsSummary.ValidityDate = result.StartDate.Value.ToShortDateString() + " - " + result.ExpirationDate.Value.ToShortDateString();
                     tariffsSummary.Remarks = result.Notes;
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId) : 0;
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
