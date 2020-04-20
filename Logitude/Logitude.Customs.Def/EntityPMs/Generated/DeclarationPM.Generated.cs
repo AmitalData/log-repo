@@ -3812,7 +3812,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	 
 	  private string courierManifestStatusCode ;
 	  	  
        

@@ -33,10 +33,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         protected override void OnUpdating(CustomsAutonomyKeywordPM entityPM, CustomsAutonomyKeyword entityPOCO)
         {
-            if (entityPM.KeywordtypeCode!=entityPOCO.KeywordtypeCode && !String.IsNullOrWhiteSpace(entityPOCO.KeywordtypeCode))
-            {
-                throw new Exception($"Change  KeywordtypeCode : {entityPM.KeywordtypeCode} not allowed !! -candidate key");
-            }
+         
             base.OnUpdating(entityPM, entityPOCO);
         }
     }

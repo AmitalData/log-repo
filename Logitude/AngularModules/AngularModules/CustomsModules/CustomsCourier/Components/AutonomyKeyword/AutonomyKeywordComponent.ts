@@ -31,29 +31,11 @@ import { ControlsIdCounter } from '../../../../Infrastructure/Utilities/Controls
 export class AutonomyKeywordComponent
     extends BaseComponent
     implements OnInit {
-    ngOnInit(): void {
-        if (this.entityArgs.EntityPM != null) {
-            this._CustomsAutonomyKeywordPMService.get(this.entityArgs.EntityPM.Id)
-                .subscribe((serviceResponse: ServiceResponse) => {
-                    this.EntityPM = serviceResponse.Result;
-                    if (this.EntityPM.KeywordtypeCode == "1") {
-                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[0];
-                    } else {
-                        this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[1];
-                    }
-
-                });
-        } else {
-            this.isNewRecord = true;
-            this.EntityPM = new CustomsAutonomyKeywordPM();
-            this.EntityPM.Tenant = SessionLocator.Tenant;
-            this.EntityPM.MarkAsDirty();
-        }    }
-
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.CustomsAutonomyKeyword";
     public EntityPM: CustomsAutonomyKeywordPM;
-    
+    isWindowMode: boolean = false;
+
     isNewRecord: boolean = false;
     ValidationErrorsList: any[] = [];
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
@@ -65,7 +47,8 @@ export class AutonomyKeywordComponent
     Loaded: boolean = false;
     FromList: boolean;
     SelectedItemKeywordtypeCode: KeyValuePair;
-    constructor(public entityArgs: EntityArgs ) {
+
+    constructor(public entityArgs: EntityArgs) {
         super();
         this._KeywordtypeCodes.push(new KeyValuePair("1", "עיר"));
         this._KeywordtypeCodes.push(new KeyValuePair("2", "טלפון"));
@@ -73,11 +56,62 @@ export class AutonomyKeywordComponent
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.Loaded = true;
             SessionLocator.SelectedSession.StopBusyIndicator();
-            this.WarningMessage = "יש לבחור קוד מילות מפתח ולאחר להזין רשימת מילות מפתח מופרדות";
+            this.WarningMessage = "יש לבחור קוד מילת מפתח ולאחר להזין  מילת מפתח ";
+            this.Listen();
         });
+        this.UIProperties.SetEnabled("KeywordsList", this.ObjectTableName, true);
+        
+    }
+    private Listen() {
+        if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
+
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                    }
+                })
+            );
+            SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess && SessionLocator.SelectedSession.CurrentEditComponent) {
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                    }
+                })
+            );
+        }
+    }
+    ngOnInit(): void {
+            if(this.entityArgs.EntityPM != null) {
+            this.EntityPM = this.entityArgs.EntityPM;
+            if (this.EntityPM.KeywordtypeCode == "1") {
+                this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[0];
+            } else {
+                this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[1];
+            }
+        } else {
+            this.isNewRecord = true;
+            this.EntityPM = new CustomsAutonomyKeywordPM();
+            this.EntityPM.Tenant = SessionLocator.Tenant;
+            this.EntityPM.MarkAsDirty();
+        }
     }
 
     SetWindowArgs(args: any) {
+        if (this.entityArgs.EntityPM != null) {
+            this.EntityPM = this.entityArgs.EntityPM;
+            if (this.EntityPM.KeywordtypeCode == "1") {
+                this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[0];
+            } else {
+                this.SelectedItemKeywordtypeCode = this._KeywordtypeCodes[1];
+            }
+        } else {
+            this.isNewRecord = true;
+            this.EntityPM = new CustomsAutonomyKeywordPM();
+            this.EntityPM.Tenant = SessionLocator.Tenant;
+            this.EntityPM.MarkAsDirty();
+        }
+
     }
 
 
@@ -88,18 +122,23 @@ export class AutonomyKeywordComponent
         this._WarningMessage = newValue;
     }
 
-    public get KeywordsList() {
+    public get KeywordtypeCode() {
         if (this.EntityPM == null) {
             return "";
         }
-        return this.EntityPM.KeywordsList;
+        return this.EntityPM.KeywordtypeCode;
     }
+    public set KeywordtypeCode(newValue: string) { this.EntityPM.KeywordtypeCode = newValue; }
+
+    public get KeywordsList() { return this.EntityPM.KeywordsList; }
     public set KeywordsList(newValue: string) {
         this.EntityPM.KeywordsList = newValue;
     }
 
-    _SelectedKeywordtypeCode: String;
 
+
+
+    _SelectedKeywordtypeCode: String;
     KeywordtypeCodeClicked(SelectKeywordtypeCode_Key) {
         this._SelectKeywordtypeCode_Key = SelectKeywordtypeCode_Key;
         this.EntityPM.KeywordtypeCode = this._SelectKeywordtypeCode_Key;
