@@ -511,14 +511,26 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      select tot
                 );
             }
-            if (FROMDateNextMonth.Year == TODatebeginOfMonth.Year)
+            if (FROMDateNextMonth.Year == TODatebeginOfMonth.Year )
             {
-                QBaseTotalsFromBirthTilStartOfMonthTo =
-                    (from tot in QBaseTotalsFromBirthTilStartOfMonthTo
-                     where
-                     (tot.Year == FROMDateNextMonth.Year && tot.Month > FROMDateNextMonth.Month && tot.Month < TODatebeginOfMonth.Month)
-                     select tot
-                );
+                if ( FROMDateNextMonth.Month < TODatebeginOfMonth.Month)
+                {
+                    QBaseTotalsFromBirthTilStartOfMonthTo =
+                   (from tot in QBaseTotalsFromBirthTilStartOfMonthTo
+                    where
+                    (tot.Year == FROMDateNextMonth.Year && tot.Month >= FROMDateNextMonth.Month && tot.Month < TODatebeginOfMonth.Month)
+                    select tot
+               );
+                }
+                else
+                {
+                    QBaseTotalsFromBirthTilStartOfMonthTo =
+                   (from tot in QBaseTotalsFromBirthTilStartOfMonthTo
+                    where (tot.Year == -1111)
+                    select tot
+               );
+                }
+               
 
             }
             if (FROMDateNextMonth.Year < TODatebeginOfMonth.Year)
