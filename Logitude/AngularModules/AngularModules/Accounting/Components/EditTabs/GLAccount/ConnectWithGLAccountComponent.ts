@@ -55,7 +55,7 @@ export class ConnectWithGLAccountComponent extends BaseComponent {
          this.GLAccountCurrencyPM.GLAccountId = value;
      }
 
-     private selectedGLAccount:GLAccountPM;
+     public selectedGLAccount:GLAccountPM;
      public get SelectedGLAccount() { return this.selectedGLAccount; }
      public set SelectedGLAccount(value: GLAccountPM) {
          this.selectedGLAccount = value;
