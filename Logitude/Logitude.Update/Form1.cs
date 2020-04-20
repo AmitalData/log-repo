@@ -4301,9 +4301,18 @@ User/Pass",
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
             Address address = myCommonContext.Addresses.Where(a => a.Id == addressId && a.AddressTypeId == "M" && a.Tenant == tenant).FirstOrDefault();
 
-            if (address != null)
+            if (address != null || tenant == 0)
             {
-                Country mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX" && a.Id == address.CountryId && a.Tenant == tenant).FirstOrDefault();
+                Country mexicoCountry;
+                if (tenant == 0)
+                {
+                    mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX" && a.Tenant == tenant).FirstOrDefault();
+                }
+                else
+                {
+                    mexicoCountry = myCommonContext.Countries.Where(a => a.Code == "MX" && a.Id == address.CountryId && a.Tenant == tenant).FirstOrDefault();
+                }
+
                 if (mexicoCountry != null)
                 {
                     List<string> statesCodes = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First().StateCode).ToList();
