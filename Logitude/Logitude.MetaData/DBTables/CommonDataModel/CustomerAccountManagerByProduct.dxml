@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="CustomerAccountManagerByProducts"
+  ShortName="CustomerAccManagerByProducts"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Column
     Name="ProductTypeCode"
     Type="varchar"
     Size="2">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CustomerId"
-    Type="varchar"
-    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -27,9 +27,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Tenant"
-    Type="int">
+    Name="CustomerId"
+    Type="varchar"
+    Size="15">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Relation

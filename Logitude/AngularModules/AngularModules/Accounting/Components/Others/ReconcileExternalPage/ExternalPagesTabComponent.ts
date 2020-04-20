@@ -466,10 +466,10 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     {
         this.CurrentSession.StartBusyIndicatorLoading();
         var externalPagePM;
-        this._ReconcileExternalPagePMService.get(externalPage.Id).subscribe((myResult) =>
+        this._ReconcileExternalPagePMService.get(externalPage.Id).subscribe((myResult:any) =>
         {
             externalPagePM = myResult.Result;
-            this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(externalPage.Id, this.ObjectTableName).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(externalPage.Id, this.ObjectTableName).subscribe((myResult:any) =>
             {
                 if (!myResult.HasError) {
                     if (myResult.Result == null) {
@@ -500,7 +500,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.EnableReconcileEditButton = false;
-        this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult) =>
+        this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult:any) =>
         {
             this.CurrentSession.StopBusyIndicator();
             var draftPage = myResult.Result;
@@ -525,7 +525,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
 
     CheckRestorePossibility(id: string, entityPM: any) {
 
-        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response) => {
+        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response:ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
 
             if (!response.HasError) {
@@ -603,7 +603,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._ExternalPageAdditionalDataPMService.get(objectTableId, entityId)
-            .subscribe(response =>
+            .subscribe((response:any) =>
             {
                 console.log("[GetAdditionalData]", response);
                 this.CurrentSession.StopBusyIndicator();
@@ -624,11 +624,11 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         if(this.ObjectTableName != 'GLAccount')
             console.error("[ExternalAdjustButtonClicked] table is not glaccount !!!!!!!");
 
-        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) =>
+        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) =>
         {
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
-                var transaction = result.Result;
+                var transaction = result;
                 var openAmountCurrency = transaction ? transaction.OpenAmountCurrencySign : "";
                 this.showReconcileWindow(openAmountCurrency);
 

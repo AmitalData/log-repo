@@ -34,9 +34,9 @@ export class AddEditMamanStickerComponent
     constructor(public entityArgs: EntityArgs) {
         super();
 
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            SessionLocator.SelectedSession.StopBusyIndicator();
+        this.CurrentSession.StartBusyIndicator("");
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+            this.CurrentSession.StopBusyIndicator();
             this.IsLoaded = true;
         });
     }
@@ -91,13 +91,13 @@ export class AddEditMamanStickerComponent
     OkButtonClicked() {
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         if (this.IsNew) {
-            this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(res => {
+            this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe((res:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendMamanSpecialAction();
             });
         }
         else {
-            this._DeclarationMamanSpecialActionPMService.update(this.EntityPM).subscribe(res => {
+            this._DeclarationMamanSpecialActionPMService.update(this.EntityPM).subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 this.SendMamanSpecialAction();
             });
@@ -107,7 +107,7 @@ export class AddEditMamanStickerComponent
 
     SendMamanSpecialAction() {
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
-        this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe(myResult => {
+        this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe((myResult :any)=> {
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (myResult.HasError) {
                 this.ValidationErrorsList = [];

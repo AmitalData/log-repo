@@ -41,12 +41,14 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;6eb00174-c908-4e6c-9a3a-0091bf5796c7&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;MarkUpType&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     DataTypeCode="&quot;Text&quot;"
     MaxLength="1000"
     IsRequiered="false"

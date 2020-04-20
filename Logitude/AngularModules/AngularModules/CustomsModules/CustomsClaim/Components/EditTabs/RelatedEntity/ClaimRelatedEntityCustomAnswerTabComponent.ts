@@ -77,8 +77,8 @@ export class ClaimRelatedEntityCustomAnswerTabComponent extends BaseComponent {
         this.EntityPM = entityPM;
         this.isControlEnabled = isEnable;
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
                 this.BuildCustomAnswerList();
                         this.Listen();
             });

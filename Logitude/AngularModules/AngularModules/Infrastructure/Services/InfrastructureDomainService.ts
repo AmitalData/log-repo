@@ -1,76 +1,68 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
-import {ServiceHelper} from '../Utilities/ServiceHelper';
-import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import {FeatureLocator} from '../Utilities/FeatureLocator';
-import {FeaturePM} from '../EntityPMs/FeaturePM';
-import {FeatureList} from '../EntityLists/FeatureList';
-import {PackagePM} from '../../Common/EntityPMs/PackagePM';
-import {PackagePMService} from '../../Common/Services/StandardPMs/PackagePMService';
-import {BusinessHourPM } from '../EntityPMs/BusinessHourPM';
-import {BusinessHoursHolidayPM} from '../EntityPMs/BusinessHoursHolidayPM';
-import {Guid} from '../Utilities/Guid';
-import {CustomFieldClass} from '../DataContracts/CustomFieldClass'; 
-import {TasksSchedulerPM} from '../EntityPMs/TasksSchedulerPM';
-import { BIReportPM } from '../EntityPMs/BIReportPM';
+import { PackagePMService } from '../../Common/Services/StandardPMs/PackagePMService';
+import { BusinessHoursHolidayPM } from '../EntityPMs/BusinessHoursHolidayPM';
 import { ClassLevelValidator } from '../Validators/ClassLevelValidator';
 import { DWQueryData } from '../../Common/DataContracts/DWQueryData';
+import { CustomFieldClass } from '../DataContracts/CustomFieldClass'; 
 import { FeatureToggleList } from '../EntityLists/FeatureToggleList';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { TasksSchedulerPM } from '../EntityPMs/TasksSchedulerPM';
+import { FeatureLocator } from '../Utilities/FeatureLocator';
+import { BusinessHourPM } from '../EntityPMs/BusinessHourPM';
+import { PackagePM } from '../../Common/EntityPMs/PackagePM';
+import { ServiceHelper } from '../Utilities/ServiceHelper';
+import { FeatureList } from '../EntityLists/FeatureList';
+import { BIReportPM } from '../EntityPMs/BIReportPM';
+import { FeaturePM } from '../EntityPMs/FeaturePM';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Guid } from '../Utilities/Guid';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
-
 export class InfrastructureDomainService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InfrastructureDomain';
     }
 
     UpdateLastFilter(myControlName: string, myFilterName: string, myFilterValue: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetUpdateLastFilter?myControlName=' + myControlName + '&myFilterName=' + myFilterName + '&myFilterValue=' + myFilterValue;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myResult = response.json();
+                var myResult = response;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }); //.share();
     }
-    GetMainMenuFollowups(objectTableName: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+    GetMainMenuFollowups(objectTableName: string) {
         var url = this._apiUrl + '/GetMainMenuFollowups?objectTableName=' + objectTableName;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetSelectedAndUnselectedRoleFeatures(RoleId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetSelectedAndUnselectedRoleFeatures?RoleId=' + RoleId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var _mappedArray: Array<FeaturePM> = [];
 
@@ -84,18 +76,16 @@ export class InfrastructureDomainService {
                 var myResponse = new ServiceResponse();
                 myResponse.Result = _mappedArray;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetSelectedAndUnselectedPackageFeatures(PackageCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+    GetSelectedAndUnselectedPackageFeatures(PackageCode: string) {
         var url = this._apiUrl + '/GetSelectedAndUnselectedPackageFeatures?PackageCode=' + PackageCode;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var _mappedArray: Array<FeaturePM> = [];
 
@@ -109,19 +99,16 @@ export class InfrastructureDomainService {
                 var myResponse = new ServiceResponse();
                 myResponse.Result = _mappedArray;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetAllowedFeaturesForLoggedUser() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetAllowedFeaturesForLoggedUser';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var _mappedArray: Array<FeaturePM> = [];
 
@@ -137,18 +124,16 @@ export class InfrastructureDomainService {
                 var myResponse = new ServiceResponse();
                 myResponse.Result = _mappedArray;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetNewFeaturesList() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+    GetNewFeaturesList() {
         var url = this._apiUrl + '/GetNewFeaturesList';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var _mappedArray: Array<FeatureList> = [];
 
@@ -162,18 +147,16 @@ export class InfrastructureDomainService {
                 var myResponse = new ServiceResponse();
                 myResponse.Result = _mappedArray;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetPackagesBMs() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+    GetPackagesBMs() {
         var url = this._apiUrl + '/GetPackagesBMs';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var _mappedArray: Array<PackagePM> = [];
 
@@ -188,37 +171,30 @@ export class InfrastructureDomainService {
                 var myResponse = new ServiceResponse();
                 myResponse.Result = _mappedArray;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    SendEntityToAirlineTenant(entityId: string, objectTableName: string, airlineCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetSendEntityToAirlineTenant';
+    SendEntityToAirlineTenant(entityId: string, objectTableName: string, airlineCode: string) {
         var url = this._apiUrl + '/GetSendEntityToAirlineTenant?entityId=' + entityId + '&objectTableName=' + objectTableName + '&airlineCode=' + airlineCode;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     UpdateFeatures(entityPM: FeaturesUpdateHelper) {
         return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
             var mappedEntity: FeaturesUpdateHelper = this.MapJsonToFeaturesUpdateHelper(entityPM, false);
 
-            return this._http.put(this._apiUrl + "/PutFeatures", JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.put(this._apiUrl + "/PutFeatures", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var myJsonResult = response;
 
                 var mappedResult: FeaturesUpdateHelper = this.MapJsonToFeaturesUpdateHelper(myJsonResult, true, entityPM);
 
@@ -226,17 +202,16 @@ export class InfrastructureDomainService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetBusinessHourBM() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetBusinessHourBM';
+
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var pm = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm = response;
                 var entity: BusinessHourPM;
                 if (pm) {
                     entity = this.MapJsonToBusinessHourEntityPM(pm);
@@ -245,71 +220,61 @@ export class InfrastructureDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetBatchServicesLogs(serviceCode: string, dateFilterCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetBatchServicesLogs?serviceCode=' + serviceCode + '&dateFilterCode=' + dateFilterCode;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetRoleFeaturesChanges(RoleId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetRoleFeaturesChanges?RoleId=' + RoleId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetPackageFeaturesChanges(PackageCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+    GetPackageFeaturesChanges(PackageCode: string) {
         var url = this._apiUrl + '/GetPackageFeaturesChanges?PackageCode=' + PackageCode;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetDataCountForTenant(entityId: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetDataCountForTenant?entityId=' + entityId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
                 var myResult = new BusinessRecordsSummary();
 
                 if (myJsonResult) {
@@ -325,108 +290,89 @@ export class InfrastructureDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     DeleteDataForTenant(entityId: number, type: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetDeleteDataForTenant?entityId=' + entityId + '&type=' + type;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     ResetCountersForTenant(entityId: number, code: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetResetCountersForTenant?entityId=' + entityId + '&code=' + code;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     UpdateTenantSettings(DocumentFilingByEmailEnabled: boolean) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetPutTenantSettings?DocumentFilingByEmailEnabled=' + DocumentFilingByEmailEnabled;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    ResendAnalyzeQueue(AnalyzeQueueId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+    ResendAnalyzeQueue(AnalyzeQueueId: string) {
         var url = this._apiUrl + '/GetResendAnalyzeQueue?AnalyzeQueueId=' + AnalyzeQueueId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var iResult = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var iResult = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = iResult;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     getDWObjectFieldsWithChildrenByDWTableId(DWOTId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var MyApi = ServiceHelper.GetLogitudeURL() + 'api/dwobjectfields'
-        return this._http.get(MyApi + "/getDWObjectFieldsWithChildrenByDWTableId" + '?DWOTId=' + DWOTId, { headers: authHeader }).map(response => {
+        var myUrl = ServiceHelper.GetLogitudeURL() + 'api/dwobjectfields/getDWObjectFieldsWithChildrenByDWTableId' + '?DWOTId=' + DWOTId;
 
-
-            var result = response.json();
-
+        return this._http.get(myUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result: any = response;
             var entity: any;
             var DWObjectFieldPMLists: any[];
             DWObjectFieldPMLists = new Array<any>();
-
 
             result.forEach((item) => {
                 entity = this.MapJsonToEntityPM(item);
                 DWObjectFieldPMLists.push(entity);
             });
 
-
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = DWObjectFieldPMLists;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
-
-
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
     private MapJsonToBusinessHourEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: BusinessHourPM = null) {
@@ -483,6 +429,7 @@ export class InfrastructureDomainService {
 
         return entityPM;
     }
+
     private MapBusinessHoursHolidays(entityPM: BusinessHourPM, jsonPM: any, mapParent: boolean = true) {
 
         var oldBusinessHoursHolidays: BusinessHoursHolidayPM[] = [];
@@ -572,6 +519,7 @@ export class InfrastructureDomainService {
             }
         }
     }
+
     private MapJsonToFeaturesUpdateHelper(jsonPM: any, getCallMap: boolean = true, entityPM: FeaturesUpdateHelper = null) {
         if (!entityPM) {
             entityPM = new FeaturesUpdateHelper();
@@ -605,6 +553,7 @@ export class InfrastructureDomainService {
 
         return entityPM;
     }
+
     public MapJsonToFeaturePM(jsonPM: any, mapParent: boolean = true, entityPM: FeaturePM = null) {
         if (!entityPM) {
             entityPM = new FeaturePM();
@@ -634,6 +583,7 @@ export class InfrastructureDomainService {
 
         return entityPM;
     }
+
     //private MapJsonToPackagePM(jsonItem: any) {
     //    var entityPM: PackagePM = new PackagePM();
     //    var jsonItemKeys = Object.keys(jsonItem);
@@ -645,6 +595,7 @@ export class InfrastructureDomainService {
 
     //    return entityPM;
     //}
+
     private MapJsonToFeatureList(jsonItem: any) {
         var entityList: FeatureList = new FeatureList();
         var jsonItemKeys = Object.keys(jsonItem);
@@ -656,6 +607,7 @@ export class InfrastructureDomainService {
 
         return entityList;
     }
+
     private clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
@@ -675,15 +627,12 @@ export class InfrastructureDomainService {
     }
 
     GetAllTasksSchedulerPMs(schedulerType:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetAllTasksSchedulerPMs?schedulerType=' + schedulerType;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<TasksSchedulerPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -694,9 +643,10 @@ export class InfrastructureDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     MapTasksSchedulerPM(jsonList: any) {
         var entityList: TasksSchedulerPM;
         entityList = new TasksSchedulerPM();
@@ -711,34 +661,27 @@ export class InfrastructureDomainService {
     }
 
     GetTaskSchedulerHistory(taskId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetTaskSchedulerHistory?taskId=' + taskId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetByBIReportId(Queryid: string, DWQueryId : string ) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-        var callTime = new Date();
+        var url = this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid + '&dWQueryId=' + DWQueryId;
+
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid + '&dWQueryId=' + DWQueryId, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm : any = response;
                 var entity: BIReportXMLData = new BIReportXMLData();
                 if (pm) {
                     entity.BIReportId = pm.BIReportId;
@@ -749,17 +692,13 @@ export class InfrastructureDomainService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
-                var servertime = response.headers.get('ServerExecutionTime');
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     UpdateBIReportXMLData(QueryData: BIReportXMLData) {
         return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
             var response: ServiceResponse;
             response = new ServiceResponse();
@@ -774,10 +713,10 @@ export class InfrastructureDomainService {
                 QueryData.BIReportPM = mappedEntity;
                 QueryData.DWQueryData = temp;
                 var temp2 = this.deepClone(QueryData);
+                var url = this._apiUrl + "/PutBIReport";
                 /////////////////////////////////////////////////////
-                return this._http.put(this._apiUrl + "/PutBIReport", JSON.stringify(temp2),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                return this._http.put(url, JSON.stringify(temp2), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                        var pm : any = response;
                         var entity: BIReportXMLData = new BIReportXMLData();
                         if (pm) {
                             entity = pm;
@@ -785,51 +724,39 @@ export class InfrastructureDomainService {
                         var serviceResponse: ServiceResponse;
                         serviceResponse = new ServiceResponse();
                         serviceResponse.Result = entity;
-                        var servertime = res.headers.get('ServerExecutionTime');
                         return serviceResponse;
-                    });
+                }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
                 return null;
             }
-        }
-        );
+        });
     }
 
     DeleteBIReport(Id: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-        var callTime = new Date();
+        var url = this._apiUrl + '/GetDeleteBIReport?' + 'Id=' + Id;
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDeleteBIReport?' + 'Id=' + Id , {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
-                var servertime = response.headers.get('ServerExecutionTime');
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     DeleteFolder(Id: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-        var callTime = new Date();
+        var url = this._apiUrl + '/GetDeleteFolder?' + 'Id=' + Id;
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDeleteFolder?' + 'Id=' + Id, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
-                var servertime = response.headers.get('ServerExecutionTime');
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: any = null) {
 
         if (!entityPM) {
@@ -891,16 +818,12 @@ export class InfrastructureDomainService {
     }
 
     GetFeatureToggles() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
         var url = this._apiUrl + '/GetFeatureToggles';
 
         return Observable.defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            return this._http.get(url, { headers: authHeader }).map(response => {
-
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<FeatureToggleList> = [];
 
                 for (var key in allLists) {
@@ -914,9 +837,10 @@ export class InfrastructureDomainService {
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     private MapJsonToFeatureToggleList(jsonItem: any) {
         var entityList: FeatureToggleList = new FeatureToggleList();
         var jsonItemKeys = Object.keys(jsonItem);
@@ -951,8 +875,6 @@ export class BusinessRecordsSummary {
     public OpportunitiesCount: number;
 }
 
-
-
 export class BIReportXMLData {
     public BIReportId: string;
     public DWQueryData: DWQueryData; 
@@ -961,9 +883,11 @@ export class BIReportXMLData {
     public UserId: string;
     public BIReportKey: string;
 }
+
 export class BITabularViewSettings {
     public Columns: Column[];  
 }
+
 export class Column {
     public Code: string;
     public Name: string;

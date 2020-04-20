@@ -86,6 +86,15 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="DBTables\Sprint.dxml" />
+    <None Include="DBTables\TMBudget.dxml" />
+    <None Include="DBTables\TMDayOffType.dxml" />
+    <None Include="DBTables\TMEmployeeTime.dxml" />
+    <None Include="DBTables\TMLocation.dxml" />
+    <None Include="DBTables\TMOfficeHour.dxml" />
+    <None Include="DBTables\TMProject.dxml" />
+    <None Include="DBTables\TMProjectCategory.dxml" />
+    <None Include="DBTables\TMRelease.dxml" />
     <None Include="EntityFiles\Sprint.lxml" />
     <None Include="EntityFiles\TMBudget.lxml" />
     <None Include="EntityFiles\TMDayOffType.lxml" />

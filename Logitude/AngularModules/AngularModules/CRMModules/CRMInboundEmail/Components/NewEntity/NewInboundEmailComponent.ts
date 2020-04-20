@@ -109,7 +109,7 @@ export class NewInboundEmailComponent extends BaseComponent implements OnInit {
         if (this.myInboundEmailWebService == null) {
             this.myInboundEmailWebService = new InboundEmailWebService();
         }
-        this.myInboundEmailWebService.SendInboundEmailAsync(this.Recepient, this.entityPM.Tenant, this.Subject, this.Body, this.entityPM.Id).subscribe((myResult) => {
+        this.myInboundEmailWebService.SendInboundEmailAsync(this.Recepient, this.entityPM.Tenant, this.Subject, this.Body, this.entityPM.Id).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var mySendingResultClass = myResponse.Result;

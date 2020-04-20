@@ -50,12 +50,12 @@ namespace WebFreight.Web.WebServices
         private ShipmentPM shipment;
 
         [WebMethod]
-        public byte[] GetShippingDeclarationData(string shipmentId, int tenant, string documentTypeCode)
+        public byte[] GetShippingDeclarationData(string shipmentId, int tenant, string documentTypeCode, string documentTypeCopyId)
         {
             this.tenant = tenant;
             this.myServicHelper = new WebServiceHelper(tenant);
 
-            ShippingDeclarationDataProvider myDataProvider = GetShippingDeclarationDataProvider(shipmentId, tenant, documentTypeCode);
+            ShippingDeclarationDataProvider myDataProvider = GetShippingDeclarationDataProvider(shipmentId, tenant, documentTypeCode, documentTypeCopyId);
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ShippingDeclarationDataProvider));
             MemoryStream memoryStream = new MemoryStream();
@@ -68,7 +68,7 @@ namespace WebFreight.Web.WebServices
             return bytearray;
         }
 
-        private ShippingDeclarationDataProvider GetShippingDeclarationDataProvider(string shipmentId, int tenant, string documentTypeCode)
+        private ShippingDeclarationDataProvider GetShippingDeclarationDataProvider(string shipmentId, int tenant, string documentTypeCode, string documentTypeCopyId)
         {
             ShippingDeclarationDataProvider myDataProvider = new ShippingDeclarationDataProvider();
 
@@ -124,7 +124,7 @@ namespace WebFreight.Web.WebServices
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 string volumeUnitCode = shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "";
                 string volumetricUnitCode = shipment.ChargeableWeightUnitCode != null ? shipment.ChargeableWeightUnitCode : "";
-
+                myDataProvider.AMSBL = shipment.AMSBL;
                 myDataProvider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
                 myDataProvider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
                 myDataProvider.ShipmentType = shipment.ShipmentTypeName != null ? shipment.ShipmentTypeName : "";
@@ -150,7 +150,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ARInvoices = shipment.ARInvoices;
                 myDataProvider.IsDangerous = shipment.IsDangerous;
                 myDataProvider.SpecialServicesTypeName = shipment.SpecialServicesTypeName;
-
+                
                 if (shipment.DocumentsClosingDate != null)
                 {
                     myDataProvider.DocumentsClosingDate = shipment.DocumentsClosingDate;
@@ -239,7 +239,7 @@ namespace WebFreight.Web.WebServices
 
                 if (shipment.MainCarriageToPortId != null)
                 {
-                    mainCarriageToPort = (from a in commonContext.Ports where a.Id == shipment.MainCarriageToPortId select a).FirstOrDefault();
+                    mainCarriageToPort = (from a in commonContext.Ports.Include("State") where a.Id == shipment.MainCarriageToPortId select a).FirstOrDefault();
                 }
 
                 if (shipment.OnCarriageToPortId != null)
@@ -403,6 +403,68 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TransportationType = shipment.TransportModeName;
                 myDataProvider.Transshipment1ETA = shipment.Transshipment1ETA;
 
+                if (shipment.ShipmentLevelCode == "C")
+                {
+                    myDataProvider.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+
+                    if (!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
+                    {
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == shipment.PreCarriageVesselId
+                                               select a).FirstOrDefault();
+                        if (vessel != null)
+                        {
+                            myDataProvider.MasterPreCarriageVesselName = vessel.EnglishName;
+                        }
+                    }
+                }
+
+                else if (shipment.ShipmentLevelCode == "H")
+                {
+                    Shipment masterData = (from a in shipmentsContext.Shipments
+                                           where a.Id == shipment.MasterShipmentDataId
+                                           select a).FirstOrDefault();
+                    
+                    myDataProvider.MasterPreCarriageCarrierNumber = masterData != null ? masterData.PreCarriageCarrierNumber : null;
+
+                    if (masterData != null && !string.IsNullOrEmpty(masterData.PreCarriageVesselId))
+                    {
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == masterData.PreCarriageVesselId
+                                         select a).FirstOrDefault();
+
+                        myDataProvider.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
+                    }
+                }
+
+                #region MasterAMSBL
+                var aMSBL_FromHouse = "";
+                if (shipment.ShipmentLevelCode == "H")
+                {
+                    Shipment masterData = (from a in shipmentsContext.Shipments
+                                           where a.Id == shipment.MasterShipmentDataId
+                                           select a).FirstOrDefault();
+
+                    aMSBL_FromHouse = masterData != null ? masterData.AMSBL : null;
+                    myDataProvider.MasterPreCarriageCarrierNumber = masterData != null ? masterData.PreCarriageCarrierNumber : null;
+                    
+                    if(masterData != null && !string.IsNullOrEmpty(masterData.PreCarriageVesselId))
+                    {
+                        Vessel vessel = (from a in commonContext.Vessels
+                                         where a.Id == masterData.PreCarriageVesselId
+                                         select a).FirstOrDefault();
+
+                        myDataProvider.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
+                    }
+                }
+                else
+                {
+                    aMSBL_FromHouse = shipment.AMSBL;
+                }
+
+                myDataProvider.MasterAMSBL = aMSBL_FromHouse;
+                #endregion 
+
                 if (!string.IsNullOrEmpty(shipment.QuoteId))
                 {
                     QuoteRepository quoteRepository = new QuoteRepository(tenant);
@@ -426,6 +488,14 @@ namespace WebFreight.Web.WebServices
                 {
                     myDataProvider.Dimensions = myDataProvider.TotalVolumetricWeight;
                 }
+
+                if(!string.IsNullOrEmpty(shipment.TotalContainers))
+                {
+                    myDataProvider.TotalContainers = shipment.TotalContainers;
+                }
+
+
+                
                 #endregion
 
                 #region Prepaid Collect
@@ -1456,6 +1526,8 @@ namespace WebFreight.Web.WebServices
                     }
 
                     myDataProvider.FirstPickupETD = myFirstPickup.ETD;
+                    myDataProvider.FirstPickupETA = myFirstPickup.ETA;
+
                     PlaceOfReceiptData data = myServicHelper.GetPlaceOfReceiptData(myFirstPickup);
 
                     if (data != null)
@@ -1607,6 +1679,11 @@ namespace WebFreight.Web.WebServices
                     DischargePortCountryCode = mainCarriageToPort.Country == null ? "" : mainCarriageToPort.Country.Code;
                     DischargePortCountryName = mainCarriageToPort.Country == null ? "" : mainCarriageToPort.Country.EnglishName;
                     DischargePortStateCode = mainCarriageToPort.State == null ? "" : mainCarriageToPort.State.Code;
+                }
+
+                if (mainCarriageToPort != null)
+                {
+                    myDataProvider.DischargePortStateCode = mainCarriageToPort.State == null ? "" : mainCarriageToPort.State.Code;
                 }
 
                 ShipmentPickUpDelivery delivery = shipmentsContext.ShipmentPickUpDeliveries.Where(a => a.PickUpDeliveryTypeCode == "DELV" && a.PickUpDeliveryNumber == shipment.ShipmentNumber + "/" + shipment.ShipmentDeliveryIndex).FirstOrDefault();
@@ -1791,7 +1868,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.DeliveryTruckNumber = myDelivery.TruckNumber;
                     myDataProvider.DeliveryTrailerNumber = myDelivery.TrailerNumber;
 
-                    myDataProvider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery);
+                    myDataProvider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery, false);
 
                     if (!string.IsNullOrEmpty(myDelivery.CarrierId))
                     {
@@ -2586,6 +2663,17 @@ namespace WebFreight.Web.WebServices
                 }
                 #endregion
 
+                #region Document copy
+                DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies
+                                                     where copy.Id == documentTypeCopyId
+                                                     select copy).FirstOrDefault();
+                if (documenttypecopy != null)
+                {
+                    myDataProvider.CopyNumber = GetCopyNameAndNumber(documenttypecopy.Code);
+                    myDataProvider.CopyName = documenttypecopy.Name != null ? documenttypecopy.Name : "";
+                }
+                #endregion
+
                 #region Receivables Lines
 
                 ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(tenant);
@@ -2758,6 +2846,7 @@ namespace WebFreight.Web.WebServices
 
                     packageline.InsidePackagesDetails = this.ComputeInsidePackagesDetailsPerPackage(package);
                     packageline.PackageDescriptionOfGoods = package.Description != null ? package.Description : "";
+                    packageline.DescriptionOfGoodsWithoutHCCode = package.Description != null ? package.Description : "";
                     packageline.VGM = package.VGM;
                     packageline.MethodUsed = package.MethodUsed;
                     packageline.ContainerNumber = package.ContainerNumber;
@@ -2833,6 +2922,8 @@ namespace WebFreight.Web.WebServices
                             " - Class: " + (package.ClassNumber != null ? package.ClassNumber : "") +
                             ", UN-N: " + (package.UnNumber != null ? package.ClassNumber : "") +
                             ", PACKING GROUP " + (package.PackagingGroup != null ? package.PackagingGroup : "");
+
+                        packageline.DescriptionOfGoodsWithoutHCCode += packageline.PackageDescriptionOfGoods;
                         packageline.IsDangerous = "Yes";
                     }
                     else
@@ -3162,6 +3253,7 @@ namespace WebFreight.Web.WebServices
                         {
                             PackageLine newPackage = new PackageLine();
                             newPackage.PackageDescriptionOfGoods = package.Description;
+                            newPackage.DescriptionOfGoodsWithoutHCCode = package.Description;
                             newPackage.ContainerNumber = package.ContainerNumber;
                             newPackage.SealNumber = package.ShipperSeal;
                             newPackage.PackageQuantity = package.Quantity.ToString();
@@ -3316,6 +3408,7 @@ namespace WebFreight.Web.WebServices
                         {
                             PackageLine newPackage = new PackageLine();
                             newPackage.PackageDescriptionOfGoods = package.Description;
+                            newPackage.DescriptionOfGoodsWithoutHCCode = package.Description;
                             newPackage.ContainerNumber = package.ContainerNumber;
                             newPackage.SealNumber = package.ShipperSeal;
                             newPackage.PackageQuantity = package.Quantity.ToString();
@@ -3461,24 +3554,53 @@ namespace WebFreight.Web.WebServices
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, myDataProvider);
 
                 if (myFirstPickup != null)
+                {
                     myDataProvider.FirstFrom = myServicHelper.GetPickUpDeliveryFromCityOrPortName(myFirstPickup);
+                    myDataProvider.FirstFromCityCountryZipCodeDetails = myServicHelper.GetPickUpDeliveryFromCityOrPortName(myFirstPickup, true);
+                }
+
                 else if (shipment.PreCarriageFromPortId != null)
+                {
                     myDataProvider.FirstFrom = shipment.PreCarriageFromPortName + " - " + shipment.PreCarriageFromPortCountryName;
+                    myDataProvider.FirstFromCityCountryZipCodeDetails = myDataProvider.FirstFrom;
+                }
+
                 else
+                {
                     myDataProvider.FirstFrom = shipment.MainCarriageFromPortName + " - " + shipment.MainCarriageFromPortCountryName;
+                    myDataProvider.FirstFromCityCountryZipCodeDetails = myDataProvider.FirstFrom;
+                }
 
                 if (myLastDelivery != null)
-                    myDataProvider.LastTo = myServicHelper.GetToDeliveryName(shipment, myLastDelivery);
+                {
+                    myDataProvider.LastTo = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, false);
+                    myDataProvider.LastToCityCountryZipCodeDetails = myServicHelper.GetToDeliveryName(shipment, myLastDelivery, true);
+                }
                 else if (shipment.OnCarriageToPortId != null)
+                {
                     myDataProvider.LastTo = shipment.OnCarriageToPortName + " - " + shipment.OnCarriageToPortCountryName;
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+                }
                 else if (shipment.Transshipment3ToPortId != null)
+                {
                     myDataProvider.LastTo = shipment.Transshipment3ToPortName + " - " + shipment.Transshipment3ToPortCountryName;
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+                }
                 else if (shipment.Transshipment2ToPortId != null)
+                {
                     myDataProvider.LastTo = shipment.Transshipment2ToPortName + " - " + shipment.Transshipment2ToPortCountryName;
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+                }
                 else if (shipment.Transshipment1ToPortId != null)
+                {
                     myDataProvider.LastTo = shipment.Transshipment1ToPortName + " - " + shipment.Transshipment1ToPortCountryName;
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+                }
                 else if (shipment.MainCarriageToPortId != null)
+                {
                     myDataProvider.LastTo = shipment.MainCarriageToPortName + " - " + shipment.MainCarriageToPortCountryName;
+                    myDataProvider.LastToCityCountryZipCodeDetails = myDataProvider.LastTo;
+                }
 
                 #region Warehouse Leg
                 myDataProvider.WarehouseLegExpectedEntryDate = shipment.WarehouseLegExpectedEntryDate;
@@ -3491,6 +3613,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.WarehouseLegRemarks = shipment.WarehouseLegRemarks;
                 myDataProvider.WarehouseLegReference = shipment.WarehouseLegReference;
                 myDataProvider.WarehouseLegTerminalName = shipment.WarehouseLegTerminalName;
+
                 if (shipment.WarehouseLegAddressId != null)
                 {
                     Address warehouseAddress = addressRepository.GetSingleAddress(shipment.WarehouseLegAddressId, tenant);
@@ -3605,6 +3728,7 @@ namespace WebFreight.Web.WebServices
             }
 
             line.PackageDescriptionOfGoods = desc.ToString() + (package.Description != null ? package.Description : "");
+            line.DescriptionOfGoodsWithoutHCCode = desc.ToString() + (package.Description != null ? package.Description : "");
             line.PackageGrossWeight = weight.ToString() + " " + String.Format("{0:#0.00}", package.Weight.Value) + " " + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "");
             line.PackageVolume = volume.ToString() + String.Format("{0:#0.00}", package.Volume.Value) + " " + (shipment.VolumeUnitCode != null ? shipment.VolumeUnitCode : "");
             line.PackageVolumetricWeight = Volumetricweight.ToString() + " " + String.Format("{0:#0.00}", package.VolumetricWeight.Value) + " " + (shipment.ChargeableWeightUnitCode != null ? shipment.ChargeableWeightUnitCode : "");
@@ -3990,6 +4114,43 @@ namespace WebFreight.Web.WebServices
             {
                 return null;
             }
+        }
+
+        private string GetCopyNameAndNumber(string doccopycode)
+        {
+            string result = "";
+
+            switch (doccopycode)
+            {
+                case "SC":
+                    result = "1"; // copy number
+                    break;
+
+                case "RC":
+                    result = "2";
+                    break;
+
+                case "CC":
+                    result = "3";
+                    break;
+
+                case "3A":
+                    result = "3A";
+                    break;
+
+                case "3B":
+                    result = "3B";
+                    break;
+
+                case "3C":
+                    result = "3C";
+                    break;
+
+                case "3D":
+                    result = "3D";
+                    break;
+            }
+            return result;
         }
     }
 }

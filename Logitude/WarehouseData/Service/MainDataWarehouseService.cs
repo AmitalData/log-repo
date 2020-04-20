@@ -75,7 +75,7 @@ namespace WarehouseData.Helper
 
         public void UpdateDWDataBase(TableClass table, string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
         {
-            dWDataWarehouseService.UpdateDWDataBase(table, sourceConnectionString, destinationConnectionString);
+            dWDataWarehouseService.UpdateDWDataBase(table, sourceConnectionString, destinationConnectionString, privateTenant, relatedTenants);
         }
 
         #endregion

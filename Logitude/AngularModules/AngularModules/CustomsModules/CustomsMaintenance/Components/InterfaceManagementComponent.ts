@@ -43,14 +43,14 @@ export class InterfaceManagementComponent implements OnInit {
     private _entityListService: EntityListService;
     constructor() {
         this._entityListService = new EntityListService();
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
             
         });
     }
     _IsLoaded: boolean = false;
     ngOnInit() {
         
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
         
                 this._IsLoaded = true;
         

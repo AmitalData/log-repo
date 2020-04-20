@@ -26,58 +26,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ChargesTypeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ShipmentPayableLineStatusCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="MeasurementId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Quantity"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AWBPrint"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="UnitPrice"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Rate"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="ExpectedAmount"
     Type="float">
     <Constraints
@@ -86,13 +34,6 @@
   <Column
     Name="ExpectedAmountLocal"
     Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="250">
     <Constraints
       Nullable="true" />
   </Column>
@@ -107,34 +48,13 @@
     Name="UpdateDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ValueDate"
     Type="datetime">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="VendorId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DueTypeCode"
-    Type="varchar"
-    Size="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PrepaidCollectId"
-    Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="MinAmount"
@@ -187,6 +107,7 @@
   </Column>
   <Column
     Name="AccountedAmountInProfitCurrency"
+    ShortName="AccountedAmountInProfit"
     Type="float">
     <Constraints
       Nullable="true" />
@@ -220,7 +141,7 @@
     Name="CreateDate"
     Type="datetime">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="CreatedByUserId"
@@ -256,13 +177,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IATACodeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsFromQuote"
     Type="bit">
     <Constraints
@@ -282,14 +196,89 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="QuoteCostMinAmount"
+    Name="IATACodeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrepaidCollectId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AWBPrint"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DueTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipmentPayableLineStatusCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MeasurementId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Quantity"
     Type="float">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="QuoteCostMaxAmount"
+    Name="Rate"
     Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UnitPrice"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChargesTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="VendorId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -310,6 +299,18 @@
     Name="ReceivableId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuoteCostMinAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuoteCostMaxAmount"
+    Type="float">
     <Constraints
       Nullable="true" />
   </Column>
@@ -340,43 +341,8 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="ChargesTypeId"
-    ReferencedTable="ChargesTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ShipmentPayableLineStatusCode"
-    ReferencedTable="ShipmentPayableLineStatus"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="MeasurementId"
-    ReferencedTable="Measurements"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="UpdateByUserId"
     ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="VendorId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="DueTypeCode"
-    ReferencedTable="DueTypes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PrepaidCollectId"
-    ReferencedTable="PrepaidCollects"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -402,6 +368,41 @@
   <Relation
     ForeignKeyColumn="IATACodeId"
     ReferencedTable="IATACodes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PrepaidCollectId"
+    ReferencedTable="PrepaidCollects"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DueTypeCode"
+    ReferencedTable="DueTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ShipmentPayableLineStatusCode"
+    ReferencedTable="ShipmentPayableLineStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MeasurementId"
+    ReferencedTable="Measurements"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChargesTypeId"
+    ReferencedTable="ChargesTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="VendorId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation

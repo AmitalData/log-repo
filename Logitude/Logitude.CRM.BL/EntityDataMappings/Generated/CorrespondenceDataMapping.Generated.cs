@@ -70,7 +70,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         RightToLeft, 
 	         ContactImageDetailId, 
 	         ContactDefaultColor, 
-	         ContactIndexColor,
+	         ContactIndexColor, 
+	         IsContainsQuotationAttachment,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

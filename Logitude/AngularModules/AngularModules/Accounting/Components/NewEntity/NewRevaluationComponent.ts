@@ -218,7 +218,7 @@ export class NewRevaluationComponent extends BaseComponent {
 
     SubmitChanges() {
         this.CurrentSession.StartBusyIndicator("");
-        this.RevaluationService.insert(this.EntityPM).subscribe(Result => {
+        this.RevaluationService.insert(this.EntityPM).subscribe((Result:any) => {
           
             var mm: ServiceResponse = Result;
             if (!mm.HasError) {

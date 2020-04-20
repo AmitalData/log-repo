@@ -43,7 +43,7 @@ export class ClientEditComponent extends BaseComponent{
        this.entityArgs.EntityArgEventEmitter.subscribe(
            theMessage => {
                if (theMessage == "ReloadEntity") {
-                   this.clientPMService.get(this.CurrentEntity.Id).subscribe(response => {
+                   this.clientPMService.get(this.CurrentEntity.Id).subscribe((response:any) => {
                        var result = response.Result;
                        if (!AppTool.IsNullOrEmpty(result)) {
                            this.CurrentEntity = result;
@@ -159,7 +159,7 @@ export class ClientEditComponent extends BaseComponent{
 
                     case "ADDRESSES": {
                         if (this.ADDRESSES == null) {
-                            this.entityResourceService.getEntityResourceByTableName("Address").subscribe(response => {
+                            this.entityResourceService.getEntityResourceByTableName("Address").subscribe((response:any) => {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClient/Components/EditTabs/Addresses/ClientAddressesTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.ADDRESSES = cmpRef.instance;
@@ -173,8 +173,8 @@ export class ClientEditComponent extends BaseComponent{
 
                     case "LICENSE": {
                         if (this.LICENSE == null) {
-                            this.entityResourceService.getEntityResourceByTableName("Customs.ClientDrivingLicense").subscribe(response => {
-                                this.entityResourceService.getEntityResourceByTableName("Customs.ClientDrivingLicenseType").subscribe(response => {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.ClientDrivingLicense").subscribe((response:any) => {
+                                this.entityResourceService.getEntityResourceByTableName("Customs.ClientDrivingLicenseType").subscribe((response:any) => {
                                 SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsClient/Components/EditTabs/License/ClientDrivingLicenseTabComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.LICENSE = cmpRef.instance;
@@ -190,7 +190,7 @@ export class ClientEditComponent extends BaseComponent{
                     case "COMMUNICATION": {
                         if (this.COMMUNICATION == null) {
                          
-                                this.entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe(response => {
+                                this.entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response:any) => {
                                     SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationsTabComponent", myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.COMMUNICATION = cmpRef.instance;
@@ -219,7 +219,7 @@ export class ClientEditComponent extends BaseComponent{
 
                     case "REQUESTSHEET": {
                         if (this.REQUESTSHEET == null) {
-                            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
                               SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.REQUESTSHEET = cmpRef.instance;
@@ -243,7 +243,7 @@ export class ClientEditComponent extends BaseComponent{
     OkButtonClicked() {
         
         if (this.isNewClient) {
-            this.clientPMService.insert(this.CurrentEntity).subscribe(response => {
+            this.clientPMService.insert(this.CurrentEntity).subscribe((response:any) => {
                 var result = response.Result;
                 this.CurrentSession.CloseCurrentWindow();
 
@@ -251,7 +251,7 @@ export class ClientEditComponent extends BaseComponent{
         }
 
         else {
-            this.clientPMService.update(this.CurrentEntity).subscribe(response => {
+            this.clientPMService.update(this.CurrentEntity).subscribe((response:any) => {
                 var result = response.Result;
                // this.CurrentSession.CurrentEditComponent.SaveChanges();
                 this.CurrentSession.CloseCurrentWindow();

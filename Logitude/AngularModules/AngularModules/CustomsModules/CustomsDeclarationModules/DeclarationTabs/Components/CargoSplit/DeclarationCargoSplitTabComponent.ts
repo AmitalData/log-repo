@@ -49,8 +49,8 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
         super();
         this.DeclarationCargoSplitList = new ObservableCollection([]);
         this._EntityPMService = new EntityPMService();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.LoadDeclarationCargoSplits();
@@ -184,8 +184,8 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
     EditButtonClicked(item: DeclarationCargoSplitPM) {
 
         var windowArgs: any = {};
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
                 this._EntityPMService.getSingle("Customs.DeclarationCargoSplit", item.Id).then((res: any) => {
                     res.subscribe((myResponse: any) => {
 

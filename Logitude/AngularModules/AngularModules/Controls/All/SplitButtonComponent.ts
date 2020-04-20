@@ -148,7 +148,7 @@ export class SplitButtonComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+    this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
       this._IsLoaded = true;
       /// alert("this._IsLoaded");
       if (AppTool.IsNullOrEmpty(this.ButtonText)) {

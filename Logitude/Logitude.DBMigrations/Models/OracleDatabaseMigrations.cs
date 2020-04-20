@@ -319,7 +319,8 @@ namespace Logitude.DBMigrations.Models
             if (DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
                 string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "\"" + FormatNameLength(c.Name, c.ShortName).ToUpper() + "\"").ToArray());
-                createTableScript += "PRIMARY KEY(" + primaryKeyColumns + ")" + "\n";
+                string primaryKeyConstraintName = FormatNameLength("PK_" + tableName, null).ToUpper();
+                createTableScript += "CONSTRAINT \"" + primaryKeyConstraintName + "\" PRIMARY KEY(" + primaryKeyColumns + ")" + "\n";
             }
             createTableScript += ");" + "\n\n";
 
@@ -801,7 +802,7 @@ namespace Logitude.DBMigrations.Models
             }
             else if (IsTableHasPrimaryKeys(DXMLTable))
             {
-                string primaryKeyConstraintName = "PK_" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper() + "_" + GenerateRandomString().ToUpper();
+                string primaryKeyConstraintName = "PK_" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName).ToUpper();
                 primaryKeyConstraintName = FormatNameLength(primaryKeyConstraintName, null);
                 alterPrimaryKeyScript += GetAddPrimaryKeyConstraintScript(primaryKeyConstraintName);
             }
@@ -847,12 +848,16 @@ namespace Logitude.DBMigrations.Models
 
             string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", parentTable, foreignKeyColumns.Replace("\"", String.Empty), createRelationScript);
 
-            IndexDefinition relationIndex = new IndexDefinition
+            string createIndexScript = null;
+            if (CurrentTable == null || (CurrentTable != null && CurrentTable.AllIndexes.Where(i => i.Columns == foreignKeyColumns.Replace("\"", String.Empty)).FirstOrDefault() == null))
             {
-                Columns = relation.ForeignKeyColumn
-            };
+                IndexDefinition relationIndex = new IndexDefinition
+                {
+                    Columns = foreignKeyColumns.Replace("\"", String.Empty)
+                };
 
-            string createIndexScript = GetCreateIndexScript(relationIndex);
+                createIndexScript = GetCreateIndexScript(relationIndex);
+            }
 
             return createRelationWithHistoryScript + createIndexScript;
         }

@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;APInvoiceTransferStatus,APInvoiceTransferStatus,,Code,&quot;">
+  SearchFields="&quot;APInvoiceTransferStatus,APInvoiceTransferStatus,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;0bc17fc8-f80e-4c8e-b43c-451393f2c07d&quot;"
     FieldName="&quot;Code&quot;"

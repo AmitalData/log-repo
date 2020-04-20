@@ -2721,5 +2721,97 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetInUseWarehouse(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+                PartnersDomainService partnersDomain = new PartnersDomainService();
+
+                bool myResult = false;
+                
+                CardRepository rep = new CardRepository(tenant);
+                List<Card> cards = rep.GetWarehouseCards(tenant).ToList();
+
+                if (!string.IsNullOrEmpty(code))
+                {
+                    if (cards.Where(p => p.Code == code).FirstOrDefault() != null)
+                    {
+                        myResult = true;
+                    }
+                    else
+                    {
+                        myResult = false;
+                    }
+                }
+                else
+                {
+                    myResult = false;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetAllTariffTranslationsByCarrierId(string carrierId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                TariffCarrierTranslationQuery myQuery = new TariffCarrierTranslationQuery(tenant);
+                List<TariffCarrierTranslationPM> myResult = myQuery.GetTranslationsByCarrier(carrierId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetRemoveTranslationFromCarrier(string id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                TariffCarrierTranslationRepository myRepository = new TariffCarrierTranslationRepository(commonDataContext);
+                
+                TariffCarrierTranslation translation = myRepository.GetSingleTariffCarrierTranslation(id, tenant);
+
+                if (translation != null)
+                {
+                    myRepository.Remove(translation);
+                    commonDataContext.SaveChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

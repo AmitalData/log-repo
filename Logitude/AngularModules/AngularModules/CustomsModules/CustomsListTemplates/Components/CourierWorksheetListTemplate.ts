@@ -446,8 +446,8 @@ export class CourierWorksheetListTemplate {
         this.ButtonClick(event);
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
-            .subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+            .subscribe((res:any) => {
+                this.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 let mess = "";
                 if (res.HasError) {
@@ -844,7 +844,7 @@ export class CourierWorksheetListTemplate {
                         declarationMamanSpecialActionPM.DeclarationId = declarationId;
                         declarationMamanSpecialActionPM.MamanSpecialActionCode = mamanSpecialActionCode;
 
-                        this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe(res => {
+                        this._DeclarationMamanSpecialActionPMService.insert(declarationMamanSpecialActionPM).subscribe((res: any) => {
                             this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
                                 .subscribe((myResponse: ServiceResponse) => {
                                     SessionLocator.SelectedSession.StopBusyIndicator();
@@ -856,7 +856,7 @@ export class CourierWorksheetListTemplate {
                     else {
                         declarationMamanSpecialActionPM.MamanSpecialActionStatusCode = null;
                         declarationMamanSpecialActionPM.MamanSpecialActionsErrorXml = null;
-                        this._DeclarationMamanSpecialActionPMService.update(declarationMamanSpecialActionPM).subscribe(res => {
+                        this._DeclarationMamanSpecialActionPMService.update(declarationMamanSpecialActionPM).subscribe((res: any) => {
                             this._DeclarationWebService.GetDeclarationMamanSpecialAction(declarationId, this._CourierWorksheet.Tenant, "U", mamanSpecialActionCode)
                                 .subscribe((myResponse: ServiceResponse) => {
                                     SessionLocator.SelectedSession.StopBusyIndicator();

@@ -36,7 +36,7 @@ namespace LogitudeBatchServicesManager
                 {
                     this.BatchManagerServiceTimer = new System.Timers.Timer();
 
-                    TimeSpan t = new TimeSpan(0, 0, 30);
+                    TimeSpan t = new TimeSpan(0, 1, 10);
                     BatchManagerServiceTimer.Interval = (int)t.TotalMilliseconds;
                     BatchManagerServiceTimer.Stop();
                     BatchManagerServiceTimer.Elapsed += BatchManagerServiceTimer_Elapsed;

@@ -46,7 +46,7 @@ export class EditPaymentChequeComponent extends BaseComponent{
 
     constructor() {
         super();
-        this._entityResourceService.getEntityResourceByTableName("PaymentCheque", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("PaymentCheque", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.SetUIProperties();
         });

@@ -25,5 +25,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         [ForeignKey("ARInvoiceId")]
         public virtual ARInvoice ARInvoice { get; set; }
+
+        public bool IsRegionalTax { get; set; }
     }
 }

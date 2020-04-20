@@ -213,15 +213,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
                 ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Quote", 0, true);
 
-                //if (entityPM.QuoteTypeCode != "P")
-                //{
+                if (entityPM.QuoteTypeCode != "P")
+                {
                     if (!entityPM.DontExportQuotationsToIntegratedSystem)
                     {
                         SentQuoteStatusMessageToUnifreight(objecttable.Id);
                     }
 
                     SendQuoteToIntegratedSystem(objecttable.Id);
-                //}
+                }
                 QuoteMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
                 entityRepository.Update(entityPoco);
@@ -714,6 +714,15 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.NotifyContactId = null;
                 entityPM.NotifyAddressId = null;
                 entityPM.NotifyNote = null;
+            }
+
+            if (string.IsNullOrEmpty(entityPM.CustomerId))
+            {
+                entityPM.CustomerName = null;
+                entityPM.CustomerContactId = null;
+                entityPM.CustomerReference1 = null;
+                entityPM.CustomerReference2 = null;
+                entityPM.CustomerNote = null;
             }
 
             if (string.IsNullOrEmpty(entityPM.QuoteCustomerTypeCode))

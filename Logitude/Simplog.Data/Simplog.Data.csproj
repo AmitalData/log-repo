@@ -182,6 +182,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerOpenFilesAmount.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerDeposition.cs" />
@@ -451,6 +452,7 @@
     <Compile Include="CommonDataModel\Mapping\SharedLogisticsContactLastLoginMap.cs" />
     <Compile Include="CommonDataModel\Mapping\SharedManifestsStatusMap.cs" />
     <Compile Include="CommonDataModel\Mapping\SharedManifestTranslationMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\TariffCarrierTranslationMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TemperatureUnitMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantAdditionalDataMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantLoginPolicyMap.cs" />
@@ -492,6 +494,7 @@
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerOpenFilesAmountRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\TariffCarrierTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\UserLastSettingsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DocumentsExecutionLogRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreateSharedLogisticsContactLastLoginRepository.cs" />

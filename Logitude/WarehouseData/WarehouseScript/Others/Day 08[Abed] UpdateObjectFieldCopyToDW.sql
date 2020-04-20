@@ -61,7 +61,7 @@ or FieldName = 'ColoaderId' or FieldName = 'ColoaderReference1'or FieldName = 'S
 or FieldName = 'IncludesCustoms' or FieldName = 'DeclarationNumber' or FieldName = 'DeclarationDate' or FieldName = 'TerminalAvailable' or FieldName = 'WarehouseLegLastFreeDate'
 or FieldName = 'OrderGrossWeight' or FieldName = 'OrderChargeableWeight' or FieldName = 'BookingVolume' or FieldName = 'BookingNumberOfPackages' or FieldName = 'EstimateProfitInProfitCurrency'or FieldName = 'EstimateProfitInLocalCurrency'
 or FieldName = 'GrossWeightUnitCode'or FieldName = 'VolumeUnitCode' or FieldName = 'ConsigneeNotImporterId'or FieldName = 'IssuingCarrierAgentId' or FieldName = 'OnCarriageTransportModeId'or FieldName = 'FirstARInvoiceApprovalDate' or FieldName = 'FreightForwarderId' or FieldName = 'FreightRelease'
-
+or FieldName = 'IsDangerous'
 )
 
 
@@ -79,13 +79,13 @@ update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from Obj
 update  ObjectFields  set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentComputedFields') and (FieldName = 'FirstPickupATD' or FieldName = 'FirstPickupATA' or FieldName = 'FinalDeliveryETD' or FieldName = 'FinalDeliveryETA' or FieldName = 'FinalDeliveryATD' or FieldName = 'FinalDeliveryATA' or FieldName='ContainersNumbers' or FieldName ='FirstPickupLocation' or FieldName ='NumberOfDeliveries' or FieldName ='OperationallyClosedByUserId' or FieldName ='LastPickupATA' or FieldName ='LastPickupATD' or FieldName ='LastPickupETA' or FieldName ='LastPickupETD' or  FieldName ='DeliveryToPortId' or FieldName ='DeliveryFrom' or FieldName ='DeliveryTo' or FieldName ='PickupFrom' or FieldName ='PickupTo')
 
 
-update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentPayable') and (FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId'  or FieldName = 'OpenAmount' or FieldName = 'OpenAmountInLocalCurrency' or FieldName = 'OpenAmountInProfitCurrency' or FieldName = 'AccountedAmount' or FieldName = 'AccountedAmountInLocalCurrency' or FieldName = 'AccountedAmountInProfitCurrency' )
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'APInvoiceLineId') and (FieldName = 'EntityPayableId' or FieldName = 'LineNumber')
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentPayable') and (FieldName = 'VendorId' or FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId'  or FieldName = 'OpenAmount' or FieldName = 'OpenAmountInLocalCurrency' or FieldName = 'OpenAmountInProfitCurrency' or FieldName = 'AccountedAmount' or FieldName = 'AccountedAmountInLocalCurrency' or FieldName = 'AccountedAmountInProfitCurrency' )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'APInvoiceLine') and (FieldName = 'EntityPayableId' or FieldName = 'LineNumber' or FieldName ='ProfitCurrencyAmount' or FieldName ='LocalCurrencyAmount')
 update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'APInvoice') and (FieldName = 'InvoiceNumber' or FieldName = 'AmountInInvoiceCurrency'  or FieldName = 'InvoiceCurrencyId' or FieldName = 'InvoiceCurrencyExchangeRate' )
 
-update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentReceivable') and (FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId' or FieldName = 'TotalAmount' or FieldName = 'TotalAmountLocal' or FieldName =  'ARInvoiceLineId' )
+update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ShipmentReceivable') and (FieldName = 'AmountInProfitCurrency'   or FieldName = 'ChargesTypeId' or FieldName = 'ShipmentId' or FieldName = 'TotalAmount' or FieldName = 'TotalAmountLocal' or FieldName =  'ARInvoiceLineId' )
 update  ObjectFields set CopyToDW = 1 where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoiceLineId') and (FieldName = 'ReceivableId' or FieldName = 'ARInvoiceId')
-update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoice') and (FieldName = 'InvoiceNumber' or FieldName = 'AmountInInvoiceCurrency'  or FieldName = 'InvoiceCurrencyId' or FieldName = 'InvoiceCurrencyExchangeRate' )
+update  ObjectFields set CopyToDW = 1  where ObjectTableId = (select id from ObjectTables where Name = 'ARInvoice') and (FieldName = 'BillToId'  or FieldName = 'InvoiceNumber' or FieldName = 'AmountInInvoiceCurrency'  or FieldName = 'InvoiceCurrencyId' or FieldName = 'InvoiceCurrencyExchangeRate' )
 
 
 

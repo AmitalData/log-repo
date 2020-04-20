@@ -690,7 +690,7 @@ export class CreateEditTicketComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicator("Loading ...");
         
         this._CardListService.getSingle(this.Parent.DeclarationPM.CustomerId)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 let cardList: CardList = res.Result;
                 let unifaceCustId: string = ""
                 if (!AppTool.IsNullOrEmpty(cardList)) {
@@ -766,8 +766,8 @@ export class CreateEditTicketComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicator("Loading ...");
         
         this._ConfirmationTypeListService.getSingle(sResponseConfirmationTypeCode)
-            .subscribe(res => {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+            .subscribe((res:any) => {
+                this.CurrentSession.StopBusyIndicator();
                 let myConfirmationTypeList :ConfirmationTypeList=res.Result;
                 if (AppTool.IsNullOrEmpty(myConfirmationTypeList)) {
                     let msg = new MessageWindow();

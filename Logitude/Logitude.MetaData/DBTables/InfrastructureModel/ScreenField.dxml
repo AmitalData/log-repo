@@ -2,7 +2,8 @@
 <Table
   Name="ScreenFields"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -61,12 +62,14 @@
     ForeignKeyColumn="ScreenId"
     ReferencedTable="Screens"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="ObjectFieldId"
     ReferencedTable="ObjectFields"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Index
     Columns="Tenant" />
 </Table>

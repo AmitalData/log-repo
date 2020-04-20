@@ -17,13 +17,14 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     moduleId: module.id,
     selector: 'AdvSearchComponent',
     templateUrl: './AdvanceSearchComponent.html',
     inputs: ['ObjectTableName', 'QueryChangeEvent', 'isWindowViewMode', 'isNewViewMode', 'QueryId','QueryCode', 'Filterchangeevent', 'rabaia'],
-    providers: [Http],
+    providers: [HttpClient],
 })
 
 export class AdvanceSearchComponent implements OnInit {
@@ -58,7 +59,7 @@ export class AdvanceSearchComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private pubSubService: PubSubService, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.Http;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
         this.myForm = fb.group({
             //'ShipperName': ['', Validators.required]
 
@@ -218,7 +219,7 @@ export class AdvanceSearchComponent implements OnInit {
             this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
         }
 
-        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe(myResult => {
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe((myResult:any) => {
             if (myResult == null) {
                 this.AdvancedQueryFilterPMs = [];
             }
@@ -579,7 +580,7 @@ export class AdvanceSearchComponent implements OnInit {
 
             var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
             myService.setServiceArgs(this.serviceArgs);
-            myService.insert(advanceFilter).subscribe(myResult => {
+            myService.insert(advanceFilter).subscribe((myResult:any) => {
                 this.AdvancedQueryFilterPMs.push(myResult.Result);
             });
 
@@ -623,11 +624,11 @@ export class AdvanceSearchComponent implements OnInit {
     public DeteteFilter(field: FilterField) {
         //if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] != null) {
         //var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
-        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.FieldCode, field.QueryCode, SessionInfo.LoggedUserId).subscribe(filter => {
+        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.FieldCode, field.QueryCode, SessionInfo.LoggedUserId).subscribe((filter: any) => {
             if (filter) {
                 var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
                 myService.setServiceArgs(this.serviceArgs);
-                myService.delete(filter).subscribe(myResult => {
+                myService.delete(filter).subscribe((myResult:any) => {
                     if (this.SelectedObjectFields != null) {
                         this.SelectedObjectFields = this.SelectedObjectFields.filter(a => a.ObjectField.Id != field.ObjectField.Id);
                     }

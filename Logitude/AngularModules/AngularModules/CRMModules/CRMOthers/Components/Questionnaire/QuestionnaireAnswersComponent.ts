@@ -72,7 +72,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
 
     //LoadData() {
     //    this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-    //    this._QuestionnairePMService.get(SessionLocator.TenantPM.DefaultQuestionnaireId).subscribe(response => {
+    //    this._QuestionnairePMService.get(SessionLocator.TenantPM.DefaultQuestionnaireId).subscribe((response:any) => {
 
     //        this.CurrentSession.CurrentWindow.StopBusyIndicator();
     //        this.EntityPM = response.Result;
@@ -95,7 +95,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
         filters.SortBy = 'Value';
         filters.addAdditionalFilter("IsMultipleChoice", true, null, null, "Equals", false, false, false, null, false, true);
 
-        this.customPickListListService.getAllFromCache(filters).subscribe(response => {
+        this.customPickListListService.getAllFromCache(filters).subscribe((response:any) => {
 
             var AllQuestionsArr: QuestionnaireQuestionPM[] = this.EntityPM.QuestionnaireQuestions;
            
@@ -282,7 +282,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
                 }
             });
 
-            this._QuestionnaireAnswerPMService.insert(questionnaireAnswerPM).subscribe(response => {
+            this._QuestionnaireAnswerPMService.insert(questionnaireAnswerPM).subscribe((response:any) => {
                 if (response.HasError === false) {
                     this.CurrentSession.CurrentWindow.Close("ok");
                 }

@@ -73,7 +73,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         logWindow.Height = 820;
         logWindow.Width = 1060;
-        logWindow.Title = "Report Scheduler Details";
+        logWindow.Title = this.ReportList.Name + " Scheduler Details";
         logWindow.DataContext = new TaskReportSchedulerItemClass(newItem, this, true);
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
@@ -91,7 +91,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         DataContext.fatherComponent = this;
         logWindow.DataContext = DataContext;
         logWindow.WindowArgs = windowArgs;
-        logWindow.Title = "Report Scheduler Details";
+        logWindow.Title = this.ReportList.Name + " Scheduler Details";
         logWindow.Height = 820;
         logWindow.Width = 1060;
         logWindow.Show('./Report/Components/Scheduler/AddEditReportSchedulerComponent');
@@ -150,6 +150,29 @@ export class TaskReportSchedulerComponent implements OnInit {
         });
 
         this.Taskscolumns.push({
+            FieldName: "TriggerType",
+            DataTypeCode: 'String',
+            Display: 'Frequency',
+            Styles: { width: '160px' },
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
+            HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: false
+        });
+
+        this.Taskscolumns.push({
+            FieldName: "Recepients",
+            DataTypeCode: 'String',
+            Display: 'Recipients',
+            Styles: { width: '160px' },
+            HtmlListComponentName: 'ReportSchedulerDateListTemplate',
+            HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+            
+        });
+
+        this.Taskscolumns.push({
             FieldName: "LastRunEndTime",
             DataTypeCode: 'String',
             Display: 'Last Run Date',
@@ -164,7 +187,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.Taskscolumns.push({
             FieldName: "InActive",
             DataTypeCode: 'Boolean',
-            Display: 'In Active',
+            Display: 'InActive',
             Styles: { width: '90px' },
             HtmlListComponentName: 'ReportSchedulerDateListTemplate',
             HtmlListComponentUrl: '../Report/Components/Scheduler/ListTemplates/ReportSchedulerDateListTemplate',
@@ -291,11 +314,12 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
     get CreateDate() { return this.EntityPM.CreateDateTime; }
     get UpdateDate() { return this.EntityPM.UpdateDateTime; }
     get LastRunTime() { return this.EntityPM.LastRunStartTime; }
-    get NextRunTimeUTC() { return this.EntityPM.NextRunTimeUTC; }
     get StartDate() { return this.EntityPM.StartDateTime; }
     get Status() { return this.EntityPM.Status; }
     get LastRunEndTime() { return this.EntityPM.LastRunEndTime; }
     get Duration() { return Math.abs(this.EntityPM.Duration); }
+    get UpdatedBy() { return this.EntityPM.UpdatedBy; }
+    get CreatedBy() { return this.EntityPM.CreatedBy; }
 
     get Name() { return this.EntityPM.Name; }
     set Name(newValue: string) {
@@ -333,6 +357,24 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
             this.EntityPM.TriggerType = newValue;
         }
     }
+
+    get Recepients() { return this.EntityPM.Recepients; }
+    set Recepients(newValue: string) {
+        if (this.EntityPM.Recepients != newValue) {
+            this.EntityPM.Recepients = newValue;
+        }
+    }
+
+    get RepeatInMinutes() { return this.EntityPM.RepeatInMinutes; }
+    set RepeatInMinutes(newValue: number) {
+        if (this.EntityPM.RepeatInMinutes != newValue) {
+
+
+            this.EntityPM.RepeatInMinutes = newValue;
+
+        }
+    }
+
     get MonthlyDay() { return this.EntityPM.MonthlyDay; }
     set MonthlyDay(newValue: number) {
         if (this.EntityPM.MonthlyDay != newValue) {

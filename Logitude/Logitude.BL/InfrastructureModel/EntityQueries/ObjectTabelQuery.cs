@@ -870,6 +870,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
 
             return ObjectTableList;
-        }       
+        } 
+        
+        public string GetObjectTableIdByName(string tableName)
+        {
+            return repository.GetObjectTableIdByName(tableName);
+        }
     }
 }

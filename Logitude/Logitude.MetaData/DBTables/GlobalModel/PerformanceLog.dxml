@@ -2,7 +2,8 @@
 <Table
   Name="PerformanceLogs"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Global">
   <Column
     Name="Id"
     Type="varchar"

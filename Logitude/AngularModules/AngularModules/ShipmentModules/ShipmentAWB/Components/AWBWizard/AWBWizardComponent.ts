@@ -861,7 +861,7 @@ export class AWBWizardComponent {
                         }
                         case "OCI": {
                             if (this.PageChild_OCI == null) {
-                                this._entityResourceService.getEntityResourceByTableName("AWBOCI", 0).subscribe(response => {
+                                this._entityResourceService.getEntityResourceByTableName("AWBOCI", 0).subscribe((response:any) => {
                                     SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/OCI/OCITabComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.PageChild_OCI = cmpRef.instance;
@@ -1468,7 +1468,7 @@ export class AWBWizardComponent {
                         screenWarnings.push(fieldName + " wrong format: must be 4 numeric digits max");
                     }
                 }
-
+                
                 if (AppTool.IsNullOrEmpty(this.EntityPM.IssuingCarrierAddressId)) {
                     screenWarnings.push(this.ValidationText.replace("%FieldName", "Issuing Carrier Agent Address"));
                 }
@@ -1631,6 +1631,13 @@ export class AWBWizardComponent {
                 var msgField = TextCodeTranslator.Translate(this.ObjectTableName + ".F.GrossWeight");
                 msgField = msgField.replace("%GrossWeightCode", this.EntityPM.GrossWeightUnitCode);
                 screenWarnings.push(this.ValidationText.replace("%FieldName", msgField));
+            }
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.SLAC)) {
+            if (!FormatTool.Validate_SLAC(this.EntityPM.SLAC)) {
+                var fieldName: string = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "SLAC");
+                screenErrors.push(fieldName + " wrong format: must be 5 numeric digits max");
             }
         }
 
@@ -2932,7 +2939,7 @@ export class AWBWizardComponent {
     documentTypePM: DocumentTypePM;
     documentTypeList: DocumentTypeList;
     GetDocstOut() {
-        this._documentTypeListExtendedService.getDocumentTypeListByCode(this.documentTypeCode, this.TenantPM.Id).subscribe(res => {
+        this._documentTypeListExtendedService.getDocumentTypeListByCode(this.documentTypeCode, this.TenantPM.Id).subscribe((res:any) => {
 
 
 
@@ -2944,7 +2951,7 @@ export class AWBWizardComponent {
 
                     this.documentTypeId = this.documentTypeList.Id;
                     this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-                    this._documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityPM.Id, this.TenantPM.Id, "", this.documentTypeId).subscribe(res => {
+                    this._documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityPM.Id, this.TenantPM.Id, "", this.documentTypeId).subscribe((res:any) => {
                
                         this.StopBusyIndicator();
 
@@ -2956,7 +2963,7 @@ export class AWBWizardComponent {
 
                             if (!this.documentOutPM) {
 
-                                this._documentOutPMService.getCreateDocumentOut(this.documentTypeId, this.EntityPM.Id, null, null, this.targetObjectTableId, this.EntityPM.Tenant).subscribe(res => {
+                                this._documentOutPMService.getCreateDocumentOut(this.documentTypeId, this.EntityPM.Id, null, null, this.targetObjectTableId, this.EntityPM.Tenant).subscribe((res:any) => {
                                         var pmResponse: ServiceResponse = res;
                                         if (!pmResponse.HasError) {
                                             var myResult = pmResponse.Result;
@@ -3000,7 +3007,7 @@ export class AWBWizardComponent {
     }
     LoadCreatedDocMethod() {
 
-        this._documentOutPMService.getSingleDocumentOutPM(this.documentOutPM.Id, this.TenantPM.Id).subscribe(res => {
+        this._documentOutPMService.getSingleDocumentOutPM(this.documentOutPM.Id, this.TenantPM.Id).subscribe((res:any) => {
      
 
 
@@ -3021,7 +3028,7 @@ export class AWBWizardComponent {
     }
     LoadDocumentTypeMethod() {
 
-        this._documentTypePMService.getSingleDocumentType(this.documentTypeId, this.documentOutPM.Id, this.TenantPM.Id).subscribe(res => {
+        this._documentTypePMService.getSingleDocumentType(this.documentTypeId, this.documentOutPM.Id, this.TenantPM.Id).subscribe((res:any) => {
 
 
             var pmResponse: ServiceResponse = res;

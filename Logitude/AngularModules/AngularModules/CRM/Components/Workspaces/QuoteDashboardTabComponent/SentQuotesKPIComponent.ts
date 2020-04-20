@@ -62,12 +62,12 @@ export class SentQuotesKPIComponent implements OnInit {
         this.dashboardArgs = new QuoteDashboardArguments();
         this.dashboardService = new DashboardService();
 
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             this.FillDashboardArgs();
             this.LoadDashboardData();
         });
 
-        this.GetQuoteSatges();
+        //this.GetQuoteSatges();
     }
 
     GetQuoteSatges() {
@@ -219,8 +219,8 @@ export class SentQuotesKPIComponent implements OnInit {
         if (flag) {
             filterAgrs.addAdditionalFilter("SentQuotesKPIChartFilter", ServiceHelper.GetDateString(this.Wizard.FromDate), ServiceHelper.GetDateString(this.Wizard.ToDate) + ";" + item.dataContext.category + "",null , "Equals", true, false, false, "String");
             filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
-            filterAgrs.addAdditionalFilter("IsClosed", true, null, null, "Equals", false, false, false, "boolean");
-            filterAgrs.addAdditionalFilter("StageId", this.acceptedSatgeId, null, null, "Equals", false, false, false, "String");
+            //filterAgrs.addAdditionalFilter("IsClosed", true, null, null, "Equals", true, false, false, "Boolean");
+            //filterAgrs.addAdditionalFilter("StageId", this.acceptedSatgeId, null, null, "Equals", false, false, false, "String");
 
             var listArgs = new ListComponentArgs();
             listArgs.Filters = filterAgrs;

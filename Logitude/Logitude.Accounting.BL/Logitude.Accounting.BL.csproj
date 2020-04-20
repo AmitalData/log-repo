@@ -194,6 +194,7 @@
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPageAnalyzer.cs" />
     <Compile Include="CoreBL\BankAccountPages\BankAccountPagesExample.cs" />
+    <Compile Include="CoreBL\BankDeposit\BankDepositJournalCreator.cs" />
     <Compile Include="CoreBL\Batch\BatchAccountingLoadTestTask.cs" />
     <Compile Include="CoreBL\Batch\BatchCardGLAccountConnectTask.cs" />
     <Compile Include="CoreBL\Batch\BatchCreateTaxReportService.cs" />
@@ -224,11 +225,19 @@
     <Compile Include="CoreBL\CashbookService.cs" />
     <Compile Include="CoreBL\FunctionalTests\ClearAccountingDB.cs" />
     <Compile Include="CoreBL\FunctionalTests\JournalToGLAccountMoreData.cs" />
+    <Compile Include="CoreBL\InterestReport\CSVStringLinesGetter.cs" />
+    <Compile Include="CoreBL\InterestReport\IInterestReportCalculationPreparations.cs" />
     <Compile Include="CoreBL\InterestReport\InterestCalculationDetails.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestPercentageForDateParams.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportArgs.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportCalculationFromCSVPreparations.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportCalculationPreparations.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportDataCalculations.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportLinesByDateCreationParams.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportLinesByDateCreationService.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportLinesByDateMappingParams.cs" />
     <Compile Include="CoreBL\InterestReport\InterestReportLinesCreationService.cs" />
+    <Compile Include="CoreBL\InterestReport\InterestReportTestResultGetter.cs" />
     <Compile Include="CoreBL\InterestReport\InterestTransactionsGroupedByDate.cs" />
     <Compile Include="CoreBL\InterestTrans\RegularJournalInterestTransactionMapping.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
@@ -487,6 +496,7 @@
     <Compile Include="EntityQueryServices\AutomaticReconcileQueryService.cs" />
     <Compile Include="EntityQueryServices\BankAccountQueryService.cs" />
     <Compile Include="EntityQueryServices\BankCodeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CashBookLineQueryService.cs" />
     <Compile Include="EntityQueryServices\BankDepositLineQueryService.cs" />
     <Compile Include="EntityQueryServices\Category1QueryService.cs" />
     <Compile Include="EntityQueryServices\Category2QueryService.cs" />
@@ -568,6 +578,7 @@
     <Compile Include="EntityQueryServices\TaxWithholdingAssessOfficeQueryService.cs" />
     <Compile Include="EntityQueryServices\WithholdingTaxDeductionTypeQueryService.cs" />
     <Compile Include="EntityUpdateServiceExt\ARPaymentChequeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServiceExt\InterestReportUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\BankCodeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\CashBookLineUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\InterestTransactionUpdateServiceExt.cs" />
@@ -661,6 +672,7 @@
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARPaymentQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestARInvoiceQueryService.cs" />
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestJournalQueryService.cs" />
+    <Compile Include="InterestService\InterestReportService.CS" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />
@@ -668,6 +680,7 @@
     <Compile Include="Utils\PostDatedChequesRedemptionBatch.cs" />
     <Compile Include="Utils\ReconciliationAfterConversionBatch.cs" />
     <Compile Include="Utils\ReconciliationStageBBatch.cs" />
+    <Compile Include="Validators\InterestReportValidator.cs" />
     <Compile Include="Validators\AccountingPeriodValidator.cs" />
     <Compile Include="Validators\AutomaticReconcileMethodValidator.cs" />
     <Compile Include="Validators\ChartOfAccountValidator.cs" />

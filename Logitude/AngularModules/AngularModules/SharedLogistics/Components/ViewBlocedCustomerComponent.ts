@@ -89,7 +89,7 @@ export class ViewBlocedCustomerComponent implements OnInit {
     LoadData() {
         this.ProductsObslist = [];
     
-        this._customerProductExtendedService.GetCustomerProducts(this.entityPM.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
+        this._customerProductExtendedService.GetCustomerProducts(this.entityPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {

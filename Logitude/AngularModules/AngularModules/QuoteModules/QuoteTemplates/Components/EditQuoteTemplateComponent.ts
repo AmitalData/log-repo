@@ -94,7 +94,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     SetWindowArgs(args: any) {
 
         var _entityResourceService: EntityResourceService = new EntityResourceService();
-        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
+        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe((response:any) => {
             this.IsReady = true;
             this.Load(args);
         });
@@ -413,7 +413,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     //Loading Area
     LoadQuoteTemplatePM() {
 
-        this.quoteTemplatePMService.get(this.QuoteTemplateId).subscribe(res => {
+        this.quoteTemplatePMService.get(this.QuoteTemplateId).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.EntityPM = pmResponse.Result;
@@ -440,7 +440,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     LoadSetting() {
     
 
-        this.quoteTemplateSettingPMService.get(this.EntityPM.QuoteTemplateSettingId).subscribe(res => {
+        this.quoteTemplateSettingPMService.get(this.EntityPM.QuoteTemplateSettingId).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.IsLoadQuoteTemplateSettingsRuning = false;
             this.LoadCompleted();
@@ -456,7 +456,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     LoadQuoteTemplateSectionLists() {
 
         this.QuoteTemplateSectionLists = [];
-        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplateSectionByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe(res => {
+        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplateSectionByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
 
             this.IsLoadQuoteTemplateSectionRuning = false;
@@ -476,7 +476,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     LoadQuoteTemplateTextCodeLists() {
         this.QuoteTemplateTextCodeLists = [];
-        this.quoteTemplateTextCodeExtendedPMService.GetQuoteTemplateTextCodeByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe(res => {
+        this.quoteTemplateTextCodeExtendedPMService.GetQuoteTemplateTextCodeByQuoteTemplateId(this.EntityPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             this.IsLoadQuoteTemplateTextCodeRuning = false;
             this.LoadCompleted();
@@ -507,7 +507,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                     var quoteId: string = this.QuotePM != null ? this.QuotePM.Id : "";
                     var sectionDocId: string = !AppTool.IsNullOrEmpty(this.selectQuoteTemplateSection.SectionDocId) ? this.selectQuoteTemplateSection.SectionDocId : "";
 
-                    this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode, sectionDocId, this.EntityPM.Id, this.EntityPM.QuoteTemplateSettingId, quoteId, this.EntityPM.CreatedByUserId, SessionLocator.Tenant).subscribe(res => {
+                    this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.selectQuoteTemplateSection.QuoteTemplateSectionTypeCode, sectionDocId, this.EntityPM.Id, this.EntityPM.QuoteTemplateSettingId, quoteId, this.EntityPM.CreatedByUserId, SessionLocator.Tenant).subscribe((res:any) => {
                         var pmResponse: ServiceResponse = res;
                         this.IsLoadPreviewSectionRuning = false;
                         this.LoadCompleted();
@@ -594,7 +594,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     
 
 
-        this.quoteTemplateSectionPMService.insert(newQuoteTemplateSectionPM).subscribe(res => {
+        this.quoteTemplateSectionPMService.insert(newQuoteTemplateSectionPM).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
 
             var pageBreakSection: QuoteTemplateSectionViewModel = new QuoteTemplateSectionViewModel(pmResponse.Result);
@@ -672,7 +672,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
                 item.EntityPM.IsDirty = false;
             });
 
-            this.quoteTemplateSectionExtendedPMService.updateSections(quoteTemplateSectionChangedLists).subscribe(res => {
+            this.quoteTemplateSectionExtendedPMService.updateSections(quoteTemplateSectionChangedLists).subscribe((res:any) => {
                 this.CurrentSession.StopBusyIndicator();
                 if (previewPdfAfterSave) this.PreviewPdf();
             });
@@ -735,7 +735,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     SaveQuoteTemplateSection(sections: any) {
 
         if (this.IsSaveQuoteTemplateSectionRuning) {
-            this.quoteTemplateSectionExtendedPMService.updateSections(sections).subscribe(res => {
+            this.quoteTemplateSectionExtendedPMService.updateSections(sections).subscribe((res:any) => {
                 this.IsSaveQuoteTemplateSectionRuning = false;
 
                 this.SaveCompleted();
@@ -751,7 +751,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
         if (this.IsSaveQuoteTemplateRuning) {
             this.RefreshQuoteTemplate = true;
-            this.quoteTemplatePMService.update(this.EntityPM).subscribe(res => {
+            this.quoteTemplatePMService.update(this.EntityPM).subscribe((res:any) => {
                 this.IsSaveQuoteTemplateRuning = false;
                 this.SaveCompleted();
             });
@@ -761,7 +761,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
     SaveQuoteTemplateSetting() {
         if (this.IsSaveQuoteTemplateSettingsRuning) {
-            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
+            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
                 this.IsSaveQuoteTemplateSettingsRuning = false;
                 this.SaveCompleted("RefreshPreviewData");
             });

@@ -2,7 +2,8 @@
 <Table
   Name="MenusTables"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -112,7 +113,8 @@
     ForeignKeyColumn="FeatureId"
     ReferencedTable="Features"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <UniqueConstraint
     Columns="Code,Tenant" />
 </Table>

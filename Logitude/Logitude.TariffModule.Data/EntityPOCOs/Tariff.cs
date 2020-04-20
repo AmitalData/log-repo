@@ -197,6 +197,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string ContainerType5Id { get; set; }
 	      
         public virtual PackageType ContainerType5 { get; set; }
+        [ForeignKey("Product")]
+        [Column("TariffProductId")]
+	    public string TariffProductId { get; set; }
+	      
+        public virtual TariffProduct Product { get; set; }
     }
 }
 	 

@@ -26,6 +26,7 @@ import { QueryPM } from '../../../EntityPMs/QueryPM';
 import { ServiceResponse } from '../../../DataContracts/ServiceResponse';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -34,7 +35,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
     selector: 'QueryList',
     templateUrl: './QueryListComponent.html',
     inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'UserItemSource', 'ObjectTableName', 'onSelectedQueryChangeEvent', 'LoadResourceCompleted', 'pubSubAdvanceQueryFiltersService', 'QueryListSourceChanged'],
-    providers: [Http],
+    providers: [HttpClient],
 })
 
 export class QueryListComponent implements OnInit, AfterViewInit {
@@ -79,7 +80,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.Http;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
         this.ItemsSource = [];
         this.UserItemSource = [];
         this.HandledUserItemSource = [];
@@ -105,7 +106,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
     }
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             if (this.SelectedItem != null) {
                 this.SetDisplayText();
             }
@@ -337,7 +338,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
             if ($event != this.SelectedItem.UniqueCode) {
-                CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                     var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.UniqueCode == $event)[0];
                     this.UserItemSource.push(Query);
                     this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
@@ -375,7 +376,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                 var myService: QueriesPMService = new QueriesPMService();
                 myService.setServiceArgs(this.serviceArgs);
 
-                myService.delete(query, SessionInfo.LoggedUserId).subscribe(myResult => {
+                myService.delete(query, SessionInfo.LoggedUserId).subscribe((myResult:any) => {
                     this.CurrentSession.StopBusyIndicator();
                     window.Queries = window.Queries.filter(a => a.UniqueCode != query.UniqueCode);
                     var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
@@ -408,7 +409,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         //        this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         //        var myQCService: QueryColumnsPMService = new QueryColumnsPMService();
         //        myQCService.setServiceArgs(this.serviceArgs);
-        //        myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, Item.Id, ObjectTable.Id, SessionInfo.LoggedUserId).subscribe(myResult => {
+        //        myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, Item.Id, ObjectTable.Id, SessionInfo.LoggedUserId).subscribe((myResult:any) => {
         //            var queryColumns = myResult;
 
         //            queryColumns.forEach((column, key) => {
@@ -420,7 +421,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         //            }
 
         //            this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
-        //            this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, Item.Id).subscribe(myResult => {
+        //            this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, Item.Id).subscribe((myResult:any) => {
         //                if (myResult == null) {
         //                    this.AdvancedQueryFilterPMs = [];
         //                }
@@ -438,8 +439,8 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         //                myService.setServiceArgs(this.serviceArgs);
         //                var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
         //                myGeneralService.setServiceArgs(this.serviceArgs);
-        //                myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
-        //                    myService.delete(query).subscribe(myResult => {
+        //                myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
+        //                    myService.delete(query).subscribe((myResult:any) => {
         //                        this.CurrentSession.StopBusyIndicator();
         //                        window.Queries = window.Queries.filter(a => a.Id != query.Id);
         //                        var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];

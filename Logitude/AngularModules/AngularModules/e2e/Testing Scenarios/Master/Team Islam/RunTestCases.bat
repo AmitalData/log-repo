@@ -14,31 +14,31 @@ FOR /L %%A IN (1,1,1) DO (
 
    
 --Report--
-  cmd /c call  npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,Reports>D:\E2ETeamIslamReport\Report.log
+  cmd /c call  npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,Reports
   CALL :CheckError "Run Report"
 
 --DocOut--
- cmd /c call  npm run e2e -- --params.Env="test_staging_951" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --params.ShipParams.ShipmentEditTabs="docs" --params.Team="islam" --suite=login,DocOut>D:\E2ETeamIslamReport\Report.log
+ cmd /c call  npm run e2e -- --params.Env="test_staging1" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --params.ShipParams.ShipmentEditTabs="docs" --params.Team="islam" --suite=login,DocOut
    CALL :CheckError "Print Document"
 
 --ShipmentView-- 
- cmd /c call  npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,ShipmentView>D:\E2ETeamIslamReport\Report.log
+ cmd /c call  npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,ShipmentView
 CALL :CheckError "ShipmentView"
    
 --CompanyAddressSetting
-   cmd /c call npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,CompanyAddressSetting>D:\E2ETeamIslamReport\Report.log
+   cmd /c call npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,CompanyAddressSetting
    CALL :CheckError "CompanyAddressSetting"
   
 --NewAgent
-   cmd /c call npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,NewAgent>D:\E2ETeamIslamReport\Report.log
+   cmd /c call npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,NewAgent
    CALL :CheckError "NewAgent"
    
 --NewUser--
-  cmd /c call npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,NewUser>D:\E2ETeamIslamReport\Report.log
+  cmd /c call npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,NewUser
   CALL :CheckError "NewUser"
  
 --NewShipper--
-  cmd /c call npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,NewShipper>D:\E2ETeamIslamReport\Report.log
+  cmd /c call npm run e2e -- --params.Env="test_staging1" --params.Team="islam" --suite=login,NewShipper
   CALL :CheckError "NewShipper"
 
  
@@ -58,7 +58,7 @@ IF %NumberErrors% NEQ 0 (
   XCOPY  "C:\Automation e2e\TeamIslam\Test\screenshots\screenshots.rar" "C:\Program Files (x86)\Jenkins\workspace\TeamIslamE2EScripts"  /S /I /Q /Y /F
   exit 1
 )
-Pause
+
 
 SETLOCAL
 :CheckError

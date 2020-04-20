@@ -2,7 +2,8 @@
 <Table
   Name="ColorIndexs"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="IndexNumber"
     Type="int">

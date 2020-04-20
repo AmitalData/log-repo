@@ -60,7 +60,9 @@
   HasDocuments="false"
   IsLookUp="true"
   IsTabsHidden="false"
-  SearchFields="&quot;APInvoiceStatus,APInvoiceStatus,,Code,&quot;">
+  SearchFields="&quot;APInvoiceStatus,APInvoiceStatus,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;1363f4f2-7380-4182-8c53-fe828a08a3dd&quot;"
     FieldName="&quot;Code&quot;"
@@ -142,7 +144,7 @@
     ObjectTableName="&quot;APInvoiceStatus&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="20"
+    MaxLength="40"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -211,7 +213,7 @@
     IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;APInvoiceStatus&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

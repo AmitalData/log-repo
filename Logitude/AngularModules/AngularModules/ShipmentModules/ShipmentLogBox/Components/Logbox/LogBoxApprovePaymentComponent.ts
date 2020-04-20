@@ -131,12 +131,12 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             }
             var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-            this._HybridPartnerPMService.get(this.ForwarderPartnerId).subscribe(theResult => {
+            this._HybridPartnerPMService.get(this.ForwarderPartnerId).subscribe((theResult:any) => {
                 if (!theResult.HasError) {
                     this.PartnerName = theResult.Result.Name;
                 }
             });
-            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
+            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
                 var Result = [];
 
                 Result = res.Result.filter(a => a.IsDeleted == false && a.HasFile == true);
@@ -150,7 +150,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
 
               
                 
-                this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
+                this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe((myResult:any) => {
                     if (myResult.Result) {
                         var DRELDecFormDocs = [];
                         var DRELOtherDocs = [];
@@ -204,7 +204,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
     ApproveButtonClicked() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
         this.ValidationWarningsList = null;
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {// || !AppTool.IsNullOrEmpty(entity.DenyReason)
                 this.messageWindow.RTL = this.RTL;
@@ -218,7 +218,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             }
             else {
                 entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                this._ShipmentAdditionalCloudDataService.update(entity).subscribe(AdditionalResult => {
+                this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult:any) => {
                     ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
                     this.DimApproveButton = true;
                     var today = new Date();
@@ -263,7 +263,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         newWindow.Height = 280;
         newWindow.RTL = true;
 
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {//!AppTool.IsNullOrEmpty(entity.DenyReason) || 
                 this.messageWindow.RTL = this.RTL;
@@ -302,7 +302,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
     }
 
     DownloadDocumentFile(item) {
-        this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe(res => {
+        this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res:any) => {
             var EntityNumber = "";
             if (this.EntityPm != null) {
                 EntityNumber = this.EntityPm.ShipmentNumber;

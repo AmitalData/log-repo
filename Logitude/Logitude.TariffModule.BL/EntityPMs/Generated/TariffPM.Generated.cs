@@ -503,6 +503,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string sellerName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SellerName  
+	   {
+	    
+	     get
+		{
+		   return sellerName;
+		 }
+		 set
+		 {
+		   if(sellerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SellerName",OldValue=sellerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sellerName=value;
+		   }
+			
+		 }
+	   }
 	  private bool setAsInActive ;
 	  	  
        
@@ -1540,6 +1563,75 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeName",OldValue=transportModeName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   transportModeName=value;
+		   }
+			
+		 }
+	   }
+	  private string tariffProductId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TariffProductId  
+	   {
+	    
+	     get
+		{
+		   return tariffProductId;
+		 }
+		 set
+		 {
+		   if(tariffProductId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffProductId",OldValue=tariffProductId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tariffProductId=value;
+		   }
+			
+		 }
+	   }
+	  private string sellerPartnerTypeId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SellerPartnerTypeId  
+	   {
+	    
+	     get
+		{
+		   return sellerPartnerTypeId;
+		 }
+		 set
+		 {
+		   if(sellerPartnerTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SellerPartnerTypeId",OldValue=sellerPartnerTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   sellerPartnerTypeId=value;
+		   }
+			
+		 }
+	   }
+	  private bool isRefreshTranslations ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRefreshTranslations  
+	   {
+	    
+	     get
+		{
+		   return isRefreshTranslations;
+		 }
+		 set
+		 {
+		   if(isRefreshTranslations != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRefreshTranslations",OldValue=isRefreshTranslations,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isRefreshTranslations=value;
 		   }
 			
 		 }

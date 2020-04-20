@@ -245,13 +245,13 @@ export class DocsOutDataViewModel {
     //CreateDocument(propertyName: string, value: any) {
 
     //    if (this.CurrentDocument == null) {
-    //        this.DocsOutTabComponent._documentOutPMService.getCreateDocumentOut(this.Id, this.EntityId, "", this.ChildReference, this.DocsOutTabComponent.ObjectTableId, this.DocsOutTabComponent.SessionInfo.LoggedUserTenant).subscribe(res => {
+    //        this.DocsOutTabComponent._documentOutPMService.getCreateDocumentOut(this.Id, this.EntityId, "", this.ChildReference, this.DocsOutTabComponent.ObjectTableId, this.DocsOutTabComponent.SessionInfo.LoggedUserTenant).subscribe((res:any) => {
 
     //            var pmResponse: ServiceResponse = res;
     //            if (!pmResponse.HasError) {
     //                var myResult = pmResponse.Result;
     //                if (myResult) {
-    //                    this.DocsOutTabComponent._documentOutPMService.getSingleDocumentOutPM(myResult.Id, myResult.Tenant).subscribe(res => {
+    //                    this.DocsOutTabComponent._documentOutPMService.getSingleDocumentOutPM(myResult.Id, myResult.Tenant).subscribe((res:any) => {
 
     //                        var pmResponse: ServiceResponse = res;
     //                        if (!pmResponse.HasError) {

@@ -1,6 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -10,49 +10,51 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {AWBSpecialHandlingCodePM} from '../../EntityPMs/AWBSpecialHandlingCodePM';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 
 export class AWBSpecialHandlingCodeExtendedPMService {
-    private _http: Http;
+    private _httpClient: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/awbspecialhandlingcodesextended';
     }
 
     get(id: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, { headers: authHeader }).map(response => {
-                var pm = response.json();
-                var entity: AWBSpecialHandlingCodePM;
-                if (pm) {
-                    entity = this.MapJsonToEntityPM(pm);
-                }
+            return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
+                map((response) => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
+                    //if (response instanceof HttpResponse) {
 
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBSpecialHandlingCode", "GetSinglePM", 'id=' + id);
+                        var pm = response;
+                        var entity: AWBSpecialHandlingCodePM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                        }
 
-                return serviceResponse;
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-            }).catch(ServiceHelper.HandleServiceError);
+                        //var servertime = response.headers.get('ServerExecutionTime');
+                        //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBSpecialHandlingCode", "GetSinglePM", 'id=' + id);
+
+                        return serviceResponse;
+                    //}
+                })
+
+                , catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     insert(entityPM: AWBSpecialHandlingCodePM) {
         var callTime = new Date();
         return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
@@ -64,21 +66,21 @@ export class AWBSpecialHandlingCodeExtendedPMService {
                 var mappedEntity: AWBSpecialHandlingCodePM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
+                return this._httpClient.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
+                    map((response) => {
+                        //if (response instanceof HttpResponse) {
+                            var pm = response;
+                            if (pm) {
+                                var mappedResult: AWBSpecialHandlingCodePM;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-                        var pm = response.json();
-                        if (pm) {
-                            var mappedResult: AWBSpecialHandlingCodePM;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            serviceResponse.Result = mappedResult;
-                        }
-
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBSpecialHandlingCode", "SaveChanges", "");                        
-                        return serviceResponse;
-
-                    }).catch(ServiceHelper.HandleServiceError);
+                            //var servertime = response.headers.get('ServerExecutionTime');
+                            //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBSpecialHandlingCode", "SaveChanges", "");
+                            return serviceResponse;
+                        //}
+                    }), catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
@@ -94,10 +96,6 @@ export class AWBSpecialHandlingCodeExtendedPMService {
         var callTime = new Date();
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
             var errorsArray = validator.Validate("AWBSpecialHandlingCode", entityPM);
@@ -108,22 +106,22 @@ export class AWBSpecialHandlingCodeExtendedPMService {
                 var mappedEntity: AWBSpecialHandlingCodePM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
+                return this._httpClient.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
+                    map((response) => {
+                        //if (response instanceof HttpResponse) {
+                            var pm = response;
+                            if (pm) {
+                                var mappedResult: AWBSpecialHandlingCodePM;
+                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-                        var pm = response.json();
-                        if (pm) {
-                            var mappedResult: AWBSpecialHandlingCodePM;
-                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            serviceResponse.Result = mappedResult;
-                        }
+                            //var servertime = response.headers.get('ServerExecutionTime');
+                            //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBSpecialHandlingCode", "SaveChanges", "");
 
-                        var servertime = response.headers.get('ServerExecutionTime');
-                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AWBSpecialHandlingCode", "SaveChanges", "");
-
-                        return serviceResponse;
-
-                    }).catch(ServiceHelper.HandleServiceError);
+                            return serviceResponse;
+                        //}
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 

@@ -110,24 +110,23 @@
 
                                 <!-- Technology -->
                                 <!--<tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <ComboBox [IsDisabled]="!IsEditingEnabled" [ItemsSource]="TechnologyList" (SelectedItemChanged)="TechnologyValueChanged($event)" [SelectedItem]="SelectedTechnology" [Binding]="'Name'"></ComboBox>
-                                                </td>
+        <td>
+            <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <ComboBox [IsDisabled]="!IsEditingEnabled" [ItemsSource]="TechnologyList" (SelectedItemChanged)="TechnologyValueChanged($event)" [SelectedItem]="SelectedTechnology" [Binding]="'Name'"></ComboBox>
+                    </td>
 
-                                                <td style="width: 36px;">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>-->
-
+                    <td style="width: 36px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>-->
                                 <!-- Mobile -->
                                 <tr class="FormFieldRow">
                                     <td>
@@ -200,6 +199,16 @@
                                     </td>
                                 </tr>
 
+                                     <!-- DontShowLocalLabels  -->
+                                    <tr class="FormFieldRow" *ngIf="IsDontShowLocalLabelsVisibile">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'DontShowLocalLabels'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'DontShowLocalLabels'" [Checked]="DontShowLocalLabels" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+                                    </tr>
+
                                 <!-- AdditionalPackagesOnly  -->
                                 <tr class="FormFieldRow" *ngIf="IsAdditionalPackagesOnlyVisible">
                                     <td>
@@ -208,6 +217,30 @@
                                     <td>
                                         <LogCheckBox [ObjectFieldName]="'AdditionalPackagesOnly'" [Checked]="AdditionalPackagesOnly" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                     </td>
+                                </tr>
+
+                                    
+                                <!-- LayoutDirection  -->
+                                <tr class="FormFieldRow" *ngIf="IsLayoutDirectionVisibile">
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <td style="width:170px">
+                                                    <LogLabel [ObjectFieldName]="'LayoutDirection'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width:180px">
+                                                    <ComboBox [ItemsSource]="LayoutDirections" [Binding]="'Name'" [SelectedItem]="SelectedDirection" (SelectedItemChanged)="SelectedDirection=$event"></ComboBox>
+                                                </td>
+                                                <td></td>
+
+                                            </tr>
+
+                                        </table>
+
+
+
+                                    </td>
+
                                 </tr>
 
                                 <!-- Notes -->

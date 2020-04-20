@@ -74,7 +74,7 @@ export class AddEditInterfaceManagementComponent
         
         //ערכים NULL==הכל, C==רק עמילות, B==רק בלדרות
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe((response: any) => {
             });
        
 
@@ -91,8 +91,8 @@ export class AddEditInterfaceManagementComponent
         this._TenantInterfaceManagementList = WinArg.SelectedItem;
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe((response:any) => {
                 this._InterfaceManagementPMExtendService
                     .GetSingleInterfaceManagementwithDefinition
                     (this._TenantInterfaceManagementList.Code, SessionLocator.Tenant)
@@ -232,7 +232,7 @@ export class AddEditInterfaceManagementComponent
         }
         
         this._InterfaceManagementPMExtendService.PutInterfaceManagementPM(this.entityPM)
-            .subscribe(resp => {
+            .subscribe((resp:any) => {
                 if (resp.HasError) {
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push(resp.ErrorsArray[0]);

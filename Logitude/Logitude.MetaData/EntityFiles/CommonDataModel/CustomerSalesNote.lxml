@@ -4,7 +4,7 @@
   IsComposition="true"
   ParentTableName="&quot;Customer&quot;"
   ObjectTableName="&quot;CustomerSalesNote&quot;"
-  DBTableName="&quot;CustomerSalesNotes&quot;"
+  DBTableName="&quot;CustomerSalesNote&quot;"
   ObjectTableSingular="&quot;Customer Sales Note&quot;"
   ObjectTablePlural="&quot;Customer Sales Notes&quot;"
   DefaultText="&quot;Customer Sales Note&quot;"
@@ -34,7 +34,9 @@
   HasDynamicHeader="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsEditable="true">
+  IsEditable="true"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;51c42860-3792-421d-9f1d-bf07ac011185&quot;"
     FieldName="&quot;Id&quot;"
@@ -53,7 +55,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15" />
   <field
     Id="&quot;17dfb5af-85f7-4bcc-bb33-53a2765a34a7&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -129,11 +132,15 @@
     DisplayInDocumentReferences="false"
     CopyToDW="false"
     HasTemplate="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="Card"
+    NavigationPropertyName="Customer"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;331288ad-2553-4763-8be3-9fc98f1956ca&quot;"
     FieldName="&quot;CreatedByUserId&quot;"
@@ -191,11 +198,15 @@
     DisplayInDocumentReferences="false"
     CopyToDW="false"
     HasTemplate="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="CreatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;abc242d5-ccec-44b2-b382-e213103c4ca1&quot;"
     FieldName="&quot;UpdatedByUserId&quot;"
@@ -253,18 +264,22 @@
     DisplayInDocumentReferences="false"
     CopyToDW="false"
     HasTemplate="false"
-    IsRequired="false"
+    IsRequired="true"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     NoMetaDataField="false"
-    HasPMField="true" />
+    HasPMField="true"
+    IsForeignKey="true"
+    ForeignEntity="User"
+    NavigationPropertyName="UpdatedByUser"
+    ObjectFieldNotRequired="true" />
   <field
     Id="&quot;f85ffe09-981b-45b4-b6cc-df3025737f95&quot;"
     FieldName="&quot;CreateDate&quot;"
     ObjectTableName="&quot;CustomerSalesNote&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"
@@ -325,7 +340,7 @@
     ObjectTableName="&quot;CustomerSalesNote&quot;"
     FieldsDataType="&quot;DateTime&quot;"
     DataTypeCode="&quot;DateTime&quot;"
-    MaxLength="1"
+    MaxLength="0"
     IsRequiered="false"
     IsCustom="false"
     MinLength="0"

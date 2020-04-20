@@ -688,11 +688,11 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
     currentScreenCode: string;
     OpenPaymentOrder() {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe((response:any) => {
 
                             this.EditEntity("Customs.PaymentOrder", this.EntityPM.PaymentOrderId, null, "POGN");
                         });
@@ -717,7 +717,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
         editWindow.Width = 1500;
 
         editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-        editWindow.WindowClosed.subscribe(res => {
+        editWindow.WindowClosed.subscribe((res:any) => {
 
 
 

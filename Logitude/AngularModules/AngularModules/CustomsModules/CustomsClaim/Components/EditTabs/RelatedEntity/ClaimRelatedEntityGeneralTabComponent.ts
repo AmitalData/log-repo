@@ -90,9 +90,9 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
         this.ClaimPM = claimPM;
         this.isControlEnabled = isEnable;
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesAmount").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesAmount").subscribe((response:any) => {
                     this.BuildPaymentAmountList();
                     this.Listen();
                 });

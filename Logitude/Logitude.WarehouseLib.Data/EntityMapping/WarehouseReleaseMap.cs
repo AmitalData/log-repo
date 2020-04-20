@@ -79,13 +79,13 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
 
             this.Property(t => t.ShipmentTypeId).HasColumnName("ShipmentTypeId").HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsFixedLength();
 
             this.Property(t => t.ShipmentLevelCode).HasColumnName("ShipmentLevelCode").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.DirectionId).HasColumnName("DirectionId").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.DirectionId).HasColumnName("DirectionId").HasMaxLength(1).IsFixedLength();
 
             this.Property(t => t.TotalQuantity).HasColumnName("TotalQuantity");
 
@@ -116,6 +116,10 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.ToAddressCountryId).HasColumnName("ToAddressCountryId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsUsed).HasColumnName("IsUsed");
+
+            this.Property(t => t.TruckerId).HasColumnName("TruckerId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TruckerReference).HasColumnName("TruckerReference").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

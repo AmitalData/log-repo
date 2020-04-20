@@ -236,20 +236,7 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
     get IsRegionalTax() { return this.EntityPM.IsRegionalTax; }
     set IsRegionalTax(value: boolean) {
         if (this.EntityPM.IsRegionalTax != value) {
-            this.EntityPM.IsRegionalTax = value;
-            this.UpdateMultiPercentage();
-        }
-    }
-
-    UpdateMultiPercentage() {
-        if (this.IsRegionalTax) {
-            this.IsMultiPercentage = false;
-            this.IsMultiPercentageEnabled = false;
-            this.UIProperties.SetEnabled("IsMultiPercentage", this.ObjectTableName, false);
-        }
-        else {
-            this.IsMultiPercentageEnabled = true;
-            this.UIProperties.SetEnabled("IsMultiPercentage", this.ObjectTableName, true);
+            this.EntityPM.IsRegionalTax = value;            
         }
     }
 }

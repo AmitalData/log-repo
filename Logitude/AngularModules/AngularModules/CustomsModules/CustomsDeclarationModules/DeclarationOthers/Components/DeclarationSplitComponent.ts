@@ -289,7 +289,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
         this.custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
             var documentFiling = resp.Result;
-            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe(res => {
+            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res:any) => {
 
 
                 var documentName =  documentFiling.DocumentId;

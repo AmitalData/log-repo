@@ -179,7 +179,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
 
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.SelectedDirectionFilterShipment, this.SelectedTransportFilterShipment).subscribe(myResult => {
+                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.SelectedDirectionFilterShipment, this.SelectedTransportFilterShipment).subscribe((myResult:any) => {
                     this.FinalShipmentData = myResult;
                     this.CommonFiltersShipment();
                 });
@@ -187,7 +187,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         }
         else {
             var days = this.ComputeDays();
-            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id).subscribe(myResult => {
+            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id).subscribe((myResult:any) => {
                 this.FinalShipmentData = myResult;
                 this.CommonFiltersShipment();
             });          
@@ -198,7 +198,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         var service = new DashboardDomainService();
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetShipmentByDirectionAndTransmodeCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate).subscribe(myResult => {
+                service.GetShipmentByDirectionAndTransmodeCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate).subscribe((myResult:any) => {
                     this.FinalDirectionAndTransportData = myResult;
                     this.CommonFiltersDirectionAndTransportMode();
                 });
@@ -208,7 +208,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         else {
             var days = this.ComputeDays();
 
-            service.GetShipmentByDirectionAndTransmode(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, null).subscribe(myResult => {
+            service.GetShipmentByDirectionAndTransmode(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, null).subscribe((myResult:any) => {
                 this.FinalDirectionAndTransportData = myResult;
                 this.CommonFiltersDirectionAndTransportMode();
             });           
@@ -220,7 +220,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {                        
                 var dtf: DirectionTransportFilter = this.GetCurrentDirectionTransmodeFilterItemCountries();
-                service.GetShipmentsByTop10CountriesDashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, "", dtf.FilterDirectionID, dtf.FilterTransportID).subscribe(myResult => {
+                service.GetShipmentsByTop10CountriesDashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, "", dtf.FilterDirectionID, dtf.FilterTransportID).subscribe((myResult:any) => {
                     this.FinalCountriesData = myResult;
                     var countriesFilterdList: List<GroupByClass> = FunctionsCRM.getCountriesFilterdList(this.FinalCountriesData, parseInt(this.SelectedShowItem.Index), this.TopCountries, this.IncludeOthersCountries);
                     this.fillCountriesPie(countriesFilterdList);
@@ -237,7 +237,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {                              
                 var service = new DashboardDomainService();
-                service.GetTop10DashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe(myResult => {
+                service.GetTop10DashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe((myResult:any) => {
                     this.FinalCustomersData = myResult;
                     this.FillCustomersPie();
                 });
@@ -262,7 +262,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     CommonFiltersCustomers() {
         var service = new DashboardDomainService();
         var days = this.ComputeDays();
-        service.GetTop10DashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe(myResult => {
+        service.GetTop10DashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe((myResult:any) => {
             this.FinalCustomersData = myResult;
             this.FillCustomersPie();
         });
@@ -458,7 +458,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         var days = this.ComputeDays();
         var dtf: DirectionTransportFilter = this.GetCurrentDirectionTransmodeFilterItemCountries();
         var service = new DashboardDomainService();      
-        service.GetShipmentsByTop10CountriesDashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, "", dtf.FilterDirectionID, dtf.FilterTransportID).subscribe(myResult => {
+        service.GetShipmentsByTop10CountriesDashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCountries, this.IncludeOthersCountries, "", dtf.FilterDirectionID, dtf.FilterTransportID).subscribe((myResult:any) => {
             this.FinalCountriesData = myResult;
             var countriesFilterdList: List<GroupByClass> = FunctionsCRM.getCountriesFilterdList(this.FinalCountriesData, parseInt(this.SelectedShowItem.Index), this.TopCountries, this.IncludeOthersCountries);
             this.fillCountriesPie(countriesFilterdList);

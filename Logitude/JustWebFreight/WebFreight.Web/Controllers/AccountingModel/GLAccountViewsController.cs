@@ -695,9 +695,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
+
                 LedgerTransactionListQueryService query = new LedgerTransactionListQueryService(MyContext);
 
-                int count = query.GetAccountOpenTransactionsCount(accountId, tenant);
+                int count = query.getRecoCount(accountId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, count);
             }
@@ -715,10 +716,5 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         public decimal Total { get; set; }
         public string PeriodName { get; set; }
     }
-
-    
-
-
-
 }
 	 

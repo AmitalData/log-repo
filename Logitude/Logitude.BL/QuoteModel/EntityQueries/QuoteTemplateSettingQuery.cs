@@ -254,6 +254,11 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                   ShowIncludedChargesContainers = a.ShowIncludedChargesContainers,
                                                   ShowIncludedChargesPackages = a.ShowIncludedChargesPackages,
                                                   ShowIncludedChargesPerContainers = a.ShowIncludedChargesPerContainers,
+                                                  ShowVATPercentageContainers = a.ShowVATPercentageContainers,
+                                                  ShowVATPercentagePackages = a.ShowVATPercentagePackages, 
+                                                  ShowVATTypeContainers =a.ShowVATTypeContainers,
+                                                  ShowVATTypePackages =a.ShowVATTypePackages,
+
                                               }).FirstOrDefault();
 
             return entity;
@@ -477,7 +482,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                        ShowIncludedChargesContainers = a.ShowIncludedChargesContainers,
                                                        ShowIncludedChargesPackages = a.ShowIncludedChargesPackages,
                                                        ShowIncludedChargesPerContainers = a.ShowIncludedChargesPerContainers,
-
+                                                       ShowVATPercentageContainers = a.ShowVATPercentageContainers,
+                                                       ShowVATPercentagePackages = a.ShowVATPercentagePackages,
+                                                       ShowVATTypeContainers = a.ShowVATTypeContainers,
+                                                       ShowVATTypePackages = a.ShowVATTypePackages,
 
                                                                       };
             return qUoteTemplateSetting;
@@ -695,12 +703,16 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                     ShowIncludedChargesContainers = quoteTemplateSetting.ShowIncludedChargesContainers,
                                                     ShowIncludedChargesPackages = quoteTemplateSetting.ShowIncludedChargesPackages,
                                                     ShowIncludedChargesPerContainers = quoteTemplateSetting.ShowIncludedChargesPerContainers,
+                                                    ShowVATPercentageContainers = quoteTemplateSetting.ShowVATPercentageContainers,
+                                                    ShowVATPercentagePackages = quoteTemplateSetting.ShowVATPercentagePackages,
+                                                    ShowVATTypeContainers = quoteTemplateSetting.ShowVATTypeContainers,
+                                                    ShowVATTypePackages = quoteTemplateSetting.ShowVATTypePackages,
                                                           };
             return result;
         }
 
-
         
+
         public QuoteTemplateSetting GetFirstQuoteTemplateSettingForTenant(int tenant)
         {
             return (from a in repository.quotesContext.QuoteTemplateSettings

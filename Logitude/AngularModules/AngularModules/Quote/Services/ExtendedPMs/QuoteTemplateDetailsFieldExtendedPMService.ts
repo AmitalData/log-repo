@@ -1,6 +1,7 @@
-﻿
+
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -18,10 +19,10 @@ import {QuoteTemplateDetailsFieldPM} from '../../EntityPMs/QuoteTemplateDetailsF
 @Injectable()
 
 export class QuoteTemplateDetailsFieldExtendedPMService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuoteTemplateDetailsFieldExtended';
     }
 
@@ -33,11 +34,9 @@ export class QuoteTemplateDetailsFieldExtendedPMService {
 
     GetQuoteTemplateDetailsFieldByQuoteTemplateId(quoteTemplateId: string, tenant: number) {
 
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetQuoteTemplateDetailsFieldByQuoteTemplateId/?' + 'quoteTemplateId=' + quoteTemplateId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetQuoteTemplateDetailsFieldByQuoteTemplateId/?' + 'quoteTemplateId=' + quoteTemplateId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result: any = response;
             var entity: QuoteTemplateDetailsFieldPM;
             var quoteTemplateDetailsFieldPMLists: QuoteTemplateDetailsFieldPM[];
             quoteTemplateDetailsFieldPMLists = new Array<QuoteTemplateDetailsFieldPM>();
@@ -50,24 +49,21 @@ export class QuoteTemplateDetailsFieldExtendedPMService {
 
             pmresponse.Result = quoteTemplateDetailsFieldPMLists;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 
 
 
     updateDetailsFields(quoteTemplateDetailsFields: any) {
         return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
+
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.put(this._apiUrl + '/PutQuoteTemplateDetailsFields', JSON.stringify(quoteTemplateDetailsFields),
-                { headers: authHeader }).map((res) => {
-                    var pm = res.json();
-                    return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+            return this._http.put(this._apiUrl + '/PutQuoteTemplateDetailsFields', JSON.stringify(quoteTemplateDetailsFields), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var pm = res;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
         }
         );
 

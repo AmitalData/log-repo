@@ -47,13 +47,26 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public SelectedVersionNumber: number;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
+    public IsAir: boolean = false;
+
     public LineIdFromPriceCheck: string;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.GetTariffType();
         this.Listen();
     }
-    
+
+    GetTariffType() {
+        if (this.EntityPM.TypeCode == "AFC") {
+            this.IsAir = true;
+        } 
+    }
+
+    GetDisplayMemberPath() {
+        return this.IsAir ? "Code" : "CombinedCode";
+    }
+
     Intialize(args: any) {
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
@@ -149,12 +162,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
+                    if (this.isRefreshTranslationsClicked) {
+                        this.isRefreshTranslationsClicked = false;
+                        this.DoRefresh();                        
+                    }
+
                     this.LoadVersions();
-                    //this.PriceStepsModifiedEvent = this.CurrentSession.SessionEvent.subscribe((res) => {
-                    //    if (res == "PriceStepsModified") {
-                    //        this.LoadVersions();
-                    //    }
-                    //});
                 }
 
                 else {
@@ -555,9 +568,11 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.Version = this.CurrentVersion.Version;
             tariffLine.OriginPortId = item.FromPortId;
             tariffLine.OriginPortCode = item.FromPortCode;
+            tariffLine.OriginPortCombinedCode = item.FromPortCombinedCode;
             tariffLine.OriginPortName = item.FromPortName;
             tariffLine.DestinationPortId = item.ToPortId;
             tariffLine.DestinationPortCode = item.ToPortCode;
+            tariffLine.DestinationPortCombinedCode = item.ToPortCombinedCode;
             tariffLine.DestinationPortName = item.ToPortName;
             tariffLine.OriginPortText = item.FromPortText;
             tariffLine.DestinationPortText = item.ToPortText;
@@ -565,7 +580,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
-            
+            tariffLine.TransitTime = item.TransitTime;
+
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = this.PriceSteps.split(",");
                 var count = steps.length;
@@ -659,9 +675,11 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         tariffLine.Version = copiedVersion.Version;
                         tariffLine.OriginPortId = item.OriginPortId;
                         tariffLine.OriginPortCode = item.OriginPortCode;
+                        tariffLine.OriginPortCombinedCode = item.OriginPortCombinedCode;
                         tariffLine.OriginPortName = item.OriginPortName;
                         tariffLine.DestinationPortId = item.DestinationPortId;
                         tariffLine.DestinationPortCode = item.DestinationPortCode;
+                        tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
                         tariffLine.DestinationPortName = item.DestinationPortName;
                         tariffLine.MinPrice = item.MinPrice;
                         tariffLine.Step1Price = item.Step1Price;
@@ -674,6 +692,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         tariffLine.Step8Price = item.Step8Price;
                         tariffLine.Index = item.Index;
                         tariffLine.Notes = item.Notes;
+                        tariffLine.TransitTime = item.TransitTime;
                         copiedVersion.AddTariffLine(tariffLine);
                     });
 
@@ -780,6 +799,22 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.EntityPM.IsUpdatingMissingPorts = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
+    }
+
+    private isRefreshTranslationsClicked: boolean = false;
+    RefreshPortsFromTranslations() {
+        if (!this.isRefreshTranslationsClicked) {
+            this.isRefreshTranslationsClicked = true;
+            this.EntityPM.IsRefreshTranslations = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+    }
+    private DoRefresh() {
+        this.TariffDomainService.RefreshPortsFromTranslations(this.EntityPM.Id, this.VersionNumber).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+        });
     }
 }
 

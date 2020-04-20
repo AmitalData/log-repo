@@ -214,12 +214,13 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
-             string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId)
+             string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
+             string ChartOfAccountsTypeCode)
         {
             return
             this
                 .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5)
+            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode)
             .Select(a => a.Id);
 
         }
@@ -331,7 +332,8 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
-            string Category1, string Category2, string Category3, string Category4, string Category5)
+            string Category1, string Category2, string Category3, string Category4, string Category5,
+            string ChartOfAccountsTypeCode)
         {
             IQueryable<GLAccount> q;
             if (!string.IsNullOrWhiteSpace(AccountId))
@@ -374,6 +376,10 @@ namespace Logitude.Accounting.Data.Repositories
             if (!string.IsNullOrWhiteSpace(Category5))
             {
                 q = q.Where(a => a.Category5Id == Category5);
+            }
+            if (!string.IsNullOrWhiteSpace(ChartOfAccountsTypeCode))
+            {
+                q = q.Where(r => r.ChartOfAccountsTypeCode == ChartOfAccountsTypeCode);
             }
             return q;
         }

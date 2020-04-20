@@ -221,9 +221,9 @@ export class HomeComponent implements OnDestroy{
             this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
         }
         //this.loginService.CurrentTenant = SessionLocator.TenantPM.Id;
-        this.loginService.CheckTenantMangmnt(SessionLocator.LoggedUserId).subscribe(myResult2 => {
+        this.loginService.CheckTenantMangmnt(SessionLocator.LoggedUserId).subscribe((myResult2: any) => {
             SessionLocator.BlockType = null;
-            var tt: TenantUserDataClass = myResult2;
+            var tt: any = myResult2;
             this.TrialMessage = "";
             this.messageWindow.Close();
             var user: UserPM = SessionLocator.LoggedUserPM;
@@ -595,7 +595,7 @@ export class HomeComponent implements OnDestroy{
 
     notificationExtendedListService: NotificationExtendedListService = new NotificationExtendedListService();
     GetBadjCount() {
-        this.notificationExtendedListService.GetNotificationsBadjCount(SessionLocator.LoggedUserId).subscribe(response => {
+        this.notificationExtendedListService.GetNotificationsBadjCount(SessionLocator.LoggedUserId).subscribe((response:any) => {
             if (response) {
                 if (!response.HasError) {
                     this.badjCount = response.Result;
@@ -631,7 +631,7 @@ export class HomeComponent implements OnDestroy{
         });
     }
     StartApplicationTimers() {     
-        var belltimer = this.initializeBadjCountTimer().subscribe(res => {
+        var belltimer = this.initializeBadjCountTimer().subscribe((res:any) => {
 
             if (FeatureLocator.HasFeaturePermession("General", "NOTIFICATIONBELL")) {
                 this.GetBadjCount();
@@ -949,7 +949,7 @@ export class HomeComponent implements OnDestroy{
     SignatureClicked() {
         if (!this.CurrentSession.IsOpenSignatureWindowFromSetting) {
             this.CurrentSession.IsOpenSignatureWindowFromSetting = true;
-            this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
 
                 var windowArgs: any = {};
                 windowArgs.DataViewModel = this;
@@ -987,7 +987,7 @@ export class HomeComponent implements OnDestroy{
                 logWindow.Width = 600;
                 logWindow.Height = 400;
             logWindow.Title = "Change User Password";
-            this._entityResourceService.getEntityResourceByTableName("User").subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("User").subscribe((response:any) => {
                 logWindow.DataContext = this;
                 logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/PersonalSettings/ChangePasswordComponent');
             });
@@ -1005,7 +1005,7 @@ export class HomeComponent implements OnDestroy{
         var windowTitle = "Edit exchange rates";
         var logWindow = new LogitudeWindow();
         logWindow.Title = windowTitle;
-        this._entityResourceService.getEntityResourceByTableName("RatesTable").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("RatesTable").subscribe((response:any) => {
             logWindow.Show('./Common/Components/Maintenance/RatesMainTabComponent');
         });
     }
@@ -1332,7 +1332,7 @@ export class HomeComponent implements OnDestroy{
                         var myService: CommonDomainService = new CommonDomainService();
                         this.CurrentSession.StartBusyIndicatorLoading();
 
-                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
                             var temp: BluesnapParameters = myResult.Result;
                             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
                             var contractId: string = SessionLocator.TenantManagementJS.BluesnapContractId;
@@ -1369,7 +1369,7 @@ export class HomeComponent implements OnDestroy{
                         this.CurrentSession.StartBusyIndicatorLoading();
 
                         var myService: CommonDomainService = new CommonDomainService();
-                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
                             var temp: BluesnapParameters = myResult.Result;
                             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
                             var contractId: string = SessionLocator.TenantManagementJS.BluesnapEAWBContractId;
@@ -1405,7 +1405,7 @@ export class HomeComponent implements OnDestroy{
                         this.CurrentSession.StartBusyIndicatorLoading();
 
                         var myService: CommonDomainService = new CommonDomainService();
-                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
                             var temp: BluesnapParameters = myResult.Result;
                             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
                             var contractId: string = SessionLocator.TenantManagementJS.BluesnapEAWBSContractId;
@@ -1448,7 +1448,7 @@ export class HomeComponent implements OnDestroy{
                         this.CurrentSession.StartBusyIndicatorLoading();
 
                         var myService: CommonDomainService = new CommonDomainService();
-                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
                             var temp: BluesnapParameters= myResult.Result;
                             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
                             var contractId: string = SessionLocator.TenantManagementJS.BluesnapCRMContractId;
@@ -1488,7 +1488,7 @@ export class HomeComponent implements OnDestroy{
                         this.CurrentSession.StartBusyIndicatorLoading();
 
                         var myService: CommonDomainService = new CommonDomainService();
-                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
                             this.CurrentSession.StopBusyIndicator();
                             var temp: BluesnapParameters = myResult.Result;
                             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
@@ -1512,7 +1512,7 @@ export class HomeComponent implements OnDestroy{
                         this.CurrentSession.StartBusyIndicatorLoading();
 
                         var myService: CommonDomainService = new CommonDomainService();
-                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
                             var temp: BluesnapParameters = myResult.Result;
                             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
                             var contractId: string = SessionLocator.TenantManagementJS.BluesnapInttraStockContractId;
@@ -1551,7 +1551,7 @@ export class HomeComponent implements OnDestroy{
 
 
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult:any) => {
             var temp = myResult.Result;
             temp = temp.Token;
             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
@@ -1655,7 +1655,7 @@ export class HomeComponent implements OnDestroy{
     }
     ConnectToDropBox() {
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetDropBoxAuthURI(SessionLocator.Tenant).subscribe((myResult) => {
+        myService.GetDropBoxAuthURI(SessionLocator.Tenant).subscribe((myResult:any) => {
             var temp = myResult.Result;
             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
             window.open(temp, 'Authenticate with Dropbox', 'left=300, top=200,directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=1300,height=650');
@@ -1663,7 +1663,7 @@ export class HomeComponent implements OnDestroy{
     }
     CreateCommLogForDropBox() {
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetDropBoxComLog(SessionLocator.Tenant).subscribe((myResult) => {
+        myService.GetDropBoxComLog(SessionLocator.Tenant).subscribe((myResult:any) => {
             var temp = myResult.Result;
             this.messageWindow.Width = 300;
             this.messageWindow.Height = 200;

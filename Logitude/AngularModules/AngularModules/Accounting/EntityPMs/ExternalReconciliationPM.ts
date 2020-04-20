@@ -124,6 +124,11 @@ export class ExternalReconciliationPM {
     public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
        
 	 
+    private accountLocalName: string;
+    public get AccountLocalName() { return this.accountLocalName; }
+    public set AccountLocalName(newValue: string) { if (this.accountLocalName != newValue) { this.accountLocalName = newValue; this.MarkAsDirty("AccountLocalName"); } }
+       
+	 
 
     public OldEntityPM: ExternalReconciliationPM;
 		

@@ -62,7 +62,7 @@ export class CourierMasterValidator {
     }
 
     CheckIfCourierExist() {
-        this.CourierMasterService.GetIfCourierMasterExists(this._CourierMasterPM.Id, this._CourierMasterPM.AirlineId, this._CourierMasterPM.HAWB, this._CourierMasterPM.MAWB).subscribe(Result => {
+        this.CourierMasterService.GetIfCourierMasterExists(this._CourierMasterPM.Id, this._CourierMasterPM.AirlineId, this._CourierMasterPM.HAWB, this._CourierMasterPM.MAWB).subscribe((Result:any) => {
             var mm: ServiceResponse = Result;
             if (!mm.HasError) {
                 if (mm.Result) {

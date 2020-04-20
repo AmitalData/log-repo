@@ -47,6 +47,9 @@ namespace WebFreight.Web.DataProviders
         public string VolumeUnit { get; set; }
         public string ReleaseDateIndicator { get; set; }
 
+        public string Trucker { get; set; }
+        public string TruckNumber { get; set; }
+
         public List<ReleasePackage> ReleasePackages { get; set; }
         public List<ReleasePackageGroup> ReleasePackagesGroupList { get; set; }
 
@@ -74,18 +77,11 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField9 { get; set; }
         public string ShipmentField10 { get; set; }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        public string ActualEntryDate { get; set; }
+        public string EntryTruckerName { get; set; }
+        public string EntryTruckerReference { get; set; }
+        
+        public string ImportManifest { get; set; }
     }
     
 

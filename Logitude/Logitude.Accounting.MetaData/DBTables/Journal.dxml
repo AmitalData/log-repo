@@ -2,7 +2,8 @@
 <Table
   Name="Journals"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Accounting">
   <Column
     Name="Id"
     Type="varchar"
@@ -43,6 +44,7 @@
     <Constraints
       Nullable="false" />
   </Column>
+
   <Column
     Name="StatusCode"
     Type="varchar"
@@ -57,6 +59,7 @@
     <Constraints
       Nullable="false" />
   </Column>
+
   <Column
     Name="AccountingEntityCode"
     Type="varchar"
@@ -171,6 +174,7 @@
     <Constraints
       Nullable="false" />
   </Column>
+
   <Relation
     ForeignKeyColumn="TypeCode"
     ReferencedTable="JournalTypes"
@@ -212,5 +216,5 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="IsLedgerCreated" />
+    Columns="IsLedgerCreated" /> 
 </Table>

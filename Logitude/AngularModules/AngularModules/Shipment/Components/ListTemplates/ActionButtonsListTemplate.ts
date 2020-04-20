@@ -55,7 +55,7 @@ export class ActionButtonsListTemplate {
         if (SessionLocator.PrivateLableSettings) {
             this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
             if (SessionLocator.PrivateLableSettings) {
-                this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
+                this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res:any) => {
                     if (res.Result == false) {
                         this.HasSharedDocs = false;
                     }
@@ -65,7 +65,7 @@ export class ActionButtonsListTemplate {
         //this.fieldName = fieldName;
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
-        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
+        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
         //        this.Source = "data:image/JPEG;base64," + myResult;
         //        this.CD.detectChanges(); 
         //    });
@@ -75,7 +75,7 @@ export class ActionButtonsListTemplate {
     CancelButtonClicked() {
         //this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 var confirmWindow = new ConfirmWindow();
@@ -85,7 +85,7 @@ export class ActionButtonsListTemplate {
                     if (confirmWindow.Yes) {
                         this.CurrentSession.StartBusyIndicator("Loading ..")
                         myResult.Result.IsCancelled = true;
-                        this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
+                        this._ShipmentPMService.update(myResult.Result).subscribe((myResult:any) => {
                             this.CurrentSession.StopBusyIndicator();
                             this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
                             this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
@@ -103,10 +103,10 @@ export class ActionButtonsListTemplate {
     ConnectButtonClicked() {
         //this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 if (SessionLocator.PrivateLableSettings) {
-                    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
+                    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res:any) => {
                         if (res.Result == false) {
                             this.HasSharedDocs = false;
                         }
@@ -163,7 +163,7 @@ export class ActionButtonsListTemplate {
     EditButtonClicked() {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
             if (!myResult.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();

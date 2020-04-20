@@ -1,53 +1,45 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
 import { AccountingIntegrityCheckPM } from '../../EntityPMs/AccountingIntegrityCheckPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-
+ 
 
 @Injectable()
 
 export class AccountingEntegrityCheckExtendedPMService {
-    private _http: Http;
+
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AccountingEntegrityCheck';
     }
 
 
     PostFixEntegrityCheckErrorInBatch(accountingEntegrityCheck: AccountingIntegrityCheckPM) {
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
 
-        return Observable.defer(() => {
+        var mappedEntity: AccountingIntegrityCheckPM;
+        mappedEntity = this.MapJsonToEntityPM(accountingEntegrityCheck, false);
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
+        return this.httpClient.post(this._apiUrl + "/PostFixEntegrityCheckErrorInBatch", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var result = res;
+                serviceResponse.Result = result;
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            var mappedEntity: AccountingIntegrityCheckPM;
-            mappedEntity = this.MapJsonToEntityPM(accountingEntegrityCheck, false);
-
-            return this._http.post(this._apiUrl + "/PostFixEntegrityCheckErrorInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
-                .map((res) => {
-
-                    var result = res.json();
-                    serviceResponse.Result = result;
-
-                    return serviceResponse;
-
-                }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+      }
 
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: AccountingIntegrityCheckPM = null) {

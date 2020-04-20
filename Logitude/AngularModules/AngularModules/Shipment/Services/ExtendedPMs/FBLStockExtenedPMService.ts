@@ -1,6 +1,5 @@
-﻿ 
+ 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -12,28 +11,27 @@ import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFiel
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 import {FBLStockPM} from '../../EntityPMs/FBLStockPM';
-
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 
 export class FBLStockExtenedPMService {
-    private _http: Http;
+    private _httpClient: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FBLStockExtened';
     }
 
     GetAllFBLStockPMsByTenant(tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAllFBLStockPMsByTenant?tenant=' + tenant ;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<FBLStockPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -46,40 +44,36 @@ export class FBLStockExtenedPMService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
 
     GetAllFBLStockPMsCountByTenant(tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAllFBLStockPMsCountByTenant?tenant=' + tenant;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                
                 var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetFBLStockPMsByTenant(tenant: number, pageSize: number, pageIndex: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetFBLStockPMsByTenant?tenant=' + tenant + '&pageSize=' + pageSize + '&pageIndex=' + pageIndex;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var listJason = response.json();
+                var listJason = response;
                 var listMapped: Array<FBLStockPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -91,62 +85,56 @@ export class FBLStockExtenedPMService {
                 serviceResponse.Result = listMapped;
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
 
 
     CreateFBLStocksOperation( myStartNumber: number, myEndNumber: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetCreateFBLStocksOperation?myStartNumber=' + myStartNumber + '&myEndNumber=' + myEndNumber;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myResult = response.json();
+                var myResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
 
     DeleteFBLStocksOperation(myStackId: string, isDeletingSeries: boolean) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetDeleteFBLStocksOperation?myStackId=' + myStackId  + '&isDeletingSeries=' + isDeletingSeries;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myResult = response.json();
+                var myResult = response;
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetAllAvailableStockSeries() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAllAvailableStockSeries';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var myResult = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

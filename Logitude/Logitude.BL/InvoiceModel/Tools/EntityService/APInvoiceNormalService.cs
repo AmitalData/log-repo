@@ -160,19 +160,31 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool isTransferToDropbox;
         private bool TransferToDropboxActivated;
         AccountingSetting accountingSetting;
+        private bool transferToFTPActivated;
+        private bool canTransferToFTP;
         private void GetAccountingSystem()
         {
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(tenant);
             this.accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
 
-            AccountingSystemRepository accountingSystemRepository = new AccountingSystemRepository(tenant);
-            AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+            if (accountingSetting != null)
+            {
+                this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                this.transferToFTPActivated = accountingSetting.TransferToFTPActivated;
 
-            this.isJournal = accountingSystem.IsJournalMode;
-            this.isExternal = accountingSystem.IsExternalCodesFromTable;
-            this.isTaxItemManaged = accountingSystem.IsTaxItemManaged;
-            this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
-            this.TransferToDropboxActivated = accountingSetting.TransferToDropboxActivated;
+                AccountingSystemRepository accountingSystemRepository = new AccountingSystemRepository(tenant);
+                AccountingSystem accountingSystem = accountingSystemRepository.GetSingleAccountingSystem(accountingSetting.AccountingSystemCode);
+
+                if (accountingSystem != null)
+                {
+                    this.isJournal = accountingSystem.IsJournalMode;
+                    this.isExternal = accountingSystem.IsExternalCodesFromTable;
+                    this.isTaxItemManaged = accountingSystem.IsTaxItemManaged;
+                    this.isTransferToDropbox = accountingSystem.CanTransferToDropbox;
+                    this.canTransferToFTP = accountingSystem.CanTransferToFTP;
+
+                }
+            }
         }
 
         private void ValidateInvoiceCreated()
@@ -216,7 +228,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, this.objectContext, this.MainShipmentConcurrencyGUID);
+            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, this.MainShipmentConcurrencyGUID);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
             if (!entityPM.IsGeneralInvoice)
@@ -500,7 +512,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            APInvoiceValidator.Validate(entityPM, this.objectContext, this.MainShipmentConcurrencyGUID);
+            APInvoiceValidator.Validate(entityPM, invoice, isNewEntity, this.objectContext, this.MainShipmentConcurrencyGUID);
             APInvoiceTracing.Trace(entityPM, invoice, isNewEntity);
 
             if (!entityPM.IsGeneralInvoice)
@@ -614,19 +626,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void CreateAPInvoiceMessage(bool setApproved)
         {
-            if (setApproved && this.isTransferToDropbox && this.TransferToDropboxActivated)
+            if (setApproved)
             {
-                if (!string.IsNullOrEmpty(entityPM.TransferError))
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
                 {
-                    throw new ApplicationException(entityPM.TransferError);
-                }
-                else
-                {
-                    this.invoice = invoiceRepository.GetSingleAPInvoice(this.entityPM.Id, this.entityPM.Tenant);
-                    List<APInvoice> entities = new List<APInvoice>();
-                    entities.Add(this.invoice);
-                    APInvoiceMessageHelper myHelper = new APInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, true);
-                    myHelper.Transfer();
+                    if (!string.IsNullOrEmpty(entityPM.TransferError))
+                    {
+                        throw new ApplicationException(entityPM.TransferError);
+                    }
+                    else
+                    {
+                        bool isDropBox = this.isTransferToDropbox && this.TransferToDropboxActivated;
+                        bool isFTP = this.canTransferToFTP && this.transferToFTPActivated;
+
+                        this.invoice = invoiceRepository.GetSingleAPInvoice(this.entityPM.Id, this.entityPM.Tenant);
+                        List<APInvoice> entities = new List<APInvoice>();
+                        entities.Add(this.invoice);
+
+                        APInvoiceMessageHelper myHelper = new APInvoiceMessageHelper(entities, this.invoice.InvoiceNumber + ".xml", tenant, isDropBox, isFTP);
+                        myHelper.Transfer();
+                    }
                 }
             }
         }
@@ -839,9 +858,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.InitializeTransferFields();
             this.InitializeGLAccountFields();
             // DropBox
-            if (this.entityPM.SetApproved && this.isTransferToDropbox && this.TransferToDropboxActivated && string.IsNullOrEmpty(entityPM.TransferError))
+            if (this.entityPM.SetApproved && string.IsNullOrEmpty(entityPM.TransferError))
             {
-                this.entityPM.TransferStatusCode = "TR";
+                if ((this.isTransferToDropbox && this.TransferToDropboxActivated) || (this.canTransferToFTP && this.transferToFTPActivated))
+                {
+                    this.entityPM.TransferStatusCode = "TR";
+                }
             }
         }
         private void InitializeExternalFields()
@@ -1697,7 +1719,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Tenant = entityPM.Tenant,
                             APInvoiceId = entityPM.Id,
                             VatTypeId = item.Id,
-                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 2),
+                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 3),
                             LocalVatableAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2),
                             InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
                             ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
@@ -1705,9 +1727,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             ExternalTAXItemId = item.ExternalTAXItemId,
                             // VatRecognizedPercentage = item.VatRecognizedPercentage,
                         };
-
-                        record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
-                        record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                        //InvoiceCurrencyVatableAmount= LocalVatableAmount/InvoiceCurrencyExchangeRate
+                      
+                       record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
+                       record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                        
                         record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
                         invoiceTotalVatRepository.Add(record);
 
@@ -2036,32 +2060,38 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    #region
-                    double? invoicepaymentstotalamount = (from a in objectContext.APInvoicePayments
-                                                          where a.APPaymentId == itemPM.APPaymentId
-                                                          && a.Tenant == tenant
-                                                          select a).Sum(s => s.PaymentAmount);
+                    double? Amount = MethodHelper.Roundd(payment.AmountInPaymentCurrency, 2);
+                    double? ExternalAmount = MethodHelper.Roundd(payment.ExternalPaymentAmount, 2);
+                    double? PaidAmount = (from a in objectContext.APInvoicePayments where a.APPaymentId == itemPM.APPaymentId && a.Tenant == tenant select a).Sum(s => s.PaymentAmount);
 
-                    if (invoicepaymentstotalamount == null)
+                    if (PaidAmount == null)
                     {
-                        invoicepaymentstotalamount = 0;
+                        PaidAmount = 0;
                     }
-
-                    invoicepaymentstotalamount = MethodHelper.Round(invoicepaymentstotalamount, 2);
 
                     if (isDelete)
                     {
-                        invoicepaymentstotalamount = MethodHelper.Round((invoicepaymentstotalamount - itemPM.PaymentAmount), 2);
+                        PaidAmount -= itemPM.PaymentAmount;
                     }
 
-                    if (invoicepaymentstotalamount <= payment.AmountInPaymentCurrency)
+                    PaidAmount = MethodHelper.Round(PaidAmount, 2);
+                    double? AllPaidAmount = MethodHelper.Roundd(PaidAmount + ExternalAmount, 2);
+
+                    if (AllPaidAmount > Amount)
                     {
-                        if (invoicepaymentstotalamount < 0)
+                        throw new Exception("The amount paid is not suitable to the total payment amount!!");
+                    }
+
+                    else
+                    {
+                        if (PaidAmount < 0)
                         {
-                            invoicepaymentstotalamount = invoicepaymentstotalamount * -1;
+                            PaidAmount = PaidAmount * -1;
                         }
 
-                        payment.OpenAmount = MethodHelper.Round((payment.AmountInPaymentCurrency - invoicepaymentstotalamount), 2);
+                        double? OpenAmount = MethodHelper.Round((Amount - PaidAmount - ExternalAmount), 2);
+
+                        payment.OpenAmount = OpenAmount;
 
                         if (payment.OpenAmount == 0)
                         {
@@ -2083,15 +2113,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 payment.StatusCode = "AD";
                             }
                         }
-                    }
 
-                    else
-                    {
-                        throw new Exception("The amount paid is not suitable to the total payment amount!!");
+                        paymentRepository.Update(payment);
                     }
-
-                    paymentRepository.Update(payment);
-                    #endregion
                 }
             }
         }
@@ -2287,10 +2311,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                    
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                     journal.JournalLines.Add(journalLine);
+                    //double? total = 0;// entityPM.InvoiceLines.Sum(a => a.LocalCurrencyAmount);// + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)));//.Sum(s => s.LocalCurrencyAmount);
+                    //double? amount = 0.0;
+                    //foreach(APInvoiceLinePM a in entityPM.InvoiceLines)
+                    //{
+                    //    if(a.VatRecognizedPercentage != null)
+                    //    {
+                    //    }
+                    //    amount = (a.VatRecognizedPercentage == null || a.VatRecognizedPercentage == 0) ? a.LocalCurrencyAmount :
+                    //   (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2)));
+
+                    //    total = (double?) amount + total;
+
+                    //}
+
 
                     // [Debit]
                     journalLine = new JournalLinePM();
                     int counter = 1;
+                    List<JournalLinePM> journalDebitLines = new List<JournalLinePM>();
                     List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
                                                         group d by new { d.ChargeTypeGLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
                                                         select new JournalLinePM()
@@ -2306,12 +2345,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
 
-                                                            LocalAmount = ((decimal)g.Sum(a => 
-                                                            a.VatRecognizedPercentage == null ? a.LocalCurrencyAmount :
-                                                                (MethodHelper.Round( (a.LocalCurrencyAmount + ((a.VatPercentage / 100) * ((1 - a.VatRecognizedPercentage) * a.LocalCurrencyAmount))), 2)))),
+                                                            LocalAmount =(decimal)g.Sum(a => 
+                                                            (a.VatRecognizedPercentage == null || a.VatRecognizedPercentage==0) ? a.LocalCurrencyAmount :
+                                                               Math.Round( (double) (a.LocalCurrencyAmount + ((1 - a.VatRecognizedPercentage) * Math.Round((double)((a.VatPercentage / 100) * a.LocalCurrencyAmount), 2))),2)),
 
                                                             CurrencyId = g.Key.ForiegnCurrencyId,
-                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
+                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat),
                                                             ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
@@ -2320,7 +2359,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                         }).ToList();
 
                     journal.JournalLines.AddRange(journalLines);
-
+                    journalDebitLines.AddRange(journalLines);
+                    var totalDebitLines = journal.JournalLines.Where(d=> d.ActionCode=="2").Sum(d => d.LocalAmount);
                     // [Vats]
                     //List<APInvoiceTotalVAT> APInvoiceTotalVATs = new List<APInvoiceTotalVAT>();
 
@@ -2334,6 +2374,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
+                        vat.LocalVatAmountWithVatRecognized =Math.Round( (vat.VatRecognizedPercentage != null && vat.VatRecognizedPercentage != 0) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,2);
+                          
                         journalLine = new JournalLinePM()
                         {
                             Tenant = tenant,
@@ -2345,9 +2387,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             DocumentDate = theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
-                            LocalAmount = vat.VatRecognizedPercentage != null ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,
+                            LocalAmount = vat.LocalVatAmountWithVatRecognized,// vat.VatRecognizedPercentage != null ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,
                             CurrencyId = theEntityPm.InvoiceCurrencyId,
-                            ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
+                            ForeignAmount = (vat.LocalVatAmountWithVatRecognized/(decimal)entityPM.InvoiceCurrencyExchangeRate),
                             ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
@@ -2355,10 +2397,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                             CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
-
+                        totalDebitLines = totalDebitLines + journalLine.LocalAmount;
                         journal.JournalLines.Add(journalLine);
                     }
+                   var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == "1").FirstOrDefault().LocalAmount;
+                    var difference = journalCreditAmount - totalDebitLines  ;
 
+                        if (Math.Abs(difference) < (decimal) 0.06)
+                        {
+                            JournalLinePM largestJournalAmount = journalDebitLines.Where(d =>  d.LocalAmount == journalDebitLines.Max(a=> a.LocalAmount)).FirstOrDefault();
+                            journal.JournalLines.Where(d => d.Line == largestJournalAmount.Line).ToList().ForEach(d => { d.LocalAmount = d.LocalAmount + difference; d.ForeignAmount = d.ForeignAmount + difference; });
+                        }
+
+                    
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
                     journalUpdate.Update(journal);
                 }

@@ -116,9 +116,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             context.SaveChanges();
         }
 
-
-
-
         public List<Agent> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
@@ -127,6 +124,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Agent GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
+        }
+
+        public Agent GetFirstSingleByName(string name, int tenant)
+        {
+            return (from record in context.Agents.Include("Card")
+                    where record.Card.EnglishName == name && record.Tenant == tenant
+                    select record).FirstOrDefault();
         }
     }
 }

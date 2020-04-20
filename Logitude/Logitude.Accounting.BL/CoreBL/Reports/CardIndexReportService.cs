@@ -62,7 +62,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                 var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsTypeCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
-                    _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts);
+                    _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts,
+                    _Param.ChartOfAccountsTypeCode);
                 _allIdAccounts = new List<string>(hashsetallIdAccounts);
             }
             else
@@ -88,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         private void GLAccountFilterIsMust()
         {
-            if (string.IsNullOrWhiteSpace(this._Param.Category1Id + this._Param.Category2Id + this._Param.Category3Id + this._Param.Category4Id + this._Param.Category5Id + this._Param.ChartOfAccountsId + this._Param.AccountTypeCode + this._Param.GLAccountId))
+            if (string.IsNullOrWhiteSpace(this._Param.Category1Id + this._Param.Category2Id + this._Param.Category3Id + this._Param.Category4Id + this._Param.Category5Id + this._Param.ChartOfAccountsId + this._Param.AccountTypeCode + this._Param.GLAccountId + _Param.ChartOfAccountsTypeCode))
             {
 
                 throw new Exception("GLAccountFilterIsMust");
@@ -112,6 +113,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public string ChartOfAccountsId { get; set; }
 
         public bool? IsReconciled { get; set; }
-
+        public string ChartOfAccountsTypeCode { get;  set; }
     }
 }

@@ -226,7 +226,7 @@ export class LogLovComponent implements OnInit {
         //this.ctrl = new FormControl(this.DataContext[this.ObjectFieldName]);
         //this.LogitudeForm.addControl(this.ObjectFieldName, this.ctrl);
 
-        this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe(res => {
+        this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res:any) => {
 
             var lookupFields: any[] = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == lookup.Id);
             var dropdownWidth = lookupFields.length * 120 + 20;
@@ -347,7 +347,7 @@ export class LogLovComponent implements OnInit {
             }
 
 
-            //this.ctrl.valueChanges.subscribe(res=> {
+            //this.ctrl.valueChanges.subscribe((res:any)=> {
             //    this.uiProperty.UIPropertyChanged.emit("valuechanges");
             //    this.ValueChanged.emit(res);
 

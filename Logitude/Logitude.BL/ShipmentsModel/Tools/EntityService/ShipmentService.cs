@@ -2977,10 +2977,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                     }
                 }
-
+                bool IsImporterApprovalRequiredOldValue = false;
                 if (entityPM.IsHybrid || loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
                     shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(entityPM.Id, entityPM.Tenant);
+                    IsImporterApprovalRequiredOldValue = shipmentAdditionalCloudData.IsImporterApprovalRequried;
                     if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                     {
                         shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
@@ -3006,8 +3007,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if ((entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData)) && entityPM.CustomsClearanceDate == null)
                     {
-
-                        if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)// && (shipmentAdditionalCloudData.IsImporterApprovalRequried != entityPM.IsImporterApprovalRequired))
+                        //var tempShipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(entityPM.Id, entityPM.Tenant);
+                        if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (!IsImporterApprovalRequiredOldValue && entityPM.IsImporterApprovalRequired))
                         {
                             AddImporterApprovalReceivedQueue();
                         }

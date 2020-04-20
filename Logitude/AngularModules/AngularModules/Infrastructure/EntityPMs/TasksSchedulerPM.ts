@@ -185,6 +185,16 @@ export class TasksSchedulerPM {
     public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
        
 	 
+    private entityId: string;
+    public get EntityId() { return this.entityId; }
+    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
+       
+	 
+    private recepients: string;
+    public get Recepients() { return this.recepients; }
+    public set Recepients(newValue: string) { if (this.recepients != newValue) { this.recepients = newValue; this.MarkAsDirty("Recepients"); } }
+       
+	 
     private lastRunEndTime: Date;
     public get LastRunEndTime() { return this.lastRunEndTime; }
     public set LastRunEndTime(newValue: Date) { if (this.lastRunEndTime != newValue) { this.lastRunEndTime = newValue; this.MarkAsDirty("LastRunEndTime"); } }
@@ -208,10 +218,7 @@ export class TasksSchedulerPM {
     private averageRunTime: number;
     public get AverageRunTime() { return this.averageRunTime; }
     public set AverageRunTime(newValue: number) { if (this.averageRunTime != newValue) { this.averageRunTime = newValue; this.MarkAsDirty("AverageRunTime"); } }
-
-    private entityId: string;
-    public get EntityId() { return this.entityId; }
-    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
+       
 	 
     private schedulerDetailsData: any;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }

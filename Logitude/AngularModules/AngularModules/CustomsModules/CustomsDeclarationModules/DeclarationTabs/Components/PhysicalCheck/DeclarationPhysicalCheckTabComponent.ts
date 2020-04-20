@@ -41,8 +41,8 @@ export class DeclarationPhysicalCheckTabComponent extends BaseComponent implemen
         super();
         this.physicalCheckList = new ObservableCollection([]);
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck").subscribe((response:any) => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.LoadPhysicalChecks();
@@ -118,7 +118,7 @@ export class DeclarationPhysicalCheckTabComponent extends BaseComponent implemen
 
             var miri = false;
             if (miri){
-                this.physicalCheckPMService.get(item.Id).subscribe(response => {
+                this.physicalCheckPMService.get(item.Id).subscribe((response:any) => {
                     var windowArgs: any = {};
                     windowArgs.EntityPM = response.Result;
                     windowArgs.declarationPM = this.EntityPM;

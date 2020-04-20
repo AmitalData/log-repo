@@ -43,7 +43,9 @@
   HasMenuButtons="false"
   HasFiltersMenu="false"
   AllowedInQueues="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;f93489a2-1338-47aa-ba1f-12e2575b0a1d&quot;"
     FieldName="&quot;Id&quot;"
@@ -62,7 +64,8 @@
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15" />
   <field
     Id="&quot;0bc2c59c-45ee-48c7-b61a-6675aa569978&quot;"
     FieldName="&quot;Tenant&quot;"
@@ -94,11 +97,15 @@
     ListFieldLable="&quot;PackageIdListLable&quot;"
     ListLableDefaultText="&quot;PackageId&quot;"
     ListLocalDefaultText="&quot;PackageId&quot;"
-    IsRequired="false"
+    IsRequired="true"
     HasDataBaseField="true"
     DisplayInList="false"
     NoMetaDataField="true"
-    HasPMField="true" />
+    HasPMField="true"
+    MaxLength="15"
+    IsForeignKey="true"
+    ForeignEntity="ShipmentPickUpDeliveryPackage"
+    NavigationPropertyName="Package" />
   <field
     Id="&quot;6745a1ef-5d2b-42e7-8d2f-cdc2b50be2db&quot;"
     FieldName="&quot;Harmonize&quot;"

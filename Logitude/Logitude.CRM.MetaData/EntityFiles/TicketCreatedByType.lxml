@@ -34,7 +34,9 @@
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="true"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;07936aa8-21ce-4adb-b514-ec19d10071fe&quot;"
     FieldName="&quot;Code&quot;"

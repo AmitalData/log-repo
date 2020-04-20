@@ -107,7 +107,7 @@ export class MiscPageComponent implements AfterViewInit {
                 }
 
                 case "ACPD": {
-                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
+                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 750;
                         logitudeWindow.Height = 500;
@@ -137,7 +137,7 @@ export class MiscPageComponent implements AfterViewInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Misc");
             listArgs.IgnoreSelectedPerspective = true;
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -149,7 +149,7 @@ export class MiscPageComponent implements AfterViewInit {
         }
     }
     YearTransferMethod(cancelYearTransfer: boolean) {
-        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe((response: any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
@@ -165,7 +165,7 @@ export class MiscPageComponent implements AfterViewInit {
     Generate1000() {
 
 
-        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
@@ -176,7 +176,7 @@ export class MiscPageComponent implements AfterViewInit {
     }
 
     Receiving1000() {
-        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 650;
             logitudeWindow.Height = 350;

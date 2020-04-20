@@ -38,6 +38,15 @@ namespace Logitude.Accounting.BL
                 Inactive = false, 
                 EnglishName = "Invoice", 
 			});
+			 
+            all.Add(new PeriodTypeDetails()
+            {    
+                Code = "3", 
+                EnglishName = "Interest Invoice", 
+                LocalName = "חשבונית ריבית", 
+                SearchFields = "3,Interest Invoice,חשבונית ריבית", 
+                Inactive = false, 
+			});
 			
             return all;
        }

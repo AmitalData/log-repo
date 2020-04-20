@@ -489,7 +489,7 @@
 
                     <tr style="height: 20px;"><td><div></div></td></tr>
 
-                    <!-- Filters -->
+                    <!-- Cashbook lines Filters -->
                     <tr *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit" style="height: 20px;">
                         <td style="width: 30px; padding: 5px;">
                             <div *ngIf="!NoCashBookRows" style="width: 29px;">
@@ -502,11 +502,11 @@
                                 <ul class="FiltersMenu">
                                     <li id="cashcheques" (click)="FilterItemClicked('cash')"  style="width: 105px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'cash'">
-                                        {{'Accounting.General.O.CashCheques' | TextCodeTranslationPipe}} ({{CashCount}})
+                                        {{'Accounting.General.O.CashCheques' | TextCodeTranslationPipe}} ({{ChequesCounter.CashChequesCount}})
                                     </li>
                                     <li id="postdatedcheques" (click)="FilterItemClicked('postdated')"  style="width: 135px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'postdated'">
-                                        {{'Accounting.General.O.postdatedCheques' | TextCodeTranslationPipe}} ({{PostdatesCount}})
+                                        {{'Accounting.General.O.postdatedCheques' | TextCodeTranslationPipe}} ({{ChequesCounter.PostdatedChequesCount}})
                                     </li>
                                 </ul>
 
@@ -520,95 +520,6 @@
                         </td>
                     </tr>
 
-                    <!-- CashBook Lines -->
-                    <tr *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit">
-                        <td colspan="3" style="height: 100%; padding-bottom: 75px;">
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeader">
-                                    <table>
-                                        <tr class="SimpleGridHeaderRow">
-                                            <td style="width: 40px; max-width: 40px"></td>
-                                            <td style="width: 90px; max-width: 90px">{{'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 100px; max-width: 100px">{{'BankDepositLine.F.DueDate' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.LocalAmount' | TextCodeTranslationPipe}} ({{tenantCurrencyCode}})</td>
-                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Currency' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.ForeignAmount' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.AccountNumber' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Bank' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Branch' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.ARPaymentNumber' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 100px; max-width: 100px">{{'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe}}</td>
-                                            <td></td>
-                                            <!--<td class="LastChild">
-                                <div></div>
-                            </td>-->
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <div class="SimpleGridViewBody">
-                                    <table *ngIf="CashBookLines">
-                                        <tr *ngIf="NoCashBookRows"><td class="CenterCenter NoRows">{{'Accounting.General.O.noChequestodeposit' | TextCodeTranslationPipe}}</td></tr>
-                                        <tr class="SimpleGridViewRow bg" *ngFor="let item of CashBookLines; let i=index;">
-
-                                            <td class="CellStretched" style="width: 40px; max-width: 40px">
-                                                <CheckBox [IsChecked]="IsAllSelected" (Checked)="LineSelection(item , $event)"></CheckBox>
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 90px; max-width: 90px">
-                                                {{item.ChequeNumber }}
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
-                                                {{item.DueDate | DateTimeToDatePipe }}
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right;">
-                                                {{item.LocalAmount | NumbersPipe:'N2' }}
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
-                                                {{item.Currency}}
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right;">
-                                                {{item.ForeignAmount | NumbersPipe:'N2' }}
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 110px; max-width: 110px">
-                                                {{item.AccountNumber}}
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
-                                                {{item.Bank}}
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
-                                                {{item.Branch}}
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 110px; max-width: 110px">
-                                                <a href="javascript:;" (click)="OpenARPayment(item.ARPaymentId)">{{item.ARPaymentNumber}}</a>
-                                            </td>
-
-                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
-                                                {{item.ARPChequeStatusName}}
-                                            </td>
-
-                                            <td><div></div></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="5">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
                     <!-- BankDeposit Lines  -->
                     <tr *ngIf="!IsLinesSelection && !this.EntityPM.IsCashDeposit">
                         <td>
@@ -619,90 +530,158 @@
                             </div>
                         </td>
                     </tr>
-                    <tr *ngIf="!IsLinesSelection && !this.EntityPM.IsCashDeposit">
-                        <td style="height: 100%; padding-bottom: 75px;">
-                            <div class="SimpleGridView">
-                                <div class="SimpleGridViewHeader">
-                                    <table>
-                                        <tr class="SimpleGridHeaderRow">
-                                            <td style="width: 90px; max-width: 90px">{{'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 100px; max-width: 100px">{{'BankDepositLine.F.DueDate' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.LocalAmount' | TextCodeTranslationPipe}} ({{tenantCurrencyCode}})</td>
-                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Currency' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.ForeignAmount' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.AccountNumber' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Bank' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 75px; max-width: 75px">{{'BankDepositLine.F.Branch' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 110px; max-width: 110px">{{'BankDepositLine.F.ARPaymentNumber' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 200px; max-width: 200px">{{'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe}}</td>
-                                            <td style="width: 50px; max-width: 50px"></td>
-                                            <td></td>
-                                            <!--<td class="LastChild">
-                                <div></div>
-                            </td>-->
-                                        </tr>
-                                    </table>
-                                </div>
 
-                                <div class="SimpleGridViewBody">
-                                    <table *ngIf="BankDepositLines">
-                                        <tr class="SimpleGridViewRow bg" *ngFor="let item of BankDepositLines; let i=index;">
+                    <!-- Lines  -->
+                    <tr *ngIf="!this.EntityPM.IsCashDeposit">
+                        <td [attr.colspan]="IsLinesSelection?3:1" style="height: 100%; padding-bottom: 75px;">
 
-                                            <td class="CellStretched" style="width: 90px; max-width: 90px">
-                                                {{item.ChequeNumber }}
-                                            </td>
+                            <div class="GeneratedGridContainer">
 
-                                            <td class="CellStretched" style="width: 100px; max-width: 100px">
-                                                {{item.DueDate | DateTimeToDatePipe }}
-                                            </td>
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                    [ItemSource]="IsLinesSelection ? CashbookLines : BankDepositLines" [UseVirtuallization]="true">
 
-                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right;">
-                                                {{item.LocalAmount | NumbersPipe:'N2' }}
-                                            </td>
+                                <log-column *ngIf="IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="''" [width]="'40'"
+                                    [binding]="''">
+                                    <ng-template let-item>
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-top: 2px;">
+                                            <CheckBox [IsChecked]="IsAllSelected || item.IsSelected == true" (Checked)="LineSelection(item , $event)"></CheckBox>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
+                                </log-column>
 
-                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
-                                                {{item.Currency}}
-                                            </td>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    [header]="'BankDepositLine.F.ChequeNumber' | TextCodeTranslationPipe" [width]="'90'"
+                                    [binding]="'ChequeNumber'">
+                                    <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                            <span>{{item.ChequeNumber}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                     </ng-template>
+                                </log-column>
 
-                                            <td class="CellStretched" style="width: 110px; max-width: 110px; text-align: right;">
-                                                {{item.ForeignAmount | NumbersPipe:'N2' }}
-                                            </td>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    [header]="'BankDepositLine.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DueDate'">
+                                    <ng-template let-item>
+                                        <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                            <span>{{item.DueDate | DateTimeToDatePipe }}</span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
+                                </log-column>
 
-                                            <td class="CellStretched" style="width: 110px; max-width: 110px">
-                                                {{item.AccountNumber}}
-                                            </td>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="GetAmountHeader()" [width]="'110'"
+                                    [binding]="'LocalAmount'">
+                                    <ng-template let-item>
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
+                                            [class.red]='item.LocalAmount<0'>
+                                            <span>{{ item.LocalAmount | NumbersPipe:'N2'  }} </span>
+                                        </div>
+                                    </log-cell-template>
+                                    </ng-template>
+                                </log-column>
 
-                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
-                                                {{item.Bank}}
-                                            </td>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    [header]="'CashBookLine.F.Currency' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Currency'">
+                                    <ng-template let-item>
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                            <span>{{item.Currency}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
 
-                                            <td class="CellStretched" style="width: 75px; max-width: 75px">
-                                                {{item.Branch}}
-                                            </td>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    [header]="'CashBookLine.F.ForeignAmount' | TextCodeTranslationPipe" [width]="'110'"
+                                    [binding]="'ForeignAmount'">
+                                    <ng-template let-item>
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;"
+                                            [class.red]='item.ForeignAmount<0'>
+                                            <span>{{ item.ForeignAmount | NumbersPipe:'N2'  }} </span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
 
-                                            <td class="CellStretched" style="width: 110px; max-width: 110px">
-                                                <a href="javascript:;" (click)="OpenARPayment(item.ARPaymentId)">{{item.ARPaymentNumber}}</a>
-                                            </td>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    [header]="'CashBookLine.F.AccountNumber' | TextCodeTranslationPipe" [width]="'110'"
+                                    [binding]="'AccountNumber'">
+                                    <ng-template let-item>
+                                    <log-cell-template  #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                            <span>{{item.AccountNumber}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
 
-                                            <td class="CellStretched" style="width: 200px; max-width: 200px">
-                                                {{item.ChequeStatusName}}
-                                            </td>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    [header]="'CashBookLine.F.Bank' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Bank'">
+                                    <ng-template let-item>
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                            <span>{{item.Bank}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
 
-                                            <td class="CellStretched" style="width: 50px; max-width: 50px" title="Return Cheque">
-                                                <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit" [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>
-                                            </td>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    [header]="'CashBookLine.F.Branch' | TextCodeTranslationPipe" [width]="'75'" [binding]="'Branch'">
+                                    <ng-template let-item>
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                            <span>{{item.Branch}}</span>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
 
-                                            <td><div></div></td>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    [header]="'CashBookLine.F.ARPaymentNumber' | TextCodeTranslationPipe" [width]="'110'"
+                                    [binding]="'ARPaymentNumber'">
+                                    <ng-template let-item>
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                            <a href="javascript:;" (click)="OpenARPayment(item.ARPaymentId)">{{item.ARPaymentNumber}}</a>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
 
-                                        </tr>
+                                <log-column [Alignment]="isRTL ? 'right' : 'left'"
+                                    [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [width]="'100'"
+                                    [binding]="'StatusCode'">
+                                    <ng-template let-item>
+                                    <log-cell-template   #logcelltemplate [IgnoreMods]="true">
+                                        <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                            {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusName : item.ARPChequeStatusLocalName ) : (showLocal?item.ChequeStatusName : item.ChequeStatusLocalName )  }}
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
 
-                                        <tr>
-                                            <td colspan="5">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                <log-column *ngIf="!IsLinesSelection" [Alignment]="isRTL ? 'right' : 'left'" [header]="" [width]="'100'"
+                                    [binding]="'StatusCode'">
+                                    <ng-template let-item>
+                                    <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                        <div class="CellStretched" style="width: 50px; max-width: 50px; padding-top: 2px;" title="Return Cheque">
+                                            <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit"
+                                                [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>
+                                        </div>
+                                    </log-cell-template>
+                                </ng-template>
+                                </log-column>
+
+                                </logitude-edit-grid>
+
                             </div>
                         </td>
                     </tr>

@@ -57,7 +57,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="true"
-  SearchFields="&quot;PaymentTermDateType,PaymentTermDateTypes,,Code,&quot;">
+  SearchFields="&quot;PaymentTermDateType,PaymentTermDateTypes,,Code,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;332bc4fe-217e-4662-8f5d-3cb99a5cdc16&quot;"
     FieldName="&quot;Code&quot;"

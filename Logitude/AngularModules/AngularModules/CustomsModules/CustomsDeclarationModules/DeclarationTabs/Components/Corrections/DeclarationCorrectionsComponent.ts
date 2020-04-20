@@ -100,10 +100,10 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
                 
@@ -636,7 +636,7 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
                         objectTableName = 'Customs.SupplierInvioceItemCertificat';
                     }
                     console.log("Get resources for ===> ", objectTableName);
-                    this.EntityResourceService.getEntityResourceByTableName(objectTableName).subscribe(response => {
+                    this.EntityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response:any) => {
                         if (this.arrayLength != 1) {
                             this.arrayLength--;
                         }

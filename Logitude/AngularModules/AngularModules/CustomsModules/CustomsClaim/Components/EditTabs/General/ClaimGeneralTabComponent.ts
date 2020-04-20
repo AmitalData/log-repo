@@ -52,11 +52,11 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         this.ClaimsRelatedEntitiesObslist = new ObservableCollection([]);
         SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
-                    SessionLocator.SelectedSession.StopBusyIndicator();
+        this.CurrentSession.StartBusyIndicator("");
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
+                    this.CurrentSession.StopBusyIndicator();
                     if (this.entityArgs.EntityPM != null) {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.BuildRelatedEntitiesList();
@@ -370,7 +370,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
         this.CurrentSearchAddressMode = item.AddressMode;
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.ClientAddress").subscribe((response:any) => {
             var windowArgs: any = {};
             windowArgs.EntityPM = item.ClientPM;
             windowArgs.Parent = this;

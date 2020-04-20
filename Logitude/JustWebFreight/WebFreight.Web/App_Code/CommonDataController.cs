@@ -202,7 +202,7 @@ namespace WebFreight.Web
                     result = data.Where(d => d.IsAgentView).ToList();
                 }
 
-                else if (partnerType == "CS")
+                else //if (partnerType == "CS") commented: if view from external link there will be no partner type and we want to show customer view events
                 {
                     result = data.Where(d => d.IsCustomerView).ToList();
                 }
@@ -242,6 +242,7 @@ namespace WebFreight.Web
                 myResult.LocalCurrencyCode = myTenant.Currency.Code;
                 myResult.ProfitCurrencyCode = myTenant.ProfitCurrency.Code;
                 myResult.TenantDateTimeFormat = myTenant.DateTimeFormat;
+                myResult.DisplayDocumentsAndEvents = myTenant.DisplayDocumentsAndEvents;
             }
 
             SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);

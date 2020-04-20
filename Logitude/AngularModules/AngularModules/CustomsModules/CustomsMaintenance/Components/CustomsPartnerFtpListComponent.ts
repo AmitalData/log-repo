@@ -85,8 +85,8 @@ export class CustomsPartnerFtpListComponent
 
 
         this.CurrentSession.StartBusyIndicator("");
-        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            this._CustomsPartnerFtpExtendedPMService.GetScreenOption(SessionLocator.Tenant).subscribe(res => {
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+            this._CustomsPartnerFtpExtendedPMService.GetScreenOption(SessionLocator.Tenant).subscribe((res:any) => {
                 let screenOption = res.Result;
                 this._PartnerCodeItems = screenOption.PartnerCodeItems;
                 //this._InterfaceNameItems = screenOption.InterfaceNameItems;
@@ -121,7 +121,7 @@ export class CustomsPartnerFtpListComponent
         this._InEditMode = false;
         this._IsNew = false;
         this._CustomsPartnerFtpPM = null;
-        this._CustomsPartnerFtpListService.getAll().subscribe(myResult => {
+        this._CustomsPartnerFtpListService.getAll().subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
 
             console.log("Get All CustomsPartnerFtp Definition: ", myResult);
@@ -166,7 +166,7 @@ export class CustomsPartnerFtpListComponent
 
         if (this._IsNew == true) {
             this._CustomsPartnerFtpPMService.insert(this._CustomsPartnerFtpPM)
-                .subscribe(response => {
+                .subscribe((response:any) => {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     var res: ServiceResponse = response;
                     if (res.HasError) {
@@ -179,7 +179,7 @@ export class CustomsPartnerFtpListComponent
             });
         }
         else {
-            this._CustomsPartnerFtpPMService.update(this._CustomsPartnerFtpPM).subscribe(response => {
+            this._CustomsPartnerFtpPMService.update(this._CustomsPartnerFtpPM).subscribe((response:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var res: ServiceResponse = response;
                 if (res.HasError) {
@@ -216,7 +216,7 @@ export class CustomsPartnerFtpListComponent
 
       
 
-        this._CustomsPartnerFtpExtendedPMService.delete(item.Id).subscribe(response => {
+        this._CustomsPartnerFtpExtendedPMService.delete(item.Id).subscribe((response:any) => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             var res: ServiceResponse = response;
             if (res.HasError) {
@@ -396,7 +396,7 @@ export class CustomsPartnerFtpListComponent
     _SettingsHost: string;
     
     private LoadFTP(id: string, code: string) {
-        this.myFTPService.get(id).subscribe(myResult => {
+        this.myFTPService.get(id).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {

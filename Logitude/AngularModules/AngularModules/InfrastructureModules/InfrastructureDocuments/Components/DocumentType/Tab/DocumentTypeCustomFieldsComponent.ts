@@ -44,7 +44,7 @@ export class DocumentTypeCustomFieldsComponent extends BaseComponent implements 
 
     ngOnInit() {
         this.FullCustomFieldsLists = [];
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeCustomField", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeCustomField", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
@@ -75,7 +75,7 @@ export class DocumentTypeCustomFieldsComponent extends BaseComponent implements 
             });
         }
 
-        this._fieldDataTypeService.GetFieldDataTypes(this.EntityPM.Tenant).subscribe(res => {
+        this._fieldDataTypeService.GetFieldDataTypes(this.EntityPM.Tenant).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
 
             if (!pmResponse.HasError) {

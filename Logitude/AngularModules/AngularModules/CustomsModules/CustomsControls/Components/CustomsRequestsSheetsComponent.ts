@@ -154,10 +154,10 @@ export class CustomsRequestsSheetsComponent
     }
     InitScreen() {
         //this.CurrentSession.StartBusyIndicator("");
-        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequestsSheet", 0).subscribe(response => {
-            this._entityResourceService.getEntityResourceByTableName("CommunicationLog", 0).subscribe(response => {
-                this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe(response => {
-                    //this._entityResourceService.getEntityResourceByTableName("CustomsRequestsSheetStatus", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequestsSheet", 0).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName("CommunicationLog", 0).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
+                    //this._entityResourceService.getEntityResourceByTableName("CustomsRequestsSheetStatus", 0).subscribe((response:any) => {
                     if (AppTool.IsNullOrEmpty(this.Title)) {
                         this.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
                     }

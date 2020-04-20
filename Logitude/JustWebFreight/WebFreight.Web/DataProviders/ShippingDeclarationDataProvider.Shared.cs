@@ -5,6 +5,9 @@ namespace WebFreight.Web.DataProviders
 {
     public class ShippingDeclarationDataProvider : BaseDataProvider
     {
+        public string MasterAMSBL { get; set; }
+        public string CopyNumber { get; set; }
+        public string CopyName { get; set; }
         public string BranchSignature { get; set; }
 
         /// <summary>
@@ -179,22 +182,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-        //public List<ShippingDeclarationCharges> ShippingChargesList { get; set; }
-
-        //public class ShippingDeclarationPackageLine
-        //{
-        //    public string PackageMarksAndNumbers { get; set; }
-        //    public string PackageQuantity { get; set; }
-        //    public string PackageDescriptionOfGoods { get; set; }
-        //    public string PackageGrossWeight { get; set; }
-        //    public string PackageVolume { get; set; }
-        //}
-
-        //public class ShippingDeclarationCharges
-        //{
-        //    public string DescriptionOfCharges { get; set; }
-        //    public string Collect { get; set; }
-        //}
         public string FromLocation { get; set; }
         public string ToLocation { get; set; }
         public string FromLocation_Label { get; set; }
@@ -323,6 +310,8 @@ namespace WebFreight.Web.DataProviders
         public double? TotalPayablesForAgent { get; set; }
         public string FirstFrom { set; get; }
         public string LastTo { set; get; }
+        public string FirstFromCityCountryZipCodeDetails { set; get; }
+        public string LastToCityCountryZipCodeDetails { set; get; }
 
         public string DeliveryFromName { get; set; }
         public string DeliveryFromAddress { get; set; }
@@ -448,6 +437,10 @@ namespace WebFreight.Web.DataProviders
         public string ConnectedQuoteNumber { get; set; }
 
         public byte[] MainCarriageCarrierLogo { get; set; }
-
+        public string DischargePortStateCode { get; set; }
+        public string TotalContainers { get; set; }
+        public DateTime? FirstPickupETA { get; set; }
+        public string MasterPreCarriageCarrierNumber { get; set; }
+        public string MasterPreCarriageVesselName { get; set; }
     }
 }

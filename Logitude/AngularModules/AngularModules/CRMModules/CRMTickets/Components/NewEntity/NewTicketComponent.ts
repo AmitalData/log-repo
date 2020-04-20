@@ -108,7 +108,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
 
     public WindowArgs: NewTicketArgs;
     SetWindowArgs(args: NewTicketArgs) {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             this.WindowArgs = args;
         });
     }
@@ -740,7 +740,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
     AddButtonClicked() {
         var path = './Quote/ComponentsNewEntity/NewQuoteComponent';
         var windowTitle = "New Quote";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;

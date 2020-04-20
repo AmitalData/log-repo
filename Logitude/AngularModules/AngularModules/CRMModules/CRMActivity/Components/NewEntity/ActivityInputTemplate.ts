@@ -579,7 +579,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
             }
             else {
                 var listService: UserListService = new UserListService();
-                listService.getSingleFromCache(value).subscribe(result => {
+                listService.getSingleFromCache(value).subscribe((result:any) => {
                     var list: UserList = result.Result;
                     if (list != null)
                         this.entityPM.BusinessUnitId = list.BusinessUnitId;
@@ -655,7 +655,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         var myContactId: string = null;
         if (!AppTool.IsNullOrEmpty(value)) {
             var cardService: CardListService = new CardListService();
-            cardService.getSingle(value).subscribe(result => {
+            cardService.getSingle(value).subscribe((result:any) => {
                 var card: CardList = result.Result;
                 if (card != null) {
                     this.CustomerName = card.EnglishName;
@@ -1170,7 +1170,7 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         });
     }
     AddCustomerClicked() {
-        this._entityResourceService.getEntityResourceByTableName("Customer").subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Customer").subscribe((response:any) => {
             var str = TextCodeTranslator.Translate("General.O.NewEntity");
             str = "New Potential Customer";
             var logWindow = new LogitudeWindow();

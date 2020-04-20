@@ -95,11 +95,11 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.IsCourierDeclaration = this.EntityPM.IsCourierDeclaration;
                             //this.DepositionStatusCode = this.EntityPM.DepositionStatusCode;
@@ -607,7 +607,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         if (tableName == 'Customs.SupplierInvioceItemsCertificate') {
             tableName = 'Customs.SupplierInvioceItemCertificat';
         }
-        this.EntityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
             // this.GetResourceForTableName(tables);
             if (this.errorsLength != 1) {
                 this.errorsLength--;

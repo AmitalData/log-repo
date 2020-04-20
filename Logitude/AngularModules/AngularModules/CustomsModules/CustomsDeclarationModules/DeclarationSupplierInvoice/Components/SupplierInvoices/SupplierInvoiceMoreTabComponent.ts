@@ -199,7 +199,7 @@ export class ModificationItemModel extends BaseComponent {
         super();
         this.ModificationPM = modificationPM;
         this.isValid = true;
-        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.parent.InvoicePM.InvoiceCurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe(response => {
+        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.parent.InvoicePM.InvoiceCurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe((response:any) => {
             if (response) {
                 if (response.Result) {
                     var rate = response.Result[0];
@@ -318,7 +318,7 @@ export class ModificationItemModel extends BaseComponent {
             var value = this.Amount;
            
         
-            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.CurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe(response => {
+            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.CurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe((response:any) => {
                 if (this.parent.InvoicePM.InvoiceAmount) {
                     this.DiscountInNIS = this.parent.InvoicePM.InvoiceAmount * this.InvoiceCurrencyExchangeRtae * value;
                   //  value = value * this.parent.InvoicePM.InvoiceAmount;

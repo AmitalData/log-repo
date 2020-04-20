@@ -18,6 +18,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string UpdateDirection { get; set; }
         public string ObjectFieldCode { get; set; }
 
+        public string SearchFields { get; set; }
+
 
         [ForeignKey("ObjectFieldId")]
         public virtual ObjectField ObjectField { get; set; }

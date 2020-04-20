@@ -186,11 +186,11 @@ export class QuoteMenuButtonsHandler {
                         button.Width = 70;
 
 
-                        var isShowRoutingRatesQuotation: boolean = false;
-                        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QRR" && d.TenantNumber == SessionLocator.Tenant)[0];
-                        if (featureToggle) {
-                            isShowRoutingRatesQuotation = true;
-                        }
+                        var isShowRoutingRatesQuotation: boolean = true;
+                        //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QRR" && d.TenantNumber == SessionLocator.Tenant)[0];
+                        //if (featureToggle) {
+                        //    isShowRoutingRatesQuotation = true;
+                        //}
 
 
                         if ((this.EntityPM.QuoteTypeCode == "P" && isShowRoutingRatesQuotation) || this.EntityPM.QuoteTypeCode == "A") {
@@ -542,13 +542,13 @@ export class QuoteMenuButtonsHandler {
     }
     private StartBuildingShipment() {
         if (this.EntityPM.IsPotentialShipper) {
-            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
                 this.ConvertShipper();
             });
         }
 
         else if (this.EntityPM.IsPotentialConsignee) {
-            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
                 this.ConvertConsignee();
             });
         }
@@ -558,7 +558,7 @@ export class QuoteMenuButtonsHandler {
         }
     }
     private ConvertShipper() {
-        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ShipperId).subscribe(myResult => {
+        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ShipperId).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var shipper: CustomerPM = myResponse.Result;
@@ -592,7 +592,7 @@ export class QuoteMenuButtonsHandler {
         });
     }
     private ConvertConsignee() {
-        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ConsigneeId).subscribe(myResult => {
+        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ConsigneeId).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var consignee: CustomerPM = myResponse.Result;
@@ -621,7 +621,7 @@ export class QuoteMenuButtonsHandler {
         });
     }
     private OpenNewShipmentComponent() {
-        this.entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe((response:any) => {
             var shipmentPM: ShipmentPM = QuoteUtilities.BuildShipment(this.EntityPM);
 
             var args = new NewShipmentComponentArgs();
@@ -721,7 +721,7 @@ export class QuoteMenuButtonsHandler {
                     if (!myResult.HasError) {
                         var count = myResult.Result;
 
-                        if (count != 0) {
+                        if (count != null && count != 0) {
                             var window = new MessageWindow();
                             window.Width = 450;
                             window.Height = 180;
@@ -788,7 +788,7 @@ export class QuoteMenuButtonsHandler {
 
         if (this.isValid) {
             var quoteDomainService: QuoteDomainService = new QuoteDomainService();
-            quoteDomainService.GetIsQuoteConnectedToShipment(this.EntityPM.Id).subscribe(resp => {
+            quoteDomainService.GetIsQuoteConnectedToShipment(this.EntityPM.Id).subscribe((resp:any) => {
                 if (!resp.HasError) {
                     var result: boolean = resp.Result;
              
@@ -879,8 +879,10 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
-        this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
-        this.CheckUpdateQuantities();
+        if (this.EntityPM.QuoteTypeCode == "A") {
+            this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
+            this.CheckUpdateQuantities();
+        }
         if (this.IsUpdateQuantitiesVisible) {
             var messageWindow = new MessageWindow();
             messageWindow.Width = 400;
@@ -906,7 +908,7 @@ export class QuoteMenuButtonsHandler {
     }
 
     public UpdateQuantitiesMessage: string;
-    public IsUpdateQuantitiesVisible: boolean;
+    public IsUpdateQuantitiesVisible: boolean = false;
     CheckUpdateQuantities() {
         var updateMessage = null;
         this.IsUpdateQuantitiesVisible = false;

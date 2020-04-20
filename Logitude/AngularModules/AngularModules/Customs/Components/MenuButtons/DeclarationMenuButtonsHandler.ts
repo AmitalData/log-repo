@@ -610,8 +610,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         this.CurrentSession.StartBusyIndicatorLoading();
         let myVehicleReductionTypeListService = new VehicleReductionTypeListService();
         myVehicleReductionTypeListService.getAllFromCache().
-            subscribe(res => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe(response => {
+            subscribe((res:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe((response:any) => {
                     this.CurrentSession.StopBusyIndicator();
 
 

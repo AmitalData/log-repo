@@ -50,6 +50,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ARPChequeStatusName  { get; set; }
        [DataMember]
        public string ARPChequeStatusCode  { get; set; }
+       [DataMember]
+       public string ARPChequeStatusLocalName  { get; set; }
    }
 
 }

@@ -124,7 +124,7 @@ export class RecallSuppliersFromFileComponent
     //    else {
     //        if (this.IsUploadInProgress) {
     //            this.IsUploadCanceled = true;
-    //            this._imageLibraryService.CancelUpload(this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(result => {
+    //            this._imageLibraryService.CancelUpload(this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe((result:any) => {
     //                this.IsUploadInProgress = false;
     //                this.IsUploadDone = false;
     //                this.IsUploadCanceled = true;

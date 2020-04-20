@@ -2,7 +2,8 @@
 <Table
   Name="Settings"
   Schema="dbo"
-  DBType="Global">
+  DBType="Global"
+  Module="Global">
   <Column
     Name="Id"
     Type="varchar"
@@ -100,10 +101,10 @@
   </Column>
   <Column
     Name="StorageAccountKey"
-    Type="nvarchar"
-    Size="-1">
+    Type="varchar"
+    Size="1000">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="IsLogEnabled"
@@ -211,6 +212,7 @@
   </Column>
   <Column
     Name="NotificationHubConnectionString"
+    ShortName="NotificationHubConnString"
     Type="varchar"
     Size="600">
     <Constraints
@@ -481,6 +483,13 @@
   </Column>
   <Column
     Name="QBOClientSecret"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TMPersonalAccessToken"
     Type="varchar"
     Size="100">
     <Constraints

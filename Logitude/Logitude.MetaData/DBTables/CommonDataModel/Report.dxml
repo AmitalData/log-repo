@@ -6,19 +6,22 @@
   Module="Common">
   <Column
     Name="ReportGroupId"
-    Type="varchar">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="FeatureId"
-    Type="varchar">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ReportDocumentId"
-    Type="varchar">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -79,7 +82,8 @@
   </Column>
   <Column
     Name="DefaultTemplateId"
-    Type="varchar">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -92,7 +96,8 @@
   </Column>
   <Column
     Name="LocalName"
-    Type="varchar">
+    Type="nvarchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -116,6 +121,27 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Relation
+    ForeignKeyColumn="ReportGroupId"
+    ReferencedTable="ReportGroups"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="FeatureId"
+    ReferencedTable="Features"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
+  <Relation
+    ForeignKeyColumn="ReportDocumentId"
+    ReferencedTable="Documents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DefaultTemplateId"
+    ReferencedTable="ReportsTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DefaultMessageTemplateId"
     ReferencedTable="ReportsTemplates"

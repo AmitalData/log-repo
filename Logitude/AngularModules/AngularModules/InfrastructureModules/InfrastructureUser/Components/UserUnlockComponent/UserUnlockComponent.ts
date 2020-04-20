@@ -55,7 +55,7 @@ export class UserUnlockComponent{
         if (this.CurrentPassword) {
             this.IsShowProgressLoading = true;
              var computerId: string = SessionLocator.GetComputerIdFromStorage();
-             this._passwordChangeService.GetSetUserLastLogin(this.CurrentPassword, SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant, computerId).subscribe(res => {
+             this._passwordChangeService.GetSetUserLastLogin(this.CurrentPassword, SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant, computerId).subscribe((res:any) => {
                  this.IsShowProgressLoading = false;
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {

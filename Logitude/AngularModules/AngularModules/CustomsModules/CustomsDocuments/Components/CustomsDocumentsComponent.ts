@@ -110,10 +110,10 @@ export class CustomsDocumentsComponent
         this.EntityPM = entityPM;
         this.ObjectTableName = objectTableName;
         this.ParentEntityCode = this.ObjectTableName.split('.')[1];
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentPointer").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentPointer").subscribe((response:any) => {
                         this.InsureCustomsDocumentsController();
                         //if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
                         //    this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM);
@@ -415,7 +415,7 @@ export class CustomsDocumentsComponent
 
         this.custDocRelatedDocsWebService.GetSingleDocumentsFilingPM(documentsFilingId).subscribe((resp: ServiceResponse) => {
             var documentFiling = resp.Result;
-            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe(res => {
+            this._ImageLibraryService.DownloadFile(documentFiling.DocumentId, documentFiling.Extension, documentFiling.Folder, SessionLocator.Tenant).subscribe((res:any) => {
 
 
                 var documentName = documentFiling.DocumentId;
@@ -716,7 +716,7 @@ export class CustomsDocumentsComponent
 
         myCommunicationLogStepListService
             .GetRequestComminicationIdByEntityId2(SessionLocator.Tenant, "2715", "30", objecttable.Id, customsDocumentsTicket.customsDocumentsTicketPM.DocumentsFilingId)
-            .subscribe((rsp) => {
+            .subscribe((rsp:any) => {
                 var myCustomsRequestsSheet = rsp.Result;
                  this.CurrentSession.StopBusyIndicator();
                 if (myCustomsRequestsSheet) {

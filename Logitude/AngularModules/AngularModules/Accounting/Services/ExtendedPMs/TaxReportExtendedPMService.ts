@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -10,138 +10,94 @@ import {TaxReportPM} from '../../EntityPMs/TaxReportPM';
 import {TaxReportLinePM} from '../../EntityPMs/TaxReportLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
+ 
 @Injectable()
 
 export class TaxReportExtendedPMService {
-    private _http: Http;
+  
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
-      this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
+       
+        this.httpClient = ServiceHelper.HttpClient;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
     }
 
     DownloadPNC874File(taxReportPM: TaxReportPM) {
+        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874File", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
 
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            //var mappedEntity: TaxReportPM;
-            //mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
-
-            return this._http.post(this._apiUrl + "/PostDownloadPNC874File", JSON.stringify(taxReportPM), { headers: authHeader })
-                .map((res) => {
-
-                    var result = res.json();
-                    serviceResponse.Result = result;
-
-                    return serviceResponse;
-
-                }).catch(ServiceHelper.HandleServiceError);
-        });
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+        
 
     }
 
     DownloadPNC874FileInBatch(taxReportPM: TaxReportPM) {
+        return this.httpClient.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
 
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            //var mappedEntity: TaxReportPM;
-            //mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
-
-            return this._http.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(taxReportPM), { headers: authHeader })
-                .map((res) => {
-
-                    var result = res.json();
-                    serviceResponse.Result = result;
-
-                    return serviceResponse;
-
-                }).catch(ServiceHelper.HandleServiceError);
-        });
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+       
 
     }
 
     PostCreateTaxReportInBatch(taxReportPM: TaxReportPM) {
+        return this.httpClient.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
 
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
 
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            //var mappedEntity: TaxReportPM;
-            //mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
-
-            return this._http.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(taxReportPM), { headers: authHeader })
-                .map((res) => {
-
-                    var result = res.json();
-                    serviceResponse.Result = result;
-
-                    return serviceResponse;
-
-                }).catch(ServiceHelper.HandleServiceError);
-        });
+        
       }
 
     GetReportLinesCounter(taxReportId: string) {
-
-            return Observable.defer(() => {
-
-                var authHeader = new Headers();
-                authHeader.append('Token', SessionInfo.Token);
-                authHeader.append('Content-Type', 'application/json');
-
+        return this.httpClient.get(this._apiUrl+'/GetLinesCounters?taxReportId='+taxReportId,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
+                var allLists = response;
 
-                return this._http.get(this._apiUrl+'/GetLinesCounters?taxReportId='+taxReportId, { headers: authHeader }).map(response => {
-                    var allLists = response.json();
-
-                    var serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = allLists;
-                    return serviceResponse;
-
-                }).catch(ServiceHelper.HandleServiceError);
-            });
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+            
 
     }
 
 
     getErrorsCount(reportId: string) {
 	    var callTime = new Date();
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        
+       return this.httpClient.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId,  ServiceHelper.GetHttpHeaders()).pipe(
+        map(response => {
+            var result = response;
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId, {
-                headers: authHeader
-            }).map(response => {
-                var result = response.json();
-
-                return result;
-            }).catch(ServiceHelper.HandleServiceError);
-        }
-
-        );
+            return result;
+        }),
+        catchError(ServiceHelper.HandleServiceError));
+       
     }
 
 

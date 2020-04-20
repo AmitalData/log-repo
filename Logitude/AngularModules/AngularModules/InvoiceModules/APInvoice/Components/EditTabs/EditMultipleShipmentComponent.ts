@@ -25,6 +25,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {VATTypesGroupPM} from '../../../../Common/EntityPMs/VATTypesGroupPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 
 @Component({
     moduleId: module.id,
@@ -749,6 +750,7 @@ export class APInvoiceLineShortItem extends BaseComponent {
         var isUpdateVisible = false;
         var isMultiIconVisible = false;
         this.VatTypesGroups = [];
+        var pipe = new NumbersPipe();
 
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
 
@@ -760,7 +762,7 @@ export class APInvoiceLineShortItem extends BaseComponent {
             }
 
             else if (this.VatPercentage != null) {
-                myValue = this.VatTypeName + " (" + this.VatPercentage + "%)";
+                myValue = this.VatTypeName + " (" + pipe.transform(this.VatPercentage, "N3") + "%)";
                 myColor = FontTool.Black;
             }
 

@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="CustomerProductLocationActualDatas"
+  ShortName="CustomerProdLocatActualDatas"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="CustomerId"
     Type="varchar"

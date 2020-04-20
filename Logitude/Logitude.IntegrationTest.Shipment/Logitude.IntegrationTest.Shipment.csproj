@@ -55,16 +55,30 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContexts\ChargesTypesDataContext.cs" />
+    <Compile Include="EntitiesInitializer\IEntityInitializer.cs" />
+    <Compile Include="EntitiesInitializer\ShipmentInitializer.cs" />
+    <Compile Include="EntitiesInitializer\ShipmentOrderPackageInitializer.cs" />
+    <Compile Include="EntitiesInitializer\ShipmentPackageInitializer.cs" />
+    <Compile Include="EntitiesInitializer\ShipmentPayableInitializer.cs" />
+    <Compile Include="EntitiesInitializer\ShipmentReceivableInitializer.cs" />
     <Compile Include="Initialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ShipmentTestService.cs" />
     <Compile Include="ShipmentPreperationCalls.cs" />
     <Compile Include="ShipmentVariables.cs" />
+    <Compile Include="Tests\CreateShipment.cs" />
     <Compile Include="Tests\IntegrationShipmentPickUpDeliveriesPackages.cs" />
     <Compile Include="Tests\IntegrationShipmentDeliveries.cs" />
     <Compile Include="Tests\IntegrationShipmentPickUps.cs" />
     <Compile Include="Tests\IntegrationShipmentPayable.cs" />
     <Compile Include="Tests\IntegrationShipmentReceivable.cs" />
     <Compile Include="Tests\IntegrationShipmentPackages.cs" />
+    <Compile Include="Tests\ShipmentOrderPackagesTest.cs" />
+    <Compile Include="Tests\ShipmentPackageTest.cs" />
+    <Compile Include="Tests\ShipmentProfitTest.cs" />
+    <Compile Include="Tests\ShipmentRoutingTest.cs" />
+    <Compile Include="Tests\ShipmentStatusTest.cs" />
     <Compile Include="Tests\ShipmentsTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +117,7 @@
       <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

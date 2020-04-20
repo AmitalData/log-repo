@@ -112,7 +112,7 @@ import { NewInterestReportComponent } from './Components/NewEntity/NewInterestRe
 import { InterestReportGeneralTabComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent';
 import { InterestReportLineByDateDetailsComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent';
 import { InterestReportLinesByDateListTemplate } from './Components/ListTemplates/InterestReportLinesByDateListTemplate';
-
+import { InterestReportShortTitleComponent } from './Components/ShortTiTles/InterestReportShortTitleComponent';
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
 
@@ -231,7 +231,8 @@ export const Components =
         NewInterestReportComponent,
         InterestReportGeneralTabComponent,
         InterestReportLineByDateDetailsComponent,
-        InterestReportLinesByDateListTemplate
+        InterestReportLinesByDateListTemplate,
+        InterestReportShortTitleComponent
     ];
 
 export class ModuleDeclarations {
@@ -357,6 +358,8 @@ export class ModuleDeclarations {
             case "InterestBasesTypeShortTitleComponent": { myResult = InterestBasesTypeShortTitleComponent; break; }
             case "ExtReconcileAdjustBankFeeComponent": { myResult = ExtReconcileAdjustBankFeeComponent; break; }
             case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break;}
+            case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
+
         }
 
         return myResult;

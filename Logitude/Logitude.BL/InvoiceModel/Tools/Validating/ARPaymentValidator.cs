@@ -35,7 +35,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class ARPaymentValidator
     {
-        public static void Validate(ARPaymentPM entityPM, IInvoiceContext objectContext, CashBookPM cashBook = null)
+        public static void Validate(ARPaymentPM entityPM, ARPayment entityPOCO, bool isNew, IInvoiceContext objectContext, CashBookPM cashBook = null)
         {
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
 
@@ -199,6 +199,31 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             ValidateAccountingSetting(entityPM);
             ValidateFullAccounting(entityPM.ARPaymentChequeReplicas, entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank );
+
+            ValidateUnUpdateFields(entityPM,entityPOCO, isNew);
+        }
+
+        private static void ValidateUnUpdateFields(ARPaymentPM entityPM, ARPayment entityPOCO, bool isNew)
+        {
+            if (!isNew)
+            {
+                bool isEditingEnabled = IsEditingEntityEnabled(entityPOCO);
+
+                if (!isEditingEnabled)
+                {
+                    if (entityPM.PaymentCurrencyExchangeRate != entityPOCO.PaymentCurrencyExchangeRate)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARPayment.F.PaymentCurrencyExchangeRate", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+
+                    if (entityPM.AmountInPaymentCurrency != entityPOCO.AmountInPaymentCurrency)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARPayment.F.AmountInPaymentCurrency", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+                }
+            }
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -413,7 +438,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Bank", tenant, useLocal)) + ";";
                     }
-                    if(code  == "CH" && valueDate != null && registerDate != null)
+                    if(code != "CA" && valueDate == null)
+                    {
+
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, false);
+                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ValueDate", tenant, false)) + ";";
+
+                    }
+                    if (code  == "CH" && valueDate != null && registerDate != null)
                     {
                         ValidateValueDate(valueDate, registerDate , tenant);
                     }
@@ -529,6 +561,21 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
             return loggedContact;
+        }
+
+        private static bool IsEditingEntityEnabled(ARPayment entityPOCO)
+        {
+            bool myResult = false;
+
+            if (entityPOCO != null)
+            {
+                if (string.IsNullOrEmpty(entityPOCO.StatusCode) || entityPOCO.StatusCode == "DR")
+                {
+                    myResult = true;
+                }
+            }
+
+            return myResult;
         }
     }
 }

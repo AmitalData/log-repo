@@ -726,7 +726,7 @@ function ResetItemFunnel() {
             "dataProvider": chartData,
             "minorGridAlpha": 0,
             "minorGridEnabled": false,
-            "autoResize": false,
+            "autoResize": true,
             "valueAxes": [{
                 "id": "v1",
                 "axisAlpha": 0.1,

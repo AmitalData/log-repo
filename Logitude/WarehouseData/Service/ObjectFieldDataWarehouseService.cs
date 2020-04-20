@@ -153,8 +153,7 @@ namespace WarehouseData.Helper
                                 }
                             }
                         }
-                        else field.DataTypeCode = "Integer";
-
+                        else field.DataTypeCode = "DateTime";
                     }
                 }
             }

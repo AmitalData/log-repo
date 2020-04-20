@@ -34,6 +34,7 @@ import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
 import { UserList } from '../../../Common/EntityLists/UserList';
 import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
 import { QueryColumnsPMService } from '../../Services/StandardPMs/QueryColumnsPMService'; 
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'NewViewComponent',
@@ -41,7 +42,7 @@ import { QueryColumnsPMService } from '../../Services/StandardPMs/QueryColumnsPM
 
     templateUrl: './NewViewComponent.html',
     inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'QueryCode', 'Filterchangeevent', 'rabaia'],
-    providers: [Http, ServiceArgs],
+    providers: [HttpClient, ServiceArgs],
 })
 
 export class NewViewComponent {
@@ -78,7 +79,7 @@ export class NewViewComponent {
     ValidationErrorsList: string[] = []; 
     CreateBtnText: string = TextCodeTranslator.Translate("General.B.Create");
     public serviceArgs: ServiceArgs;
-    public _http: Http;
+    public _http: HttpClient;
     public BooleanValues = ["True", "False", "No Filter"];
     public ShareTabIsVisible: boolean = false;
     public IsSharedByMessageVisible: boolean = false;
@@ -87,8 +88,8 @@ export class NewViewComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder, private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.Http;
-        this._http = ServiceHelper.Http;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.HttpClient;
         this.removedQueryFilters = [];
         if (this.GeneralEntitiesArgs == null) {
             this.GeneralEntitiesArgs = new GeneralEntitiesArgs();
@@ -181,7 +182,7 @@ export class NewViewComponent {
         //filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
 
         var userService: UserListService = new UserListService();
-        userService.getByFilters(filters).subscribe(res => {
+        userService.getByFilters(filters).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myUsersList = pmResponse.Result;
@@ -198,7 +199,7 @@ export class NewViewComponent {
         var myService: QueriesPMService = new QueriesPMService();
         myService.setServiceArgs(this.serviceArgs);
 
-        myService.get(this.QueryCode).subscribe(myResult => {
+        myService.get(this.QueryCode).subscribe((myResult:any) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
@@ -332,14 +333,14 @@ export class NewViewComponent {
 
             this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
                 .subscribe((response: any) => {
-                    this.queryColumnsList = response.json();
+                    this.queryColumnsList = response;
                     this.queryColumnsList = this.queryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
                     if (this.queryColumnsList.length == 0) {
                         var zeroColumnsList: any[] = [];
                         this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
-                            .subscribe((response) => {
-                                zeroColumnsList = response.json();
+                            .subscribe((response: any) => {
+                                zeroColumnsList = response;
                                 zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
                                 zeroColumnsList.forEach((querycolumn, key) => {
                                     var newcolumn = new QueryColumnPM();
@@ -806,7 +807,7 @@ export class NewViewComponent {
         var myService: QueriesPMService = new QueriesPMService();
         myService.setServiceArgs(this.serviceArgs);
         var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
-        myService.delete(query, userId).subscribe(myResult => {
+        myService.delete(query, userId).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
             window.Queries = window.Queries.filter(a => a.UniqueCode != query.UniqueCode);
             var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
@@ -832,7 +833,7 @@ export class NewViewComponent {
         //this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         //var myQCService: QueryColumnsPMService = new QueryColumnsPMService();
         //myQCService.setServiceArgs(this.serviceArgs);
-        //myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, this.EntityPM.Id, ObjectTable.Id, userId).subscribe(myResult => {
+        //myQCService.GetQueryColumnPMs(SessionInfo.LoggedUserTenant, this.EntityPM.Id, ObjectTable.Id, userId).subscribe((myResult:any) => {
         //    var queryColumns = myResult;
 
         //    queryColumns.forEach((column, key) => {
@@ -844,7 +845,7 @@ export class NewViewComponent {
         //    }
 
         //    this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
-        //    this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, userId, this.EntityPM.Id).subscribe(myResult => {
+        //    this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, userId, this.EntityPM.Id).subscribe((myResult:any) => {
         //        if (myResult == null) {
         //            this.AdvancedQueryFilterPMs = [];
         //        }
@@ -862,8 +863,8 @@ export class NewViewComponent {
         //        myService.setServiceArgs(this.serviceArgs);
         //        var myGeneralService: GeneralEntitiesService = new GeneralEntitiesService();
         //        myGeneralService.setServiceArgs(this.serviceArgs);
-        //        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
-        //            myService.delete(query).subscribe(myResult => {
+        //        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
+        //            myService.delete(query).subscribe((myResult:any) => {
         //                this.CurrentSession.StopBusyIndicator();
         //                window.Queries = window.Queries.filter(a => a.Id != query.Id);
         //                var ObjectTable = window.ObjectTables.filter(x => x.Name === this.CurrentObjectTable)[0];
@@ -910,7 +911,7 @@ export class NewViewComponent {
             this.myAdvancedQueryFiltersPMService.setServiceArgs(this.serviceArgs);
         }
 
-        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe(myResult => {
+        this.myAdvancedQueryFiltersPMService.getadvancedqueryfiltersbytenantByQuery(SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, QueryCode).subscribe((myResult:any) => {
             this.GetFiltersComplete(myResult, QueryCode);
         });
     }
@@ -1080,7 +1081,7 @@ export class NewViewComponent {
         //    var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
         //var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
         //myService.setServiceArgs(this.serviceArgs);
-        //myService.delete(advanceFilter).subscribe(myResult => {
+        //myService.delete(advanceFilter).subscribe((myResult:any) => {
         if (this.SelectedObjectFields != null) {
             this.removedQueryFilters.push(this.SelectedObjectFields.filter(a => a.ObjectField.Id == field.ObjectField.Id)[0]);
             this.SelectedObjectFields = this.SelectedObjectFields.filter(a => a.ObjectField.Id != field.ObjectField.Id);
@@ -1240,8 +1241,8 @@ export class NewViewComponent {
                 
                 myService.setServiceArgs(this.serviceArgs);
                 textCodesService.setServiceArgs(this.serviceArgs);
-                myService.insert(this.EntityPM).subscribe(myResult => {
-                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe(res => {
+                myService.insert(this.EntityPM).subscribe((myResult:any) => {
+                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe((res:any) => {
                         window.TextCodesTranslations.push(res);
                         this.AddFiltersAndColumns(myResult.Result);
                         window.Queries.push(myResult.Result);
@@ -1339,7 +1340,7 @@ export class NewViewComponent {
         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         myGeneralService.setServiceArgs(this.serviceArgs);
         if (this.IsNew) {
-            myGeneralService.insert(this.GeneralEntitiesArgs).subscribe(myResult => {
+            myGeneralService.insert(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                 myResult.Result.AdvancedQueryFilterPMs.forEach((filter, key) => {
                     window.PreDefinedFilters.push(filter);
                 });
@@ -1348,7 +1349,7 @@ export class NewViewComponent {
             });
         }
         else {
-            myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+            myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CurrentSession.CurrentWindow.Close(newQuery.UniqueCode);
             });
@@ -1472,9 +1473,9 @@ export class NewViewComponent {
 
             myService.setServiceArgs(this.serviceArgs);
             textCodesService.setServiceArgs(this.serviceArgs);
-            myService.update(this.EntityPM).subscribe(myResult => {
+            myService.update(this.EntityPM).subscribe((myResult:any) => {
                 if (!SessionLocator.UseCachedData) {
-                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe(res => {
+                    textCodesService.getByCode(myResult.Result.NameTextCodeCode, myResult.Result.Tenant).subscribe((res:any) => {
                         window.TextCodesTranslations = window.TextCodesTranslations.filter(a => a.TextCodeCode != myResult.Result.NameTextCodeCode);
                         window.TranslationsCache = window.TranslationsCache.filter(d => d.Code != myResult.Result.NameTextCodeCode);
                         window.TextCodesTranslations.push(res);
@@ -1485,7 +1486,7 @@ export class NewViewComponent {
                     });
                 }
                 else {
-                    CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
+                    CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                         this.UpdateColumnsAndFilters();
                         var CurrentQuery = window.Queries.filter(x => x.UniqueCode == this.QueryCode)[0];
                         CurrentQuery = this.EntityPM;
@@ -1608,7 +1609,7 @@ export class NewViewComponent {
 
         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
         myGeneralService.setServiceArgs(this.serviceArgs);
-        myGeneralService.update(this.GeneralEntitiesArgs).subscribe(myResult => {
+        myGeneralService.update(this.GeneralEntitiesArgs).subscribe((myResult:any) => {
             myResult.Result.AdvancedQueryFilterPMs.forEach((filter, key) => {
                 if (window.PreDefinedFilters.filter(o => o.Id === filter.Id).length == 0) {
                     window.PreDefinedFilters.push(filter);

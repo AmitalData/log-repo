@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
@@ -9,24 +10,20 @@ import {ShipmentPMService} from '../Services/StandardPMs/ShipmentPMService';
 @Injectable()
 
 export class SplitShipmentService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SplitShipment';
     }
 
     Split(entityPM: SplitShipmentHelper) {
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
             var mappedEntity: SplitShipmentHelper = this.MapSplitShipmentHelper(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
 
                 var mappedResult: SplitShipmentHelper = this.MapSplitShipmentHelper(myJsonResult, true, entityPM);
 
@@ -34,7 +31,7 @@ export class SplitShipmentService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

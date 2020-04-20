@@ -58,6 +58,8 @@ namespace Logitude.Accounting.BL.CoreBL
         private static Simplog.Data.CommonDataModel.EntityPOCOs.Card card;
         private static List<TaxReportData> ledgerTransactons;
         private static List<LedgerTransaction> journalsTransactions;
+        private static  List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards;
+        private static List<GLAccountPM> glAccounts;
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
 
@@ -76,7 +78,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<ARInvoice> invoices = aRInvoiceRepository.GetARInvoicesByIds(taxReport.Tenant, AccountingEntiyIds);
                 List<string> cardIds = invoices.Select(d => d.BillToId).ToList();
 
-                List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards = cardRepository.GetCardsByIds(cardIds, tenant).ToList();
+                 cards = cardRepository.GetCardsByIds(cardIds, tenant).ToList();
 
 
 
@@ -180,7 +182,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 APInvoicePM aPInvoice = null;
 
                 List<string> glAccountIds = ledgerTransactons.Select(d => d.OppositGLAccount).ToList();
-                List<GLAccountPM> glAccounts = gLAccountQueryService.GetByGLAccountsIdList(glAccountIds, tenant);
+                glAccounts = gLAccountQueryService.GetByGLAccountsIdList(glAccountIds, tenant);
                 cards = cardRepository.GetCardsByGLAccountIds(glAccountIds, tenant).ToList();
 
                 List<string> apInvoiceIds = ledgerTransactons.Where(d => d.AccountingEntity == "4").Select(d => d.AccountingEntityId).ToList();
@@ -203,21 +205,21 @@ namespace Logitude.Accounting.BL.CoreBL
                 InputVatAmount = 0;
                 InputInvoiceAmount = 0;
                 card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
-                if (a.AccountingEntity == AccountingEntityValues.APInvoice)
-                {
-                    aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
+                //if (a.AccountingEntity == AccountingEntityValues.APInvoice)
+                //{
+                //  //  aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
 
-                    if (aPInvoice != null)
-                    {
-                        SetVatFieldsForAPInvoiceTransaction(aPInvoice);
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
+                //    //if (aPInvoice != null)
+                //    //{
+                //    //    SetVatFieldsForAPInvoiceTransaction(aPInvoice);
+                //    //}
+                //    //else
+                //    //{
+                //    //    continue;
+                //    //}
+                //}
 
-                else if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
+                 if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
                 {
                     if (card.VatNumber == tenantPM.VatNumber)
                     {
@@ -232,6 +234,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
+                    SetVatNumber(card);
                     SetVatAmounts(a);
                 }
 
@@ -269,32 +272,16 @@ namespace Logitude.Accounting.BL.CoreBL
                     Tenant = tenant,
                     TransmitStatusCode = transmitStatusCode,
                     TaxReportDate = taxReport.TaxReportMonth
-
                 };
 
-
-
-
-                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId).FirstOrDefault();
-                string CreditAccountId = null;
-                string accountTypeCode = null;
-                //if (journal.JournalLines.Count > 0)
-                //{
-                //    CreditAccountId = journal.JournalLines.FirstOrDefault().CreditAccountId;
-                //    accountTypeCode = journal.JournalLines.FirstOrDefault().AccountTypeCode;
-                //}
-
-
-
-                //  GLAccountPM account = gLAccountQueryService.GetSingle(CreditAccountId, false, false);
-
-               
+                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId && d.TaxReportJournalLineNumber == a.JournalLineNumber ).FirstOrDefault();
+              //   card = cards.Where(d => d.GLAccountId == a.AccountId).FirstOrDefault();
                     if (aPInvoice != null && (aPInvoice.VATNumber == tenantPM.VatNumber))
                     {
                         taxReportLine.LineTypeCode = "C";
                     }
 
-                    else if ( journal.LineCounter>0 && journal.LineCreditAccountId == setting.CustomsGLAccountId)
+                    else if ( journal.LineCounter>0 && journal.LineCreditAccountId != null && journal.LineCreditAccountId == setting.CustomsGLAccountId)
                     {
 
                         taxReportLine.LineTypeCode = "R";
@@ -305,7 +292,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxReportLine.LineTypeCode = "P";
                     }
 
-                    else if (journal.LineCreditAccountTypeCode != "3" || (journal.LineCreditAccountTypeCode == "3" && (gLAccountPM!= null && gLAccountPM.Smallcashbook==true)))
+                    else if ((journal.LineCreditAccountTypeCode == "3" && (gLAccountPM!= null && gLAccountPM.Smallcashbook==true)))
                     {
                         taxReportLine.LineTypeCode = "K";
                     }
@@ -440,13 +427,21 @@ namespace Logitude.Accounting.BL.CoreBL
                 referenceGroup = "0000";
             }
         }
-
+        private static void SetVatNumber(Simplog.Data.CommonDataModel.EntityPOCOs.Card card)
+        {
+            if (card != null)
+            {
+                GLAccountPM account = glAccounts.Where(d => d.Id == card.GLAccountId && d.AccountTypeCode == "3").FirstOrDefault();
+                VatNumber = account != null ? card.VatNumber : null;
+            }
+        }
        private static void SetVatAmounts(TaxReportData report)
         {
+            
             InputVatAmount = report.LocalAmountDebit;
 
-            if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
-                VatNumber = card.VatNumber;
+            //if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
+            //    VatNumber = card.VatNumber;
           
             var transactionSum = journalsTransactions.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountCredit);
             InputInvoiceAmount = transactionSum - InputVatAmount;

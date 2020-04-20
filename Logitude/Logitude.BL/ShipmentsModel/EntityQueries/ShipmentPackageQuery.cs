@@ -57,8 +57,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     CommodityId = a.CommodityId,
                                                     NumberOfInsidePackages = a.NumberOfInsidePackages,
                                                     NumberOfInsidePackagesDetails = a.NumberOfInsidePackagesDetails,
-                                                   
-                                                }).ToList();
+
+
+                                                 }).ToList();
 
             return myResult;
         }
@@ -181,7 +182,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        Color = a.Color, 
                        ChassisNumber = a.ChassisNumber, 
                        RegistrationNumber = a.RegistrationNumber, 
-                       CountryId = a.CountryId, 
+                       CountryId = a.CountryId,
+                       WarehouseReleaseNumber = a.WarehouseReleaseNumber,
                    }).FirstOrDefault();
 
 
@@ -312,7 +314,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ChassisNumber = a.ChassisNumber,
                        RegistrationNumber = a.RegistrationNumber,
                        CountryId = a.CountryId,
-                       CountryName = a.Country != null ? a.Country.EnglishName : "", 
+                       CountryName = a.Country != null ? a.Country.EnglishName : "",
+                       WarehouseReleaseNumber = a.WarehouseReleaseNumber,
                    }).ToList();
 
             foreach (ShipmentPackagePM package in shipmentPackages)
@@ -437,6 +440,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 ChassisNumber = a.ChassisNumber,
                                 RegistrationNumber = a.RegistrationNumber,
                                 CountryId = a.CountryId,
+                                WarehouseReleaseNumber = a.WarehouseReleaseNumber,
                             }).ToList();
             }
 

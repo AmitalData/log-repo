@@ -407,7 +407,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 filters = new ApiQueryFilters();
                 //filters.PageSize = 50;
                 this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-                    res.subscribe(resp => {
+                    res.subscribe((resp:any) => {
 
                     });
 
@@ -421,7 +421,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
                 var loadPr = this.entityListService.getByFilters(this.LookUpTableName, filters);
                 loadPr.then((res: any) => {
-                    res.subscribe(resp => {
+                    res.subscribe((resp:any) => {
                         console.log(resp);
                     });
                 });
@@ -1644,7 +1644,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
 
             loadPromise.then((res: any) => {
-                res.subscribe(resp => {
+                res.subscribe((resp:any) => {
                     //turn loading flag off
                     this.isLoadingZero = false;
                     if (resp.Result) {
@@ -2820,7 +2820,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         //turn loading flag on
         this.isLoading = true;
         this.entityListService.getAllFromCache(this.LookUpTableName, filters).then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 if (resp.Result) {
 
                     for (var i = 0; i < resp.Result.length; i++) {
@@ -2989,7 +2989,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
  
         loadPromise.then((res: any) => {
-            res.subscribe(resp => {
+            res.subscribe((resp:any) => {
                 if (resp.Result) {
 
                     for (var i = 0; i < resp.Result.length; i++) {

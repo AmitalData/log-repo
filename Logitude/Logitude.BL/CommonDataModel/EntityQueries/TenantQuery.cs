@@ -16,6 +16,8 @@ using Logitude.BL.CommonDataModel.DataContracts;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -328,6 +330,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
                         LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
                         HideFCLAllIn = tt.HideFCLAllIn,
+                        DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -340,27 +343,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
-                    if (tenant.CurrencyId != null)
-                    {
-                        CurrencyRepository repository = new CurrencyRepository(tenant.Id);
-                        Currency cur = repository.GetSingleCurrencyById(tenant.CurrencyId, tenant.Id, true);
-                        if (cur != null)
-                        {
-                            tenant.CurrencyCode = cur.Code;
-                            tenant.CurrencySign = cur.Sign;
-                        }
-                    }
-
-                    if (tenant.AddressId != null)
-                    {
-                        AddressQuery addressQuery = new AddressQuery(id);
-                        AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
-                        if (add != null)
-                        {
-                            tenant.CountryCode = add.CountryCode;
-                            tenant.CountryName = add.CountryEnglishName;
-                        }
-                    }
+                    this.GetTenantOtherFields(tenant);
 
                     entity = tenant;
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
@@ -505,6 +488,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
                     LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
                     HideFCLAllIn = tt.HideFCLAllIn,
+                    DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -518,28 +502,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     scope.Complete();
                 }
 
-                if (tenant.CurrencyId != null)
-                {
-                    CurrencyRepository repository = new CurrencyRepository(tenant.Id);
-                    Currency cur = repository.GetSingleCurrencyById(tenant.CurrencyId, tenant.Id, true);
-                    tenant.CurrencyCode = cur.Code;
-                }
-
-                if (tenant.AddressId != null)
-                {
-                    AddressQuery addressQuery = new AddressQuery(id);
-                    AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id);
-                    if (add != null)
-                    {
-                        tenant.CountryCode = add.CountryCode;
-                        tenant.CountryName = add.CountryEnglishName;
-                    }
-                }
+                this.GetTenantOtherFields(tenant);
 
                 entity = tenant;
             }
             return entity;
         }
+
+
 
         public static TenantPM GetSingleTenantPM(int id)
         {
@@ -659,6 +629,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                            ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                            HideFCLAllIn = a.HideFCLAllIn,
+                                           DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -671,19 +642,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
-                    if (tenant.CurrencyId != null)
-                    {
-                        Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
-                        tenant.CurrencyCode = cur.Code;
-                    }
-
-                    if (tenant.AddressId != null)
-                    {
-                        AddressQuery addressQuery = new AddressQuery(id);
-                        AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id)?? new AddressPM();
-                        tenant.CountryCode = add.CountryCode;
-                        tenant.CountryName = add.CountryEnglishName;
-                    }
+                    GetStaticTenantOtherFields(tenant);
 
                     entity = tenant;
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
@@ -807,6 +766,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                        ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                        HideFCLAllIn = a.HideFCLAllIn,
+                                       DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -818,19 +778,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                     // tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                 }
-                if (tenant.CurrencyId != null)
-                {
-                    Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
-                    tenant.CurrencyCode = cur.Code;
-                }
 
-                if (tenant.AddressId != null)
-                {
-                    AddressQuery addressQuery = new AddressQuery(id);
-                    AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id)?? new AddressPM();
-                    tenant.CountryCode = add.CountryCode;
-                    tenant.CountryName = add.CountryEnglishName;
-                }
+                GetStaticTenantOtherFields(tenant);
 
                 entity = tenant;
             }
@@ -965,6 +914,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                                DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                                LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                                               DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -978,31 +928,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                         }
 
-                        if (tenant.CurrencyId != null)
-                        {
-                            Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
-                            tenant.CurrencyCode = cur.Code;
-                        }
-
-                        if (tenant.AddressId != null)
-                        {
-                            AddressQuery addressQuery = new AddressQuery(id);
-                            AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id) ?? new AddressPM();
-                            tenant.CountryCode = add.CountryCode;
-                            tenant.CountryName = add.CountryEnglishName;
-                        }
+                        GetStaticTenantOtherFields(tenant);
 
                         entity = tenant;
+
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
+
                     else
                     {
                         entity = (TenantPM)CacheManager.CacheWrapper.Get(entityName);
                     }
                 }
+
                 else
                 {
                     ICommonDataContext context = CommonDataContext.GetContext(id);
@@ -1123,6 +1064,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                            DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                            LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                                           DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1136,19 +1078,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
-                    if (tenant.CurrencyId != null)
-                    {
-                        Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
-                        tenant.CurrencyCode = cur.Code;
-                    }
-
-                    if (tenant.AddressId != null)
-                    {
-                        AddressQuery addressQuery = new AddressQuery(id);
-                        AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id)?? new AddressPM();
-                        tenant.CountryCode = add.CountryCode;
-                        tenant.CountryName = add.CountryEnglishName;
-                    }
+                    GetStaticTenantOtherFields(tenant);
 
                     entity = tenant;
                 }
@@ -1272,20 +1202,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                        DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                        LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                                       DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
-                    if (tenant.AddressId != null)
-                    {
-                        AddressRepository addressrep = new AddressRepository(context);
-                        Address address = addressrep.GetSingleAddress(tenant.AddressId, tenant.Id);
-                        if (address != null)
-                        {
-                            tenant.CountryName = address.Country.EnglishName;
-                            tenant.CompanyAddress = address.Name;
-                        }
-                    }
-
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalObjectContext = GlobalContext.GetContext();
@@ -1297,26 +1217,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
-                    if (tenant.CurrencyId != null)
-                    {
-                        Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
-                        if (cur == null)
-                        {
-                            cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, 0, true);
-                        }
-                        tenant.CurrencyCode = cur.Code;
-                    }
-
-                if (tenant.AddressId != null)
-                {
-                    AddressQuery addressQuery = new AddressQuery(id);
-                    AddressPM add = addressQuery.GetSingleAddressPM(tenant.AddressId, tenant.Id)?? new AddressPM();
-                    tenant.CountryCode = add.CountryCode;
-                    tenant.CountryName = add.CountryEnglishName;
+                    GetStaticTenantOtherFields(tenant);
                 }
 
-
-                }
                 entity = tenant;
             }
             return entity;
@@ -1456,6 +1359,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DocumentShareAsDefault = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.DocumentShareAsDefault:false,
                     LogBoxAdminUserId = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.LogBoxAdminUserId : null,
                     HideFCLAllIn = myPOCO.HideFCLAllIn,
+                    DisplayDocumentsAndEvents = myPOCO.DisplayDocumentsAndEvents,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1467,26 +1371,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entityPM.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().TemporalEndDate;
                 }
 
-                if (entityPM.CurrencyId != null)
-                {
-                    Currency cur = CurrencyRepository.GetSingleCurrency(entityPM.CurrencyId, entityPM.Id, true);
-                    if (cur != null)
-                    {
-                        entityPM.CurrencyCode = cur.Code;
-                        entityPM.CurrencySign = cur.Sign;
-                    }
-                }
-
-                if (entityPM.AddressId != null)
-                {
-                    AddressQuery addressQuery = new AddressQuery(entityPM.Id);
-                    AddressPM add = addressQuery.GetSingleAddressPM(entityPM.AddressId, entityPM.Id);
-                    if (add != null)
-                    {
-                        entityPM.CountryCode = add.CountryCode;
-                        entityPM.CountryName = add.CountryEnglishName;
-                    }
-                }
+                this.GetTenantOtherFields(entityPM);
             }
 
             return entityPM;
@@ -1832,6 +1717,78 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             TenantRepository tenantRepository = new TenantRepository(tenant);
             return tenantRepository.TenantExist(copyFromTenant);
+        }
+
+        private void GetTenantOtherFields(TenantPM entityPM)
+        {
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(entityPM.Id);
+
+            if (entityPM.CurrencyId != null)
+            {
+                CurrencyRepository currencyRepository = new CurrencyRepository(commonDataContext);
+                Currency currency = currencyRepository.GetSingleCurrencyById(entityPM.CurrencyId, entityPM.Id, true);
+
+                if (currency == null)
+                {
+                    currency = currencyRepository.GetSingleCurrencyById(entityPM.CurrencyId, 0, true);
+                }
+
+                if (currency != null)
+                {
+                    entityPM.CurrencyCode = currency.Code;
+                    entityPM.CurrencySign = currency.Sign;
+                }
+            }
+
+            if (entityPM.AddressId != null)
+            {
+                AddressRepository addressRepository = new AddressRepository(commonDataContext);
+                AddressQuery addressQuery = new AddressQuery(addressRepository);
+                AddressPM address = addressQuery.GetSingleAddressPM(entityPM.AddressId, entityPM.Id);
+
+                if (address != null)
+                {
+                    entityPM.CountryCode = address.CountryCode;
+                    entityPM.CountryName = address.CountryEnglishName;
+                    entityPM.CompanyAddress = address.Name;
+                }
+            }
+        }
+
+        private static void GetStaticTenantOtherFields(TenantPM entityPM)
+        {
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(entityPM.Id);
+
+            if (entityPM.CurrencyId != null)
+            {
+                CurrencyRepository currencyRepository = new CurrencyRepository(commonDataContext);
+                Currency currency = currencyRepository.GetSingleCurrencyById(entityPM.CurrencyId, entityPM.Id, true);
+
+                if (currency == null)
+                {
+                    currency = currencyRepository.GetSingleCurrencyById(entityPM.CurrencyId, 0, true);
+                }
+
+                if (currency != null)
+                {
+                    entityPM.CurrencyCode = currency.Code;
+                    entityPM.CurrencySign = currency.Sign;
+                }
+            }
+
+            if (entityPM.AddressId != null)
+            {
+                AddressRepository addressRepository = new AddressRepository(commonDataContext);
+                AddressQuery addressQuery = new AddressQuery(addressRepository);
+                AddressPM address = addressQuery.GetSingleAddressPM(entityPM.AddressId, entityPM.Id);
+
+                if (address != null)
+                {
+                    entityPM.CountryCode = address.CountryCode;
+                    entityPM.CountryName = address.CountryEnglishName;
+                    entityPM.CompanyAddress = address.Name;
+                }
+            }
         }
     }
 }

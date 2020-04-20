@@ -18,6 +18,7 @@ import {ObjectsLocator} from '../Locators/ObjectsLocator';
 import {EntityResourceService} from '../Services/EntityResourceService';;
 import {CachedDataManagerServices} from './CachedDataManagerServices';
 import { GeneralDomainService } from '../Services/GeneralDomainService';
+import { map, catchError, flatMap } from 'rxjs/operators';
 
 export class CachedDataManager {  
 
@@ -195,6 +196,10 @@ export class CachedDataManager {
             if (tablesCalls[k].ClientModuleName) {
                 //promises.push(entityListService.getAllFromCache(chachedTables[k].Name, filters)).then(res=> {
                 try {
+                    if (tablesCalls[k].Name == "VatType")
+                        filters.ForceCacheRefresh = true;
+                    else
+                        filters.ForceCacheRefresh = false;
 
                     var myCachedDataManagerServices = new CachedDataManagerServices();
                     myCachedDataManagerServices.getAllFromCache(tablesCalls[k].Name, filters).then((res: any) => {
@@ -251,11 +256,9 @@ export class CachedDataManager {
                 var authHeader = new Headers();
                 authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                return ServiceHelper.Http.get(ServiceHelper.GetLogitudeURL() + 'api/ObjectTableLastUpdate/GetLastTableUpdateDate/?' + 'tenant=' + SessionInfo.LoggedUserTenant, {
-                    headers: authHeader
-                }).subscribe(resp=> {
+                return ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + 'api/ObjectTableLastUpdate/GetLastTableUpdateDate/?' + 'tenant=' + SessionInfo.LoggedUserTenant, ServiceHelper.GetHttpHeaders()).subscribe((response: any) => {
 
-                    var lastdate = resp.json();
+                    var lastdate = response;
                     LocalStorageManager.SetItem("CachedTableLastUpdateDate" + SessionInfo.LoggedUserTenant, JSON.stringify(lastdate));
                     console.log(lastdate);
                 });
@@ -291,12 +294,10 @@ export class CachedDataManager {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return ServiceHelper.Http.get(ServiceHelper.GetLogitudeURL() + 'api/SystemMetadataLastUpdate/GetSystemMetadataLastUpdates/?' + 'tenant=' + 0, {
-                headers: authHeader
-            }).flatMap(response => {
+            return ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + 'api/SystemMetadataLastUpdate/GetSystemMetadataLastUpdates/?' + 'tenant=' + 0, ServiceHelper.GetHttpHeaders()).pipe(flatMap(response => {
                 return Observable.create(observer => {
 
-                    var list = response.json();
+                    var list = response;
 
                     var serverlastUpdates: MetaDataLastUpdateDates;
                     var clientlastUpdates: MetaDataLastUpdateDates;
@@ -351,7 +352,7 @@ export class CachedDataManager {
 
                     //return list;
                 });
-             }).catch(ServiceHelper.HandleTimerServiceError);
+            }), catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -371,10 +372,8 @@ export class CachedDataManager {
             var storedDate = LocalStorageManager.GetItem(cacheKey);
             if (storedDate) {
 
-                return ServiceHelper.Http.get(ServiceHelper.GetLogitudeURL() + 'api/ObjectTableLastUpdate/GetLastUpdatedTables/?' + 'tenant=' + SessionInfo.LoggedUserTenant + '&sinceDate=' + JSON.parse(storedDate) + '&clientEmail=' + SessionInfo.LoggedUserEmail, {
-                    headers: authHeader
-                }).map(response => {
-                    var list = response.json();
+                return ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + 'api/ObjectTableLastUpdate/GetLastUpdatedTables/?' + 'tenant=' + SessionInfo.LoggedUserTenant + '&sinceDate=' + JSON.parse(storedDate) + '&clientEmail=' + SessionInfo.LoggedUserEmail, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var list = response;
                     //CachedDataManager.needTobeUpdatedTablesList = CachedDataManager.MapJsonToEntityList<ObjectTableLastUpdatePM>(list, ObjectTableLastUpdatePM);
                     //for (var key in cachedJson) {
 
@@ -396,11 +395,9 @@ export class CachedDataManager {
 
                     return list;
 
-                    }).catch(ServiceHelper.HandleTimerServiceError);
+                }), catchError(ServiceHelper.HandleServiceError));
             }
-        }
-
-        );
+        });
 
     }
 
@@ -487,8 +484,8 @@ export class CachedDataManager {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = ServiceHelper.GetLogitudeURL() + 'api/ngMetaData/GetTenantTextCodes?tenant=' + SessionInfo.LoggedUserTenant;
         return Observable.defer(() => {
-            return ServiceHelper.Http.get(url, { headers: authHeader }).map(response => {
-                var newList = response.json();
+            return ServiceHelper.HttpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var newList = response;
                 for (var k in newList) {
                     var item = newList[k];
 
@@ -522,8 +519,8 @@ export class CachedDataManager {
                     //}
                 }
 
-                return response.json();
-            });
+                return response;
+            }), catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -535,8 +532,8 @@ export class CachedDataManager {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = ServiceHelper.GetLogitudeURL() + 'api/ngMetaData/GetTenantObjectFields?loggedTenant=' + SessionInfo.LoggedUserTenant;
         return Observable.defer(() => {
-            return ServiceHelper.Http.get(url, { headers: authHeader }).map(response => {
-                var newList = response.json();
+            return ServiceHelper.HttpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var newList = response;
                 for (var k in newList) {
                     var item = newList[k];
 
@@ -556,8 +553,8 @@ export class CachedDataManager {
  
                 }
 
-                return response.json();
-            });
+                return response;
+            }), catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -565,7 +562,7 @@ export class CachedDataManager {
     public static RefreshObjectFieldsModifications() {
         console.log("calling refresh for object fields modifications");
         var generalDomainService: GeneralDomainService = new GeneralDomainService();
-        generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe(response => {
+        generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe((response: ServiceResponse) => {
 
             if (!response.HasError) {
                 window.ObjectFieldModifications = response.Result;

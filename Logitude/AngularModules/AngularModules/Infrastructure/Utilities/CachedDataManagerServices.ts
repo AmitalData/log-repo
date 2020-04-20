@@ -90,7 +90,7 @@ import { FeatureToggleListService } from '../Services/StandardLists/FeatureToggl
 // Tariff Module
 import { TariffListService } from '../../TariffModule/Services/StandardLists/TariffListService';
 import { TariffTypeListService } from '../../TariffModule/Services/StandardLists/TariffTypeListService';
-
+import { TariffProductListService } from '../../TariffModule/Services/StandardLists/TariffProductListService';
 
 //Occasions
 import { OccasionStatusListService } from '../../CRM/Services/StandardLists/OccasionStatusListService';
@@ -210,6 +210,7 @@ export class CachedDataManagerServices {
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
+            case "TariffProductListService": { myResult = new TariffProductListService(); break; }    
             default: {
 
                 if (ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {

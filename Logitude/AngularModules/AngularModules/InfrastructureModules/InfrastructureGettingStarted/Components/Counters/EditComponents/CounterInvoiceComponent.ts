@@ -29,12 +29,14 @@ export class CounterInvoiceComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public SameRadioButtonLabel: string;
     public DiffRadioButtonLabel: string;
+    public HasInterestFeature: boolean=false;
     public ItemsSource: CounterInvoiceDefinitionItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
         this.HasConsolidationFeature = FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent");
+        this.HasInterestFeature = FeatureLocator.HasFeaturePermession("InterestReport", "Module");
 
         if (this.HasConsolidationFeature) {
             this.SameRadioButtonLabel = "Same for Invoice, Credit, Manifest and Consolidation.";
@@ -134,9 +136,12 @@ export class CounterInvoiceComponent extends BaseComponent {
         itemsParams.push({ Code: 'MN', Name: "Manifest" });
         itemsParams.push({ Code: 'CI', Name: "Customs Invoice" });
         itemsParams.push({ Code: 'CC', Name: "Customs Credit" });
-
         if (this.HasConsolidationFeature) {
             itemsParams.push({ Code: 'CON', Name: "Consolidation" });
+        }
+        if (this.HasInterestFeature) {
+            itemsParams.push({ Code: 'IT', Name: "Interest Invoice" });
+            itemsParams.push({ Code: 'IC', Name: "Interest Credit" });
         }
 
         itemsParams.forEach(item => {

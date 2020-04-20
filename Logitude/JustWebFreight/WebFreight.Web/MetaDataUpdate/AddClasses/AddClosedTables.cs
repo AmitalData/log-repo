@@ -326,24 +326,24 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static void AddChargesGroups(ChargesGroupDetails chargesGroupDetails, ChargesGroupRepository chargesGroupRepository)
         {
-            var allChargesGroups0 = chargesGroupRepository.GetChargesGroups(0).ToList();
-            Dictionary<string, ChargesGroup> tenantChargesGroups = allChargesGroups0.ToDictionary(d => d.Code, a => a);
+            //var allChargesGroups0 = chargesGroupRepository.GetChargesGroups(0).ToList();
+            //Dictionary<string, ChargesGroup> tenantChargesGroups = allChargesGroups0.ToDictionary(d => d.Code, a => a);
 
-            if (tenantChargesGroups.Keys.Contains(chargesGroupDetails.Code))
-            {
-                ChargesGroup chargesGroup = chargesGroupRepository.GetSingleChargesGroupByCode(chargesGroupDetails.Code, 0);
-                chargesGroup.Name = chargesGroupDetails.Name;
-                chargesGroup.ViewOrder = chargesGroupDetails.ViewOrder;
-                chargesGroup.SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower();
-                chargesGroupRepository.Update(chargesGroup);
-            }
-            else
-            {
-                ChargesGroup newChargesGroup = new ChargesGroup() { Code = chargesGroupDetails.Code, Name = chargesGroupDetails.Name,ViewOrder = chargesGroupDetails.ViewOrder, SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower() };
-                newChargesGroup.Id = IdCounter.GetNumber("ChargesGroup", 0);
-                newChargesGroup.Tenant = 0;
-                chargesGroupRepository.Add(newChargesGroup);
-            }
+            //if (tenantChargesGroups.Keys.Contains(chargesGroupDetails.Code))
+            //{
+            //    ChargesGroup chargesGroup = chargesGroupRepository.GetSingleChargesGroupByCode(chargesGroupDetails.Code, 0);
+            //    chargesGroup.Name = chargesGroupDetails.Name;
+            //    chargesGroup.ViewOrder = chargesGroupDetails.ViewOrder;
+            //    chargesGroup.SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower();
+            //    chargesGroupRepository.Update(chargesGroup);
+            //}
+            //else
+            //{
+            //    ChargesGroup newChargesGroup = new ChargesGroup() { Code = chargesGroupDetails.Code, Name = chargesGroupDetails.Name,ViewOrder = chargesGroupDetails.ViewOrder, SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower() };
+            //    newChargesGroup.Id = IdCounter.GetNumber("ChargesGroup", 0);
+            //    newChargesGroup.Tenant = 0;
+            //    chargesGroupRepository.Add(newChargesGroup);
+            //}
         }
         
         public static void AddVolumeUnits(VolumeUnitDetails volumeUnitDetails, VolumeUnitRepository volumeUnitRepository)

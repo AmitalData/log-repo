@@ -74,7 +74,26 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
         }
 
 
-
+        protected override void Trace(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO, string changesXml)
+        {
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
+            {
+                if (entityPM.StatusCode != entityPOCO.StatusCode)
+                {
+                    if (entityPM.StatusCode == "CAEA")
+                    {
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = entityPM.Tenant,
+                            EventTypeCode = "CAEA",
+                            UserId = entityPM.UpdatedByUserId,
+                            EntityId = entityPM.Id,
+                            ObjectTableName = "WarehouseEntry",
+                        });
+                    }
+                }
+            }
+        }
 
         protected override void OnUpdating(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
         {

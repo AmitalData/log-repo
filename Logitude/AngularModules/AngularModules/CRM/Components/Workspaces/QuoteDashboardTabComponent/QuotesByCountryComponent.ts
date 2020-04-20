@@ -31,7 +31,7 @@ export class QuotesByCountryComponent implements OnInit {
         this.dashboardArgs = new QuoteDashboardArguments();
         this.dashboardService = new DashboardService();
 
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
             this.FillDashboardArgs();
             this.LoadDashboardData();
         });
@@ -174,6 +174,14 @@ export class QuotesByCountryComponent implements OnInit {
         filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", true, false, false, "Boolean");
         filterAgrs.addAdditionalFilter("SalesmanUserId", this.dashboardArgs.OwnerId, null, null, "Equals", false, false, false, "String");
         filterAgrs.addAdditionalFilter("BusinessUnitId", this.dashboardArgs.BusinessUnitId, null, null, "Equals", true, false, false, "string");
+
+        if (this.SelectedDirectionFilter != "All") {
+            filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, false, false, "String");
+        }
+
+        if (this.SelectedTransportFilter != "All") {
+            filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", true, false, false, "string");
+        }
 
         var listArgs = new ListComponentArgs();
         listArgs.Filters = filterAgrs;

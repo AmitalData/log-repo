@@ -57,7 +57,9 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  SearchFields="&quot;TarrifFromTo,TarrifFromToes,,Id,&quot;">
+  SearchFields="&quot;TarrifFromTo,TarrifFromToes,,Id,&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7e2c2a09-4981-4afb-aad2-1c1a1af894f2&quot;"
     FieldName="&quot;Id&quot;"
@@ -68,7 +70,7 @@
     ObjectTableName="&quot;TarrifFromTo&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -214,14 +216,14 @@
     LookUpTableName="&quot;TarrifHeader&quot;"
     MinLength="0"
     MaxLength="15"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
@@ -253,7 +255,7 @@
     FullFieldLable="&quot;TarrifHeaderId&quot;"
     DefaultText="&quot;Tariff Header&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -275,7 +277,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="TarrifHeader"
+    NavigationPropertyName="TarrifHeader" />
   <field
     Id="&quot;9dd3f4ab-daa2-441e-9c3f-e79cbc564ad2&quot;"
     FieldName="&quot;TarrifFromToTypeCode&quot;"
@@ -327,7 +331,7 @@
     FullFieldLable="&quot;TarrifFromToTypeCode&quot;"
     DefaultText="&quot;Tariff From To Type Code&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -349,7 +353,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="TarrifFromToType"
+    NavigationPropertyName="TarrifFromToType" />
   <field
     Id="&quot;d8df4e08-6e84-4154-b576-18c032db8f6f&quot;"
     FieldName="&quot;PortId&quot;"
@@ -401,7 +407,7 @@
     FullFieldLable="&quot;PortId&quot;"
     DefaultText="&quot;Port&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -423,7 +429,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Port"
+    NavigationPropertyName="Port" />
   <field
     Id="&quot;f4d5096e-98f1-4f9a-a780-f47ac1b86b04&quot;"
     FieldName="&quot;CountryId&quot;"
@@ -475,7 +483,7 @@
     FullFieldLable="&quot;CountryId&quot;"
     DefaultText="&quot;Country&quot;"
     IsNullable="false"
-    IsForeignKey="false"
+    IsForeignKey="true"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -497,7 +505,9 @@
     IsSpellCheckedHelpLocalDefaultText="true"
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
-    EnableFullscreenTextBox="false" />
+    EnableFullscreenTextBox="false"
+    ForeignEntity="Country"
+    NavigationPropertyName="Country" />
   <field
     Id="&quot;6a953756-b262-4f58-8d03-2e16f8620911&quot;"
     FieldName="&quot;PortCode&quot;"

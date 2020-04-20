@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {Observable}     from 'rxjs/Rx';
@@ -9,160 +8,154 @@ import {QuotePM} from '../EntityPMs/QuotePM';
 import {QuoteSettingPM} from '../EntityPMs/QuoteSettingPM';
 import {QuoteStageList} from '../EntityLists/QuoteStageList';
 import { QuotePMService } from './StandardPMs/QuotePMService';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+//import { defer } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 export class QuoteDomainService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
+    private _httpClient: HttpClient
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
+        this._httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuoteDomain';
     }
-
+    
     GetQuotesCounts(ownerId: string, businessUnitId: string, directionId: string, transportModeId: string, RecordsTypeCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetQuotesCounts?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&directionId=' + directionId + '&transportModeId=' + transportModeId + '&RecordsTypeCode=' + RecordsTypeCode;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+                
+                map(response => {
+                    var myJsonResult = response;
 
-                var myJsonResult = response.json();
-                var myResult = new CRMSummary();
+                    var myResult = new CRMSummary();
 
-                if (myJsonResult) {
-                    var jsonListKeys = Object.keys(myJsonResult);
-                    for (var key in jsonListKeys) {
-                        var property = jsonListKeys[key];
-                        myResult[property] = myJsonResult[property];
+                    if (myJsonResult) {
+                        var jsonListKeys = Object.keys(myJsonResult);
+                        for (var key in jsonListKeys) {
+                            var property = jsonListKeys[key];
+                            myResult[property] = myJsonResult[property];
+                        }
                     }
-                }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myResult;
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = myResult;
+                    return serviceResponse;
+                }),
+                
+                catchError(ServiceHelper.HandleServiceError));
         });
     }
+
     GetQuotesByOpportunityId(oportunityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetQuotesByOpportunityId?oportunityId=' + oportunityId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
 
     }
     ConnectQuotesToOpportunity(oportunityId: string, quotesIds:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
+   
         var url = this._apiUrl + '/GetConnectQuotesToOpportunity?opportunityId=' + oportunityId + '&quotesIds=' + quotesIds;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
 
     }
     GetRecentQuotes(ownerId: string, businessUnitId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetRecentQuotes?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+                
+                map(response => {
+                    var allLists = response;
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = allLists;
+                    return serviceResponse;
+                }),
+                
+                catchError(ServiceHelper.HandleServiceError));
         });
     }  
     GetDataCountsForCRM(tenant: number, customerid: string) {
         var _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomersData';
-        var authHeader = new Headers();
-
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = _apiUrl + '/GetDataCountsForCRM?customerId=' + customerid + '&tenant=' + tenant;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetStageFunnelData(ownerId: string, businessUnitId: string, RecordsTypeCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetStageFunnelData?OwnerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetStageFunnelData?OwnerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse.Result;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }    
     GetCRMMoneyInformation(tenant: number, customerid: string) {
         var _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomersData';
-        var authHeader = new Headers();
-
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = _apiUrl + '/GetCRMMoneyInformation?CRMMoneyCustomerId=' + customerid + '&tenant=' + tenant;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetSingleQuoteStageListByCode(code: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetSingleQuoteStageListByCode?code=' + code;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var myJsonResult = response.json();
+                var myJsonResult = response;
 
                 var mappedResult: QuoteStageList;
 
@@ -180,95 +173,82 @@ export class QuoteDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }    
     ComputeQuoteAutomaticSubject(entityPM: QuotePM) {
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
             var iService = new QuotePMService();
             var mappedEntity: QuotePM = iService.MapJsonToEntityPM(entityPM, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetActivitiesByQuoteId(entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         var url = this._apiUrl + '/GetActivitiesByQuoteId?entityId=' + entityId;
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetIsQuoteConnectedToShipment(quoteId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetIsQuoteConnectedToShipment?quoteId=' + quoteId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var result = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = result;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
 
     }
 
     GetQuoteSettings() {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetQuoteSettings';
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var itemJSON = response.json();
+                var itemJSON = response;
                 var itemMapped: QuoteSettingPM = this.MapQuoteSettings(itemJSON);
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = itemMapped;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     UpdateQuoteSettings(entityPM: QuoteSettingPM) {
         return Observable.defer(() => {
 
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
             var mappedEntity: QuoteSettingPM = this.MapQuoteSettings(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
+            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myJsonResult = res;
 
                 var mappedResult: QuoteSettingPM = this.MapQuoteSettings(myJsonResult, true, entityPM);
 
@@ -276,7 +256,7 @@ export class QuoteDomainService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     MapQuoteSettings(jsonPM: any, getCallMap: boolean = true, entityPM: QuoteSettingPM = null) {
@@ -303,14 +283,12 @@ export class QuoteDomainService {
     }
 
     GetQuoteConnectedEntities(quoteId: string, opportunityId: string ) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetQuoteConnectedEntities?quoteId=' + quoteId + '&opportunityId=' + opportunityId;
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var listJason = response.json();
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
                 var listMapped: Array<QuoteConnectedEntity> = [];
 
                 for (var itemJeson in listJason) {
@@ -321,7 +299,7 @@ export class QuoteDomainService {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = listMapped;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     MapQuoteConnectedEntity(jsonList: any) {

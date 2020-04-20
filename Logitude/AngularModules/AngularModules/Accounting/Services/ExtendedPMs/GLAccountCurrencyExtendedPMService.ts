@@ -1,7 +1,6 @@
 ﻿
 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -11,31 +10,30 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-
 import {GLAccountCurrencyPM} from '../../EntityPMs/GLAccountCurrencyPM';
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
-
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
+ 
 @Injectable()
 
 export class GLAccountCurrencyExtendedPMService{
 
-    private _http: Http;
+
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+       
+        this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccountCurrency';
     }
 
     insert(entityPM: GLAccountCurrencyPM) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+     
 
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
+         
             var validator: ClassLevelValidator;
 
             validator = new ClassLevelValidator();
@@ -48,11 +46,9 @@ export class GLAccountCurrencyExtendedPMService{
             if (errorsArray.length == 0) {
                 var mappedEntity: GLAccountCurrencyPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((response) => {
-
-                        var pm = response.json();
+                return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity) ,  ServiceHelper.GetHttpHeaders()).pipe(
+                    map(response => {
+                        var pm = response;
                         if (pm) {
                             var mappedResult: GLAccountCurrencyPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -63,7 +59,9 @@ export class GLAccountCurrencyExtendedPMService{
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+                 
             }
             else {
 
@@ -73,9 +71,7 @@ export class GLAccountCurrencyExtendedPMService{
                 return Observable.of(serviceResponse);
 
             }
-        }
-
-        );
+      
     }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: GLAccountCurrencyPM = null) {

@@ -455,10 +455,12 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new UserLastSettingsMap());
             modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
             modelBuilder.Configurations.Add(new CustomsInterfaceMap());
+            modelBuilder.Configurations.Add(new TariffCarrierTranslationMap());
 
             base.OnModelCreating(modelBuilder);
         }
 
+        public IDbSet<TariffCarrierTranslation> TariffCarrierTranslations { get; set; }
         public IDbSet<VatFormatType> VatFormatTypes { get; set; }
         public IDbSet<EmailProvider> EmailProviders { get; set; }
         public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }

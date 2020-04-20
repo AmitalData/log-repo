@@ -65,7 +65,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CalculatedExcepInterestAmount, 
 	         CalculatedCreditInterestAmount, 
 	         CalculationDetails, 
-	         LineNumber,
+	         LineNumber, 
+	         TotalInterest,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

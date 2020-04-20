@@ -4,7 +4,7 @@
   ObjectTableName="&quot;Toggle&quot;"
   IsNew="true"
   DBTableName="&quot;Toggles&quot;"
-  OldDBTableName="&quot;Toggles&quot;"
+  DBTableOldNames="Toggles"
   ObjectTableSingular="&quot;Toggle&quot;"
   ObjectTablePlural="&quot;Toggles&quot;"
   HasCustomFilter="false"
@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;9718&quot;"
+  Code="&quot;5173&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -62,11 +62,13 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;e2c2eccb-a53a-4781-ade4-abff679a9dfc&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -113,6 +115,7 @@
     ListLableDefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -126,6 +129,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -136,7 +140,7 @@
   <field
     Id="&quot;5f449aff-1b66-401e-95cc-6e6043b3e653&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -183,6 +187,7 @@
     ListLableDefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -196,6 +201,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -206,7 +212,7 @@
   <field
     Id="&quot;80be495f-9193-496f-a709-280062c6fe23&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -253,6 +259,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -266,6 +273,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -273,6 +281,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;ToggleHeaderScreen&quot;"
+    ObjectTableName="&quot;Toggle&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -323,10 +340,6 @@
       Name="&quot;Build Document Report Service&quot;"
       SearchFields="&quot;BDR,Build Document Report Service&quot;" />
     <Record
-      Name="&quot;QuotationRoutingRatesQuotes&quot;"
-      Code="&quot;QRR&quot;"
-      SearchFields="&quot;QRR,QuotationRoutingRatesQuotes&quot;" />
-    <Record
       Code="&quot;RRW&quot;"
       Name="&quot;Run Report Via WorkerRole&quot;"
       SearchFields="&quot;RRW,Run Report Via WorkerRole&quot;" />
@@ -342,6 +355,14 @@
       Code="&quot;BDW&quot;"
       Name="&quot;Build Document Via WorkerRole&quot;"
       SearchFields="&quot;BDW,Build Document Via WorkerRole&quot;" />
+    <Record
+      Code="&quot;RRS&quot;"
+      Name="&quot;Run Report on Secondary DB&quot;"
+      SearchFields="&quot;RRS,Run Report on Secondary DB&quot;" />
+    <Record
+      Name="&quot;Charges DWH&quot;"
+      Code="&quot;CWH&quot;"
+      SearchFields="&quot;CWH,Charges DWH&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

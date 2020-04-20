@@ -112,15 +112,15 @@ export class CargoSplitGeneralTabComponent
         this.ItemsList = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         //this.entityArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCargoIdentifier").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCon").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsItem").subscribe(response => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsPackDet").subscribe(response => {
-                                this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
-                                    //this.Init();
-                                    //this.EntityPM = this.entityArgs.EntityPM;
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCargoIdentifier").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCon").subscribe((response:any) => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsItem").subscribe((response:any) => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsPackDet").subscribe((response:any) => {
+                                this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe((response:any) => {
+                                //this.Init();
+                                //this.EntityPM = this.entityArgs.EntityPM;
                                     //this.ObjectTableName = this.entityArgs.ObjectTableName;
                                     this._EntityResourceFinished = true;
 

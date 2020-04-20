@@ -30,7 +30,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
             if (isInlandDomestic)
             {
-                
+
             }
 
             else
@@ -60,6 +60,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
             ValidateConvertQuote(entityPM);
             ValidateFCLDuplicatedPackages(entityPM);
             ValidateDomesticQuote(entityPM);
+            ValidateQuoteCharges(entityPM);
         }
 
         private static void ValidateConvertQuote(QuotePM entityPM)
@@ -115,7 +116,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                             }
                         }
 
-                        throw new ApplicationException("You are restricted for " + airlineCodes + " Airlines only"); 
+                        throw new ApplicationException("You are restricted for " + airlineCodes + " Airlines only");
                     }
                 }
             }
@@ -271,17 +272,19 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 AccountingSetting accountingSetting = (from d in myCommonContext.AccountingSettings
                                                        where d.Id == entityPM.Tenant
                                                        select d).FirstOrDefault();
-
-                if (!accountingSetting.EnableMultiPercentageVATTypes)
+                if (accountingSetting != null)
                 {
-                    List<VatType> allVats = (from f in myCommonContext.VatTypes
-                                             where allVatsIds.Contains(f.Id)
-                                             && f.Tenant == entityPM.Tenant
-                                             select f).ToList();
-
-                    if (allVats.Where(d => d.IsMultiPercentage).Any())
+                    if (!accountingSetting.EnableMultiPercentageVATTypes)
                     {
-                        throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
+                        List<VatType> allVats = (from f in myCommonContext.VatTypes
+                                                 where allVatsIds.Contains(f.Id)
+                                                 && f.Tenant == entityPM.Tenant
+                                                 select f).ToList();
+
+                        if (allVats.Where(d => d.IsMultiPercentage).Any())
+                        {
+                            throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
+                        }
                     }
                 }
             }
@@ -381,7 +384,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                     List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
                     AddDomesticPort(iDomesticCountries, entityPM.FromPortId, entityPM.Tenant);
                     AddDomesticPort(iDomesticCountries, entityPM.ToPortId, entityPM.Tenant);
-   
+
                     if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
                     {
                         bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
@@ -395,7 +398,6 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 }
             }
         }
-
         private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
         {
             if (!string.IsNullOrEmpty(iPortId))
@@ -436,6 +438,33 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
                         });
                     }
+                }
+            }
+        }
+        private static void ValidateQuoteCharges(QuotePM entityPM)
+        {
+            foreach (QuoteChargePM item in entityPM.QuoteCharges)
+            {
+                switch (item.ChangeSetOp)
+                {
+                    case Simplog.Server.Infrastructure.ChangeSetOperation.Insert:
+                    case Simplog.Server.Infrastructure.ChangeSetOperation.Update:
+                        {
+                            if (item.CostCurrencyId == null)
+                            {
+                                if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
+                                {
+                                    throw new ApplicationException("Tenant freight currency is required");
+                                }
+
+                                else
+                                {
+                                    throw new ApplicationException("Tenant other Charges currency is required");
+                                }
+                            }
+
+                            break;
+                        }
                 }
             }
         }

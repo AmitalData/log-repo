@@ -2,74 +2,37 @@
 <Table
   Name="Tenants"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
-    Name="Id"
-    Type="int">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Company"
-    Type="varchar"
-    Size="100">
+    Name="IsHybrid"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="CurrencyId"
+    Name="DefaultQuestionnaireId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="Email"
-    Type="varchar"
-    Size="50">
+    Name="IsMobileActivated"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
-    Name="Website"
-    Type="varchar"
-    Size="100">
+    Name="AllowEAWBMoreThanTenPackages"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
-    Name="AddressId"
+    Name="Signature"
     Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LocalAddressId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Format"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Language"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Direction"
-    Type="varchar"
-    Size="40">
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
@@ -81,117 +44,49 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Signature"
+    Name="VatNumber"
     Type="varchar"
-    Size="60">
+    Size="20">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="CASSCode"
+    Name="AddressId"
     Type="varchar"
-    Size="4">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="DimensionsUnitCode"
+    Name="Company"
     Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VolumeUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="GrossWeightUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ChargeableWeightUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExportFreightPrepaidCollectId"
-    Type="varchar"
-    Size="1">
+    Size="100">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="ExportOtherPrepaidCollectId"
+    Name="PaymentTermId"
     Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ImportFreightPrepaidCollectId"
-    Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ImportOtherPrepaidCollectId"
-    Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="MasterExportFreightPrepaidCollectId"
-    Type="varchar"
-    Size="1">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="MasterExportOtherPrepaidCollectId"
+    Name="AgentId"
     Type="varchar"
-    Size="1">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="MasterImportFreightPrepaidCollectId"
+    Name="CurrencyId"
     Type="varchar"
-    Size="1">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="MasterImportOtherPrepaidCollectId"
-    Type="varchar"
-    Size="1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsHybrid"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsQuoteSubjectEdited"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="DefaultQuestionnaireId"
+    Name="ProfitCurrencyId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -212,15 +107,156 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="VatNumber"
+    Name="QuoteSaleCurrencyId"
     Type="varchar"
-    Size="20">
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VolumeUnitCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DimensionsUnitCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GrossWeightUnitCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChargeableWeightUnitCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WeightMeasurementUnitCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportFreightPrepaidCollectId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ImportFreightPrepaidCollectId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ExportOtherPrepaidCollectId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ImportOtherPrepaidCollectId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MasterExportFreightPrepaidCollectId"
+    ShortName="MasterExportFreightPCId"
+    OldNames="MasterExportFreightPCId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MasterImportFreightPrepaidCollectId"
+    ShortName="MasterImportFreightPCId"
+    OldNames="MasterImportFreightPCId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MasterExportOtherPrepaidCollectId"
+    ShortName="MasterExportOtherPCId"
+    OldNames="MasterExportOtherPCId"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MasterImportOtherPrepaidCollectId"
+    ShortName="MasterImportOtherPCId"
+    OldNames="MasterImportOtherPCId"
+    Type="varchar"
+    Size="1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="TimeZoneOffset"
     Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Language"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Id"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Email"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Website"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Format"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Direction"
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -243,111 +279,14 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="QuoteSaleCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="PasswordPolicyCode"
     Type="varchar"
     Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="PaymentTermId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ProfitCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="AgentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="IsDataBackupBuilt"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="WeightMeasurementUnitCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DateTimeFormat"
-    Type="varchar"
-    Size="100"
-    DefaultValue="'dd\/MM\/yyyy'">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="LocalCustomsCode"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VatUniqueTypeCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VatUniqueCountryId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VatMandatoryCountryId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VatMandatoryTypeCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VatMandatoryForPotentialCustomers"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AllowAgentInCustomersLOV"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -374,19 +313,15 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="DateTimeFormat"
+    Type="varchar"
+    Size="100"
+    DefaultValue="'dd\/MM\/yyyy'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="IsSharedLogisticsActivated"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsWebAccessActivated"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsMobileActivated"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -396,6 +331,48 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="CASSCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LocalCustomsCode"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VatUniqueTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VatMandatoryTypeCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VatUniqueCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VatMandatoryCountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="IsCustomerTelRequired"
@@ -422,19 +399,21 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="VatMandatoryForPotentialCustomers"
+    ShortName="VaTMandatoryPotentialCustomers"
+    OldNames="VaTMandatoryPotentialCustomers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="HasPrimaryContact"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="AllowEAWBMoreThanTenPackages"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ExportQuotationsToIntegratedSystem"
+    Name="IsQuoteSubjectEdited"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -461,12 +440,6 @@
   </Column>
   <Column
     Name="IsCustomerTenantShare"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CustomerTenantShareExportFile"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -510,16 +483,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsCorrespondenceRightToLeftEnabled"
-    Type="bit">
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="IsNotesRightToLeftEnabled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="AccountingActivationDate"
@@ -534,13 +502,54 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsInternalTicketByDefault"
+    Name="ExportQuotationsToIntegratedSystem"
+    ShortName="ExportQuotationsToIntegrated"
+    OldNames="ExportQuotationsToIntegrated"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="IsFullTextSearchEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TenantVATManagement"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StorageEncryptionKey"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LayoutDirection"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TenantEmailSendingQuota"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsWebAccessActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsInternalTicketByDefault"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -566,24 +575,26 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="TenantVATManagement"
+    Name="IsCorrespondenceRightToLeftEnabled"
+    ShortName="IsCorrespondenceRTLEnabled"
+    OldNames="IsCorrespondenceRTLEnabled"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="StorageEncryptionKey"
-    Type="varchar"
-    Size="40">
+    Name="IsNotesRightToLeftEnabled"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
-    Name="LayoutDirection"
-    Type="nvarchar"
-    Size="-1">
+    Name="AllowAgentInCustomersLOV"
+    ShortName="AllowAgentInShipCustomersLOV"
+    OldNames="AllowAgentInShipCustomersLOV"
+    Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="TemperatureUnitCode"
@@ -600,11 +611,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="TenantEmailSendingQuota"
-    Type="int"
-    DefaultValue="0">
+    Name="LocalAddressId"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="NumberFormatCode"
@@ -612,6 +623,12 @@
     Size="4">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerTenantShareExportFile"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="EcommerceSupportEmail"
@@ -648,13 +665,13 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ApplyVATForAllPartners"
+    Name="HideFCLAllIn"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="HideFCLAllIn"
+    Name="ApplyVATForAllPartners"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -665,74 +682,41 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
-    ForeignKeyColumn="CurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DisplayDocumentsAndEvents"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="LocalAddressId"
-    ReferencedTable="Addresses"
+    ForeignKeyColumn="PaymentTermId"
+    ReferencedTable="PaymentTerms"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="DimensionsUnitCode"
-    ReferencedTable="DimensionsUnits"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="VolumeUnitCode"
-    ReferencedTable="VolumeUnits"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="GrossWeightUnitCode"
-    ReferencedTable="WeightUnits"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ExportFreightPrepaidCollectId"
-    ReferencedTable="PrepaidCollects"
+    ForeignKeyColumn="AgentId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="ExportOtherPrepaidCollectId"
-    ReferencedTable="PrepaidCollects"
+    ForeignKeyColumn="CurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="ImportFreightPrepaidCollectId"
-    ReferencedTable="PrepaidCollects"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ImportOtherPrepaidCollectId"
-    ReferencedTable="PrepaidCollects"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="MasterExportFreightPrepaidCollectId"
-    ReferencedTable="PrepaidCollects"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="MasterExportOtherPrepaidCollectId"
-    ReferencedTable="PrepaidCollects"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="MasterImportFreightPrepaidCollectId"
-    ReferencedTable="PrepaidCollects"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="MasterImportOtherPrepaidCollectId"
-    ReferencedTable="PrepaidCollects"
+    ForeignKeyColumn="ProfitCurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -751,24 +735,24 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="PasswordPolicyCode"
-    ReferencedTable="PasswordPolicies"
+    ForeignKeyColumn="VolumeUnitCode"
+    ReferencedTable="VolumeUnits"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="PaymentTermId"
-    ReferencedTable="PaymentTerms"
-    ReferencedColumn="Id"
+    ForeignKeyColumn="DimensionsUnitCode"
+    ReferencedTable="DimensionsUnits"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="ProfitCurrencyId"
-    ReferencedTable="Currencies"
-    ReferencedColumn="Id"
+    ForeignKeyColumn="GrossWeightUnitCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="AgentId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
+    ForeignKeyColumn="ChargeableWeightUnitCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="WeightMeasurementUnitCode"
@@ -776,8 +760,58 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="ExportFreightPrepaidCollectId"
+    ReferencedTable="PrepaidCollects"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ImportFreightPrepaidCollectId"
+    ReferencedTable="PrepaidCollects"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ExportOtherPrepaidCollectId"
+    ReferencedTable="PrepaidCollects"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ImportOtherPrepaidCollectId"
+    ReferencedTable="PrepaidCollects"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MasterExportFreightPrepaidCollectId"
+    ReferencedTable="PrepaidCollects"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MasterImportFreightPrepaidCollectId"
+    ReferencedTable="PrepaidCollects"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MasterExportOtherPrepaidCollectId"
+    ReferencedTable="PrepaidCollects"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MasterImportOtherPrepaidCollectId"
+    ReferencedTable="PrepaidCollects"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PasswordPolicyCode"
+    ReferencedTable="PasswordPolicies"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="VatUniqueTypeCode"
     ReferencedTable="VatUniqueType"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="VatMandatoryTypeCode"
+    ReferencedTable="VatMandatoryType"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -789,11 +823,6 @@
     ForeignKeyColumn="VatMandatoryCountryId"
     ReferencedTable="Countries"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="VatMandatoryTypeCode"
-    ReferencedTable="VatMandatoryType"
-    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="CustomerId"
@@ -816,6 +845,11 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="LocalAddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="NumberFormatCode"
     ReferencedTable="NumberFormats"
     ReferencedColumn="Code"
@@ -826,5 +860,5 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="ChargeableWeightUnitCode" />
+    Columns="AutomaticLastUpdateDate" />
 </Table>

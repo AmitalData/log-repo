@@ -2,7 +2,8 @@
 <Table
   Name="ObjectTableRules"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -147,7 +148,8 @@
     ForeignKeyColumn="TriggerFieldId"
     ReferencedTable="ObjectFields"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <UniqueConstraint
     Columns="RuleCode,Tenant" />
 </Table>

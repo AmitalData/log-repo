@@ -792,5 +792,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public DateTime? FirstARInvoiceApprovalDate { get; set; }
         public int? WarehouseStorageFreeDays { get; set; }
+
+        public string SLAC { get; set; }
     }
 }

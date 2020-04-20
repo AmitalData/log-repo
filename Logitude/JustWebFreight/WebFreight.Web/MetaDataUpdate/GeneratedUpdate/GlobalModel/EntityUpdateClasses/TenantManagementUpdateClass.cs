@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class TenantManagementUpdateClass
-   {  
+   {  		
+		public const string HashString = "9a9a5a218dcc1aa5a3be499ba57d2802";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	             				    ObjectTableName =  "TenantManagement",
 			      				    IsNew =  false,
 			      				    DBTableName =  "TenantManagements",
-			      				    OldDBTableName =  "TenantManagements",
 			      				    ObjectTableSingular =  "Tenant Management",
 			      				    ObjectTablePlural =  "Tenant Managements",
 			      				    HasCustomFilter =  true,
@@ -129,22 +129,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "TenantManagement,TenantManagements,,,",
+			      				    HashString =  TenantManagementUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EnableBranding",
-					  						OldFieldName =  "EnableBranding",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -199,14 +199,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "EnableBranding",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TrialStartDate",
-					  						OldFieldName =  "TrialStartDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -265,14 +264,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TrialStartDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TrialEndDate",
-					  						OldFieldName =  "TrialEndDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -331,14 +329,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TrialEndDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ProductionEndDate",
-					  						OldFieldName =  "ProductionEndDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -396,14 +393,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ProductionEndDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaidUntilDate",
-					  						OldFieldName =  "PaidUntilDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -462,14 +458,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaidUntilDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsTrial",
-					  						OldFieldName =  "IsTrial",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -527,14 +522,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsTrial",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "NumberOfUsers",
-					  						OldFieldName =  "NumberOfUsers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -592,16 +586,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "NumberOfUsers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -657,14 +650,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -722,14 +714,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CountryName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TimeZone",
-					  						OldFieldName =  "TimeZone",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -785,14 +776,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TimeZone",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsActive",
-					  						OldFieldName =  "IsActive",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -850,14 +840,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsActive",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "GlobalDBId",
-					  						OldFieldName =  "GlobalDBId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -913,14 +902,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "GlobalDBId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TTY",
-					  						OldFieldName =  "TTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  7,
@@ -978,14 +966,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FreeUsers",
-					  						OldFieldName =  "FreeUsers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1043,14 +1030,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FreeUsers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapContractQTYs",
-					  						OldFieldName =  "BluesnapContractQTYs",
+					 						FieldName =  "BluesnapContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1069,8 +1055,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapContractQTYs",
-					  						ListPropertyPath =  "BluesnapContractQTYs",
+					  						PMPropertyPath =  "BluesnapContractQTY",
+					  						ListPropertyPath =  "BluesnapContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1081,7 +1067,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapContractQTYs",
+					  						Code =  "BluesnapContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1090,7 +1076,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapContractQTYs",
+					  						FullFieldLable =  "BluesnapContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1102,17 +1088,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapContractQTYs",
+					  						HelpTextCode =  "BluesnapContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapCRMContractQTYs",
-					  						OldFieldName =  "BluesnapCRMContractQTYs",
+					 						FieldName =  "BluesnapCRMContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1131,8 +1116,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapCRMContractQTYs",
-					  						ListPropertyPath =  "BluesnapCRMContractQTYs",
+					  						PMPropertyPath =  "BluesnapCRMContractQTY",
+					  						ListPropertyPath =  "BluesnapCRMContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1143,7 +1128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapCRMContractQTYs",
+					  						Code =  "BluesnapCRMContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1152,7 +1137,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapCRMContractQTYs",
+					  						FullFieldLable =  "BluesnapCRMContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1164,17 +1149,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapCRMContractQTYs",
+					  						HelpTextCode =  "BluesnapCRMContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapEAWBContractQTYs",
-					  						OldFieldName =  "BluesnapEAWBContractQTYs",
+					 						FieldName =  "BluesnapEAWBContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1193,8 +1177,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapEAWBContractQTYs",
-					  						ListPropertyPath =  "BluesnapEAWBContractQTYs",
+					  						PMPropertyPath =  "BluesnapEAWBContractQTY",
+					  						ListPropertyPath =  "BluesnapEAWBContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1205,7 +1189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapEAWBContractQTYs",
+					  						Code =  "BluesnapEAWBContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1214,7 +1198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapEAWBContractQTYs",
+					  						FullFieldLable =  "BluesnapEAWBContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1226,17 +1210,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapEAWBContractQTYs",
+					  						HelpTextCode =  "BluesnapEAWBContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapEAWBSContractQTYs",
-					  						OldFieldName =  "BluesnapEAWBSContractQTYs",
+					 						FieldName =  "BluesnapEAWBSContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1255,8 +1238,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapEAWBSContractQTYs",
-					  						ListPropertyPath =  "BluesnapEAWBSContractQTYs",
+					  						PMPropertyPath =  "BluesnapEAWBSContractQTY",
+					  						ListPropertyPath =  "BluesnapEAWBSContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1267,7 +1250,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapEAWBSContractQTYs",
+					  						Code =  "BluesnapEAWBSContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1276,7 +1259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapEAWBSContractQTYs",
+					  						FullFieldLable =  "BluesnapEAWBSContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1288,17 +1271,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapEAWBSContractQTYs",
+					  						HelpTextCode =  "BluesnapEAWBSContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapOneTimeContractQTYs",
-					  						OldFieldName =  "BluesnapOneTimeContractQTYs",
+					 						FieldName =  "BluesnapOneTimeContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1317,8 +1299,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapOneTimeContractQTYs",
-					  						ListPropertyPath =  "BluesnapOneTimeContractQTYs",
+					  						PMPropertyPath =  "BluesnapOneTimeContractQTY",
+					  						ListPropertyPath =  "BluesnapOneTimeContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1329,7 +1311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						Code =  "BluesnapOneTimeContractQTYs",
+					  						Code =  "BluesnapOneTimeContractQTY",
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1338,7 +1320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapOneTimeContractQTYs",
+					  						FullFieldLable =  "BluesnapOneTimeContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1350,17 +1332,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
-					  						HelpTextCode =  "BluesnapOneTimeContractQTYs",
+					  						HelpTextCode =  "BluesnapOneTimeContractQTY",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsRecurring",
-					  						OldFieldName =  "IsRecurring",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1418,14 +1399,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsRecurring",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LicensePrice",
-					  						OldFieldName =  "LicensePrice",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1483,14 +1463,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LicensePrice",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActiveTrail",
-					  						OldFieldName =  "ActiveTrail",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -1546,14 +1525,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ActiveTrail",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PayingCustomers",
-					  						OldFieldName =  "PayingCustomers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -1609,16 +1587,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PayingCustomers",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -1674,14 +1651,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Notes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LastFWBSentDate",
-					  						OldFieldName =  "LastFWBSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1739,14 +1715,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFWBSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LastFHLSentDate",
-					  						OldFieldName =  "LastFHLSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1804,14 +1779,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFHLSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StatisticsUpdateDate",
-					  						OldFieldName =  "StatisticsUpdateDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1869,14 +1843,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "StatisticsUpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipmentLastDate",
-					  						OldFieldName =  "ShipmentLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1934,14 +1907,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShipmentLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipmentTotalLastWeek",
-					  						OldFieldName =  "ShipmentTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1999,14 +1971,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShipmentTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShipmentTotalLastMonth",
-					  						OldFieldName =  "ShipmentTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2064,14 +2035,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShipmentTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "QuoteLastDate",
-					  						OldFieldName =  "QuoteLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2129,14 +2099,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "QuoteLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "QuoteTotalLastWeek",
-					  						OldFieldName =  "QuoteTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2194,14 +2163,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "QuoteTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "QuoteTotalLastMonth",
-					  						OldFieldName =  "QuoteTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2259,14 +2227,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "QuoteTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ARInvoiceLastDate",
-					  						OldFieldName =  "ARInvoiceLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2324,14 +2291,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ARInvoiceLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ARInvoiceTotalLastWeek",
-					  						OldFieldName =  "ARInvoiceTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2389,14 +2355,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ARInvoiceTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ARInvoiceTotalLastMonth",
-					  						OldFieldName =  "ARInvoiceTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2454,14 +2419,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ARInvoiceTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "APInvoiceLastDate",
-					  						OldFieldName =  "APInvoiceLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2519,14 +2483,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "APInvoiceLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "APInvoiceTotalLastWeek",
-					  						OldFieldName =  "APInvoiceTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2584,14 +2547,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "APInvoiceTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "APInvoiceTotalLastMonth",
-					  						OldFieldName =  "APInvoiceTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2649,14 +2611,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "APInvoiceTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerLastDate",
-					  						OldFieldName =  "CustomerLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2714,14 +2675,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CustomerLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerTotalLastWeek",
-					  						OldFieldName =  "CustomerTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2779,14 +2739,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CustomerTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerTotalLastMonth",
-					  						OldFieldName =  "CustomerTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2844,14 +2803,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CustomerTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "NotRecuringTenants",
-					  						OldFieldName =  "NotRecuringTenants",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Constant",
 					  						MinLength =  0,
@@ -2907,14 +2865,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "NotRecuringTenants",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LastLoginDateTime",
-					  						OldFieldName =  "LastLoginDateTime",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2973,14 +2930,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastLoginDateTime",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3038,14 +2994,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "CreateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3103,16 +3058,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "UpdateDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MainContract",
-					  						OldFieldName =  "MainContract",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  25,
 					  						IsRequired =  false,
@@ -3166,14 +3120,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "MainContract",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TemporalStartDate",
-					  						OldFieldName =  "TemporalStartDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3230,14 +3183,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TemporalStartDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TemporalEndDate",
-					  						OldFieldName =  "TemporalEndDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3294,14 +3246,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TemporalEndDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FirstPaymentDate",
-					  						OldFieldName =  "FirstPaymentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3360,14 +3311,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FirstPaymentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsAWBStockPrepaid",
-					  						OldFieldName =  "IsAWBStockPrepaid",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3423,14 +3373,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsAWBStockPrepaid",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ManageLicencesPerUser",
-					  						OldFieldName =  "ManageLicencesPerUser",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3488,18 +3437,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ManageLicencesPerUser",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsCargonautEnabled",
-					  						OldFieldName =  "IsCargonautEnabled",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3551,14 +3499,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsCargonautEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsSystemSupportEnabled",
-					  						OldFieldName =  "IsSystemSupportEnabled",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3616,14 +3563,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsSystemSupportEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsDistributorSupportEnabled",
-					  						OldFieldName =  "IsDistributorSupportEnabled",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3681,18 +3627,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsDistributorSupportEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsEAWBOnlyDemo",
-					  						OldFieldName =  "IsEAWBOnlyDemo",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3744,18 +3689,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsEAWBOnlyDemo",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsRestrictedByAirline",
-					  						OldFieldName =  "IsRestrictedByAirline",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3807,18 +3751,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsRestrictedByAirline",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ManagesRegisteredAgent",
-					  						OldFieldName =  "ManagesRegisteredAgent",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -3870,14 +3813,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ManagesRegisteredAgent",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LastFFRSentDate",
-					  						OldFieldName =  "LastFFRSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3935,14 +3877,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFFRSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "OpportunityLastDate",
-					  						OldFieldName =  "OpportunityLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4000,14 +3941,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "OpportunityLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "OpportunityTotalLastWeek",
-					  						OldFieldName =  "OpportunityTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4065,14 +4005,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "OpportunityTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "OpportunityTotalLastMonth",
-					  						OldFieldName =  "OpportunityTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4130,14 +4069,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "OpportunityTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActivityLastDate",
-					  						OldFieldName =  "ActivityLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4195,14 +4133,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ActivityLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActivityTotalLastWeek",
-					  						OldFieldName =  "ActivityTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4260,14 +4197,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ActivityTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ActivityTotalLastMonth",
-					  						OldFieldName =  "ActivityTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4325,14 +4261,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ActivityTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FSRLastSentDate",
-					  						OldFieldName =  "FSRLastSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4390,14 +4325,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FSRLastSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FSULastReceivedDate",
-					  						OldFieldName =  "FSULastReceivedDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4455,14 +4389,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FSULastReceivedDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FSALastReceivedDate",
-					  						OldFieldName =  "FSALastReceivedDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4520,14 +4453,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "FSALastReceivedDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ResellerCommission",
-					  						OldFieldName =  "ResellerCommission",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -4585,14 +4517,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ResellerCommission",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BillingByLogitude",
-					  						OldFieldName =  "BillingByLogitude",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4650,18 +4581,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BillingByLogitude",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsDEXXConnectionEnabled",
-					  						OldFieldName =  "IsDEXXConnectionEnabled",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -4713,14 +4643,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsDEXXConnectionEnabled",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LastFHLCargonautSentDate",
-					  						OldFieldName =  "LastFHLCargonautSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4778,14 +4707,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFHLCargonautSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LastFWBCargonautSentDate",
-					  						OldFieldName =  "LastFWBCargonautSentDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4843,14 +4771,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LastFWBCargonautSentDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaymentFailure",
-					  						OldFieldName =  "PaymentFailure",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4908,14 +4835,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaymentFailure",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SuspendDate",
-					  						OldFieldName =  "SuspendDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -4974,16 +4900,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SuspendDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "InternalNotes",
-					  						OldFieldName =  "InternalNotes",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -5037,16 +4962,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "InternalNotes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BluesnapAccount",
-					  						OldFieldName =  "BluesnapAccount",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  25,
 					  						IsRequired =  false,
@@ -5100,14 +5024,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapAccount",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PIMA",
-					  						OldFieldName =  "PIMA",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5163,14 +5086,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PIMA",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SignupRequestRecipients",
-					  						OldFieldName =  "SignupRequestRecipients",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5226,14 +5148,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SignupRequestRecipients",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LoginPageNotes",
-					  						OldFieldName =  "LoginPageNotes",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5289,14 +5210,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "LoginPageNotes",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TenantConnectedToAirlineCode",
-					  						OldFieldName =  "TenantConnectedToAirlineCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  2,
@@ -5352,18 +5272,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TenantConnectedToAirlineCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SupportActivated",
-					  						OldFieldName =  "SupportActivated",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -5415,14 +5334,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SupportActivated",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SupportEmail",
-					  						OldFieldName =  "SupportEmail",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5478,18 +5396,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SupportEmail",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsMultiPackage",
-					  						OldFieldName =  "IsMultiPackage",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -5541,14 +5458,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsMultiPackage",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -5606,16 +5522,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Id",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  true,
@@ -5671,14 +5586,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Name",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PackageCode",
-					  						OldFieldName =  "PackageCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Package",
@@ -5737,17 +5651,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PackageCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TemporalPackageCode",
-					  						OldFieldName =  "TemporalPackageCode",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Package",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  5,
 					  						IsRequired =  false,
@@ -5801,17 +5713,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TemporalPackageCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "RecurringPeriodCode",
-					  						OldFieldName =  "RecurringPeriodCode",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "RecurringPeriod",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2,
 					  						IsRequired =  false,
@@ -5865,14 +5775,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "RecurringPeriodCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaymentMethodCode",
-					  						OldFieldName =  "PaymentMethodCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentMethod",
@@ -5929,14 +5838,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaymentMethodCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaymentChannelCode",
-					  						OldFieldName =  "PaymentChannelCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentChannel",
@@ -5993,14 +5901,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaymentChannelCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaymentCurrencyCode",
-					  						OldFieldName =  "PaymentCurrencyCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PaymentCurrency",
@@ -6059,14 +5966,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PaymentCurrencyCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DistributorCode",
-					  						OldFieldName =  "DistributorCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Distributor",
@@ -6125,14 +6031,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "DistributorCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Technology",
-					  						OldFieldName =  "Technology",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6190,19 +6095,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "Technology",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BluesnapCRMContractId",
-					  						OldFieldName =  "BluesnapCRMContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6255,19 +6159,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapCRMContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BluesnapEAWBContractId",
-					  						OldFieldName =  "BluesnapEAWBContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6320,19 +6223,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapEAWBContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BluesnapEAWBSContractId",
-					  						OldFieldName =  "BluesnapEAWBSContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6385,14 +6287,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapEAWBSContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BluesnapOneTimeContract",
-					  						OldFieldName =  "BluesnapOneTimeContract",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6449,19 +6350,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapOneTimeContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BluesnapContractId",
-					  						OldFieldName =  "BluesnapContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6514,20 +6414,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "BluesnapContractId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AWBMessagesCCSTypeCode",
-					  						OldFieldName =  "AWBMessagesCCSTypeCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AWBMessagesCCSType",
 					  						MinLength =  0,
 					  						MaxLength =  10,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -6578,14 +6477,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AWBMessagesCCSTypeCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TenantTypeCode",
-					  						OldFieldName =  "TenantTypeCode",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TenantType",
@@ -6642,18 +6540,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "TenantTypeCode",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "HideSharedlogistics",
-					  						OldFieldName =  "HideSharedlogistics",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
-					  						MaxLength =  1,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -6708,14 +6605,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "HideSharedlogistics",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ContactEmail",
-					  						OldFieldName =  "ContactEmail",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6780,14 +6676,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerURL",
-					  						OldFieldName =  "CustomerURL",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6849,14 +6744,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SilverlightEndDate",
-					  						OldFieldName =  "SilverlightEndDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6914,14 +6808,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "SilverlightEndDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AgentSharedLogisticsStatisticsLastDate",
-					  						OldFieldName =  "AgentSharedLogisticsStatisticsLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -6979,14 +6872,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AgentSharedLogisticsStatisticsLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AgentSharedLogisticsStatisticsLastWeek",
-					  						OldFieldName =  "AgentSharedLogisticsStatisticsLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7044,14 +6936,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AgentSharedLogisticsStatisticsLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AgentSharedLogisticsStatisticsLastMonth",
-					  						OldFieldName =  "AgentSharedLogisticsStatisticsLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7109,14 +7000,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "AgentSharedLogisticsStatisticsLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PackageName",
-					  						OldFieldName =  "PackageName",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7174,14 +7064,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PackageName",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MobileLastDate",
-					  						OldFieldName =  "MobileLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -7239,14 +7128,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "MobileLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MobileTotalLastWeek",
-					  						OldFieldName =  "MobileTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7304,14 +7192,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "MobileTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MobileTotalLastMonth",
-					  						OldFieldName =  "MobileTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7369,14 +7256,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "MobileTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShardLogisticLastDate",
-					  						OldFieldName =  "ShardLogisticLastDate",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -7434,14 +7320,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShardLogisticLastDate",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShardLogisticTotalLastWeek",
-					  						OldFieldName =  "ShardLogisticTotalLastWeek",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7499,14 +7384,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShardLogisticTotalLastWeek",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ShardLogisticTotalLastMonth",
-					  						OldFieldName =  "ShardLogisticTotalLastMonth",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7564,14 +7448,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ShardLogisticTotalLastMonth",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "RequestedAirlines",
-					  						OldFieldName =  "RequestedAirlines",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7629,14 +7512,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "RequestedAirlines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "RegisteredAirlines",
-					  						OldFieldName =  "RegisteredAirlines",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7694,14 +7576,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "RegisteredAirlines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PendingAirlines",
-					  						OldFieldName =  "PendingAirlines",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7759,14 +7640,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PendingAirlines",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PrivateLabelId",
-					  						OldFieldName =  "PrivateLabelId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7822,14 +7702,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "PrivateLabelId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsParentTenant",
-					  						OldFieldName =  "IsParentTenant",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7887,14 +7766,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "IsParentTenant",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ParentTenantId",
-					  						OldFieldName =  "ParentTenantId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -7950,14 +7828,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ParentTenantId",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ChangeHeaderColor",
-					  						OldFieldName =  "ChangeHeaderColor",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8013,14 +7890,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						HelpTextCode =  "ChangeHeaderColor",
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsINTTRAStockPrepaid",
-					  						OldFieldName =  "IsINTTRAStockPrepaid",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8071,17 +7947,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PackageCodeSearchField",
-					  						OldFieldName =  "PackageCodeSearchField",
 					  						ObjectTableName =  "TenantManagement",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Package",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  250,
 					  						IsRequired =  false,
@@ -8133,14 +8007,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsINTTRAOnlyDemo",
-					  						OldFieldName =  "IsINTTRAOnlyDemo",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8192,14 +8065,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AutoArchiveOnInvoice",
-					  						OldFieldName =  "AutoArchiveOnInvoice",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8251,19 +8123,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "BluesnapInttraStockContractId",
-					  						OldFieldName =  "BluesnapInttraStockContractId",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "BluesnapContract",
 					  						MinLength =  0,
-					  						MaxLength =  10,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -8312,14 +8183,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BluesnapInttraStockContractQTYs",
-					  						OldFieldName =  "BluesnapInttraStockContractQTYs",
+					 						FieldName =  "BluesnapInttraStockContractQTY",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -8338,8 +8208,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BluesnapInttraStockContractQTYs",
-					  						ListPropertyPath =  "BluesnapInttraStockContractQTYs",
+					  						PMPropertyPath =  "BluesnapInttraStockContractQTY",
+					  						ListPropertyPath =  "BluesnapInttraStockContractQTY",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -8356,7 +8226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BluesnapInttraStockContractQTYs",
+					  						FullFieldLable =  "BluesnapInttraStockContractQTY",
 					  						DefaultText =  "QTY",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -8370,14 +8240,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsTestTenant",
-					  						OldFieldName =  "IsTestTenant",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8430,14 +8299,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MainAdditionalPackageApplied",
-					  						OldFieldName =  "MainAdditionalPackageApplied",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8489,14 +8357,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TotalPrice",
-					  						OldFieldName =  "TotalPrice",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -8552,14 +8419,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SupportDomain",
-					  						OldFieldName =  "SupportDomain",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8609,14 +8475,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TotalNumberOfUsers",
-					  						OldFieldName =  "TotalNumberOfUsers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -8669,14 +8534,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TotalFreeUsers",
-					  						OldFieldName =  "TotalFreeUsers",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -8727,14 +8591,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AveragePrice",
-					  						OldFieldName =  "AveragePrice",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -8787,14 +8650,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TotalPaymentamount",
-					  						OldFieldName =  "TotalPaymentamount",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -8847,11 +8709,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -8859,8 +8721,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	        QueryGroup TenantManagementQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TNTS", Name = "Tenants" }, queryGroupRepository);
 						QueryGroup TenantManagementQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "678c", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable TenantManagementObjectTable = objectTables.ContainsKey("TenantManagement") ? objectTables["TenantManagement"] : null;
+            if (TenantManagementObjectTable == null)
+            {
+                TenantManagementObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable TenantManagementObjectTable = objectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> TenantManagementObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "TenantManagement").ToList();   
 
 			   TextCode TenantManagementTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.AllTenants", DefaultText = @"All Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

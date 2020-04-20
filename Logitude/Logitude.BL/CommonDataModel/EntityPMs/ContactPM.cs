@@ -122,6 +122,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool DontShowLocal { get; set; }
 
         [DataMember]
+        public bool DontShowLocalLabels { get; set; }
+
+
+        [DataMember]
         public bool MustChangePassword { get; set; }
 
         [DataMember]

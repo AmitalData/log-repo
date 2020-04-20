@@ -175,6 +175,39 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+            if(shipment.ShipmentLevelCode == "C")
+            {
+                shipmentPM.MasterPreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+
+                if(!string.IsNullOrEmpty(shipment.PreCarriageVesselId))
+                {
+                    Vessel vesselEntity = vesselRep.GetSingleVessel(shipment.PreCarriageVesselId, tenant);
+                    if (vesselEntity != null)
+                    {
+                        shipmentPM.MasterPreCarriageVesselName = vesselEntity.EnglishName;
+                    }
+                }
+            }
+
+            else if (shipment.ShipmentLevelCode == "H")
+            {
+                Shipment masterShipment = (from a in repository.context.Shipments
+                                       where a.Id == shipment.MasterShipmentDataId
+                                       select a).FirstOrDefault();
+
+                if (masterShipment != null)
+                {
+                    shipmentPM.MasterPreCarriageCarrierNumber = masterShipment.PreCarriageCarrierNumber;
+
+                    if (!string.IsNullOrEmpty(masterShipment.PreCarriageVesselId))
+                    {
+                        Vessel vessel = vesselRep.GetSingleVessel(masterShipment.PreCarriageVesselId, tenant);
+
+                        shipmentPM.MasterPreCarriageVesselName = vessel != null ? vessel.EnglishName : null;
+                    }
+                }
+            }
+
             #region if (masterData != null)
             if (masterData != null)
             {
@@ -1393,6 +1426,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.NextLegName = shipment.NextLeg != null ? shipment.NextLeg.Name : null;
             shipmentPM.ShipmentTypeViewField = (shipment.ShipmentType != null ? shipment.ShipmentType.Name : "") + " " + (shipment.ShipmentLevel != null ? shipment.ShipmentLevel.Name : "");
             shipmentPM.CASSCode = shipment.CASSCode;
+            shipmentPM.SLAC = shipment.SLAC;
             shipmentPM.NoFreightFile = shipment.NoFreightFile;
             shipmentPM.DeliveryOrder = shipment.DeliveryOrder;
             shipmentPM.FreightLocationId = shipment.FreightLocationId;
@@ -1763,6 +1797,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ComputedStatusDate = shipment.ComputedStatusDate;
             shipmentPM.FinalArrivalDate = shipment.FinalArrivalDate;
             shipmentPM.EstimatedFinalArrivalDate = shipment.EstimatedFinalArrivalDate;
+            shipmentPM.CreateDateTime = shipment.CreateDateTime;
             shipmentPM.ActualFinalArrivalDate = shipment.ActualFinalArrivalDate;
             shipmentPM.CustomFileId = shipment.CustomFileId;
             shipmentPM.CustomFileNumber = shipment.CustomFileNumber;
@@ -1770,6 +1805,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.AMSBL = shipment.AMSBL;
             shipmentPM.MoveTypeId = shipment.MoveTypeId;
             shipmentPM.HasContainerException = shipment.HasContainerException;
+            shipmentPM.WarehouseStorageFreeDays = shipment.WarehouseStorageFreeDays;
+            shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
 
             if (shipment.MoveTypeId != null)
             {
@@ -3359,6 +3396,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FirstARInvoiceApprovalDate = shipment.FirstARInvoiceApprovalDate;
             shipmentPM.ActualFinalArrivalDate = shipment.ActualFinalArrivalDate;
             shipmentPM.EstimatedFinalArrivalDate = shipment.EstimatedFinalArrivalDate;
+            shipmentPM.CreateDateTime = shipment.CreateDateTime;
+            shipmentPM.WarehouseStorageFreeDays = shipment.WarehouseStorageFreeDays;
+            shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
@@ -4121,6 +4161,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         CustomClearancePointContactId = s.CustomClearancePointContactId,
                                                         CustomClearancePointReference1 = s.CustomClearancePointReference1,
                                                         CASSCode = s.CASSCode,
+                                                        SLAC = s.SLAC,
                                                         FreelancerId = s.FreelancerId,
                                                         FreelancerAddressId = s.FreelancerAddressId,
                                                         FreelancerContactId = s.FreelancerContactId,
@@ -10974,6 +11015,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          ActualFinalArrivalDate = s.ActualFinalArrivalDate,
                                                          AMSBL = s.AMSBL,
                                                          CASSCode = s.CASSCode,
+                                                         SLAC = s.SLAC,
                                                          FreelancerId = s.FreelancerId,
                                                          FreelancerAddressId = s.FreelancerAddressId,
                                                          FreelancerContactId = s.FreelancerContactId,

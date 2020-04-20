@@ -152,6 +152,11 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
+                    if (this.isRefreshTranslationsClicked) {
+                        this.isRefreshTranslationsClicked = false;
+                        this.DoRefresh();
+                    }
+
                     this.LoadVersions();
                 }
 
@@ -520,9 +525,11 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             tariffLine.Version = this.CurrentVersion.Version;
             tariffLine.OriginPortId = item.FromPortId;
             tariffLine.OriginPortCode = item.FromPortCode;
+            tariffLine.OriginPortCombinedCode = item.FromPortCombinedCode;
             tariffLine.OriginPortName = item.FromPortName;
             tariffLine.DestinationPortId = item.ToPortId;
             tariffLine.DestinationPortCode = item.ToPortCode;
+            tariffLine.DestinationPortCombinedCode = item.ToPortCombinedCode;
             tariffLine.DestinationPortName = item.ToPortName;
             tariffLine.OriginPortText = item.FromPortText;
             tariffLine.DestinationPortText = item.ToPortText;
@@ -530,6 +537,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
+            tariffLine.TransitTime = item.TransitTime;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.ContainerType1Id)) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
@@ -636,9 +644,11 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                         tariffLine.Version = copiedVersion.Version;
                         tariffLine.OriginPortId = item.OriginPortId;
                         tariffLine.OriginPortCode = item.OriginPortCode;
+                        tariffLine.OriginPortCombinedCode = item.OriginPortCombinedCode;
                         tariffLine.OriginPortName = item.OriginPortName;
                         tariffLine.DestinationPortId = item.DestinationPortId;
                         tariffLine.DestinationPortCode = item.DestinationPortCode;
+                        tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
                         tariffLine.DestinationPortName = item.DestinationPortName;
                         tariffLine.Surcharge1Price = item.Surcharge1Price;
                         tariffLine.Surcharge2Price = item.Surcharge2Price;
@@ -647,6 +657,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
                         tariffLine.Surcharge5Price = item.Surcharge5Price;
                         tariffLine.Index = item.Index;
                         tariffLine.Notes = item.Notes;
+                        tariffLine.TransitTime = item.TransitTime;
                         copiedVersion.AddTariffLine(tariffLine);
                     });
 
@@ -753,6 +764,22 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
             this.EntityPM.IsUpdatingMissingPorts = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
+    }
+
+    private isRefreshTranslationsClicked: boolean = false;
+    RefreshPortsFromTranslations() {
+        if (!this.isRefreshTranslationsClicked) {
+            this.isRefreshTranslationsClicked = true;
+            this.EntityPM.IsRefreshTranslations = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+    }
+    private DoRefresh() {
+        this.TariffDomainService.RefreshPortsFromTranslations(this.EntityPM.Id, this.VersionNumber).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+        });
     }
 }
 

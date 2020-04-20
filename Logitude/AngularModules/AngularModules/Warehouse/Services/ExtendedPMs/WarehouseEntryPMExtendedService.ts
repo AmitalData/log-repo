@@ -1,7 +1,7 @@
-﻿/// <reference path="../../../infrastructure/datacontracts/customfieldclass.ts" />
 
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -17,20 +17,56 @@ import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFiel
 @Injectable()
 export class WarehouseEntryPMExtendedService {
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/WarehouseEntryExtended';
     }
 
+    CancelEntry(entityPM: WarehouseEntryPM) {
+
+        return Observable.defer(() => {
+
+            var validator: ClassLevelValidator;
+
+            validator = new ClassLevelValidator();
+
+            var errorsArray = validator.Validate("WarehouseEntry", entityPM);
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            if (errorsArray.length == 0) {
+                var mappedEntity: WarehouseEntryPM;
+                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.put(this._apiUrl + '/PutCancelWarehouseEntry', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var pm = response;
+                    if (pm) {
+                        var mappedResult: WarehouseEntryPM;
+                        mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                        serviceResponse.Result = mappedResult;
+                    }
+
+                    return serviceResponse;
+
+                }), catchError(ServiceHelper.HandleServiceError));
+            }
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+
+                return Observable.of(serviceResponse);
+            }
+        });
+    }
 
     GetWarehouseConnectedEntitiesByEntityId(entityId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + "/GetWarehouseConnectedEntitiesByEntityId" + '?entityId=' + entityId , { headers: authHeader }).map(response => {
+        
+        
+        return this._http.get(this._apiUrl + "/GetWarehouseConnectedEntitiesByEntityId" + '?entityId=' + entityId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-            var result = response.json();
+            var result = response;
            
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -39,7 +75,7 @@ export class WarehouseEntryPMExtendedService {
             return pmresponse;
 
 
-        }).catch(ServiceHelper.HandleServiceError);
+        }),catchError(ServiceHelper.HandleServiceError));
     }
 
 

@@ -235,6 +235,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             {
                 entity.BillToGLAccountId = entityPM.BillToGLAccountId;
             }
+
+            entity.RegionalTaxId = entityPM.RegionalTaxId;
+            entity.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)
@@ -274,6 +277,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsBackToBack = entityPM.IsBackToBack;
             entity.IsExpense = entityPM.IsExpense;
             entity.PrepaidCollectId = entityPM.PrepaidCollectId;
+            entity.IsRegionalTax = entityPM.IsRegionalTax;
 
             Tenant myTenant = TenantRepository.GetSingleTenant(entityPM.Tenant, true);
 

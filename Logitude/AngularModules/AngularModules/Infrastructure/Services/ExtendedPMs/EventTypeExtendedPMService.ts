@@ -1,40 +1,24 @@
-﻿
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Observable';
-import {ServiceArgs} from '../../DataContracts/ServiceArgs';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
-import {Guid} from '../../Utilities/Guid';
-import {InfraSettings} from '../../Utilities/InfraSettings';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {EventTypePM} from '../../EntityPMs/EventTypePM';
-
-
-
-
-
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { EventTypePM } from '../../EntityPMs/EventTypePM';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class EventTypeExtendedPMService {
-
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/EventTypeExtended';
     }
 
-
-
-
-
     GetEventTypeByCode(code: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-
-        return this._http.get(this._apiUrl + '/geteventtypebycode/?' + 'code=' + code + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
+        var url = this._apiUrl + '/geteventtypebycode/?' + 'code=' + code + '&tenant=' + tenant;
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result = response;
             var entity: EventTypePM;
             entity = this.MapJsonToEntityPM(result);
             var pmresponse: ServiceResponse;
@@ -42,20 +26,14 @@ export class EventTypeExtendedPMService {
 
             pmresponse.Result = entity;
             return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 
-
-
-
-
-
     GetEventTypesByObjectTable(objectTableId: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        var url = this._apiUrl + '/geteventtypesbyobjecttable/?' + 'objectTableId=' + objectTableId + '&tenant=' + tenant;
 
-        return this._http.get(this._apiUrl +'/geteventtypesbyobjecttable/?' +  'objectTableId=' + objectTableId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
-            var result = response.json();
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result: any = response;
             var entity: EventTypePM;
             var eventTypePMLists: EventTypePM[];
             eventTypePMLists = new Array<EventTypePM>();
@@ -64,37 +42,28 @@ export class EventTypeExtendedPMService {
                 entity = this.MapJsonToEntityPM(item);
                 eventTypePMLists.push(entity);
             });
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
 
-            pmresponse.Result = eventTypePMLists;
-            return pmresponse;
-        }).catch(ServiceHelper.HandleServiceError);
+            serviceResponse.Result = eventTypePMLists;
+
+            return serviceResponse;
+        }), catchError(ServiceHelper.HandleServiceError));
     }
-
-
 
     update(eventTypePMLists: any) {
         return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-            authHeader.append('Content-Type', 'application/json');
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
- 
-            return this._http.put(this._apiUrl, JSON.stringify(eventTypePMLists),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
-                        return serviceResponse;
-                    }).catch(ServiceHelper.HandleServiceError);
-        }
-        );
 
+            return this._http.put(this._apiUrl, JSON.stringify(eventTypePMLists), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                //var pm = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
 
-
     MapJsonToEntityPM(jsonPM: any) {
-
         var entityPM: EventTypePM;
         entityPM = new EventTypePM();
         var jsonPMKeys = Object.keys(jsonPM);
@@ -103,11 +72,8 @@ export class EventTypeExtendedPMService {
             var property = jsonPMKeys[key];
             entityPM[property] = jsonPM[property];
         }
-
-
         entityPM.IsDirty = false;
 
         return entityPM;
     }
-
 }

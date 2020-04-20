@@ -440,5 +440,6 @@ export class ShipmentList {
 		NotInvoicedReceivablesAmount: number;
 		CreatedByPartner: string;
 		FirstARInvoiceApprovalDate: Date;
+		SLAC: string;
 	
 }

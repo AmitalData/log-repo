@@ -50,9 +50,9 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         this.entityPM = entityArgs.EntityPM;
         this.connectedListIds = new ObservableCollection([]);
         this.notConnectedListIds = new ObservableCollection([]);
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe((response: any) => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => {
 
                     this.IsVisibile = true;
                     this.OnAllBtnClicked(true);

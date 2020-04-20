@@ -214,12 +214,12 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
         InterestBasesPeriods = this.EntityPM.InterestBasesPeriods;
         this.EntityPM.InterestBasesPeriods = null;
 
-        this.myService.insert(this.EntityPM).subscribe(myResult => {
+        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 InterestBasesPeriods.forEach(s => s.InterestBaseTypeId = this.EntityPM.Id);
                 this.EntityPM.InterestBasesPeriods = InterestBasesPeriods;
-                this.myService.update(this.EntityPM).subscribe(myResult => {
+                this.myService.update(this.EntityPM).subscribe((myResult:any) => {
                     var iServiceResponse: ServiceResponse = myResult;
                     if (!iServiceResponse.HasError) {
                         var entity = iServiceResponse.Result;

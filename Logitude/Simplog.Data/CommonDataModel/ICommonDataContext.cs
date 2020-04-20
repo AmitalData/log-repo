@@ -10,6 +10,7 @@ namespace Simplog.Data.CommonDataModel
 {
     public interface ICommonDataContext : IContext
     {
+        IDbSet<TariffCarrierTranslation> TariffCarrierTranslations { get; }
         IDbSet<AddressType> AddressTypes { get; }
         IDbSet<Country> Countries { get; }
         IDbSet<State> States { get; }

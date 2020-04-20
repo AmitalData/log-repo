@@ -242,7 +242,7 @@ export class AddEditTarrifHeaderComponent extends BaseComponent {
 
      
            if (!this.IsNew) {
-            myService.update(this.EntityPM).subscribe(myResult => {
+            myService.update(this.EntityPM).subscribe((myResult:any) => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
@@ -261,7 +261,7 @@ export class AddEditTarrifHeaderComponent extends BaseComponent {
         }
         else {
                this.EntityPM.CreateDate = DateTool.GetCurrentDateAsUtc();
-            myService.insert(this.EntityPM).subscribe(myResult => {
+            myService.insert(this.EntityPM).subscribe((myResult:any) => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");

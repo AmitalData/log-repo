@@ -17,5 +17,6 @@ namespace WebFreight.Web.Helpers
         public bool IsAgentShared { get; set; }
         public bool IsShipperShared { get; set; }
         public bool IsConsigneeShared { get; set; }
+        public bool DisplayDocumentsAndEvents { get; set; }
     }
 }

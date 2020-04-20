@@ -293,7 +293,7 @@ export class PayablePageComponent {
     }
 
     LoadQueriesCounts() {
-        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe(myResult => {
+        this._GLAccountExtendedListService.GetGLAccountsSummary().subscribe((myResult:GLAccountSummary) => {
             if (myResult != null) {
                 this.glAccountSummary.ActiveVendorsCount = myResult.ActiveVendorsCount > 1000 ? "1000+" : myResult.ActiveVendorsCount.toString();
                 this.glAccountSummary.InactiveVendorsCount = myResult.InactiveVendorsCount > 1000 ? "1000+" : myResult.InactiveVendorsCount.toString();
@@ -306,7 +306,7 @@ export class PayablePageComponent {
         // APPayments
 
         var myService = new ModulesService();
-        myService.GetAccountPayablesSummary().subscribe(myResult => {
+        myService.GetAccountPayablesSummary().subscribe((myResult:any) => {
             if (myResult != null) {
                 this.APPaymentsDraftsCount = myResult.APPaymentsDraftsCount > 1000 ? "1000+" : myResult.APPaymentsDraftsCount.toString();
                 this.APPaymentsOpenedCount = myResult.APPaymentsOpenedCount > 1000 ? "1000+" : myResult.APPaymentsOpenedCount.toString();

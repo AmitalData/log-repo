@@ -1,6 +1,7 @@
-﻿
+
 import {Injectable, } from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,10 +12,10 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 export class HtmlEditorService {
 
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/HtmlEditor';
     }
 
@@ -26,18 +27,14 @@ export class HtmlEditorService {
         authHeader.append('Content-Type', 'application/json');
 
         return this._http.get(this._apiUrl + '?docOutId=' + docOutId + '&entityId=' + entityId + '&objecttableId=' + objecttableId + '&childEntityId=' + childEntityId + '&childEntityObjectTableId=' + childEntityObjectTableId + '&tenant=' + tenant + '&userId=' + userId + '&theIsSendMail=' + theIsSendMail + '&documentTemplateId=' + documentTemplateId + '&subject=' + subject + "&mode=" + mode + "&from=" + from + "&replyTo=" + replyTo + "&cc=" + cc + "&bcc=" + bcc
-            , {
-                headers: authHeader,
-
-            })
-            .map(result => {
+            ,ServiceHelper.GetHttpHeaders()).pipe(map((result:any) => {
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = result.json();
+                pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
     }
 
@@ -48,13 +45,13 @@ export class HtmlEditorService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
 
-        return this._http.get(this._apiUrl + '?documentId=' + documentId + '&tenant=' + tenant, { headers: authHeader, }).map(result => {
+        return this._http.get(this._apiUrl + '?documentId=' + documentId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(result => {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = result.json();
+                pmresponse.Result = result;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
     }
     sendDocumentHtml(sendHtmlFilter: any) {
@@ -62,18 +59,14 @@ export class HtmlEditorService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return Observable.defer(() => {
-                return this._http.post(this._apiUrl + '/postsendhtmldocument', JSON.stringify(sendHtmlFilter), {
-                headers: authHeader,
-
-            }).map(response => {
-                var result = response.json();
-
+                return this._http.post(this._apiUrl + '/postsendhtmldocument', JSON.stringify(sendHtmlFilter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+       
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = result;
+                    pmresponse.Result = response;
                 return pmresponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -87,18 +80,14 @@ export class HtmlEditorService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return Observable.defer(() => {
-            return this._http.put(this._apiUrl + '/putsaveeditedreporttoserver', JSON.stringify(filters), {
-
-                headers: authHeader,
-
-            }).map(response => {
+            return this._http.put(this._apiUrl + '/putsaveeditedreporttoserver', JSON.stringify(filters),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
-                pmresponse.Result = response.json();
+                pmresponse.Result = response;
                 return pmresponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );

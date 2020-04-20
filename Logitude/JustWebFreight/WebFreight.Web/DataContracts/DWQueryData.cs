@@ -15,5 +15,6 @@ namespace WebFreight.Web.DataContracts
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public string ColumnsSort { get; set; }
+        public string FactTableName { get; set; }
     }
 }

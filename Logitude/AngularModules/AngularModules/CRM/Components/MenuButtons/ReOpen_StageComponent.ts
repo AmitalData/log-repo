@@ -54,7 +54,7 @@ export class ReOpen_StageComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             var listService: StageListService = new StageListService();
 
-            listService.getAllFromCache().subscribe(result => {
+            listService.getAllFromCache().subscribe((result:any) => {
                 var stage: StageList = result.Result.filter(d => d.Id == this.StageId)[0];
                 if (stage != null) {
                     this.entityPM.Probability = stage.Probability;

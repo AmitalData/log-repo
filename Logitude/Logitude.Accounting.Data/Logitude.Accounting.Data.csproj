@@ -80,6 +80,7 @@
     <Compile Include="AccountingContext.cs" />
     <Compile Include="AccountingContext.SharedTable.cs" />
     <Compile Include="DataContract\TaxReportData.cs" />
+    <Compile Include="EntitiesTypeEnums.CS" />
     <Compile Include="EntityKeys\AccountingIntegrityCheckKeys.cs" />
     <Compile Include="EntityKeys\AccountingNoteKeys.cs" />
     <Compile Include="EntityKeys\AutomaticExternalReconcileMethodKeys.cs" />

@@ -276,7 +276,7 @@ export class RootComponent implements OnInit {
         }
         this._FinishLogin = true;
         var termsofUseService = new TermsofUseService();
-        termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe(res => {
+        termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult: TermsofUseArgs = pmResponse.Result;
@@ -340,7 +340,7 @@ export class RootComponent implements OnInit {
     SignOutCompleted() {
     
         var loginService = new LoginService();
-        loginService.GetSignOut().subscribe(res => {
+        loginService.GetSignOut().subscribe((res:any) => {
 
         });
 

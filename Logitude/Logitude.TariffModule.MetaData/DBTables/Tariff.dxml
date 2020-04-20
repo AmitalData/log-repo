@@ -2,7 +2,8 @@
 <Table
   Name="Tariffs"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Tariff">
   <Column
     Name="Id"
     Type="varchar"
@@ -324,6 +325,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TariffProductId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -462,6 +470,11 @@
   <Relation
     ForeignKeyColumn="ContainerType5Id"
     ReferencedTable="PackageTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TariffProductId"
+    ReferencedTable="TariffProducts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

@@ -2,7 +2,8 @@
 <Table
   Name="SpecialServicesTypes"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Shipment">
   <Column
     Name="Id"
     Type="varchar"
@@ -50,5 +51,11 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

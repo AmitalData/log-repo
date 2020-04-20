@@ -63,13 +63,23 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
             }
         }
     }
-    
-    RunReport() {
+
+    ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.CustomerId)) {
             this.ValidationErrorsList.push("Please select a partner");
+            return false;
         }
-        else {
+        return true;
+    }
+
+    PrepareContactList() {
+        this.ReportsPreview.CleanPartnersObslist();
+        if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
+    }
+
+    RunReport() {
+        if (this.ValidateSelectedFilters()) {
             var queryFilterItems: Array<QueryFilterItem> = this.GetQueryFilterItems();
             var reportFliter: ReportFliter;
 
@@ -82,9 +92,7 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
             reportFliter.NumberOfPage = 1;
             reportFliter.ProcessType = "GenerateReport";
 
-            this.ReportsPreview.CleanPartnersObslist();
-            if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
-
+            this.PrepareContactList();
             this.RunReportEvent.emit(reportFliter);
             //this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
         }

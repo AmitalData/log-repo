@@ -340,7 +340,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         LastRunEndTime = a.LastRunEndTime,
                                                         LastRunEndTimeUTC = a.LastRunEndTimeUTC,
                                                         AverageRunTime = a.AverageRunTime,
-                                                        EntityId = a.EntityId
+                                                        EntityId = a.EntityId,
+                                                        Recepients = (a.SchedulerDetailsXML.IndexOf("<To>") > -1 ? a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<To>") + 4, a.SchedulerDetailsXML.IndexOf("</To>") - 4 - a.SchedulerDetailsXML.IndexOf("<To>")) : null) + (a.SchedulerDetailsXML.IndexOf("<Cc>") > -1 ? ";" + a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<Cc>") + 4, a.SchedulerDetailsXML.IndexOf("</Cc>") - 4 - a.SchedulerDetailsXML.IndexOf("<Cc>")) : null) + (a.SchedulerDetailsXML.IndexOf("<Bcc>") > -1 ? ";" + a.SchedulerDetailsXML.Substring(a.SchedulerDetailsXML.IndexOf("<Bcc>") + 5, a.SchedulerDetailsXML.IndexOf("</Bcc>") - 5 - a.SchedulerDetailsXML.IndexOf("<Bcc>")) : null)
                                                     };
             return result;
         }

@@ -7,14 +7,19 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {JournalLinePM} from '../../EntityPMs/JournalLinePM';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators'
+ 
 
 @Injectable()
 
 export class JournalExtendedPMService {
-    private _http: Http;
+
     private _apiUrl: string;
+    private httpClient: HttpClient;
     constructor() {
-        this._http = ServiceHelper.Http;
+  
+        this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + /*'api/journalviews'*/ 'api/journalop';
     }
 
@@ -25,82 +30,44 @@ export class JournalExtendedPMService {
 
 
         let url = this._apiUrl + '?JournalOp=void&JournalId=' + JournalId + '&tenant=' + tenant + '&AccountingEntityCode=' + AccountingEntityCode + '&AccountingEntityId=' + AccountingEntityId + '&AccountingEntityReference=' + AccountingEntityReference;
-
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-
-            // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-
-            return this._http.delete(url, { headers: authHeader }).map(response => {
-
-                var pm = response.json();
+        return this.httpClient.delete( url,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var pm = response;
                 if (pm) {
                     var mappedResult: JournalPM;
-                    //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                
                     serviceResponse.Result = mappedResult;
                 }
 
 
                 return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
-        }
-
-        );
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+       
 
     }
-    //GetByAccountingEntityId(accountingEntityId) {
-    //    var authHeader = new Headers();
-    //    authHeader.append('Token', SessionInfo.Token);
-    //    var url = this._apiUrl + '/GetByAccountingEntityId?accountingEntityId=' + accountingEntityId;
 
-    //    return Observable.defer(() => {
-    //        return this._http.get(url, { headers: authHeader }).map(response => {
-
-    //            var result = response.json();
-    //            var entity: JournalPM;
-    //            if (result) {
-    //                entity = this.MapJsonToEntityPM(result);
-    //            }
-    //            var serviceResponse: ServiceResponse;
-    //            serviceResponse = new ServiceResponse();
-    //            serviceResponse.Result = entity;
-    //            return serviceResponse;
-
-    //        }).catch(ServiceHelper.HandleServiceError);
-    //    });
-    //}
 
     GetByAccountingEntityId(accountingEntityId: string, accountingEntityCode:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+   
+      return this.httpClient.get(this._apiUrl + '/GetJournalByAccountingEntityId?accountingEntityId=' + accountingEntityId + '&accountingEntityCode=' + accountingEntityCode,   ServiceHelper.GetHttpHeaders()).pipe(
+        map(res => {
+            var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetJournalByAccountingEntityId?accountingEntityId=' + accountingEntityId + '&accountingEntityCode=' + accountingEntityCode, {
-                headers: authHeader
-            }).map(response => {
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-
-                var result = response.json();
-                var entity: JournalPM;
-                if (result) {
-                    entity = this.MapJsonToEntityPM(result);
-                }
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-                return serviceResponse;
-            });
-        });
+            var result = res;
+            var entity: JournalPM;
+            if (result) {
+                entity = this.MapJsonToEntityPM(result);
+            }
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = entity;
+            return serviceResponse;
+        }),
+        catchError(ServiceHelper.HandleServiceError));
+     
 
     }
 

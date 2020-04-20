@@ -2,7 +2,8 @@
 <Table
   Name="Cards"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"
@@ -47,70 +48,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="EnglishName"
-    Type="varchar"
-    Size="70">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="VatNumber"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InActive"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ReceivablesAccountingCard"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PayablesAccountingCard"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ExternalId2"
-    Type="varchar"
-    Size="25">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Notes"
-    Type="nvarchar"
-    Size="2000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Code"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="false" />
   </Column>
@@ -122,21 +61,23 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
+    Name="InvoiceCurrencyId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="LastLoginDate"
-    Type="datetime">
+    Name="VatTypeId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="InvitationDate"
-    Type="datetime">
+    Name="ImageDetailId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -153,29 +94,18 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsCustomer"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="EnableConsolidationInvoices"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CityName"
-    Type="nvarchar"
-    Size="25">
+    Name="CountryCode"
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="IsActiveForMobile"
-    Type="bit">
+    Name="SalesmanUserId"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="IRSPlace"
@@ -192,30 +122,157 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SupportNotes"
-    Type="nvarchar"
-    Size="2000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="GLAccountId"
+    Name="CreatedByUserId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ExternalAccountingBusinessArea"
+    Name="UpdatedByUserId"
     Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SharedLogisticsInvitationStatusCode"
+    ShortName="SharedLogInvitationStatCode"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InvitationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastLoginDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CollectorId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ClassifierId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrimaryContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustomer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CountryId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EnableConsolidationInvoices"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsActiveForMobile"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VatNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PaymentTermId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PartnerTypeId"
+    Type="char"
+    Size="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Notes"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CityName"
+    Type="nvarchar"
     Size="25">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="SATPaymentMethodCode"
+    Name="CountryName"
     Type="varchar"
-    Size="2">
+    Size="120">
     <Constraints
       Nullable="true" />
   </Column>
@@ -227,7 +284,21 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ZipCode"
+    Name="MetodoPagoCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UsoCFDICode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GLAccountId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -255,131 +326,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SalesmanUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CountryId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CountryCode"
-    Type="varchar"
-    Size="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CountryName"
-    Type="varchar"
-    Size="120">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="StateName"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CreatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="UpdatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PrimaryContactId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ImageDetailId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InvoiceCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="VatTypeId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PaymentTermId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="PartnerTypeId"
-    Type="char"
-    Size="2">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SharedLogisticsInvitationStatusCode"
-    Type="int">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CollectorId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ClassifierId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="MetodoPagoCode"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="UsoCFDICode"
-    Type="nvarchar"
-    Size="128">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsInternationalPartner"
     Type="bit">
     <Constraints
@@ -392,42 +338,80 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="SATPaymentMethodCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExternalId2"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SupportNotes"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReceivablesAccountingCard"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PayablesAccountingCard"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StateName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExternalAccountingBusinessArea"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ZipCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="CreatedByPartner"
     Type="varchar"
     Size="25">
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="SalesmanUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CountryId"
-    ReferencedTable="Countries"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CreatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="UpdatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="PrimaryContactId"
-    ReferencedTable="Contacts"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ImageDetailId"
-    ReferencedTable="ImageDetails"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+  <Column
+    Name="StorageFreeDays"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"
@@ -439,13 +423,23 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="PaymentTermId"
-    ReferencedTable="PaymentTerms"
+    ForeignKeyColumn="ImageDetailId"
+    ReferencedTable="ImageDetails"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="PartnerTypeId"
-    ReferencedTable="PartnerTypes"
+    ForeignKeyColumn="SalesmanUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="UpdatedByUserId"
+    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -464,6 +458,26 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="PrimaryContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CountryId"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PaymentTermId"
+    ReferencedTable="PaymentTerms"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PartnerTypeId"
+    ReferencedTable="PartnerTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="MetodoPagoCode"
     ReferencedTable="MetodoPagos"
     ReferencedColumn="Code"
@@ -479,6 +493,8 @@
     Columns="Tenant,InActive,PartnerTypeId,EnglishName" />
   <Index
     Columns="Tenant,InActive,PartnerTypeId,IsCustomer" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <UniqueConstraint
     Columns="Tenant,Code,PartnerTypeId" />
 </Table>

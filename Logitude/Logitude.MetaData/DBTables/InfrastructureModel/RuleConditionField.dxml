@@ -2,7 +2,8 @@
 <Table
   Name="RuleConditionFields"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Infrastructure">
   <Column
     Name="Id"
     Type="varchar"
@@ -61,5 +62,6 @@
     ForeignKeyColumn="ObjectFieldId"
     ReferencedTable="ObjectFields"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
 </Table>

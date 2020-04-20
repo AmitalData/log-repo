@@ -37,15 +37,15 @@ namespace Logitude.Accounting.Data.Repositories
             return interestReport;
         }
 
-        public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant)
+        public decimal GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(int tenant,string glaccountId)
         {
             decimal? closedBalance = (from a in context.InterestReports
-                                     where a.Tenant == tenant && a.InterestReportStatusCode != "1" && a.InterestReportStatusCode != "3"
+                                     where a.Tenant == tenant && a.InterestReportStatusCode != "1" && a.InterestReportStatusCode != "3" && a.GLAccountId==glaccountId
                                      orderby a.InterestCalculationDate descending
                                      select a.CloseBalance).FirstOrDefault();
             return closedBalance != null ? closedBalance.Value : 0;
         }
-
+       
    }
 
 }

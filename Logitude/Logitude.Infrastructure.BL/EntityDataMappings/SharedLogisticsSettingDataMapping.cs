@@ -19,7 +19,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 
         public void CustomPMToPOCO(SharedLogisticsSettingPM entityPM, SharedLogisticsSetting entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+
+            if (entityPM.Id == null)
+            {
+                entityPM.Id = entityPM.Tenant.ToString();
+            }
+
+            entityPOCO.Id = entityPM.Id;
+            entityPOCO.Tenant = entityPM.Tenant;
         }
 
         public void CustomPOCOToPM(SharedLogisticsSettingPM entityPM, SharedLogisticsSetting entityPOCO)

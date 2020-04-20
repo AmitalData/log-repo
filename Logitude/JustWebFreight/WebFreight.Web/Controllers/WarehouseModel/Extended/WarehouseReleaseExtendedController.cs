@@ -30,12 +30,34 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.Warehouse;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.WarehouseModel.Extended
 {
     public class WarehouseReleaseExtendedController : ApiController
     {
+        public HttpResponseMessage GetNumberofConnectedWarehouseReleasesByEntryId(string entryId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", tenant);
+
+                WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
+                int numberofConnectedWarehouseReleasePackages = warehouseReleaseQueryService.GetNumberofConnectedWarehouseReleasesByEntryId(entryId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, numberofConnectedWarehouseReleasePackages);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetWarehouseConnectedReleaseByEntityId(string entityId)
         {
@@ -86,7 +108,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
             }
         }
 
-        public HttpResponseMessage GetWarehouseReleaseByCstomerIdIdAndwarehouseId(string customerId, string warehouseId)
+        public HttpResponseMessage GetWarehouseReleaseByCustomerIdAndwarehouseId(string customerId, string warehouseId)
         {
             try
             {
@@ -437,9 +459,28 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
         }
 
 
+        public HttpResponseMessage GetEnableWarehouseRelaseForUse(string releaseNumber, string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("WarehouseRelease", "UPDATE", tenant);
+                WarehouseRelaseService warehouseRelaseService = new WarehouseRelaseService();
+                warehouseRelaseService.EnableWarehouseRelaseForUse(releaseNumber, shipmentId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
 
-
+      
     }
 
     public class CrossDockWorkspaceSummaryClass

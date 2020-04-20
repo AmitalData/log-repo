@@ -89,7 +89,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge8MinPrice, 
 	         Surcharge9MinPrice, 
 	         Surcharge10MinPrice, 
-	         CurrencyId,
+	         CurrencyId, 
+	         TransitTime,
 	      }
 
 
@@ -169,7 +170,10 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge9MinPrice, 
 	         Surcharge10MinPrice, 
 	         CurrencyId, 
-	         CurrencyCode,
+	         CurrencyCode, 
+	         OriginPortCombinedCode, 
+	         DestinationPortCombinedCode, 
+	         TransitTime,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -511,6 +515,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
             {
 				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransitTime))
+            {
+				entityPOCO.TransitTime = entityPM.TransitTime;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -859,6 +868,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.CurrencyId = entityPOCO.CurrencyId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TransitTime))
+            {
+					entityPM.TransitTime = entityPOCO.TransitTime;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -1198,6 +1212,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
             {
                 oldEntityPM.CurrencyId = entityPM.CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TransitTime))
+            {
+                oldEntityPM.TransitTime = entityPM.TransitTime;
             }
 			
 		}

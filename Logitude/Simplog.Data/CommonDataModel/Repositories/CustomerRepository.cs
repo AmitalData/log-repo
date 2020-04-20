@@ -358,5 +358,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return oldestDate;
         }
+
+        public Customer GetFirstSingleByName(string name, int tenant)
+        {
+            return (from record in context.Customers.Include("Card")
+                    where record.Card.EnglishName == name && record.Tenant == tenant
+                    select record).FirstOrDefault();
+        }
     }
 }

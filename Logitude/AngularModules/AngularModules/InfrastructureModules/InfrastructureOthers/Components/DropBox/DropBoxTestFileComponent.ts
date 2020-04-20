@@ -56,7 +56,7 @@ export class DropBoxTestFileComponent extends BaseComponent implements OnInit, A
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             var myService: CommonDomainService = new CommonDomainService();
-            myService.GetDropBoxComLogTestFile(SessionLocator.Tenant, this.FileName, this.FolderName, this.FileText, this.ObjectTableId).subscribe((myResult) => {
+            myService.GetDropBoxComLogTestFile(SessionLocator.Tenant, this.FileName, this.FolderName, this.FileText, this.ObjectTableId).subscribe((myResult:any) => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var temp = myResult.Result;
                 this.messageWindow.Width = 300;

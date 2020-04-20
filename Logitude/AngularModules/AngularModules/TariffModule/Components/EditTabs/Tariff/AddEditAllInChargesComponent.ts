@@ -33,7 +33,7 @@ export class AddEditAllInChargesComponent {
     private isVersionDirty: boolean = false;
     private isTariffDirty: boolean = false;
     SetWindowArgs(args: any) {
-        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
             if (args) {
                 this.IsEditingEnabled = args['IsEditingEnabled'];
                 this.EntityPM = args['VersionPM'];

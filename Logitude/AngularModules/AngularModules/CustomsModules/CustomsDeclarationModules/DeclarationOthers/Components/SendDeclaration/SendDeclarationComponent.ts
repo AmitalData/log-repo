@@ -398,7 +398,7 @@ export class SendDeclarationService implements OnDestroy {
 
                     this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
                     this._SupplierInvoiceExtendedPMService
-                        .GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, supplierInvoice.InvoiceCounterKey, 0, 0, "").subscribe(response => {
+                        .GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.Id, supplierInvoice.InvoiceCounterKey, 0, 0, "").subscribe((response:any) => {
                             supplierInvoice = response.Result;
 
                             var service: AnalyzeUnifreightInsuranceService = new AnalyzeUnifreightInsuranceService();

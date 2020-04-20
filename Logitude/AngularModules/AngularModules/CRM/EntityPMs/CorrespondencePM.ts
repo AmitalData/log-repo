@@ -158,6 +158,11 @@ export class CorrespondencePM {
     public set ContactIndexColor(newValue: number) { if (this.contactIndexColor != newValue) { this.contactIndexColor = newValue; this.MarkAsDirty("ContactIndexColor"); } }
        
 	 
+    private isContainsQuotationAttachment: boolean;
+    public get IsContainsQuotationAttachment() { return this.isContainsQuotationAttachment; }
+    public set IsContainsQuotationAttachment(newValue: boolean) { if (this.isContainsQuotationAttachment != newValue) { this.isContainsQuotationAttachment = newValue; this.MarkAsDirty("IsContainsQuotationAttachment"); } }
+       
+	 
 
     public OldEntityPM: CorrespondencePM;
 		

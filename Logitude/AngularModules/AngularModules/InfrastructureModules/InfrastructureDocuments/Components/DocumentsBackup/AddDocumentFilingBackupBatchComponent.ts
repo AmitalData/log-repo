@@ -134,7 +134,7 @@ export class AddDocumentFilingBackupBatchComponent extends BaseComponent impleme
         documentFilingBackupBatchPM.TotalFailed = 0;
         documentFilingBackupBatchPM.TotalDocuments = 0;
         documentFilingBackupBatchPM.TotalSucceeded = 0;
-        service.insert(documentFilingBackupBatchPM).subscribe(res => {
+        service.insert(documentFilingBackupBatchPM).subscribe((res:any) => {
             this.CurrentSession.StopBusyIndicator();
             if (!res.HasError) {
                 this.CurrentSession.CloseCurrentWindowEmit("OK");

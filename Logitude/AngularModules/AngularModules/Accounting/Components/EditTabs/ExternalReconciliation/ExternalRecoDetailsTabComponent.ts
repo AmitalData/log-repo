@@ -94,7 +94,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             this.ledgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse.Result) {
                     var result = serviceResponse.Result;
-                    var transaction = result.Result; // get the data
+                    var transaction = result; // get the data
                     this.openAmountCurrency = transaction ? transaction.CurrencyCode : "";
                     this.ledgerAmountHeader += " (" + this.openAmountCurrency + ")";
                     this.bankAmountHeader += " (" + this.openAmountCurrency + ")";
@@ -103,7 +103,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
             });
         }
         else {
-            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult) => {
+            this._CurrencyPMService.get(glAccountCurrencyId).subscribe((myResult:any) => {
                 var currency = myResult.Result;
                 this.openAmountCurrency = currency ? currency.Code : "";
                 this.ledgerAmountHeader += " (" + this.openAmountCurrency + ")";
@@ -144,7 +144,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
     }
     GetBankLines(bankPageLinesIds, transactionsLinesIds) {
-        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult) => {
+        this._ReconcileExternalPageExtendedListService.getBankPageLinesByIds(bankPageLinesIds).subscribe((myResult:ServiceResponse) => {
             var result = myResult.Result;
             var list = result.Result;
 
@@ -176,9 +176,9 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
         // 2- get ledger transactions lines
         if (transactionsLinesIds.length > 0) {
-            this.ledgerTransactionExtendedListService.getLedgerTransactionsByIds(transactionsLinesIds).subscribe((myResult) => {
+            this.ledgerTransactionExtendedListService.getLedgerTransactionsByIds(transactionsLinesIds).subscribe((myResult: ServiceResponse) => {
                 var result = myResult.Result;
-                var list = result.Result;
+                var list = result;
 
                 // Incapsulate transactions
                 var transactionsItems: TransactionLineModel[] = [];

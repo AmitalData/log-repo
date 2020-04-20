@@ -253,7 +253,8 @@ namespace WebFreight.Web.DataProviders
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public string CommodityNumber { get; set; }
-      
+        public int? NumberOfInsidePackages { get; set; }
+        public string ContainerNumber { get; set; }
     }
 
     public class PreAlertManifestDetails

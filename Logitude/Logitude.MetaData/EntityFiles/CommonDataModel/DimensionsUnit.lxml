@@ -48,7 +48,9 @@
   SearchFields="&quot;DimensionsUnit,DimensionsUnits,,Code,&quot;"
   ClientModuleName="&quot;Common&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;Name&quot;">
+  CloseTableName="&quot;Name&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;ed2a5d6f-5cb4-4d0b-84f7-7384b41966ea&quot;"
     FieldName="&quot;Code&quot;"
@@ -187,7 +189,7 @@
     Id="&quot;aa853e05-c685-4106-ae6a-68597fdb852a&quot;"
     FieldName="&quot;SearchFields&quot;"
     ObjectTableName="&quot;DimensionsUnit&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="1000"
     IsRequired="false"

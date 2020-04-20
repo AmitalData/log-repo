@@ -79,8 +79,7 @@
                                                                     (SelectedItemChanged)="DestinationPortId"
                                                                     [DisplayMemberPath]="'Code'"
                                                                     [SelectedValue]="DestinationPortId"
-                                                                    [DependencyFilter1Value]="DestinationDependencyFilterValue"
-                                                                    >
+                                                                    [DependencyFilter1Value]="DestinationDependencyFilterValue">
                                                             </LogLov>
 
                                                         </td>
@@ -121,21 +120,14 @@
                                                 <div></div>
                                             </td>
                                         </tr>
-                                        <tr style="height:15px">
+                                        <tr style="height:15px" *ngIf="TariffType == 'OLC' || TariffType == 'AFC'">
                                             <td>
                                                 <table>
                                                     <tr>
-                                                        <td *ngIf="TariffType != 'OFC'">
+                                                        <td *ngIf="TariffType == 'OLC' || TariffType == 'AFC'">
                                                             <div class="FillParent" style="padding-left:10px">
                                                                 <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please insert totals or </span>
                                                                 <Hyperlink (click)="FillDimensionsClicked()">Fill Dimensions</Hyperlink>
-                                                            </div>
-                                                        </td>
-
-                                                        <td *ngIf="TariffType == 'OFC'">
-                                                            <div class="FillParent" style="padding-left:10px">
-                                                                <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please insert  </span>
-                                                                <Hyperlink (click)="FillContainersClicked()">Containers</Hyperlink>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -143,7 +135,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            </td>                                          
+                                            </td>
                                         </tr>
 
                                         <tr style="height:5px">
@@ -152,11 +144,121 @@
                                             </td>
                                         </tr>
 
-                                        <tr>
+                                        <tr *ngIf="TariffType == 'OFC'">
                                             <td>
                                                 <table>
                                                     <tr>
+                                                        <td style="width:120px">
+                                                            <LogLabel [NoObjectField]="true" [Text]="'Containers'" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
 
+                                                        <td style="width:40px">
+                                                            <LogTextBox [ObjectFieldName]="'Quantity1'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity1" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+                                                        <td style="width:2px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:120px;">
+                                                            <LogLov [ObjectFieldName]="'ContainerType1Id'"
+                                                                    [SelectedValue]="ContainerType1Id"
+                                                                    [NoObjectField]="true"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'PackageType'"
+                                                                    [HideLastColumn]="true"
+                                                                    [RunToggleMode]="true"
+                                                                    [DependencyFilter1Value]="'O'"
+                                                                    [DependencyFilter2Value]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width:40px">
+                                                            <LogTextBox [ObjectFieldName]="'Quantity2'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity2" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+                                                        <td style="width:2px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:120px;">
+                                                            <LogLov [ObjectFieldName]="'ContainerType2Id'"
+                                                                    [SelectedValue]="ContainerType2Id"
+                                                                    [NoObjectField]="true"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'PackageType'"
+                                                                    [HideLastColumn]="true"
+                                                                    [RunToggleMode]="true"
+                                                                    [DependencyFilter1Value]="'O'"
+                                                                    [DependencyFilter2Value]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width:40px">
+                                                            <LogTextBox [ObjectFieldName]="'Quantity3'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity3" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+                                                        <td style="width:2px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:120px;">
+                                                            <LogLov [ObjectFieldName]="'ContainerType3Id'"
+                                                                    [SelectedValue]="ContainerType3Id"
+                                                                    [NoObjectField]="true"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'PackageType'"
+                                                                    [HideLastColumn]="true"
+                                                                    [RunToggleMode]="true"
+                                                                    [DependencyFilter1Value]="'O'"
+                                                                    [DependencyFilter2Value]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width:40px">
+                                                            <LogTextBox [ObjectFieldName]="'Quantity4'" [NoObjectField]="true" [HideColumns]="true" [Text]="Quantity4" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+                                                        <td style="width:2px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:120px;">
+                                                            <LogLov [ObjectFieldName]="'ContainerType4Id'"
+                                                                    [SelectedValue]="ContainerType4Id"
+                                                                    [NoObjectField]="true"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'PackageType'"
+                                                                    [HideLastColumn]="true"
+                                                                    [RunToggleMode]="true"
+                                                                    [DependencyFilter1Value]="'O'"
+                                                                    [DependencyFilter2Value]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width:40px">
+                                                            <LogTextBox [ObjectFieldName]="'Quantity5'" [HideColumns]="true" [NoObjectField]="true" [Text]="Quantity5" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+                                                        <td style="width:2px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:120px;">
+                                                            <LogLov [ObjectFieldName]="'ContainerType5Id'"
+                                                                    [SelectedValue]="ContainerType5Id"
+                                                                    [NoObjectField]="true"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'PackageType'"
+                                                                    [HideLastColumn]="true"
+                                                                    [RunToggleMode]="true"
+                                                                    [DependencyFilter1Value]="'O'"
+                                                                    [DependencyFilter2Value]="true">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngIf="TariffType != 'OFC'">
+                                            <td>
+                                                <table>
+                                                    <tr>
                                                         <td style="width:90px">
                                                             <LogLabel [ObjectFieldName]="'GrossWeight'" [NoObjectField]="true" [Text]="'Gross Weight'" [DataContext]="DataContext"></LogLabel>
                                                         </td>
@@ -240,16 +342,12 @@
                                                             </LogLov>
 
                                                         </td>
-
-
-                                                        <td></td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </td>
-
-
-
-
                                         </tr>
 
                                     </table>
@@ -393,7 +491,7 @@
                                                                                             <tr>
 
 
-                                                                                                <td colspan="3">
+                                                                                                <td colspan="2">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:80px">
@@ -404,6 +502,22 @@
                                                                                                                 <div class="TextTrimming" style="width:400px;max-width:400px">
                                                                                                                     {{item.Remarks}}
                                                                                                                 </div>
+                                                                                                            </td>
+
+                                                                                                        </tr>
+                                                                                                    </table>
+
+                                                                                                </td>
+
+                                                                                                <td style="text-align:left">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:80px">
+                                                                                                                <label style="color:darkgray"> Transit time:</label>
+
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                {{item.TransitTime}}
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                     </table>
@@ -565,7 +679,7 @@
                                                                                                 <td style="width:3px;">
                                                                                                     <div></div>
                                                                                                 </td>
-                                                                                                <td *ngIf="item != null && item.Surcharges != null && item.Surcharges.length > 0" style="float:left;top:12px;">
+                                                                                                <td *ngIf="item != null && item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length > 0" style="float:left;top:12px;">
                                                                                                     <Hyperlink [FontSize]="12" (click)="ViewSurchargesClicked(item)">(view tariff)</Hyperlink>
                                                                                                 </td>
                                                                                             </tr>
@@ -578,7 +692,7 @@
                                                                                         <div></div>
                                                                                     </td>
                                                                                 </tr>
-                                                                                <tr *ngFor="let surcharge of item.Surcharges" style="height:10px;border-bottom:2px;border-color:#D1D1D1">
+                                                                                <tr *ngFor="let surcharge of item.SurchargesWithoutAllIn" style="height:10px;border-bottom:2px;border-color:#D1D1D1">
                                                                                     <td>
                                                                                         <table>
                                                                                             <tr>

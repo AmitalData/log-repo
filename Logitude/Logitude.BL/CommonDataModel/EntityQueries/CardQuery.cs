@@ -214,6 +214,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IsAutonomy = a.IsAutonomy,
                                       CreatedByPartner = a.CreatedByPartner,
                                       StorageFreeDays = a.StorageFreeDays,
+                                      RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id: null) : null,
+                                      IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
                                   }).FirstOrDefault();
 
 
@@ -1062,6 +1064,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                               CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                               CreatedByPartner = card.CreatedByPartner,
+                                              RankId = card.Customer != null ? (card.Customer.Rank != null ? card.Customer.Rank.Name : null) : null,
+                                              IndustryId = card.Customer != null ? (card.Customer.Industry != null ? card.Customer.Industry.Name : null) : null,
                                           };
 
             if(myResult.Count() > 0)
@@ -1155,51 +1159,58 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 AirlineRepository airlineRepository = new AirlineRepository(objectContext);
                 ShippingLineRepository shippingLineRepository = new ShippingLineRepository(objectContext);
                 AddressRepository AddressRepository = new AddressRepository(objectContext);
-
-
+                
                 Card oldTenantCard = CardRepository.GetSingleCard(entityId, 0, true);
-            Card newTenantCard = CardRepository.GetSingleCardByCodeAndType(oldTenantCard.Code, oldTenantCard.PartnerTypeId, tenant, false);
+                Card newTenantCard = CardRepository.GetSingleCardByCodeAndType(oldTenantCard.Code, oldTenantCard.PartnerTypeId, tenant, false);
                 if (oldTenantCard.UpdateDate == null)
+                {
                     oldTenantCard.UpdateDate = oldTenantCard.CreateDate;
-            if (newTenantCard.CreateDate != oldTenantCard.UpdateDate)
-            {
-                DateTime? todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                newTenantCard.UpdateDate = todayDateTime;
-                    newTenantCard.CreateDate = oldTenantCard.UpdateDate ;
+                }
+
+                if (newTenantCard.CreateDate != oldTenantCard.UpdateDate)
+                {
+                    DateTime? todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    newTenantCard.UpdateDate = todayDateTime;
+                    newTenantCard.CreateDate = oldTenantCard.UpdateDate;
                     newTenantCard.EnglishName = oldTenantCard.EnglishName;
-                newTenantCard.LocalName = oldTenantCard.LocalName;
+                    newTenantCard.LocalName = oldTenantCard.LocalName;
+
+                    if(string.IsNullOrEmpty(newTenantCard.ImageDetailId))
+                    {
+                        newTenantCard.ImageDetailId = oldTenantCard.ImageDetailId;
+                    }
+
                     CardRepository.Update(newTenantCard);
                     CardRepository.SubmitChanges();
-                     switch (newTenantCard.PartnerTypeId)
-                            {
-                                case "AL":
-                                    {
-                                        Airline NewAirline = airlineRepository.GetSingleAirline(newTenantCard.Id, newTenantCard.Tenant);
-                                        Airline oldAirline = airlineRepository.GetSingleAirline(oldTenantCard.Id, oldTenantCard.Tenant);
-                                        newTenantCard.Website = oldTenantCard.Website;
-                                        NewAirline.Prefix = oldAirline.Prefix;
-                                        NewAirline.ICAO = oldAirline.ICAO;
-                                        NewAirline.CheckDigit = oldAirline.CheckDigit;
-                                        NewAirline.LimitedLength = oldAirline.LimitedLength;
-                                        airlineRepository.Update(NewAirline);
-                                airlineRepository.SubmitChanges();
-                                        break;
-                                    }
 
-                                case "SL":
-                                    {
-                                        ShippingLine NewShippingLine = shippingLineRepository.GetSingleShippingLine(newTenantCard.Id, newTenantCard.Tenant);
-                                        ShippingLine oldShippingLine = shippingLineRepository.GetSingleShippingLine(oldTenantCard.Id, oldTenantCard.Tenant);
-                                        newTenantCard.Website = oldTenantCard.Website;
-                                        NewShippingLine.SCACCode = oldShippingLine.SCACCode;
-                                        shippingLineRepository.Update(NewShippingLine);
-                                shippingLineRepository.SubmitChanges();
-                                        break;
-                                    }
-                             
+                    switch (newTenantCard.PartnerTypeId)
+                    {
+                        case "AL":
+                            {
+                                Airline NewAirline = airlineRepository.GetSingleAirline(newTenantCard.Id, newTenantCard.Tenant);
+                                Airline oldAirline = airlineRepository.GetSingleAirline(oldTenantCard.Id, oldTenantCard.Tenant);
+                                newTenantCard.Website = oldTenantCard.Website;
+                                NewAirline.Prefix = oldAirline.Prefix;
+                                NewAirline.ICAO = oldAirline.ICAO;
+                                NewAirline.CheckDigit = oldAirline.CheckDigit;
+                                NewAirline.LimitedLength = oldAirline.LimitedLength;
+                                airlineRepository.Update(NewAirline);
+                                airlineRepository.SubmitChanges();
+                                break;
                             }
-                
-            }
+
+                        case "SL":
+                            {
+                                ShippingLine NewShippingLine = shippingLineRepository.GetSingleShippingLine(newTenantCard.Id, newTenantCard.Tenant);
+                                ShippingLine oldShippingLine = shippingLineRepository.GetSingleShippingLine(oldTenantCard.Id, oldTenantCard.Tenant);
+                                newTenantCard.Website = oldTenantCard.Website;
+                                NewShippingLine.SCACCode = oldShippingLine.SCACCode;
+                                shippingLineRepository.Update(NewShippingLine);
+                                shippingLineRepository.SubmitChanges();
+                                break;
+                            }
+                    }
+                }
 
                 CardList myCardList = new CardList()
                 {
@@ -1226,6 +1237,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CityName = newTenantCard.CityName,
                     CountryName = newTenantCard.CountryName,
                     StateName = newTenantCard.StateName,
+                    
                 };
 
                 if (myCardList.CityName == null || myCardList.CountryName == null || myCardList.StateName == null)
@@ -1240,14 +1252,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             myCardList.StateName = myMainAddress.State == null ? null : myMainAddress.State.EnglishName;
                         }
                     }
-                }                
+                }
                 scope.Complete();
 
                 return myCardList;
             }
-
         }
-
 
         public CardList GetCarrierCopyToCurrentTenant(string entityId, int tenant, string ccsTypeCode, string newAirlineActionCode, bool newAirlineActionValue, string notes)
         {
@@ -2075,6 +2085,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
                                             && (a.PartnerTypeId != "CS" && a.PartnerTypeId != "PO" && a.PartnerTypeId != "AG")
                                             && (a.PartnerTypeId != "VD" && a.PartnerTypeId != "DR" && a.PartnerTypeId != "LL" && a.PartnerTypeId != "WA")
+                                         
                                          select new CardList()
                                          {
                                              Id = a.Id,
@@ -2090,8 +2101,46 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards.ToList();
         }
 
+        public IQueryable<CardList> GetCardsByTenant(int tenant)
+        {
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             LocalName = a.LocalName,
+                                             PartnerTypeId = a.PartnerTypeId,
+                                             PayablesAccountingCard = a.PayablesAccountingCard,
+                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             GLAccountId = a.GLAccountId,
+                                             PrimaryContactId = a.PrimaryContactId,
+                                             BusinessPhone = a.PrimaryContact.BusinessPhone,
+                                             //CreditStatus = a.cred,
 
+                                         };
 
+            return cards;
+        }
 
+        public List<ShortPartnersDetails> GetConnectedPartnerIdsByGLAccountId(string glAccountId, int tenant)
+        {
+            List<ShortPartnersDetails> cards = (from a in repository.context.Cards
+                                         where a.Tenant == tenant && a.GLAccountId == glAccountId
+                                         select new ShortPartnersDetails()
+                                         {
+                                             PartnerId = a.Id,
+                                             PartnerName = a.PartnerType.Name,
+                                         }).ToList();
+
+            return cards;
+        }
+    }
+
+    public class ShortPartnersDetails
+    {
+        public string PartnerId { get; set; }
+        public string PartnerName { get; set; }
     }
 }

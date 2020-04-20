@@ -49,7 +49,7 @@ export class ReportsTemplateRestoreComponent implements OnInit {
     DataViewModel: any;
     SetWindowArgs(args: any) {
 
-        this._entityResourceService.getEntityResourceByTableName("ReportsTemplatesVersion", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("ReportsTemplatesVersion", 0).subscribe((response:any) => {
             this.IsVisibile = true;
             if (args) {
                 this.DataViewModel = args.DataViewModel;

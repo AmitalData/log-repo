@@ -34,7 +34,7 @@ export class ObjectFieldsSearchComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.Http;;
+        this.serviceArgs.http = ServiceHelper.HttpClient;
         if (this.CurrentSession == null) {
             this.SearchFieldsId = "ObjectFieldSearchFields_-1_-1";
         }

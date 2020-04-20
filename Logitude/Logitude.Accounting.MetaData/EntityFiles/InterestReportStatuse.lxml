@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Interest Report Statuse&quot;"
-  Code="&quot;1bb2&quot;"
+  Code="&quot;eaff&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -61,7 +61,9 @@
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
-  IsTabsHidden="false">
+  IsTabsHidden="false"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;e65986d8-9cbc-49fb-afae-70c4038f03a0&quot;"
     FieldName="&quot;Code&quot;"
@@ -297,7 +299,7 @@
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
-    ObjectFieldNotRequired="false"
+    ObjectFieldNotRequired="true"
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"
@@ -396,11 +398,6 @@
       Code="&quot;1&quot;"
       SearchFields="&quot;1,Draft,טיוטה&quot;" />
     <Record
-      LocalName="&quot;הופקה חשבונית&quot;"
-      EnglishName="&quot;Invoice&quot;"
-      Code="&quot;2&quot;"
-      SearchFields="&quot;2,Invoice,הופקה חשבונית&quot;" />
-    <Record
       LocalName="&quot;בוטל&quot;"
       EnglishName="&quot;Cancelled&quot;"
       Code="&quot;3&quot;"
@@ -410,6 +407,21 @@
       EnglishName="&quot;Closed without Invoice&quot;"
       LocalName="&quot;נסגר ללא חשבונית&quot;"
       SearchFields="&quot;4,Closed without Invoice,נסגר ללא חשבונית&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      LocalName="&quot;הופקה חשבונית&quot;"
+      EnglishName="&quot;Invoiced&quot;"
+      SearchFields="&quot;2,Invoiced,הופקה חשבונית&quot;" />
+    <Record
+      EnglishName="&quot;Failed&quot;"
+      Code="&quot;6&quot;"
+      SearchFields="&quot;6,Failed,נכשלה&quot;"
+      LocalName="&quot;נכשלה&quot;" />
+    <Record
+      Code="&quot;5&quot;"
+      LocalName="&quot;בתהליך&quot;"
+      SearchFields="&quot;5,In Progress,בתהליך&quot;"
+      EnglishName="&quot;In Progress&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

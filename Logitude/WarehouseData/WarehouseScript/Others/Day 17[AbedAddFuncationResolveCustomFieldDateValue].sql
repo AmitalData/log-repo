@@ -13,13 +13,13 @@ RETURNS sql_variant
 AS  
 BEGIN  
  DECLARE @MyValueOut sql_variant
- if(@DataTypeCode = ''Date'' )begin  set @MyValueOut = -1; end 
+ if(@DataTypeCode = ''Date'' ) begin  set @MyValueOut = ''1-1-1''; end 
 
 if(@DataTypeCode = ''DateTime'' and  LEN(@FieldValue) >= 14)
 begin
 set @MyValueOut = SUBSTRING(@FieldValue, 1, 4) + ''-''+ SUBSTRING(@FieldValue, 5, 2) + ''-''+ SUBSTRING(@FieldValue, 7, 2) +'' ''+ SUBSTRING(@FieldValue, 9, 2) + '':''+ SUBSTRING(@FieldValue, 11, 2) + '':''+ SUBSTRING(@FieldValue, 13, 2) 
 set @MyValueOut = convert(varchar, CAST(@MyValueOut AS datetime), 20)
-set @MyValueOut = CONVERT(DATE, @MyValueOut)
+-- set @MyValueOut = CONVERT(DATE, @MyValueOut)
 end
 
 ELSE if(@DataTypeCode = ''Date''  and  LEN(@FieldValue) >= 8) 

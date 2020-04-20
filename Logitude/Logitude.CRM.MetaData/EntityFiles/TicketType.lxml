@@ -32,7 +32,9 @@
   Code="&quot;TTQG&quot;"
   Name="&quot;TicketType&quot;"
   GenerateDomainService="false"
-  ClientModuleName="&quot;CRM&quot;">
+  ClientModuleName="&quot;CRM&quot;"
+  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;f56b43a0-637d-4b2f-9ca3-3eff31702061&quot;"
     FieldName="&quot;Id&quot;"

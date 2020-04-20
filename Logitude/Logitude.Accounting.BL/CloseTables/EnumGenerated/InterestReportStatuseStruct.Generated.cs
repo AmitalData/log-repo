@@ -11,9 +11,11 @@ namespace Logitude.Accounting.BL.CloseTables
     public struct InterestReportStatuseValues
     {   
        public const string Draft = "1";  
-       public const string Invoice = "2";  
        public const string Cancelled = "3";  
        public const string ClosedwithoutInvoice = "4";  
+       public const string Invoiced = "2";  
+       public const string Failed = "6";  
+       public const string InProgress = "5";  
     }
 }
 

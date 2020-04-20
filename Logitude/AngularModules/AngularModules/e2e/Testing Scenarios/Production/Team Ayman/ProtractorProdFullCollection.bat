@@ -102,7 +102,7 @@ cd C:\Automation e2e\TeamAyman\Prod
 IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
-Pause
+
 
 SETLOCAL
 :CheckError
