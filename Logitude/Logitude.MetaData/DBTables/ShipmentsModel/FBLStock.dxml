@@ -19,7 +19,14 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="IsUsed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Number"
+    ShortName="Number_"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -36,11 +43,5 @@
     Size="250">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="IsUsed"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
 </Table>

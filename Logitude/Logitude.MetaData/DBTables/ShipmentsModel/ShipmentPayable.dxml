@@ -108,7 +108,6 @@
   <Column
     Name="AccountedAmountInProfitCurrency"
     ShortName="AccountedAmountInProfit"
-    OldNames="AccountedAmountInProfit"
     Type="float">
     <Constraints
       Nullable="true" />
