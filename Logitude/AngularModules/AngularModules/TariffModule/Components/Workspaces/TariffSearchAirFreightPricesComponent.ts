@@ -1034,31 +1034,30 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
     AssignTariffChargesToQuote() {
         this.TariffList_Quote.forEach(item => {
-            var chargeItem = new QuoteChargeItem(item, this.FatherComponent, false);
+            this.FatherComponent.EntityPM.AddQuoteChargePM(item);
+            var chargeItem: QuoteChargeItem = new QuoteChargeItem(item, this.FatherComponent, false);
             chargeItem.ChargesTypeId = item.ChargesTypeId;
             chargeItem.CostMeasurementId = item.CostMeasurementId;
             chargeItem.CostCurrencyId = item.CostCurrencyId;
-            chargeItem.CostUnitPrice = item.CostUnitPrice;
+            chargeItem.CostTotalAmount = item.CostTotalAmount;
             chargeItem.CostMinAmount = item.CostMinAmount;
             chargeItem.CostExchangeRate = item.CostExchangeRate;
             chargeItem.SaleMeasurementId = item.SaleMeasurementId;
             chargeItem.SaleCurrencyId = item.SaleCurrencyId;
             chargeItem.SaleExchangeRate = item.SaleExchangeRate;
-
-            //chargeItem.SaleUnitPrice = item.SaleUnitPrice;
             chargeItem.ChargesGroupCode = item.ChargesGroupCode;
-
-            this.FatherComponent.ItemsSource.Insert(chargeItem);       
-            chargeItem.ComputeCostInSalePrice();
-            chargeItem.SetSaleQuantity();
+            var amount: number = item.CostTotalAmount;
             chargeItem.SetCostQuantity();
-            chargeItem.ComputeCostAmounts();
+            var quantity: number = chargeItem.CostQuantity;
+            if (quantity != null && quantity != 0) {
+                chargeItem.CostUnitPrice = (amount / quantity);
+            }
+            chargeItem.SetSaleQuantity();
             chargeItem.ComputeSalePrice();
             chargeItem.SetUIProperties_AllIn();
-             this.FatherComponent.EntityPM.AddQuoteChargePM(item);
+            this.FatherComponent.ItemsSource.Insert(chargeItem);
         });
         this.ReloadTariffCharges();
-
     }
     ReloadTariffCharges() {
         this.FatherComponent.BuildItemsSource();
@@ -1107,9 +1106,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
                 if (!item.IsAllIn) {
                     chargePM.CostMinAmount = AppTool.Round(item.MinPrice, 3);
-                    chargePM.CostUnitPrice = AppTool.Round(item.ActualPrice, 3); 
+                    chargePM.CostTotalAmount = AppTool.Round(item.ActualPrice, 3); 
                 }
-
+                
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsCostAllIn = item.IsAllIn;
