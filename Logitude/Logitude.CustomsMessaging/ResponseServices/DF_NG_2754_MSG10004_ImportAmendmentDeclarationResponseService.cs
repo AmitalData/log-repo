@@ -994,7 +994,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
  }
                         supplierInvoiceItemPM.SalesTaxExemptionTypeCode = GetValueCodeType( governmentAgencyGoodsItem.DMExtensions.SalesTaxExemptionType);
                         supplierInvoiceItemPM.PreferenceDocumentNumber = GetValueIDType( governmentAgencyGoodsItem.DMExtensions.PreferenceDocumentNumber);
-                        supplierInvoiceItemPM.IsUsed = governmentAgencyGoodsItem.DMExtensions.IsUsed.Value;
+                        if(governmentAgencyGoodsItem.DMExtensions.IsUsed !=null) supplierInvoiceItemPM.IsUsed =   governmentAgencyGoodsItem.DMExtensions.IsUsed.Value;
                         supplierInvoiceItemPM.ActualInvoiceLines = governmentAgencyGoodsItem.DMExtensions.InvoiceLineNumbers;
                        if(governmentAgencyGoodsItem.DMExtensions.DeferredCustomsTax!= null) supplierInvoiceItemPM.DeferredCustomsTax = governmentAgencyGoodsItem.DMExtensions.DeferredCustomsTax.Value;
                        if(governmentAgencyGoodsItem.DMExtensions.DeferredPurchaseTax!=null) supplierInvoiceItemPM.DeferredPurchaseTax = governmentAgencyGoodsItem.DMExtensions.DeferredPurchaseTax.Value;
