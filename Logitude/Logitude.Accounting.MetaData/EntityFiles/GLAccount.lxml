@@ -11861,21 +11861,25 @@
     <TextCode
       Code="&quot;GLAccount.O.Glaccount.Currency&quot;"
       DefaultText="&quot;glaccount .currency&quot;"
+      LocalDefaultText="&quot;כרטיס מטבעי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;GLAccount.O.WasConnected&quot;"
       DefaultText="&quot;was connected to glaccount .main&quot;"
+      LocalDefaultText="&quot;חובר לכרטיס ראשי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;GLAccount.O.GLAccountCurrencyDisconnected&quot;"
       DefaultText="&quot;GLAccount.currency disconnected&quot;"
+      LocalDefaultText="&quot;ניתוק כרטסת מטבעית בוצע&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;GLAccount.O.WasDisconnected&quot;"
       DefaultText="&quot;was disconnected to glaccount .main&quot;"
+      LocalDefaultText="&quot;נותק מכרטיס ראשי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
