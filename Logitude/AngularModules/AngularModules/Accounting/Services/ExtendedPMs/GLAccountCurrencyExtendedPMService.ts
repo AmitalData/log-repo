@@ -74,6 +74,45 @@ export class GLAccountCurrencyExtendedPMService{
       
     }
 
+
+    
+    Put(entityPM: GLAccountCurrencyPM) {
+
+        var callTime = new Date();
+ 
+            var validator: ClassLevelValidator;
+            validator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("GLAccountCurrency", entityPM);
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            if (errorsArray.length == 0) {
+                var mappedEntity: GLAccountCurrencyPM;
+                mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+                return this.httpClient.put(this._apiUrl, JSON.stringify(mappedEntity) ,  ServiceHelper.GetHttpHeaders()).pipe(
+                    map(response => {
+                        var pm = response;
+                        if (pm) {
+                            var mappedResult: GLAccountCurrencyPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            serviceResponse.Result = mappedResult;
+                        }
+                        return serviceResponse;
+
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+                 
+            }
+            else {
+
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+
+                return Observable.of(serviceResponse);
+
+            }
+      
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: GLAccountCurrencyPM = null) {
 
 
