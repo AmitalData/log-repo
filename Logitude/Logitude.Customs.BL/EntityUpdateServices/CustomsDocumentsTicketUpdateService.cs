@@ -59,7 +59,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     customDocument.ChangeSetOp = ChangeSetOperation.Update;
                     customDocument.IsPartOfDeclaration = false;
 
-                    this._CreateHybridTask = true;;//Bug 36694: Disconnecting document from the ticket does not create trigger to UNF
+                    this._CreateHybridTask = true; ;//Bug 36694: Disconnecting document from the ticket does not create trigger to UNF
                 }
                 if (metaDataValues.Count == 0)
                 {
@@ -104,7 +104,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     this.UpdateIsPartOfDeclaration(customDocument, entityPM);
                     this._CreateHybridTask = true;//Bug 36694: Disconnecting document 
                     customsdocumentUpdateService.Update(customDocument, true);
-                    
+
                 }
             }
             UpdateNotification(entityPM);
@@ -175,7 +175,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //    Communications.AddCommunicationLog(logParams);
         //}
 
-        private void ApplySetDeclarationAsChanged(string declarationId,int tenant)
+        private void ApplySetDeclarationAsChanged(string declarationId, int tenant)
         {
             ICustomContext context = MainContext as CustomContext;
             //-------------------- mohammad task 33591 prevent concurrency error for client------------------------//
@@ -228,7 +228,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     ApplySetDeclarationAsChanged(declarationPtr.ParentEntityId, entityPM.Tenant);
                 }
             }
-            else if (!string.IsNullOrEmpty(connectedDeclarationId)) {
+            else if (!string.IsNullOrEmpty(connectedDeclarationId))
+            {
                 ApplySetDeclarationAsChanged(connectedDeclarationId, entityPM.Tenant);
             }
         }
@@ -335,7 +336,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             newNotificationPM.AssigneToId = NotificationBase.CalcAssigneToId(newNotificationPM.Tenant, customerId, referentUserId, notificationDefinitionCode, oldassigneId);
 
             NotificationBase.CloseAllRelatedNotification(dbContext, newNotificationPM, "8228");
-            if(notificationDefinitionCode == "8228A" || notificationDefinitionCode == "8228D")
+            if (notificationDefinitionCode == "8228A" || notificationDefinitionCode == "8228D")
             {
                 NotificationBase.CloseAllRelatedNotification(dbContext, newNotificationPM, "8227N");
             }
@@ -350,7 +351,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             //if (entityPM.DocumentTypeCode == "380")
             //{
-                UpdateDeclarationCourierStatus(entityPM);
+            UpdateDeclarationCourierStatus(entityPM);
             //}
         }
 
@@ -359,7 +360,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICustomContext context = MainContext as CustomContext;
             List<CustomsDocumentPointerPM> pointers = ticket.CustomsDocumentPointers;
             var declarationPtr = pointers.Where(d => d.ParentEntityCode == "Declaration").FirstOrDefault();
-            if (ticket.CustomsDocumentPointers.Count == 0|| declarationPtr==null)
+            if (ticket.CustomsDocumentPointers.Count == 0 || declarationPtr == null)
             {
                 CustomsDocumentPointerQueryService CustomsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(context);
                 pointers = CustomsDocumentPointerQueryService.GetPointersForTicket(ticket.Id, ticket.Tenant);
@@ -467,69 +468,69 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     }
                                 }
 
-                                }
                             }
                         }
-
                     }
+
                 }
-                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+            }
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
 
-                    if (!string.IsNullOrWhiteSpace(status))
-                    {
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
-                        if (currentDeclarationCourierStatusPM == null)
-                        {
-                            currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
-                            {
-                                DeclarationId = connectedDeclarationPM.Id,
-                                Tenant = connectedDeclarationPM.Tenant,
-                                IsClosedForFollowUp = false,
-                                IsCourierMissingClassification = false,
-                            };
-                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
-                        }
-                        else
-                        {
-                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                        currentDeclarationCourierStatusPM.DocumentStatusCode = status;
-                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                        LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
-                    }
-              
-                if (currentDeclarationCourierStatusPM != null)
+            if (!string.IsNullOrWhiteSpace(status))
+            {
+                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                if (currentDeclarationCourierStatusPM == null)
                 {
-                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
-                    string prevValCourierDeclarationStatusCode = null;
-                    string currvValCourierDeclarationStatusCode = null;
-                    string prevValCourierDocumentStatusCode = null;
-                    string currvValCourierDocumentStatusCode = null;
-
-                    prevValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
-                    prevValCourierDocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
-                    calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
-
-                    if (!inProgress && !DocumentStatusCodeIsX)
+                    currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
                     {
-                        calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
-                    }
-                    currvValCourierDocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
-                    currvValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
-
-                    if (prevValCourierDeclarationStatusCode != currvValCourierDeclarationStatusCode || prevValCourierDocumentStatusCode != currvValCourierDocumentStatusCode)
-                    {
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
-                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                    }
-                    LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.CourierDeclarationStatusCode: " + currentDeclarationCourierStatusPM.CourierDeclarationStatusCode);
+                        DeclarationId = connectedDeclarationPM.Id,
+                        Tenant = connectedDeclarationPM.Tenant,
+                        IsClosedForFollowUp = false,
+                        IsCourierMissingClassification = false,
+                    };
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
-       
+                else
+                {
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+                currentDeclarationCourierStatusPM.DocumentStatusCode = status;
+                declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
+            }
+
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
+                string prevValCourierDeclarationStatusCode = null;
+                string currvValCourierDeclarationStatusCode = null;
+                string prevValCourierDocumentStatusCode = null;
+                string currvValCourierDocumentStatusCode = null;
+
+                prevValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                prevValCourierDocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
+                calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
+
+                if (!inProgress && !DocumentStatusCodeIsX)
+                {
+                    calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);
+                }
+                currvValCourierDocumentStatusCode = currentDeclarationCourierStatusPM.DocumentStatusCode;
+                currvValCourierDeclarationStatusCode = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+
+                if (prevValCourierDeclarationStatusCode != currvValCourierDeclarationStatusCode || prevValCourierDocumentStatusCode != currvValCourierDocumentStatusCode)
+                {
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                }
+                LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.CourierDeclarationStatusCode: " + currentDeclarationCourierStatusPM.CourierDeclarationStatusCode);
+            }
+
         }
-           
-        }
+
     }
 }
+
 
