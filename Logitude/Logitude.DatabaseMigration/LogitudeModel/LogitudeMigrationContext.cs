@@ -3070,7 +3070,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<PointerLevel> PointerLevel { get; set; }
         public IDbSet<ClientDrivingLicense> ClientDrivingLicense { get; set; }
         public IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseType { get; set; }
-        public IDbSet<DecisionType> DecisionType { get; set; }
+        
         public IDbSet<SeizureMethodType> SeizureMethodType { get; set; }
         public IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizure { get; set; }
         public IDbSet<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefund { get; set; }
@@ -5241,7 +5241,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new UsoCFDIMap());
             modelBuilder.Configurations.Add(new DocumentTypeCustomsDataMap());
             modelBuilder.Configurations.Add(new DocumentStatusMap());
-            modelBuilder.Configurations.Add(new DecisionTypeMap());
+            
             modelBuilder.Configurations.Add(new CourierCustomStatusMap());
             #endregion
 

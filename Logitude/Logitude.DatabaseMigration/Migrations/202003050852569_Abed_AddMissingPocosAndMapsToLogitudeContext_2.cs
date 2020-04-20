@@ -8,7 +8,7 @@ namespace Logitude.DatabaseMigration.Migrations
         public override void Up()
         {
             RenameTable(name: "dbo.DocumentTypeCustomsDatas", newName: "DocumentTypeCustomsData");
-            MoveTable(name: "dbo.DecisionTypes", newSchema: "Customs");
+            //MoveTable(name: "dbo.DecisionTypes", newSchema: "Customs");
             MoveTable(name: "dbo.DocumentTypeCustomsData", newSchema: "Customs");
 
             Sql("declare @sql nvarchar(2000) " +
@@ -127,11 +127,11 @@ namespace Logitude.DatabaseMigration.Migrations
                 "set @sql = 'alter table [dbo].[CarrierAreasPorts] drop constraint [' + @pkName + ']' " +
                 "exec(@sql)");
 
-            Sql("declare @sql nvarchar(2000) " +
-                "declare @pkName varchar(500) " +
-                "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'Customs' and table_name = 'DecisionTypes') " +
-                "set @sql = 'alter table [Customs].[DecisionTypes] drop constraint [' + @pkName + ']' " +
-                "exec(@sql)");
+            //Sql("declare @sql nvarchar(2000) " +
+            //    "declare @pkName varchar(500) " +
+            //    "set @pkName = (select constraint_name from information_schema.table_constraints where constraint_type = 'PRIMARY KEY' and table_schema = 'Customs' and table_name = 'DecisionTypes') " +
+            //    "set @sql = 'alter table [Customs].[DecisionTypes] drop constraint [' + @pkName + ']' " +
+            //    "exec(@sql)");
 
             Sql("declare @sql nvarchar(2000) " +
                 "declare @pkName varchar(500) " +
@@ -173,7 +173,7 @@ namespace Logitude.DatabaseMigration.Migrations
             AddPrimaryKey("dbo.UsoCFDIs", "Code");
             AddPrimaryKey("dbo.DocumentStatus", "Code");
             AddPrimaryKey("dbo.CarrierAreasPorts", "Id");
-            AddPrimaryKey("Customs.DecisionTypes", "Code");
+            //AddPrimaryKey("Customs.DecisionTypes", "Code");
             AddPrimaryKey("Customs.DocumentTypeCustomsData", "DocumentTypeId");
             AddPrimaryKey("dbo.DWObjectFieldCategories", "Id");
             CreateIndex("dbo.Cards", "UsoCFDICode");

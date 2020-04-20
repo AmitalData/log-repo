@@ -116,7 +116,7 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
         this.OriginalFieldsList.Collection.forEach((field: RequiredFieldItemModel) => {
             var i = new RequierdFieldObject();
             i.ObjectfieldId = field.ObjectfieldId;
-            i.ObjectfieldCode = field.FieldCode;
+            i.ObjectfieldCode = field.ObjectfieldCode;
 
             i.ObjectTableId = field.ObjectField.ObjectTableId;
             i.ObjectFieldName = field.ObjectField.FieldName;
