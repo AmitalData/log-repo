@@ -520,7 +520,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var typeservice = TrailReportFactory.CreateNew(trailReportParam);
             List<TrailReportM> res1 = typeservice.Execute();
             typeservice.Dispose();
-            List<string> includedGLAccounts = GetIncludedGLAccounts(res1, tenant);          
+            List<string> includedGLAccounts = GetIncludedGLAccounts(res1, openFormatReportPM, tenant);          
 
             IEnumerable< IGrouping<string,TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
 
@@ -4046,7 +4046,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
-        private List<string> GetIncludedGLAccounts(List<TrailReportM> result, int tenant)
+        private List<string> GetIncludedGLAccounts(List<TrailReportM> result,OpenFormatReportPM openFormatReport, int tenant)
         {
             var zeroVlauesList = result.Where(d => d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0).ToList();
             List<string> zeroVlauesGLAccounts = new List<string>();
@@ -4054,15 +4054,18 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 zeroVlauesGLAccounts = zeroVlauesList.Select(d => d.GLAccountId).ToList();
             }
+
             List<string> exceptedGLAccounts = new List<string>();
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
-            exceptedGLAccounts = gLAccountQueryService.GetGLAccountsWithoutLedgerTransactions(zeroVlauesGLAccounts, tenant);
+            exceptedGLAccounts = gLAccountQueryService.GetGLAccountsWithoutLedgerTransactions(zeroVlauesGLAccounts,openFormatReport, tenant);
+
             result = result.Where(d => !exceptedGLAccounts.Contains(d.GLAccountId)).ToList();
             List<string> includedGLAccounts = new List<string>();
             if (includedGLAccounts != null)
             {
                 includedGLAccounts = result.Select(d => d.GLAccountId).ToList();
             }
+
             return includedGLAccounts;
         }
         public   BatchTaskExecutionPM CreateBKMVDATAFileInBatch(string taxReportId, int tenant)
