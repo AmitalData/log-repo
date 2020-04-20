@@ -2976,22 +2976,28 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                         myStringBuilder.Append(a);
-
-                        if (item.ARPaymentMethod == "Cash")
+                        if (item.ARPaymentMethod != null)
                         {
-                            myStringBuilder.Append("1");
-                        }
-                        else if (item.ARPaymentMethod == "Cheque")
-                        {
-                            myStringBuilder.Append("2");
-                        }
-                        else if (item.ARPaymentMethod == "Credit Card")
-                        {
-                            myStringBuilder.Append("3");
-                        }
-                        else if (item.ARPaymentMethod == "Bank Transfer")
-                        {
-                            myStringBuilder.Append("4");
+                            if (item.ARPaymentMethod == "Cash")
+                            {
+                                myStringBuilder.Append("1");
+                            }
+                            else if (item.ARPaymentMethod == "Cheque")
+                            {
+                                myStringBuilder.Append("2");
+                            }
+                            else if (item.ARPaymentMethod.ToLower() == "credit card")
+                            {
+                                myStringBuilder.Append("3");
+                            }
+                            else if (item.ARPaymentMethod.ToLower() == "bank transfer")
+                            {
+                                myStringBuilder.Append("4");
+                            }
+                            else
+                            {
+                                myStringBuilder.Append("0");
+                            }
                         }
                         else
                         {
@@ -3214,19 +3220,26 @@ namespace Logitude.Accounting.BL.CoreBL
                     
 
                     myStringBuilder.Append(a);
+                    if (item.ARPaymentMethod != null)
+                    {
+                        if (item.ARPaymentMethod.ToLower() == "cash")
+                        {
+                            myStringBuilder.Append("1");
+                        }
 
-                    if (item.ARPaymentMethod == "Cash")
-                    {
-                        myStringBuilder.Append("1");
-                    }
-                  
-                    else if (item.ARPaymentMethod == "Credit Card")
-                    {
-                        myStringBuilder.Append("3");
-                    }
-                    else if (item.ARPaymentMethod == "Bank Transfer")
-                    {
-                        myStringBuilder.Append("4");
+                        else if (item.ARPaymentMethod.ToLower() == "credit card")
+                        {
+                            myStringBuilder.Append("3");
+                        }
+                        else if (item.ARPaymentMethod.ToLower() == "bank transfer")
+                        {
+                            myStringBuilder.Append("4");
+                        }
+                        else
+                        {
+                            myStringBuilder.Append("0");
+                        }
+
                     }
                     else
                     {

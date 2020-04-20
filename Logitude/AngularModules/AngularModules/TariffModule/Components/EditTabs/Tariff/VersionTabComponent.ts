@@ -21,6 +21,7 @@ import { DatePipe } from '@angular/common';
 import { TariffVersionAllInChargePM } from '../../../EntityPMs/TariffVersionAllInChargePM';
 import { AirCostTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
+
 declare var ResultAsArray: any;
 
 @Component({
@@ -48,8 +49,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
     public IsAir: boolean = false;
-
     public LineIdFromPriceCheck: string;
+    public AllInCharges: string;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -105,9 +106,29 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         else {
             this.LoadTariffLines("currentVersion");
         }
+
+        this.BuildAllInChargesText();
         this.GetTariffSettings();
         this.SetUIProperties();
         this.SetStepsLabelsAndVisibility();
+    }
+
+    private BuildAllInChargesText() {
+        var allInCharges: string = null;
+
+        if (this.CurrentVersion != null) {
+            this.CurrentVersion.TariffAllInCharges.forEach((item: TariffVersionAllInChargePM) => {
+                if (AppTool.IsNullOrEmpty(allInCharges)) {
+                    allInCharges = item.ChargesTypeCode;
+                }
+
+                else {
+                    allInCharges = allInCharges + ", " + item.ChargesTypeCode;
+                }
+            });
+
+        }
+        this.AllInCharges = allInCharges;
     }
 
     private GetTariffSettings() {
@@ -787,7 +808,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditAllInChargesComponent");
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
-                
+                this.BuildAllInChargesText();
             }
         });
     }

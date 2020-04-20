@@ -113,7 +113,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 outputreference = invoice.InvoiceNumber;
                             }
-
+                           SetReferenceFields(outputreference);
                             if (!string.IsNullOrEmpty(invoice.VatNumber))
                             {
                                 vatNumber = invoice.VatNumber;
@@ -122,8 +122,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         TaxReportLinePM line = new TaxReportLinePM()
                             {
                                 VatNumber = vatNumber,
-                                Reference = outputreference,
-                                ReferecneGroup = "0000",
+                                Reference = reference ,
+                                ReferecneGroup = referenceGroup,
                                 ReferenceDate = invoice.InvoiceDate,
                                 JournalId = a.Id,
                                 OutputOrInput = "O",
@@ -240,10 +240,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (VatNumber == null)
                     VatNumber = "000000000";
-
+               
                 GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
+
                 if (gLAccountPM != null)
                 {
+                   
+                    if(gLAccountPM.AccountTypeCode=="3" || gLAccountPM.AccountTypeCode == "1")
+                    {
+                        VatNumber = card != null ? card.VatNumber : null;
+                    }
                     if (gLAccountPM.IsEquipmentVendor)
                     {
                         isEquipment = true;
