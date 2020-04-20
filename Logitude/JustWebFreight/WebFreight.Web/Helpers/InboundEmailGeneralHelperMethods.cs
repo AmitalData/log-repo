@@ -48,13 +48,7 @@ namespace WebFreight.Web.Helpers
                         attachments = Mail.ParseTNEF(ReadFully(request.Files[i].InputStream), true);
 
                         // make a folder to store attachments.
-                        string folder = string.Format("{0}\\temp", Path.GetDirectoryName(fileName));
-                        if (!Directory.Exists(folder))
-                        {
-                            Directory.CreateDirectory(folder);
-                        }
-
-
+                       
                         string bodyHtml = "";
                         // find html body.
                         for (int m = 0; m < attachments.Length; m++)
@@ -79,9 +73,7 @@ namespace WebFreight.Web.Helpers
                             }
 
                             string contentId = attachment.ContentID;
-                            string attachmentPath = string.Format("{0}\\{1}", folder, attachment.Name);
-                            attachment.SaveAs(attachmentPath, true);
-
+                           
                             // in email html body, the image link syntax is: <img src="cid:[attachment content id]">
                             // but it is not working in normal web browser, so we need to replace cid link to real attachment file path.
                             if (contentId.Length > 0)
@@ -89,8 +81,11 @@ namespace WebFreight.Web.Helpers
                                 string cidLink = string.Format("cid:{0}", contentId);
                                 if (bodyHtml.IndexOf(cidLink) != -1)
                                 {
-                                    bodyHtml = bodyHtml.Replace(cidLink, attachmentPath);
-                                }
+                                    var IMAGE = attachment.Content;
+                                    string base64String = Convert.ToBase64String(IMAGE, 0, IMAGE.Length);
+                                    var imageUrl = "data:image/" + attachment.Name.Split('.')[1] + ";base64," + base64String;
+                                    bodyHtml = bodyHtml.Replace(cidLink, imageUrl);
+                                }  
                             }
                         }
 
@@ -107,21 +102,16 @@ namespace WebFreight.Web.Helpers
                                     // save body with correct image links to body.html
                                     // then you can try to open body.html in browser, it should workd fine.
                                     // all body html and attachment are save to current winmail.dat folder\temp
-                                    string htmlFile = string.Format("{0}\\body.html", folder);
-                                    using (var htmlFs = new FileStream(htmlFile, FileMode.Create))
+
+                                    intputStream = Encoding.UTF8.GetBytes(bodyHtml);
+                                    attachmentsFiles.Add(new FileAttachment()
                                     {
-                                        htmlFs.Seek(0, SeekOrigin.Begin);
-                                        intputStream = Encoding.UTF8.GetBytes(bodyHtml);
-                                        attachmentsFiles.Add(new FileAttachment()
-                                        {
-                                            ContentLength = intputStream.Length,
-                                            ContentType = tatt.ContentType,
-                                            FileName = tatt.Name,
-                                            InputStream = intputStream,
-                                        });
-                                        htmlFs.Write(intputStream, 0, intputStream.Length);
-                                        htmlFs.Close();
-                                    }
+                                        ContentLength = intputStream.Length,
+                                        ContentType = tatt.ContentType,
+                                        FileName = tatt.Name,
+                                        InputStream = intputStream,
+                                    });
+
                                 }
                                 else
                                 {
