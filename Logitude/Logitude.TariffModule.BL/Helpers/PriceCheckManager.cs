@@ -650,6 +650,25 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.UpdateDate = result.UpdateDate;
                     tariffsSummary.LastUsedDate = result.LastUsedDate;
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
+
+                    if(result.StartDate != null)
+                    {
+                        tariffsSummary.ValidityDate = result.StartDate.Value.ToShortDateString();
+                    }
+
+                    if(result.ExpirationDate != null)
+                    {
+                        if(string.IsNullOrEmpty(tariffsSummary.ValidityDate))
+                        {
+                            tariffsSummary.ValidityDate = result.ExpirationDate.Value.ToShortDateString();
+                        }
+
+                        else
+                        {
+                            tariffsSummary.ValidityDate = tariffsSummary.ValidityDate + " - " + result.ExpirationDate.Value.ToShortDateString();
+                        }
+                    }
+
                     tariffsSummary.ValidityDate = result.StartDate.Value.ToShortDateString() + " - " + result.ExpirationDate.Value.ToShortDateString();
                     tariffsSummary.Remarks = result.Notes;
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId) : 0;
@@ -736,6 +755,25 @@ namespace Logitude.TariffModule.BL.Helpers
 
                     tariffsSummary.SellerName = sellerName;
                     tariffsSummary.EffictiveDate = trariff.ExpirationDate;
+
+                    if (trariff.StartDate != null)
+                    {
+                        tariffsSummary.ValidityDate = trariff.StartDate.Value.ToShortDateString();
+                    }
+
+                    if (trariff.ExpirationDate != null)
+                    {
+                        if (string.IsNullOrEmpty(tariffsSummary.ValidityDate))
+                        {
+                            tariffsSummary.ValidityDate = trariff.ExpirationDate.Value.ToShortDateString();
+                        }
+
+                        else
+                        {
+                            tariffsSummary.ValidityDate = tariffsSummary.ValidityDate + " - " + trariff.ExpirationDate.Value.ToShortDateString();
+                        }
+                    }
+
                     tariffsSummary.Remarks = trariff.Notes;
                     var calculatedLocalAmount = CalculateLocalAmount(price, currencyId, trariff.CurrencyId, tenant);
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
