@@ -349,6 +349,7 @@ export class TariffSearchSummary {
     TariffNumber: string;
     ChargeTypeId: string;
     Price: string;
+    SurchargesPrice: string;
     ActualPrice: number;
     EffictiveDate: Date;
     Remarks: string;
@@ -373,6 +374,10 @@ export class TariffSearchSummary {
     LineId: string;
     ContainersPrices: Array<ContainersPrice>;
     TransitTime: string;
+    LastUsedDate: Date;
+    UpdateDate: Date;
+    ValidityDate: string;
+    CurrencySign: string;
 }
 
 export class ContainersPrice {
@@ -497,4 +502,5 @@ export class TariffSearchArgs {
     Quantity3: number;
     Quantity4: number;
     Quantity5: number;
+    ProductId: string;
 }

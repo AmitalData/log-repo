@@ -32,6 +32,6 @@ namespace Logitude.TariffModule.BL.DataContracts
         public int? Quantity3 { get; set; }
         public int? Quantity4 { get; set; }
         public int? Quantity5 { get; set; }
-
+        public string ProductId { get; set; }
     }
 }

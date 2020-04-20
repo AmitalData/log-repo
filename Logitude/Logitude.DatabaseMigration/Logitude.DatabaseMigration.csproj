@@ -2303,9 +2303,10 @@
     <Compile Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.Designer.cs">
       <DependentUpon>202004111256429_AddTransitTimeFieldToTariff_Maheera.cs</DependentUpon>
     </Compile>
-
-
-
+    <Compile Include="Migrations\202004191949500_AddLastUsedDateToTariff_Samar.cs" />
+    <Compile Include="Migrations\202004191949500_AddLastUsedDateToTariff_Samar.Designer.cs">
+      <DependentUpon>202004191949500_AddLastUsedDateToTariff_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\202004160804388_JournalFieldsMigration.cs" />
     <Compile Include="Migrations\202004160804388_JournalFieldsMigration.Designer.cs">
       <DependentUpon>202004160804388_JournalFieldsMigration.cs</DependentUpon>
@@ -4194,8 +4195,6 @@
     <EmbeddedResource Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.resx">
       <DependentUpon>202004111256429_AddTransitTimeFieldToTariff_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-
-
     <EmbeddedResource Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.resx">
       <DependentUpon>202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -4212,12 +4211,12 @@
     <EmbeddedResource Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.resx">
       <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
     </EmbeddedResource>
-
-
     <EmbeddedResource Include="Migrations\202004160804388_JournalFieldsMigration.resx">
       <DependentUpon>202004160804388_JournalFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
-
+    <EmbeddedResource Include="Migrations\202004191949500_AddLastUsedDateToTariff_Samar.resx">
+      <DependentUpon>202004191949500_AddLastUsedDateToTariff_Samar.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
