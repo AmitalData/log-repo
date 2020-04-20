@@ -83,6 +83,7 @@ using WebFreight.Web.AccountingModel;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Simplog.Data.Helpers;
+using Logitude.BL.CommonDataModel.EntityOtherServices;
 
 namespace Logitude.Update
 {
@@ -4279,6 +4280,7 @@ User/Pass",
                 TenantRepository tenantRep = new TenantRepository(0);
                 List<Tenant> tenants = tenantRep.GetTenants().ToList();
 
+               
                 foreach (Tenant tenant in tenants)
                 {
                     this.AddMexicoCitiesByTenant(allDataLines, tenant);
