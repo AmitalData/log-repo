@@ -54,7 +54,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var param1 = new //RevenueExpenseReportParam
                 {
                     Tenant = 989,
-                    
+                    FromDate = DateTime.Now.Date.AddMonths(-3),
                     ToDate = DateTime.Now.Date, //new DateTime(2016, 11, 20),
                     MyRevenueExpenseReportLevelOptions = "ChartofaccountType=1,Chartofaccount=2,GLAccount=3",
                     MyRevenueExpenseReportLevel = ReportLevel.ChartofaccountType,
