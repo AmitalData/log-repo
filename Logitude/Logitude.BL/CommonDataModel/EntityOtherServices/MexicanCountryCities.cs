@@ -13,7 +13,7 @@ namespace Logitude.BL.CommonDataModel.EntityOtherServices
 {
     public class MexicanCountryCities
     {
-        public void AddMexicanCountryCities(int tenant, string countryId)
+        public void AddMexicanCountryCities(int tenant, string countryId = null)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(0);
             Country country_MX = commonContext.Countries.Where(a => a.Code == "MX" && a.Tenant == 0).FirstOrDefault();
@@ -30,29 +30,37 @@ namespace Logitude.BL.CommonDataModel.EntityOtherServices
 
             foreach (var item in countriesCities)
             {
-                CountryCity newCity = commonContext.CountryCities.Where(p => p.Code == item.Code && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
-                if (newCity == null)
+                if(countryId == null)
                 {
-                    var state = commonContext.States.Where(a => a.Code == item.StateCode && a.Tenant == tenant).FirstOrDefault();
-                    if (state != null)
-                    {
-                        newCity = new CountryCity()
-                        {
-                            Id = IdCounter.GetNumber("CountryCity", 0).ToString(),
-                            Tenant = tenant,
-                            Code = item.Code,
-                            EnglishName = item.EnglishName,
-                            LocalName = item.LocalName,
-                            StateId = state.Id,
-                            CountryId = countryId,
-                            SearchFields = item.SearchFields,
-                        };
+                    var country = commonContext.Countries.Where(a => a.Tenant == tenant && a.Code == "MX").FirstOrDefault();
+                    countryId = country != null ? country.Id : null;
+                }
 
-                        commonContext.CountryCities.Add(newCity);
+                if (countryId != null)
+                {
+                    CountryCity newCity = commonContext.CountryCities.Where(p => p.Code == item.Code && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+                    if (newCity == null)
+                    {
+                        var state = commonContext.States.Where(a => a.Code == item.StateCode && a.Tenant == tenant).FirstOrDefault();
+                        if (state != null)
+                        {
+                            newCity = new CountryCity()
+                            {
+                                Id = IdCounter.GetNumber("CountryCity", 0).ToString(),
+                                Tenant = tenant,
+                                Code = item.Code,
+                                EnglishName = item.EnglishName,
+                                LocalName = item.LocalName,
+                                StateId = state.Id,
+                                CountryId = countryId,
+                                SearchFields = item.SearchFields,
+                            };
+
+                            commonContext.CountryCities.Add(newCity);
+                        }
                     }
                 }
             }
-
             commonContext.SaveChanges();
         }
     }
