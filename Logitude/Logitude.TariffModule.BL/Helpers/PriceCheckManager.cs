@@ -175,7 +175,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             List<Tariff> TariffListTemp = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
 
-            if (!string.IsNullOrEmpty(product))
+            if (!string.IsNullOrEmpty(product) && tariffType == "AFC")
             {
                 TariffListTemp = TariffListTemp.Where(p => p.TariffProductId == product).ToList();
             }
@@ -386,7 +386,7 @@ namespace Logitude.TariffModule.BL.Helpers
             }
             
             List<Tariff> TariffList = this.tariffRepository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
-            if (!string.IsNullOrEmpty(product))
+            if (!string.IsNullOrEmpty(product) && tariffType == "AFC")
             {
                 TariffList = TariffList.Where(p => p.TariffProductId == product).ToList();
             }
@@ -866,12 +866,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                 select d).ToList();
 
             List<Tariff> TariffListTemp = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode ==  tariffType).ToList();
-
-            if (!string.IsNullOrEmpty(product))
-            {
-                TariffListTemp = TariffListTemp.Where(p => p.TariffProductId == product).ToList();
-            }
-
+            
             this.tariffList = FilterTariffsByContainers(TariffListTemp, args);
 
             List<string> tempTariffIds = tariffList.Select(a => a.Id).ToList();
