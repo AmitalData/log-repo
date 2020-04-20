@@ -384,7 +384,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             Dictionary<string, List<TariffLine>> TariffLines = tariffRepository.GetAllTariffLinesByTariffIds(TariffList.Select(p => p.Id).ToArray(), tenant).Where(p => VersionIds.Contains(p.Version)).Where(p => System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= betweenDate && p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= betweenDate) : true).GroupBy(p => p.TariffId).ToDictionary(o => o.Key, o => o.ToList());
 
-            Dictionary<string, string> Currencies = commonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
+            Dictionary<string, string> Currencies = commonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code + "," + p.Sign);
             List<TariffVersionAllInCharge> TariffVersionAllInChargesList = tariffRepository.GetAllTariffAllInOnVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), TariffVersionList.Select(p => p.Version).ToArray(), tenant).ToList();
             List<Tariff> SurchargeTariffList = tariffRepository.GetSurchargeTariffsByCodeAndSellerId(TariffList.Select(p => p.SellerId).ToArray(), tariffType, tenant).Where(p => !p.InActive).ToList();
             List<Measurement> UsedMeasurements = commonContext.Measurements.Where(p => p.Tenant == tenant).ToList();
@@ -591,7 +591,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
 
                                                 string CurrencyId = ChargesfilteredLines.CurrencyId != null ? ChargesfilteredLines.CurrencyId : CurrentSurcharge.CurrencyId;
-                                                var LinePrice = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrencyId);
+                                                var LinePrice = CalculateLocalAmount((CurrentSurchargePriceCalculation == null ? 0 : CurrentSurchargePriceCalculation.Value), currencyId, CurrencyId);
 
                                                 decimal? minPriceSurcharge = null;
                                                 if (valueofSurchargeMin != null)
@@ -606,7 +606,7 @@ namespace Logitude.TariffModule.BL.Helpers
                                                 }
 
                                                 SurchargeItem.Price = LinePrice;
-                                                SurchargeItem.ActualPrice = CurrentSurchargePriceCalculation.Value;
+                                                SurchargeItem.ActualPrice = CurrentSurchargePriceCalculation == null ? 0 : CurrentSurchargePriceCalculation.Value;
                                                 Sum += SurchargeItem.Price;
                                                 SurchargeItem.TariffId = CurrentSurcharge.Id;
                                                 SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
@@ -630,19 +630,22 @@ namespace Logitude.TariffModule.BL.Helpers
 
                                 tariffsSummary.AllInSurcharges = surchargesList.Where(a => a.IsAllIn).ToList();
                                 tariffsSummary.SurchargesWithoutAllIn = surchargesList.Where(a => !a.IsAllIn).ToList();
+                                tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();
                             }
                         }
                     }
 
                     tariffsSummary.SellerName = sellerName;
+                    tariffsSummary.UpdateDate = result.UpdateDate;
+                    tariffsSummary.LastUsedDate = result.LastUsedDate;
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
+                    tariffsSummary.ValidityDate = result.StartDate.Value.ToShortDateString() + " - " + result.ExpirationDate.Value.ToShortDateString();
                     tariffsSummary.Remarks = result.Notes;
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId) : 0;
                     tariffsSummary.decimalprice = (decimal?)Sum + calculatedLocalAmount;
                     tariffsSummary.VersionId = item.TariffVersion + "";
                     tariffsSummary.TariffId = item.tariffid;
                     tariffsSummary.TariffNumber = result.TariffNumber;
-
 
                     var airChrageType = chargesTypes.Where(p => p.Code == chargeCode).Select(p => p).FirstOrDefault();
                     tariffsSummary.ChargeTypeId = airChrageType.Id;
@@ -664,12 +667,26 @@ namespace Logitude.TariffModule.BL.Helpers
 
                     if (!string.IsNullOrEmpty(currencyId))
                     {
-                        tariffsSummary.CurrencyCode = Currencies.Keys.Contains(currencyId) ? Currencies[currencyId] : null;
+                        string code = null;
+                        string sign = null;
+                        string code_sign = Currencies.Keys.Contains(currencyId) ? Currencies[currencyId] : null;
+                        if (!string.IsNullOrEmpty(code_sign))
+                        {
+                            string[] code_sign_array = code_sign.Split(',');
+                            code = code_sign_array[0];
+
+                            if (code_sign_array.Count() > 1)
+                            {
+                                sign = code_sign_array[1];
+                            }
+                        }
+
+                        tariffsSummary.CurrencyCode = code;
+                        tariffsSummary.CurrencySign = sign;
                         tariffsSummary.CurrencyId = result.CurrencyId;
                     }
 
                     tariffSearchSummaries.Add(tariffsSummary);
-
                 }
             }
 
@@ -734,9 +751,25 @@ namespace Logitude.TariffModule.BL.Helpers
 
                     if (!string.IsNullOrEmpty(currencyId))
                     {
-                        tariffsSummary.CurrencyCode = currencies.Keys.Contains(currencyId) ? currencies[currencyId] : null;
+                        string code = null;
+                        string sign = null;
+                        string code_sign = currencies.Keys.Contains(currencyId) ? currencies[currencyId] : null;
+                        if (!string.IsNullOrEmpty(code_sign))
+                        {
+                            string[] code_sign_array = code_sign.Split(',');
+                            code = code_sign_array[0];
+
+                            if (code_sign_array.Count() > 1)
+                            {
+                                sign = code_sign_array[1];
+                            }
+                        }
+
+                        tariffsSummary.CurrencyCode = code;
+                        tariffsSummary.CurrencySign = sign;                        
                         tariffsSummary.CurrencyId = trariff.CurrencyId;
                     }
+
                     tariffSearchSummaries.Add(tariffsSummary);
                 }
             }

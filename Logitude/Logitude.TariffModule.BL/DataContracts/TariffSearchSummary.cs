@@ -14,6 +14,7 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string TariffNumber { get; set; }
         public string ChargeTypeId { get; set; }
         public string Price { get; set; }
+        public string SurchargesPrice { get; set; }
         public decimal? ActualPrice { get; set; }
         public DateTime? EffictiveDate { get; set; }
         public string Remarks { get; set; }
@@ -21,6 +22,7 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string ImageId { get; set; }
         public decimal? decimalprice { get; set; }
         public string CurrencyCode { get; set; }
+        public string CurrencySign { get; set; }
         public string CurrencyId { get; set; }
         public string VersionId { get; set; }
         public string TotalSurcharge { get; set; }
@@ -37,6 +39,9 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string LineId { get; set; }
         public List<ContainersPrice> ContainersPrices { get; set; }
         public string TransitTime { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public DateTime? LastUsedDate { get; set; }
+        public string ValidityDate { get; set; }
     }
 
     public class ContainersPrice
