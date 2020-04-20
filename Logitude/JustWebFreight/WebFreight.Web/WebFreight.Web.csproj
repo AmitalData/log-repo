@@ -2439,6 +2439,7 @@
     <Compile Include="Helpers\TFSParseWebhook.cs" />
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="Helpers\TMMessageBuilderAnalyzer.cs" />
+    <Compile Include="Helpers\UploadTariffHelper.cs" />
     <Compile Include="Helpers\WorkerRole\BIReportExecutionService.cs" />
     <Compile Include="Helpers\WorkerRole\DocumentsExecutionService.cs" />
     <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
