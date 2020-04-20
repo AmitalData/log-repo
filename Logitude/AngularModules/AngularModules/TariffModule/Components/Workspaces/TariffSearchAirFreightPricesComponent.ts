@@ -1049,7 +1049,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             var amount: number = item.CostTotalAmount;
             chargeItem.SetCostQuantity();
             var quantity: number = chargeItem.CostQuantity;
-            chargeItem.CostUnitPrice = (amount / quantity);
+            if (quantity != null && quantity != 0) {
+                chargeItem.CostUnitPrice = (amount / quantity);
+            }
             chargeItem.SetSaleQuantity();
             chargeItem.ComputeSalePrice();
             chargeItem.SetUIProperties_AllIn();
