@@ -225,6 +225,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         #region Upgrade Objects Tenant Zero
         public void LoadUpdateTenantZero(IWebFreightContext context)
         {
+            //  ________________________________________________
+            // |                                                |
+            // |           MUST BE ADDED To LXML Files          |
+            // |________________________________________________|
             return;
             isUpdate = true;
             LoadObjectsTenantZero(context);
@@ -232,6 +236,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         private void LoadObjectsTenantZero(IWebFreightContext context)
         {
+            //  ________________________________________________
+            // |                                                |
+            // |           MUST BE ADDED To LXML Files          |
+            // |________________________________________________|
             objectContext = context;
 
             textCodeRepository = new TextCodeRepository(objectContext);
@@ -270,6 +278,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         #region Features
         private void LoadRolesAndFeatures(int tenant)
         {
+            //  ________________________________________________
+            // |                                                |
+            // |           MUST BE ADDED To LXML Files          |
+            // |________________________________________________|
             ICommonDataContext ObjectContext = CommonDataContext.GetContext(tenant);
             FeatureRepository FeaturesRepository = new FeatureRepository(ObjectContext);
             RoleFeatureRepository RoleFeaturesRepository = new RoleFeatureRepository(ObjectContext);
@@ -617,7 +629,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         public void LoadOtherFields(IWebFreightContext context)
         {
-            return;
+            //  ________________________________________________
+            // |                                                |
+            // |           MUST BE ADDED To LXML Files          |
+            // |________________________________________________|
+            return; //
             objectContext = context;
             textCodeRepository = new TextCodeRepository(objectContext);
 

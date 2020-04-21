@@ -967,11 +967,11 @@ namespace WebFreight.Web.MetaDataUpdate
 
             CRMUpdate updateClass = new CRMUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
-            updateClass.LoadUpdateTenantZero(context);
-            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadUpdateTenantZero");
+            //updateClass.LoadUpdateTenantZero(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadUpdateTenantZero");
 
-            updateClass.LoadOtherFields(context);
-            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOtherFields");
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOtherFields");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs();

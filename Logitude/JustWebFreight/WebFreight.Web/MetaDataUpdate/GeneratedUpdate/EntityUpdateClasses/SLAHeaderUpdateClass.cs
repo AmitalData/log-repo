@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SLAHeaderUpdateClass
    {  		
-		public const string HashString = "e1e7ba90f695ef41aa57e54ddcc57c8a";
+		public const string HashString = "b766249ff99bd9b46373a1b540bf458e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,9 +86,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "SLAHeader",
 			      				    IsNew =  false,
 			      				    DBTableName =  "SLAHeaders",
-			      				    OldDBTableName =  "SLAHeaders",
 			      				    ObjectTableSingular =  "SLA Header",
 			      				    ObjectTablePlural =  "SLA ",
+			      				    DescriptionDefaultText =  "Define the service level agreement based on severity and escalation management conditions.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "SLAHeader",
-			      				    Code =  "8475",
+			      				    Code =  "f1d9",
 			      				    Name =  "SLAHeader Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "CRM",
@@ -142,7 +142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -202,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -260,7 +258,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -320,7 +317,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -378,7 +374,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -439,7 +434,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -500,7 +494,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SLALines",
-					  						OldFieldName =  "SLALines",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -558,7 +551,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SLAEscalations",
-					  						OldFieldName =  "SLAEscalations",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -616,7 +608,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -673,7 +664,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserName",
-					  						OldFieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -730,7 +720,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						OldFieldName =  "Inactive",
 					  						ObjectTableName =  "SLAHeader",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -806,6 +795,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
