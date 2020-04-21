@@ -1976,7 +1976,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
         if (this.DWObjectTableCode.indexOf("DIM_") != -1) {
 
-            if (this.Code == '[Full Date]' || '[Full Date US]') {
+            if (this.Code == '[Full Date]' || this.Code == '[Full Date US]') {
                 this.ParentDataTypeCode = "Date";
                 this.DataTypeCode = "Date";
             } else this.ParentDataTypeCode = "LookUp";
