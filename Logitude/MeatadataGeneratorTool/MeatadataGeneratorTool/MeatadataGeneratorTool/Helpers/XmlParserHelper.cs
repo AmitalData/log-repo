@@ -10,8 +10,6 @@ using MeatadataGeneratorTool.TextCodes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,23 +20,6 @@ namespace MeatadataGeneratorTool.Helpers
 {
     public class XmlParserHelper
     {
-        private  DataTable GetCopyToDWObjectFields(string tableName)
-        {
-            string connectionString = "Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password= Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
-            DataTable objectFieldsTable = new DataTable();
-            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
-            {
-                sourceConnection.Open();
-                SqlCommand commandSourceData = new SqlCommand("SELECT  FieldName from ObjectFields where CopyToDW = 1 and objectTableId = (select id from ObjectTables where Name ='" + tableName + "' )", sourceConnection);
-                SqlDataReader reader = commandSourceData.ExecuteReader();
-                objectFieldsTable.Load(reader);
-                reader.Close();
-            }
-
-            return objectFieldsTable;
-        }
-
-
 
         public ObjectTableViewModel LoadObjectTableData(XmlDocument document)
         {
@@ -59,29 +40,11 @@ namespace MeatadataGeneratorTool.Helpers
             List<DataContractViewModel> DataContracts = new List<DataContractViewModel>();
             List<TextCodesViewModel> TextCodes = new List<TextCodesViewModel>();
             List<FeaturesViewModel> Features = new List<FeaturesViewModel>();
-            var copyToDwObjectFieldLists = GetCopyToDWObjectFields(objectTable.ObjectTableName);
-
-
-
-
             foreach (XmlNode fieldNode in entity.ChildNodes)
             {
                 if (fieldNode.Name == "field")
                 {
-
-                    var f = BuildObjectField(fieldNode, objectTable);
-                    if (copyToDwObjectFieldLists != null)
-                    {
-                        var dwfield = (from rowfield in copyToDwObjectFieldLists.AsEnumerable()
-                                       where rowfield.Field<string>("FieldName") == f.FieldName
-                                       select rowfield.Field<string>("FieldName")).FirstOrDefault();
-                        if (!string.IsNullOrEmpty(dwfield))
-                        {
-                            f.CopyToDW = true;
-                        }
-
-                    }
-                    fields.Add(f);
+                    fields.Add(BuildObjectField(fieldNode, objectTable));
                 }
                 else if (fieldNode.Name == "Query")
                 {
@@ -120,7 +83,7 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.MenuButtonGroupName = GetAttributeStringValue(fieldNode.Attributes["MenuButtonGroupName"]);
                     objectTable.MenuButtonGroupType = GetAttributeStringValue(fieldNode.Attributes["MenuButtonGroupType"]);
-                      
+
                     foreach (XmlNode fNode in fieldNode.ChildNodes)
                     {
                         MenuButtons.Add(BuildMenuButtons(fNode, objectTable));
@@ -232,9 +195,9 @@ namespace MeatadataGeneratorTool.Helpers
             }
 
             field.FieldName = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
-			field.GeneratedComponentPath = GetAttributeStringValue(fieldNode.Attributes["GeneratedComponentPath"]);
+            field.GeneratedComponentPath = GetAttributeStringValue(fieldNode.Attributes["GeneratedComponentPath"]);
 
-			if (fieldNode.Attributes["OldFieldName"] != null)
+            if (fieldNode.Attributes["OldFieldName"] != null)
             {
                 field.OldFieldName = GetAttributeStringValue(fieldNode.Attributes["OldFieldName"]);
             }
@@ -244,7 +207,7 @@ namespace MeatadataGeneratorTool.Helpers
             }
 
 
-            if(fieldNode.Attributes["OldNames"] != null)
+            if (fieldNode.Attributes["OldNames"] != null)
             {
                 field.OldNames = GetAttributeStringValue(fieldNode.Attributes["OldNames"]);
             }
@@ -546,7 +509,7 @@ namespace MeatadataGeneratorTool.Helpers
                 Query.Perspective = GetAttributeStringValue(fieldNode.Attributes["Perspective"]);
             }
 
-           
+
 
             foreach (XmlNode fNode in fieldNode.ChildNodes)
             {
@@ -858,8 +821,8 @@ namespace MeatadataGeneratorTool.Helpers
             textCode.LocalDefaultText = GetAttributeStringValue(fieldNode.Attributes["LocalDefaultText"]);
             textCode.TextCodeTypeCode = GetAttributeStringValue(fieldNode.Attributes["TextCodeTypeCode"]);
             textCode.IsSpellChecked = GetAttributeBoolValue(fieldNode.Attributes["IsSpellChecked"]);
-            
-           
+
+
 
             return textCode;
         }
@@ -925,7 +888,7 @@ namespace MeatadataGeneratorTool.Helpers
             }
             catch (Exception)
             {
-                DCField.IsCloseField = false; 
+                DCField.IsCloseField = false;
 
             }
             try
@@ -1081,17 +1044,17 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.NoTS = false;
                 }
-				if (entity.Attributes["NoDefaultFeatures"] != null)
-				{
-					objectTable.NoDefaultFeatures = GetAttributeBoolValue(entity.Attributes["NoDefaultFeatures"]);
-				}
-				else
-				{
-					objectTable.NoDefaultFeatures = false;
-				}
+                if (entity.Attributes["NoDefaultFeatures"] != null)
+                {
+                    objectTable.NoDefaultFeatures = GetAttributeBoolValue(entity.Attributes["NoDefaultFeatures"]);
+                }
+                else
+                {
+                    objectTable.NoDefaultFeatures = false;
+                }
 
 
-				if (entity.Attributes["HasCompactSearch"] != null)
+                if (entity.Attributes["HasCompactSearch"] != null)
                 {
                     objectTable.HasCompactSearch = GetAttributeBoolValue(entity.Attributes["HasCompactSearch"]);
                 }
