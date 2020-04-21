@@ -17624,7 +17624,7 @@
     <TextCode
       Code="&quot;ARInvoice.S.ShortTitle.ByInvoiceAutoCredited&quot;"
       DefaultText="&quot;By Invoice&quot;"
-      LocalDefaultText="&quot; ע&quot;י חשבונית&quot;"
+      LocalDefaultText="&quot; ע''י חשבונית&quot;"
       TextCodeTypeCode="&quot;S&quot;"
       IsSpellChecked="false" />
     <TextCode

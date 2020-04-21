@@ -444,4 +444,6 @@
       SearchFields="&quot;4,Failed,נכשל&quot;" />
   </Records>
   <DataContracts />
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

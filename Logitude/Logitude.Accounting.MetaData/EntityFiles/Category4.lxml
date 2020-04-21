@@ -684,4 +684,23 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;Category4.Features.Category4&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Category4.Features.Category4&quot;"
+      FeatureDefaultText="&quot;Category 4&quot;" />
+  </AdditionalFeatures>
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.ACC.Category4&quot;"
+      DefaultText="&quot;Category 1&quot;"
+      LocalDefaultText="&quot;Category 1&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
 </entity>

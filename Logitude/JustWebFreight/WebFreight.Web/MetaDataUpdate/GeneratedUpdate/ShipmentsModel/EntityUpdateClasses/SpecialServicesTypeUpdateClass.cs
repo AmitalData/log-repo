@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class SpecialServicesTypeUpdateClass
    {  		
-		public const string HashString = "47120cab85bc21bd674b56901a2a60ca";
+		public const string HashString = "f9896097ad024e009281fb2eeb0d4035";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "SpecialServicesType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "SpecialServicesTypes",
-			      				    OldDBTableName =  "SpecialServicesTypes",
 			      				    ObjectTableSingular =  "Special Services Type",
 			      				    ObjectTablePlural =  "Special Services Types",
 			      				    HasCustomFilter =  false,
@@ -143,7 +142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "SpecialServicesType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -208,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "SpecialServicesType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -273,7 +270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "SpecialServicesType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -338,7 +334,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "SpecialServicesType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -400,7 +395,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "SpecialServicesType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,

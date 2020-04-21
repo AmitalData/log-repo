@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AirlineMessagingRuleUpdateClass
    {  		
-		public const string HashString = "d90baf156f6684ac56e70d38bfe20ad3";
+		public const string HashString = "3d49c5b0fc986ce367dd6f6a4ab5544a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

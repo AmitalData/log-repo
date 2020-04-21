@@ -2351,6 +2351,43 @@
       LocalDefaultText="&quot;שם הקופה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CashBook.B.All&quot;"
+      DefaultText="&quot;All&quot;"
+      LocalDefaultText="&quot;הכל&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CashBook.B.CashCheques&quot;"
+      DefaultText="&quot;Cash Cheques&quot;"
+      LocalDefaultText="&quot;המחאות מזומן&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CashBook.B.PostdatedCheques&quot;"
+      DefaultText="&quot;Postdated Cheques&quot;"
+      LocalDefaultText="&quot;המחאות דחויות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;CashbookMenuFeature&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;CashBook.Features.CashbookMenuFeature&quot;"
+      FeatureDefaultText="&quot;Cashbook&quot;" />
+    <Feature
+      Code="&quot;MORECASHBOOK&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;CashBook.Features.More&quot;"
+      FeatureDefaultText="&quot;More&quot;" />
+  </AdditionalFeatures>
 </entity>

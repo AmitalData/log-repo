@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class AnalyzeQueueUpdateClass
    {  		
-		public const string HashString = "a59b75fb2df56b22081f9d35167f5ccc";
+		public const string HashString = "08295408520ee40d429e48123b673fa0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	             				    ObjectTableName =  "AnalyzeQueue",
 			      				    IsNew =  false,
 			      				    DBTableName =  "AnalyzeQueues",
-			      				    OldDBTableName =  "AnalyzeQueues",
 			      				    ObjectTableSingular =  "Analyze Queue",
 			      				    ObjectTablePlural =  "AnalyzeQueues",
 			      				    HasCustomFilter =  false,
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -206,7 +204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CommunicationLogId",
-					  						OldFieldName =  "CommunicationLogId",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CommunicationLog",
@@ -270,7 +267,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "EntityReference",
-					  						OldFieldName =  "EntityReference",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -335,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ObjectTableName",
-					  						OldFieldName =  "ObjectTableName",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -400,7 +395,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "From",
-					  						OldFieldName =  "From",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -465,7 +459,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -530,7 +523,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "FileSize",
-					  						OldFieldName =  "FileSize",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -595,7 +587,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Status",
-					  						OldFieldName =  "Status",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -660,7 +651,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ErrorMessage",
-					  						OldFieldName =  "ErrorMessage",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -725,7 +715,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -788,7 +777,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Subject",
-					  						OldFieldName =  "Subject",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -853,7 +841,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Retries",
-					  						OldFieldName =  "Retries",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -918,7 +905,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ConnectedToTenant",
-					  						OldFieldName =  "ConnectedToTenant",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -983,7 +969,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "ConnectedToEntity",
-					  						OldFieldName =  "ConnectedToEntity",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1048,7 +1033,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1113,7 +1097,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "TenantName",
-					  						OldFieldName =  "TenantName",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1178,7 +1161,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AWBNumber",
-					  						OldFieldName =  "AWBNumber",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1243,7 +1225,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "AckReason",
-					  						OldFieldName =  "AckReason",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1308,7 +1289,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "DoneDate",
-					  						OldFieldName =  "DoneDate",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1373,7 +1353,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "Log",
-					  						OldFieldName =  "Log",
 					  						ObjectTableName =  "AnalyzeQueue",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

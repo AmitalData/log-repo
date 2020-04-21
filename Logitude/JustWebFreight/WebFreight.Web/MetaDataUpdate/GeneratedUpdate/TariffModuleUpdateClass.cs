@@ -437,7 +437,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TariffSurchargesUpdateMethodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					TariffSurchargesUpdateMethodUpdateClass.FillTariffSurchargesUpdateMethod();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						TariffSurchargesUpdateMethodUpdateClass.FillTariffSurchargesUpdateMethod();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -465,7 +469,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TariffTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					TariffTypeUpdateClass.FillTariffType();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						TariffTypeUpdateClass.FillTariffType();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}

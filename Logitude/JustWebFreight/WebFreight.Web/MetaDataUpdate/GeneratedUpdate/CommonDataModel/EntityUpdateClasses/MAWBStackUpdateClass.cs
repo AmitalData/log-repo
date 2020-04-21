@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class MAWBStackUpdateClass
    {  		
-		public const string HashString = "8e575ab436d72c5d5f16ffb7bad60a60";
+		public const string HashString = "fa9f88be90be29846dcfbb8c6257572b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "MAWBStack",
 			      				    IsNew =  false,
 			      				    DBTableName =  "MAWBStacks",
-			      				    OldDBTableName =  "MAWBStacks",
 			      				    ObjectTableSingular =  "MAWB Stack",
 			      				    ObjectTablePlural =  "MAWBStacks",
 			      				    HasCustomFilter =  false,
@@ -116,9 +115,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "MAWB Stack",
-			      				    Code =  "5103",
+			      				    Code =  "a00b",
 			      				    Name =  "MAWBStack",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -126,6 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "MAWBStack,MAWBStacks,,Id,",
 			      				    HashString =  MAWBStackUpdateClass.HashString,
 			                    
@@ -139,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Number",
-					  						OldFieldName =  "Number",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -188,6 +188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Number",
@@ -200,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InsertionDate",
-					  						OldFieldName =  "InsertionDate",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -249,6 +249,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InsertionDate",
@@ -261,7 +262,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AirlineId",
-					  						OldFieldName =  "AirlineId",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Airline",
@@ -311,6 +311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AirlineId",
@@ -323,7 +324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -372,6 +372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Notes",
@@ -384,7 +385,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AssignedToId",
-					  						OldFieldName =  "AssignedToId",
 					  						ObjectTableName =  "MAWBStack",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -434,6 +434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "AssignedToId",
@@ -448,7 +449,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable MAWBStackObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MAWBStack" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> MAWBStackObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MAWBStack").ToList();
+		       
+	      
+
+	         Screen MAWBStackMAWBStackHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MAWBStack.HeaderScreen", Name = "MAWBStackHeaderScreen", ObjectTableId = MAWBStackObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    MAWBStackObjectTable.HeaderScreenId = MAWBStackMAWBStackHeaderScreenScreen0.Id;
+		    MAWBStackObjectTable.HeaderScreenCode = MAWBStackMAWBStackHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

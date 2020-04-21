@@ -714,23 +714,25 @@ namespace MetaDataGenerator
 
 
             RemoveOldNodes(doc, additionalTextCodesListXElement, "TextCode");
-           // XmlElement 
+            // XmlElement 
 
             List<TextCode> additionalTextCodes = (from a in allTextCodes
                                                   where a.ObjectTableId == table.Id && a.Tenant == 0
-                                                  && a.Id != table.DescriptionTextCodeId
+                                                  && (a.Id != table.DescriptionTextCodeId || a.TextCodeTypeCode.ToLower() == "o")
                                                   && a.Id != table.NewButtonTextCodeId
-                                                  && a.TextCodeTypeCode.ToLower() != "f" && a.TextCodeTypeCode.ToLower() != "th"
-                                                  && a.TextCodeTypeCode.ToLower() != "h"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "f" //&& a.TextCodeTypeCode.ToLower() != "th"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "h"
                                                   && a.TextCodeTypeCode.ToLower() != "t"
-                                                  && a.TextCodeTypeCode.ToLower() != "ch"
-                                                  && a.TextCodeTypeCode.ToLower() != "q"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "ch"
+                                                  //&& a.TextCodeTypeCode.ToLower() != "q"
+                                                  && a.TextCodeTypeCode.ToLower() != "tip"
                                                   && !a.Code.Contains(".MenuButtons.")
                                                   && !a.Code.Contains(".Features.")
                                                   && !allFeatures.Any(f => f.NameTextCodeId == a.Id)
                                                   && !allQueries.Any(f => f.NameTextCodeId == a.Id)
                                                   && !allMenuButtons.Any(f => f.LabelTextCodeId == a.Id)
-                                                  && !tableObjectFields.Any(f => f.FullNameTextCodeId == a.Id || f.ListTextCodeId == a.Id || f.HelpTextCodeId == a.Id)
+                                                  && !tableObjectFields.Any(f => f.FullNameTextCodeId == a.Id || f.ListTextCodeId == a.Id || f.HelpTextCodeId == a.Id || f.ShortNameTextCodeId == a.Id)
+                                                  && !allTabs.Any(t => t.TabNameTextCodeId == a.Id)
                                                   select a).ToList();
 
             foreach (TextCode tcode in additionalTextCodes)

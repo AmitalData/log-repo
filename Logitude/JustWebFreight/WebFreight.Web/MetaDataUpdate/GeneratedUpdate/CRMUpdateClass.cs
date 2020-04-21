@@ -492,7 +492,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					ActivityPriorityUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					ActivityPriorityUpdateClass.FillActivityPriority();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						ActivityPriorityUpdateClass.FillActivityPriority();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -520,7 +524,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					ActivityStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					ActivityStatusUpdateClass.FillActivityStatus();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						ActivityStatusUpdateClass.FillActivityStatus();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -548,7 +556,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					ActivityTimeTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					ActivityTimeTypeUpdateClass.FillActivityTimeType();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						ActivityTimeTypeUpdateClass.FillActivityTimeType();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -576,7 +588,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					ActivityTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					ActivityTypeUpdateClass.FillActivityType();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						ActivityTypeUpdateClass.FillActivityType();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -604,7 +620,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					CallTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					CallTypeUpdateClass.FillCallType();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						CallTypeUpdateClass.FillCallType();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -767,7 +787,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					EscalationActionTimeIndicatorUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					EscalationActionTimeIndicatorUpdateClass.FillEscalationActionTimeIndicator();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						EscalationActionTimeIndicatorUpdateClass.FillEscalationActionTimeIndicator();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -795,7 +819,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					EscalationPreDefinitionUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					EscalationPreDefinitionUpdateClass.FillEscalationPreDefinition();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						EscalationPreDefinitionUpdateClass.FillEscalationPreDefinition();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -904,7 +932,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					OccasionStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					OccasionStatusUpdateClass.FillOccasionStatus();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						OccasionStatusUpdateClass.FillOccasionStatus();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -1553,7 +1585,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TicketCreatedByTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					TicketCreatedByTypeUpdateClass.FillTicketCreatedByType();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						TicketCreatedByTypeUpdateClass.FillTicketCreatedByType();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -1635,7 +1671,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TicketSourceUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					TicketSourceUpdateClass.FillTicketSource();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						TicketSourceUpdateClass.FillTicketSource();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -1717,7 +1757,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TimeUnitUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					TimeUnitUpdateClass.FillTimeUnit();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						TimeUnitUpdateClass.FillTimeUnit();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}

@@ -3150,38 +3150,38 @@
     <Feature
       Code="&quot;TASK&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;TasksScheduler.Features.TASK&quot;"
-      FeatureDefaultText="&quot;Task&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;TasksScheduler.Features.TASK&quot;"
+      FeatureDefaultText="&quot;Task&quot;" />
     <Feature
       Code="&quot;FTP&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;TasksScheduler.Features.FTP&quot;"
-      FeatureDefaultText="&quot;FTP&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;TasksScheduler.Features.FTP&quot;"
+      FeatureDefaultText="&quot;FTP&quot;" />
     <Feature
       Code="&quot;SHOWUTCBUTTON&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;TasksScheduler.Features.SHOWUTCBUTTON&quot;"
-      FeatureDefaultText="&quot;Show UTC Button&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;TasksScheduler.Features.SHOWUTCBUTTON&quot;"
+      FeatureDefaultText="&quot;Show UTC Button&quot;" />
     <Feature
       Code="&quot;SFTP&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;TasksScheduler.Features.SFTP&quot;"
-      FeatureDefaultText="&quot;SFTP&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;TasksScheduler.Features.SFTP&quot;"
+      FeatureDefaultText="&quot;SFTP&quot;" />
   </AdditionalFeatures>
 </entity>

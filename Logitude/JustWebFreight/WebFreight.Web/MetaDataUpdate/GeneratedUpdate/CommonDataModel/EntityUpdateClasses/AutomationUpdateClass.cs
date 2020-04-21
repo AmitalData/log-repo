@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AutomationUpdateClass
    {  		
-		public const string HashString = "8cf910a7380a28a699020b7c9cab0c44";
+		public const string HashString = "70c1d852e23b8ef1b7a3cb8394ffa8dc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "Automation",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Automations",
-			      				    OldDBTableName =  "Automations",
 			      				    ObjectTableSingular =  "Automation",
 			      				    ObjectTablePlural =  "Automations",
 			      				    HasCustomFilter =  false,
@@ -117,9 +116,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Automation",
-			      				    Code =  "23b1",
+			      				    Code =  "31bb",
 			      				    Name =  "Automation",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -141,7 +141,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "Automation",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -205,7 +204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "Automation",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -269,7 +267,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "Automation",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
