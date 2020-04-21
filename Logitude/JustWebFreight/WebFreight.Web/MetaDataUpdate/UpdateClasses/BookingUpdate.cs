@@ -89,6 +89,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         #region Upgrade Objects Tenant Zero
         public void LoadUpdateTenantZero(IWebFreightContext context)
         {
+            return;
+            //  ________________________________________________
+            // |                                                |
+            // |           MUST BE ADDED To LXML Files          |
+            // |________________________________________________|
             isUpdate = true;
             LoadObjectsTenantZero(context);
         }
@@ -276,27 +281,27 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         public void LoadMenustables()
         {
-            objectContext = WebFreightContext.GetContext(0);
-            menusTablesRepository = new MenusTableRepository(objectContext);
-            objectTableRepository = new ObjectTableRepository(objectContext);
+            //objectContext = WebFreightContext.GetContext(0);
+            //menusTablesRepository = new MenusTableRepository(objectContext);
+            //objectTableRepository = new ObjectTableRepository(objectContext);
 
-            FeatureRepository featureRepository = new FeatureRepository(0);
-            Dictionary<string, MenusTable> tenantMenusTables = menusTablesRepository.GetMenusTablesByTenant(0).ToDictionary(d => d.Code, a => a);
-            List<ObjectTable> tenantObjectTables = objectTableRepository.GetObjectsByTenant(0).ToList();
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //FeatureRepository featureRepository = new FeatureRepository(0);
+            //Dictionary<string, MenusTable> tenantMenusTables = menusTablesRepository.GetMenusTablesByTenant(0).ToDictionary(d => d.Code, a => a);
+            //List<ObjectTable> tenantObjectTables = objectTableRepository.GetObjectsByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
 
-            menusTablesRepository.SubmitChanges();
+            //menusTablesRepository.SubmitChanges();
         }
 
         public void LoadObjectTableHelperControls()
         {
-            objectContext = WebFreightContext.GetContext(0);
-            objectTableHelperControlsRepository = new ObjectTableHelperControlRepository(objectContext);
-            Dictionary<string, ObjectTableHelperControl> TenantHelpers = objectTableHelperControlsRepository.GetObjectTableHelperControlsByTenant(0).ToDictionary(d => d.Code, a => a);
+            //objectContext = WebFreightContext.GetContext(0);
+            //objectTableHelperControlsRepository = new ObjectTableHelperControlRepository(objectContext);
+            //Dictionary<string, ObjectTableHelperControl> TenantHelpers = objectTableHelperControlsRepository.GetObjectTableHelperControlsByTenant(0).ToDictionary(d => d.Code, a => a);
 
-            ObjectTable BookingTable = objectContext.ObjectTables.Where(f => f.Name == "Booking" && f.Tenant == 0).FirstOrDefault();
+            //ObjectTable BookingTable = objectContext.ObjectTables.Where(f => f.Name == "Booking" && f.Tenant == 0).FirstOrDefault();
 
-            objectContext.SaveChanges();
+            //objectContext.SaveChanges();
         }
 
         public void LoadObjectTableTabs()
@@ -471,6 +476,12 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         public void LoadOtherFields(IWebFreightContext context)
         {
+            //  ________________________________________________
+            // |                                                |
+            // |           MUST BE ADDED To LXML Files          |
+            // |________________________________________________|
+
+            return;
             objectContext = context;
             textCodeRepository = new TextCodeRepository(objectContext);
 

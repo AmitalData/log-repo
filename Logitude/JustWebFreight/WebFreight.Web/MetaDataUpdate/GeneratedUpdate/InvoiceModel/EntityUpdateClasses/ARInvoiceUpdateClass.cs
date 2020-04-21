@@ -9566,7 +9566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMMultiCurrencyMustInLocalCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.MultiCurrencyMustInLocalCurrency", DefaultText = "Multi currency ARInvoice should be only in Local currency",LocalDefaultText = @"חשבונית רב מטבעית חייבת להיות במטבע מקומי", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceSShortTitleByInvoiceAutoCredited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.S.ShortTitle.ByInvoiceAutoCredited", DefaultText = "By Invoice",LocalDefaultText = " ע''י חשבונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceSShortTitleByInvoiceAutoCredited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.S.ShortTitle.ByInvoiceAutoCredited", DefaultText = "By Invoice",LocalDefaultText = @" ע''י חשבונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOCanNotCreditExempt = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.CanNotCreditExempt", DefaultText = "Can not credit card exempt VAT if the amount is not exempt",LocalDefaultText = @"לא ניתן לזכות כרטיס פטור בסכום חייב במע''מ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

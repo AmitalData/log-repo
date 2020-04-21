@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class BusinessHourUpdateClass
    {  		
-		public const string HashString = "037353733af611d07e0fc0da66bb2bdf";
+		public const string HashString = "d94f47386c549f030a133db4be9a1848";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1845,7 +1845,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable BusinessHourObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessHour" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode BusinessHourTextCode_BusinessHourOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessHour.O.TableDescription", DefaultText = "Define business hours and holidays.",LocalDefaultText = null, ObjectTableId = BusinessHourObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

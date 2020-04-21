@@ -446,4 +446,6 @@
         IsCloseField="false" />
     </DataContract>
   </DataContracts>
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

@@ -221,4 +221,6 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

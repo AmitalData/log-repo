@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "23b36a63698862e81c8c4ea3c0447680";
+		public const string HashString = "743b7ab1e9a45bd5d35714a6c321bd85";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3034,7 +3034,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature JournalFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature JournalFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature JournalFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature JournalFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.PackageFeature", NameTextCodeDefaultText = "Journal Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature JournalFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.PackageFeature", NameTextCodeDefaultText = "Journal Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature JournalFeature_EVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_DETAILS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Details", NameTextCodeDefaultText = @"Details" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_SAVEJOURNAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SAVEJOURNAL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Savejournal", NameTextCodeDefaultText = @"Save Journal" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_MOREJOURNAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREJOURNAL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Morejournal", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_SAVEASDRAFTJOURNAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SAVEASDRAFTJOURNAL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.SaveAsDraftJournal", NameTextCodeDefaultText = @"Save As Draft Journal" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_APPROVEJOURNAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVEJOURNAL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.ApproveJournal", NameTextCodeDefaultText = @"Approve Journal" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_PRINTJOURNAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTJOURNAL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.JournalPrint", NameTextCodeDefaultText = @"Print Journal Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_JOURNAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JOURNAL", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Journal", NameTextCodeDefaultText = @"All Journals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_DraftJournal = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DraftJournal", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.DraftJournal", NameTextCodeDefaultText = @"Draft Journals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_SavedJournal = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SavedJournal", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.SavedJournal", NameTextCodeDefaultText = @"Saved Journals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_ApprovedJournal = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ApprovedJournal", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.ApprovedJournal", NameTextCodeDefaultText = @"Approved Journals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature JournalFeature_ExternalJournals = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalJournals", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.ExternalJournals", NameTextCodeDefaultText = @"External Journals" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -3338,6 +3366,104 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalORevelations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Revelations", DefaultText = "Revelations",LocalDefaultText = @"שערוך", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalORecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Recent", DefaultText = "Recent Journals",LocalDefaultText = @"פקודות אחרונים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.General", DefaultText = "General",LocalDefaultText = @"כללי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_GeneralMCACCJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Journal", DefaultText = "Journal",LocalDefaultText = @"פקודת יומן", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalQJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.Journal", DefaultText = "All Journal",LocalDefaultText = @"כל פקודות היומן", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalQApprovedJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.ApprovedJournal", DefaultText = "Approved Journals",LocalDefaultText = @"פקודות יומן מאושרות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalQDraftJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.DraftJournal", DefaultText = "Draft Journals",LocalDefaultText = @"פקודות יומן בסטטוס טיוטה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalQSavedJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.SavedJournal", DefaultText = "Waiting for Approval Journals",LocalDefaultText = @"פקודות יומן מחכות לאישור", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalQAutoCreatedJournals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.AutoCreatedJournals", DefaultText = "Auto Created Journals",LocalDefaultText = @" פקודות יומן אוטומטיות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOTheAccountingDayMustBeInRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.TheAccountingDayMustBeInRange", DefaultText = "The accounting day must be in the range of the accounting month.",LocalDefaultText = @"היום החשבונאי שהוקלד אינו קיים בטווח ימי החודש החשבונאי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOAccDay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccDay", DefaultText = "Acc. Day",LocalDefaultText = @"יום חשבונאי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalSDetailsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.S.Details.Details", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.Line", DefaultText = "Line",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHActionCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.ActionCode", DefaultText = "Action Code",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHDocumentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.DocumentDate", DefaultText = "Document Date",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.DueDate", DefaultText = "Due Date",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHCreditAccountName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.CreditAccountName", DefaultText = "C.Account",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHDebitAccountName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.DebitAccountName", DefaultText = "D.Account",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.Currency", DefaultText = "Currency",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.LocalAmount", DefaultText = "Amount (%InvoiceCurrencyCode)",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHForeignAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.ForeignAmount", DefaultText = "F.Amount",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHReference1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.Reference1", DefaultText = "Ref.1",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHReference2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.Reference2", DefaultText = "Ref.2",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHReference3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.Reference3", DefaultText = "Ref.3",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalCHNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMForeignAmountNotZero = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ForeignAmountNotZero", DefaultText = "Foreign amount is empty",LocalDefaultText = @"סכום במטח הינו חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMLocalAmountNotZero = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.LocalAmountNotZero", DefaultText = "Local amount is empty",LocalDefaultText = @"סכום במטבע מקומי הינו חובה ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMYouShouldHaveOneLineAtLeast = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldHaveOneLineAtLeast", DefaultText = "There must be at least one journal line",LocalDefaultText = @"חובה להזין לפחות שורת פקודת יומן אחת", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMCurrenyNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.CurrenyNotMatched", DefaultText = "Account Currncy does not equal to selected currecy code",LocalDefaultText = @"מטבע הכרטיס לא תואם את המטבע הנבחר", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMJournalAmountNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalAmountNotMatched", DefaultText = "Journal credit amount does not match the debit amount",LocalDefaultText = @"סכום חובה שונה מסכום זכות ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMExchangeRateEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ExchangeRateEmpty", DefaultText = "Exchange rate is not defined",LocalDefaultText = @"לא הוגדר שער המרה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMActionCodeCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCredit", DefaultText = "Please select a credit account",LocalDefaultText = @"נא לבחור כרטיס זכות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMJLAccountingDateMustWithinJournalMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JLAccountingDateMustWithinJournalMonth", DefaultText = "Jornal Line Accounting Date must be within Accounting month of Journal",LocalDefaultText = @"תאריך בשורה חייב להיות בטווח של החודש החשבונאי של פ היומן", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMFutureDateForbidden = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FutureDateForbidden", DefaultText = "Future date is not allowed",LocalDefaultText = @"לא ניתן  להקליד תאריך עתידי ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMAccountIsBlocked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AccountIsBlocked", DefaultText = "GL Account (%name) is inactive",LocalDefaultText = @"כרטיס (%name) חסום", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMActionCodeDebit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeDebit", DefaultText = "Please select a debit account",LocalDefaultText = @"אנא בחר כרטיס חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMActionCodeCreditAndCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCreditAndCredit", DefaultText = "Please select a credit and a debit account",LocalDefaultText = @"אנא בחר כרטיס זכות וכרטיס חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMActionCodeNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeNotMatched", DefaultText = "Action Code does not Matched the account you picked",LocalDefaultText = @"שגיאה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMActionCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCode", DefaultText = "Please Select Action Code",LocalDefaultText = @"אנא בחר ציין את את סוג השורה  חובה/זכות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMDocumentDateBiggerDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DocumentDateBiggerDueDate", DefaultText = "Document date must be earlier then due date ",LocalDefaultText = @"התאריך החשבונאי חייב להיות מוקדם מתאריך האסמכתא", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMDueDateMustgreaterthancurrent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateMustgreaterthancurrent", DefaultText = "Due Date ,Must be Equal or greater than current date ",LocalDefaultText = @"תאריך הפרעון צריך להיות גדול או שווה מהתאריך הנוכחי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMJournalcurrencydoesnotexist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Journal.currencydoesnotexist", DefaultText = "Currency does not exist",LocalDefaultText = @"המטבע לא קיים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMControlAccountIdIsMust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsMust", DefaultText = "Account Which is not a card must Control Account definition",LocalDefaultText = @"חשבון שאיננו כרטיס תפעולי חייב להיות כרטיס מרכז", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMControlAccountIdIsNotMatch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsNotMatch", DefaultText = "Control Account Is Not Match",LocalDefaultText = @"חשבון מרכז איננו תואם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMDueDateIsMust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateIsMust", DefaultText = "Due Date Is Must",LocalDefaultText = @"תאריך פרעון הינו חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMFAMltiExchangerateNELA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FAMltiExchangerateNELA", DefaultText = "Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})",LocalDefaultText = @"סכום במטבע מקומי חייב להיות שווה לסכום במטבע זר כפול שער המרה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMAllDateMustInit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AllDateMustInit", DefaultText = "All dates variable must initialize",LocalDefaultText = @"כל התאריכים חייבים אתחול", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalMYouShouldSelectTwoTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldSelectTwoTransactions", DefaultText = "You should select at lease two transactions in order to create new reconcile",LocalDefaultText = @"יש לבחור לפחות שתי תנועות על מנת ליצור התאמה חדשה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOCodeShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CodeShort", DefaultText = "Journal Code Too Short",LocalDefaultText = @"פרט מכס קצר מידי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOCodeLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CodeLong", DefaultText = "Journal Code Too Long",LocalDefaultText = @"פרט המכס ארוך מדי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOCorrectDigit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CorrectDigit", DefaultText = "Check digit is incorrect ,the correct digit is ",LocalDefaultText = @" ספרת הביקורת שגויה , הספרה הנכונה היא ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

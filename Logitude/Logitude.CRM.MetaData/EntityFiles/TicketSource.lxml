@@ -246,4 +246,5 @@
       SearchFields="&quot;Mail,MAL,&quot;" />
   </Records>
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

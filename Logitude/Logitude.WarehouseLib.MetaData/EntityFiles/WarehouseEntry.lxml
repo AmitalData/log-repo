@@ -5697,8 +5697,8 @@
     EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;CreatedEntriesQuery&quot;"
-    TextCode="&quot;Created Entries&quot;"
-    LocalTextCode="&quot;Created Entries&quot;"
+    TextCode="&quot;Expected Arrival Entries&quot;"
+    LocalTextCode="&quot;Expected Arrival Entries&quot;"
     QueryGroupCode="&quot;b972&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;WarehouseEntry&quot;"

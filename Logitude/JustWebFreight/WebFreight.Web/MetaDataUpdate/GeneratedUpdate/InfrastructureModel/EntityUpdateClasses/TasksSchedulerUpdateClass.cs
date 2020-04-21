@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class TasksSchedulerUpdateClass
    {  		
-		public const string HashString = "ba1ae5f0e1ca1e9c896620cbbe999a4f";
+		public const string HashString = "7d4ee56a6a3a619a32b54af6d12d90e5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

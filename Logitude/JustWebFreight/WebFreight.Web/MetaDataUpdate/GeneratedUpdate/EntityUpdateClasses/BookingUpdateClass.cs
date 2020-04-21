@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BookingUpdateClass
    {  		
-		public const string HashString = "632047171632d869b8706238d9c3948b";
+		public const string HashString = "fa0c5359132bc35faaf6c795ee82e143";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10119,7 +10119,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature BookingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BookingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BookingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BookingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.PackageFeature", NameTextCodeDefaultText = "Booking Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature BookingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.PackageFeature", NameTextCodeDefaultText = "Booking Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature BookingFeature_BOOKINGSENDRESPONSE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BOOKINGSENDRESPONSE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.SendResponse", NameTextCodeDefaultText = @"Send Response" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature BookingFeature_BOOKINGEVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BOOKINGEVENTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature BookingFeature_Booking_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.BookingMenu", NameTextCodeDefaultText = @"Bookings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature BookingFeature_Booking_Action_SendToAirlineTenant = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Booking.Action.SendToAirlineTenant", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BookingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Booking.Features.SendToAirlineTenant", NameTextCodeDefaultText = @"Send to airline tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -10273,6 +10285,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable BookingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Booking" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode BookingTextCode_BookingTHCommunications = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.TH.Communications", DefaultText = "Communications",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSOverviewPisces = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Overview.Pisces", DefaultText = "Pieces",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSRoutingsTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Routings.To", DefaultText = "To",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSRoutingsMainCarriageLeg1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Routings.MainCarriageLeg1", DefaultText = "Main Carriage Leg1",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSRoutingsMainCarriageLeg2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Routings.MainCarriageLeg2", DefaultText = "Main Carriage Leg2",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSRoutingsMainCarriageLeg3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Routings.MainCarriageLeg3", DefaultText = "Main Carriage Leg3",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSRoutingsFlightNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Routings.FlightNo", DefaultText = "Flight No",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSRoutingsAirline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Routings.Airline", DefaultText = "Airline",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSPackagesDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Packages.Details", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSPackagesSummary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Packages.Summary", DefaultText = "Summary",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingSPackagesPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.S.Packages.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingPackageSPackagesTare = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BookingPackage.S.Packages.Tare", DefaultText = "Tare (%WeightCode)",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingPackageSPackagesVolume = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BookingPackage.S.Packages.Volume", DefaultText = "Volume (%VolumeCode)",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingPackageSPackagesDimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BookingPackage.S.Packages.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingPackageSPackagesWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BookingPackage.S.Packages.Weight", DefaultText = "Gross Weight (%WeightCode)",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingPackageSPackagesVolumetricWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BookingPackage.S.Packages.VolumetricWeight", DefaultText = "Volumetric Weight (%WeightCode)",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingOPackagesVolume = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.O.Packages.Volume", DefaultText = "Volume (%UnitCode)",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingOPackagesGrossWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.O.Packages.GrossWeight", DefaultText = "Gross Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingOPackagesDimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.O.Packages.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingOPackagesVolWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.O.Packages.VolWeight", DefaultText = "Volumetric Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingOPackagesEditDangerousGoods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.O.Packages.EditDangerousGoods", DefaultText = "Edit Dangerous Goods",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingBPackagesDangerouseGoodsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.B.Packages.DangerouseGoodsDetails", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BookingTextCode_BookingMDeleteThisPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Booking.M.DeleteThisPackage", DefaultText = "Delete this package?",LocalDefaultText = null, ObjectTableId = BookingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

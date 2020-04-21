@@ -294,4 +294,6 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

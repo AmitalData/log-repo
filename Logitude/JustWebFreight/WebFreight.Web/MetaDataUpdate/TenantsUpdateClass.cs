@@ -842,11 +842,11 @@ namespace WebFreight.Web.MetaDataUpdate
             performanceTimerLogger.LogMessage("Generated" + ",AccountingUpdateClass");
             AccountingUpdate updateClass = new AccountingUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
-            updateClass.LoadUpdateTenantZero(context);
-            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadObjectTablesToTenantZero");
+            //updateClass.LoadUpdateTenantZero(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadUpdateTenantZero");
 
-            updateClass.LoadOtherFields(context);
-            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadOtherFields");
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadOtherFields");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs(); 
@@ -939,19 +939,19 @@ namespace WebFreight.Web.MetaDataUpdate
 
             BookingUpdate updateClass = new BookingUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
-            updateClass.LoadUpdateTenantZero(context);
-            performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadUpdateTenantZero");
+            //updateClass.LoadUpdateTenantZero(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadUpdateTenantZero");
 
-            updateClass.LoadOtherFields(context);
-            performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadOtherFields");
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadOtherFields");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs();
             updateClass.LoadObjectTableHelperControls();
             performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadObjectTableHelperControls");
 
-            updateClass.LoadMenustables();
-            performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadMenustables");
+            //updateClass.LoadMenustables();
+            //performanceTimerLogger.LogMessage("Manual" + ",BookingUpdate.LoadMenustables");
             //updateClass.LoadEventTypes();
         }
 
@@ -967,11 +967,11 @@ namespace WebFreight.Web.MetaDataUpdate
 
             CRMUpdate updateClass = new CRMUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
-            updateClass.LoadUpdateTenantZero(context);
-            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadUpdateTenantZero");
+            //updateClass.LoadUpdateTenantZero(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadUpdateTenantZero");
 
-            updateClass.LoadOtherFields(context);
-            performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOtherFields");
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",CRMUpdate.LoadOtherFields");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs();

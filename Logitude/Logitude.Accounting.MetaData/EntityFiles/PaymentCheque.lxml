@@ -3785,5 +3785,15 @@
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;MOREE&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;PaymentCheque.Features.PCMore&quot;"
+      FeatureDefaultText="&quot;More&quot;" />
+  </AdditionalFeatures>
 </entity>

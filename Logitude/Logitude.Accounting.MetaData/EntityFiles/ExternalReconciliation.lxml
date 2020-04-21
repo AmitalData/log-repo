@@ -1299,5 +1299,15 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;ExtRecoGenerateTestRecords&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;ExternalReconciliation.Features.ExtRecoGenerateTestRecords&quot;"
+      FeatureDefaultText="&quot;Generate Test Records&quot;" />
+  </AdditionalFeatures>
 </entity>

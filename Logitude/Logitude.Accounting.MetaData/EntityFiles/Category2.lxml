@@ -685,4 +685,23 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;Category2.Features.Category2&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Category2.Features.Category2&quot;"
+      FeatureDefaultText="&quot;Category 2&quot;" />
+  </AdditionalFeatures>
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.ACC.Category2&quot;"
+      DefaultText="&quot;Category 1&quot;"
+      LocalDefaultText="&quot;Category 1&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
 </entity>

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ChartOfAccountUpdateClass
    {  		
-		public const string HashString = "6c53ff6652c1e76f3022fbd5cdf491d7";
+		public const string HashString = "05fd64b1beb54a063d5a6e3786dd5195";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -788,7 +788,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature ChartOfAccountFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ChartOfAccountFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ChartOfAccountFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ChartOfAccountFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.PackageFeature", NameTextCodeDefaultText = "ChartOfAccount Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature ChartOfAccountFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.PackageFeature", NameTextCodeDefaultText = "ChartOfAccount Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ChartOfAccountFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ChartOfAccountFeature_EVENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.Events", NameTextCodeDefaultText = @"Events" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ChartOfAccountFeature_CHARTOFACCOUNTSMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHARTOFACCOUNTSMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.ChartOfAccountsMenu", NameTextCodeDefaultText = @"Chart of Accounts" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -878,7 +888,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ChartOfAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChartOfAccount" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ChartOfAccountTextCode_GeneralMCACCChartOfAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.ChartOfAccounts", DefaultText = "Chart of Accounts",LocalDefaultText = @"לוח חשבונות", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChartOfAccountTextCode_ChartOfAccountsOCodeAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChartOfAccounts.O.CodeAlreadyExists", DefaultText = "The Code is used by another Chart Of Account",LocalDefaultText = @"הקוד קיים", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChartOfAccountTextCode_ChartOfAccountsOCannotBeItself = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChartOfAccounts.O.CannotBeItself", DefaultText = "Cannot be a parent of itself",LocalDefaultText = @"קבוצת מאזן לא יכולה לשמש קוד אב של עצמה", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChartOfAccountTextCode_ChartOfAccountsOParentDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChartOfAccounts.O.ParentDoesNotExist", DefaultText = "Parent does not exist",LocalDefaultText = @"קוד אב לא קיים", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChartOfAccountTextCode_ChartOfAccountsOWrongParentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChartOfAccounts.O.WrongParentType", DefaultText = "The type of parent chart of account differs from this chart of account",LocalDefaultText = @"סוג קבוצת מאזן שונה מסוג של קוד אב", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChartOfAccountTextCode_ChartOfAccountsOParentIsChild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChartOfAccounts.O.ParentIsChild", DefaultText = "Can't connect to this account since it's already defined as a  child for the current account",LocalDefaultText = @"לא ניתן לקשר כרטיס זה כאב מכיוון שהוא מוגדר כבר כבן לכרטיס", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

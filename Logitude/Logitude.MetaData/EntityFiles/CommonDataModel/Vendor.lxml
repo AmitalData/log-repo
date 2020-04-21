@@ -4593,7 +4593,6 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
- 
   <Screen
     Name="&quot;Billing Tab Screen&quot;"
     ObjectTableName="&quot;Vendor&quot;"

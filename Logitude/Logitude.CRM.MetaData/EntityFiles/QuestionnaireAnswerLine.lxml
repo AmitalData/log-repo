@@ -218,4 +218,5 @@
     GenerateInList="true" />
   <EventTypes />
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>
