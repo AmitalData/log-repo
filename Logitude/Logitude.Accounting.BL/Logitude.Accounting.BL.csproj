@@ -591,6 +591,7 @@
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BankAccountTraceEventService.cs" />
+    <Compile Include="EntityUpdateServices\GLAccountCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BankDepositOnUpdatingService.cs" />
     <Compile Include="EntityUpdateServices\BankDepositOnCreatingService.cs" />
     <Compile Include="EntityUpdateServices\BankAccountOnCreatingService.cs" />

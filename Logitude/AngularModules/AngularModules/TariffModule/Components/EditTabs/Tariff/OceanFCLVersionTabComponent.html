@@ -40,6 +40,18 @@
                             {{InitialEnddate | DateTimePipe:'SD'}}
                         </td>
 
+                        <td style="width:10px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:90px;" class="Label">All-In Charges: </td>
+                        <td style="width:1px;" class="Value">
+                            {{AllInCharges}}
+                        </td>
+                        <td style="width:20px;">
+                            <IconButton [Left]="5" [Name]="'Edit'" [IsSmall]="true" (click)="AllInChargesClicked()"></IconButton>
+                        </td>
+
                         <td>
                             <div></div>
                         </td>
@@ -116,7 +128,7 @@
                                     </div>
 
                                     <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
-                                    <button (click)="AllInChargesClicked()">All-In Charges</button>
+                                    <!--<button (click)="AllInChargesClicked()">All-In Charges</button>-->
                                     <button (click)="UpdateMissingPortsClicked()" *ngIf="IsUpdateMissingPortsVisible">Update Missing Ports</button>
                                 </div>
                             </div>

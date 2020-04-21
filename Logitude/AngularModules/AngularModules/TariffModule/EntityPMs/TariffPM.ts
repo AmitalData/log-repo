@@ -418,6 +418,11 @@ export class TariffPM {
     public set IsRefreshTranslations(newValue: boolean) { if (this.isRefreshTranslations != newValue) { this.isRefreshTranslations = newValue; this.MarkAsDirty("IsRefreshTranslations"); } }
        
 	 
+    private lastUsedDate: Date;
+    public get LastUsedDate() { return this.lastUsedDate; }
+    public set LastUsedDate(newValue: Date) { if (this.lastUsedDate != newValue) { this.lastUsedDate = newValue; this.MarkAsDirty("LastUsedDate"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

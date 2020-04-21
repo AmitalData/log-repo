@@ -38,6 +38,7 @@ export class TariffList {
 	LastActivityDate: Date;
 	TransportModeCode: string;
 	TransportModeName: string;
+	LastUsedDate: Date;
 	
 }
  

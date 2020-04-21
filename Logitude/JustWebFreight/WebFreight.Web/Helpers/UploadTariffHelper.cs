@@ -46,7 +46,7 @@ namespace WebFreight.Web.Helpers
         {
             TariffRepository tariffRepository = new TariffRepository(tenant);
             Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
-            if(tariff != null)
+            if (tariff != null)
             {
                 carrierId = tariff.SellerId;
             }
@@ -63,20 +63,679 @@ namespace WebFreight.Web.Helpers
             IWorksheet sheet = workbook.Worksheets[0];
 
             List<ExcelTariffLines> tariffLinesResult = new List<ExcelTariffLines>();
+            List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
             if (tariffType == "AFC" || tariffType == "OLC")
             {
-                tariffLinesResult = this.BuildOceanAirFreightCostExcelLines(sheet);
+                excelSheetLines = this.ReadExcelSheetData_LCL(sheet);
+                tariffLinesResult = this.BuildTariffLines_LCL(excelSheetLines);
             }
 
             else if (tariffType == "OFC")
             {
-                tariffLinesResult = this.BuildOceanFCLFreightCostExcelLines(sheet);
+                excelSheetLines = this.ReadExcelSheetData_FCL(sheet);
+                tariffLinesResult = this.BuildTariffLines_FCL(excelSheetLines);
             }
-
             return tariffLinesResult;
         }
-        
-        public List<ExcelTariffLines> BuildOceanAirFreightCostExcelLines(IWorksheet sheet)
+        private List<ExcelSheetLine> ReadExcelSheetData_LCL(IWorksheet sheet)
+        {
+            List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
+
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+            string transitTimecolumn = sheet.Columns[sheet.Columns.Count() - 2].DisplayText;
+
+            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+            {
+                String[] rowData = new String[sheet.Columns.Count() - 1];
+                ExcelSheetLine myLine = new ExcelSheetLine();
+                var rowDataLength = rowData.Length;
+                var StepLength = rowData.Length;
+                if (!string.IsNullOrEmpty(priceSteps))
+                {
+                    StepLength = priceSteps.Split(',').Length + 3;
+                }
+
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
+                String transitTimeRowData = row.Cells[sheet.Columns.Count() - 2].Value2.ToString();
+
+                for (int i = 0; i < sheet.Columns.Count() - 2; i++)
+                {
+                    if (row.Cells[i].HasFormula)
+                    {
+                        rowData[i] = row.Cells[i].FormulaNumberValue.ToString();
+                    }
+                    else
+                    {
+                        rowData[i] = row.Cells[i].Value2.ToString();
+                    }
+                }
+
+                /*From Port*/
+                string fromPortCode = rowData[0];
+                if (!Regex.IsMatch(fromPortCode, @"^[a-zA-Z0-9]+$"))
+                {
+                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z0-9]+", "");
+                }
+
+                myLine.FromPort = fromPortCode;
+
+                /*To Port*/
+                string toPortCode = rowData[1];
+                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z0-9]+$"))
+                {
+                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z0-9]+", "");
+                }
+
+                myLine.ToPort = toPortCode;
+
+                if (StepLength > 2 && rowDataLength > 2)
+                {
+                    myLine.MinPrice = rowData[2];
+                }
+
+                if (StepLength > 3 && rowDataLength > 3)
+                {
+                    myLine.Price1 = rowData[3];
+                }
+
+                if (StepLength > 4 && rowDataLength > 4)
+                {
+                    myLine.Price2 = rowData[4];
+                }
+
+                if (StepLength > 5 && rowDataLength > 5)
+                {
+                    myLine.Price3 = rowData[5];
+                }
+
+                if (StepLength > 6 && rowDataLength > 6)
+                {
+                    myLine.Price4 = rowData[6];
+                }
+
+                if (StepLength > 7 && rowDataLength > 7)
+                {
+                    myLine.Price5 = rowData[7];
+                }
+
+                if (StepLength > 8 && rowDataLength > 8)
+                {
+                    myLine.Price6 = rowData[8];
+                }
+
+                if (StepLength > 9 && rowDataLength > 9)
+                {
+                    myLine.Price7 = rowData[9];
+                }
+
+                if (StepLength > 10 && rowDataLength > 10)
+                {
+                    myLine.Price8 = rowData[10];
+                }
+
+                if (!string.IsNullOrEmpty(transitTimecolumn))
+                {
+                    myLine.TransitTime = transitTimeRowData;
+                }
+
+                if (!string.IsNullOrEmpty(notescolumn))
+                {
+                    myLine.Notes = notesRowData;
+                }
+
+                excelSheetLines.Add(myLine);
+            }
+
+            return excelSheetLines;
+        }
+        private List<ExcelSheetLine> ReadExcelSheetData_FCL(IWorksheet sheet)
+        {
+            List<ExcelSheetLine> excelSheetLines = new List<ExcelSheetLine>();
+
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+            string transitTimecolumn = sheet.Columns[sheet.Columns.Count() - 2].DisplayText;
+
+            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+            {
+                String[] rowData = new String[sheet.Columns.Count() - 1];
+                ExcelSheetLine myLine = new ExcelSheetLine();
+
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
+                String transitTimeRowData = row.Cells[sheet.Columns.Count() - 2].Value2.ToString();
+
+                for (int i = 0; i < sheet.Columns.Count() - 2; i++)
+                {
+                    if (row.Cells[i].HasFormula)
+                    {
+                        rowData[i] = row.Cells[i].FormulaNumberValue.ToString();
+                    }
+                    else
+                    {
+                        rowData[i] = row.Cells[i].Value2.ToString();
+                    }
+                }
+
+                /*From Port*/
+                string fromPortCode = rowData[0];
+                if (!Regex.IsMatch(fromPortCode, @"^[a-zA-Z0-9]+$"))
+                {
+                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z0-9]+", "");
+                }
+
+                myLine.FromPort = fromPortCode;
+
+                /*To Port*/
+                string toPortCode = rowData[1];
+                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z0-9]+$"))
+                {
+                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z0-9]+", "");
+                }
+
+                myLine.ToPort = toPortCode;
+
+                if (rowData.Length > 2)
+                {
+                    myLine.Price1 = rowData[2];
+                }
+
+                if (rowData.Length > 3)
+                {
+                    myLine.Price2 = rowData[3];
+                }
+
+                if (rowData.Length > 4)
+                {
+                    myLine.Price3 = rowData[4];
+                }
+
+                if (rowData.Length > 5)
+                {
+                    myLine.Price4 = rowData[5];
+                }
+
+                if (rowData.Length > 6)
+                {
+                    myLine.Price5 = rowData[6];
+                }
+
+                if (!string.IsNullOrEmpty(transitTimecolumn))
+                {
+                    myLine.TransitTime = transitTimeRowData;
+                }
+
+                if (!string.IsNullOrEmpty(notescolumn))
+                {
+                    myLine.Notes = notesRowData;
+                }
+
+                excelSheetLines.Add(myLine);
+            }
+
+            return excelSheetLines;
+        }
+
+        private List<ExcelTariffLines> BuildTariffLines_LCL(List<ExcelSheetLine> excelSheetLines)
+        {
+            List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
+
+            int rowIndex = 0;
+
+            foreach (ExcelSheetLine row in excelSheetLines)
+            {
+                ExcelTariffLines tariffLine = new ExcelTariffLines();
+                tariffLine.Index = rowIndex;
+
+                //From Port
+                Port fromPort = this.GetPortDetails(row.FromPort, tenant);
+                if (fromPort != null)
+                {
+                    if ((fromPort.IsAir && tariffType == "AFC") || (fromPort.IsOcean && tariffType == "OLC"))
+                    {
+                        tariffLine.FromPortId = fromPort.Id;
+                        tariffLine.FromPortCode = fromPort.Code;
+                        tariffLine.FromPortCombinedCode = fromPort.CombinedCode;
+                        tariffLine.FromPortName = fromPort.EnglishName;
+                    }
+
+                    else
+                    {
+                        tariffLine.FromPortIsNotAir = true;
+                        tariffLine.FromPortText = row.FromPort;
+                    }
+                }
+                else
+                {
+                    tariffLine.FromPortText = this.TrimTo_20(row.FromPort);
+                }
+
+                //To Port
+                Port toPort = this.GetPortDetails(row.ToPort, tenant);
+                if (toPort != null)
+                {
+                    if ((toPort.IsAir && tariffType == "AFC") || (toPort.IsOcean && tariffType == "OLC"))
+                    {
+                        tariffLine.ToPortId = toPort.Id;
+                        tariffLine.ToPortCode = toPort.Code;
+                        tariffLine.ToPortCombinedCode = toPort.CombinedCode;
+                        tariffLine.ToPortName = toPort.EnglishName;
+                    }
+
+                    else
+                    {
+                        tariffLine.ToPortIsNotAir = true;
+                        tariffLine.ToPortText = row.ToPort;
+                    }
+                }
+                else
+                {
+                    tariffLine.ToPortText = this.TrimTo_20(row.ToPort);
+                }
+
+                //Min Price
+                if (this.IsNumber(row.MinPrice))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.MinPrice);
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.MinPrice = myNumber;
+                    }
+
+                    else
+                    {
+                        tariffLine.IsMinPriceMinus = true;
+                        tariffLine.MinPriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.MinPriceText = this.TrimTo_20(row.MinPrice);
+                }
+
+                //Price 1
+                if (this.IsNumber(row.Price1))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price1);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Step1Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsStep1PriceMinus = true;
+                        tariffLine.Step1PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Step1PriceText = this.TrimTo_20(row.Price1);
+                }
+
+                //Price 2
+                if (this.IsNumber(row.Price2))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price2);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Step2Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsStep2PriceMinus = true;
+                        tariffLine.Step2PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Step2PriceText = this.TrimTo_20(row.Price2);
+                }
+
+                //Price 3
+                if (this.IsNumber(row.Price3))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price3);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Step3Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsStep3PriceMinus = true;
+                        tariffLine.Step3PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Step3PriceText = this.TrimTo_20(row.Price3);
+                }
+
+                //Price 4
+                if (this.IsNumber(row.Price4))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price4);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Step4Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsStep4PriceMinus = true;
+                        tariffLine.Step4PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Step4PriceText = this.TrimTo_20(row.Price4);
+                }
+
+                //Price 5
+                if (this.IsNumber(row.Price5))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price5);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Step5Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsStep5PriceMinus = true;
+                        tariffLine.Step5PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Step5PriceText = this.TrimTo_20(row.Price5);
+                }
+
+                //Price 6
+                if (this.IsNumber(row.Price6))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price6);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Step6Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsStep6PriceMinus = true;
+                        tariffLine.Step6PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Step6PriceText = this.TrimTo_20(row.Price6);
+                }
+
+                //Price 7
+                if (this.IsNumber(row.Price7))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price7);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Step7Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsStep7PriceMinus = true;
+                        tariffLine.Step7PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Step7PriceText = this.TrimTo_20(row.Price7);
+                }
+
+                //Price 8
+                if (this.IsNumber(row.Price8))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price8);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Step8Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsStep8PriceMinus = true;
+                        tariffLine.Step8PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Step8PriceText = this.TrimTo_20(row.Price8);
+                }
+
+                //Transit Time
+                if (!string.IsNullOrEmpty(row.TransitTime))
+                {
+                    tariffLine.TransitTime = row.TransitTime;
+
+                    if (row.TransitTime.Length > 100)
+                    {
+                        tariffLine.TransitTime = row.TransitTime.Substring(0, 100);
+                    }
+                }
+
+                //Notes
+                if (!string.IsNullOrEmpty(row.Notes))
+                {
+                    tariffLine.Notes = row.Notes;
+
+                    if (row.Notes.Length > 500)
+                    {
+                        tariffLine.Notes = row.Notes.Substring(0, 500);
+                    }
+                }
+
+                myResult.Add(tariffLine);
+                rowIndex++;
+            }
+
+            foreach (ExcelTariffLines item in myResult)
+            {
+                this.SetErrors_LCL(item);
+            }
+
+            return myResult;
+        }
+        private List<ExcelTariffLines> BuildTariffLines_FCL(List<ExcelSheetLine> excelSheetLines)
+        {
+            List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
+
+            int rowIndex = 0;
+
+            foreach (ExcelSheetLine row in excelSheetLines)
+            {
+                ExcelTariffLines tariffLine = new ExcelTariffLines();
+                tariffLine.Index = rowIndex;
+
+                //From Port
+                Port fromPort = this.GetPortDetails(row.FromPort, tenant);
+                if (fromPort != null)
+                {
+                    if (fromPort.IsOcean)
+                    {
+                        tariffLine.FromPortId = fromPort.Id;
+                        tariffLine.FromPortCode = fromPort.Code;
+                        tariffLine.FromPortCombinedCode = fromPort.CombinedCode;
+                        tariffLine.FromPortName = fromPort.EnglishName;
+                    }
+
+                    else
+                    {
+                        tariffLine.FromPortIsNotAir = true;
+                        tariffLine.FromPortText = row.FromPort;
+                    }
+                }
+                else
+                {
+                    tariffLine.FromPortText = this.TrimTo_20(row.FromPort);
+                }
+
+                //To Port
+                Port toPort = this.GetPortDetails(row.ToPort, tenant);
+                if (toPort != null)
+                {
+                    if (toPort.IsOcean)
+                    {
+                        tariffLine.ToPortId = toPort.Id;
+                        tariffLine.ToPortCode = toPort.Code;
+                        tariffLine.ToPortCombinedCode = toPort.CombinedCode;
+                        tariffLine.ToPortName = toPort.EnglishName;
+                    }
+
+                    else
+                    {
+                        tariffLine.ToPortIsNotAir = true;
+                        tariffLine.ToPortText = row.ToPort;
+                    }
+                }
+                else
+                {
+                    tariffLine.ToPortText = this.TrimTo_20(row.ToPort);
+                }
+
+                //Price 1
+                if (this.IsNumber(row.Price1))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price1);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Surcharge1Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsSurcharge1PriceMinus = true;
+                        tariffLine.Surcharge1PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Surcharge1PriceText = this.TrimTo_20(row.Price1);
+                }
+
+                //Price 2
+                if (this.IsNumber(row.Price2))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price2);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Surcharge2Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsSurcharge2PriceMinus = true;
+                        tariffLine.Surcharge2PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Surcharge2PriceText = this.TrimTo_20(row.Price2);
+                }
+
+                //Price 3
+                if (this.IsNumber(row.Price3))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price3);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Surcharge3Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsSurcharge3PriceMinus = true;
+                        tariffLine.Surcharge3PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Surcharge3PriceText = this.TrimTo_20(row.Price3);
+                }
+
+                //Price 4
+                if (this.IsNumber(row.Price4))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price4);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Surcharge4Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsSurcharge4PriceMinus = true;
+                        tariffLine.Surcharge4PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Surcharge4PriceText = this.TrimTo_20(row.Price4);
+                }
+
+                //Price 5
+                if (this.IsNumber(row.Price5))
+                {
+                    decimal myNumber = Convert.ToDecimal(row.Price5);
+
+                    if (myNumber >= 0)
+                    {
+                        tariffLine.Surcharge5Price = myNumber;
+                    }
+                    else
+                    {
+                        tariffLine.IsSurcharge5PriceMinus = true;
+                        tariffLine.Surcharge5PriceText = String.Format("{0:0.000}", myNumber);
+                    }
+                }
+                else
+                {
+                    tariffLine.Surcharge5PriceText = this.TrimTo_20(row.Price5);
+                }
+
+                //Transit Time
+                if (!string.IsNullOrEmpty(row.TransitTime))
+                {
+                    tariffLine.TransitTime = row.TransitTime;
+
+                    if (row.TransitTime.Length > 100)
+                    {
+                        tariffLine.TransitTime = row.TransitTime.Substring(0, 100);
+                    }
+                }
+
+                //Notes
+                if (!string.IsNullOrEmpty(row.Notes))
+                {
+                    tariffLine.Notes = row.Notes;
+
+                    if (row.Notes.Length > 500)
+                    {
+                        tariffLine.Notes = row.Notes.Substring(0, 500);
+                    }
+                }
+
+                myResult.Add(tariffLine);
+                rowIndex++;
+            }
+
+            foreach (ExcelTariffLines item in myResult)
+            {
+                this.SetErrors_FCL(item);
+            }
+
+            return myResult;
+        }
+
+        public List<ExcelTariffLines> BuildOceanAirFreightCostExcelLines00(IWorksheet sheet)
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
@@ -368,7 +1027,7 @@ namespace WebFreight.Web.Helpers
 
                 if (!string.IsNullOrEmpty(transitTimecolumn))
                 {
-                    tariffLine.TransitTime  = transitTimeRowData;
+                    tariffLine.TransitTime = transitTimeRowData;
 
                     if (transitTimeRowData.Length > 100)
                     {
@@ -392,12 +1051,12 @@ namespace WebFreight.Web.Helpers
 
             foreach (ExcelTariffLines item in myResult)
             {
-                this.SetErrors_AirFreightCost(item);
+                this.SetErrors_LCL(item);
             }
 
             return myResult;
         }
-        public List<ExcelTariffLines> BuildOceanFCLFreightCostExcelLines(IWorksheet sheet)
+        public List<ExcelTariffLines> BuildOceanFCLFreightCostExcelLines00(IWorksheet sheet)
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
@@ -621,12 +1280,13 @@ namespace WebFreight.Web.Helpers
 
             foreach (ExcelTariffLines item in myResult)
             {
-                this.SetErrors_OceanFCLFreightCost(item);
+                this.SetErrors_LCL(item);
             }
 
             return myResult;
         }
-        private void SetErrors_AirFreightCost(ExcelTariffLines item)
+
+        private void SetErrors_LCL(ExcelTariffLines item)
         {
             bool error = false;
             string errorText = "";
@@ -1001,7 +1661,7 @@ namespace WebFreight.Web.Helpers
             item.HasErrors = error;
             item.ErrorText = errorText;
         }
-        private void SetErrors_OceanFCLFreightCost(ExcelTariffLines item)
+        private void SetErrors_FCL(ExcelTariffLines item)
         {
             bool error = false;
             string errorText = "";
@@ -1252,10 +1912,11 @@ namespace WebFreight.Web.Helpers
             item.HasErrors = error;
             item.ErrorText = errorText;
         }
+
         private Port GetPortDetails(string code, int tenant)
         {
             Port myPort = null;
-            
+
             if (!string.IsNullOrEmpty(code))
             {
                 code = code.Trim();
@@ -1270,7 +1931,7 @@ namespace WebFreight.Web.Helpers
                 }
 
                 //Search in translations
-                if(myPort == null)
+                if (myPort == null)
                 {
                     TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetCarrierTranslationByPartnerCodeAndCarrier(code, carrierId, tenant);
                     if (carrierTranslation != null)
@@ -1518,6 +2179,23 @@ namespace WebFreight.Web.Helpers
         public string Notes { get; set; }
         public DateTime? StartDate { get; set; }
         public string StartDateText { get; set; }
+        public string TransitTime { get; set; }
+    }
+
+    public class ExcelSheetLine
+    {
+        public string FromPort { get; set; }
+        public string ToPort { get; set; }
+        public string MinPrice { get; set; }
+        public string Price1 { get; set; }
+        public string Price2 { get; set; }
+        public string Price3 { get; set; }
+        public string Price4 { get; set; }
+        public string Price5 { get; set; }
+        public string Price6 { get; set; }
+        public string Price7 { get; set; }
+        public string Price8 { get; set; }
+        public string Notes { get; set; }
         public string TransitTime { get; set; }
     }
 }

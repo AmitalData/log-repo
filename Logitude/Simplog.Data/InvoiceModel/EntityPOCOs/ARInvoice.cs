@@ -210,5 +210,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public virtual VatType RegionalTax { get; set; }
 
         public double? RegionalTaxPercentage { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
     }
 }

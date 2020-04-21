@@ -2363,6 +2363,15 @@
     <Compile Include="Migrations\202004111256429_AddTransitTimeFieldToTariff_Maheera.Designer.cs">
       <DependentUpon>202004111256429_AddTransitTimeFieldToTariff_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004191949500_AddLastUsedDateToTariff_Samar.cs" />
+    <Compile Include="Migrations\202004191949500_AddLastUsedDateToTariff_Samar.Designer.cs">
+      <DependentUpon>202004191949500_AddLastUsedDateToTariff_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004160804388_JournalFieldsMigration.cs" />
+    <Compile Include="Migrations\202004160804388_JournalFieldsMigration.Designer.cs">
+      <DependentUpon>202004160804388_JournalFieldsMigration.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs" />
     <Compile Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.Designer.cs">
       <DependentUpon>202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs</DependentUpon>
@@ -4324,6 +4333,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.resx">
       <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004160804388_JournalFieldsMigration.resx">
+      <DependentUpon>202004160804388_JournalFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004191949500_AddLastUsedDateToTariff_Samar.resx">
+      <DependentUpon>202004191949500_AddLastUsedDateToTariff_Samar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.resx">
       <DependentUpon>202001090817197_Mutaz_Add_Field_ObjectFieldCode_To_CusstomRequiredFields_And_Remove_ForiegnKey.cs</DependentUpon>

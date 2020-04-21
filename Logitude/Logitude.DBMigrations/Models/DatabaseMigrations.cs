@@ -682,7 +682,7 @@ namespace Logitude.DBMigrations.Models
 
             if (name.Length <= maxLength)
             {
-                return name;
+                return String.IsNullOrEmpty(shortName) ? name : shortName;
             }
             else
             {

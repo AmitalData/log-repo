@@ -15,13 +15,11 @@ namespace Logitude.DeploymentAgentService.Models
 
         public int NewVersion { get; set; }
 
-        public string Tenant { get; set; }
+        public int? LastReleaseId { get; set; }
 
         public ServiceType ServiceType { get; set; }
 
-        public Artifact NewVersionArtifact { get; set; }
-
-        public Customer Customer { get; set; }
+        public Artifact Artifact { get; set; }
 
         public DeploymentStatus DeploymentStatus { get; set; }
     }

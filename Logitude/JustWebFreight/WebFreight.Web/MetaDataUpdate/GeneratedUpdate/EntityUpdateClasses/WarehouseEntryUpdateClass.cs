@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseEntryUpdateClass
    {  		
-		public const string HashString = "9a83169802015f6c9c425e1c73384587";
+		public const string HashString = "2d65da9101b7e84fb9acfe9441741f9e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5047,7 +5047,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable WarehouseEntryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WarehouseEntry" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntryBPartnersAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.B.Partners.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntryBPartnersAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.B.Partners.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntryBPartnersAddPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.B.Partners.AddPartners", DefaultText = "Add Partners",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersReference1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Reference1", DefaultText = "Reference1",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersReference2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Reference2", DefaultText = "Reference2",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.MyCustomer", DefaultText = "My Customer",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersEditShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.EditShipper", DefaultText = "Edit Shipper",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersEditConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.EditConsignee", DefaultText = "Edit Consignee",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntrySPartnersPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.S.Partners.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode WarehouseEntryTextCode_WarehouseEntryMDeleteThisPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseEntry.M.DeleteThisPartner", DefaultText = "Delete This Partner?",LocalDefaultText = null, ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
