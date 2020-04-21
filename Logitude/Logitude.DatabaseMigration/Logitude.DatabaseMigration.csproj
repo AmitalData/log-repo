@@ -2311,7 +2311,6 @@
     <Compile Include="Migrations\202004160804388_JournalFieldsMigration.Designer.cs">
       <DependentUpon>202004160804388_JournalFieldsMigration.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs" />
     <Compile Include="Migrations\202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.Designer.cs">
       <DependentUpon>202004161051421_WesamAddMarkForDeleteFieldToDocumentsTable.cs</DependentUpon>
@@ -2324,7 +2323,6 @@
     <Compile Include="Migrations\202004100922221_AddDisplayDocumentsAndEventsToTenant.Designer.cs">
       <DependentUpon>202004100922221_AddDisplayDocumentsAndEventsToTenant.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202004150910268_AbedAddExcelOnlyToReportTable.cs" />
     <Compile Include="Migrations\202004150910268_AbedAddExcelOnlyToReportTable.Designer.cs">
       <DependentUpon>202004150910268_AbedAddExcelOnlyToReportTable.cs</DependentUpon>
@@ -2333,7 +2331,10 @@
     <Compile Include="Migrations\202004160706407_AbedAddExcelOnlyToReportExecutionLog.Designer.cs">
       <DependentUpon>202004160706407_AbedAddExcelOnlyToReportExecutionLog.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\202004211002165_Update_DueDate_Nullable.cs" />
+    <Compile Include="Migrations\202004211002165_Update_DueDate_Nullable.Designer.cs">
+      <DependentUpon>202004211002165_Update_DueDate_Nullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4204,7 +4205,6 @@
     <EmbeddedResource Include="Migrations\202004100922221_AddDisplayDocumentsAndEventsToTenant.resx">
       <DependentUpon>202004100922221_AddDisplayDocumentsAndEventsToTenant.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202004150910268_AbedAddExcelOnlyToReportTable.resx">
       <DependentUpon>202004150910268_AbedAddExcelOnlyToReportTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -4216,6 +4216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004191949500_AddLastUsedDateToTariff_Samar.resx">
       <DependentUpon>202004191949500_AddLastUsedDateToTariff_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211002165_Update_DueDate_Nullable.resx">
+      <DependentUpon>202004211002165_Update_DueDate_Nullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
