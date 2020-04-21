@@ -926,7 +926,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private int taxReportJournalLineNumber ;
 	  	  
        
@@ -950,13 +949,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
-	  private DateTime documentDate ;
+	  private DateTime? documentDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime DocumentDate  
+       public DateTime? DocumentDate  
 	   {
 	    
 	     get
@@ -967,19 +965,19 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(documentDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentDate",OldValue=documentDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentDate",OldValue=documentDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   documentDate=value;
 		   }
 			
 		 }
 	   }
-	  private DateTime dueDate ;
+	  private DateTime? dueDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime DueDate  
+       public DateTime? DueDate  
 	   {
 	    
 	     get
@@ -990,14 +988,13 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(dueDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DueDate",OldValue=dueDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DueDate",OldValue=dueDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   dueDate=value;
 		   }
 			
 		 }
 	   }
-
    }
    
 }
