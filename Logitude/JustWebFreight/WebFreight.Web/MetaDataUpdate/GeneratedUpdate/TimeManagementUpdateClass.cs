@@ -327,13 +327,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TMDayOffTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						TMDayOffTypeUpdateClass.FillTMDayOffType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				TMDayOffTypeUpdateClass.FillTMDayOffType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TMEmployeeTime", ObjectTables, TMEmployeeTimeUpdateClass.HashString))
@@ -386,13 +385,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TMLocationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						TMLocationUpdateClass.FillTMLocation();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				TMLocationUpdateClass.FillTMLocation();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TMOfficeHour", ObjectTables, TMOfficeHourUpdateClass.HashString))

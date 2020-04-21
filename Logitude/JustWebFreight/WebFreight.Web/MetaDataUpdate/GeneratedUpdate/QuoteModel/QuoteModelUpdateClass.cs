@@ -330,13 +330,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					MarkUpTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						MarkUpTypeUpdateClass.FillMarkUpType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				MarkUpTypeUpdateClass.FillMarkUpType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Quote", ObjectTables, QuoteUpdateClass.HashString))
@@ -416,13 +415,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteClosingReasonUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteCostCharge", ObjectTables, QuoteCostChargeUpdateClass.HashString))
@@ -475,13 +473,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteCustomerTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuotePackage", ObjectTables, QuotePackageUpdateClass.HashString))
@@ -561,13 +558,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteRatingUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						QuoteRatingUpdateClass.FillQuoteRating();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				QuoteRatingUpdateClass.FillQuoteRating();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteSaleCharge", ObjectTables, QuoteSaleChargeUpdateClass.HashString))
@@ -917,13 +913,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						QuoteTypeUpdateClass.FillQuoteType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				QuoteTypeUpdateClass.FillQuoteType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("QuoteVATsTotal", ObjectTables, QuoteVATsTotalUpdateClass.HashString))

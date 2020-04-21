@@ -334,4 +334,6 @@
       IsSelectable="false"
       Name="&quot;Cancel Any Previous Space Allocation&quot;" />
   </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

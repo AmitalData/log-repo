@@ -427,12 +427,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if(MetadataUpdateUtility.IsChangedMetadataTable("AccountingEntity", ObjectTables, AccountingEntityUpdateClass.HashString))
+			if (MetadataUpdateUtility.IsChangedMetadataTable("AccountingEntity", ObjectTables, AccountingEntityUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-				{				
+				{
 					MetadataUpdateUtility.DeleteAllTableMetadata("AccountingEntity");
-					AccountingEntityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					AccountingEntityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository, TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AccountingEntityUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
 					this.ObjectContext.SaveChanges();
@@ -450,13 +450,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					AccountingEntityUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						AccountingEntityUpdateClass.FillAccountingEntity();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+
+				AccountingEntityUpdateClass.FillAccountingEntity();
+
+
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AccountingIntegrityCheck", ObjectTables, AccountingIntegrityCheckUpdateClass.HashString))
@@ -590,13 +589,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					ARPaymentChequeStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						ARPaymentChequeStatusUpdateClass.FillARPaymentChequeStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				ARPaymentChequeStatusUpdateClass.FillARPaymentChequeStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AutomaticExternalRconcilMthod", ObjectTables, AutomaticExternalRconcilMthodUpdateClass.HashString))
@@ -622,13 +620,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					AutomaticExternalRconcilMthodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						AutomaticExternalRconcilMthodUpdateClass.FillAutomaticExternalRconcilMthod();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				AutomaticExternalRconcilMthodUpdateClass.FillAutomaticExternalRconcilMthod();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AutomaticReconcile", ObjectTables, AutomaticReconcileUpdateClass.HashString))
@@ -654,13 +651,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					AutomaticReconcileUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						AutomaticReconcileUpdateClass.FillAutomaticReconcile();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				AutomaticReconcileUpdateClass.FillAutomaticReconcile();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AutomaticReconcileMethod", ObjectTables, AutomaticReconcileMethodUpdateClass.HashString))
@@ -821,13 +817,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					BankPageEntryTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						BankPageEntryTypeUpdateClass.FillBankPageEntryType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				BankPageEntryTypeUpdateClass.FillBankPageEntryType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("CashBook", ObjectTables, CashBookUpdateClass.HashString))
@@ -907,13 +902,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					CashBookTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						CashBookTypeUpdateClass.FillCashBookType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				CashBookTypeUpdateClass.FillCashBookType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Category1", ObjectTables, Category1UpdateClass.HashString))
@@ -1101,13 +1095,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					ChartOfAccountsTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						ChartOfAccountsTypeUpdateClass.FillChartOfAccountsType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				ChartOfAccountsTypeUpdateClass.FillChartOfAccountsType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ExternalPageAdditionalData", ObjectTables, ExternalPageAdditionalDataUpdateClass.HashString))
@@ -1403,13 +1396,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					GLAccountTotalDateTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						GLAccountTotalDateTypeUpdateClass.FillGLAccountTotalDateType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				GLAccountTotalDateTypeUpdateClass.FillGLAccountTotalDateType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("GLAccountType", ObjectTables, GLAccountTypeUpdateClass.HashString))
@@ -1435,13 +1427,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					GLAccountTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						GLAccountTypeUpdateClass.FillGLAccountType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				GLAccountTypeUpdateClass.FillGLAccountType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("GLAccountWithholdingTax", ObjectTables, GLAccountWithholdingTaxUpdateClass.HashString))
@@ -1494,13 +1485,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					IntegrityCheckStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						IntegrityCheckStatusUpdateClass.FillIntegrityCheckStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				IntegrityCheckStatusUpdateClass.FillIntegrityCheckStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("InterestBasesPeriod", ObjectTables, InterestBasesPeriodUpdateClass.HashString))
@@ -1580,13 +1570,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					InterestEntityTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						InterestEntityTypeUpdateClass.FillInterestEntityType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				InterestEntityTypeUpdateClass.FillInterestEntityType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("InterestReport", ObjectTables, InterestReportUpdateClass.HashString))
@@ -1693,13 +1682,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					InterestReportStatuseUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						InterestReportStatuseUpdateClass.FillInterestReportStatuse();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				InterestReportStatuseUpdateClass.FillInterestReportStatuse();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("InterestTransaction", ObjectTables, InterestTransactionUpdateClass.HashString))
@@ -1941,13 +1929,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					JournalStatusTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						JournalStatusTypeUpdateClass.FillJournalStatusType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				JournalStatusTypeUpdateClass.FillJournalStatusType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("JournalType", ObjectTables, JournalTypeUpdateClass.HashString))
@@ -1973,13 +1960,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					JournalTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						JournalTypeUpdateClass.FillJournalType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				JournalTypeUpdateClass.FillJournalType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("LedgerTransaction", ObjectTables, LedgerTransactionUpdateClass.HashString))
@@ -2059,13 +2045,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					OpenFormatReportStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						OpenFormatReportStatusUpdateClass.FillOpenFormatReportStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				OpenFormatReportStatusUpdateClass.FillOpenFormatReportStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PaymentCheque", ObjectTables, PaymentChequeUpdateClass.HashString))
@@ -2145,13 +2130,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					PaymentChequeStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						PaymentChequeStatusUpdateClass.FillPaymentChequeStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				PaymentChequeStatusUpdateClass.FillPaymentChequeStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("PeriodType", ObjectTables, PeriodTypeUpdateClass.HashString))
@@ -2177,13 +2161,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					PeriodTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						PeriodTypeUpdateClass.FillPeriodType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				PeriodTypeUpdateClass.FillPeriodType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ReconcileExternalPage", ObjectTables, ReconcileExternalPageUpdateClass.HashString))
@@ -2263,13 +2246,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					ReconcileExternalPageStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						ReconcileExternalPageStatusUpdateClass.FillReconcileExternalPageStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				ReconcileExternalPageStatusUpdateClass.FillReconcileExternalPageStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("ReconcileMethod", ObjectTables, ReconcileMethodUpdateClass.HashString))
@@ -2295,13 +2277,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					ReconcileMethodUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						ReconcileMethodUpdateClass.FillReconcileMethod();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				ReconcileMethodUpdateClass.FillReconcileMethod();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Reconciliation", ObjectTables, ReconciliationUpdateClass.HashString))
@@ -2408,13 +2389,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					RevaluationStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						RevaluationStatusUpdateClass.FillRevaluationStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				RevaluationStatusUpdateClass.FillRevaluationStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("RevenueExpenseType", ObjectTables, RevenueExpenseTypeUpdateClass.HashString))
@@ -2440,13 +2420,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					RevenueExpenseTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						RevenueExpenseTypeUpdateClass.FillRevenueExpenseType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				RevenueExpenseTypeUpdateClass.FillRevenueExpenseType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TaxDeductionReport", ObjectTables, TaxDeductionReportUpdateClass.HashString))
@@ -2499,13 +2478,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TaxDeductionReportStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						TaxDeductionReportStatusUpdateClass.FillTaxDeductionReportStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				TaxDeductionReportStatusUpdateClass.FillTaxDeductionReportStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TaxReport", ObjectTables, TaxReportUpdateClass.HashString))
@@ -2585,13 +2563,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TaxReportLineStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						TaxReportLineStatusUpdateClass.FillTaxReportLineStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				TaxReportLineStatusUpdateClass.FillTaxReportLineStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TaxReportLineTransmitStatus", ObjectTables, TaxReportLineTransmitStatusUpdateClass.HashString))
@@ -2617,13 +2594,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TaxReportLineTransmitStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						TaxReportLineTransmitStatusUpdateClass.FillTaxReportLineTransmitStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				TaxReportLineTransmitStatusUpdateClass.FillTaxReportLineTransmitStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TaxReportLineType", ObjectTables, TaxReportLineTypeUpdateClass.HashString))
@@ -2649,13 +2625,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TaxReportLineTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						TaxReportLineTypeUpdateClass.FillTaxReportLineType();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				TaxReportLineTypeUpdateClass.FillTaxReportLineType();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TaxReportStatus", ObjectTables, TaxReportStatusUpdateClass.HashString))
@@ -2681,13 +2656,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TaxReportStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						TaxReportStatusUpdateClass.FillTaxReportStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				TaxReportStatusUpdateClass.FillTaxReportStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("TaxWithholdingAssessOffice", ObjectTables, TaxWithholdingAssessOfficeUpdateClass.HashString))
@@ -2767,13 +2741,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					VatReportStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
-					{
-						VatReportStatusUpdateClass.FillVatReportStatus();
-						innerScope.Complete();
-					}
 					scope.Complete();
 				}
+ 
+				VatReportStatusUpdateClass.FillVatReportStatus();
+
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("WithholdingTaxDeductionType", ObjectTables, WithholdingTaxDeductionTypeUpdateClass.HashString))

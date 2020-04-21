@@ -286,4 +286,6 @@
       Name="&quot;Waiting for Airline Confirmation&quot;"
       SearchFields="&quot;RBA,Waiting for Airline Confirmation,&quot;" />
   </Records>
+  <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>
