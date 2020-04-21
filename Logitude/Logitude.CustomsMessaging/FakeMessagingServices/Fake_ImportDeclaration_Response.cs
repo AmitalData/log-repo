@@ -115,6 +115,8 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _ResponseHeader.ErrorCode = "None";
            
         }
+
+     
         public DeclarationGoodsShipmentGovernmentAgencyGoodsItem[] AddGovernmentAgencyGoodsItem(DeclarationGoodsShipmentGovernmentAgencyGoodsItem[] _governmentAgencyGoodsItem)
         {
             foreach (DeclarationGoodsShipmentGovernmentAgencyGoodsItem item in _governmentAgencyGoodsItem)
