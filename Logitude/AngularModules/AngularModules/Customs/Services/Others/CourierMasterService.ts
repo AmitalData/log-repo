@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -20,10 +21,10 @@ import { AppTool } from '../../../Infrastructure/Tools';
 
 export class CourierMasterService {
 
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster';
     }
 
@@ -33,12 +34,12 @@ export class CourierMasterService {
 
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetIfCourierMasterExists?' + 'Id=' + Id + '&airlineId=' + airlineId + '&HAWB=' + HAWB + '&MAWB=' + MAWB, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetIfCourierMasterExists?' + 'Id=' + Id + '&airlineId=' + airlineId + '&HAWB=' + HAWB + '&MAWB=' + MAWB, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });
@@ -93,12 +94,10 @@ export class CourierMasterService {
 
 
         return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array<DeclarationPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -112,7 +111,7 @@ export class CourierMasterService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -159,12 +158,10 @@ export class CourierMasterService {
 
 
         return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array<DeclarationPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -178,7 +175,7 @@ export class CourierMasterService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -191,14 +188,12 @@ export class CourierMasterService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetRequiredFieldsForCourierMaster/?courierMasterId=" + courierMasterId, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetRequiredFieldsForCourierMaster/?courierMasterId=" + courierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -211,14 +206,12 @@ export class CourierMasterService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetRequiredFieldsForCourierMasterIncludeManifest/?courierMasterId=" + courierMasterId, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetRequiredFieldsForCourierMasterIncludeManifest/?courierMasterId=" + courierMasterId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -257,10 +250,8 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getCourierMasterByDeclarationId?' + 'declarationId=' + declarationId, {
-                headers: authHeader
-            }).map(response => {
-                var pm = response.json();
+            return this._http.get(this._apiUrl + '/getCourierMasterByDeclarationId?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm = response;
 
 
 
@@ -277,7 +268,7 @@ export class CourierMasterService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetStatistic(CourierMasterId) {
@@ -285,10 +276,8 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetStatistic?' + 'CourierMasterId=' + CourierMasterId, {
-                headers: authHeader
-            }).map(response => {
-                var KeyValuePairList = response.json();
+            return this._http.get(this._apiUrl + '/GetStatistic?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var KeyValuePairList = response;
 
 
 
@@ -302,7 +291,7 @@ export class CourierMasterService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetSendPayReadyLow2755(CourierMasterId, HAWB, InternalBankId:string ) {
@@ -310,10 +299,8 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId, {
-                headers: authHeader
-            }).map(response => {
-                var messString = response.json();
+            return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var messString = response;
                 
 
                 var serviceResponse: ServiceResponse;
@@ -323,7 +310,7 @@ export class CourierMasterService {
                 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -339,9 +326,8 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendPayReadyLow2755/', JSON.stringify(requestParams), { headers: authHeader })
-                .map((res) => {
-                    var messString = res.json();
+                this._apiUrl + '/PostSendPayReadyLow2755/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
 
 
                     var serviceResponse: ServiceResponse;
@@ -350,7 +336,7 @@ export class CourierMasterService {
 
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
             ;
 
         });
@@ -366,9 +352,8 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLTerminal/', JSON.stringify(requestParams), { headers: authHeader })
-                .map((res) => {
-                    var messString = res.json();
+                this._apiUrl + '/PostSendALLTerminal/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
 
 
                     var serviceResponse: ServiceResponse;
@@ -377,7 +362,7 @@ export class CourierMasterService {
 
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
             ;
 
         });
@@ -393,9 +378,8 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLCorrectDec/', JSON.stringify(requestParams), { headers: authHeader })
-                .map((res) => {
-                    var messString = res.json();
+                this._apiUrl + '/PostSendALLCorrectDec/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
 
 
                     var serviceResponse: ServiceResponse;
@@ -404,7 +388,7 @@ export class CourierMasterService {
 
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
             ;
 
         });
@@ -421,9 +405,8 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLCorrectManifest/', JSON.stringify(requestParams), { headers: authHeader })
-                .map((res) => {
-                    var messString = res.json();
+                this._apiUrl + '/PostSendALLCorrectManifest/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
 
 
                     var serviceResponse: ServiceResponse;
@@ -432,7 +415,7 @@ export class CourierMasterService {
 
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
             ;
 
         });
@@ -449,15 +432,14 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLChangeStorageSiteCode/', JSON.stringify(requestParams), { headers: authHeader })
-                .map((res) => {
-                    var messString = res.json();
+                this._apiUrl + '/PostSendALLChangeStorageSiteCode/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();
                     serviceResponse.Result = messString;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
             ;
 
         });
@@ -474,14 +456,13 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendUnCorrectDocuments/', JSON.stringify(requestParams), { headers: authHeader })
-                .map((res) => {
-                    var messString = res.json();
+                this._apiUrl + '/PostSendUnCorrectDocuments/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
                     var serviceResponse: ServiceResponse;
                     serviceResponse = new ServiceResponse();
                     serviceResponse.Result = messString;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
             ;
 
         });
@@ -492,10 +473,8 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendALLCorrectManifest?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, {
-                headers: authHeader
-            }).map(response => {
-                var messString = response.json();
+            return this._http.get(this._apiUrl + '/GetSendALLCorrectManifest?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var messString = response;
 
 
 
@@ -509,7 +488,7 @@ export class CourierMasterService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -519,10 +498,8 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendALLCorrectDec?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, {
-                headers: authHeader
-            }).map(response => {
-                var messString = response.json();
+            return this._http.get(this._apiUrl + '/GetSendALLCorrectDec?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var messString = response;
 
 
 
@@ -536,7 +513,7 @@ export class CourierMasterService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -551,16 +528,14 @@ export class CourierMasterService {
         var callTime = new Date();
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId +
-                '&testerSendOption=' +  sTesterSendOption, {
-                headers: authHeader
-            }).map(response => {
-                var messString = response.json();
+                '&testerSendOption=' +  sTesterSendOption, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var messString = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = messString;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     
@@ -569,16 +544,14 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendECTHRDataMaman?' + 'declarationId=' + declarationId, {
-                headers: authHeader
-            }).map(response => {
-                var messString = response.json();
+            return this._http.get(this._apiUrl + '/GetSendECTHRDataMaman?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var messString = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = messString;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -587,16 +560,14 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSendFTPMamanRequest?' + 'CourierMasterId=' + CourierMasterId, {
-                headers: authHeader
-            }).map(response => {
-                var messString = response.json();
+            return this._http.get(this._apiUrl + '/GetSendFTPMamanRequest?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var messString = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = messString;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -641,13 +612,13 @@ export class CourierMasterService {
             return this._http.post(
                 this._apiUrl + '/PostGatepassRequestMessage/',
                 JSON.stringify(requestParams),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         });
     }
@@ -657,10 +628,8 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId, {
-                headers: authHeader
-            }).map(response => {
-                var KeyValuePairList = response.json();
+            return this._http.get(this._apiUrl + '/GetPending?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var KeyValuePairList = response;
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -668,7 +637,7 @@ export class CourierMasterService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -678,17 +647,15 @@ export class CourierMasterService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetIfAllowToCancelCourierMaster?' + 'CourierMasterId=' + CourierMasterId, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + '/GetIfAllowToCancelCourierMaster?' + 'CourierMasterId=' + CourierMasterId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
  
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }

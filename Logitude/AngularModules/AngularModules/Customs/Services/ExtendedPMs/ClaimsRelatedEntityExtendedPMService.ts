@@ -1,5 +1,6 @@
-﻿import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -18,10 +19,10 @@ import { ClaimValidator } from '../../Validators/ClaimValidator';
 @Injectable()
 
 export class ClaimsRelatedEntityExtendedPMService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/claimsRelatedEntities';
     }
 
@@ -44,8 +45,8 @@ export class ClaimsRelatedEntityExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: ClaimsRelatedEntityPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -53,7 +54,7 @@ export class ClaimsRelatedEntityExtendedPMService {
                         }
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 
@@ -84,8 +85,8 @@ export class ClaimsRelatedEntityExtendedPMService {
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
-                    { headers: authHeader }).map((res) => {
-                        var pm = res.json();
+                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                        var pm = res;
                         if (pm) {
                             var mappedResult: ClaimsRelatedEntityPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -95,7 +96,7 @@ export class ClaimsRelatedEntityExtendedPMService {
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
             }
             else {
 

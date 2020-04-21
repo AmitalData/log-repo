@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -23,10 +24,10 @@ import {CustomsAutonomyKeywordPM} from '../../EntityPMs/CustomsAutonomyKeywordPM
 @Injectable()
 
 export class CustomsAutonomyKeywordExtendedPMService {
- private _http: Http;
+ private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/customsautonomykeywords';      
     }
 
@@ -35,10 +36,8 @@ export class CustomsAutonomyKeywordExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getByKeywordtypeCode?' + 'KeywordtypeCode=' + KeywordtypeCode + '&tenant=' + tenant.toString(), {
-                    headers: authHeader
-                }).map(response => {
-                    var pm = response.json();
+            return this._http.get(this._apiUrl + '/getByKeywordtypeCode?' + 'KeywordtypeCode=' + KeywordtypeCode + '&tenant=' + tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
+                    var pm = response.body;
 
                    
 					
@@ -57,7 +56,7 @@ export class CustomsAutonomyKeywordExtendedPMService {
 				 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
             });                    
     }
 

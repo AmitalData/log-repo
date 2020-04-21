@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -18,10 +19,10 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 @Injectable()
 
 export class ClientMessagesService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Client';
 
     }
@@ -42,13 +43,13 @@ export class ClientMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostUpdateDeleteClientAddressContactRequest/',
                 hahahah,
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -73,13 +74,13 @@ export class ClientMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostClientRequest/',
                 hahahahah,
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -100,12 +101,12 @@ export class ClientMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostClientSearchByIDRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -123,13 +124,13 @@ export class ClientMessagesService {
             return this._http.post(
                 this._apiUrl + '/CreateClientRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -141,9 +142,9 @@ export class ClientMessagesService {
         code = encodeURIComponent(code);
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleClientPMByCode?' + 'code=' + code + "&isIncludeAll=" + isIncludeAll,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var pm = response.json();
+                var pm = response;
 
 
                 var entity: ClientPM;
@@ -155,7 +156,7 @@ export class ClientMessagesService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });
@@ -167,8 +168,8 @@ export class ClientMessagesService {
         //code = encodeURIComponent(code);
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleClientPMByPassportNumberOrCountry?' + 'passportNumber=' + passportNumber + "&passportCountryCode=" + passportCountryCode,
-                { headers: authHeader }).map(response => {
-                    var pm = response.json();
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var pm = response;
                     var entity: ClientPM;
                     if (pm) {
                         entity = this.MapJsonToEntityPM(pm);
@@ -178,7 +179,7 @@ export class ClientMessagesService {
                     serviceResponse = new ServiceResponse();
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         });
     }
@@ -188,18 +189,15 @@ export class ClientMessagesService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return Observable.defer(() => {
-            return this._http.put(this._apiUrl + '/PutRecallClientsForCutomsRequest', JSON.stringify(fileUploadParamerter), {
-                headers: authHeader,
-
-            }).map(response => {
-                var result = response.json();
+            return this._http.put(this._apiUrl + '/PutRecallClientsForCutomsRequest', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
                 pmresponse.Result = result;
                 return pmresponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
 

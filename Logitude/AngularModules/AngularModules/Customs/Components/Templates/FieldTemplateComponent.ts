@@ -88,8 +88,8 @@ export class FieldTemplateComponent {
     OpenCourierMaster() {
         //static entityResourceService: EntityResourceService = new EntityResourceService();
 
-        //entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
-            //entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
+        //entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response:any) {
+            //entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe((response:any) {
             this.courierMasterService.getCourierMasterByDeclarationId(this.Entity.Id).subscribe((response: ServiceResponse) => {
                 if (response) {
                     if (!response.HasError) {

@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -15,10 +16,10 @@ import { NewPaymentRequestParams } from '../../DataContract/RequestParams/NewPay
 @Injectable()
 
 export class PaymentMessagesService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PaymentMessages';
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PaymentMessages';
 
@@ -38,13 +39,13 @@ export class PaymentMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostPaymentOrderQueryRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -64,13 +65,13 @@ export class PaymentMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostMasavPaymentsToAgentRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -90,13 +91,13 @@ export class PaymentMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostNewPaymentRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );

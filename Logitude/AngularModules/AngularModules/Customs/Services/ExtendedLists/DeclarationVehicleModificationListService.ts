@@ -1,5 +1,6 @@
 ﻿                                               import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,11 +12,11 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 
 export class DeclarationVehicleModificationListService{
 
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationVehicleModification';
     }
 
@@ -38,11 +39,11 @@ export class DeclarationVehicleModificationListService{
                 + '&adjustmentTypeCode=' + adjustmentTypeCode
                 + '&tenant=' + tenant.toString()
                 
-                , { headers: authHeader }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var _mappedListsArray: Array<DeclarationVehicleModificationList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -56,7 +57,7 @@ export class DeclarationVehicleModificationListService{
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }  
 

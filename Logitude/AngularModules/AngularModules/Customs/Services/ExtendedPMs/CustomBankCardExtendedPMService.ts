@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,10 +12,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomBankCardExtendedPMService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomBank';
     }
 
@@ -23,10 +24,10 @@ export class CustomBankCardExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleCustomBanksCard/?' + 'bankId=' + bankId + '&cardId=' + cardId, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetSingleCustomBanksCard/?' + 'bankId=' + bankId + '&cardId=' + cardId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-                var pm = response.json();
+                var pm = response;
 
                 var entity: CustomBanksCardPM;
                 if (pm) {
@@ -38,7 +39,7 @@ export class CustomBankCardExtendedPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }

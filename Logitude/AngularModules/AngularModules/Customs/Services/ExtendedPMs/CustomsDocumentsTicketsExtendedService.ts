@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,10 +12,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomsDocumentsTicketsExtendedService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsDocumentsTicketsExtended';
     }
 
@@ -34,9 +35,9 @@ export class CustomsDocumentsTicketsExtendedService {
             var mappedEntity: CustomsDocumentsTicketPM;
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, { headers: authHeader }).map(response => {
+            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var pm = response.json();
+                var pm = response;
                 if (pm) {
                     var mappedResult: CustomsDocumentsTicketPM;
                     //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -46,7 +47,7 @@ export class CustomsDocumentsTicketsExtendedService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );

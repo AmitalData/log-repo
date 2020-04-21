@@ -390,44 +390,52 @@
                                             <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderNumber' | TextCodeTranslationPipe"
                                                         [binding]="'DeliveryOrderNumber'"
                                                         [width]="'80'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.DeliveryOrderNumber}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- ProducerName -->
                                             <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ProducerName' | TextCodeTranslationPipe"
                                                         [binding]="'ProducerName'"
                                                         [width]="'180'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.ProducerName}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- ReceiverName -->
                                             <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverName' | TextCodeTranslationPipe"
                                                         [binding]="'ReceiverName'"
                                                         [width]="'180'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.ReceiverName}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- ReceiverCustomerActivityTypeName -->
                                             <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverCustomerActivityTypeName' | TextCodeTranslationPipe"
                                                         [binding]="'ReceiverCustomerActivityTypeName'"
                                                         [width]="'100'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.ReceiverCustomerActivityTypeName}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- ReceiverCustomerActivityTypeName -->
@@ -435,44 +443,52 @@
                                             <!--<log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverCustomerActivityTypeName' | TextCodeTranslationPipe"
                                                         [binding]="'ReceiverCustomerActivityTypeName'"
                                                         [width]="'100'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.ReceiverCustomerActivityTypeName}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>-->
                                                 
                                             <!-- DeliveryOrderDate -->
                                             <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderDate' | TextCodeTranslationPipe"
                                                         [binding]="'DeliveryOrderDate'"
                                                         [width]="'100'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.DeliveryOrderDate}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- DeliveryOrderStatusName -->
                                             <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderStatusName' | TextCodeTranslationPipe"
                                                         [binding]="'DeliveryOrderStatusName'"
                                                         [width]="'100'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.DeliveryOrderStatusName}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- DeliverySiteName -->
                                             <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliverySiteName' | TextCodeTranslationPipe"
                                                         [binding]="'DeliverySiteName'"
                                                         [width]="'150'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.DeliverySiteName}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
                                         </logitude-edit-grid>
                                     </div>
@@ -498,55 +514,65 @@
                                             <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.Version' | TextCodeTranslationPipe"
                                                         [binding]="'Version'"
                                                         [width]="'80'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.Version}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- SubmiterName -->
                                             <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.SubmiterName' | TextCodeTranslationPipe"
                                                         [binding]="'SubmiterName'"
                                                         [width]="'220'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.SubmiterName}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- CreateDate -->
                                             <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.CreateDate' | TextCodeTranslationPipe"
                                                         [binding]="'CreateDate'"
                                                         [width]="'120'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.CreateDate}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- ActionDate -->
                                             <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.ActionDate' | TextCodeTranslationPipe"
                                                         [binding]="'ActionDate'"
                                                         [width]="'120'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.ActionDate}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- CargoStausName -->
                                             <log-column [header]="'Customs.CargoQueryCargosVersionResults.O.CargoStausName' | TextCodeTranslationPipe"
                                                         [binding]="'CargoStausName'"
                                                         [width]="'120'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.CargoStausName}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -573,7 +599,7 @@
 
 
                                             <log-row-details style="width: 920px;">
-                                                <row-template template="let item">
+                                                <row-template >
                                                     <!--[style.height.px]="item.RowDetailsHeights"-->
                                                     <div style="min-height: 200px; width: 920px; background: #E8F7FF; position: relative;"
                                                         [style.height.px]="(item.SealDetailsList.length * 26)  + (item.CargoMovmentList.length * 26) + 20 + 28 + 25">
@@ -597,13 +623,15 @@
                                                                                 <log-column [width]="'70'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQuerySealDetailsResults.O.RowNumber' | TextCodeTranslationPipe"
                                                                                             [binding]="'RowNumber'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.RowNumber}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -611,26 +639,30 @@
                                                                                 <log-column [width]="'70'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQuerySealDetailsResults.O.SealTypeName' | TextCodeTranslationPipe"
                                                                                             [binding]="'SealTypeName'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.SealTypeName}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
                                                                                 <!-- SealNumber -->
                                                                                 <log-column [width]="'100'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQuerySealDetailsResults.O.SealNumber' | TextCodeTranslationPipe"
                                                                                             [binding]="'SealNumber'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.SealNumber}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -658,13 +690,15 @@
                                                                                 <log-column [width]="'40'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQuerySealDetailsResults.O.RowNumber' | TextCodeTranslationPipe"
                                                                                             [binding]="'RowNumber'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.RowNumber}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -672,13 +706,15 @@
                                                                                 <log-column [width]="'90'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQueryCargoMovmentResults.O.ExitReasonName' | TextCodeTranslationPipe"
                                                                                             [binding]="'ExitReasonName'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.ExitReasonName}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -686,13 +722,15 @@
                                                                                 <log-column [width]="'90'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQueryCargoMovmentResults.O.StatusName' | TextCodeTranslationPipe"
                                                                                             [binding]="'StatusName'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.StatusName}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -700,13 +738,15 @@
                                                                                 <log-column [width]="'90'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQueryCargoMovmentResults.O.DocumentNumber' | TextCodeTranslationPipe"
                                                                                             [binding]="'DocumentNumber'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.DocumentNumber}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -715,13 +755,15 @@
                                                                                 <log-column [width]="'80'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQueryCargoMovmentResults.O.ReferenceTypeName' | TextCodeTranslationPipe"
                                                                                             [binding]="'ReferenceTypeName'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.ReferenceTypeName}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -729,13 +771,15 @@
                                                                                 <log-column [width]="'100'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQueryCargoMovmentResults.O.ReferenceNum' | TextCodeTranslationPipe"
                                                                                             [binding]="'ReferenceNum'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.ReferenceNum}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -744,13 +788,15 @@
                                                                                 <log-column [width]="'100'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQueryCargoMovmentResults.O.ExitSiteName' | TextCodeTranslationPipe"
                                                                                             [binding]="'ExitSiteName'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.ExitSiteName}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -758,13 +804,15 @@
                                                                                 <log-column [width]="'90'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQueryCargoMovmentResults.O.ExitDateTime' | TextCodeTranslationPipe"
                                                                                             [binding]="'ExitDateTime'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.ExitDateTime}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -772,13 +820,15 @@
                                                                                 <log-column [width]="'90'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQueryCargoMovmentResults.O.EntrySiteName' | TextCodeTranslationPipe"
                                                                                             [binding]="'EntrySiteName'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.EntrySiteName}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
 
@@ -786,13 +836,15 @@
                                                                                 <log-column [width]="'90'" [Alignment]="'right'"
                                                                                             [header]="'Customs.CargoQueryCargoMovmentResults.O.EntryDateTime' | TextCodeTranslationPipe"
                                                                                             [binding]="'EntryDateTime'">
-                                                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                                         <div style="width:100%;height:100%;">
                                                                                             <div class="RightCenter">
                                                                                                 <span>{{item.EntryDateTime}}</span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </log-cell-template>
+</ng-template>
                                                                                 </log-column>
 
                                                                             </logitude-edit-grid>
@@ -813,11 +865,13 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.RowNumber' | TextCodeTranslationPipe"
                                                         [binding]="'RowNumber'"
                                                         [width]="'40'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.RowNumber}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -825,11 +879,13 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.ParentCargoRowDetailsID' | TextCodeTranslationPipe"
                                                         [binding]="'ParentCargoRowDetailsID'"
                                                         [width]="'100'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.ParentCargoRowDetailsID}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -837,11 +893,13 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.ContainerNumber' | TextCodeTranslationPipe"
                                                         [binding]="'ContainerNumber'"
                                                         [width]="'100'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.ContainerNumber}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -849,11 +907,13 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.CharacteristicCode' | TextCodeTranslationPipe"
                                                         [binding]="'CharacteristicCode'"
                                                         [width]="'90'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.CharacteristicCode}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -861,11 +921,13 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.ContainerType' | TextCodeTranslationPipe"
                                                         [binding]="'ContainerType'"
                                                         [width]="'80'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.ContainerType}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -873,11 +935,13 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.Length' | TextCodeTranslationPipe"
                                                         [binding]="'Length'"
                                                         [width]="'70'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.Length}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -885,11 +949,13 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.Quantity' | TextCodeTranslationPipe"
                                                         [binding]="'Quantity'"
                                                         [width]="'85'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.Quantity}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -897,11 +963,13 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.GrossMassMeasureWeight' | TextCodeTranslationPipe"
                                                         [binding]="'GrossMassMeasureWeight'"
                                                         [width]="'85'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.GrossMassMeasureWeight}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -909,11 +977,13 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.RecordNumberOfPackeges' | TextCodeTranslationPipe"
                                                         [binding]="'RecordNumberOfPackeges'"
                                                         [width]="'80'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.RecordNumberOfPackeges}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
 
@@ -921,22 +991,26 @@
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.TotalRecordWeight' | TextCodeTranslationPipe"
                                                         [binding]="'TotalRecordWeight'"
                                                         [width]="'80'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.TotalRecordWeight}}</span>
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                             <!-- DangerousGoodsIndication -->
                                             <log-column [header]="'Customs.CargoQueryCargoItemResults.O.DangerousGoodsIndication' | TextCodeTranslationPipe"
                                                         [binding]="'DangerousGoodsIndication'"
                                                         [width]="'70'" [Alignment]="'right'">
-                                                <log-cell-template template="let item" #logcelltemplate>
+                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <img *ngIf="item.DangerousGoodsIndication == 'Visible' " title="is Dangerous " src="./Images/CheckBoxIcon.png" />
                                                     </div>
                                                 </log-cell-template>
+</ng-template>
                                             </log-column>
 
                                         </logitude-edit-grid>

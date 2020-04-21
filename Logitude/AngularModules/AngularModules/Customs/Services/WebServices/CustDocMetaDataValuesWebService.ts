@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,10 +12,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustDocMetaDataValuesWebService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustDocMetaDataValuesWebService';
     }
 
@@ -28,11 +29,11 @@ export class CustDocMetaDataValuesWebService {
             var custDocMetadataValue = new CustomsDocumentMetaDataValuePM(null);
             custDocMetadataValue.CustomsDocumentId = customsDocumentFilingsIds;;
             custDocMetadataValue.MetaDataTypeCode = '1';
-            return this._http.post(this._apiUrl, JSON.stringify(custDocMetadataValue), { headers: authHeader }).map(response => {
+            return this._http.post(this._apiUrl, JSON.stringify(custDocMetadataValue), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var _mappedListsArray: Array<CustomsDocumentMetaDataValuePM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -45,7 +46,7 @@ export class CustDocMetaDataValuesWebService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });
@@ -58,11 +59,11 @@ export class CustDocMetaDataValuesWebService {
         authHeader.append('Token', SessionInfo.Token);
         var params = encodeURIComponent(entityId);
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCustomsDocumentMetaDataValuesByConnectedEntity?' + 'entityId=' + params, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetCustomsDocumentMetaDataValuesByConnectedEntity?' + 'entityId=' + params, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var _mappedListsArray: Array<CustomsDocumentMetaDataValuePM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -75,7 +76,7 @@ export class CustDocMetaDataValuesWebService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });

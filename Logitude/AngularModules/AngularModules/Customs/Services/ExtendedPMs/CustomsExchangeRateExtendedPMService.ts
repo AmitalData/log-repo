@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,10 +12,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomsExchangeRateExtendedPMService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsExchangeRatesExtended';
     }
 
@@ -23,10 +24,10 @@ export class CustomsExchangeRateExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCustomsExchangeRateForCurrencyAndDate/?' + 'currencyTypeCode=' + currencyTypeCodes + '&date=' + date,  { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetCustomsExchangeRateForCurrencyAndDate/?' + 'currencyTypeCode=' + currencyTypeCodes + '&date=' + date,  ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<CustomsExchangeRatePM> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -42,7 +43,7 @@ export class CustomsExchangeRateExtendedPMService {
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -59,10 +60,10 @@ export class CustomsExchangeRateExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
        
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCustomsExchangeRateForDate/?' + 'date=' + stringDate, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetCustomsExchangeRateForDate/?' + 'date=' + stringDate, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<CustomsExchangeRatePM> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -78,7 +79,7 @@ export class CustomsExchangeRateExtendedPMService {
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }

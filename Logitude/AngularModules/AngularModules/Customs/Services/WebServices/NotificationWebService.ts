@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -13,10 +14,10 @@ import { NotificationPMService } from '../StandardPMs/NotificationPMService';
 @Injectable()
 
 export class NotificationWebService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/NotificationWebService';
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/NotificationWebService';
 
@@ -35,11 +36,9 @@ export class NotificationWebService {
             var notificationPMService: NotificationPMService = new NotificationPMService();
 
             return this._http.get(this._apiUrl + "/GetNotificationsByDefinitionCode/?objectTableId=" + objectTableId + "&entityId=" + entityId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    var allLists = response.json();
+                    var allLists = response;
                     var _mappedListsArray: Array<NotificationPM> = [];
                     if (allLists) {
                         for (var key in allLists) {
@@ -53,7 +52,7 @@ export class NotificationWebService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = _mappedListsArray;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -71,13 +70,13 @@ export class NotificationWebService {
             return this._http.post(
                 this._apiUrl + '/PostSendNotificationReplyRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -110,15 +109,15 @@ export class NotificationWebService {
             serviceResponse = new ServiceResponse();
 
             return this._http.get(this._apiUrl + "/GetSetNotificationsStatus/?" + IdsParameterString + "status=" + status
-                , { headers: authHeader }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    //var res = response.json();
+                    //var res = response;
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     
                     //serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
 

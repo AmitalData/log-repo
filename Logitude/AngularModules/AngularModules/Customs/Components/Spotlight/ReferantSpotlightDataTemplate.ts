@@ -40,7 +40,7 @@ export class ReferantSpotlightDataTemplate
     _IsReady: boolean = false;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe(response => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response:any) {
             this._IsReady = true;
         });
         this.ReferantExceptionItemsSource = new ObservableCollection([]);

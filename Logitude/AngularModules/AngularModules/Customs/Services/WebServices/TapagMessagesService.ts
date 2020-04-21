@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -23,10 +24,10 @@ import { GuaranteePM } from '../../EntityPMs/GuaranteePM';
 @Injectable()
 
 export class TapagMessagesService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TapagMessages';
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TapagMessages';
 
@@ -46,13 +47,13 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostGuaranteeCertificateRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -72,13 +73,13 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostFaultQueryRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -98,13 +99,13 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostGuaranteeFileFilterQueryRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -119,14 +120,12 @@ export class TapagMessagesService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetDeclarationTapagsLists/?declarationId=" + declarationId + "&tenant=" + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetDeclarationTapagsLists/?declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -143,11 +142,9 @@ export class TapagMessagesService {
             var depositPMService: DepositPMService = new DepositPMService();
 
             return this._http.get(this._apiUrl + "/GetDepositPMByPaymentOrderNumberOrTapagId/?paymentNumber=" + paymentNumber + "&tapagId=" + tapagId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    var pm = response.json();
+                    var pm = response;
                     var entity: DepositPM;
                     if (pm) {
                         entity = depositPMService.MapJsonToEntityPM(pm);
@@ -156,7 +153,7 @@ export class TapagMessagesService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -173,11 +170,9 @@ export class TapagMessagesService {
             var deficitPMService: DeficitPMService = new DeficitPMService();
 
             return this._http.get(this._apiUrl + "/GetDeficitPMByPaymentOrderNumberOrTapagId/?paymentNumber=" + paymentNumber + "&tapagId=" + tapagId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    var pm = response.json();
+                    var pm = response;
                     var entity: DeficitPM;
                     if (pm) {
                         entity = deficitPMService.MapJsonToEntityPM(pm);
@@ -186,7 +181,7 @@ export class TapagMessagesService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -200,14 +195,12 @@ export class TapagMessagesService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetSingleTapagList/?id=" + tapagId + "&tenant=" + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetSingleTapagList/?id=" + tapagId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -224,11 +217,9 @@ export class TapagMessagesService {
             var guaranteePMService: GuaranteePMService = new GuaranteePMService();
 
             return this._http.get(this._apiUrl + "/GetGuaranteeByTapagId/?tapagId=" + tapagId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    var pm = response.json();
+                    var pm = response;
                     var entity: GuaranteePM;
                     if (pm) {
                         entity = guaranteePMService.MapJsonToEntityPM(pm);
@@ -237,7 +228,7 @@ export class TapagMessagesService {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -254,11 +245,9 @@ export class TapagMessagesService {
             var deficitConnFileParagraphTypeListService: DeficitConnFileParagraphTypeListService = new DeficitConnFileParagraphTypeListService();
 
             return this._http.get(this._apiUrl + "/GetDeficitConnectedFileParagraphTypeList/?declarationId=" + declarationId + "&deficitId=" + deficitId + "&tenant=" + tenant
-                , {
-                    headers: authHeader
-                }).map(response => {
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                    //var pm = response.json();
+                    //var pm = response;
                     //var entity: DeficitConnFileParagraphTypeList;
                     //if (pm) {
                     //    entity = deficitConnFileParagraphTypeListService.MapJsonToEntityList(pm);
@@ -266,10 +255,10 @@ export class TapagMessagesService {
 
                     //var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse.Result = entity;
-                    var res = response.json();
+                    var res = response;
                     serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -288,13 +277,13 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostDeclarationFilterRequestParams/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -314,13 +303,13 @@ export class TapagMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostBankAccountToRefundQueryRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );

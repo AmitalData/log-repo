@@ -243,7 +243,7 @@
 
                                                 <!-- Details -->
                                                 <log-row-details>
-                                                    <row-template template="let item">
+                                                    <row-template >
                                                         <div style="min-height: 180px; width: 100%; background: #e3f2fb; position: relative;">
                                                             <div style="position: absolute; top: 5px; right: 5px; bottom: 5px; left: 5px; background: white;">
                                                                 <table>
@@ -336,95 +336,115 @@
 
                                                 <!-- VendorNumber -->
                                                 <log-column [header]="'Customs.CustomsVendor.F.VendorNumber' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'" [binding]="'VendorNumber'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                                         <div style="text-align: right;" class="TextTrimming">
                                                             <span>{{item.VendorNumber}}</span>
                                                         </div>
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                                 <!-- VendorName -->
                                                 <log-column [header]="'Customs.CustomsVendor.F.VendorName' | TextCodeTranslationPipe" [width]="'177'" [Alignment]="'right'" [binding]="'VendorName'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                                         <div style="text-align: right;" class="TextTrimming">
                                                             <span>{{item.VendorName}}</span>
                                                         </div>
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                                 <!-- CountryCode -->
                                                 <log-column [header]="'Customs.CustomsVendor.F.CountryCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'CountryCode'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                                         <div style="text-align: right;" class="TextTrimming">
                                                             <span>{{item.CountryName}}</span>
                                                         </div>
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                                 <!-- SubCountryCode -->
                                                 <log-column [header]="'Customs.CustomsVendor.F.SubCountryCode' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'SubCountryCode'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                                         <div style="text-align: right;" class="TextTrimming">
                                                             <span>{{item.SubCountryName}}</span>
                                                         </div>
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                                 <!-- VATNumber -->
                                                 <log-column [header]="'Customs.CustomsVendor.F.VATNumber' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'VATNumber'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                                         <div style="text-align: right;" class="TextTrimming">
                                                             <span>{{item.VATNumber}}</span>
                                                         </div>
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                                 <!-- DunsNumber -->
                                                 <log-column [header]="'Customs.CustomsVendor.F.DunsNumber' | TextCodeTranslationPipe" [width]="'43'" [Alignment]="'right'" [binding]="'DunsNumber'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                                         <div style="text-align: right;" class="TextTrimming">
                                                             <span>{{item.DunsNumber}}</span>
                                                         </div>
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                                 <!-- StatusName -->
                                                 <log-column [header]="'Customs.CustomsVendor.F.StatusCode' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="'right'" [binding]="'StatusName'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                                         <div style="text-align: right;" class="TextTrimming">
                                                             <span>{{item.StatusName}}</span>
                                                         </div>
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                                 <!-- InActive -->
                                                 <log-column [header]="'Customs.CustomsVendor.F.InActive' | TextCodeTranslationPipe" [width]="'60'" [Alignment]="'right'" [binding]="'InActive'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                                         <div style="text-align: right;" class="TextTrimming">
                                                             <!--<span>{{item.InActive}}</span>-->
                                                             <img *ngIf="item.InActive" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
 
                                                         </div>
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                                 <!-- IsFromDeclarationMode -->
                                                 <log-column *ngIf="IsFromDeclarationMode" [header]="'Customs.General.O.Deposition' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
                                                         <div style="text-align: right;" class="TextTrimming">
                                                             <span *ngIf="!IsImporterDespositionValide" style="color:red">{{item.ImporterDesposition}}</span>
                                                             <span *ngIf="IsImporterDespositionValide" style="color:green">{{item.ImporterDesposition}}</span>
                                                         </div>
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                                 <!-- Buttons -->
                                                 <log-column [width]="'83'" [Alignment]="'right'" [header]="'Customs.CustomsVendor.O.Exist' | TextCodeTranslationPipe">
-                                                    <log-cell-template template="let item" [IgnoreMods]="true" [TabIndex]="-1">
+                                                    <ng-template let-item>
+<log-cell-template  [IgnoreMods]="true" [TabIndex]="-1">
                                                         <button *ngIf="!item.Exists" [disabled]="item.StatusCode=='3'" class="Button sm" (click)="AddButtonClicked(item)">{{'Customs.General.B.Add' | TextCodeTranslationPipe}}</button>
                                                         <button *ngIf="item.Exists" class="Button sm" (click)="UpdateButtonClicked(item)">{{'Customs.CustomsClosedTable.B.Update' | TextCodeTranslationPipe}}</button>
 
                                                     </log-cell-template>
+</ng-template>
                                                 </log-column>
 
                                             </logitude-edit-grid>

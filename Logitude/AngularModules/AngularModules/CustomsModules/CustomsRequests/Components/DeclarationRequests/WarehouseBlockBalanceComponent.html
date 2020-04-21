@@ -297,83 +297,97 @@
                                         <log-column [width]="'80'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.ActionDate' | TextCodeTranslationPipe"
                                                     [binding]="'ActionDate'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ActionDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ActionPackagesQuantity -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.ActionPackagesQuantity' | TextCodeTranslationPipe"
                                                     [binding]="'ActionPackagesQuantity'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ActionPackagesQuantity}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- PackagesQuantityAfterAction -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.PackagesQuantityAfterAction' | TextCodeTranslationPipe"
                                                     [binding]="'PackagesQuantityAfterAction'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.PackagesQuantityAfterAction }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ActionValue -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.ActionValue' | TextCodeTranslationPipe"
                                                     [binding]="'ActionValue'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.ActionValue }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ValueAfterAction -->
                                         <log-column [width]="'130'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.ValueAfterAction' | TextCodeTranslationPipe"
                                                     [binding]="'ValueAfterAction'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.ValueAfterAction }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- GovernmentProcedureTypeText -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.GovernmentProcedureType' | TextCodeTranslationPipe"
                                                     [binding]="'GovernmentProcedureTypeText'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.GovernmentProcedureTypeText }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- DeclarationNumber -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.DeclarationNumber' | TextCodeTranslationPipe"
                                                     [binding]="'DeclarationNumber'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.DeclarationNumber }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -394,7 +408,7 @@
 
                                         <!-- PackingDetailsList -->
                                         <log-row-details>
-                                            <row-template template="let item">
+                                            <row-template >
                                                 <div style="min-height: 55px; width: 600px; background: #E8F7FF; position: relative;" [style.height.px]="item.RowDetailsHeights">
                                                     <div style="position: absolute; top: 0px; right: 10px; bottom: 0px; left: 10px;">
                                                         <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="item.PackingDetailsListObs">
@@ -402,65 +416,75 @@
                                                             <log-column [width]="'100'" [Alignment]="'right'"
                                                                         [header]="'Customs.WarehouseBlockBalance.O.PackingType' | TextCodeTranslationPipe"
                                                                         [binding]="'PackingTypeText'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div style="width:100%;height:100%;">
                                                                         <div class="RightCenter">
                                                                             <span>{{item.PackingTypeText }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                             <!-- StorageActionPackagesQuantity -->
                                                             <log-column [width]="'130'" [Alignment]="'right'"
                                                                         [header]="'Customs.WarehouseBlockBalance.O.StorageActionPackagesQuantity' | TextCodeTranslationPipe"
                                                                         [binding]="'StorageActionPackagesQuantity'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div style="width:100%;height:100%;">
                                                                         <div class="RightCenter">
                                                                             <span>{{item.StorageActionPackagesQuantity }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                             <!-- PackagesQuantityAfterStorageAction -->
                                                             <log-column [width]="'120'" [Alignment]="'right'"
                                                                         [header]="'Customs.WarehouseBlockBalance.O.PackagesQuantityAfterStorageAction' | TextCodeTranslationPipe"
                                                                         [binding]="'PackagesQuantityAfterStorageAction'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div style="width:100%;height:100%;">
                                                                         <div class="RightCenter">
                                                                             <span>{{item.PackagesQuantityAfterStorageAction }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                             <!-- StorageActionPackagesWeight -->
                                                             <log-column [width]="'80'" [Alignment]="'right'"
                                                                         [header]="'Customs.WarehouseBlockBalance.O.StorageActionPackagesWeight' | TextCodeTranslationPipe"
                                                                         [binding]="'StorageActionPackagesWeight'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div style="width:100%;height:100%;">
                                                                         <div class="RightCenter">
                                                                             <span>{{item.StorageActionPackagesWeight }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                             <!-- PackagesWeightAfterStorageAction -->
                                                             <log-column [width]="'120'" [Alignment]="'right'"
                                                                         [header]="'Customs.WarehouseBlockBalance.O.PackagesWeightAfterStorageAction' | TextCodeTranslationPipe"
                                                                         [binding]="'PackagesWeightAfterStorageAction'">
-                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                                     <div style="width:100%;height:100%;">
                                                                         <div class="RightCenter">
                                                                             <span>{{item.PackagesWeightAfterStorageAction }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </log-cell-template>
+</ng-template>
                                                             </log-column>
 
                                                         </logitude-edit-grid>
@@ -473,85 +497,99 @@
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.StorageActionType' | TextCodeTranslationPipe"
                                                     [binding]="'StorageActionType'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.StorageActionType}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StorageActionDate -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.StorageActionDate' | TextCodeTranslationPipe"
                                                     [binding]="'StorageActionDate'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.StorageActionDate}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StorageActionPackagesQuantity -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.StorageActionPackagesQuantity' | TextCodeTranslationPipe"
                                                     [binding]="'StorageActionPackagesQuantity'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.StorageActionPackagesQuantity }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- PackagesQuantityAfterStorageAction -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.PackagesQuantityAfterStorageAction' | TextCodeTranslationPipe"
                                                     [binding]="'PackagesQuantityAfterStorageAction'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.PackagesQuantityAfterStorageAction }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StorageReferenceType -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.StorageReferenceType' | TextCodeTranslationPipe"
                                                     [binding]="'StorageReferenceType'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.StorageReferenceType }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- CargoMovementReference -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.CargoMovementReference' | TextCodeTranslationPipe"
                                                     [binding]="'CargoMovementReference'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.CargoMovementReference }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- StorageUnloadingExceptionTypeText -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.StorageUnloadingExceptionType' | TextCodeTranslationPipe"
                                                     [binding]="'StorageUnloadingExceptionTypeText'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.StorageUnloadingExceptionTypeText }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -576,11 +614,13 @@
                                         <log-column [width]="'250'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.SpecialActivityType' | TextCodeTranslationPipe"
                                                     [binding]="'SpecialActivityTypeName'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.SpecialActivityTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -603,98 +643,114 @@
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.InvoiceSequenceNumber' | TextCodeTranslationPipe"
                                                     [binding]="'InvoiceSequenceNumber'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.InvoiceSequenceNumber}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- GoodsItemSequenceNumber -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.GoodsItemSequenceNumber' | TextCodeTranslationPipe"
                                                     [binding]="'GoodsItemSequenceNumber'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.GoodsItemSequenceNumber}}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- RemainingQuantity -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.RemainingQuantity' | TextCodeTranslationPipe"
                                                     [binding]="'RemainingQuantity'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.RemainingQuantity }}</span>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- GoodsPriceBase -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.GoodsPriceBase' | TextCodeTranslationPipe"
                                                     [binding]="'GoodsPriceBase'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.GoodsPriceBase }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- GoodsPriceMAD -->
                                         <log-column [width]="'140'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.GoodsPriceMAD' | TextCodeTranslationPipe"
                                                     [binding]="'GoodsPriceMAD'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.GoodsPriceMAD }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- GoodsPriceMADAEF -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.GoodsPriceMADAEF' | TextCodeTranslationPipe"
                                                     [binding]="'GoodsPriceMADAEF'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.GoodsPriceMADAEF }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- CurrencyType -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.CurrencyType' | TextCodeTranslationPipe"
                                                     [binding]="'CurrencyType'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.CurrencyType }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                         <!-- ExchangeRate -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.WarehouseBlockBalance.O.ExchangeRate' | TextCodeTranslationPipe"
                                                     [binding]="'ExchangeRate'">
-                                            <log-cell-template template="let item" #logcelltemplate>
+                                            <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.ExchangeRate }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
+</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>

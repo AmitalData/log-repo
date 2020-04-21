@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,10 +13,10 @@ import { PhysicalCheckList } from '../../EntityLists/PhysicalCheckList';
 @Injectable()
 
 export class PhysicalCheckWebService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PhysicalCheckWebService';
     }
 
@@ -27,14 +28,12 @@ export class PhysicalCheckWebService {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetPhysicalCheckByDeclarationIdLists/?declarationId=" + declarationId + "&tenant=" + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetPhysicalCheckByDeclarationIdLists/?declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
@@ -47,14 +46,12 @@ export class PhysicalCheckWebService {
             authHeader.append('Content-Type', 'application/json');
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.post(this._apiUrl + "/PostClosePhysicalCheck/?physicalCheckId=" + physicalCheckId + "&tenant=" + tenant, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.post(this._apiUrl + "/PostClosePhysicalCheck/?physicalCheckId=" + physicalCheckId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }

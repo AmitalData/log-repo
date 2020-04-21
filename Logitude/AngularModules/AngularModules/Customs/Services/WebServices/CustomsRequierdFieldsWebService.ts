@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,10 +13,10 @@ import {RequierdFieldObject} from '../../../CustomsModules/CustomsMaintenance/Co
 @Injectable()
 
 export class CustomsRequierdFieldsWebService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequierdFields';
 
     }
@@ -33,15 +34,13 @@ export class CustomsRequierdFieldsWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetSomeObjectTables/", {
-                    headers: authHeader
-                }).map(response => {
+            return this._http.get(this._apiUrl + "/GetSomeObjectTables/", ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -61,15 +60,13 @@ export class CustomsRequierdFieldsWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetCustomsRequiredFieldListsByObjectTable/?objectTableId=" + objectTableId, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetCustomsRequiredFieldListsByObjectTable/?objectTableId=" + objectTableId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var srv = new CustomsRequiredFieldListService();
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var _mappedListsArray: Array<CustomsRequiredFieldList> = [];
 
                 if (serviceResponse.Result) {
@@ -84,7 +81,7 @@ export class CustomsRequierdFieldsWebService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -105,13 +102,13 @@ export class CustomsRequierdFieldsWebService {
             return this._http.post(
                 this._apiUrl + '/PostRequiredFields/',
                 JSON.stringify(fields),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );

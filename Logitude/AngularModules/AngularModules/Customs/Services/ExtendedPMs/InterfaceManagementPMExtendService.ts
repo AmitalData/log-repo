@@ -1,6 +1,7 @@
 ﻿
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,10 +13,10 @@ import { DeclarationPM } from '../../EntityPMs/DeclarationPM';
 @Injectable()
 
 export class InterfaceManagementPMExtendService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InterfaceManagementPMExtend';
     }
 
@@ -26,11 +27,11 @@ export class InterfaceManagementPMExtendService {
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleInterfaceManagementwithDefinition?code=' + code + '&tenant=' + tenant.toString(), { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetSingleInterfaceManagementwithDefinition?code=' + code + '&tenant=' + tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                // serviceResponse.Result = response.json();
+                // serviceResponse.Result = response;
 
-                var pm = response.json();
+                var pm = response;
 
                 var entity: InterfaceManagementPM;
                 if (pm) {
@@ -42,7 +43,7 @@ export class InterfaceManagementPMExtendService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -69,16 +70,14 @@ export class InterfaceManagementPMExtendService {
                     .put(
                     this._apiUrl + '/PutInterfaceManagementPM/',
                     JSON.stringify(mappedEntity),
-                    { headers: authHeader }
-                    )
-                    .map(response => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();
-                        var pm = response.json();
+                        var pm = response;
                         serviceResponse.Result = pm;
 
                         return serviceResponse;
                     })
-                    .catch(ServiceHelper.HandleServiceError);
+                    ,catchError(ServiceHelper.HandleServiceError));
             }
 
             );

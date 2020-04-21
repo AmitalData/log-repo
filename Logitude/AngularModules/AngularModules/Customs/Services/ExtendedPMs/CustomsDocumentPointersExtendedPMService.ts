@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,10 +12,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomsDocumentPointersExtendedPMService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsDocumentPointer';
     }
 
@@ -23,9 +24,9 @@ export class CustomsDocumentPointersExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCustomDocumentPointersForItems/?' + 'parentEntityId=' + parentEntityId + '&invCounterKey=' + invCounterKey + '&itemsLineNumbers=' + itemsLineNumbers, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetCustomDocumentPointersForItems/?' + 'parentEntityId=' + parentEntityId + '&invCounterKey=' + invCounterKey + '&itemsLineNumbers=' + itemsLineNumbers, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<CustomsDocumentPointerPM> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -41,7 +42,7 @@ export class CustomsDocumentPointersExtendedPMService {
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }

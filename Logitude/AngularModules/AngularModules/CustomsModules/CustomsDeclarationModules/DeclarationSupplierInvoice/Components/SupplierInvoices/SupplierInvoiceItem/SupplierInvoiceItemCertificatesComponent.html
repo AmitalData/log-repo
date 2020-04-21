@@ -63,17 +63,20 @@
 
 
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.SequenceNumeric' | TextCodeTranslationPipe" [width]="'75'" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate [TabIndex]="-1">
                                         <div style="text-align:right" class="TextTrimming">
                                             <span>{{item.SequenceNumeric}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
 
 
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ReqConfirmationTypeCode' | TextCodeTranslationPipe" [binding]="'ConfirmationTypeCode'" [width]="'85'" [Editable]="true" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ConfirmationTypeName}}</span>
                                         </div>
@@ -89,6 +92,7 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
 
                                 </log-column>
@@ -96,7 +100,8 @@
 
 
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.AttachmentTypeCode' | TextCodeTranslationPipe" [binding]="'AttachmentTypeCode'" [width]="'95'" [Editable]="true" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.AttachmentTypeName}}</span>
                                         </div>
@@ -112,11 +117,13 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
 
                                 </log-column>
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateNumber' | TextCodeTranslationPipe" [binding]="'CertificateNumber'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.CertificateNumber}}</span>
                                         </div>
@@ -127,6 +134,7 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
 
                                 </log-column>
@@ -134,7 +142,8 @@
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateExemptionTypeCode' | TextCodeTranslationPipe" [width]="'85'"
                                  [Editable]="true" [Alignment]="'right'" [binding]="'CertificateExemptionTypeCode'">
 
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.CertificateExemptionTypeName}}</span>
                                         </div>
@@ -150,12 +159,14 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ResConfirmationTypeCode' | TextCodeTranslationPipe" [width]="'70'"
                                  [Editable]="true" [Alignment]="'right'" [binding]="'ResConfirmationTypeCode'">
 
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ResConfirmationTypeName}}</span>
                                         </div>
@@ -171,13 +182,15 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
 
                                 </log-column>
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CustomsAttachmentID' | TextCodeTranslationPipe" [width]="'145'" 
                                 [Editable]="true" [Alignment]="'right'" [binding] ="'CustomsAttachmentID'">
 
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.CustomsAttachmentID}}</span>
                                         </div>
@@ -188,6 +201,7 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
@@ -195,7 +209,8 @@
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ExternalRequestTypeCode' | TextCodeTranslationPipe" [width]="'100'"
                                  [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature" [binding]="'ExternalRequestTypeCode'">
 
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ExternalRequestTypeCode}}</span>
                                         </div>
@@ -206,13 +221,15 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
                                 <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ApprovalRequestNumber' | TextCodeTranslationPipe" [width]="'110'" 
                                 [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature" [binding]="'ApprovalRequestNumber'">
 
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ApprovalRequestNumber}}</span>
                                         </div>
@@ -223,13 +240,15 @@
 
                                         </div>
                                     </log-cell-template>
+</ng-template>
 
                                 </log-column>
 
 
 
                                 <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
-                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
                                         <div style="width: 30px; float: right; height:20px;padding-top:3px">
                                             <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton>
                                         </div>
@@ -237,6 +256,7 @@
 
 
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
 

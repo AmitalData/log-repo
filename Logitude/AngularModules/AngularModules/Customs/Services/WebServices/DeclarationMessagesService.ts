@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -26,10 +27,10 @@ import { CargoSealsRequestParams } from '../../DataContract/RequestParams/CargoS
 @Injectable()
 
 export class DeclarationMessagesService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarartionRestore';
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationRestore';
         
@@ -51,13 +52,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostDeclarationRequest/',
                 JSON.stringify(entity),
-                    { headers: authHeader }).map((res) => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                   
-                        serviceResponse.Result = res.json();
+                        serviceResponse.Result = res;
 
                         return serviceResponse;
 
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
            
         }
 
@@ -78,13 +79,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostDeclarationStatusRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -104,13 +105,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostWarehouseBlockBalanceRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -130,13 +131,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostPrintRequestRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -158,13 +159,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendDeclarationConstraint/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -186,13 +187,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendCollateralAnswers/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -214,13 +215,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendDeclarationConstraintAgentObjection/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -242,13 +243,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendPaymentWithCheckCustomFileCredit/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -270,13 +271,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendTransferRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -298,13 +299,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostCheckCustomFileCreditOnly/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -326,13 +327,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendPaymentOnly/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -352,11 +353,11 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostExportDeclarationDataRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -374,11 +375,11 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostStorageEntranceUnloadingRequest/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -398,13 +399,13 @@ export class DeclarationMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSendCargoSplit/',
                 JSON.stringify(params),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );

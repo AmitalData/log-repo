@@ -160,46 +160,53 @@
                                     <log-column [width]="'110'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimDisplayFileNumber' | TextCodeTranslationPipe"
                                                 [binding]="'fileNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.fileNumber}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- file number \ Numeral -->
                                     <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.Numeral' | TextCodeTranslationPipe"
                                                 [binding]="'Numeral'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.Numeral}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- agentName -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimAgentName' | TextCodeTranslationPipe"
                                                 [binding]="'agentName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.agentName}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- createDate -->
                                     <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimCreateDate' | TextCodeTranslationPipe"
                                                 [binding]="'createDate'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <!--StringFormat='{}{0:dd/MM/yyyy}-->
@@ -207,13 +214,15 @@
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- claimAmount -->
                                     <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimClaimAmount' | TextCodeTranslationPipe"
                                                 [binding]="'claimAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
 
@@ -221,13 +230,15 @@
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- totalRefundAmount -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimTotalRefundAmount' | TextCodeTranslationPipe"
                                                 [binding]="'totalRefundAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
 
@@ -235,32 +246,37 @@
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- closeDate -->
                                     <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimCloseDate' | TextCodeTranslationPipe"
                                                 [binding]="'closeDate'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.closeDate}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- statusName -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.ClaimStatusName' | TextCodeTranslationPipe"
                                                 [binding]="'statusName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.statusName}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
                                 </logitude-edit-grid>
 
@@ -286,104 +302,120 @@
                                     <log-column [width]="'110'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitDisplayFileNumber' | TextCodeTranslationPipe"
                                                 [binding]="'fileNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.fileNumber}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- file number \ Numeral -->
                                     <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.Numeral' | TextCodeTranslationPipe"
                                                 [binding]="'Numeral'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.Numeral}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- agentName -->
                                     <log-column [width]="'110'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitAgentName' | TextCodeTranslationPipe"
                                                 [binding]="'agentName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.agentName}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- productionDate -->
                                     <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitProductionDate' | TextCodeTranslationPipe"
                                                 [binding]="'productionDate'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.productionDate}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- estimatedBalance -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitEstimatedBalance' | TextCodeTranslationPipe"
                                                 [binding]="'estimatedBalance'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.estimatedBalance}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- totalRefundAmount -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitTotalRefundAmount' | TextCodeTranslationPipe"
                                                 [binding]="'totalRefundAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.totalRefundAmount}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- closeDate -->
                                     <log-column [width]="'90'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitCloseDate' | TextCodeTranslationPipe"
                                                 [binding]="'closeDate'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.closeDate}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
 
                                     <!-- statusName -->
                                     <log-column [width]="'100'" [Alignment]="'right'"
                                                 [header]="'Customs.DeclarationFilter.F.DeficitStatusName' | TextCodeTranslationPipe"
                                                 [binding]="'statusName'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                             <div style="width:100%;height:100%;">
                                                 <div class="RightCenter">
                                                     <span>{{item.statusName}}</span>
                                                 </div>
                                             </div>
                                         </log-cell-template>
+</ng-template>
                                     </log-column>
                                 </logitude-edit-grid>
 

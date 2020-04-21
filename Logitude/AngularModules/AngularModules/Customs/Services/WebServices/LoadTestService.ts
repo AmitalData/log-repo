@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,10 +12,10 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class LoadTestService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
 
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsLoadTest';
 
@@ -36,13 +37,13 @@ export class LoadTestService {
             return this._http.post(
                 this._apiUrl + '/PostCourierBOLRequest/',
                 JSON.stringify(entity),
-                { headers: authHeader }).map((res) => {
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -62,14 +63,14 @@ export class LoadTestService {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetNewCustomFile/?' + '&tenant=' + tenant + '&ConsigneeId=' + ConsigneeId + '&CustomerId=' + CustomerId,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -83,14 +84,14 @@ export class LoadTestService {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetDeclarationFromFileNo/?' + '&tenant=' + tenant + '&fileNo=' + fileNo + '&FilingCopy=' +  FilingCopy,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     GetTicket(tenant: number, declarationId: string) {
@@ -103,14 +104,14 @@ export class LoadTestService {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetTicket/?' + '&tenant=' + tenant + '&declarationId=' + declarationId,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     

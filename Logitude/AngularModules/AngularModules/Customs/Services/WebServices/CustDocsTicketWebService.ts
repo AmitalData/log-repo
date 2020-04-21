@@ -1,5 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -15,10 +16,10 @@ import {CustomsDocumentPointerPM} from '../../EntityPMs/CustomsDocumentPointerPM
 @Injectable()
 
 export class CustDocsTicketWebService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustDocsTicketWebService';
     }
 
@@ -26,11 +27,11 @@ export class CustDocsTicketWebService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCustomsDocumentsTicketsByEntityIdAndChilds?' + 'entityId=' + entityId + '&childEntityId1=' + childEntityId1 + '&childEntityId2=' + childEntityId2 + '&childEntityId3=' + childEntityId3 + '&parentEntityCode=' + parentEntityCode, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetCustomsDocumentsTicketsByEntityIdAndChilds?' + 'entityId=' + entityId + '&childEntityId1=' + childEntityId1 + '&childEntityId2=' + childEntityId2 + '&childEntityId3=' + childEntityId3 + '&parentEntityCode=' + parentEntityCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 var _mappedListsArray: Array<CustomsDocumentsTicketPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -43,7 +44,7 @@ export class CustDocsTicketWebService {
 
                 serviceResponse.Result = _mappedListsArray; 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         });

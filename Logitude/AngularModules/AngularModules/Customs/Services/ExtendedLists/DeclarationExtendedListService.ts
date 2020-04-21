@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -14,10 +15,10 @@ import { PerformanceLogger } from '../../../Infrastructure/Utilities/Performance
 @Injectable()
 
 export class DeclarationExtendedListService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Declarartion';
     }
 
@@ -30,11 +31,11 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleDeclarationByCustomFileNo/?' + 'customFileNo=' + customFileNo,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     var declarationList: DeclarationList;
                     if (serviceResponse.Result) {
 
@@ -48,7 +49,7 @@ export class DeclarationExtendedListService {
 
                     serviceResponse.Result = declarationList;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -60,14 +61,14 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemCount/?' + 'declarationId=' + declarationId,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -80,11 +81,11 @@ export class DeclarationExtendedListService {
         return Observable.defer(() => {
             return this._http
                 .get(this._apiUrl + '/GetSingleDeclarationByNumber/?' + 'declarationByNumber=' + declarationByNumber + '&tenant=' + tenant,
-                    { headers: authHeader }).map(response => {
+                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                         var serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = response.json();
+                        serviceResponse.Result = response;
                         var declarationList: DeclarationList;
                         if (serviceResponse.Result) {
 
@@ -98,7 +99,7 @@ export class DeclarationExtendedListService {
 
                         serviceResponse.Result = declarationList;
                         return serviceResponse;
-                    }).catch(ServiceHelper.HandleServiceError);
+                    }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -110,13 +111,13 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetConsignmentListPMByCustomFileNo/?' + 'customFileNo=' + customFileNo,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -128,13 +129,13 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetDeclarationPendingListPMByDeclarationId/?' + 'declarationId=' + declarationId,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -146,14 +147,14 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetCurrenciesCodesForDeclaration/?' + 'declarationId=' + declarationId + '&tenant=' + tenant,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -165,14 +166,14 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleDeclarationPMByCargoIdentifiers/?' + 'cargoTypeCode=' + cargoTypeCode + '&manifestNumber=' + manifestNumber + '&secondCargoID=' + secondCargoID + '&tenant=' + tenant,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -188,9 +189,8 @@ export class DeclarationExtendedListService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendCollateral8212/', JSON.stringify(requestParams), { headers: authHeader })
-                .map((res) => {
-                    var messString = res.json();
+                this._apiUrl + '/PostSendCollateral8212/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    var messString = res;
 
 
                     var serviceResponse: ServiceResponse;
@@ -199,7 +199,7 @@ export class DeclarationExtendedListService {
 
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
             ;
 
         });
@@ -213,14 +213,14 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.put(this._apiUrl + '/PutCopyDeclaration_test/?' + 'fromDeclarationId=' + fromDeclarationId + '&tenant=' + tenant,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -233,14 +233,14 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.put(this._apiUrl + '/PutCopyDeclaration/?' + 'fromDeclarationId=' + fromDeclarationId + '&toDeclarationId=' + toDeclarationId + '&tenant=' + tenant,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -250,10 +250,10 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetDeclarationByCustomFileNoAndCCU/?' + 'customFileNo=' + customFileNo,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     var declarationList: DeclarationList;
                     if (serviceResponse.Result) {
                         var entity: DeclarationList;
@@ -262,7 +262,7 @@ export class DeclarationExtendedListService {
 
                     serviceResponse.Result = declarationList;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -274,10 +274,10 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetDeclarationAmendmentsById/?' + 'id=' + id,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var list = response.json();
+                    var list:any = response;
 
                     var _mappedListsArray: Array<DeclarationList> = [];
                     if (list) {
@@ -290,7 +290,7 @@ export class DeclarationExtendedListService {
  
                     serviceResponse.Result = _mappedListsArray;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
 
 
@@ -331,12 +331,10 @@ export class DeclarationExtendedListService {
 
 
         return Observable.defer(() => {
-            return this._http.get(callUrl, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array<DeclarationList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -350,7 +348,7 @@ export class DeclarationExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

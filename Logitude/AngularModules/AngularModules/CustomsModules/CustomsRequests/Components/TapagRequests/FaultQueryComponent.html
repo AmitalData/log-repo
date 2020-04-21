@@ -169,7 +169,7 @@
 
                                 <!-- FaultAdittionalInformationList -->
                                 <log-row-details>
-                                    <row-template template="let item">
+                                    <row-template >
                                         <div style="min-height: 80px; width: 660px; background: #E8F7FF; position: relative;" [style.height.px]="item.RowDetailsHeights">
                                             <div style="position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
                                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="item.FaultAdittionalInformationListObs">
@@ -177,91 +177,105 @@
                                                     <log-column [width]="'120'" [Alignment]="'right'"
                                                                 [header]="'Customs.FaultQuery.O.AgentInDeclaration' | TextCodeTranslationPipe"
                                                                 [binding]="'AgentInDeclarationName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div style="width:100%;height:100%;">
                                                                 <div class="RightCenter">
                                                                     <span>{{item.AgentInDeclarationName }}</span>
                                                                 </div>
                                                             </div>
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
                                                     <!-- ExporterImporterInDeclarationName -->
                                                     <log-column [width]="'120'" [Alignment]="'right'"
                                                                 [header]="'Customs.FaultQuery.O.ExporterImporterInDeclaration' | TextCodeTranslationPipe"
                                                                 [binding]="'ExporterImporterInDeclarationName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div style="width:100%;height:100%;">
                                                                 <div class="RightCenter">
                                                                     <span>{{item.ExporterImporterInDeclarationName }}</span>
                                                                 </div>
                                                             </div>
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
                                                     <!-- SeverityName -->
                                                     <log-column [width]="'70'" [Alignment]="'right'"
                                                                 [header]="'Customs.FaultQuery.O.Severity' | TextCodeTranslationPipe"
                                                                 [binding]="'SeverityName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div style="width:100%;height:100%;">
                                                                 <div class="RightCenter">
                                                                     <span>{{item.SeverityName }}</span>
                                                                 </div>
                                                             </div>
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
                                                     <!-- FelonyType -->
                                                     <log-column [width]="'70'" [Alignment]="'right'"
                                                                 [header]="'Customs.FaultQuery.O.FelonyType' | TextCodeTranslationPipe"
                                                                 [binding]="'FelonyTypeName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div style="width:100%;height:100%;">
                                                                 <div class="RightCenter">
                                                                     <span>{{item.FelonyTypeName }}</span>
                                                                 </div>
                                                             </div>
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
                                                     <!-- RansomViolationType -->
                                                     <log-column [width]="'70'" [Alignment]="'right'"
                                                                 [header]="'Customs.FaultQuery.O.RansomViolationType' | TextCodeTranslationPipe"
                                                                 [binding]="'RansomViolationTypeName'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div style="width:100%;height:100%;">
                                                                 <div class="RightCenter">
                                                                     <span>{{item.RansomViolationTypeName }}</span>
                                                                 </div>
                                                             </div>
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
                                                     <!-- RansomViolationSum -->
                                                     <log-column [width]="'90'" [Alignment]="'right'"
                                                                 [header]="'Customs.FaultQuery.O.RansomViolationSum' | TextCodeTranslationPipe"
                                                                 [binding]="'RansomViolationSum'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div style="width:100%;height:100%;">
                                                                 <div class="RightCenter">
                                                                     <span>{{item.RansomViolationSum }}</span>
                                                                 </div>
                                                             </div>
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
                                                     <!-- Scoring -->
                                                     <log-column [width]="'70'" [Alignment]="'right'"
                                                                 [header]="'Customs.FaultQuery.O.Scoring' | TextCodeTranslationPipe"
                                                                 [binding]="'Scoring'">
-                                                        <log-cell-template template="let item" #logcelltemplate>
+                                                        <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                                             <div style="width:100%;height:100%;">
                                                                 <div class="RightCenter">
                                                                     <span>{{item.Scoring }}</span>
                                                                 </div>
                                                             </div>
                                                         </log-cell-template>
+</ng-template>
                                                     </log-column>
 
                                                 </logitude-edit-grid>
@@ -274,85 +288,99 @@
                                 <log-column [width]="'70'" [Alignment]="'right'"
                                             [header]="'Customs.FaultQuery.O.ProceduralFaultID' | TextCodeTranslationPipe"
                                             [binding]="'ProceduralFaultID'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.ProceduralFaultID}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- ProceduralFaultInputProcessName -->
                                 <log-column [width]="'100'" [Alignment]="'right'"
                                             [header]="'Customs.FaultQuery.O.ProceduralFaultInputProcess' | TextCodeTranslationPipe"
                                             [binding]="'ProceduralFaultInputProcessName'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.ProceduralFaultInputProcessName}}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- CreateDate -->
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.FaultQuery.O.CreateDate' | TextCodeTranslationPipe"
                                             [binding]="'CreateDate'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CreateDate }}</span>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- ProceduralFaultStatusName -->
                                 <log-column [width]="'80'" [Alignment]="'right'"
                                             [header]="'Customs.FaultQuery.O.ProceduralFaultStatus' | TextCodeTranslationPipe"
                                             [binding]="'ProceduralFaultStatusName'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.ProceduralFaultStatusName }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- DeclarationId -->
                                 <log-column [width]="'110'" [Alignment]="'right'"
                                             [header]="'Customs.FaultQuery.O.DeclarationId' | TextCodeTranslationPipe"
                                             [binding]="'DeclarationId'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.DeclarationId }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- ResponsibilityName -->
                                 <log-column [width]="'120'" [Alignment]="'right'"
                                             [header]="'Customs.FaultQuery.O.ResponsibilityID' | TextCodeTranslationPipe"
                                             [binding]="'ImporterExporterResponsibilityName'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.ImporterExporterResponsibilityName }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                                 <!-- CustomsHouseName -->
                                 <log-column [width]="'90'" [Alignment]="'right'"
                                             [header]="'Customs.FaultQuery.O.CustomsHouse' | TextCodeTranslationPipe"
                                             [binding]="'CustomsHouseName'">
-                                    <log-cell-template template="let item" #logcelltemplate>
+                                    <ng-template let-item>
+<log-cell-template  #logcelltemplate>
                                         <div style="width:100%;height:100%;">
                                             <div class="RightCenter">
                                                 <span>{{item.CustomsHouseName }}</span>
                                             </div>
                                         </div>
                                     </log-cell-template>
+</ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>

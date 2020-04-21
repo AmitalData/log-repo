@@ -1,5 +1,6 @@
-﻿import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -10,10 +11,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomDocumentViewerService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomDocumentViewer';
 
     }
@@ -31,11 +32,9 @@ export class CustomDocumentViewerService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetDocumentPage/?documentId=" + documentId + "&currPage=" + currPage + "&isConnectedToUni=" + isConnectedToUni + '&angle=' +angle, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl + "/GetDocumentPage/?documentId=" + documentId + "&currPage=" + currPage + "&isConnectedToUni=" + isConnectedToUni + '&angle=' +angle, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var json = response.json();
+                var json = response;
 
                 var mappedObject: CustomDocumentPageObject = this.MapJsonToCustomDocumentPageObject(json);
 
@@ -43,7 +42,7 @@ export class CustomDocumentViewerService {
                 serviceResponse.Result = mappedObject;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 

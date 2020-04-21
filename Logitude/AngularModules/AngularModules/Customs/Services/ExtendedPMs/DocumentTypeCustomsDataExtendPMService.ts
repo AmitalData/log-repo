@@ -6,7 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -23,10 +24,10 @@ import {DocumentTypeCustomsDataPM} from '../../EntityPMs/DocumentTypeCustomsData
 @Injectable()
 
 export class DocumentTypeCustomsDataExtendPMService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/documenttypecustomsdata';
     }
 
@@ -41,13 +42,12 @@ export class DocumentTypeCustomsDataExtendPMService {
 
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.delete(this._apiUrl + '/DeleteRecord?' + 'documenttypeid=' + documenttypeid, { headers: authHeader }
-            ).map(res => {
-                serviceResponse.Result = res.json();
+            return this._http.delete(this._apiUrl + '/DeleteRecord?' + 'documenttypeid=' + documenttypeid, ServiceHelper.GetHttpHeaders()).pipe(map(res => {
+                serviceResponse.Result = res;
                 return serviceResponse;
 
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

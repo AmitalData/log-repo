@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,10 +12,10 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class VehicleExtendedPMService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Vehicle';
     }
 
@@ -23,11 +24,11 @@ export class VehicleExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetVehicleByVehicleChassisNumberOrRichbitFileNumber?vehicleChassisNumber=' + vehicleChassisNumber + '&richbitFileNumber=' + richbitFileNumber, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetVehicleByVehicleChassisNumberOrRichbitFileNumber?vehicleChassisNumber=' + vehicleChassisNumber + '&richbitFileNumber=' + richbitFileNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-               // serviceResponse.Result = response.json();
+               // serviceResponse.Result = response;
 
-                var pm = response.json();
+                var pm = response;
 
                 var entity: VehiclePM;
                 if (pm) {
@@ -39,7 +40,7 @@ export class VehicleExtendedPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -50,14 +51,14 @@ export class VehicleExtendedPMService {
         authHeader.append('Content-Type', 'application/json');
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/CheckIfVehicleExistByChassisNumber/?' + '&vehicleChassisNumber=' + vehicleChassisNumber, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/CheckIfVehicleExistByChassisNumber/?' + '&vehicleChassisNumber=' + vehicleChassisNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -69,13 +70,13 @@ export class VehicleExtendedPMService {
         return Observable.defer(() => {
             return this._http
                 .get(this._apiUrl + '/GetCheckIfVehicleExistByChassisNumber/?' + '&vehicleChassisNumber=' + vehicleChassisNumber,
-                { headers: authHeader }).map(response => {
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
 
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -84,11 +85,11 @@ export class VehicleExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDuplicatedVehInSameDeclaration?declarationId=' + declarationId + '&richbitNumbersString=' + vehiclesNumbers + '&chassissNumbersString=' + chassissNumbersString, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetDuplicatedVehInSameDeclaration?declarationId=' + declarationId + '&richbitNumbersString=' + vehiclesNumbers + '&chassissNumbersString=' + chassissNumbersString, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                // serviceResponse.Result = response.json();
+                // serviceResponse.Result = response;
 
-                var pm = response.json();
+                var pm = response;
 
                 //var entity: VehiclePM;
                 //if (pm) {
@@ -100,7 +101,7 @@ export class VehicleExtendedPMService {
                 serviceResponse.Result = pm;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -110,11 +111,11 @@ export class VehicleExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetCheckRichbitNumbersError?richbitNumbersString=' + vehiclesNumbers, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetCheckRichbitNumbersError?richbitNumbersString=' + vehiclesNumbers, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                // serviceResponse.Result = response.json();
+                // serviceResponse.Result = response;
 
-                var pm = response.json();
+                var pm = response;
 
                 //var entity: VehiclePM;
                 //if (pm) {
@@ -126,7 +127,7 @@ export class VehicleExtendedPMService {
                 serviceResponse.Result = pm;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
 
     }
@@ -137,9 +138,9 @@ export class VehicleExtendedPMService {
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetVehiclesByRichbitFileNumbers/?' + '&richbitNumbersString=' + richbitNumbersString, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetVehiclesByRichbitFileNumbers/?' + '&richbitNumbersString=' + richbitNumbersString, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
 
-                var allLists = response.json();
+                var allLists = response.body;
                 var _mappedListsArray: Array<VehiclePM> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -156,7 +157,7 @@ export class VehicleExtendedPMService {
                 var servertime = response.headers.get('ServerExecutionTime');
 
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -165,15 +166,15 @@ export class VehicleExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetIsVehicleAttachmentNumberIsMoreThenAllow/?' + '&vehicleId=' + vehicleId, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl + '/GetIsVehicleAttachmentNumberIsMoreThenAllow/?' + '&vehicleId=' + vehicleId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                var pm = response.json();
+                var pm = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = pm;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
