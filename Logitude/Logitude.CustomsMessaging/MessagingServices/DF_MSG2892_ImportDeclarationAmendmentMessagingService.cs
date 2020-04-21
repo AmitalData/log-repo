@@ -19,6 +19,7 @@ using Logitude.Server.Tools.Helpers;
 using UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference;
 using RequestHeader = UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.RequestHeader;
 using ESBRequestSigned = UnifreightIIG.Common.ImportDeclarationAmendmentServiceReference.ESBRequestSigned;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -138,13 +139,25 @@ namespace Logitude.CustomsMessaging.MessagingServices
             
         }
         protected override INF_MSG_Generic CallWS(
-            DF_NG_2892_MSG14000_ImportDeclarationAmendmentRequestMsg customRequest, 
-            GenericRequestParams requestParams, 
+            DF_NG_2892_MSG14000_ImportDeclarationAmendmentRequestMsg customRequest,
+            GenericRequestParams requestParams,
             out string exceptionMessage)
         {
             exceptionMessage = null;
             var response = new INF_MSG_Generic();
-          
+            if (requestParams.TestCase != null)
+            {
+                BuildRequestContentHeaderB4Sign(customRequest);
+                 
+
+                        var Fake2892 = new Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService(requestParams);
+                _ResponseHeader= Fake2892.CallWS(out response);
+
+           
+            exceptionMessage = null;
+            return response;
+         
+            }
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
             BuildRequestContentHeaderB4Sign(customRequest);
 
