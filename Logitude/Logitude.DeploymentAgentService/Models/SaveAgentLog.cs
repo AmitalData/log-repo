@@ -15,5 +15,7 @@ namespace Logitude.DeploymentAgentService.Models
         public bool IsException { get; set; }
 
         public DateTime LogDatetime { get; set; }
+
+        public int? ReleaseId { get; set; }
     }
 }

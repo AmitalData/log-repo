@@ -61,17 +61,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\AgentLog\AgentLog.cs" />
-    <Compile Include="Models\AgentLog\SaveAgentLog.cs" />
-    <Compile Include="Models\Agent\Agent.cs" />
-    <Compile Include="Models\Agent\UpdateAgentCurrentVersion.cs" />
-    <Compile Include="Models\Agent\UpdateAgentDeploymentStatus.cs" />
-    <Compile Include="Models\Artifact\Artifact.cs" />
-    <Compile Include="Models\Customer\Customer.cs" />
+    <Compile Include="Models\SaveAgentLog.cs" />
+    <Compile Include="Models\Agent.cs" />
+    <Compile Include="Models\UpdateAgentCurrentVersion.cs" />
+    <Compile Include="Models\UpdateAgentDeploymentStatus.cs" />
+    <Compile Include="Models\Artifact.cs" />
     <Compile Include="Models\DeploymentApiHttpRequest.cs" />
-    <Compile Include="Models\DeploymentStatus\DeploymentStatus.cs" />
+    <Compile Include="Models\DeploymentStatus.cs" />
     <Compile Include="Models\HttpRequestType.cs" />
-    <Compile Include="Models\ServiceType\ServiceType.cs" />
+    <Compile Include="Models\ServiceType.cs" />
     <Compile Include="Models\XMLParser.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

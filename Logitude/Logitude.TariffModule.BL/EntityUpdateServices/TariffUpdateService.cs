@@ -56,31 +56,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         }
                     }
                 }
-
-                //if(entityPM.TypeCode == "OFS")
-                //{
-                //    string BCNTId = this.GetBCNTMeasurements(entityPM.Tenant);
-
-                //    if(!string.IsNullOrEmpty(BCNTId))
-                //    {
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 1);
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 2);
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 3);
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 4);
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 5);
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 6);
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 7);
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 8);
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 9);
-                //        this.FillBCNTMeasurements(entityPM, BCNTId, 10);
-                //    }
-
-                //    else
-                //    {
-                //        throw new ApplicationException("BCNT Measurement is not found");
-                //    }
-                //}
-
+                
                 this.ValidateSurchargeUniqueSeller(entityPM);
                 this.ValidateFCLSurchargeUniqueSeller(entityPM);
             }
@@ -152,13 +128,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.UpdateMissingPorts(entityPM);
                 entityPM.IsUpdatingMissingPorts = false;
             }
-
-            //if (entityPM.IsRefreshTranslations)
-            //{
-            //    this.RefreshTranslations(entityPM);
-            //    entityPM.IsRefreshTranslations = false;
-            //}
-
+            
             this.InsertTariffSurchargeLog(entityPM);
         }
         
@@ -392,27 +362,27 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             entityPM.LastStartDate = entityPM.StartDate;
             entityPM.LastExpirationDate = entityPM.ExpirationDate;
 
-            TariffVersionPM tariffVersionPM = new TariffVersionPM()
-            {
-                TariffId = entityPM.Id,
-                Tenant = entityPM.Tenant,
-                CreateDate = entityPM.CreateDate,
-                CreatedByUserId = entityPM.CreatedByUserId,
-                StartDate = entityPM.StartDate,
-                ExpirationDate = entityPM.ExpirationDate,
-                Version = entityPM.LastVersion,
-                SearchFields = entityPM.LastVersion.ToString(),
-                ChangeSetOp = ChangeSetOperation.Insert,
-                IsDraft = true,
-            };
+            //TariffVersionPM tariffVersionPM = new TariffVersionPM()
+            //{
+            //    TariffId = entityPM.Id,
+            //    Tenant = entityPM.Tenant,
+            //    CreateDate = entityPM.CreateDate,
+            //    CreatedByUserId = entityPM.CreatedByUserId,
+            //    StartDate = entityPM.StartDate,
+            //    ExpirationDate = entityPM.ExpirationDate,
+            //    Version = entityPM.LastVersion,
+            //    SearchFields = entityPM.LastVersion.ToString(),
+            //    ChangeSetOp = ChangeSetOperation.Insert,
+            //    IsDraft = true,
+            //};
 
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFA")
-            {
-                tariffVersionPM.StartDate = null;
-                tariffVersionPM.ExpirationDate = null;
-            }
+            //if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFA")
+            //{
+            //    tariffVersionPM.StartDate = null;
+            //    tariffVersionPM.ExpirationDate = null;
+            //}
 
-            entityPM.TariffVersions.Add(tariffVersionPM);
+            //entityPM.TariffVersions.Add(tariffVersionPM);
         }
 
         private TariffLineRepository iTariffLineRepository;

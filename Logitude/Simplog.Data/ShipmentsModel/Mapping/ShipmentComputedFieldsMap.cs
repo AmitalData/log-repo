@@ -49,7 +49,17 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.NumberOfHouses).HasColumnName("NumberOfHouses");
             this.Property(t => t.IsDigitalSignRequired).HasColumnName("IsDigitalSignRequired");
             this.Property(t => t.IsDepositionRequired).HasColumnName("IsDepositionRequired");
-            this.Property(t => t.ImporterDepositionRequestDetails).HasColumnName("ImporterDepositionRequestDetails");
+
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.ImporterDepositionRequestDetails).HasColumnName("ImporterDepositionReqDetails");
+            }
+            else
+            {
+                this.Property(t => t.ImporterDepositionRequestDetails).HasColumnName("ImporterDepositionRequestDetails");
+            }
+
             this.Property(t => t.FirstPickupLocation).HasColumnName("FirstPickupLocation");
             this.Property(t => t.Commodity).HasColumnName("Commodity");
             this.Property(t => t.ContainersNumbers).HasColumnName("ContainersNumbers");

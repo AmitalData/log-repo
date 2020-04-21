@@ -2152,10 +2152,39 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             return documentsExecutionLog;
         }
 
-    }
 
 
-    public class BuildDocumentParameter
+
+        public bool IsRunStimulDocumentViaWorkerRole()
+        {
+            bool result = false;
+            string currentIP = AuthenticationUtil.GetIP4Address();
+            if (!string.IsNullOrEmpty(currentIP))
+            {
+                int LastIpPart = 0;
+                var IpParts = currentIP.Split('.');
+                if (IpParts.Length == 4)
+                {
+                    int.TryParse(IpParts[3], out LastIpPart);
+                    IGlobalContext objectContext = GlobalContext.GetContext();
+                    var settingRepository = new SettingRepository(objectContext);
+                    var settingQuery = new SettingQuery(settingRepository);
+                    var settings = settingQuery.GetSinglePM();
+                    if (settings != null && settings.System2RedirectFraction > 0 && LastIpPart != 0 && (LastIpPart % settings.System2RedirectFraction) == 0) result = true;
+                }
+            }
+            return result;
+        }
+    
+
+
+
+
+
+}
+
+
+public class BuildDocumentParameter
     {
         public string DocumentTypeCode { get; set; }
         public string DocumentTypeId { get; set; }

@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Document Type Template&quot;"
-  Code="&quot;a77e&quot;"
+  Code="&quot;ce93&quot;"
   Name="&quot;DocumentTypeTemplate&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
@@ -2663,7 +2663,8 @@
   <field
     Id="&quot;4ed6e7b7-ed92-498a-8e55-3cf838dd1ecd&quot;"
     FieldName="&quot;From&quot;"
-    OldNames="From"
+    ShortName="From1"
+    OldNames="From,From1"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

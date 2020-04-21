@@ -272,7 +272,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 //get journal of reconciliation - WI39779
                 JournalQueryService journalQuery = new JournalQueryService(entityPM.Tenant);
-                JournalPM journal = journalQuery.GetByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+                JournalPM journal = journalQuery
+                    //.GetByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+                //10  התאמה Adjustment
+                .GetByAccountingEntityIdAndAccountingEntityCode(entityPM.Id, "10", entityPM.Tenant);
                 if (journal != null)
                 {
                     // Void it!

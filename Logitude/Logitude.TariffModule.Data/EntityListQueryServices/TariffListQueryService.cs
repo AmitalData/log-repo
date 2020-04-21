@@ -44,6 +44,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                                                 UpdateDate = a.UpdateDate,
                                                 UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : "" : "",
                                                 TariffNumber = a.TariffNumber,
+                                                LastUsedDate = a.LastUsedDate,
                                             });
             return query;
         }
@@ -97,7 +98,9 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                         LastActivityTypeName = lastActivity.ActivityType.Name,
                         LastActivityByUserName = lastActivity.User.Contact.EnglishName,
                         CurrencyId = a.CurrencyId,
+                        LastUsedDate = a.LastUsedDate,
                     };
+
                     TariffType tariffType = GetTariffType(a.TypeCode, tenant);
                     list.TypeName = tariffType.Name != null ? tariffType.Name : "";
                     list.TransportModeCode = tariffType.TransportModeCode != null ? tariffType.TransportModeCode : "";

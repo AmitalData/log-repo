@@ -62,30 +62,30 @@ namespace WebFreight.Web
             string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
             string oldIP = HttpContext.Current.Request.UserHostAddress;
             int LastIpPart = 0;
-            if (string.IsNullOrEmpty(currentIP))
-            {
-                var IpParts = oldIP.Split('.');
-                if (IpParts.Length == 4)
-                {
-                    int.TryParse(IpParts[3], out LastIpPart);
-                    IGlobalContext objectContext = GlobalContext.GetContext();
-                    var settingRepository = new SettingRepository(objectContext);
-                    var settingQuery = new SettingQuery(settingRepository);
-                    var settings = settingQuery.GetSinglePM();
-                    if (settings != null && settings.System2RedirectFraction > 0 && LastIpPart != 0 && (LastIpPart % settings.System2RedirectFraction) == 0)
-                    {
-                        if (LogitudeSettings.DeploymentStage == "amitalstorage")
-                        {
-                            context.Response.Redirect("https://cloud2.amital.co.il");
-                        }
-                        else
-                        {
-                            context.Response.Redirect("https://system2.logitudeworld.com");
-                        }
-                    }
-                }
+            //if (string.IsNullOrEmpty(currentIP))
+            //{
+            //    var IpParts = oldIP.Split('.');
+            //    if (IpParts.Length == 4)
+            //    {
+            //        int.TryParse(IpParts[3], out LastIpPart);
+            //        IGlobalContext objectContext = GlobalContext.GetContext();
+            //        var settingRepository = new SettingRepository(objectContext);
+            //        var settingQuery = new SettingQuery(settingRepository);
+            //        var settings = settingQuery.GetSinglePM();
+            //        if (settings != null && settings.System2RedirectFraction > 0 && LastIpPart != 0 && (LastIpPart % settings.System2RedirectFraction) == 0)
+            //        {
+            //            if (LogitudeSettings.DeploymentStage == "amitalstorage")
+            //            {
+            //                context.Response.Redirect("https://cloud2.amital.co.il");
+            //            }
+            //            else
+            //            {
+            //                context.Response.Redirect("https://system2.logitudeworld.com");
+            //            }
+            //        }
+            //    }
 
-            }
+            //}
             if (enableHttps && LogitudeSettings.ForceHttps)
             {
                 SecurityUtility.RedirectToHttps();

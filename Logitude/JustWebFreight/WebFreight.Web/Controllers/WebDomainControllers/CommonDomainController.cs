@@ -4,6 +4,7 @@ using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.security;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityOtherServices;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -1563,6 +1564,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         vatTypeService.Create(vatType_REIVA_PM);
                     }
                 }
+
+                MexicanCountryCities mexicanCountryCities = new MexicanCountryCities();
+                mexicanCountryCities.AddMexicanCountryCities(tenant);
 
                 bool myResult = true;
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);

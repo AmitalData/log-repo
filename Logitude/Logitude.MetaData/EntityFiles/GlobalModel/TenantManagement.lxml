@@ -8959,7 +8959,8 @@
   <field
     Id="&quot;44a8c71c-e6ea-4257-a3e2-a16598c02c64&quot;"
     FieldName="&quot;AgentSharedLogisticsStatisticsLastDate&quot;"
-    OldNames="AgentSharedLogisticsStatisticsLastDate"
+    ShortName="AgentSharedLogisticsLastDate"
+    OldNames="AgentSharedLogisticsStatisticsLastDate,AgentSharedLogisticsLastDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -9036,7 +9037,8 @@
   <field
     Id="&quot;b5ff8c0a-ee5e-480f-983c-996afcff3eab&quot;"
     FieldName="&quot;AgentSharedLogisticsStatisticsLastWeek&quot;"
-    OldNames="AgentSharedLogisticsStatisticsLastWeek"
+    ShortName="AgentSharedLogisticsLastWeek"
+    OldNames="AgentSharedLogisticsStatisticsLastWeek,AgentSharedLogisticsLastWeek"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -9113,7 +9115,8 @@
   <field
     Id="&quot;5e1bce85-2fea-4d12-bbec-d7a7e0a52763&quot;"
     FieldName="&quot;AgentSharedLogisticsStatisticsLastMonth&quot;"
-    OldNames="AgentSharedLogisticsStatisticsLastMonth"
+    ShortName="AgentSharedLogisticsLastMonth"
+    OldNames="AgentSharedLogisticsStatisticsLastMonth,AgentSharedLogisticsLastMonth"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

@@ -1,18 +1,89 @@
-INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('General','General',10)
-UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 10 WHERE [dbo].[DWCategories].[Code] = 'General'
-INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Operational','Operational',20)
-UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 20 WHERE [dbo].[DWCategories].[Code] = 'Operational'
-INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('References','References',30)
-UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 30 WHERE [dbo].[DWCategories].[Code] = 'References'
-INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Partners','Partners',40)
-UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 40 WHERE [dbo].[DWCategories].[Code] = 'Partners'
-INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Packages','Packages',50)
-UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 50 WHERE [dbo].[DWCategories].[Code] = 'Packages'
-INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Money','Money',60)
-UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 60 WHERE [dbo].[DWCategories].[Code] = 'Money'
-INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Charges','Charges',70)
-UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 70 WHERE [dbo].[DWCategories].[Code] = 'Charges'
-INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Dates','Dates',80)
-UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 80 WHERE [dbo].[DWCategories].[Code] = 'Dates'
-INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('CustomFields','Custom Fields',90)
-UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 90 WHERE [dbo].[DWCategories].[Code] = 'CustomFields'
+--General
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'General')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('General','General',10)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 10 WHERE [dbo].[DWCategories].[Code] = 'General'	  
+		  End
+
+--Operational
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'Operational')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Operational','Operational',20)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 20 WHERE [dbo].[DWCategories].[Code] = 'Operational'	  
+		  End
+
+--References
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'References')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('References','References',30)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 30 WHERE [dbo].[DWCategories].[Code] = 'References'	  
+		  End
+
+--Partners
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'Partners')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Partners','Partners',40)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 40 WHERE [dbo].[DWCategories].[Code] = 'Partners'	  
+		  End
+
+--Packages
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'Partners')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Packages','Packages',50)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 50 WHERE [dbo].[DWCategories].[Code] = 'Packages'	  
+		  End
+
+--Money
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'Money')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Money','Money',60)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 60 WHERE [dbo].[DWCategories].[Code] = 'Money'	  
+		  End
+
+--Charges
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'Charges')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Charges','Charges',70)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 70 WHERE [dbo].[DWCategories].[Code] = 'Charges'	  
+		  End
+
+--Dates
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'Dates')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('Dates','Dates',80)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 80 WHERE [dbo].[DWCategories].[Code] = 'Dates'	  
+		  End
+
+--CustomFields
+IF not EXISTS(SELECT 1 FROM [dbo].[DWCategories] 
+          WHERE Code = 'CustomFields')
+		  Begin  
+				INSERT INTO [dbo].[DWCategories] ([Code],[Name],[Index]) VALUES('CustomFields','CustomFields',90)
+		  End
+ELSE      Begin 
+				UPDATE [dbo].[DWCategories] Set [dbo].[DWCategories].[Index] = 90 WHERE [dbo].[DWCategories].[Code] = 'CustomFields'	  
+		  End

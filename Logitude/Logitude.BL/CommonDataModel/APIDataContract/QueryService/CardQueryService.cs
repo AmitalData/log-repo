@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             {
                 throw ex;
             }
+        }
+
+        public List<ShortPartnersDetails> GetAllConnectedPartnersByGLAccountId(string glAccountId, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            List<ShortPartnersDetails> shortConnectedPartnersDetails = cardQuery.GetConnectedPartnerIdsByGLAccountId(glAccountId, tenant);
+            return shortConnectedPartnersDetails;
         }
 
     }

@@ -606,6 +606,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FileNotFound.aspx" />
+    <Content Include="Errors\404.aspx" />
     <Content Include="AccountingWebServices\Testers\AccountingBalanceTester.aspx" />
     <Content Include="AccountingWebServices\Testers\Reconcile.aspx" />
     <Content Include="AccountingWebServices\Testers\RevaluationWorkerRoleTester.aspx" />
@@ -711,6 +713,7 @@
     <Content Include="images\Previous.png" />
     <Content Include="images\Recent.png" />
     <Content Include="images\RecentW.png" />
+    <Content Include="images\text.png" />
     <Content Include="images\verified.png" />
     <Content Include="images\verifiedGreen.png" />
     <Content Include="images\Warning_icon.png" />
@@ -927,6 +930,20 @@
     <Content Include="App_Code\AngularJS_App_Code\Common\CommunicationLogStepController.cs" />
     <Content Include="App_Code\PodSecurityController.cs" />
     <Content Include="App_Code\BrandingController.cs" />
+    <Compile Include="FileNotFound.aspx.cs">
+      <DependentUpon>FileNotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FileNotFound.aspx.designer.cs">
+      <DependentUpon>FileNotFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Errors\404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Errors\404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AccountingModel\AccountingRegistrations.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.ReconcileExternalPageStatus.CS" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountTotalDateType.CS" />
@@ -1977,6 +1994,7 @@
     <Compile Include="Controllers\WebDomainControllers\QuickbooksDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteDashboardController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteDomainController.cs" />
+    <Compile Include="Controllers\WebDomainControllers\ReportController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ReportsDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ClockTimeGeneralDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\TariffDomainController.cs" />
@@ -3070,7 +3088,10 @@
     <Content Include="Integration Test\FullAccounting\FullAccountingTesting.postman_collection.json" />
     <Content Include="Integration Test\FullAccounting\PostmanDataCloud.csv" />
     <Content Include="Integration Test\FullAccounting\PrepareFullAccountingVars.postman_collection.json" />
-    <Content Include="Integration Test\LoginVars\CloudLoginVars.csv" />
+    <Content Include="Integration Test\LoginVars\Master\TeamAyman\LoginVars.csv" />
+    <Content Include="Integration Test\LoginVars\Master\TeamIslam\LoginVars.csv" />
+    <Content Include="Integration Test\LoginVars\Production\Cloud\TeamAyman\CloudLoginVars.csv" />
+    <Content Include="Integration Test\LoginVars\Production\Logitude\TeamIslam\LoginVars.csv" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -3704,7 +3725,6 @@
     <Content Include="App_Code\AngularJS_App_Code\DocumentExtendedController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCustomFieldController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\ReportGroupController.cs" />
-    <Content Include="App_Code\AngularJS_App_Code\ReportController.cs" />
     <Content Include="App_Code\ImageLibraryController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\EntityResourceController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Common\ngAddressController.cs" />

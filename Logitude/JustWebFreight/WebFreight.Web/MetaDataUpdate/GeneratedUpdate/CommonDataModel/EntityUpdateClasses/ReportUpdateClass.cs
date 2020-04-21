@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportUpdateClass
    {  		
-		public const string HashString = "8681ddbf174e2dffc3453bc6133803b2";
+		public const string HashString = "d97f8b990415a610181ce1a81e97f457";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,6 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "Report",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Reports",
+			      				    OldDBTableName =  "Reports",
 			      				    ObjectTableSingular =  "Report",
 			      				    ObjectTablePlural =  "Reports",
 			      				    DescriptionDefaultText =  "Maintain all the reports you can use in the system.",
@@ -141,6 +142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Id",
+					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -202,6 +204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Tenant",
+					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -264,6 +267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Name",
+					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -330,6 +334,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FilterControlName",
+					  						OldFieldName =  "FilterControlName",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -394,6 +399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Description",
+					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -458,6 +464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -522,6 +529,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
+					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -585,6 +593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
+					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -649,6 +658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FilterHtmlComponentUrl",
+					  						OldFieldName =  "FilterHtmlComponentUrl",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -710,6 +720,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AvailableForScheduling",
+					  						OldFieldName =  "AvailableForScheduling",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -763,6 +774,61 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ExcelOnly",
+					  						ObjectTableName =  "Report",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ExcelOnly",
+					  						ListPropertyPath =  "ExcelOnly",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ExcelOnly",
+					  						DefaultText =  "Excel Only",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
 	    }
 

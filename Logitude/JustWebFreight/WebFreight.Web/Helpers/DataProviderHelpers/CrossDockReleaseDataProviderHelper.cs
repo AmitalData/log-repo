@@ -89,6 +89,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     {
                         dataProvider.WarehouseCode = card.Code;
                         dataProvider.WarehouseName = card.EnglishName;
+                        dataProvider.TerminalCode = card.FirmCode;
                     }
 
                     AddressQuery addressQuery = new AddressQuery(tenant);
@@ -113,7 +114,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 }
 
                 dataProvider.TenantLogo = DataProviders.General.GetLogo(tenant);
-
+                
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
 

@@ -52,7 +52,15 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         string value = item.FieldValue as string;
 
                         CardContactRepository repositry = new CardContactRepository(tenant);
-                        queryableData = repositry.GetContactsByCardId(value);
+                        if (item.Operator == "InListExact")
+                        {
+                            List<string> cardIds = value.Split(',').ToList();
+                            queryableData = repositry.GetContactsByCardIds(cardIds);
+                        }
+                        else
+                        {
+                            queryableData = repositry.GetContactsByCardId(value);
+                        }
                     }
 
                     if (item.FieldName == "ContactEmailAndNames")

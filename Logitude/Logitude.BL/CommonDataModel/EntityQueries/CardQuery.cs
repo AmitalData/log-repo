@@ -1990,6 +1990,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          Tenant = a.Tenant,
                          EnglishName = a.EnglishName,
                          Code = a.Code,
+                         FirmCode = a.Warehouse != null ? a.Warehouse.FirmCode : null,
                      }).FirstOrDefault();
 
             return cardList;
@@ -2124,6 +2125,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards;
         }
 
+        public List<ShortPartnersDetails> GetConnectedPartnerIdsByGLAccountId(string glAccountId, int tenant)
+        {
+            List<ShortPartnersDetails> cards = (from a in repository.context.Cards
+                                         where a.Tenant == tenant && a.GLAccountId == glAccountId
+                                         select new ShortPartnersDetails()
+                                         {
+                                             PartnerId = a.Id,
+                                             PartnerName = a.PartnerType.Name,
+                                         }).ToList();
 
+            return cards;
+        }
+    }
+
+    public class ShortPartnersDetails
+    {
+        public string PartnerId { get; set; }
+        public string PartnerName { get; set; }
     }
 }

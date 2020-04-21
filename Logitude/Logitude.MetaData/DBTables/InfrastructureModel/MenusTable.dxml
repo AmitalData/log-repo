@@ -113,7 +113,8 @@
     ForeignKeyColumn="FeatureId"
     ReferencedTable="Features"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <UniqueConstraint
     Columns="Code,Tenant" />
 </Table>

@@ -108,6 +108,7 @@
   </Column>
   <Column
     Name="MainCarriageSpaceAllocationCode"
+    ShortName="MainCarriageSpaceAllocationCod"
     Type="varchar"
     Size="2">
     <Constraints
@@ -115,6 +116,7 @@
   </Column>
   <Column
     Name="MainCarriageAllotmentIdentification"
+    ShortName="MainCarriageAllotmentIdentific"
     Type="varchar"
     Size="14">
     <Constraints
@@ -183,6 +185,7 @@
   </Column>
   <Column
     Name="Transshipment1AllotmentIdentification"
+    ShortName="Transshipment1AllotmentIdentif"
     Type="varchar"
     Size="14">
     <Constraints
@@ -204,6 +207,7 @@
   </Column>
   <Column
     Name="Transshipment1SpaceAllocationCode"
+    ShortName="Transshipment1SpaceAllocationC"
     Type="varchar"
     Size="2">
     <Constraints
@@ -238,6 +242,7 @@
   </Column>
   <Column
     Name="Transshipment2AllotmentIdentification"
+    ShortName="Transshipment2AllotmentIdentif"
     Type="varchar"
     Size="14">
     <Constraints
@@ -259,6 +264,7 @@
   </Column>
   <Column
     Name="Transshipment2SpaceAllocationCode"
+    ShortName="Transshipment2SpaceAllocationC"
     Type="varchar"
     Size="2">
     <Constraints
@@ -592,6 +598,7 @@
   </Column>
   <Column
     Name="MainCarriageFinalDestinationPortId"
+    ShortName="MainCarriageFinalDestinationPo"
     Type="varchar"
     Size="15">
     <Constraints

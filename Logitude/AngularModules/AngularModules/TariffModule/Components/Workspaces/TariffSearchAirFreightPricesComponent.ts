@@ -24,6 +24,8 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { PackageTypeList } from '../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../Common/Services/StandardLists/PackageTypeListService';
 import { QuoteTool } from '../../../Quote/Tools';
+import { TariffProductListService } from '../../Services/StandardLists/TariffProductListService';
+import { TariffProductList } from '../../EntityLists/TariffProductList';
 
 
 @Component({
@@ -51,16 +53,34 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
     private packageTypeListService: PackageTypeListService;
-
+    public IsFirstTime: boolean = true;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myDomainService = new TariffDomainService();
         this.myChargesTypeListService = new ChargesTypeListService();
         this.SetUIProperties();
         this.Date = DateTool.GetCurrentDateAsUtc();
+
         this.CalculateDefaultCurrency();
+        this.GetTariffProducts();
+
         this.dimenstionShipment = new ShipmentPM();
         this.packageTypeListService = new PackageTypeListService();
+    }
+
+    private GetTariffProducts() {
+        var service: TariffProductListService = new TariffProductListService();
+        service.getAllFromCache().subscribe((res: any) => {
+            if (!res.HasError) {
+                if (res.Result) {
+                    var myResult: TariffProductList[] = res.Result;
+
+                    var generalProduct = myResult.filter(d => d.Code == "GEN")[0];
+                    this.TariffProductId = generalProduct == null ? null : generalProduct.Id;
+                }
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     private CalculateDefaultCurrency() {
@@ -348,6 +368,17 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
+
+    private productId: string;
+    get TariffProductId() {
+        return this.productId;
+    }
+    set TariffProductId(value: string) {
+        if (this.productId != value) {
+            this.productId = value;
+        }
+    }
+
     ComputeGrossWeigh_Kg_Ton() {
         var weigh_Kg: number = null;
         var weigh_Ton: number = null;
@@ -562,16 +593,31 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             tariffSearchArgs.Quantity3 = this.Quantity3;
             tariffSearchArgs.Quantity4 = this.Quantity4;
             tariffSearchArgs.Quantity5 = this.Quantity5;
+            tariffSearchArgs.ProductId = this.TariffProductId;
 
             this.myDomainService.GetAvailableAirlineFreightTariffs(tariffSearchArgs).subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result) {
-                        this.AvailableTariffs = res.Result;
-                   
+                        this.loadedResults = res.Result;
+                        this.AssignResultToItemsSource();
                     }
                 }
                 this.CurrentSession.StopBusyIndicator();
             });
+        }
+    }
+
+    private loadedResults: Array<TariffSearchSummary> = [];
+    private AssignResultToItemsSource() {
+        this.NoDataMessage = "No results found matching your search. Please refine your search, or enter more tariffs to the system";
+        this.IsFirstTime = false;
+
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            this.AvailableTariffs = this.loadedResults.filter(f => f.SellerName.toUpperCase().indexOf(this.SearchText.toUpperCase()) > -1);
+        }
+
+        else {
+            this.AvailableTariffs = this.loadedResults;
         }
     }
 
@@ -1034,31 +1080,30 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     }
     AssignTariffChargesToQuote() {
         this.TariffList_Quote.forEach(item => {
-            var chargeItem = new QuoteChargeItem(item, this.FatherComponent, false);
+            this.FatherComponent.EntityPM.AddQuoteChargePM(item);
+            var chargeItem: QuoteChargeItem = new QuoteChargeItem(item, this.FatherComponent, false);
             chargeItem.ChargesTypeId = item.ChargesTypeId;
             chargeItem.CostMeasurementId = item.CostMeasurementId;
             chargeItem.CostCurrencyId = item.CostCurrencyId;
-            chargeItem.CostUnitPrice = item.CostUnitPrice;
+            chargeItem.CostTotalAmount = item.CostTotalAmount;
             chargeItem.CostMinAmount = item.CostMinAmount;
             chargeItem.CostExchangeRate = item.CostExchangeRate;
             chargeItem.SaleMeasurementId = item.SaleMeasurementId;
             chargeItem.SaleCurrencyId = item.SaleCurrencyId;
             chargeItem.SaleExchangeRate = item.SaleExchangeRate;
-
-            //chargeItem.SaleUnitPrice = item.SaleUnitPrice;
             chargeItem.ChargesGroupCode = item.ChargesGroupCode;
-
-            this.FatherComponent.ItemsSource.Insert(chargeItem);       
-            chargeItem.ComputeCostInSalePrice();
-            chargeItem.SetSaleQuantity();
+            var amount: number = item.CostTotalAmount;
             chargeItem.SetCostQuantity();
-            chargeItem.ComputeCostAmounts();
+            var quantity: number = chargeItem.CostQuantity;
+            if (quantity != null && quantity != 0) {
+                chargeItem.CostUnitPrice = (amount / quantity);
+            }
+            chargeItem.SetSaleQuantity();
             chargeItem.ComputeSalePrice();
             chargeItem.SetUIProperties_AllIn();
-             this.FatherComponent.EntityPM.AddQuoteChargePM(item);
+            this.FatherComponent.ItemsSource.Insert(chargeItem);
         });
         this.ReloadTariffCharges();
-
     }
     ReloadTariffCharges() {
         this.FatherComponent.BuildItemsSource();
@@ -1107,9 +1152,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
                 if (!item.IsAllIn) {
                     chargePM.CostMinAmount = AppTool.Round(item.MinPrice, 3);
-                    chargePM.CostUnitPrice = AppTool.Round(item.ActualPrice, 3); 
+                    chargePM.CostTotalAmount = AppTool.Round(item.ActualPrice, 3); 
                 }
-
+                
                 chargePM.VendorId = item.SellerId;
                 chargePM.VendorName = item.SellerName;
                 chargePM.IsCostAllIn = item.IsAllIn;
@@ -1137,5 +1182,61 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
         
         return isValid;
+    }
+
+    public IsFiltersExtended: boolean = false;
+    public IsFiltersHidden: boolean = true;
+    public FiltersHeight: number = 90;
+    public NoDataMessage: string = "Please enter data to get up-to-date results";
+    ExtendedFiltersClicked(action: string) {
+        if (action == "show") {
+            this.IsFiltersExtended = true;
+            this.IsFiltersHidden = false;
+            this.FiltersHeight = 130;
+        }
+
+        else {
+            this.IsFiltersExtended = false;
+            this.IsFiltersHidden = true;
+            this.FiltersHeight = 90;
+        }        
+    }
+
+    //FlexibleDate
+
+    get GrossWeightFilterVisible() { return AppTool.IsNullOrZero(this.GrossWeight) ? false : true }
+    get VolumeFilterVisible() { return AppTool.IsNullOrZero(this.Volume) ? false : true }
+
+    private fromPrice: number;
+    get FromPrice() {
+        return this.fromPrice;
+    }
+    set FromPrice(value: number) {
+        if (this.fromPrice != value) {
+            this.fromPrice = value;
+        }
+    }
+
+    private toPrice: number;
+    get ToPrice() {
+        return this.toPrice;
+    }
+    set ToPrice(value: number) {
+        if (this.toPrice != value) {
+            this.toPrice = value;
+        }
+    }
+
+    private searchText: string = null;
+    public get SearchText() { return this.searchText; }
+    public set SearchText(value: string) {
+        if (this.searchText != value) {
+            this.searchText = value;
+        }
+    }
+
+    SearchTextChanged(text: string) {
+        this.SearchText = text;
+        this.AssignResultToItemsSource();
     }
 }

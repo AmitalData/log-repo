@@ -124,5 +124,18 @@ export class ExportDocumentService {
 
     }
 
+
+
+    GetIsRunStimulDocumentViaWorkerRole() {
+ 
+        return this._http.get(this._apiUrl + "/GetIsRunStimulDocumentViaWorkerRole", ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
+
 }
 

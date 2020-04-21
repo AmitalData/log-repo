@@ -133,7 +133,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
                         SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureDocuments/Components/SendMessageContacts/SendToContactsComponent', myLocation.viewContainerRef)
                             .then(cmpRef => {
                                 this.PageChild_OPEMA = cmpRef.instance;
-                                this.SetRecepientsDetails();
+                                this.SetRecepientsDetails(false);
                                 this.CurrentSession.StopBusyIndicator();
                             });
                     }
@@ -152,7 +152,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.RunBuildStimulsoftTimer();
     }
 
-    SetRecepientsDetails() {
+    SetRecepientsDetails(isReloaded) {
         this.PageChild_PRREP.PrepareContactList();
         var windowArgs: any = {};
         var recepients: ReportSchedulerRecepients = this.PageChild_RETASK.DataContext.SchedulerDetails.ReportDetails.Recepients;
@@ -164,6 +164,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         windowArgs.OnCloseSendToContactsEvent = false;
         windowArgs.IsUserFromReport = this.PageChild_PRREP.PartnersObslist ? true : false;
         windowArgs.IsSchedulerReport = true;
+        windowArgs.isReloaded = isReloaded;
         this.PageChild_OPEMA.SetWindowArgs(windowArgs);
     }
 
@@ -190,6 +191,9 @@ export class AddEditReportSchedulerComponent implements OnInit {
         }
         else if (this.SelectedTabLocation == 1) {
             if (this.PageChild_PRREP.ValidateSelectedFilters()) {
+                if (this.PageChild_OPEMA != null) {
+                    this.SetRecepientsDetails(true);
+                }
                 this.SetSelectedItem("OPEMA");
                 this.SelectedTabLocation += 1;
             }

@@ -46,7 +46,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         VoidedByJournalId, 
 	         ExternalSystem, 
 	         QueueId, 
-	         IsLedgerCreated,
+	         IsLedgerCreated, 
+	         DocumentDate, 
+	         DueDate,
 	      }
 
 
@@ -87,7 +89,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         QueueId, 
 	         StatusLocalName, 
 	         IsLedgerCreated, 
-	         LineCreditAccountTypeCode,
+	         LineCreditAccountTypeCode, 
+	         TaxReportJournalLineNumber, 
+	         DocumentDate, 
+	         DueDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -214,6 +219,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLedgerCreated))
             {
 				entityPOCO.IsLedgerCreated = entityPM.IsLedgerCreated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentDate))
+            {
+				entityPOCO.DocumentDate = entityPM.DocumentDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DueDate))
+            {
+				entityPOCO.DueDate = entityPM.DueDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -347,6 +362,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.IsLedgerCreated = entityPOCO.IsLedgerCreated;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentDate))
+            {
+					entityPM.DocumentDate = entityPOCO.DocumentDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DueDate))
+            {
+					entityPM.DueDate = entityPOCO.DueDate;
+            }
+
 		}
 
 		public void PMToOldPM(JournalPM entityPM, JournalPM oldEntityPM)
@@ -471,6 +496,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLedgerCreated))
             {
                 oldEntityPM.IsLedgerCreated = entityPM.IsLedgerCreated;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentDate))
+            {
+                oldEntityPM.DocumentDate = entityPM.DocumentDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DueDate))
+            {
+                oldEntityPM.DueDate = entityPM.DueDate;
             }
 			
 		}

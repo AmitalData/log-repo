@@ -114,6 +114,7 @@ import { InterestReportGeneralTabComponent } from './Components/EditTabs/Interes
 import { InterestReportLineByDateDetailsComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent';
 import { InterestReportLinesByDateListTemplate } from './Components/ListTemplates/InterestReportLinesByDateListTemplate';
 import { InterestReportShortTitleComponent } from './Components/ShortTiTles/InterestReportShortTitleComponent';
+import { ConnectWithGLAccountComponent } from './Components/EditTabs/GLAccount/ConnectWithGLAccountComponent';
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
 
@@ -142,6 +143,7 @@ export const Components =
         NewRevaluationComponent,
         AddEditRecoExPageComponent,
         NewConnectedGLAccountComponent,
+        ConnectWithGLAccountComponent,
         NewPaymentChequeComponent,
         NewOpenFormatReportComponent,
         LoadRecoExPageComponent,
@@ -263,6 +265,7 @@ export class ModuleDeclarations {
             case "AutoRecoMethodComponent": { myResult = AutoRecoMethodComponent; break; }
             case "NewRevaluationComponent": { myResult = NewRevaluationComponent; break; }
             case "AddEditRecoExPageComponent": { myResult = AddEditRecoExPageComponent; break; }
+            case "ConnectWithGLAccountComponent": { myResult = ConnectWithGLAccountComponent; break; }
             case "NewConnectedGLAccountComponent": { myResult = NewConnectedGLAccountComponent; break; }
             case "NewPaymentChequeComponent": { myResult = NewPaymentChequeComponent; break; }
             case "NewTaxReportComponent": { myResult = NewTaxReportComponent; break; }

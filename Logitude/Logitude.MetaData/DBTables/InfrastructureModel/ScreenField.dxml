@@ -20,12 +20,14 @@
   </Column>
   <Column
     Name="Column"
+    ShortName="Column_"
     Type="int">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="Row"
+    ShortName="Row_"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -62,12 +64,14 @@
     ForeignKeyColumn="ScreenId"
     ReferencedTable="Screens"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="ObjectFieldId"
     ReferencedTable="ObjectFields"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Index
     Columns="Tenant" />
 </Table>

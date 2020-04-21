@@ -2244,7 +2244,8 @@
   <field
     Id="&quot;304d1c6b-7aa8-4e49-9e6a-c75ba33fef0a&quot;"
     FieldName="&quot;PaymentCurrencyExchangeRateDate&quot;"
-    OldNames="PaymentCurrencyExchangeRateDate"
+    ShortName="ExchangeRateDate"
+    OldNames="PaymentCurrencyExchangeRateDate,ExchangeRateDate"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"

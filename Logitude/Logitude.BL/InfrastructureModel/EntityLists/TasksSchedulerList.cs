@@ -51,5 +51,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public int Retries { get; set; }
         public double AverageRunTime { get; set; }
         public string EntityId { get; set; }
+        public string Recepients { get; set; }
     }
 }

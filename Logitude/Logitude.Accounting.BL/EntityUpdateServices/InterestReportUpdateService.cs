@@ -22,6 +22,8 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Accounting.BL.Validators;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -29,38 +31,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(InterestReportPM entityPM, EntityPM entityParentPM)
         {
-            ContactPM contact = GetLoggedContact(entityPM.Tenant);
-            bool showLocals = !contact.DontShowLocal;
+            MapInterestReport(entityPM);
+            CreateBatchTaskExecution(entityPM);
+        }
+
+
+        private void MapInterestReport(InterestReportPM entityPM)
+        {
+           
             entityPM.CreateDateTime = DateTime.UtcNow;
             entityPM.InterestReportStatusCode = "5";
             entityPM.ReportNumber = CodeCounter.GetNumber("InterestReport", entityPM.Tenant).ToString();
-            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-            Card card = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
-            InterestReportRepository interestReportRepository = new InterestReportRepository(entityPM.Tenant);
-            InterestReport interestReport = interestReportRepository.GetSingleByCusstomerAndStatudDraft(entityPM.CustomerId, entityPM.Tenant);
-            if (interestReport != null)
-            {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CustomeralreadyhasaDraftinterest", entityPM.Tenant, showLocals)+" "+interestReport.ReportNumber);
-            }
-            if (card.GLAccountId == null)
-            {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotconnected", entityPM.Tenant, showLocals));
-            }
-            interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId,entityPM.InterestCalculationDate, entityPM.Tenant);
-            if (interestReport != null)
-            {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
-            }
-            entityPM.GLAccountId = card.GLAccountId;
-            GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPM.Tenant);
-            GLAccount gLAccount = gLAccountRepository.GetSingle(entityPM.GLAccountId, entityPM.Tenant);
-            entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
-            if (gLAccount.ActiveForInterest == false)
-            {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotdefined", entityPM.Tenant, showLocals));
-            }
-            CreateBatchTaskExecution(entityPM);
+           
         }
+
+        
 
         protected override void UpdateComposition(InterestReportPM entityPM)
         {
@@ -307,7 +292,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     { "Tenant", entityPM.Tenant.ToString() }
                 });
         }
-
+        protected override void Validate(InterestReportPM entityPM)
+        {
+            ValidationResult result = InterestReportValidator.IsInterestReportValid(entityPM);
+            if (result != null)
+            {
+                throw new ApplicationException(result.ErrorMessage);
+            }
+            base.Validate(entityPM);
+        }
 
     }
 }

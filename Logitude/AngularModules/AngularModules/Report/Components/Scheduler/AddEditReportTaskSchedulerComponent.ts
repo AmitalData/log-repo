@@ -240,9 +240,9 @@ export class AddEditReportTaskSchedulerComponent  {
     SetReportDetails(reportFilterItems: Array<QueryFilterItem>, reportTemplateId: string, recepients: ReportSchedulerRecepients) {
         this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportFilterItems;
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportTemplateId;
-        this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To ? recepients.To.toString().replace(',', ';') : "";
-        this.DataContext.SchedulerDetails.ReportDetails.Recepients.Cc = recepients.Cc ? recepients.Cc.toString().replace(',', ';') : "";
-        this.DataContext.SchedulerDetails.ReportDetails.Recepients.Bcc = recepients.Bcc ? recepients.Bcc.toString().replace(',', ';') : "";
+        this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To ? recepients.To.toString().split(',').join(';') : "";
+        this.DataContext.SchedulerDetails.ReportDetails.Recepients.Cc = recepients.Cc ? recepients.Cc.toString().split(',').join(';') : "";
+        this.DataContext.SchedulerDetails.ReportDetails.Recepients.Bcc = recepients.Bcc ? recepients.Bcc.toString().split(',').join(';') : "";
     }
 
     GetReportFilterItems() {

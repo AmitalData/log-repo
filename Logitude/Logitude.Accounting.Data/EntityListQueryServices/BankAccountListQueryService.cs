@@ -26,7 +26,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<BankAccountList> query = (from a in iQueryable.Include("GLAccount").Include("DeferredGLAccount").Include("TransferGLAcccount")
                                                  .Include("BankCode")
-                                                 .Include("Currency").DefaultIfEmpty()
+                                                 .Include("Currency")
+                                                 //.DefaultIfEmpty()
                                                  select new BankAccountList()
                                                  {
 

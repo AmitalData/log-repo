@@ -73,6 +73,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RetryNumber).HasColumnName("RetryNumber");
             this.Property(t => t.StartDate).HasColumnName("StartDate");
             this.Property(t => t.ExecutedByServerName).HasColumnName("ExecutedByServerName");
+            this.Property(t => t.ExcelOnly).HasColumnName("ExcelOnly");
+
+
+
 
             // Relationships
 

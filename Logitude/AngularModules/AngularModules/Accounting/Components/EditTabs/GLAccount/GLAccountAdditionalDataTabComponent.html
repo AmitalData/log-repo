@@ -31,6 +31,11 @@
                     <span style="font-size:12px; padding-right:5px;padding-top:5px" class="hyperlink" (click)="Add()">{{'GLAccounts.O.Add' | TextCodeTranslationPipe}}</span>
 
                 </td>
+
+                <td style="text-align:center;width:50px">
+                    <span style="font-size:12px; padding-right:5px;padding-top:5px" class="hyperlink" (click)="Connect()">{{'GLAccount.O.Connect' | TextCodeTranslationPipe}}</span>
+
+                </td>
                 <td style="width:10px"></td>
             </tr>
         </table>
@@ -38,7 +43,7 @@
 </tr>
 
 <tr>
-    <td style="height: 40%;width:400px">
+    <td style="height: 40%;width:480px">
         <div class="CellContent" style="bottom: 75px;">
             <logitude-edit-grid GridHeight="100%" [ItemSource]="ConnectedGLAccounts">
 
@@ -73,7 +78,7 @@
                 <log-column [width]="'75'" [header]="'GLAccount.F.Inactive' | TextCodeTranslationPipe"  [Alignment]="'center'" [Editable]="true" [visibility]="'visibile'">
                     <ng-template let-item>
                     <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
-                        <div style="width: 30px;   height:20px;padding-top:3px;align-self:center;padding-right:30px; padding-left:30px  ">
+                        <div *ngIf="!IsConnectedWithExistGLAccount(item.DisplayNumber)" style="width: 30px;   height:20px;padding-top:3px;align-self:center;padding-right:30px; padding-left:30px  ">
                             <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="item.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="item" (ValueChanged)="item.InactiveChecked($event)"></LogCheckBox>
                         </div>
 
@@ -83,6 +88,21 @@
                 </ng-template>
                 </log-column>
 
+                <log-column [width]="'75'" [header]="'GLAccount.O.Disconnect' | TextCodeTranslationPipe"  [Alignment]="'center'" [Editable]="true" [visibility]="'visibile'">
+                    <ng-template let-item>
+                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                      
+                        <div [style.text-align]="'center'" class="TextTrimming" *ngIf="IsConnectedWithExistGLAccount(item.DisplayNumber)">
+                            <button style="height: 18px;margin:auto;margin-top:3px;" class="Button sm" (click)="ConfirmDisConnect(item.entityPM)">
+                                {{'GLAccount.O.Disconnect' | TextCodeTranslationPipe}}
+                            </button>
+                        </div>
+
+                    </log-cell-template>
+                </ng-template>
+                </log-column>
+
+             
 
             </logitude-edit-grid>
         </div>

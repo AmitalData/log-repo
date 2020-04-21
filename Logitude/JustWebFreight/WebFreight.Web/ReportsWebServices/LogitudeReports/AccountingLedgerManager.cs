@@ -445,6 +445,30 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openAPpayment.PaymentCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openAPpayment.InternalNotes;
                 OpeningAccounts.Add(accountingLedgerRecord);
+
+                if (openAPpayment.ExternalPaymentAmount != null && openAPpayment.ExternalPaymentAmount != 0)
+                {
+                    AccountingLedger externalLedgerRecord = new AccountingLedger()
+                    {
+                        ReferenceType = "External Payment",
+                        Credits = (double)Math.Abs((decimal)openAPpayment.ExternalPaymentAmount),
+                        ValueDate = openAPpayment.ExternalPaymentDate,
+                        CreateDate = openAPpayment.ExternalPaymentDate,
+
+                        DueDate = accountingLedgerRecord.DueDate,
+                        ReferenceNumber = accountingLedgerRecord.ReferenceNumber,
+                        CustomerId = accountingLedgerRecord.CustomerId,
+                        BranchId = accountingLedgerRecord.BranchId,
+                        BranchName = accountingLedgerRecord.BranchName,
+                        BillToVendor = accountingLedgerRecord.BillToVendor,
+                        Currency = accountingLedgerRecord.Currency,
+                        Notes = accountingLedgerRecord.Notes,
+                        RegisterDate = accountingLedgerRecord.RegisterDate,
+                        PaymentMethod = accountingLedgerRecord.PaymentMethod,
+                    };
+
+                    OpeningAccounts.Add(externalLedgerRecord);
+                }
             }
             #endregion
 
@@ -811,6 +835,30 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.PaymentMethod = APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
 
                 tempList.Add(accountingLedgerRecord);
+
+                if (apPayment.ExternalPaymentAmount != null && apPayment.ExternalPaymentAmount != 0)
+                {
+                    AccountingLedger externalLedgerRecord = new AccountingLedger()
+                    {
+                        ReferenceType = "External Payment",
+                        Credits = (double)Math.Abs((decimal)apPayment.ExternalPaymentAmount),
+                        ValueDate = apPayment.ExternalPaymentDate,
+                        CreateDate = apPayment.ExternalPaymentDate,
+
+                        DueDate = accountingLedgerRecord.DueDate,
+                        ReferenceNumber = accountingLedgerRecord.ReferenceNumber,
+                        CustomerId = accountingLedgerRecord.CustomerId,
+                        BranchId = accountingLedgerRecord.BranchId,
+                        BranchName = accountingLedgerRecord.BranchName,
+                        BillToVendor = accountingLedgerRecord.BillToVendor,
+                        Currency = accountingLedgerRecord.Currency,
+                        Notes = accountingLedgerRecord.Notes,
+                        RegisterDate = accountingLedgerRecord.RegisterDate,
+                        PaymentMethod = accountingLedgerRecord.PaymentMethod,
+                    };
+
+                    tempList.Add(externalLedgerRecord);
+                }
             }
             #endregion
 

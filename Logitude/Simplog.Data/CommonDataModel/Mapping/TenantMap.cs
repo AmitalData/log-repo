@@ -125,7 +125,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CheckDigitControlAlgorithmCode).HasColumnName("CheckDigitControlAlgorithmCode");
             this.Property(t => t.ApplyVATForAllPartners).HasColumnName("ApplyVATForAllPartners");
             this.Property(t => t.HideFCLAllIn).HasColumnName("HideFCLAllIn");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
+            this.Property(t => t.DisplayDocumentsAndEvents).HasColumnName("DisplayDocumentsAndEvents");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

@@ -90,12 +90,14 @@
     ForeignKeyColumn="QueryId"
     ReferencedTable="Queries"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="ObjectFieldId"
     ReferencedTable="ObjectFields"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Relation
     ForeignKeyColumn="UserId"
     ReferencedTable="Users"

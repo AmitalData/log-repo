@@ -108,18 +108,18 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
                 }
 
-                CityQueryService CityCityService = new CityQueryService(Tenant);
-                if (MyEntity.City != null)
-                {
-                    var myCityPM = CityCityService.CityCustomDataMappingAndValidatin(MyEntity.City, temp.CountryId, Tenant, ComputingPartnerName);
-                    if (myCityPM != null)
-                    {
-                        temp.City = myCityPM.EnglishName;
-                        temp.CityCode = myCityPM.Code;
-                    }
-                }
+                //CityQueryService CityCityService = new CityQueryService(Tenant);
+                //if (MyEntity.City != null)
+                //{
+                //    var myCityPM = CityCityService.CityCustomDataMappingAndValidatin(MyEntity.City, temp.CountryId, Tenant, ComputingPartnerName);
+                //    if (myCityPM != null)
+                //    {
+                //        temp.City = myCityPM.EnglishName;
+                //        temp.CityCode = myCityPM.Code;
+                //    }
+                //}
 
-
+                temp.City = MyEntity.City;
                 temp.ZipCode = MyEntity.ZipCode;
                 temp.PhoneNumber = MyEntity.PhoneNumber;
                 temp.FaxNumber = MyEntity.FaxNumber; StateQueryService StateStateService = new StateQueryService(Tenant);

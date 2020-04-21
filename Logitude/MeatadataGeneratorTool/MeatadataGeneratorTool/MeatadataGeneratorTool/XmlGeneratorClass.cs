@@ -2044,9 +2044,19 @@ namespace MeatadataGeneratorTool
                         int? fieldDigitsAfterPoint = field.DigitsAfterPoint;
 
                         string dxmlColumnDataType = GetDataTypeForDXMLColumn(fieldDataType, fieldIsFixedLength);
-                        bool dxmlColumnNullable = GetNullableForDXMLColumn(fieldIsRequired, fieldIsNullable, fieldIsPrimaryKey, dxmlColumnDataType);
-                        int dxmlColumnSize = new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
+                        bool dxmlColumnNullable;
 
+                        if(entityName.ToLower() == "Address".ToLower() && (fieldName.ToLower() == "City".ToLower() || fieldName.ToLower() == "CountryId".ToLower()))
+                        {
+                            dxmlColumnNullable = true;
+                        }
+                        else
+                        {
+                            dxmlColumnNullable = GetNullableForDXMLColumn(fieldIsRequired, fieldIsNullable, fieldIsPrimaryKey, dxmlColumnDataType);
+                        }
+
+
+                        int dxmlColumnSize = new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
 
                         columnElement.SetAttribute("Name", fieldName);
 
@@ -2061,7 +2071,7 @@ namespace MeatadataGeneratorTool
                         {
                             if (fieldOldNames.Contains(","))
                             {
-                                var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName);
+                                var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName && x != fieldShortName);
 
                                 oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
                             }
@@ -2093,17 +2103,17 @@ namespace MeatadataGeneratorTool
                             columnElement.SetAttribute("Scale", fieldDigitsAfterPoint.ToString());
                         }
 
-                        string dxmlColumnName;
+                        string columnNames;
                         if (!string.IsNullOrEmpty(field.OldNames))
                         {
-                            dxmlColumnName = !field.OldNames.Contains(",") ? field.OldNames : field.OldNames.Split(',').Last();
+                            columnNames = field.OldNames;
                         }
                         else
                         {
-                            dxmlColumnName = field.FieldName;
+                            columnNames = field.FieldName;
                         }
 
-                        XElement columnWithDefaultValueElement = columnWithDefaultValueElements.Where(x => x.Attribute("Name").Value == dxmlColumnName).FirstOrDefault();
+                        XElement columnWithDefaultValueElement = columnWithDefaultValueElements.Where(x => (!columnNames.Contains(",") && x.Attribute("Name").Value == columnNames) || (columnNames.Contains(",") && columnNames.Split(',').Contains(x.Attribute("Name").Value))).FirstOrDefault();
                         if (columnWithDefaultValueElement != null)
                         {
                             columnElement.SetAttribute("DefaultValue", columnWithDefaultValueElement.Attribute("DefaultValue").Value);

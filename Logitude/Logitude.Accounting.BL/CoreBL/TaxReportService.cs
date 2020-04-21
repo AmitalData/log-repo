@@ -105,7 +105,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                            VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                             InvoiceAmount = invoice.TotalAmountForTaxReport != null ? invoice.TotalAmountForTaxReport : 0;
-                            if (invoice.InvoiceNumber.Length == 9)
+                            if (invoice.InvoiceNumber.Length > 9)
                             {
                                 outputreference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
                             }
@@ -113,7 +113,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 outputreference = invoice.InvoiceNumber;
                             }
-
+                           SetReferenceFields(outputreference);
                             if (!string.IsNullOrEmpty(invoice.VatNumber))
                             {
                                 vatNumber = invoice.VatNumber;
@@ -122,8 +122,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         TaxReportLinePM line = new TaxReportLinePM()
                             {
                                 VatNumber = vatNumber,
-                                Reference = outputreference,
-                                ReferecneGroup = "0000",
+                                Reference = reference ,
+                                ReferecneGroup = referenceGroup,
                                 ReferenceDate = invoice.InvoiceDate,
                                 JournalId = a.Id,
                                 OutputOrInput = "O",
@@ -204,22 +204,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 VatNumber = null;
                 InputVatAmount = 0;
                 InputInvoiceAmount = 0;
-                card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
-                //if (a.AccountingEntity == AccountingEntityValues.APInvoice)
-                //{
-                //  //  aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
+                card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();             
+                if (a.AccountingEntity == AccountingEntityValues.APInvoice)
+                {
+                    aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
+                    if (aPInvoice == null)
+                    {
+                        continue;
+                    }                   
+                }
 
-                //    //if (aPInvoice != null)
-                //    //{
-                //    //    SetVatFieldsForAPInvoiceTransaction(aPInvoice);
-                //    //}
-                //    //else
-                //    //{
-                //    //    continue;
-                //    //}
-                //}
-
-                 if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
+                if (card != null && card.PartnerTypeId == PartnerTypeValues.Customer)
                 {
                     if (card.VatNumber == tenantPM.VatNumber)
                     {
@@ -240,10 +235,16 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (VatNumber == null)
                     VatNumber = "000000000";
-
+               
                 GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
+
                 if (gLAccountPM != null)
                 {
+                   
+                    if(gLAccountPM.AccountTypeCode=="3" || gLAccountPM.AccountTypeCode == "1")
+                    {
+                        VatNumber = card != null ? card.VatNumber : null;
+                    }
                     if (gLAccountPM.IsEquipmentVendor)
                     {
                         isEquipment = true;
@@ -272,32 +273,16 @@ namespace Logitude.Accounting.BL.CoreBL
                     Tenant = tenant,
                     TransmitStatusCode = transmitStatusCode,
                     TaxReportDate = taxReport.TaxReportMonth
-
                 };
 
-
-
-
-                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId).FirstOrDefault();
-                string CreditAccountId = null;
-                string accountTypeCode = null;
-                //if (journal.JournalLines.Count > 0)
-                //{
-                //    CreditAccountId = journal.JournalLines.FirstOrDefault().CreditAccountId;
-                //    accountTypeCode = journal.JournalLines.FirstOrDefault().AccountTypeCode;
-                //}
-
-
-
-                //  GLAccountPM account = gLAccountQueryService.GetSingle(CreditAccountId, false, false);
-
-               
+                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId && d.TaxReportJournalLineNumber == a.JournalLineNumber ).FirstOrDefault();
+              //   card = cards.Where(d => d.GLAccountId == a.AccountId).FirstOrDefault();
                     if (aPInvoice != null && (aPInvoice.VATNumber == tenantPM.VatNumber))
                     {
                         taxReportLine.LineTypeCode = "C";
                     }
 
-                    else if ( journal.LineCounter>0 && journal.LineCreditAccountId == setting.CustomsGLAccountId)
+                    else if ( journal.LineCounter>0 && journal.LineCreditAccountId != null && journal.LineCreditAccountId == setting.CustomsGLAccountId)
                     {
 
                         taxReportLine.LineTypeCode = "R";
@@ -308,7 +293,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxReportLine.LineTypeCode = "P";
                     }
 
-                    else if (journal.LineCreditAccountTypeCode != "3" || (journal.LineCreditAccountTypeCode == "3" && (gLAccountPM!= null && gLAccountPM.Smallcashbook==true)))
+                    else if ((journal.LineCreditAccountTypeCode == "3" && (gLAccountPM!= null && gLAccountPM.Smallcashbook==true)))
                     {
                         taxReportLine.LineTypeCode = "K";
                     }
@@ -405,9 +390,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     Reference = Reference.Replace("-", "");
                 }
-                if (Reference.Length > 20)
+                if (Reference.Length > 9)
                 {
-                    Reference = Reference.Substring(0, 19);
+                    Reference = Reference.Substring(Reference.Length -9);
                 }
             
                 Regex isMatche = new Regex("([A-Za-z])");

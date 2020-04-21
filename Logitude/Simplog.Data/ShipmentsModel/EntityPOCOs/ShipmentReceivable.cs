@@ -49,6 +49,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string VatTypeId { get; set; }
         public bool IsBackToBack { get; set; }
         public string ShipmentReceivableParentId { get; set; }
+        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }

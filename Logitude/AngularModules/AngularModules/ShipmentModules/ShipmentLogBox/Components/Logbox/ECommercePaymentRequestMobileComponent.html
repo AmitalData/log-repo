@@ -422,6 +422,18 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <tr *ngIf="ShowFinalMessage == true">
+                                                <td style="height: 10px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="ShowFinalMessage == true">
+                                                <td style="direction:rtl;text-align:center;">
+                                                    <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;word-wrap: break-word;white-space: normal;">
+                                                        {{FinalMessage}}
+                                                    </span>
+                                                </td>
+                                            </tr>
                                         </table>
                                     </td>
                                 </tr>
@@ -449,25 +461,6 @@
         </tr>
     </table>
 </div>
-<table class="LogitudeWindow" style="direction:rtl;border: 1px solid #BCBEC0;" *ngIf="ShowFinalMessage == true">
-    <tr style="height:33%">
-        <td>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <table style="direction:rtl;">
-                <tr>
-                    <td style="text-align:center;" *ngIf="ShowFinalMessage == true">
-                        <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;word-wrap: break-word;white-space: normal;">
-                            {{FinalMessage}}
-                        </span>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
 
 <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == true" style="direction:rtl;">
     <tr>
