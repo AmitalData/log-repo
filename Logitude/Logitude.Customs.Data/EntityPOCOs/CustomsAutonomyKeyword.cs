@@ -27,6 +27,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string KeywordtypeCode { get; set; }
         [Column("KeywordsList")]
 	    public string KeywordsList { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 

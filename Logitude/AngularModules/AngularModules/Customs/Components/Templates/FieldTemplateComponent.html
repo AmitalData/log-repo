@@ -114,7 +114,14 @@
                 </div>
             </div>
 
-
+            <!-- AutonomeyKeyword -->
+            <div *ngIf="ObjectTableName == 'Customs.CustomsAutonomyKeyword'">
+                <div *ngIf="FieldName == 'Delete'" style="position:relative;width:100%; height: 100%;" (click)="DeleteAutonomyKey(Entity['Id'])">
+                    <div *ngIf="!IsHeaderScreenTemplate" style="display: inline; position: absolute;right: 0px; top:5px;">
+                        <IconButton [Name]="'Delete'"><</IconButton>
+                    </div>
+                </div>
+            </div>
             <!-- PaymentOrder -->
             <div *ngIf="ObjectTableName == 'Customs.PaymentOrder'">
                 <!-- ActualPayDate -->
@@ -179,7 +186,7 @@
 
 
                         <div *ngIf="IsHeaderScreenTemplate" class="TextTrimming"
-                                style="display: inline; padding-right:25px;">
+                             style="display: inline; padding-right:25px;">
                             <span>{{Entity[FieldName] | DateTimePipe:'D'}}</span>
 
 

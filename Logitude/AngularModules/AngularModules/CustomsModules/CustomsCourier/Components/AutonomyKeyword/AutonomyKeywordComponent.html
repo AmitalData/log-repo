@@ -62,9 +62,7 @@
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'KeywordtypeCode'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"
-                                  
-                                  ></LogLabel>
+                                  [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
                         <!--[SelectedItem]="SelectedKeywordtypeCode"-->
@@ -80,8 +78,8 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'KeywordsList'" [ObjectTableName]="ObjectTableName" [Text]="KeywordsList"
-                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'" [IsMultiline]="true"  ></LogTextBox>
+                        <LogTextBox [ObjectFieldName]="'KeywordsList'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [HideColumns]="true" [Text]="KeywordsList" ></LogTextBox>
                     </td>
                     <td></td>
                 </tr>
@@ -96,7 +94,7 @@
         </td>
     </tr>
 
-    <tr style="height: 40px;">
+    <tr *ngIf="isWindowMode" style="height: 40px;">
         <td>
             <div></div>
         </td>
