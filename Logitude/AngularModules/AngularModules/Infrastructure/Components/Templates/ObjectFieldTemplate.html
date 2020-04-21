@@ -5,8 +5,8 @@
             <div class="MediaFill">
                 <div class="MediaFillRelative">
 
-                    <div  class="MediaFillAbsolute" [hidden]="HasTemplate != true && this.IsSpotLightTemplate != true" style="overflow: hidden;">
-                        <div ChildDirective></div>
+                    <div  class="MediaFillAbsolute" [hidden]="!this.ShowChildTemplate" style="overflow: hidden;">
+                        <div class="LocationDirective" ChildDirective></div>
                     </div>
 
                     <div class="MediaFillAbsolute" *ngIf="!HasTemplate && ObjectField != null">

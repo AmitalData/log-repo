@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, AfterViewInit, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {AppTool} from '../../Tools';
 import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
@@ -17,7 +17,7 @@ import { ChildDirective } from '../../Directives/ChildDirective';
 // https://github.com/angular/angular/issues/10762
 // http://stackoverflow.com/questions/39794156/angular2-dynamically-added-elements
 
-export class ObjectFieldTemplate implements AfterViewInit, OnDestroy {
+export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   public Entity: any = null;
   public CustomField: any = null;
   public ObjectTable: ObjectTablePM = null;
@@ -41,16 +41,16 @@ export class ObjectFieldTemplate implements AfterViewInit, OnDestroy {
   public isRTL: boolean = false;
   private CurrentSession = SessionLocator.SelectedSession;
   @ViewChild(ChildDirective) Child: ChildDirective;
-  constructor(private CD: ChangeDetectorRef) {
+  public ShowChildTemplate: boolean = false;
+  constructor(private changeDetector: ChangeDetectorRef) {
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     if (ObjectsLocator.GlobalSetting) {
       this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
 
-    if (this.ObjectField != null && this.IsSpotLightTemplate == false) {
-      //this.IsCustom = this.ObjectField.IsCustom;
+    if (this.ObjectField && !this.IsSpotLightTemplate) {
       this.HasTemplate = this.ObjectField.HasTemplate;
       this.DataTypeCode = this.ObjectField.DataTypeCode;
       this.DigitsAfterPoints = "n" + this.ObjectField.DigitsAfterPoint;
@@ -74,28 +74,22 @@ export class ObjectFieldTemplate implements AfterViewInit, OnDestroy {
         case "Boolean":
         case "Date":
         case "DateTime":
-        case "Integer":
-          {
-            if (this.HasTemplate != true) {
-              this.IsAutoFormat = true;
-            }
-
-            break;
+        case "Integer": {
+          if (this.HasTemplate != true) {
+            this.IsAutoFormat = true;
           }
+
+          break;
+        }
 
         case "LookUp":
-        case "PickList":
-          {
-            this.IsLookUp = true;
-            break;
-          }
+        case "PickList": {
+          this.IsLookUp = true;
+          break;
+        }
       }
 
-      if (this.HasTemplate) {
-        this.LoadTemplate();
-      }
-
-      else {
+      if (!this.HasTemplate) {
         if (this.Entity != null) {
           if (this.IsHeaderScreenTemplate && this.IsLookUp) {
 
@@ -195,46 +189,30 @@ export class ObjectFieldTemplate implements AfterViewInit, OnDestroy {
               this.FieldValue = this.Entity[this.FieldName];
             }
           }
-
-          this.DetectChanges();
         }
       }
     }
 
-    if (this.IsSpotLightTemplate == true) {
-      this.LoadSpotLightTemplate();
+    if (this.HasTemplate || this.IsSpotLightTemplate) {
+      this.ShowChildTemplate = true;
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.HasTemplate) {
+      this.LoadTemplate();
     }
 
-    this.DetectChanges();
+    else if (this.IsSpotLightTemplate) {
+      this.LoadSpotLightTemplate();
+    }
   }
 
   LoadTemplate() {
     if (this.HasTemplate) {
-      if (this.Child.Location) {
-        if (this.Entity != null && this.ObjectTable != null && this.ObjectField != null) {
 
-          var myComponentPath = null;
-          if (this.ObjectTable.ClientModuleName == "Infrastructure") {
-            myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/InfrastructureFieldTemplateComponent";
-          }
+      if (this.Entity != null && this.ObjectTable != null && this.ObjectField != null) {
 
-          else {
-            myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/FieldTemplateComponent";
-          }
-
-          SessionLocator.DynamicLoader.Load(myComponentPath, this.Child.Location)
-            .then(cmpRef => {
-              cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate });
-              //this.DetectChanges();                           
-            });
-        }
-      }
-    }
-  }
-
-  LoadSpotLightTemplate() {
-    if (this.Child.Location) {
-      if (this.Entity != null && this.ObjectTable != null) {
 
         var myComponentPath = null;
         if (this.ObjectTable.ClientModuleName == "Infrastructure") {
@@ -247,32 +225,51 @@ export class ObjectFieldTemplate implements AfterViewInit, OnDestroy {
 
         SessionLocator.DynamicLoader.Load(myComponentPath, this.Child.Location)
           .then(cmpRef => {
-            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate });
-
+            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate });
             this.DetectChanges();
-
-            this.CurrentSession.SessionEvent.subscribe(s => {
-              if (s == "SpotLightDetectChanges") {
-                this.DetectChanges();
-              }
-            });
-
           });
       }
     }
   }
 
+  LoadSpotLightTemplate() {
+    if (this.Entity != null && this.ObjectTable != null) {
+
+      var myComponentPath = null;
+      if (this.ObjectTable.ClientModuleName == "Infrastructure") {
+        myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/InfrastructureFieldTemplateComponent";
+      }
+
+      else {
+        myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/FieldTemplateComponent";
+      }
+
+      SessionLocator.DynamicLoader.Load(myComponentPath, this.Child.Location)
+        .then(cmpRef => {
+          cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate });
+
+          this.DetectChanges();
+
+          this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "SpotLightDetectChanges") {
+              this.DetectChanges();
+            }
+          });
+
+        });
+    }
+  }
+
   DetectChanges() {
-    if (this.CD) {
-      var isDestroyed: boolean = this.CD['destroyed'];
+    if (this.changeDetector) {
+      var isDestroyed: boolean = this.changeDetector['destroyed'];
       if (!isDestroyed) {
-        //console.log("DetectChanges Templates") 
-        this.CD.detectChanges();
+        this.changeDetector.detectChanges();
       }
     }
   }
 
   ngOnDestroy() {
-    this.CD = null;
+    this.changeDetector = null;
   }
 }
