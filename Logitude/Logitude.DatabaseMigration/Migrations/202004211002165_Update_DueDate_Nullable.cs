@@ -8,8 +8,8 @@ namespace Logitude.DatabaseMigration.Migrations
         public override void Up()
         {
  
-            AddColumn("dbo.Journals", "DocumentDate", c => c.DateTime());
-            AddColumn("dbo.Journals", "DueDate", c => c.DateTime());
+            AlterColumn("dbo.Journals", "DocumentDate", c => c.DateTime());
+            AlterColumn("dbo.Journals", "DueDate", c => c.DateTime());
           
         }
         
