@@ -30,21 +30,16 @@ export class FieldTemplateComponent {
     public IsSpotLightTemplate: boolean = false;
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
+    customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
     private _ListComponentArgs: ListComponentArgs ;
     @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
-    constructor() {
+    constructor(private CD: ChangeDetectorRef) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
             this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
         } else {
             this._ListComponentArgs = new ListComponentArgs();
         }
-
-    customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
-    @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
-    constructor(private _ListComponentArgs: ListComponentArgs, private CD: ChangeDetectorRef){
-        
     }
-
     public ButtonClick() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
 
@@ -153,7 +148,7 @@ export class FieldTemplateComponent {
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
                 });
         }
-    }
+    
         else {
             if (this.Entity.IsControllerRemarks) {
                 _declarationRemarksService.GetINCorINAtatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
@@ -167,7 +162,7 @@ export class FieldTemplateComponent {
             }
         }
     }
- DeleteAutonomyKey(value: number) {
+    DeleteAutonomyKey(value: number) {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         if (!AppTool.IsNullOrEmpty(value)) {
             var confirmWindow = new ConfirmWindow();
@@ -183,7 +178,7 @@ export class FieldTemplateComponent {
                 }
             });
         }
-        }
+    }
     ShowCFIFILEMMoveToQueueScreen() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
