@@ -544,6 +544,10 @@
     <Compile Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.Designer.cs">
       <DependentUpon>202004020908214_AddOcrToSupplierInvoiceItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004190752541_AddSearchfieldTAutonomyKeyword.cs" />
+    <Compile Include="Migrations\202004190752541_AddSearchfieldTAutonomyKeyword.Designer.cs">
+      <DependentUpon>202004190752541_AddSearchfieldTAutonomyKeyword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -942,6 +946,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004020908214_AddOcrToSupplierInvoiceItems.resx">
       <DependentUpon>202004020908214_AddOcrToSupplierInvoiceItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004190752541_AddSearchfieldTAutonomyKeyword.resx">
+      <DependentUpon>202004190752541_AddSearchfieldTAutonomyKeyword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

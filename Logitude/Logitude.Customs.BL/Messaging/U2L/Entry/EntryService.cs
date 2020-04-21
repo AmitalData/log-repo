@@ -212,6 +212,28 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                             mySupplierInvoiceItem.Unit = item.InvoiceQuantityType;
                             mySupplierInvoiceItem.StatisticQuantityUnit = item.StatisticQuantityType;
                             mySupplierInvoiceItem.MarksAndNumbers = item.MarksAndNumbers;
+                            if (string.IsNullOrWhiteSpace(mySupplierInvoiceItem.MarksAndNumbers))
+                            {
+                                if(!string.IsNullOrWhiteSpace(item.ItemDescription) || !string.IsNullOrWhiteSpace(item.ItemCode))
+                                {
+                                    if (string.IsNullOrWhiteSpace(item.ItemDescription))
+                                    {
+                                        mySupplierInvoiceItem.MarksAndNumbers = item.ItemCode;
+                                    }
+                                    else if (string.IsNullOrWhiteSpace(item.ItemCode))
+                                    {
+                                        mySupplierInvoiceItem.MarksAndNumbers = item.ItemDescription;
+                                    }
+                                    else
+                                    {
+                                        mySupplierInvoiceItem.MarksAndNumbers = string.Concat(item.ItemCode, "-", item.ItemDescription);
+                                    }
+                                    if (!string.IsNullOrWhiteSpace(mySupplierInvoiceItem.MarksAndNumbers) && mySupplierInvoiceItem.MarksAndNumbers.Length > 30)
+                                    {
+                                        mySupplierInvoiceItem.MarksAndNumbers = mySupplierInvoiceItem.MarksAndNumbers.Substring(0, 30);
+                                    }
+                                }
+                            }
                             if (item.Weight.HasValue) mySupplierInvoiceItem.PackageWeight = item.Weight.ToString();
                             if (item.PackageQuantity.HasValue && item.PackageQuantity > 0)
                             {

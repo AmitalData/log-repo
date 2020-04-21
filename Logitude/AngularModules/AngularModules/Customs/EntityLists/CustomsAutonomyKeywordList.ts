@@ -13,6 +13,8 @@ export class CustomsAutonomyKeywordList {
 	KeywordtypeCode: string;
 	KeywordsList: string;
 	KeywordtypeLocalName: string;
+	SearchFields: string;
+	Delete: boolean;
 	
 }
  

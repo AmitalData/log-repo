@@ -116,7 +116,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 foreach (var customsDocumentPMItem in customsDocumentPMList)
                 {
-                    if (customsDocumentPMItem.DocumentStatusCode == "2")
+                    if (customsDocumentPMItem.DocumentStatusCode == "2" || String.IsNullOrWhiteSpace(customsDocumentPMItem.DocumentStatusCode))
                     {
                         try
                         {

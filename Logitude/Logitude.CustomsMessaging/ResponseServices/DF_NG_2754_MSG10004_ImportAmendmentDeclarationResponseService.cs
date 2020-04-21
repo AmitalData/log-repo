@@ -31,7 +31,7 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    public class DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService :
+    public class DF_NG_2754_MSG10004_ImportAmendmentDeclarationResponseService :
         ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2754_MSG10004_ImportDeclarationResponse, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
@@ -994,7 +994,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
  }
                         supplierInvoiceItemPM.SalesTaxExemptionTypeCode = GetValueCodeType( governmentAgencyGoodsItem.DMExtensions.SalesTaxExemptionType);
                         supplierInvoiceItemPM.PreferenceDocumentNumber = GetValueIDType( governmentAgencyGoodsItem.DMExtensions.PreferenceDocumentNumber);
-                        supplierInvoiceItemPM.IsUsed = governmentAgencyGoodsItem.DMExtensions.IsUsed.Value;
+                        if(governmentAgencyGoodsItem.DMExtensions.IsUsed !=null) supplierInvoiceItemPM.IsUsed =   governmentAgencyGoodsItem.DMExtensions.IsUsed.Value;
                         supplierInvoiceItemPM.ActualInvoiceLines = governmentAgencyGoodsItem.DMExtensions.InvoiceLineNumbers;
                        if(governmentAgencyGoodsItem.DMExtensions.DeferredCustomsTax!= null) supplierInvoiceItemPM.DeferredCustomsTax = governmentAgencyGoodsItem.DMExtensions.DeferredCustomsTax.Value;
                        if(governmentAgencyGoodsItem.DMExtensions.DeferredPurchaseTax!=null) supplierInvoiceItemPM.DeferredPurchaseTax = governmentAgencyGoodsItem.DMExtensions.DeferredPurchaseTax.Value;
@@ -1092,10 +1092,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             List<SupplierInvoiceModificationPM> supplierInvoiceModificationPMs = new List<SupplierInvoiceModificationPM>();
 
             foreach (var customsValuation in declarationGoodsShipment.CustomsValuation)
-            {if (customsValuation.ExitToEntryChargeAmount == null) continue;
-            if(GetValueAmountType(customsValuation.OtherChargeDeductionAmount) ==0) continue;
-                string[] ChargesTypeCode = new string[] { "67,144,I02" };
+            {
+                string[] ChargesTypeCode = new string[] { "67","144","I02" };
                 if (!ChargesTypeCode.Contains(GetValueCodeType(customsValuation.ChargesTypeCode))  ) {
+                    if (GetValueAmountType(customsValuation.OtherChargeDeductionAmount) == 0) continue;
+
                     SupplierInvoiceModificationPM supplierInvoiceModificationPM = new SupplierInvoiceModificationPM()
                     { ChangeSetOp = ChangeSetOperation.Insert,
                         DeclarationId = declarationId,
@@ -1106,7 +1107,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };  supplierInvoiceModificationPMs.Add(supplierInvoiceModificationPM);
                   }
 
-
+                if (customsValuation.ExitToEntryChargeAmount == null) continue;
                 if (customsValuation.ChargesTypeCode.Value=="67" )
                 {
                     supplierInvoicePM.InsruanceCurrencyTypeCode = customsValuation.ExitToEntryChargeAmount.currencyID.ToString();

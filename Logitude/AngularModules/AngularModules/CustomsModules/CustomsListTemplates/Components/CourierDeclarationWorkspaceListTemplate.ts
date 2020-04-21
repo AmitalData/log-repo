@@ -6,7 +6,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { CourierMasterList } from '../../../Customs/EntityLists/CourierMasterList';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { CourierMasterPMService } from '../../../Customs/Services/StandardPMs/CourierMasterPMService';
@@ -34,9 +34,10 @@ export class CourierDeclarationWorkspaceListTemplate {
     setVariables(courierMasterList: CourierMasterList, fieldName: string) {
         this._CourierMasterList = courierMasterList;
         this.fieldName = fieldName;
-        var today = new Date();
+        var today = DateTool.GetCurrentDateTimeAsUtc();
         today.setHours(0, 0, 0, 0);
-        var estimatedArrivalDate = new Date(this._CourierMasterList.EstimatedArrivalDate);//.setHours(0, 0, 0, 0);
+        
+        var estimatedArrivalDate = DateTool.GetDateFromDate(this._CourierMasterList.EstimatedArrivalDate);//.setHours(0, 0, 0, 0);
         estimatedArrivalDate.setHours(0, 0, 0, 0);
          if (estimatedArrivalDate.getTime() < today.getTime()) {
             this.colorDate = "Red";
