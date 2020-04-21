@@ -46,14 +46,14 @@
   </Column>
   <Column
     Name="Name"
-    Type="varchar"
+    Type="nvarchar"
     Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Description"
-    Type="varchar"
+    Type="nvarchar"
     Size="200">
     <Constraints
       Nullable="true" />
