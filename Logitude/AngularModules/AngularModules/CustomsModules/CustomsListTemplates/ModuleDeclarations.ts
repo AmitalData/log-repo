@@ -15,8 +15,8 @@ import { CourierDeclarationWorkspaceListTemplate } from './Components/CourierDec
  import { CustomsCollateralListTemplate } from './Components/CustomsCollateralListTemplate';
 import { DeclarationAmendmentListTemplate } from './Components/DeclarationAmendmentDeclarationListTemplate';
 import { DeclarationListTemplate } from './Components/DeclarationListTemplate';
+import { ActionListHeaderTemplate } from './Components/ListHeaderTemplates/ActionListHeaderTemplate';
 
- 
 export const Components =
   [
     CustomsRequestsSheetsListTemplate,
@@ -34,7 +34,8 @@ export const Components =
     CustomsCollateralListTemplate,
     CourierDeclarationWorkspaceListTemplate,
     DeclarationAmendmentListTemplate,
-    DeclarationListTemplate
+        DeclarationListTemplate,
+        ActionListHeaderTemplate
 
   ];
 
@@ -60,6 +61,8 @@ export class ModuleDeclarations {
           case "CourierDeclarationWorkspaceListTemplate": { myResult = CourierDeclarationWorkspaceListTemplate; break; }
           case "DeclarationAmendmentListTemplate": { myResult = DeclarationAmendmentListTemplate; break; }
           case "DeclarationListTemplate": { myResult = DeclarationListTemplate; break; }
+          case "ActionListHeaderTemplate": { myResult = ActionListHeaderTemplate; break; }
+
       }
 
     return myResult;
