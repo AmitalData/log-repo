@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class LeadSourceUpdateClass
    {  		
-		public const string HashString = "6816b3e2a90b42798a63239629c2b9d8";
+		public const string HashString = "4961ddd5dddf12c0c4e5838d999474a9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "LeadSource",
 			      				    IsNew =  false,
 			      				    DBTableName =  "LeadSources",
-			      				    OldDBTableName =  "LeadSources",
 			      				    ObjectTableSingular =  "Lead Source",
 			      				    ObjectTablePlural =  "Lead Sources",
 			      				    DescriptionDefaultText =  "Define the sources that supply you with information about  new customers.",
@@ -144,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "LeadSource",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -209,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "LeadSource",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -276,7 +273,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "LeadSource",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -340,7 +336,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "LeadSource",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,

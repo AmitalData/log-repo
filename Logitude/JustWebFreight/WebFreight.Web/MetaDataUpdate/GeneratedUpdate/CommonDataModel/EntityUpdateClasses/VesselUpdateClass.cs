@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class VesselUpdateClass
    {  		
-		public const string HashString = "943aecf34a51634efb23aa3c410a265a";
+		public const string HashString = "4ae15c489ba8199364d595a1ad032ebb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "Vessel",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Vessels",
-			      				    OldDBTableName =  "Vessels",
 			      				    ObjectTableSingular =  "Vessel",
 			      				    ObjectTablePlural =  "Vessels",
 			      				    DescriptionDefaultText =  "Add and manage information about the vessels you work with.",
@@ -146,7 +145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -211,7 +209,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -276,7 +273,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -341,7 +337,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -404,7 +399,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AddedManually",
-					  						OldFieldName =  "AddedManually",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -469,7 +463,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -534,7 +527,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -600,7 +592,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -663,7 +654,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IMOCode",
-					  						OldFieldName =  "IMOCode",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -728,7 +718,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryId",
-					  						OldFieldName =  "CountryId",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -792,7 +781,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryName",
-					  						OldFieldName =  "CountryName",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -855,7 +843,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryCode",
-					  						OldFieldName =  "CountryCode",
 					  						ObjectTableName =  "Vessel",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

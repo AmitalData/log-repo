@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPayableUpdateClass
    {  		
-		public const string HashString = "8f6b064e827cec5f75905e7b86efd9d8";
+		public const string HashString = "18e8a6faa3f40175d108fe8e0af838be";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "ShipmentPayable",
 			      				    IsNew =  false,
 			      				    DBTableName =  "ShipmentPayables",
-			      				    OldDBTableName =  "ShipmentPayables",
 			      				    ObjectTableSingular =  "Shipment Payable",
 			      				    ObjectTablePlural =  "ShipmentPayables",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Payable",
-			      				    Code =  "ce27",
+			      				    Code =  "e316",
 			      				    Name =  "ShipmentPayable",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -140,7 +139,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentId",
-					  						OldFieldName =  "ShipmentId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -201,7 +199,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ExpectedAmount",
-					  						OldFieldName =  "ExpectedAmount",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -267,7 +264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ExpectedAmountLocal",
-					  						OldFieldName =  "ExpectedAmountLocal",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -333,7 +329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MinAmount",
-					  						OldFieldName =  "MinAmount",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -399,7 +394,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MaxAmount",
-					  						OldFieldName =  "MaxAmount",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -465,7 +459,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ExpectedAmountInProfitCurrency",
-					  						OldFieldName =  "ExpectedAmountInProfitCurrency",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -531,7 +524,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountedAmount",
-					  						OldFieldName =  "AccountedAmount",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -592,7 +584,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountedAmountInLocalCurrency",
-					  						OldFieldName =  "AccountedAmountInLocalCurrency",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -653,7 +644,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AccountedAmountInProfitCurrency",
-					  						OldFieldName =  "AccountedAmountInProfitCurrency",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -714,7 +704,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OpenAmount",
-					  						OldFieldName =  "OpenAmount",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -775,7 +764,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OpenAmountInLocalCurrency",
-					  						OldFieldName =  "OpenAmountInLocalCurrency",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -836,7 +824,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "OpenAmountInProfitCurrency",
-					  						OldFieldName =  "OpenAmountInProfitCurrency",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -897,7 +884,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IATACodeId",
-					  						OldFieldName =  "IATACodeId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "IATACode",
@@ -960,7 +946,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "PrepaidCollectId",
-					  						OldFieldName =  "PrepaidCollectId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
@@ -1027,7 +1012,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AWBPrint",
-					  						OldFieldName =  "AWBPrint",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1088,7 +1072,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "DueTypeCode",
-					  						OldFieldName =  "DueTypeCode",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "DueType",
@@ -1151,7 +1134,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ShipmentPayableLineStatusCode",
-					  						OldFieldName =  "ShipmentPayableLineStatusCode",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ShipmentPayableLineStatus",
@@ -1214,7 +1196,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "MeasurementId",
-					  						OldFieldName =  "MeasurementId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Measurement",
@@ -1279,7 +1260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Quantity",
-					  						OldFieldName =  "Quantity",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1340,7 +1320,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Rate",
-					  						OldFieldName =  "Rate",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1403,7 +1382,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CurrencyId",
-					  						OldFieldName =  "CurrencyId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -1470,7 +1448,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "UnitPrice",
-					  						OldFieldName =  "UnitPrice",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1531,7 +1508,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TotalAmount",
-					  						OldFieldName =  "TotalAmount",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1594,7 +1570,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TotalAmountLocal",
-					  						OldFieldName =  "TotalAmountLocal",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -1657,7 +1632,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1718,7 +1692,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ChargesTypeId",
-					  						OldFieldName =  "ChargesTypeId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChargesType",
@@ -1781,7 +1754,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "VendorId",
-					  						OldFieldName =  "VendorId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -1842,7 +1814,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "VatTypeId",
-					  						OldFieldName =  "VatTypeId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatType",
@@ -1909,7 +1880,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "IsBackToBack",
-					  						OldFieldName =  "IsBackToBack",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1973,7 +1943,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "ReceivableId",
-					  						OldFieldName =  "ReceivableId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2037,7 +2006,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "AmountInProfitCurrency",
-					  						OldFieldName =  "AmountInProfitCurrency",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2098,7 +2066,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "QuoteCostMinAmount",
-					  						OldFieldName =  "QuoteCostMinAmount",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -2160,7 +2127,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "QuoteCostMaxAmount",
-					  						OldFieldName =  "QuoteCostMaxAmount",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -2222,7 +2188,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "UOMPercentage",
-					  						OldFieldName =  "UOMPercentage",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2284,7 +2249,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TariffId",
-					  						OldFieldName =  "TariffId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2343,7 +2307,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TariffNumber",
-					  						OldFieldName =  "TariffNumber",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2402,7 +2365,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TariffVersion",
-					  						OldFieldName =  "TariffVersion",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,

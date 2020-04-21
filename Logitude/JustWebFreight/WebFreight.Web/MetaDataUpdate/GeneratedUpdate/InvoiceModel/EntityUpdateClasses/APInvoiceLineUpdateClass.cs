@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceLineUpdateClass
    {  		
-		public const string HashString = "f16c37359bbe2777da6680bbecad6d50";
+		public const string HashString = "ac857d771d39eae0d6509f9c9da073de";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	             				    ObjectTableName =  "APInvoiceLine",
 			      				    IsNew =  false,
 			      				    DBTableName =  "APInvoiceLines",
-			      				    OldDBTableName =  "APInvoiceLines",
 			      				    ObjectTableSingular =  "A/P Invoice Line",
 			      				    ObjectTablePlural =  "A/P Invoice Lines",
 			      				    HasCustomFilter =  false,
@@ -115,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/P Invoice Line",
-			      				    Code =  "538e",
+			      				    Code =  "8f40",
 			      				    Name =  "APInvoiceLine",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -140,7 +139,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "APInvoiceId",
-					  						OldFieldName =  "APInvoiceId",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "APInvoice",
@@ -205,7 +203,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "LineNumber",
-					  						OldFieldName =  "LineNumber",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -269,7 +266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "InvoiceCurrencyAmount",
-					  						OldFieldName =  "InvoiceCurrencyAmount",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
@@ -336,7 +332,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "LocalCurrencyAmount",
-					  						OldFieldName =  "LocalCurrencyAmount",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -400,7 +395,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ProfitCurrencyAmount",
-					  						OldFieldName =  "ProfitCurrencyAmount",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -464,7 +458,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -531,7 +524,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ChargesTypeId",
-					  						OldFieldName =  "ChargesTypeId",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChargesType",
@@ -596,7 +588,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ChargesTypeName",
-					  						OldFieldName =  "ChargesTypeName",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -663,7 +654,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VatTypeId",
-					  						OldFieldName =  "VatTypeId",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "VatType",
@@ -728,7 +718,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VatTypeName",
-					  						OldFieldName =  "VatTypeName",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -795,7 +784,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VatPercentage",
-					  						OldFieldName =  "VatPercentage",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
@@ -858,7 +846,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ForiegnCurrencyId",
-					  						OldFieldName =  "ForiegnCurrencyId",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
@@ -923,7 +910,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ForiegnExchangeRate",
-					  						OldFieldName =  "ForiegnExchangeRate",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -987,7 +973,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ForiegnCurrencyAmount",
-					  						OldFieldName =  "ForiegnCurrencyAmount",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
@@ -1054,7 +1039,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1121,7 +1105,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "LocalDescription",
-					  						OldFieldName =  "LocalDescription",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1185,7 +1168,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ExternalVATCard",
-					  						OldFieldName =  "ExternalVATCard",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1249,7 +1231,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "DebitAccount",
-					  						OldFieldName =  "DebitAccount",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1313,7 +1294,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VatAmount",
-					  						OldFieldName =  "VatAmount",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1376,7 +1356,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ChargeTypeGLAccountId",
-					  						OldFieldName =  "ChargeTypeGLAccountId",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1438,7 +1417,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "AuthorizedSignatory",
-					  						OldFieldName =  "AuthorizedSignatory",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1500,7 +1478,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "PrepaidCollectId",
-					  						OldFieldName =  "PrepaidCollectId",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
@@ -1558,7 +1535,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "VatRecognizedPercentage",
-					  						OldFieldName =  "VatRecognizedPercentage",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -1617,7 +1593,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "ContainerTypeId",
-					  						OldFieldName =  "ContainerTypeId",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PackageType",
@@ -1675,7 +1650,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Quantity",
-					  						OldFieldName =  "Quantity",
 					  						ObjectTableName =  "APInvoiceLine",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,

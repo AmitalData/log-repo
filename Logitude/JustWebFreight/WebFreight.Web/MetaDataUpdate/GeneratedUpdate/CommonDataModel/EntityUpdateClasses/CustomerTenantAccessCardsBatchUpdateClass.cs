@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerTenantAccessCardsBatchUpdateClass
    {  		
-		public const string HashString = "9138ffee8ba03699fb06eec69d8ba94e";
+		public const string HashString = "6f80d54ff1501068a079594144a0d41e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customer Tenant Access Cards Batch",
-			      				    Code =  "f8a6",
+			      				    Code =  "1733",
 			      				    Name =  "CustomerTenantAccessCardsBatch",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -834,7 +834,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CustomerTenantAccessCardsBatchObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerTenantAccessCardsBatch" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> CustomerTenantAccessCardsBatchObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerTenantAccessCardsBatch").ToList();
+		       
+	      
+
+	         Screen CustomerTenantAccessCardsBatchCustomerTenantAccessCardsBatchHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomerTenantAccessCardsBatch.HeaderScreen", Name = "CustomerTenantAccessCardsBatchHeaderScreen", ObjectTableId = CustomerTenantAccessCardsBatchObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CustomerTenantAccessCardsBatchObjectTable.HeaderScreenId = CustomerTenantAccessCardsBatchCustomerTenantAccessCardsBatchHeaderScreenScreen0.Id;
+		    CustomerTenantAccessCardsBatchObjectTable.HeaderScreenCode = CustomerTenantAccessCardsBatchCustomerTenantAccessCardsBatchHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

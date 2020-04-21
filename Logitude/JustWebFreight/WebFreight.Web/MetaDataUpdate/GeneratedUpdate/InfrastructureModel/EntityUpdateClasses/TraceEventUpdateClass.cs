@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class TraceEventUpdateClass
    {  		
-		public const string HashString = "6ed791baba33a9583a2b4089d9a4b690";
+		public const string HashString = "5b8462d0a21ad9ea69817a7d81d8cd74";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "TraceEvent",
 			      				    IsNew =  false,
 			      				    DBTableName =  "TraceEvents",
-			      				    OldDBTableName =  "TraceEvents",
 			      				    ObjectTableSingular =  "Trace Event",
 			      				    ObjectTablePlural =  "TraceEvents",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Trace Event",
-			      				    Code =  "a432",
+			      				    Code =  "b2e2",
 			      				    Name =  "TraceEvent",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EventTypeId",
-					  						OldFieldName =  "EventTypeId",
 					  						ObjectTableName =  "TraceEvent",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "EventType",
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "TraceEvent",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -269,7 +266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EventDateTime",
-					  						OldFieldName =  "EventDateTime",
 					  						ObjectTableName =  "TraceEvent",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -333,7 +329,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LogDateTime",
-					  						OldFieldName =  "LogDateTime",
 					  						ObjectTableName =  "TraceEvent",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -397,7 +392,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "UserId",
-					  						OldFieldName =  "UserId",
 					  						ObjectTableName =  "TraceEvent",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -460,7 +454,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Location",
-					  						OldFieldName =  "Location",
 					  						ObjectTableName =  "TraceEvent",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
