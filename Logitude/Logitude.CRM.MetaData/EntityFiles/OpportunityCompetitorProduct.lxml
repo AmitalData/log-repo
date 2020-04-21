@@ -198,4 +198,5 @@
     NoMetaDataField="true" />
   <EventTypes />
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

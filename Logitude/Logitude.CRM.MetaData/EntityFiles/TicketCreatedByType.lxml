@@ -231,4 +231,5 @@
       SearchFields="&quot;Internal User,INU,&quot;" />
   </Records>
   <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

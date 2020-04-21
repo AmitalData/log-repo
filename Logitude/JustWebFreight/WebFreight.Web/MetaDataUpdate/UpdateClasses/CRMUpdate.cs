@@ -24,6 +24,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.CRM.BL.CLoseTable;
+using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses;
 
 namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 {
@@ -150,6 +151,11 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         private void LoadObjectsTenantZero(IWebFreightContext context)
         {
+            //  ________________________________________________
+            // |                                                |
+            // |           MUST BE ADDED To LXML Files          |
+            // |________________________________________________|
+            return;
             objectContext = context;
 
             textCodeRepository = new TextCodeRepository(objectContext);
@@ -1910,6 +1916,12 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         public void LoadOtherFields(IWebFreightContext context)
         {
+            //  ________________________________________________
+            // |                                                |
+            // |           MUST BE ADDED To LXML Files          |
+            // |________________________________________________|
+
+            return;
             objectContext = context;
             textCodeRepository = new TextCodeRepository(objectContext);
             
