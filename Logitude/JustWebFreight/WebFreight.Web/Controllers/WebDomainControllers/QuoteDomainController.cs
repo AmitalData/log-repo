@@ -14,6 +14,7 @@ using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel;
@@ -47,6 +48,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+               
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
@@ -505,7 +507,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 List<QuoteConnectedEntity> myResult = new List<QuoteConnectedEntity>();
-                
+
                 IShipmentsContext shipmentContext = ShipmentsContext.GetContext(tenant);
                 ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentContext);
                 IQueryable<ShipmentDataView> myShipments = shipmentRepository.GetShipmentsByQuoteId(quoteId, tenant);
@@ -572,6 +574,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        
     }
 }
 
