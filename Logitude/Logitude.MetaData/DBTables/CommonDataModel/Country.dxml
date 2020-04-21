@@ -13,22 +13,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Code"
-    Type="char"
-    Size="2">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="EnglishName"
-    Type="varchar"
-    Size="120">
     <Constraints
       Nullable="false" />
   </Column>
@@ -38,6 +24,13 @@
     Size="120">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="GlobalZoneId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Column
     Name="AddedManually"
@@ -52,24 +45,17 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="EC"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Notes"
     Type="nvarchar"
     Size="250">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="EC"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="HasStates"
@@ -90,6 +76,27 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="char"
+    Size="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EnglishName"
+    Type="varchar"
+    Size="120">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="IsNorthAmerica"
     Type="bit">
     <Constraints
@@ -100,13 +107,6 @@
     Type="datetime">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="GlobalZoneId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="GlobalZoneId"

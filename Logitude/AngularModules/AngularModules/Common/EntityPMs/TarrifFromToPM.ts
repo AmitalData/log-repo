@@ -72,10 +72,7 @@ export class TarrifFromToPM {
     public get ChangeOp() { return this.changeOp; }
     public set ChangeOp(newValue: string) { if (this.changeOp != newValue) { this.changeOp = newValue; this.MarkAsDirty("ChangeOp"); } }
        
-    private changeSetOp: string;
-    public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
-
+	 
 
     public OldEntityPM: TarrifFromToPM;
 	    
@@ -84,8 +81,7 @@ export class TarrifFromToPM {
     public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
 
     public UniqueKey: string;
-
-
+	 	
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
         this.IsDirty = true;

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomsInterfaceSettingUpdateClass
    {  		
-		public const string HashString = "69bae41ce99b4926093d4f6f4e09c88e";
+		public const string HashString = "2ce0ccc96725396f3d9f9881958f6a2a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CustomsInterfaceSetting",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CustomsInterfaceSettings",
-			      				    OldDBTableName =  "CustomsInterfaceSettings",
 			      				    ObjectTableSingular =  "Customs Interface Setting",
 			      				    ObjectTablePlural =  "Customs Interface Settings",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Interface Setting",
-			      				    Code =  "1490",
+			      				    Code =  "a3c8",
 			      				    Name =  "CustomsInterfaceSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ActivateCustomsManagementInShipments",
-					  						OldFieldName =  "ActivateCustomsManagementInShipments",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -191,6 +189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ActivateCustomsManagementInShipments",
@@ -203,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalCustomsInterfaceCode",
-					  						OldFieldName =  "LocalCustomsInterfaceCode",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomsInterface",
@@ -254,6 +252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalCustomsInterfaceCode",
@@ -266,7 +265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ImportToUSAInterfaceCode",
-					  						OldFieldName =  "ImportToUSAInterfaceCode",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomsInterface",
@@ -317,6 +315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ImportToUSAInterfaceCode",
@@ -329,7 +328,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ExportFromUSAInterfaceCode",
-					  						OldFieldName =  "ExportFromUSAInterfaceCode",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomsInterface",
@@ -380,6 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ExportFromUSAInterfaceCode",
@@ -392,7 +391,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalCompanyId",
-					  						OldFieldName =  "LocalCompanyId",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -441,6 +439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalCompanyId",
@@ -453,7 +452,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalUserId",
-					  						OldFieldName =  "LocalUserId",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -502,6 +500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalUserId",
@@ -514,7 +513,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalPassword",
-					  						OldFieldName =  "LocalPassword",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -563,6 +561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "LocalPassword",
@@ -575,7 +574,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ArtemusOutSettingsId",
-					  						OldFieldName =  "ArtemusOutSettingsId",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "FTPDetail",
@@ -626,6 +624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ArtemusOutSettingsId",
@@ -638,7 +637,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ArtemusInSettingsId",
-					  						OldFieldName =  "ArtemusInSettingsId",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "FTPDetail",
@@ -689,6 +687,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ArtemusInSettingsId",
@@ -701,7 +700,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ArtemusOutSettingsHost",
-					  						OldFieldName =  "ArtemusOutSettingsHost",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -751,6 +749,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ArtemusOutSettingsHost",
@@ -763,7 +762,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ArtemusInSettingsHost",
-					  						OldFieldName =  "ArtemusInSettingsHost",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -813,6 +811,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "ArtemusInSettingsHost",
@@ -825,7 +824,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CustomsInterfaceCode",
-					  						OldFieldName =  "CustomsInterfaceCode",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomsInterface",
@@ -878,6 +876,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CustomsInterfaceCode",
@@ -890,7 +889,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CompanyId",
-					  						OldFieldName =  "CompanyId",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -939,6 +937,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CompanyId",
@@ -951,7 +950,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "UserId",
-					  						OldFieldName =  "UserId",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1000,6 +998,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "UserId",
@@ -1012,7 +1011,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Password",
-					  						OldFieldName =  "Password",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1061,6 +1059,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Password",
@@ -1073,7 +1072,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AMCAirStartDate",
-					  						OldFieldName =  "AMCAirStartDate",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1118,6 +1116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1129,7 +1128,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AMCOceanStartDate",
-					  						OldFieldName =  "AMCOceanStartDate",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1174,6 +1172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1187,7 +1186,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CustomsInterfaceSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsInterfaceSetting" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> CustomsInterfaceSettingObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsInterfaceSetting").ToList();
+		       
+	      
+
+	         Screen CustomsInterfaceSettingCustomsInterfaceSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsInterfaceSetting.HeaderScreen", Name = "CustomsInterfaceSettingHeaderScreen", ObjectTableId = CustomsInterfaceSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CustomsInterfaceSettingObjectTable.HeaderScreenId = CustomsInterfaceSettingCustomsInterfaceSettingHeaderScreenScreen0.Id;
+		    CustomsInterfaceSettingObjectTable.HeaderScreenCode = CustomsInterfaceSettingCustomsInterfaceSettingHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EmailAlertSettingUpdateClass
    {  		
-		public const string HashString = "9cf3efd1e0641239eb599b6123e68095";
+		public const string HashString = "053f1de2a76c7dfe13661674c4d4a0b8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "EmailAlertSetting",
 			      				    IsNew =  false,
 			      				    DBTableName =  "EmailAlertSettings",
-			      				    OldDBTableName =  "EmailAlertSettings",
 			      				    ObjectTableSingular =  "Email Alert Settings",
 			      				    ObjectTablePlural =  "Email Alert Settings",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Email Alert Settings",
-			      				    Code =  "d7b6",
+			      				    Code =  "cb2e",
 			      				    Name =  "EmailAlertSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "EmailAlertSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -206,7 +204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ParentId",
-					  						OldFieldName =  "ParentId",
 					  						ObjectTableName =  "EmailAlertSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -269,7 +266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ParentName",
-					  						OldFieldName =  "ParentName",
 					  						ObjectTableName =  "EmailAlertSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -334,7 +330,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "EmailAlertSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -397,7 +392,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "EmailAlertSetting",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,

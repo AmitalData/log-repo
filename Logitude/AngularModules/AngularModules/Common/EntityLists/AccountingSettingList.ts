@@ -54,5 +54,6 @@ export class AccountingSettingList {
 		AllowRegionalTaxManagement: boolean;
 		EnableAPPaymentExternalPayment: boolean;
 		TransferToFTPActivated: boolean;
-		TransferFTPDetailId: string;	
-}
+		TransferFTPDetailId: string;
+	
+}

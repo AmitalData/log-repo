@@ -10,6 +10,8 @@ using MeatadataGeneratorTool.TextCodes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +22,23 @@ namespace MeatadataGeneratorTool.Helpers
 {
     public class XmlParserHelper
     {
+        private  DataTable GetCopyToDWObjectFields(string tableName)
+        {
+            string connectionString = "Data Source=.;Initial Catalog=Logitude2-5_Main;Integrated Security=False;Persist Security Info=True;User ID=sa;Password= Saas256;MultipleActiveResultSets=True;Connect Timeout=60";
+            DataTable objectFieldsTable = new DataTable();
+            using (SqlConnection sourceConnection = new SqlConnection(connectionString))
+            {
+                sourceConnection.Open();
+                SqlCommand commandSourceData = new SqlCommand("SELECT  FieldName from ObjectFields where CopyToDW = 1 and objectTableId = (select id from ObjectTables where Name ='" + tableName + "' )", sourceConnection);
+                SqlDataReader reader = commandSourceData.ExecuteReader();
+                objectFieldsTable.Load(reader);
+                reader.Close();
+            }
+
+            return objectFieldsTable;
+        }
+
+
 
         public ObjectTableViewModel LoadObjectTableData(XmlDocument document)
         {
@@ -40,11 +59,29 @@ namespace MeatadataGeneratorTool.Helpers
             List<DataContractViewModel> DataContracts = new List<DataContractViewModel>();
             List<TextCodesViewModel> TextCodes = new List<TextCodesViewModel>();
             List<FeaturesViewModel> Features = new List<FeaturesViewModel>();
+            var copyToDwObjectFieldLists = GetCopyToDWObjectFields(objectTable.ObjectTableName);
+
+
+
+
             foreach (XmlNode fieldNode in entity.ChildNodes)
             {
                 if (fieldNode.Name == "field")
                 {
-                    fields.Add(BuildObjectField(fieldNode, objectTable));
+
+                    var f = BuildObjectField(fieldNode, objectTable);
+                    if (copyToDwObjectFieldLists != null)
+                    {
+                        var dwfield = (from rowfield in copyToDwObjectFieldLists.AsEnumerable()
+                                       where rowfield.Field<string>("FieldName") == f.FieldName
+                                       select rowfield.Field<string>("FieldName")).FirstOrDefault();
+                        if (!string.IsNullOrEmpty(dwfield))
+                        {
+                            f.CopyToDW = true;
+                        }
+
+                    }
+                    fields.Add(f);
                 }
                 else if (fieldNode.Name == "Query")
                 {
