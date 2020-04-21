@@ -72,7 +72,6 @@ namespace WebFreight.Web.Helpers
             SqlCommandDefinition sqlCommandDefinition = sqlCommandDef;
             foreach (var Myfilter in FiltersList)
             {
-                var isHaveBracket = false;
                 var isHaveMultiSelect = false;
                 if (Myfilter.FilterItems.Count > 0)
                 {
@@ -81,7 +80,6 @@ namespace WebFreight.Web.Helpers
                         WhereStmt = WhereStmt;
                         if (WhereStmt != " where ")
                         {
-                            isHaveBracket = true;
                                WhereStmt = WhereStmt + " " + AndOr + " ( ";
                         }
                        
@@ -97,9 +95,8 @@ namespace WebFreight.Web.Helpers
                     }
                     if (WhereStmt != "" && GetIfFiltersHaveValues(Myfilter.FilterItems) == true)
                     {
-                        if(isHaveBracket) WhereStmt = WhereStmt + " ) ";
-                        WhereStmt = WhereStmt.Replace("And  And", "And");
-                        WhereStmt = WhereStmt.Replace("Or  Or", "Or");
+                        WhereStmt = WhereStmt + " ) ";
+                 
                         WhereStmt = WhereStmt.Replace("And  (  )", "");
                         WhereStmt = WhereStmt.Replace("Or  (  )", "");
                     }
@@ -215,10 +212,13 @@ namespace WebFreight.Web.Helpers
                             if (filter.Operation.Code == "IsNull")
                             {
 
+                                if (WhereStmt.Replace("(", "").Replace(")", "").Replace(" ", "") == "where") WhereStmt += "(";
+                        
                                 WhereStmt += "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is null or " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " = '' " + " ) " + AndOr + " ";
                             }
                             else if (filter.Operation.Code == "IsNotNull")
                             {
+                                if (WhereStmt.Replace("(", "").Replace(")", "").Replace(" ", "") == "where") WhereStmt += "(";
                                 WhereStmt += "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " is not null and " + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + " <> '' " + " ) " + AndOr + " ";
                             }
                             else
