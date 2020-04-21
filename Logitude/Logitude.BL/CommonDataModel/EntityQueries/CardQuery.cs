@@ -1990,6 +1990,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          Tenant = a.Tenant,
                          EnglishName = a.EnglishName,
                          Code = a.Code,
+                         FirmCode = a.Warehouse != null ? a.Warehouse.FirmCode : null,
                      }).FirstOrDefault();
 
             return cardList;
