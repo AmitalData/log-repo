@@ -11,6 +11,11 @@ import { DeclarationReferantDataList } from '../../EntityLists/DeclarationRefera
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ResourceLoader } from '@angular/compiler';
 
+import { CustomsAutonomyKeywordExtendedPMService } from '../../Services/ExtendedPMs/CustomsAutonomyKeywordExtendedPMService';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+
 @Component({
     moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
@@ -33,6 +38,10 @@ export class FieldTemplateComponent {
         } else {
             this._ListComponentArgs = new ListComponentArgs();
         }
+
+    customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
+    @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
+    constructor(private _ListComponentArgs: ListComponentArgs, private CD: ChangeDetectorRef){
         
     }
 
@@ -113,13 +122,14 @@ export class FieldTemplateComponent {
                         logWindow.WindowClosed.subscribe(($event1: any) => {
                             //this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
                         });
-
+                         
                     }
                 }
                 });
             //});
         //});
 
+ 
     }
 
     OpenRemarks() {
@@ -143,6 +153,7 @@ export class FieldTemplateComponent {
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
                 });
         }
+    }
         else {
             if (this.Entity.IsControllerRemarks) {
                 _declarationRemarksService.GetINCorINAtatusList(this.Entity.Tenant, this.Entity.CustomFileNo)
@@ -156,7 +167,23 @@ export class FieldTemplateComponent {
             }
         }
     }
-
+ DeleteAutonomyKey(value: number) {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Height = 150;
+            confirmWindow.Show("הםם םתה בטוח שברצונך למחוק םת מילת מפתח הזםת?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) { // YES
+                    this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
+                        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        this.CD.detectChanges();
+                    });
+                }
+            });
+        }
+        }
     ShowCFIFILEMMoveToQueueScreen() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
@@ -222,7 +249,6 @@ export class FieldTemplateComponent {
             SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
         }
     }
-
 
     public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
 
