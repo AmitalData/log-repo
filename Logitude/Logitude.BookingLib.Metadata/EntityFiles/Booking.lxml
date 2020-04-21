@@ -15103,6 +15103,153 @@
       DefaultText="&quot;Communications&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Overview.Pisces&quot;"
+      DefaultText="&quot;Pieces&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Routings.To&quot;"
+      DefaultText="&quot;To&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Routings.MainCarriageLeg1&quot;"
+      DefaultText="&quot;Main Carriage Leg1&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Routings.MainCarriageLeg2&quot;"
+      DefaultText="&quot;Main Carriage Leg2&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Routings.MainCarriageLeg3&quot;"
+      DefaultText="&quot;Main Carriage Leg3&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Routings.FlightNo&quot;"
+      DefaultText="&quot;Flight No&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Routings.Airline&quot;"
+      DefaultText="&quot;Airline&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Packages.Details&quot;"
+      DefaultText="&quot;Details&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Packages.Summary&quot;"
+      DefaultText="&quot;Summary&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.S.Packages.Packages&quot;"
+      DefaultText="&quot;Packages&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BookingPackage.S.Packages.Tare&quot;"
+      DefaultText="&quot;Tare (%WeightCode)&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BookingPackage.S.Packages.Volume&quot;"
+      DefaultText="&quot;Volume (%VolumeCode)&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BookingPackage.S.Packages.Dimensions&quot;"
+      DefaultText="&quot;Dimensions (L-W-H) (%UnitCode)&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BookingPackage.S.Packages.Weight&quot;"
+      DefaultText="&quot;Gross Weight (%WeightCode)&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BookingPackage.S.Packages.VolumetricWeight&quot;"
+      DefaultText="&quot;Volumetric Weight (%WeightCode)&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.O.Packages.Volume&quot;"
+      DefaultText="&quot;Volume (%UnitCode)&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.O.Packages.GrossWeight&quot;"
+      DefaultText="&quot;Gross Weight (%UnitCode)&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.O.Packages.Dimensions&quot;"
+      DefaultText="&quot;Dimensions (L-W-H) (%UnitCode)&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.O.Packages.VolWeight&quot;"
+      DefaultText="&quot;Volumetric Weight (%UnitCode)&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.O.Packages.EditDangerousGoods&quot;"
+      DefaultText="&quot;Edit Dangerous Goods&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.B.Packages.DangerouseGoodsDetails&quot;"
+      DefaultText="&quot;Details&quot;"
+      TextCodeTypeCode="&quot;B&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Booking.M.DeleteThisPackage&quot;"
+      DefaultText="&quot;Delete this package?&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;BOOKINGSENDRESPONSE&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Booking.Features.SendResponse&quot;"
+      FeatureDefaultText="&quot;Send Response&quot;" />
+    <Feature
+      Code="&quot;BOOKINGEVENTS&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Booking.Features.Events&quot;"
+      FeatureDefaultText="&quot;Events&quot;" />
+    <Feature
+      Code="&quot;Booking.Menu&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Booking.Features.BookingMenu&quot;"
+      FeatureDefaultText="&quot;Bookings&quot;" />
+    <Feature
+      Code="&quot;Booking.Action.SendToAirlineTenant&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Booking.Features.SendToAirlineTenant&quot;"
+      FeatureDefaultText="&quot;Send to airline tenant&quot;" />
+  </AdditionalFeatures>
 </entity>

@@ -1217,4 +1217,16 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <AdditionalTextCodes />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;FlightsSchedules.Simulator&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;FlightsSchedulesRequest.Features.SendResponse&quot;"
+      FeatureDefaultText="&quot;Send Response&quot;" />
+  </AdditionalFeatures>
 </entity>

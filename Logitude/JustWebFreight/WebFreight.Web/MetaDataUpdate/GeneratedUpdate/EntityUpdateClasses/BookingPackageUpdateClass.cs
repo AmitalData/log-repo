@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BookingPackageUpdateClass
    {  		
-		public const string HashString = "131713391a26fd74d22749c15f0c8cc6";
+		public const string HashString = "0677c24cb3d8716e3a69847bcd2c2705";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1477,7 +1477,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable BookingPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BookingPackage" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode BookingPackageTextCode_BookingPackageMValueEditedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BookingPackage.M.ValueEditedByUser", DefaultText = "Value Edited by User, Double Click to Reset Calculated value",LocalDefaultText = null, ObjectTableId = BookingPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
