@@ -94,9 +94,9 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("IsLedgerCreated")]
 	    public bool IsLedgerCreated { get; set; }
         [Column("DocumentDate")]
-	    public DateTime DocumentDate { get; set; }
+	    public DateTime? DocumentDate { get; set; }
         [Column("DueDate")]
-	    public DateTime DueDate { get; set; }
+	    public DateTime? DueDate { get; set; }
     }
 }
 	 
