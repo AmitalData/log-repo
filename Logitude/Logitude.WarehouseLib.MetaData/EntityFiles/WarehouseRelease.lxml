@@ -4783,8 +4783,8 @@
     EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;CreatedReleasesQuery&quot;"
-    TextCode="&quot;Created Releases&quot;"
-    LocalTextCode="&quot;Created Releases&quot;"
+    TextCode="&quot;Expected Delivery Releases&quot;"
+    LocalTextCode="&quot;Expected Delivery Releases&quot;"
     QueryGroupCode="&quot;2e12&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;WarehouseRelease&quot;"
