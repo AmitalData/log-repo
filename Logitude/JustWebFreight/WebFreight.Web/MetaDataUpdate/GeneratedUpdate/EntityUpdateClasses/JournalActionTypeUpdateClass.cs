@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalActionTypeUpdateClass
    {  		
-		public const string HashString = "7da2b572e4428dc4f89d7d3ad2cae6d3";
+		public const string HashString = "a99241ff2cefb67e48f61ed443936b50";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -564,7 +564,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable JournalActionTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "JournalActionType" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode JournalActionTypeTextCode_JournalActionTypeTHNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalActionType.TH.New", DefaultText = "New",LocalDefaultText = @"חדש", ObjectTableId = JournalActionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalActionTypeTextCode_GeneralMCACCAccountingTables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.AccountingTables", DefaultText = "Accounting Tables",LocalDefaultText = @"טבלאות הנהלת חשבונות", ObjectTableId = JournalActionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalActionTypeTextCode_GeneralMCACCJournalActionTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.JournalActionTypes", DefaultText = "Journal Actions",LocalDefaultText = @"סוגי פעולה של פקודות", ObjectTableId = JournalActionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalActionTypeTextCode_JournalActionTypeOCodeAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalActionType.O.CodeAlreadyExists", DefaultText = "Existing code",LocalDefaultText = @"הקוד קיים", ObjectTableId = JournalActionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

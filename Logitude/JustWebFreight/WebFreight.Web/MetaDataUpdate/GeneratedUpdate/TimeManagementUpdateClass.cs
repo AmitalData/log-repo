@@ -327,7 +327,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TMDayOffTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					TMDayOffTypeUpdateClass.FillTMDayOffType();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						TMDayOffTypeUpdateClass.FillTMDayOffType();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -382,7 +386,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					TMLocationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					TMLocationUpdateClass.FillTMLocation();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						TMLocationUpdateClass.FillTMLocation();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}

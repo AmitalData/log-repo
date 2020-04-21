@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DWHSettingUpdateClass
    {  		
-		public const string HashString = "4ca38d08ce4fb6110013d70c811369c8";
+		public const string HashString = "6b06d860e9a14616493789ed571c55e1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "DWHSetting",
 			      				    IsNew =  false,
 			      				    DBTableName =  "DWHSettings",
-			      				    OldDBTableName =  "DWHSettings",
 			      				    ObjectTableSingular =  "DWHSetting",
 			      				    ObjectTablePlural =  "DWHSettings",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "DWHSetting",
-			      				    Code =  "c112",
+			      				    Code =  "00e2",
 			      				    Name =  "DWHSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "DWHSetting",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -204,7 +202,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ParentTenant",
-					  						OldFieldName =  "ParentTenant",
 					  						ObjectTableName =  "DWHSetting",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -267,7 +264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Server",
-					  						OldFieldName =  "Server",
 					  						ObjectTableName =  "DWHSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -330,7 +326,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Password",
-					  						OldFieldName =  "Password",
 					  						ObjectTableName =  "DWHSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -393,7 +388,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "UserName",
-					  						OldFieldName =  "UserName",
 					  						ObjectTableName =  "DWHSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -456,7 +450,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Catalog",
-					  						OldFieldName =  "Catalog",
 					  						ObjectTableName =  "DWHSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

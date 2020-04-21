@@ -3105,6 +3105,25 @@
         IsCompositKey="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;JournalLine.O.AccountCurrency&quot;"
+      DefaultText="&quot;Journal Code Too Short&quot;"
+      LocalDefaultText="&quot;פרט מכס קצר מידי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;JournalLine.O.CodeLong&quot;"
+      DefaultText="&quot;Journal Code Too Long&quot;"
+      LocalDefaultText="&quot;פרט המכס ארוך מדי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;JournalLine.O.CorrectDigit&quot;"
+      DefaultText="&quot;Check digit is incorrect ,the correct digit is &quot;"
+      LocalDefaultText="&quot; ספרת הביקורת שגויה , הספרה הנכונה היא &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -1093,5 +1093,15 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;AccountingIntegrityCheck.Features.Menu&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;AccountingIntegrityCheck.Features.Menu&quot;"
+      FeatureDefaultText="&quot;Accounting Integrity Checks&quot;" />
+  </AdditionalFeatures>
 </entity>

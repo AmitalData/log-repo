@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestTransactionUpdateClass
    {  		
-		public const string HashString = "a3b9eaf251a74ed042c78e91508434fd";
+		public const string HashString = "d776a52717f0043d0297e768d9aee20b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1477,7 +1477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable InterestTransactionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestTransaction" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode InterestTransactionTextCode_InterestTransactionOTotalLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransaction.O.TotalLocalAmount", DefaultText = "Total",LocalDefaultText = "סה''כ", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode InterestTransactionTextCode_InterestTransactionOTotalLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransaction.O.TotalLocalAmount", DefaultText = "Total",LocalDefaultText = @"סה''כ", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

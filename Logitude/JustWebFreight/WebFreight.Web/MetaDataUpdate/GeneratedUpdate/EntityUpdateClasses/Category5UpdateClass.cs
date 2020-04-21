@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class Category5UpdateClass
    {  		
-		public const string HashString = "525b200433ba4c4f1afaddb5ddb1a883";
+		public const string HashString = "347f7695f61ae3eee4b4ccfc42c9487e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -468,7 +468,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature Category5FeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = Category5ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category5.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature Category5FeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = Category5ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category5.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature Category5FeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = Category5ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category5.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature Category5FeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = Category5ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category5.Features.PackageFeature", NameTextCodeDefaultText = "Category5 Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature Category5FeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = Category5ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category5.Features.PackageFeature", NameTextCodeDefaultText = "Category5 Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature Category5Feature_Category5_Features_Category5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category5.Features.Category5", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = Category5ObjectTable.Id, Tenant = 0, NameTextCodeCode = "Category5.Features.Category5", NameTextCodeDefaultText = @"Category 5" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -520,7 +526,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable Category5ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Category5" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode Category5TextCode_GeneralMCACCCategory5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Category5", DefaultText = "Category 1",LocalDefaultText = @"Category 1", ObjectTableId = Category5ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

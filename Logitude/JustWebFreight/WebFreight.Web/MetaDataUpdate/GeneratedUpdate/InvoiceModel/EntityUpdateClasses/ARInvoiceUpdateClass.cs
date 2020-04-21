@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "d461505a37d65aa1081fe07c1180e055";
+		public const string HashString = "5823f81ea315cac38d117299abacf18f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9566,7 +9566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMMultiCurrencyMustInLocalCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.MultiCurrencyMustInLocalCurrency", DefaultText = "Multi currency ARInvoice should be only in Local currency",LocalDefaultText = @"חשבונית רב מטבעית חייבת להיות במטבע מקומי", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceSShortTitleByInvoiceAutoCredited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.S.ShortTitle.ByInvoiceAutoCredited", DefaultText = "By Invoice",LocalDefaultText = " ע''י חשבונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceSShortTitleByInvoiceAutoCredited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.S.ShortTitle.ByInvoiceAutoCredited", DefaultText = "By Invoice",LocalDefaultText = @" ע''י חשבונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOCanNotCreditExempt = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.CanNotCreditExempt", DefaultText = "Can not credit card exempt VAT if the amount is not exempt",LocalDefaultText = @"לא ניתן לזכות כרטיס פטור בסכום חייב במע''מ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

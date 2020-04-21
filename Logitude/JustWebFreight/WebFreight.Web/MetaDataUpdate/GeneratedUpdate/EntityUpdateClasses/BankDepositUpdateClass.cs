@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankDepositUpdateClass
    {  		
-		public const string HashString = "2b59891e91375fd5d68919d069ea0165";
+		public const string HashString = "bee4aef83507849fcc8d20c702b1650a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2105,7 +2105,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature BankDepositFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BankDepositFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BankDepositFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BankDepositFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.PackageFeature", NameTextCodeDefaultText = "BankDeposit Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature BankDepositFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.PackageFeature", NameTextCodeDefaultText = "BankDeposit Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature BankDepositFeature_DETAILS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.Details", NameTextCodeDefaultText = @"Details Tab" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature BankDepositFeature_BANKDEPOSITMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKDEPOSITMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.BankDepositMenu", NameTextCodeDefaultText = @"Bank Deposit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature BankDepositFeature_MOREBNKDPST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREBNKDPST", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankDeposit.Features.More", NameTextCodeDefaultText = @"More Buttons" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -2285,7 +2295,55 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable BankDepositObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankDeposit" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode BankDepositTextCode_GeneralMCACCBankDeposits = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.BankDeposits", DefaultText = "Bank Deposits",LocalDefaultText = @"הפקדות", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_DepositDetailsODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Deposit.Details.O.Details", DefaultText = "Details",LocalDefaultText = @"פרטי הפקדה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_DepositGeneralODetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = " Deposit.General.O.Details", DefaultText = "General",LocalDefaultText = @"הגדרות הפקדה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_DepositDetailsBCancelDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Deposit.Details.B.CancelDeposit", DefaultText = "Cancel Deposit",LocalDefaultText = @"ביטול הפקדה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.Line", DefaultText = "Line",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHDepositId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.DepositId", DefaultText = "Deposit",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHARPaymentChequeId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.ARPaymentChequeId", DefaultText = "ARPayment Cheque",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.DueDate", DefaultText = "Due Date",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHIsOutOfDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.IsOutOfDeposit", DefaultText = "Out Of Deposit",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHOutOfDepositeDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.OutOfDepositeDate", DefaultText = "Out Of Deposite Date",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.Currency", DefaultText = "Currency",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.LocalAmount", DefaultText = "Amount (%InvoiceCurrencyCode)",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHForeignAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.ForeignAmount", DefaultText = "Foreign Amount",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHChequeNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.ChequeNumber", DefaultText = "Cheque No.",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHBank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.Bank", DefaultText = "Bank",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHBankAccountNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.BankAccountNumber", DefaultText = "Bank Account",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHBranch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.Branch", DefaultText = "Branch",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositCHARPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.CH.ARPayment", DefaultText = "ARPayment",LocalDefaultText = null, ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositODepositAmountmustbelessthanCashbook = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositAmountmustbelessthanCashbook", DefaultText = "Deposit amount should be less than or equal cashbook total",LocalDefaultText = @"סכום ההפקדה צריך להיות קטן או שווה לסכום בקופה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankDepositTextCode_BankDepositODepositCancelChequeMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositCancelChequeMSG", DefaultText = "The deposit can’t be cancelled, at least one one cheques have been redeemed, you should cancel the external reconciliation in order to return the cheque to the cashbook",LocalDefaultText = @"לא ניתן לבטל את ההפקדה, משום שהיא מכילה לפחות המחאה אחת שנפרעה, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה", ObjectTableId = BankDepositObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

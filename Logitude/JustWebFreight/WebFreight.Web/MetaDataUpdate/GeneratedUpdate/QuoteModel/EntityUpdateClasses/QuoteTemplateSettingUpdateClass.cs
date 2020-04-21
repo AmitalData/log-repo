@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateSettingUpdateClass
    {  		
-		public const string HashString = "c87766b48ee1ce3b5374ef57b0095bf8";
+		public const string HashString = "9f96fbb11cf6bf8c051d0b85dcbda98e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteTemplateSetting",
 			      				    IsNew =  false,
 			      				    DBTableName =  "QuoteTemplateSettings",
-			      				    OldDBTableName =  "QuoteTemplateSettings",
 			      				    ObjectTableSingular =  "Quote TemplateS Setting",
 			      				    ObjectTablePlural =  "Quote TemplateS Settings",
 			      				    HasCustomFilter =  false,
@@ -116,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Quote TemplateS Setting",
-			      				    Code =  "656c",
+			      				    Code =  "f20a",
 			      				    Name =  "QuoteTemplateSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",
@@ -141,7 +140,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "DisplaySalesCurrency",
-					  						OldFieldName =  "DisplaySalesCurrency",
 					  						ObjectTableName =  "QuoteTemplateSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -202,7 +200,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "ColumnHeaderForeground",
-					  						OldFieldName =  "ColumnHeaderForeground",
 					  						ObjectTableName =  "QuoteTemplateSetting",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -263,7 +260,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "ShowVATTypePackages",
-					  						OldFieldName =  "ShowVATTypePackages",
 					  						ObjectTableName =  "QuoteTemplateSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -320,7 +316,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "ShowVATTypeContainers",
-					  						OldFieldName =  "ShowVATTypeContainers",
 					  						ObjectTableName =  "QuoteTemplateSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -377,7 +372,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "ShowVATPercentagePackages",
-					  						OldFieldName =  "ShowVATPercentagePackages",
 					  						ObjectTableName =  "QuoteTemplateSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -434,7 +428,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "ShowVATPercentageContainers",
-					  						OldFieldName =  "ShowVATPercentageContainers",
 					  						ObjectTableName =  "QuoteTemplateSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,

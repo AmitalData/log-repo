@@ -330,7 +330,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					MarkUpTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					MarkUpTypeUpdateClass.FillMarkUpType();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						MarkUpTypeUpdateClass.FillMarkUpType();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -412,7 +416,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteClosingReasonUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						QuoteClosingReasonUpdateClass.FillQuoteClosingReason();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -467,7 +475,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteCustomerTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						QuoteCustomerTypeUpdateClass.FillQuoteCustomerType();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -549,7 +561,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteRatingUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					QuoteRatingUpdateClass.FillQuoteRating();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						QuoteRatingUpdateClass.FillQuoteRating();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}
@@ -901,7 +917,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel
 					this.ObjectContext.SaveChanges();
 					QuoteTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
 					this.ObjectContext.SaveChanges();
-					QuoteTypeUpdateClass.FillQuoteType();
+					using (TransactionScope innerScope = TransactionFactory.GetNewTransaction())
+					{
+						QuoteTypeUpdateClass.FillQuoteType();
+						innerScope.Complete();
+					}
 					scope.Complete();
 				}
 			}

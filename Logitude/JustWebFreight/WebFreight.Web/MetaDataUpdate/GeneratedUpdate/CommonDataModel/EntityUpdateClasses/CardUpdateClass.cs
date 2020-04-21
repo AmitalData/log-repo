@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "1ea14210436db467739a1720097a7696";
+		public const string HashString = "3f64d3f53074fc3d297183eca147760b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Card",
-			      				    Code =  "d910",
+			      				    Code =  "7e1e",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
