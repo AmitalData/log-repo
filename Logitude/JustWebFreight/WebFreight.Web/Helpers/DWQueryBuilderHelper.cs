@@ -72,6 +72,7 @@ namespace WebFreight.Web.Helpers
             SqlCommandDefinition sqlCommandDefinition = sqlCommandDef;
             foreach (var Myfilter in FiltersList)
             {
+                var isHaveBracket = false;
                 var isHaveMultiSelect = false;
                 if (Myfilter.FilterItems.Count > 0)
                 {
@@ -80,7 +81,8 @@ namespace WebFreight.Web.Helpers
                         WhereStmt = WhereStmt;
                         if (WhereStmt != " where ")
                         {
-                            WhereStmt = WhereStmt + " " + AndOr + " ( ";
+                            isHaveBracket = true;
+                               WhereStmt = WhereStmt + " " + AndOr + " ( ";
                         }
                        
                     }
@@ -95,7 +97,9 @@ namespace WebFreight.Web.Helpers
                     }
                     if (WhereStmt != "" && GetIfFiltersHaveValues(Myfilter.FilterItems) == true)
                     {
-                        WhereStmt = WhereStmt + " ) ";
+                        if(isHaveBracket) WhereStmt = WhereStmt + " ) ";
+                        WhereStmt = WhereStmt.Replace("And  And", "And");
+                        WhereStmt = WhereStmt.Replace("Or  Or", "Or");
                         WhereStmt = WhereStmt.Replace("And  (  )", "");
                         WhereStmt = WhereStmt.Replace("Or  (  )", "");
                     }
