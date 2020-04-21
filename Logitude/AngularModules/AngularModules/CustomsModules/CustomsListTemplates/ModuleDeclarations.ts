@@ -13,9 +13,8 @@ import { DeclarationQueryListTemplate } from './Components/DeclarationQueryListT
  
 import { CourierDeclarationWorkspaceListTemplate } from './Components/CourierDeclarationWorkspaceListTemplate'
  import { CustomsCollateralListTemplate } from './Components/CustomsCollateralListTemplate';
-import { DeclarationAmendmentListTemplate } from './Components/DeclarationAmendmentListTemplate';
+import { DeclarationAmendmentListTemplate } from './Components/DeclarationAmendmentDeclarationListTemplate';
 import { DeclarationListTemplate } from './Components/DeclarationListTemplate';
-import { DeclarationReferantDataListTemplate } from './Components/DeclarationReferantDataListTemplate';
 
  
 export const Components =
@@ -35,8 +34,7 @@ export const Components =
     CustomsCollateralListTemplate,
     CourierDeclarationWorkspaceListTemplate,
     DeclarationAmendmentListTemplate,
-        DeclarationListTemplate,
-        DeclarationReferantDataListTemplate
+    DeclarationListTemplate
 
   ];
 
@@ -62,8 +60,6 @@ export class ModuleDeclarations {
           case "CourierDeclarationWorkspaceListTemplate": { myResult = CourierDeclarationWorkspaceListTemplate; break; }
           case "DeclarationAmendmentListTemplate": { myResult = DeclarationAmendmentListTemplate; break; }
           case "DeclarationListTemplate": { myResult = DeclarationListTemplate; break; }
-          case "DeclarationReferantDataListTemplate": { myResult = DeclarationReferantDataListTemplate; break; }
-
       }
 
     return myResult;

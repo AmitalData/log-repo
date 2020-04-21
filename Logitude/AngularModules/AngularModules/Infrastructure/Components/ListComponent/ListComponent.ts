@@ -1020,8 +1020,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                         });
                     }
                 }
-
-                debugger;
                 this.ColumnsReady.emit("ColumnsReady");
             });
     }

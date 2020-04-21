@@ -818,7 +818,6 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 this.cd.detectChanges();
             }
         }
-        debugger;
         if (this.ColumnsReady) {
             this.ColumnsReadySub = this.ColumnsReady.subscribe((res) => {
                 var index = 0
