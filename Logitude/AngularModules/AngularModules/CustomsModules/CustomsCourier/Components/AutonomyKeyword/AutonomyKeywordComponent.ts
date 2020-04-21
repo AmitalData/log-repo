@@ -59,7 +59,6 @@ export class AutonomyKeywordComponent
             this.WarningMessage = "יש לבחור קוד מילת מפתח ולאחר להזין  מילת מפתח ";
             this.Listen();
         });
-        this.UIProperties.SetEnabled("KeywordsList", this.ObjectTableName, true);
         
     }
     private Listen() {
@@ -93,7 +92,8 @@ export class AutonomyKeywordComponent
             this.isNewRecord = true;
             this.EntityPM = new CustomsAutonomyKeywordPM();
             this.EntityPM.Tenant = SessionLocator.Tenant;
-            this.EntityPM.MarkAsDirty();
+                this.EntityPM.MarkAsDirty();
+                this.isWindowMode = true;
         }
     }
 

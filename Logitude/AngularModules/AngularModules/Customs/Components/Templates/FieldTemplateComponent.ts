@@ -3,6 +3,11 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CourierMasterService} from '../../Services/Others/CourierMasterService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { CustomsAutonomyKeywordExtendedPMService } from '../../Services/ExtendedPMs/CustomsAutonomyKeywordExtendedPMService';
+import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -18,8 +23,9 @@ export class FieldTemplateComponent {
     public IsSpotLightTemplate: boolean = false;
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
+    customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
     @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
-    constructor() {
+    constructor(private _ListComponentArgs: ListComponentArgs, private CD: ChangeDetectorRef){
 
     }
 
@@ -91,7 +97,7 @@ export class FieldTemplateComponent {
                         logWindow.WindowClosed.subscribe(($event1: any) => {
                             //this.ShowCourierMasterByIdReturnCloseSaveCallBack(isSaved);
                         });
-
+                         
                     }
                 }
                 });
@@ -100,7 +106,23 @@ export class FieldTemplateComponent {
 
     }
 
-
+    DeleteAutonomyKey(value: number) {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Height = 150;
+            confirmWindow.Show("האם אתה בטוח שברצונך למחוק את מילת מפתח הזאת?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) { // YES
+                    this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
+                        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        this.CD.detectChanges();
+                    });
+                }
+            });
+        }
+    }
 
     public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
 
