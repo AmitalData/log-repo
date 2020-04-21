@@ -2335,6 +2335,10 @@
     <Compile Include="Migrations\202004211002165_Update_DueDate_Nullable.Designer.cs">
       <DependentUpon>202004211002165_Update_DueDate_Nullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.cs" />
+    <Compile Include="Migrations\202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.Designer.cs">
+      <DependentUpon>202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.cs" />
     <Compile Include="Migrations\202003301631528_AddFTPDeatilsPropertiesForAccountingTransfer_Samar.Designer.cs">
@@ -4219,6 +4223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004211002165_Update_DueDate_Nullable.resx">
       <DependentUpon>202004211002165_Update_DueDate_Nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.resx">
+      <DependentUpon>202004211231477_WesamChangeTypeOfNameDescriptionTasksSchedulerToNVarChar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
