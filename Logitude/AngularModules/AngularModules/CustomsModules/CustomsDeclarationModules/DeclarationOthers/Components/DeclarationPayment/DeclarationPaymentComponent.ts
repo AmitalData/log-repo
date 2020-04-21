@@ -1567,8 +1567,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             logWindow.ComponentLoaded.subscribe(comp => {
                 logWindow.WindowClosed.subscribe(res => {
                     if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
-
-                        this._TestCase = new TestCase();
+                         this._TestCase = new TestCase();
                         this._TestCase.Code = comp._ScenarioCode;
                         this._TestCase.Param1 = comp.Param1;
                         this._TestCase.Param2 = comp.Param2;

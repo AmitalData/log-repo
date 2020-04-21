@@ -130,8 +130,7 @@ export class SendDeclarationComponent implements OnDestroy {
             logWindow.ComponentLoaded.subscribe(comp => {
                 logWindow.WindowClosed.subscribe(res => {
                     if (!AppTool.IsNullOrEmpty(res) && res=="Ok") {
-                        
-                        this._SendDeclarationService._TestCase = new TestCase();
+                         this._SendDeclarationService._TestCase = new TestCase();
                         this._SendDeclarationService._TestCase.Code = comp._ScenarioCode;
                         this._SendDeclarationService._TestCase.Param1 = comp.Param1;
                         this._SendDeclarationService._TestCase.Param2 = comp.Param2;
@@ -274,7 +273,7 @@ export class SendDeclarationService implements OnDestroy {
                     }
 
                     else {
-                        this.EntityPM = myResponse.Result;
+                         this.EntityPM = myResponse.Result;
                         if (this.CurrentSession.CurrentEditComponent) {
                             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -800,7 +799,7 @@ export class SendDeclarationService implements OnDestroy {
         searchParams.ResponseName = "Amendment Declaration Response";
         searchParams.RequestVIA = this.RequestVIA;
         searchParams.ForcePersonalSign = this.ForcePersonalSign;
-
+        searchParams.TestCase = this._TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
 
         if (this.CourierWorksheetmode) {

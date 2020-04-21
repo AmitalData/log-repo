@@ -151,7 +151,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                  
 
                         var Fake2892 = new Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService(requestParams);
-                response= Fake2892.CallWS( );
+                _ResponseHeader= Fake2892.CallWS(out response);
 
            
             exceptionMessage = null;

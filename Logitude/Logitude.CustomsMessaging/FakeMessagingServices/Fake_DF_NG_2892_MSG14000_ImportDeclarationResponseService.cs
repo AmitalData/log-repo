@@ -14,7 +14,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         public Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService(GenericRequestParams requestParams)  {
             genericRequestParams = requestParams;
         }
-    public INF_MSG_Generic CallWS()
+    public ResponseHeader CallWS(out INF_MSG_Generic response)
         {
             //  UpdateDeclaration();
             //  UpdateStatus("5");
@@ -25,12 +25,13 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             dynamic data = JObject.Parse(genericRequestParams.TestCase.Param1);
 
             string Error = data.Error;
-
-            INF_MSG_Generic response = new INF_MSG_Generic();
+            ResponseHeader responseHeader = new ResponseHeader();
+                          response = new INF_MSG_Generic();
             response.ResponseContentHeader = new ResponseContentHeader();
             if (Error == "true")
             {
                 response.ResponseContentHeader.Exception = new Exception[1];
+                response.ResponseContentHeader.Exception[0] = new Exception();
                 response.ResponseContentHeader.Exception[0].ExceptionLevel =  3 ;
                 response.ResponseContentHeader.Exception[0].ExeptionType =  9999 ;
                 response.ResponseContentHeader.Exception[0].ExceptionParms = null;
@@ -42,9 +43,15 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             response.ResponseContentHeader.Remark = "";
             response.ResponseContentHeader.Exception = null;
             response.ResponseContentHeader.ApplicationID = 0;
+
+            responseHeader.CorrelationId = Guid.NewGuid().ToString();
+            responseHeader.ExternalId = Guid.NewGuid().ToString();
+            responseHeader.Status = "Success";
+            responseHeader.ErrorDescription = "";
+            responseHeader.ErrorCode = "None";
             //response.
-         //   response.DeclarationPaymentDetails=AddPaymentDetails_2754();
-            return response;
+            //   response.DeclarationPaymentDetails=AddPaymentDetails_2754();
+            return responseHeader;
 
         }
   
