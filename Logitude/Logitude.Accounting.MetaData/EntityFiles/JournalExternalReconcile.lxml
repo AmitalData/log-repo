@@ -348,4 +348,6 @@
   </EventTypes>
   <Records />
   <DataContracts />
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

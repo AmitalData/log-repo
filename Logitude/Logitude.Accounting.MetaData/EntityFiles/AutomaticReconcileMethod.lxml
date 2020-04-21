@@ -1302,4 +1302,50 @@
         IsCompositKey="false" />
     </DataContract>
   </DataContracts>
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;GENERAL&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;AutomaticReconcileMethod.Features.General&quot;"
+      FeatureDefaultText="&quot;General&quot;" />
+    <Feature
+      Code="&quot;AUTORECOMETHODSMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;AutomaticReconcileMethod.Features.AutomaticReconcileMethodsMenu&quot;"
+      FeatureDefaultText="&quot;Automatic Reconcile Methods&quot;" />
+  </AdditionalFeatures>
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.ACC.AutomaticReconcileMethods&quot;"
+      DefaultText="&quot;Automatic Reconcile Methods&quot;"
+      LocalDefaultText="&quot;התאמות אוטומטיות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AutomaticReconcileMethod.O.CodeAlreadyExists&quot;"
+      DefaultText="&quot;Existing code&quot;"
+      LocalDefaultText="&quot;הקוד קיים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AutomaticReconcileMethod.O.uniqueMethods&quot;"
+      DefaultText="&quot;There is Reconcile Method with the same Automatic Reconcile&quot;"
+      LocalDefaultText="&quot;There is reconcile method with the same automatic reconcile&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AutomaticReconcileMethod.TH.New&quot;"
+      DefaultText="&quot;New&quot;"
+      LocalDefaultText="&quot;חדש&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
 </entity>

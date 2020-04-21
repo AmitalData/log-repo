@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxWithholdingAssessOfficeUpdateClass
    {  		
-		public const string HashString = "b80d438b0042b7d40e94a067b886c6fd";
+		public const string HashString = "db384c859bf72ce9254d48e0c94dfa01";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -489,7 +489,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature TaxWithholdingAssessOfficeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TaxWithholdingAssessOfficeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TaxWithholdingAssessOfficeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TaxWithholdingAssessOfficeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.PackageFeature", NameTextCodeDefaultText = "TaxWithholdingAssessOffice Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature TaxWithholdingAssessOfficeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.PackageFeature", NameTextCodeDefaultText = "TaxWithholdingAssessOffice Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature TaxWithholdingAssessOfficeFeature_TaxOfficesMenuFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxOfficesMenuFeature", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Menu", NameTextCodeDefaultText = @"TaxWithholdingAssessingOffice" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 

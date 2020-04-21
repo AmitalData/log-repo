@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconcileExternalPageStatusUpdateClass
    {  		
-		public const string HashString = "e6880abe48c37de4533eeb6d47c2b3e2";
+		public const string HashString = "5b05fb871fb360cf7533902e59bb9abd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

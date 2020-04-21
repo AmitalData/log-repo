@@ -11777,7 +11777,1018 @@
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
-  <TextCode
+    <TextCode
+      Code="&quot;GLAccount.TH.New&quot;"
+      DefaultText="&quot;New&quot;"
+      LocalDefaultText="&quot;חדש&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.TH.Reconcile&quot;"
+      DefaultText="&quot;Reconcile&quot;"
+      LocalDefaultText="&quot;התאמה&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.GLAccounts&quot;"
+      DefaultText="&quot;General Ledger Accounts&quot;"
+      LocalDefaultText="&quot;חשבונות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.Clients&quot;"
+      DefaultText="&quot;Client Accounts&quot;"
+      LocalDefaultText="&quot;לקוחות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.Q.Multi&quot;"
+      DefaultText="&quot;Multi&quot;"
+      LocalDefaultText="&quot;רב מטבעי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.Q.Active&quot;"
+      DefaultText="&quot;Active&quot;"
+      LocalDefaultText="&quot;פעיל&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.Q.Inactive&quot;"
+      DefaultText="&quot;Inactive&quot;"
+      LocalDefaultText="&quot;חסום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.DisplayNumberAlreadyExists&quot;"
+      DefaultText="&quot;Existing number - choose another one&quot;"
+      LocalDefaultText="&quot;מספר קיים - יש לבחור במספר אחר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.InternalNumberAlreadyExists&quot;"
+      DefaultText="&quot;The Internal Number exists with another GL Account&quot;"
+      LocalDefaultText="&quot;המספר הפנימי קיים בחשבון אחר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ClientMultiAlreadyExists&quot;"
+      DefaultText="&quot;A multi-currency account already exists for the Client - please choose a currrency&quot;"
+      LocalDefaultText="&quot;ללקוח קיים כבר חשבון רב-מטבעי - אנא בחר מטבע&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ClientCurrencyAlreadyExists&quot;"
+      DefaultText="&quot;Client account already exists in &quot;"
+      LocalDefaultText="&quot;ללקוח קיים כבר חשבון במטבע &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.VendorMultiAlreadyExists&quot;"
+      DefaultText="&quot;A multi-currency account already exists for the Vendor - please choose a currrency&quot;"
+      LocalDefaultText="&quot;לספק קיים כבר חשבון רב-מטבעי - אנא בחר מטבע&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.VendorCurrencyAlreadyExists&quot;"
+      DefaultText="&quot;Vendor account already exists in &quot;"
+      LocalDefaultText="&quot;ללקוח קיים כבר חשבון במטבע &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.LedgerTransactionExists&quot;"
+      DefaultText="&quot;Ledger account transactions exist&quot;"
+      LocalDefaultText="&quot;לכרטיס יש תנועות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.LedgerTransactionManyExist&quot;"
+      DefaultText="&quot;This account has transactions with different currencies&quot;"
+      LocalDefaultText="&quot;לכרטיס ישנם תנועות במטבעות שונים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ParentAccountNotFound&quot;"
+      DefaultText="&quot;Parent account not found&quot;"
+      LocalDefaultText="&quot;לא נמצא חשבון אב&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.CustomerAccountNotFound&quot;"
+      DefaultText="&quot;Customer account not found&quot;"
+      LocalDefaultText="&quot;לא נמצא חשבון לקוח&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ChartOfAccountsNotFound&quot;"
+      DefaultText="&quot;Chart of accounts not found&quot;"
+      LocalDefaultText="&quot;לא נמצא לוח חשבונות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.CardRevExpOnly&quot;"
+      DefaultText="&quot;A Card may ber Revenue or Expense only&quot;"
+      LocalDefaultText="&quot;כרטיס יכול להיות הוצאות או הכנסות בלבד&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.RevExpOther&quot;"
+      DefaultText="&quot;Revenue or Expense permitted for a Card only&quot;"
+      LocalDefaultText="&quot;שדה סוג חשבון נדרש רק עבור כרטיסי הכנסות או הוצאות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.WrongParentType&quot;"
+      DefaultText="&quot;Type of the Chart of Accounts differs from this GL Account&quot;"
+      LocalDefaultText="&quot;סוג קבוצת מאזן שונה מסוג של חשבון&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.CustomerAccountMissing&quot;"
+      DefaultText="&quot;Customer Account is missing&quot;"
+      LocalDefaultText="&quot;חסר חשבון לקוח&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ControlAccountNotDefined&quot;"
+      DefaultText="&quot;The Account is defined as a Control Account but is not connected to the Full Accounting Settings&quot;"
+      LocalDefaultText="&quot;החשבון מוגדר כמרכז אבל חסר בהגדרות הנהלת החשבונות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ControlAccountMissing&quot;"
+      DefaultText="&quot;Control Account is missing&quot;"
+      LocalDefaultText="&quot;חסר חשבון מרכז&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ControlAccountNotFound&quot;"
+      DefaultText="&quot;Control Account is missing&quot;"
+      LocalDefaultText="&quot;חשבון מרכז לא נמצא&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.WrongControlChartType&quot;"
+      DefaultText="&quot;Control Account's Chart of Accounts Type differs from this GL Account&quot;"
+      LocalDefaultText="&quot;סוג קבוצת מאזן של המרכז שונה מזה של חשבון&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.AccountTypeCodeMissing&quot;"
+      DefaultText="&quot;Account Type Code is missing&quot;"
+      LocalDefaultText="&quot;חסר קוד של סוג חשבון&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.WrongCustomerAccountType&quot;"
+      DefaultText="&quot;Wrong Customer Account Type&quot;"
+      LocalDefaultText="&quot;סוג חשבון לקוח שגוי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.CurrencyOrMulti&quot;"
+      DefaultText="&quot;Currency or Multi is a must&quot;"
+      LocalDefaultText="&quot;מטבע או רב מטבעי - חובה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.AccountIsaMulti&quot;"
+      DefaultText="&quot;The account is defined as multi currency account&quot;"
+      LocalDefaultText="&quot;החשבון מוגדר כחשבון רב-מטבעי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ControlMulti&quot;"
+      DefaultText="&quot;Control account must be a multi currency account, would you like to make it a multi currency account?&quot;"
+      LocalDefaultText="&quot;חשבון מרכז חייב להיות רב מטבעי, האם ברצונך להפוך אותו לחשבון רב מטבעי?&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.AmountToReconcileTooBig&quot;"
+      DefaultText="&quot;Amount to reconcile is too big&quot;"
+      LocalDefaultText="&quot;סכום ההתאמה גדול מדי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.AmountToReconcileWrongSign&quot;"
+      DefaultText="&quot;Amount to reconcile has wrong sign&quot;"
+      LocalDefaultText="&quot;סכום ההתאמה בסימן שגוי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ReconcileSearch&quot;"
+      DefaultText="&quot;Search by:&quot;"
+      LocalDefaultText="&quot;חפש לפי:&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ReconcileSearchHelpText&quot;"
+      DefaultText="&quot; Journal&#xA; Accounting Entity Ref.&#xA; Ref.1&#xA; Ref.2&#xA; Ref.3&quot;"
+      TextCodeTypeCode="&quot;H&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.YearTransferSucceed&quot;"
+      DefaultText="&quot; Year Transfer Succeed&quot;"
+      LocalDefaultText="&quot;מעבר שנה הסתיים בהצלחה&quot;"
+      TextCodeTypeCode="&quot;H&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.RevaluationSucceed&quot;"
+      DefaultText="&quot; Revaluation Succeed&quot;"
+      LocalDefaultText="&quot;שערוך הסתיים בהצלחה&quot;"
+      TextCodeTypeCode="&quot;H&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.MultiCurrencyForSplitted&quot;"
+      DefaultText="&quot;The GL Account must be defined as multi currency in order to create splitted GL Accounts by currency&quot;"
+      LocalDefaultText="&quot;הכרטיס חייב להיות מוגדר כרב מטבעי ע”מ ליצור כרטיסים מפוצלים לפי מטבעות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.CurrencyExists&quot;"
+      DefaultText="&quot;This customer has GL Account with the chosen currency. choose another one&quot;"
+      LocalDefaultText="&quot;ללקוח קיים כרטיס במטבע הנבחר. נא לבחור מטבע אחר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ConnectedGLAccounts&quot;"
+      DefaultText="&quot;Connected GL Accounts&quot;"
+      LocalDefaultText="&quot;כרטיסים מקושרים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.SplittedByCurrency&quot;"
+      DefaultText="&quot;Splitted by Currency&quot;"
+      LocalDefaultText="&quot;פיצול לפי מטבע&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.Children&quot;"
+      DefaultText="&quot;Children GL Accounts&quot;"
+      LocalDefaultText="&quot;כרטיסי בנים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.Choose&quot;"
+      DefaultText="&quot;Choose&quot;"
+      LocalDefaultText="&quot;בחר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.Add&quot;"
+      DefaultText="&quot;Add&quot;"
+      LocalDefaultText="&quot;הוסף&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.NotValidDate&quot;"
+      DefaultText="&quot;Can’t enter two identical periods&quot;"
+      LocalDefaultText="&quot;לא ניתן להזין שתי תקופות חופפות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.AccountingBalance&quot;"
+      DefaultText="&quot;Accounting Balance&quot;"
+      LocalDefaultText="&quot;יתרה חשבונאית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.DispalyTransactions&quot;"
+      DefaultText="&quot;Dispaly transactions&quot;"
+      LocalDefaultText="&quot;הצג תנועות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.TotalDue&quot;"
+      DefaultText="&quot;Total Due&quot;"
+      LocalDefaultText="&quot;יתרה לגביה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.NextDueDate&quot;"
+      DefaultText="&quot;Next due date&quot;"
+      LocalDefaultText="&quot;תאריך פרעון הבא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.OpenTransactions&quot;"
+      DefaultText="&quot;Open Transactions&quot;"
+      LocalDefaultText="&quot;תנועות פתוחות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.Reconcile&quot;"
+      DefaultText="&quot;Reconcile&quot;"
+      LocalDefaultText="&quot;בצע התאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.LastTransactions&quot;"
+      DefaultText="&quot;Last Transactions&quot;"
+      LocalDefaultText="&quot;תנועות אחרונות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.Date&quot;"
+      DefaultText="&quot;Date&quot;"
+      LocalDefaultText="&quot;תאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.Collecting&quot;"
+      DefaultText="&quot;Due&quot;"
+      LocalDefaultText="&quot;גביה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.Accounting&quot;"
+      DefaultText="&quot;Accounting&quot;"
+      LocalDefaultText="&quot;חשבונאית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.MustBeMultiCurrency&quot;"
+      DefaultText="&quot;Parent GLAccount must be multi currency&quot;"
+      LocalDefaultText="&quot;כרטיס אב חייב להיות רב מטבעי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.O.CheckInvoiceDate&quot;"
+      DefaultText="&quot;Invoice Date can't be bigger than the Accounting Date&quot;"
+      LocalDefaultText="&quot;לא ניתן להקליד תאריך אסמכתא מאוחר מהתאריך החשבונאי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APPayment.O.VendorGLAccount&quot;"
+      DefaultText="&quot;The vendor is not connected to GLAccount&quot;"
+      LocalDefaultText="&quot;הספק לא קושר לכרטיס הנהלת חשבונות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriods.O.WrongOpenMonth&quot;"
+      DefaultText="&quot;Wrong open month&quot;"
+      LocalDefaultText="&quot;חודש פתוח שגוי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriods.O.WrongClosedMonth&quot;"
+      DefaultText="&quot;Wrong closed month&quot;"
+      LocalDefaultText="&quot;חודש סגור שגוי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriods.O.FutureMonthForbidden&quot;"
+      DefaultText="&quot;Future month is not allowed&quot;"
+      LocalDefaultText="&quot;לא ניתן להגדיר חודש עתידי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriods.O.ClosedAfterOpen&quot;"
+      DefaultText="&quot;Closed month later than open month is not allowed&quot;"
+      LocalDefaultText="&quot;לא ניתן להגדיר חודש סגור אחרי חודש פתוח&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriods.O.therearejournalsdidnottranslated&quot;"
+      DefaultText="&quot;Can’t close this month. there are journals that did not translated into transactions for this month&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AccountingPeriods.O.ClosedMonth&quot;"
+      DefaultText="&quot;Closed month&quot;"
+      LocalDefaultText="&quot;חודש סגור&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Transactions.F.WithAttachAccount&quot;"
+      DefaultText="&quot;With Attach Account&quot;"
+      LocalDefaultText="&quot;הצג חשבונות קשורים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Transactions.F.WithoutAdjustedTransactions&quot;"
+      DefaultText="&quot;Without adjusted Transactions&quot;"
+      LocalDefaultText="&quot;ללא תנועות מותאמות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.Vendors&quot;"
+      DefaultText="&quot;Vendor Accounts&quot;"
+      LocalDefaultText="&quot;ספקים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.Suppliers&quot;"
+      DefaultText="&quot;Suppliers&quot;"
+      LocalDefaultText="&quot;ספקים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.Q.Suppliers&quot;"
+      DefaultText="&quot;Suppliers&quot;"
+      LocalDefaultText="&quot;ספקים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.Q.NewClient&quot;"
+      DefaultText="&quot;New Client Account&quot;"
+      LocalDefaultText="&quot;לקוח חדש&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.Q.NewVendor&quot;"
+      DefaultText="&quot;New Vendor Account&quot;"
+      LocalDefaultText="&quot;ספק חדש&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.F.DisplayNumberLabel&quot;"
+      DefaultText="&quot;Account No.: &quot;"
+      LocalDefaultText="&quot;מספר חשבון: &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.F.EnglishNameLabel&quot;"
+      DefaultText="&quot;Account Name: &quot;"
+      LocalDefaultText="&quot;שם חשבון: &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.F.CurrencyCodeLabel&quot;"
+      DefaultText="&quot;Currency: &quot;"
+      LocalDefaultText="&quot;מטבע: &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.F.ReconcileMethodNameLabel&quot;"
+      DefaultText="&quot;Reconcile Method: &quot;"
+      LocalDefaultText="&quot;שיטת התאמה: &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.F.InternalNumberLabel&quot;"
+      DefaultText="&quot;System No.: &quot;"
+      LocalDefaultText="&quot;מספר מערכת: &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluations.Q.FutureDateForbidden&quot;"
+      DefaultText="&quot;Future date is not allowed&quot;"
+      LocalDefaultText="&quot;לא ניתן להגדיר תאריך עתידי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluations.Q.Revaluation&quot;"
+      DefaultText="&quot;Revaluation&quot;"
+      LocalDefaultText="&quot;שערוך&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluations.Q.RevaluationError&quot;"
+      DefaultText="&quot;Revaluation error: &quot;"
+      LocalDefaultText="&quot;שגיאת התאמה: &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluations.Q.RateNotFound&quot;"
+      DefaultText="&quot; exchange rate not found for &quot;"
+      LocalDefaultText="&quot; שער המרה לא נמצא לתאריך &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluations.Q.DiffAccountNotDefined&quot;"
+      DefaultText="&quot;Difference account not defined&quot;"
+      LocalDefaultText="&quot;לא מודגר חשבון להפרשים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluations.Q.DataMissing&quot;"
+      DefaultText="&quot;Chart of accounts or an account or 'Revaluation Enabled' is missing&quot;"
+      LocalDefaultText="&quot;חסרים: קבוצת מאזן או חשבון או 'מאופשר שערוך'&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Revaluations.Q.OpenRevaluations&quot;"
+      DefaultText="&quot;Other open revaluations exist&quot;"
+      LocalDefaultText="&quot;קיימים שערוכים אחרים פתוחים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journals.O.ExternalNoAlreadyExists_1&quot;"
+      DefaultText="&quot;Journal with External Number &quot;"
+      LocalDefaultText="&quot;פקודת יומן עם מספר חיצוני &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journals.O.ExternalNoAlreadyExists_2&quot;"
+      DefaultText="&quot; from &quot;"
+      LocalDefaultText="&quot; מ- &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journals.O.ExternalNoAlreadyExists_3&quot;"
+      DefaultText="&quot; exists already&quot;"
+      LocalDefaultText="&quot;כבר קיימת&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journals.O.ExternalNoAlreadyExists_4&quot;"
+      DefaultText="&quot; as a Journal No. &quot;"
+      LocalDefaultText="&quot; כפקודת יומן מספר &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.LocalCurrencyErr&quot;"
+      DefaultText="&quot;The reconcile method for multi currency GLAaccount must be local currency&quot;"
+      LocalDefaultText="&quot;שיטת ההתאמה עבור כרטיסים רב מטבעיים היא במטבע מקומי בלבד&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.GLAccountIsControl&quot;"
+      DefaultText="&quot;This GL Account is defined as control account&quot;"
+      LocalDefaultText="&quot;כרטיס זה מוגדר ככרטיס מרכז&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.RequiredFields&quot;"
+      DefaultText="&quot;Fill the required fields&quot;"
+      LocalDefaultText="&quot;נא למלא שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.AgingDetails&quot;"
+      DefaultText="&quot;Aging Details&quot;"
+      LocalDefaultText="&quot;נתוני גיול בש”ח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans&quot;"
+      DefaultText="&quot;The chart of account can’t be changed, the GL account have transactions&quot;"
+      LocalDefaultText="&quot;לא ניתן לשנות את קבוצת המאזן לכרטיס שיש בו תנועות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.GLAParentValidation1&quot;"
+      DefaultText="&quot;GLAccount and its parent must be same chart of account type&quot;"
+      LocalDefaultText="&quot;סוג קבוצת מאזן עבור הכרטיס וכרטיס האב שמקושר אליו חייב להיות זהה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.GLAParentValidation2&quot;"
+      DefaultText="&quot;GLAccount and its parent must be same chart of account&quot;"
+      LocalDefaultText="&quot;קבוצת מאזן עבור הכרטיס ווכרטיס האב שמקושר אליו חייבת להיות זהה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.ReconcileMethodcantUpdated&quot;"
+      DefaultText="&quot;The reconcile method can’t be updated, the GLAccount has transations&quot;"
+      LocalDefaultText="&quot;לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.filter_accounting&quot;"
+      DefaultText="&quot;Accounting&quot;"
+      LocalDefaultText="&quot;חשבונאי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.filter_reference&quot;"
+      DefaultText="&quot;Document&quot;"
+      LocalDefaultText="&quot;אסמכתא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.filter_due&quot;"
+      DefaultText="&quot;Due&quot;"
+      LocalDefaultText="&quot;פרעון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.CreditDetails&quot;"
+      DefaultText="&quot;Credit Details&quot;"
+      LocalDefaultText="&quot;נתוני אשראי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.CreditLimit&quot;"
+      DefaultText="&quot;Credit Limit&quot;"
+      LocalDefaultText="&quot;מסגרת אשראי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.CardIndex&quot;"
+      DefaultText="&quot;Card Index&quot;"
+      LocalDefaultText="&quot;הצג תנועות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.FutureChequesToday&quot;"
+      DefaultText="&quot;Open Cheques&quot;"
+      LocalDefaultText="&quot;המחאות שלא נפרעו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.DisplayChequelist&quot;"
+      DefaultText="&quot;Display Cheque list&quot;"
+      LocalDefaultText="&quot; הצג רשימת המחאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.FutureCheques&quot;"
+      DefaultText="&quot;Future Open Cheques&quot;"
+      LocalDefaultText="&quot;המחאות עתידיות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.TotalOpenShipments&quot;"
+      DefaultText="&quot;Open Shipments&quot;"
+      LocalDefaultText="&quot; תיקים פתוחים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.fromfieldrequired&quot;"
+      DefaultText="&quot;From date field is required&quot;"
+      LocalDefaultText="&quot;מתאריך שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.tofieldrequired&quot;"
+      DefaultText="&quot;To data field is required&quot;"
+      LocalDefaultText="&quot;עד תאריך שדה חובה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.GLAccountReactivated&quot;"
+      DefaultText="&quot;GLAccount Reactivated&quot;"
+      LocalDefaultText="&quot;הכרטיס הופעל מחדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.Q.AllCustomers&quot;"
+      DefaultText="&quot;All Customers&quot;"
+      LocalDefaultText="&quot;כל הלקוחות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.Q.AllVendors&quot;"
+      DefaultText="&quot;All Vendors&quot;"
+      LocalDefaultText="&quot;כל הספקים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.F.CreatedByUser&quot;"
+      DefaultText="&quot;Created by User&quot;"
+      LocalDefaultText="&quot;נוצר על ידי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.F.ReconciliationNumber&quot;"
+      DefaultText="&quot;Reconciliation No.&quot;"
+      LocalDefaultText="&quot;התאמה מספר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.F.CreateDate&quot;"
+      DefaultText="&quot;Create Date&quot;"
+      LocalDefaultText="&quot;תאריך פתיחה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.F.ManageReconciliations&quot;"
+      DefaultText="&quot;Manage Reconciliations&quot;"
+      LocalDefaultText="&quot;ניהול התאמות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.F.FromDateLabel&quot;"
+      DefaultText="&quot;From Date: &quot;"
+      LocalDefaultText="&quot;מתאריך: &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.F.ToDateLabel&quot;"
+      DefaultText="&quot;To: &quot;"
+      LocalDefaultText="&quot;עד: &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.Q.OnlyFirstRecords&quot;"
+      DefaultText="&quot;Only the first &quot;"
+      LocalDefaultText="&quot;מוצגות רק &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.Q.OnlyFirstRecords_Ending&quot;"
+      DefaultText="&quot; records are shown. Please refine your search to get less results.&quot;"
+      LocalDefaultText="&quot; רשומות ראשונות. נא לחדד את החיפוש שלך כדי לקבל פחות תוצאות.&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.Q.SearchWarning&quot;"
+      DefaultText="&quot;Search Warning&quot;"
+      LocalDefaultText="&quot;אזהרה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.Q.reconciliationwassavedas&quot;"
+      DefaultText="&quot;The reconciliation was successfully saved as draft, and it will be dispalyed next time entering the the screen.&quot;"
+      LocalDefaultText="&quot;ההתאמה נשמרה כטיוטה והיא תוצג ברגע שנכנסים למסך התאמות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.Q.ThereisUncompletedReconciliation&quot;"
+      DefaultText="&quot;There is uncompleted reconciliation, do you want to complete it?&quot;"
+      LocalDefaultText="&quot;קיימת התאמה שלא הושלמה, האם תרצה להשלים אותה?&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.O.AmountMustBSmaller2OpenAmount&quot;"
+      DefaultText="&quot;The amount must be smaller or equal to open amount&quot;"
+      LocalDefaultText="&quot;הסכום חייב להיות קטן או שווה לסכום הפתוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.O.ErrorsInSelectedLines&quot;"
+      DefaultText="&quot;There are errors in the selected reconciliation lines&quot;"
+      LocalDefaultText="&quot;קיימת הודעת שגיאה בשורת ההתאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Cheques.Q.ChequeNotDeposited&quot;"
+      DefaultText="&quot;Cheque has not been deposited&quot;"
+      LocalDefaultText="&quot;המחאה לא הופקדה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AgingReport.O.AgingForDate&quot;"
+      DefaultText="&quot;Aging For Date&quot;"
+      LocalDefaultText="&quot;גיול לתאריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AgingReport.O.Customer&quot;"
+      DefaultText="&quot;Customer&quot;"
+      LocalDefaultText="&quot;לקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AgingReport.O.NumberMonthsBackwards&quot;"
+      DefaultText="&quot;Number of months backwards&quot;"
+      LocalDefaultText="&quot;מספר חודשים אחורנית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AgingReport.O.CurrenciesDetailed&quot;"
+      DefaultText="&quot;Currencies Detailed&quot;"
+      LocalDefaultText="&quot;פירוט מטבעות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AgingReport.O.RunReport&quot;"
+      DefaultText="&quot;Run Report&quot;"
+      LocalDefaultText="&quot;הרץ דוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AgingReport.O.FutureDate&quot;"
+      DefaultText="&quot;Future date&quot;"
+      LocalDefaultText="&quot;תאריך עתידי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLTransactionReport.O.GLAccountNo&quot;"
+      DefaultText="&quot;GLAccount No&quot;"
+      LocalDefaultText="&quot;מספר כרטיס&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLTransactionReport.O.GLAccountZrequierd&quot;"
+      DefaultText="&quot;GL Account field is requierd&quot;"
+      LocalDefaultText="&quot;חובה למלא את השדה מספר כרטיס&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLTransactionReport.O.WithClosedTransactions&quot;"
+      DefaultText="&quot;With Closed Transactions&quot;"
+      LocalDefaultText="&quot;כלול תנועות סגורות&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLTransactionReport.O.RequiredFields&quot;"
+      DefaultText="&quot;One of the fields  “glaccount” or “Chart of account” must be filled&quot;"
+      LocalDefaultText="&quot;חובה לתחום כרטיס או קבוצת מאזן&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.S.Transactions.Transactions&quot;"
+      DefaultText="&quot;Transactions&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.YearTransfer&quot;"
+      DefaultText="&quot;Year Transfer&quot;"
+      LocalDefaultText="&quot;מעבר שנה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;YearTransfer.Q.YearTransfer&quot;"
+      DefaultText="&quot;Year Transfer&quot;"
+      LocalDefaultText="&quot;מעבר שנה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;YearTransfer.F.Year&quot;"
+      DefaultText="&quot;Year&quot;"
+      LocalDefaultText="&quot;שנה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;YearTransfer.F.YearLabel&quot;"
+      DefaultText="&quot;Year: &quot;"
+      LocalDefaultText="&quot;שנה: &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;YearTransfer.O.RevenueExpenseType&quot;"
+      DefaultText="&quot;A year transfer account is undefined or is not configured correctly.&quot;"
+      LocalDefaultText="&quot;חשבון להעברת שנה אינו מוגדר או אינו מוגדר תקין.&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.System1000&quot;"
+      DefaultText="&quot;System 1000&quot;"
+      LocalDefaultText="&quot;מערכת 1000&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.Q.System1000&quot;"
+      DefaultText="&quot;System 1000&quot;"
+      LocalDefaultText="&quot;מערכת 1000&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.DeductionFileNumber&quot;"
+      DefaultText="&quot;Deduction File Number is undefined.&quot;"
+      LocalDefaultText="&quot;מספר תיק ניכויים אינו מוגדר.&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.FinishingRowType&quot;"
+      DefaultText="&quot;Finishing Row Type&quot;"
+      LocalDefaultText="&quot;רשומת סיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.StartingRowType&quot;"
+      DefaultText="&quot;Starting Row Type&quot;"
+      LocalDefaultText="&quot;רשומת פתיחה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.VendorLineRowType&quot;"
+      DefaultText="&quot;Vendor Line Row Type&quot;"
+      LocalDefaultText="&quot;רשומת תנועה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.NotValidRowType&quot;"
+      DefaultText="&quot;Not a valid Row Type&quot;"
+      LocalDefaultText="&quot;רשומת לא מסוג תקין&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.DoesntStartWithRowType&quot;"
+      DefaultText="&quot;does not start with a Line Row Type&quot;"
+      LocalDefaultText="&quot;לא מתחיל בסוג רשומה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.NotEncountered&quot;"
+      DefaultText="&quot;not encountered&quot;"
+      LocalDefaultText="&quot;לא זוהתה עד כה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.DiffersFrom&quot;"
+      DefaultText="&quot;differs from &quot;"
+      LocalDefaultText="&quot;לא זהה ל&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.IsMissing&quot;"
+      DefaultText="&quot;is missing&quot;"
+      LocalDefaultText="&quot;חסר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.IsEmpty&quot;"
+      DefaultText="&quot;is empty&quot;"
+      LocalDefaultText="&quot;ריק&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.NotFound&quot;"
+      DefaultText="&quot;not found&quot;"
+      LocalDefaultText="&quot;לא נמצא&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.AppearsBefore&quot;"
+      DefaultText="&quot;Appears Before&quot;"
+      LocalDefaultText="&quot;מופיעה לפני&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.StartingRowDeductionFile&quot;"
+      DefaultText="&quot;Starting Row Deduction File&quot;"
+      LocalDefaultText="&quot;תיק ניכויים ברשומת הפתיחה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.FinishingRowDeductionFile&quot;"
+      DefaultText="&quot;Finishing Row Deduction File&quot;"
+      LocalDefaultText="&quot;תיק ניכויים ברשומת הסיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.OurDeductionFile&quot;"
+      DefaultText="&quot;Our Deduction File Number&quot;"
+      LocalDefaultText="&quot;מספר תיק הניכויים שלנו&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.FinishingRowTotals&quot;"
+      DefaultText="&quot;Finishing Row totals are not summing up together&quot;"
+      LocalDefaultText="&quot;כמויות לא מתחברות יחד ברשימת הסיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.FinishingRowTotalVendors&quot;"
+      DefaultText="&quot;Finishing Row Total Vendor Number&quot;"
+      LocalDefaultText="&quot;כמות ספקים ברשימת הסיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.CountVendorRows&quot;"
+      DefaultText="&quot;count of Vendor Rows&quot;"
+      LocalDefaultText="&quot;ספירת שורות ספקים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.VendorLineNo&quot;"
+      DefaultText="&quot;Vendor Line #&quot;"
+      LocalDefaultText="&quot;שורת ספק מס' &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.VendorNo&quot;"
+      DefaultText="&quot;Vendor #&quot;"
+      LocalDefaultText="&quot;ספק מס' &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.VendorCode&quot;"
+      DefaultText="&quot;Vendor Code&quot;"
+      LocalDefaultText="&quot;מספר ספק&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.LocatedDeductionFile&quot;"
+      DefaultText="&quot;Located Deduction File&quot;"
+      LocalDefaultText="&quot;תיק ניכויים שאותר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.LocatedVATNumber&quot;"
+      DefaultText="&quot;Located VAT Number&quot;"
+      LocalDefaultText="&quot;מספר עוסק מורשה שאותר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.StartDate&quot;"
+      DefaultText="&quot;Start Date&quot;"
+      LocalDefaultText="&quot;תאריך התחלה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.EndDate&quot;"
+      DefaultText="&quot;End Date&quot;"
+      LocalDefaultText="&quot;תאריך סיום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.FailedWhilePerforming&quot;"
+      DefaultText="&quot;failed while performing&quot;"
+      LocalDefaultText="&quot;תקלה בביצוע&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;System1000.O.NoVendors&quot;"
+      DefaultText="&quot;No Vendors found with Vat Number and Deduction File Number&quot;"
+      LocalDefaultText="&quot;לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;GLAccount.O.NoCreditDefined&quot;"
       DefaultText="&quot;Credit balance not defined&quot;"
       LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;"
@@ -11902,9 +12913,64 @@
       DefaultText="&quot;Preview&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-       <TextCode Code="&quot;GLAccount.O.IsCreditLimitSet&quot;" DefaultText="&quot;Credit Limit Is Set&quot;" LocalDefaultText="&quot;מוגדר מסגרת אשראי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;GLAccount.O.SortBy&quot;" DefaultText="&quot;Sort By&quot;" LocalDefaultText="&quot;מיון לפי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-  
+    <TextCode
+      Code="&quot;GLAccount.O.IsCreditLimitSet&quot;"
+      DefaultText="&quot;Credit Limit Is Set&quot;"
+      LocalDefaultText="&quot;מוגדר מסגרת אשראי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.SortBy&quot;"
+      DefaultText="&quot;Sort By&quot;"
+      LocalDefaultText="&quot;מיון לפי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;RECONCILE&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;GLAccount.Features.Reconcile&quot;"
+      FeatureDefaultText="&quot;Reconcile&quot;" />
+    <Feature
+      Code="&quot;MOREGLACCOUNT&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;GLAccount.Features.More&quot;"
+      FeatureDefaultText="&quot;More Buttons&quot;" />
+    <Feature
+      Code="&quot;YEARTRANSFERMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;YearTransfer.Features.YearTransferMenu&quot;"
+      FeatureDefaultText="&quot;YearTransfer&quot;" />
+    <Feature
+      Code="&quot;GEN1000MENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;YearTransfer.Features.GEN1000MENU&quot;"
+      FeatureDefaultText="&quot;Generate a vendor file for the system 1000&quot;" />
+    <Feature
+      Code="&quot;RECV1000MENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;YearTransfer.Features.Recv1000MENU&quot;"
+      FeatureDefaultText="&quot;Receiving file withholding tax system 1000&quot;" />
+  </AdditionalFeatures>
 </entity>

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "eb0e4bbc93afab66e5966fbbbf1b8f77";
+		public const string HashString = "9127186b69b46d6d336139a16278bb79";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7665,7 +7665,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature GLAccountFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature GLAccountFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature GLAccountFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature GLAccountFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.PackageFeature", NameTextCodeDefaultText = "GLAccount Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature GLAccountFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.PackageFeature", NameTextCodeDefaultText = "GLAccount Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature GLAccountFeature_RECONCILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECONCILE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reconcile", NameTextCodeDefaultText = @"Reconcile" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GLAccountFeature_MOREGLACCOUNT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREGLACCOUNT", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.More", NameTextCodeDefaultText = @"More Buttons" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GLAccountFeature_YEARTRANSFERMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "YEARTRANSFERMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "YearTransfer.Features.YearTransferMenu", NameTextCodeDefaultText = @"YearTransfer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GLAccountFeature_GEN1000MENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GEN1000MENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "YearTransfer.Features.GEN1000MENU", NameTextCodeDefaultText = @"Generate a vendor file for the system 1000" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GLAccountFeature_RECV1000MENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECV1000MENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "YearTransfer.Features.Recv1000MENU", NameTextCodeDefaultText = @"Receiving file withholding tax system 1000" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -8551,6 +8565,344 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   		   //--------------> Additional TextCodes <--------------\\
 
  		   ObjectTable GLAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccount" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode GLAccountTextCode_GLAccountTHNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.New", DefaultText = "New",LocalDefaultText = @"חדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountTHReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Reconcile", DefaultText = "Reconcile",LocalDefaultText = @"התאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GeneralMCACCGLAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.GLAccounts", DefaultText = "General Ledger Accounts",LocalDefaultText = @"חשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GeneralMCACCClients = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Clients", DefaultText = "Client Accounts",LocalDefaultText = @"לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsQMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Multi", DefaultText = "Multi",LocalDefaultText = @"רב מטבעי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsQActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Active", DefaultText = "Active",LocalDefaultText = @"פעיל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsQInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Inactive", DefaultText = "Inactive",LocalDefaultText = @"חסום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsODisplayNumberAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayNumberAlreadyExists", DefaultText = "Existing number - choose another one",LocalDefaultText = @"מספר קיים - יש לבחור במספר אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOInternalNumberAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.InternalNumberAlreadyExists", DefaultText = "The Internal Number exists with another GL Account",LocalDefaultText = @"המספר הפנימי קיים בחשבון אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOClientMultiAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ClientMultiAlreadyExists", DefaultText = "A multi-currency account already exists for the Client - please choose a currrency",LocalDefaultText = @"ללקוח קיים כבר חשבון רב-מטבעי - אנא בחר מטבע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOClientCurrencyAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ClientCurrencyAlreadyExists", DefaultText = "Client account already exists in ",LocalDefaultText = @"ללקוח קיים כבר חשבון במטבע ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOVendorMultiAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.VendorMultiAlreadyExists", DefaultText = "A multi-currency account already exists for the Vendor - please choose a currrency",LocalDefaultText = @"לספק קיים כבר חשבון רב-מטבעי - אנא בחר מטבע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOVendorCurrencyAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.VendorCurrencyAlreadyExists", DefaultText = "Vendor account already exists in ",LocalDefaultText = @"ללקוח קיים כבר חשבון במטבע ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionExists", DefaultText = "Ledger account transactions exist",LocalDefaultText = @"לכרטיס יש תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionManyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionManyExist", DefaultText = "This account has transactions with different currencies",LocalDefaultText = @"לכרטיס ישנם תנועות במטבעות שונים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOParentAccountNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ParentAccountNotFound", DefaultText = "Parent account not found",LocalDefaultText = @"לא נמצא חשבון אב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCustomerAccountNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerAccountNotFound", DefaultText = "Customer account not found",LocalDefaultText = @"לא נמצא חשבון לקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOChartOfAccountsNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ChartOfAccountsNotFound", DefaultText = "Chart of accounts not found",LocalDefaultText = @"לא נמצא לוח חשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCardRevExpOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CardRevExpOnly", DefaultText = "A Card may ber Revenue or Expense only",LocalDefaultText = @"כרטיס יכול להיות הוצאות או הכנסות בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsORevExpOther = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RevExpOther", DefaultText = "Revenue or Expense permitted for a Card only",LocalDefaultText = @"שדה סוג חשבון נדרש רק עבור כרטיסי הכנסות או הוצאות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOWrongParentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.WrongParentType", DefaultText = "Type of the Chart of Accounts differs from this GL Account",LocalDefaultText = @"סוג קבוצת מאזן שונה מסוג של חשבון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCustomerAccountMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerAccountMissing", DefaultText = "Customer Account is missing",LocalDefaultText = @"חסר חשבון לקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOControlAccountNotDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlAccountNotDefined", DefaultText = "The Account is defined as a Control Account but is not connected to the Full Accounting Settings",LocalDefaultText = @"החשבון מוגדר כמרכז אבל חסר בהגדרות הנהלת החשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOControlAccountMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlAccountMissing", DefaultText = "Control Account is missing",LocalDefaultText = @"חסר חשבון מרכז", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOControlAccountNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlAccountNotFound", DefaultText = "Control Account is missing",LocalDefaultText = @"חשבון מרכז לא נמצא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOWrongControlChartType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.WrongControlChartType", DefaultText = "Control Account's Chart of Accounts Type differs from this GL Account",LocalDefaultText = @"סוג קבוצת מאזן של המרכז שונה מזה של חשבון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOAccountTypeCodeMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountTypeCodeMissing", DefaultText = "Account Type Code is missing",LocalDefaultText = @"חסר קוד של סוג חשבון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOWrongCustomerAccountType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.WrongCustomerAccountType", DefaultText = "Wrong Customer Account Type",LocalDefaultText = @"סוג חשבון לקוח שגוי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCurrencyOrMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CurrencyOrMulti", DefaultText = "Currency or Multi is a must",LocalDefaultText = @"מטבע או רב מטבעי - חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOAccountIsaMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountIsaMulti", DefaultText = "The account is defined as multi currency account",LocalDefaultText = @"החשבון מוגדר כחשבון רב-מטבעי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOControlMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlMulti", DefaultText = "Control account must be a multi currency account, would you like to make it a multi currency account?",LocalDefaultText = @"חשבון מרכז חייב להיות רב מטבעי, האם ברצונך להפוך אותו לחשבון רב מטבעי?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOAmountToReconcileTooBig = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AmountToReconcileTooBig", DefaultText = "Amount to reconcile is too big",LocalDefaultText = @"סכום ההתאמה גדול מדי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOAmountToReconcileWrongSign = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AmountToReconcileWrongSign", DefaultText = "Amount to reconcile has wrong sign",LocalDefaultText = @"סכום ההתאמה בסימן שגוי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOReconcileSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileSearch", DefaultText = "Search by:",LocalDefaultText = @"חפש לפי:", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOReconcileSearchHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileSearchHelpText", DefaultText = " Journal\n Accounting Entity Ref.\n Ref.1\n Ref.2\n Ref.3",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOYearTransferSucceed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.YearTransferSucceed", DefaultText = " Year Transfer Succeed",LocalDefaultText = @"מעבר שנה הסתיים בהצלחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsORevaluationSucceed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RevaluationSucceed", DefaultText = " Revaluation Succeed",LocalDefaultText = @"שערוך הסתיים בהצלחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOMultiCurrencyForSplitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MultiCurrencyForSplitted", DefaultText = "The GL Account must be defined as multi currency in order to create splitted GL Accounts by currency",LocalDefaultText = @"הכרטיס חייב להיות מוגדר כרב מטבעי ע”מ ליצור כרטיסים מפוצלים לפי מטבעות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCurrencyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CurrencyExists", DefaultText = "This customer has GL Account with the chosen currency. choose another one",LocalDefaultText = @"ללקוח קיים כרטיס במטבע הנבחר. נא לבחור מטבע אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOConnectedGLAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ConnectedGLAccounts", DefaultText = "Connected GL Accounts",LocalDefaultText = @"כרטיסים מקושרים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOSplittedByCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.SplittedByCurrency", DefaultText = "Splitted by Currency",LocalDefaultText = @"פיצול לפי מטבע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOChildren = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Children", DefaultText = "Children GL Accounts",LocalDefaultText = @"כרטיסי בנים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Choose", DefaultText = "Choose",LocalDefaultText = @"בחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOAdd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Add", DefaultText = "Add",LocalDefaultText = @"הוסף", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsONotValidDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NotValidDate", DefaultText = "Can’t enter two identical periods",LocalDefaultText = @"לא ניתן להזין שתי תקופות חופפות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOAccountingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountingBalance", DefaultText = "Accounting Balance",LocalDefaultText = @"יתרה חשבונאית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsODispalyTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DispalyTransactions", DefaultText = "Dispaly transactions",LocalDefaultText = @"הצג תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOTotalDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.TotalDue", DefaultText = "Total Due",LocalDefaultText = @"יתרה לגביה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsONextDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NextDueDate", DefaultText = "Next due date",LocalDefaultText = @"תאריך פרעון הבא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOOpenTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.OpenTransactions", DefaultText = "Open Transactions",LocalDefaultText = @"תנועות פתוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Reconcile", DefaultText = "Reconcile",LocalDefaultText = @"בצע התאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOLastTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LastTransactions", DefaultText = "Last Transactions",LocalDefaultText = @"תנועות אחרונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsODate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Date", DefaultText = "Date",LocalDefaultText = @"תאריך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCollecting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Collecting", DefaultText = "Due",LocalDefaultText = @"גביה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOAccounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Accounting", DefaultText = "Accounting",LocalDefaultText = @"חשבונאית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOMustBeMultiCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MustBeMultiCurrency", DefaultText = "Parent GLAccount must be multi currency",LocalDefaultText = @"כרטיס אב חייב להיות רב מטבעי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_APInvoiceOCheckInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CheckInvoiceDate", DefaultText = "Invoice Date can't be bigger than the Accounting Date",LocalDefaultText = @"לא ניתן להקליד תאריך אסמכתא מאוחר מהתאריך החשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_APPaymentOVendorGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VendorGLAccount", DefaultText = "The vendor is not connected to GLAccount",LocalDefaultText = @"הספק לא קושר לכרטיס הנהלת חשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOWrongOpenMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.WrongOpenMonth", DefaultText = "Wrong open month",LocalDefaultText = @"חודש פתוח שגוי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOWrongClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.WrongClosedMonth", DefaultText = "Wrong closed month",LocalDefaultText = @"חודש סגור שגוי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOFutureMonthForbidden = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.FutureMonthForbidden", DefaultText = "Future month is not allowed",LocalDefaultText = @"לא ניתן להגדיר חודש עתידי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOClosedAfterOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.ClosedAfterOpen", DefaultText = "Closed month later than open month is not allowed",LocalDefaultText = @"לא ניתן להגדיר חודש סגור אחרי חודש פתוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOtherearejournalsdidnottranslated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.therearejournalsdidnottranslated", DefaultText = "Can’t close this month. there are journals that did not translated into transactions for this month",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.ClosedMonth", DefaultText = "Closed month",LocalDefaultText = @"חודש סגור", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_TransactionsFWithAttachAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Transactions.F.WithAttachAccount", DefaultText = "With Attach Account",LocalDefaultText = @"הצג חשבונות קשורים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_TransactionsFWithoutAdjustedTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Transactions.F.WithoutAdjustedTransactions", DefaultText = "Without adjusted Transactions",LocalDefaultText = @"ללא תנועות מותאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GeneralMCACCVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Vendors", DefaultText = "Vendor Accounts",LocalDefaultText = @"ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GeneralMCACCSuppliers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Suppliers", DefaultText = "Suppliers",LocalDefaultText = @"ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsQSuppliers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Suppliers", DefaultText = "Suppliers",LocalDefaultText = @"ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsQNewClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.NewClient", DefaultText = "New Client Account",LocalDefaultText = @"לקוח חדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsQNewVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.NewVendor", DefaultText = "New Vendor Account",LocalDefaultText = @"ספק חדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsFDisplayNumberLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.DisplayNumberLabel", DefaultText = "Account No.: ",LocalDefaultText = @"מספר חשבון: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsFEnglishNameLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.EnglishNameLabel", DefaultText = "Account Name: ",LocalDefaultText = @"שם חשבון: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsFCurrencyCodeLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.CurrencyCodeLabel", DefaultText = "Currency: ",LocalDefaultText = @"מטבע: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsFReconcileMethodNameLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.ReconcileMethodNameLabel", DefaultText = "Reconcile Method: ",LocalDefaultText = @"שיטת התאמה: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsFInternalNumberLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.InternalNumberLabel", DefaultText = "System No.: ",LocalDefaultText = @"מספר מערכת: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_RevaluationsQFutureDateForbidden = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.FutureDateForbidden", DefaultText = "Future date is not allowed",LocalDefaultText = @"לא ניתן להגדיר תאריך עתידי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_RevaluationsQRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.Revaluation", DefaultText = "Revaluation",LocalDefaultText = @"שערוך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_RevaluationsQRevaluationError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RevaluationError", DefaultText = "Revaluation error: ",LocalDefaultText = @"שגיאת התאמה: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_RevaluationsQRateNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RateNotFound", DefaultText = " exchange rate not found for ",LocalDefaultText = @" שער המרה לא נמצא לתאריך ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_RevaluationsQDiffAccountNotDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.DiffAccountNotDefined", DefaultText = "Difference account not defined",LocalDefaultText = @"לא מודגר חשבון להפרשים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_RevaluationsQDataMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.DataMissing", DefaultText = "Chart of accounts or an account or 'Revaluation Enabled' is missing",LocalDefaultText = @"חסרים: קבוצת מאזן או חשבון או 'מאופשר שערוך'", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_RevaluationsQOpenRevaluations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.OpenRevaluations", DefaultText = "Other open revaluations exist",LocalDefaultText = @"קיימים שערוכים אחרים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_1", DefaultText = "Journal with External Number ",LocalDefaultText = @"פקודת יומן עם מספר חיצוני ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_2", DefaultText = " from ",LocalDefaultText = @" מ- ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_3", DefaultText = " exists already",LocalDefaultText = @"כבר קיימת", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_4", DefaultText = " as a Journal No. ",LocalDefaultText = @" כפקודת יומן מספר ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOLocalCurrencyErr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LocalCurrencyErr", DefaultText = "The reconcile method for multi currency GLAaccount must be local currency",LocalDefaultText = @"שיטת ההתאמה עבור כרטיסים רב מטבעיים היא במטבע מקומי בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOGLAccountIsControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountIsControl", DefaultText = "This GL Account is defined as control account",LocalDefaultText = @"כרטיס זה מוגדר ככרטיס מרכז", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RequiredFields", DefaultText = "Fill the required fields",LocalDefaultText = @"נא למלא שדה חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOAgingDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AgingDetails", DefaultText = "Aging Details",LocalDefaultText = @"נתוני גיול בש”ח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOChartOfAccountCantChangedGLAhaveTrans = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", DefaultText = "The chart of account can’t be changed, the GL account have transactions",LocalDefaultText = @"לא ניתן לשנות את קבוצת המאזן לכרטיס שיש בו תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOGLAParentValidation1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation1", DefaultText = "GLAccount and its parent must be same chart of account type",LocalDefaultText = @"סוג קבוצת מאזן עבור הכרטיס וכרטיס האב שמקושר אליו חייב להיות זהה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOGLAParentValidation2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation2", DefaultText = "GLAccount and its parent must be same chart of account",LocalDefaultText = @"קבוצת מאזן עבור הכרטיס ווכרטיס האב שמקושר אליו חייבת להיות זהה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOReconcileMethodcantUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodcantUpdated", DefaultText = "The reconcile method can’t be updated, the GLAccount has transations",LocalDefaultText = @"לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOfilter_accounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting",LocalDefaultText = @"חשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOfilter_reference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Document",LocalDefaultText = @"אסמכתא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOfilter_due = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due",LocalDefaultText = @"פרעון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCreditDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditDetails", DefaultText = "Credit Details",LocalDefaultText = @"נתוני אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCreditLimit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditLimit", DefaultText = "Credit Limit",LocalDefaultText = @"מסגרת אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCardIndex = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CardIndex", DefaultText = "Card Index",LocalDefaultText = @"הצג תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOFutureChequesToday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureChequesToday", DefaultText = "Open Cheques",LocalDefaultText = @"המחאות שלא נפרעו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsODisplayChequelist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayChequelist", DefaultText = "Display Cheque list",LocalDefaultText = @" הצג רשימת המחאות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOFutureCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheques", DefaultText = "Future Open Cheques",LocalDefaultText = @"המחאות עתידיות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOTotalOpenShipments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.TotalOpenShipments", DefaultText = "Open Shipments",LocalDefaultText = @" תיקים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOfromfieldrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.fromfieldrequired", DefaultText = "From date field is required",LocalDefaultText = @"מתאריך שדה חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOtofieldrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.tofieldrequired", DefaultText = "To data field is required",LocalDefaultText = @"עד תאריך שדה חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOGLAccountReactivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountReactivated", DefaultText = "GLAccount Reactivated",LocalDefaultText = @"הכרטיס הופעל מחדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsQAllCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllCustomers", DefaultText = "All Customers",LocalDefaultText = @"כל הלקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsQAllVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllVendors", DefaultText = "All Vendors",LocalDefaultText = @"כל הספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsFCreatedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.CreatedByUser", DefaultText = "Created by User",LocalDefaultText = @"נוצר על ידי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsFReconciliationNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.ReconciliationNumber", DefaultText = "Reconciliation No.",LocalDefaultText = @"התאמה מספר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsFCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.CreateDate", DefaultText = "Create Date",LocalDefaultText = @"תאריך פתיחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsFManageReconciliations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.ManageReconciliations", DefaultText = "Manage Reconciliations",LocalDefaultText = @"ניהול התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsFFromDateLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.FromDateLabel", DefaultText = "From Date: ",LocalDefaultText = @"מתאריך: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsFToDateLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.ToDateLabel", DefaultText = "To: ",LocalDefaultText = @"עד: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsQOnlyFirstRecords = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.OnlyFirstRecords", DefaultText = "Only the first ",LocalDefaultText = @"מוצגות רק ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsQOnlyFirstRecords_Ending = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.OnlyFirstRecords_Ending", DefaultText = " records are shown. Please refine your search to get less results.",LocalDefaultText = @" רשומות ראשונות. נא לחדד את החיפוש שלך כדי לקבל פחות תוצאות.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsQSearchWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.SearchWarning", DefaultText = "Search Warning",LocalDefaultText = @"אזהרה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsQreconciliationwassavedas = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.reconciliationwassavedas", DefaultText = "The reconciliation was successfully saved as draft, and it will be dispalyed next time entering the the screen.",LocalDefaultText = @"ההתאמה נשמרה כטיוטה והיא תוצג ברגע שנכנסים למסך התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsQThereisUncompletedReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.ThereisUncompletedReconciliation", DefaultText = "There is uncompleted reconciliation, do you want to complete it?",LocalDefaultText = @"קיימת התאמה שלא הושלמה, האם תרצה להשלים אותה?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsOAmountMustBSmaller2OpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.AmountMustBSmaller2OpenAmount", DefaultText = "The amount must be smaller or equal to open amount",LocalDefaultText = @"הסכום חייב להיות קטן או שווה לסכום הפתוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ReconciliationsOErrorsInSelectedLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInSelectedLines", DefaultText = "There are errors in the selected reconciliation lines",LocalDefaultText = @"קיימת הודעת שגיאה בשורת ההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_ChequesQChequeNotDeposited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Cheques.Q.ChequeNotDeposited", DefaultText = "Cheque has not been deposited",LocalDefaultText = @"המחאה לא הופקדה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AgingReportOAgingForDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.AgingForDate", DefaultText = "Aging For Date",LocalDefaultText = @"גיול לתאריך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AgingReportOCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.Customer", DefaultText = "Customer",LocalDefaultText = @"לקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AgingReportONumberMonthsBackwards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.NumberMonthsBackwards", DefaultText = "Number of months backwards",LocalDefaultText = @"מספר חודשים אחורנית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AgingReportOCurrenciesDetailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.CurrenciesDetailed", DefaultText = "Currencies Detailed",LocalDefaultText = @"פירוט מטבעות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AgingReportORunReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReport", DefaultText = "Run Report",LocalDefaultText = @"הרץ דוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_AgingReportOFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.FutureDate", DefaultText = "Future date",LocalDefaultText = @"תאריך עתידי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountNo", DefaultText = "GLAccount No",LocalDefaultText = @"מספר כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountZrequierd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountZrequierd", DefaultText = "GL Account field is requierd",LocalDefaultText = @"חובה למלא את השדה מספר כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLTransactionReportOWithClosedTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.WithClosedTransactions", DefaultText = "With Closed Transactions",LocalDefaultText = @"כלול תנועות סגורות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLTransactionReportORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFields", DefaultText = "One of the fields  “glaccount” or “Chart of account” must be filled",LocalDefaultText = @"חובה לתחום כרטיס או קבוצת מאזן", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsSTransactionsTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.S.Transactions.Transactions", DefaultText = "Transactions",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GeneralMCACCYearTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.YearTransfer", DefaultText = "Year Transfer",LocalDefaultText = @"מעבר שנה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_YearTransferQYearTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.Q.YearTransfer", DefaultText = "Year Transfer",LocalDefaultText = @"מעבר שנה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_YearTransferFYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_YearTransferFYearLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.YearLabel", DefaultText = "Year: ",LocalDefaultText = @"שנה: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_YearTransferORevenueExpenseType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.RevenueExpenseType", DefaultText = "A year transfer account is undefined or is not configured correctly.",LocalDefaultText = @"חשבון להעברת שנה אינו מוגדר או אינו מוגדר תקין.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GeneralMCACCSystem1000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.System1000", DefaultText = "System 1000",LocalDefaultText = @"מערכת 1000", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000QSystem1000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.Q.System1000", DefaultText = "System 1000",LocalDefaultText = @"מערכת 1000", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000ODeductionFileNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DeductionFileNumber", DefaultText = "Deduction File Number is undefined.",LocalDefaultText = @"מספר תיק ניכויים אינו מוגדר.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OFinishingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowType", DefaultText = "Finishing Row Type",LocalDefaultText = @"רשומת סיכום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OStartingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartingRowType", DefaultText = "Starting Row Type",LocalDefaultText = @"רשומת פתיחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OVendorLineRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorLineRowType", DefaultText = "Vendor Line Row Type",LocalDefaultText = @"רשומת תנועה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000ONotValidRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotValidRowType", DefaultText = "Not a valid Row Type",LocalDefaultText = @"רשומת לא מסוג תקין", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000ODoesntStartWithRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DoesntStartWithRowType", DefaultText = "does not start with a Line Row Type",LocalDefaultText = @"לא מתחיל בסוג רשומה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000ONotEncountered = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotEncountered", DefaultText = "not encountered",LocalDefaultText = @"לא זוהתה עד כה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000ODiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DiffersFrom", DefaultText = "differs from ",LocalDefaultText = @"לא זהה ל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OIsMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.IsMissing", DefaultText = "is missing",LocalDefaultText = @"חסר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OIsEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.IsEmpty", DefaultText = "is empty",LocalDefaultText = @"ריק", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000ONotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotFound", DefaultText = "not found",LocalDefaultText = @"לא נמצא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OAppearsBefore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.AppearsBefore", DefaultText = "Appears Before",LocalDefaultText = @"מופיעה לפני", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OStartingRowDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartingRowDeductionFile", DefaultText = "Starting Row Deduction File",LocalDefaultText = @"תיק ניכויים ברשומת הפתיחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OFinishingRowDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowDeductionFile", DefaultText = "Finishing Row Deduction File",LocalDefaultText = @"תיק ניכויים ברשומת הסיכום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OOurDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.OurDeductionFile", DefaultText = "Our Deduction File Number",LocalDefaultText = @"מספר תיק הניכויים שלנו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OFinishingRowTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowTotals", DefaultText = "Finishing Row totals are not summing up together",LocalDefaultText = @"כמויות לא מתחברות יחד ברשימת הסיכום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OFinishingRowTotalVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowTotalVendors", DefaultText = "Finishing Row Total Vendor Number",LocalDefaultText = @"כמות ספקים ברשימת הסיכום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OCountVendorRows = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.CountVendorRows", DefaultText = "count of Vendor Rows",LocalDefaultText = @"ספירת שורות ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OVendorLineNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorLineNo", DefaultText = "Vendor Line #",LocalDefaultText = @"שורת ספק מס' ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OVendorNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorNo", DefaultText = "Vendor #",LocalDefaultText = @"ספק מס' ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OVendorCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorCode", DefaultText = "Vendor Code",LocalDefaultText = @"מספר ספק", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OLocatedDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.LocatedDeductionFile", DefaultText = "Located Deduction File",LocalDefaultText = @"תיק ניכויים שאותר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OLocatedVATNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.LocatedVATNumber", DefaultText = "Located VAT Number",LocalDefaultText = @"מספר עוסק מורשה שאותר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OStartDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartDate", DefaultText = "Start Date",LocalDefaultText = @"תאריך התחלה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OEndDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.EndDate", DefaultText = "End Date",LocalDefaultText = @"תאריך סיום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000OFailedWhilePerforming = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FailedWhilePerforming", DefaultText = "failed while performing",LocalDefaultText = @"תקלה בביצוע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_System1000ONoVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NoVendors", DefaultText = "No Vendors found with Vat Number and Deduction File Number",LocalDefaultText = @"לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountONoCreditDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoCreditDefined", DefaultText = "Credit balance not defined",LocalDefaultText = @"לא הוגדרה מסגרת אשראי ללקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

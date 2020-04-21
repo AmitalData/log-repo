@@ -2204,6 +2204,12 @@
     HasDataBaseField="false"
     NoMetaDataField="true" />
   <EventTypes />
-  <AdditionalTextCodes></AdditionalTextCodes>
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;BusinessHour.O.TableDescription&quot;"
+      DefaultText="&quot;Define business hours and holidays.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

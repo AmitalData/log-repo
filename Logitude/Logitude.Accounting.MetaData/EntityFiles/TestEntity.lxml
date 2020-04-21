@@ -159,4 +159,6 @@
     NoMetaDataField="false"
     GenerateInList="false" />
   <EventTypes />
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

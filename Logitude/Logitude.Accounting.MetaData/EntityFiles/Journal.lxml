@@ -4035,6 +4035,395 @@
       LocalDefaultText="&quot;פקודות אחרונים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.TH.General&quot;"
+      DefaultText="&quot;General&quot;"
+      LocalDefaultText="&quot;כללי&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.Journal&quot;"
+      DefaultText="&quot;Journal&quot;"
+      LocalDefaultText="&quot;פקודת יומן&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.Q.Journal&quot;"
+      DefaultText="&quot;All Journal&quot;"
+      LocalDefaultText="&quot;כל פקודות היומן&quot;"
+      TextCodeTypeCode="&quot;Q&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.Q.ApprovedJournal&quot;"
+      DefaultText="&quot;Approved Journals&quot;"
+      LocalDefaultText="&quot;פקודות יומן מאושרות&quot;"
+      TextCodeTypeCode="&quot;Q&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.Q.DraftJournal&quot;"
+      DefaultText="&quot;Draft Journals&quot;"
+      LocalDefaultText="&quot;פקודות יומן בסטטוס טיוטה&quot;"
+      TextCodeTypeCode="&quot;Q&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.Q.SavedJournal&quot;"
+      DefaultText="&quot;Waiting for Approval Journals&quot;"
+      LocalDefaultText="&quot;פקודות יומן מחכות לאישור&quot;"
+      TextCodeTypeCode="&quot;Q&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.Q.AutoCreatedJournals&quot;"
+      DefaultText="&quot;Auto Created Journals&quot;"
+      LocalDefaultText="&quot; פקודות יומן אוטומטיות&quot;"
+      TextCodeTypeCode="&quot;Q&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.TheAccountingDayMustBeInRange&quot;"
+      DefaultText="&quot;The accounting day must be in the range of the accounting month.&quot;"
+      LocalDefaultText="&quot;היום החשבונאי שהוקלד אינו קיים בטווח ימי החודש החשבונאי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.AccDay&quot;"
+      DefaultText="&quot;Acc. Day&quot;"
+      LocalDefaultText="&quot;יום חשבונאי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.S.Details.Details&quot;"
+      DefaultText="&quot;Details&quot;"
+      TextCodeTypeCode="&quot;S&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.Line&quot;"
+      DefaultText="&quot;Line&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.ActionCode&quot;"
+      DefaultText="&quot;Action Code&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.DocumentDate&quot;"
+      DefaultText="&quot;Document Date&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.DueDate&quot;"
+      DefaultText="&quot;Due Date&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.CreditAccountName&quot;"
+      DefaultText="&quot;C.Account&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.DebitAccountName&quot;"
+      DefaultText="&quot;D.Account&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.Currency&quot;"
+      DefaultText="&quot;Currency&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.LocalAmount&quot;"
+      DefaultText="&quot;Amount (%InvoiceCurrencyCode)&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.ForeignAmount&quot;"
+      DefaultText="&quot;F.Amount&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.Reference1&quot;"
+      DefaultText="&quot;Ref.1&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.Reference2&quot;"
+      DefaultText="&quot;Ref.2&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.Reference3&quot;"
+      DefaultText="&quot;Ref.3&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.CH.Notes&quot;"
+      DefaultText="&quot;Notes&quot;"
+      TextCodeTypeCode="&quot;CH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ForeignAmountNotZero&quot;"
+      DefaultText="&quot;Foreign amount is empty&quot;"
+      LocalDefaultText="&quot;סכום במטח הינו חובה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.LocalAmountNotZero&quot;"
+      DefaultText="&quot;Local amount is empty&quot;"
+      LocalDefaultText="&quot;סכום במטבע מקומי הינו חובה &quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.YouShouldHaveOneLineAtLeast&quot;"
+      DefaultText="&quot;There must be at least one journal line&quot;"
+      LocalDefaultText="&quot;חובה להזין לפחות שורת פקודת יומן אחת&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.CurrenyNotMatched&quot;"
+      DefaultText="&quot;Account Currncy does not equal to selected currecy code&quot;"
+      LocalDefaultText="&quot;מטבע הכרטיס לא תואם את המטבע הנבחר&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.JournalAmountNotMatched&quot;"
+      DefaultText="&quot;Journal credit amount does not match the debit amount&quot;"
+      LocalDefaultText="&quot;סכום חובה שונה מסכום זכות &quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ExchangeRateEmpty&quot;"
+      DefaultText="&quot;Exchange rate is not defined&quot;"
+      LocalDefaultText="&quot;לא הוגדר שער המרה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ActionCodeCredit&quot;"
+      DefaultText="&quot;Please select a credit account&quot;"
+      LocalDefaultText="&quot;נא לבחור כרטיס זכות&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.JLAccountingDateMustWithinJournalMonth&quot;"
+      DefaultText="&quot;Jornal Line Accounting Date must be within Accounting month of Journal&quot;"
+      LocalDefaultText="&quot;תאריך בשורה חייב להיות בטווח של החודש החשבונאי של פ היומן&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.FutureDateForbidden&quot;"
+      DefaultText="&quot;Future date is not allowed&quot;"
+      LocalDefaultText="&quot;לא ניתן  להקליד תאריך עתידי &quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.AccountIsBlocked&quot;"
+      DefaultText="&quot;GL Account (%name) is inactive&quot;"
+      LocalDefaultText="&quot;כרטיס (%name) חסום&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ActionCodeDebit&quot;"
+      DefaultText="&quot;Please select a debit account&quot;"
+      LocalDefaultText="&quot;אנא בחר כרטיס חובה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ActionCodeCreditAndCredit&quot;"
+      DefaultText="&quot;Please select a credit and a debit account&quot;"
+      LocalDefaultText="&quot;אנא בחר כרטיס זכות וכרטיס חובה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ActionCodeNotMatched&quot;"
+      DefaultText="&quot;Action Code does not Matched the account you picked&quot;"
+      LocalDefaultText="&quot;שגיאה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ActionCode&quot;"
+      DefaultText="&quot;Please Select Action Code&quot;"
+      LocalDefaultText="&quot;אנא בחר ציין את את סוג השורה  חובה/זכות&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.DocumentDateBiggerDueDate&quot;"
+      DefaultText="&quot;Document date must be earlier then due date &quot;"
+      LocalDefaultText="&quot;התאריך החשבונאי חייב להיות מוקדם מתאריך האסמכתא&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.DueDateMustgreaterthancurrent&quot;"
+      DefaultText="&quot;Due Date ,Must be Equal or greater than current date &quot;"
+      LocalDefaultText="&quot;תאריך הפרעון צריך להיות גדול או שווה מהתאריך הנוכחי&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.Journal.currencydoesnotexist&quot;"
+      DefaultText="&quot;Currency does not exist&quot;"
+      LocalDefaultText="&quot;המטבע לא קיים&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ControlAccountIdIsMust&quot;"
+      DefaultText="&quot;Account Which is not a card must Control Account definition&quot;"
+      LocalDefaultText="&quot;חשבון שאיננו כרטיס תפעולי חייב להיות כרטיס מרכז&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.ControlAccountIdIsNotMatch&quot;"
+      DefaultText="&quot;Control Account Is Not Match&quot;"
+      LocalDefaultText="&quot;חשבון מרכז איננו תואם&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.DueDateIsMust&quot;"
+      DefaultText="&quot;Due Date Is Must&quot;"
+      LocalDefaultText="&quot;תאריך פרעון הינו חובה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.FAMltiExchangerateNELA&quot;"
+      DefaultText="&quot;Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})&quot;"
+      LocalDefaultText="&quot;סכום במטבע מקומי חייב להיות שווה לסכום במטבע זר כפול שער המרה&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.AllDateMustInit&quot;"
+      DefaultText="&quot;All dates variable must initialize&quot;"
+      LocalDefaultText="&quot;כל התאריכים חייבים אתחול&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.M.YouShouldSelectTwoTransactions&quot;"
+      DefaultText="&quot;You should select at lease two transactions in order to create new reconcile&quot;"
+      LocalDefaultText="&quot;יש לבחור לפחות שתי תנועות על מנת ליצור התאמה חדשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.CodeShort&quot;"
+      DefaultText="&quot;Journal Code Too Short&quot;"
+      LocalDefaultText="&quot;פרט מכס קצר מידי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.CodeLong&quot;"
+      DefaultText="&quot;Journal Code Too Long&quot;"
+      LocalDefaultText="&quot;פרט המכס ארוך מדי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.CorrectDigit&quot;"
+      DefaultText="&quot;Check digit is incorrect ,the correct digit is &quot;"
+      LocalDefaultText="&quot; ספרת הביקורת שגויה , הספרה הנכונה היא &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;EVENTS&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.Events&quot;"
+      FeatureDefaultText="&quot;Events&quot;" />
+    <Feature
+      Code="&quot;DETAILS&quot;"
+      FeatureTypeCode="&quot;AREA&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.Details&quot;"
+      FeatureDefaultText="&quot;Details&quot;" />
+    <Feature
+      Code="&quot;SAVEJOURNAL&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.Savejournal&quot;"
+      FeatureDefaultText="&quot;Save Journal&quot;" />
+    <Feature
+      Code="&quot;MOREJOURNAL&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.Morejournal&quot;"
+      FeatureDefaultText="&quot;More&quot;" />
+    <Feature
+      Code="&quot;SAVEASDRAFTJOURNAL&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.SaveAsDraftJournal&quot;"
+      FeatureDefaultText="&quot;Save As Draft Journal&quot;" />
+    <Feature
+      Code="&quot;APPROVEJOURNAL&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.ApproveJournal&quot;"
+      FeatureDefaultText="&quot;Approve Journal&quot;" />
+    <Feature
+      Code="&quot;PRINTJOURNAL&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.JournalPrint&quot;"
+      FeatureDefaultText="&quot;Print Journal Button&quot;" />
+    <Feature
+      Code="&quot;JOURNAL&quot;"
+      FeatureTypeCode="&quot;QUER&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.Journal&quot;"
+      FeatureDefaultText="&quot;All Journals&quot;" />
+    <Feature
+      Code="&quot;DraftJournal&quot;"
+      FeatureTypeCode="&quot;QUER&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.DraftJournal&quot;"
+      FeatureDefaultText="&quot;Draft Journals&quot;" />
+    <Feature
+      Code="&quot;SavedJournal&quot;"
+      FeatureTypeCode="&quot;QUER&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.SavedJournal&quot;"
+      FeatureDefaultText="&quot;Saved Journals&quot;" />
+    <Feature
+      Code="&quot;ApprovedJournal&quot;"
+      FeatureTypeCode="&quot;QUER&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.ApprovedJournal&quot;"
+      FeatureDefaultText="&quot;Approved Journals&quot;" />
+    <Feature
+      Code="&quot;ExternalJournals&quot;"
+      FeatureTypeCode="&quot;QUER&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Journal.Features.ExternalJournals&quot;"
+      FeatureDefaultText="&quot;External Journals&quot;" />
+  </AdditionalFeatures>
 </entity>

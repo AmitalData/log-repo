@@ -403,4 +403,6 @@
       SearchFields="&quot;H,תשומות- מסמך אחר עפ&quot;י החוק&quot;" />
   </Records>
   <DataContracts />
+  <AdditionalFeatures />
+  <AdditionalTextCodes />
 </entity>

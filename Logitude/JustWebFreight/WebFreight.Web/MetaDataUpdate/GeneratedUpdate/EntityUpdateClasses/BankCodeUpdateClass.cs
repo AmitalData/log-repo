@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankCodeUpdateClass
    {  		
-		public const string HashString = "ab0733f52a840df4d733db15dc661bf3";
+		public const string HashString = "65bed0ddbabbacba9e731ebb98909ed2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -586,7 +586,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature BankCodeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankCode.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BankCodeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankCode.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature BankCodeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankCode.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature BankCodeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankCode.Features.PackageFeature", NameTextCodeDefaultText = "BankCode Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature BankCodeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankCode.Features.PackageFeature", NameTextCodeDefaultText = "BankCode Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature BankCodeFeature_BANKCODEMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKCODEMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankCode.Features.BankCodeMenu", NameTextCodeDefaultText = @"Bank Codes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -638,7 +644,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable BankCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankCode" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode BankCodeTextCode_GeneralMCACCBankCodes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.BankCodes", DefaultText = "Bank Codes",LocalDefaultText = @"קודי בנקים", ObjectTableId = BankCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

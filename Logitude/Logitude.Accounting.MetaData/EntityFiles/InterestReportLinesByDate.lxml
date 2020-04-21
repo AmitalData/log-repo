@@ -1522,7 +1522,7 @@
     <TextCode
       Code="&quot;InterestReportLinesByDate.O.Total&quot;"
       DefaultText="&quot;Total&quot;"
-      LocalDefaultText="&quot;סה&quot;כ&quot;"
+      LocalDefaultText="&quot;סה''כ&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

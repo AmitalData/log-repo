@@ -787,4 +787,23 @@
       Id="3" />
   </Records>
   <DataContracts />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;BANKCODEMENU&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;BankCode.Features.BankCodeMenu&quot;"
+      FeatureDefaultText="&quot;Bank Codes&quot;" />
+  </AdditionalFeatures>
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.ACC.BankCodes&quot;"
+      DefaultText="&quot;Bank Codes&quot;"
+      LocalDefaultText="&quot;קודי בנקים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
 </entity>

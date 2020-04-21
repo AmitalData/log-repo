@@ -842,11 +842,11 @@ namespace WebFreight.Web.MetaDataUpdate
             performanceTimerLogger.LogMessage("Generated" + ",AccountingUpdateClass");
             AccountingUpdate updateClass = new AccountingUpdate();
             //updateClass.UpgradeClosedTablesForTenantZero();
-            updateClass.LoadUpdateTenantZero(context);
-            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadObjectTablesToTenantZero");
+            //updateClass.LoadUpdateTenantZero(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadUpdateTenantZero");
 
-            updateClass.LoadOtherFields(context);
-            performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadOtherFields");
+            //updateClass.LoadOtherFields(context);
+            //performanceTimerLogger.LogMessage("Manual" + ",AccountingUpdate.LoadOtherFields");
             //updateClass.loadQueries();
             //updateClass.loadScreens();
             //updateClass.LoadObjectTableTabs(); 
