@@ -29,8 +29,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         PointerLevel, 
 	         AutoSetOriginalDocumentTrue, 
-	         IsCourierManadatory, 
-	         IsDiamondManadatory,
+	         IsDiamondManadatory, 
+	         IsCourierManadatory,
+ 
 	      }
 
 
@@ -45,8 +46,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PointerLevel, 
 	         AutoSetOriginalDocumentTrue, 
 	         PointerLevelName, 
-	         IsCourierManadatory, 
-	         IsDiamondManadatory,
+	         IsDiamondManadatory, 
+	         IsCourierManadatory,
+
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -93,6 +95,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
             {
 				entityPOCO.IsDiamondManadatory = entityPM.IsDiamondManadatory;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCourierManadatory))
+            {
+				entityPOCO.IsCourierManadatory = entityPM.IsCourierManadatory;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -146,6 +153,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsDiamondManadatory = entityPOCO.IsDiamondManadatory;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCourierManadatory))
+            {
+					entityPM.IsCourierManadatory = entityPOCO.IsCourierManadatory;
+            }
+
 		}
 
 		public void PMToOldPM(CustomDocumentTypePM entityPM, CustomDocumentTypePM oldEntityPM)
@@ -190,6 +202,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDiamondManadatory))
             {
                 oldEntityPM.IsDiamondManadatory = entityPM.IsDiamondManadatory;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCourierManadatory))
+            {
+                oldEntityPM.IsCourierManadatory = entityPM.IsCourierManadatory;
             }
 			
 		}

@@ -215,6 +215,7 @@
       <QueryFilter QueryCode="&quot;DeclarationAmendments&quot;" PredefinedValue="&quot;1&quot;" ObjectFieldName="&quot;AmendmentStatus&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
+ 
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;Customs.Declaration&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;Customs.Declaration&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />

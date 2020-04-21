@@ -142,7 +142,8 @@ export class CargoSealsQueryComponent
                 this.CargoSealObslist.Clear();
                 if (this.CurrentEntity.CargoSeals != null) {
                     this.CurrentEntity.CargoSeals.forEach((item: CargoSealPM) => {
-                         if (item.UpdateTypeCode == '2') {
+                        debugger;
+                        if (item.UpdateTypeCode == '2') {
                             item.CanToAdd = true;
                         }
                         else {
@@ -175,7 +176,9 @@ export class CargoSealsQueryComponent
         }
     }
 
- 
+    public get IsReady() { return this._IsReady; }
+    public set IsReady(newValue: boolean) { this._IsReady = newValue; }
+
     get UpdateDate() { return this.RequestParams.UpdateDate; }
     set UpdateDate(value: Date) {
         if (this.RequestParams.UpdateDate != value) {
@@ -320,13 +323,7 @@ export class CargoSealsQueryComponent
         }
     }
 
-    get IsReady() { return this._IsReady; }
-    set IsReady(newValue: boolean) {
-        if (this._IsReady != newValue) {
-            this._IsReady = newValue;
-        }
-    }
-
+ 
     get ResponseMessage() { return this.ResponseData ? this.ResponseData.UserMessage : null; }
     set ResponseMessage(value: string) {
         if (this.ResponseData.UserMessage != value) {

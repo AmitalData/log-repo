@@ -104,7 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Custom Document Type",
-			      				    Code =  "d3da",
+			      				    Code =  "e948",
 			      				    Name =  "Customs.CustomDocumentType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -245,10 +245,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
+					  						FullLocalDefaultText =  "שם םנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
+					  						ListLocalDefaultText =  "שם םנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -449,10 +449,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive ",
-					  						FullLocalDefaultText =  "לא פּעיל",
+					  						FullLocalDefaultText =  "לם פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לא פּעיל",
+					  						ListLocalDefaultText =  "לם פּעיל",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -588,10 +588,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoSetOriginalDocumentTrue",
 					  						DefaultText =  "AutoSetOriginalDocument",
-					  						FullLocalDefaultText =  "סימון אוטומטי של מסמך מקורי",
+					  						FullLocalDefaultText =  "סימון םוטומטי של מסמך מקורי",
 					  						ListFieldLable =  "AutoSetOriginalDocumentTrueListLable",
 					  						ListLableDefaultText =  "Auto Set Original Document",
-					  						ListLocalDefaultText =  "סימון אוטומטי של מסמך מקורי",
+					  						ListLocalDefaultText =  "סימון םוטומטי של מסמך מקורי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -815,6 +815,75 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsCourierManadatory",
+					  						OldFieldName =  "IsCourierManadatory",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.CustomDocumentType",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsCourierManadatory",
+					  						ListPropertyPath =  "IsCourierManadatory",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CustomDocumentType",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsCourierManadatory",
+					  						DefaultText =  "Courier Manadatory",
+					  						FullLocalDefaultText =  "חובה לבלדרות",
+					  						ListFieldLable =  "IsCourierManadatoryListLable",
+					  						ListLableDefaultText =  "Courier Manadatory",
+					  						ListLocalDefaultText =  "חובה לבלדרות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -838,12 +907,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             ScreenField CustomDocumentTypeGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "PointerLevel").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField CustomDocumentTypeGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "AutoSetOriginalDocumentTrue").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+ 
+            ScreenField CustomDocumentTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsDiamondManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CustomDocumentTypeGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsCourierManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField CustomDocumentTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsDiamondManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
-
+            ScreenField CustomDocumentTypeGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = CustomDocumentTypeObjectFields.Where(d => d.FieldName == "IsCourierManadatory").FirstOrDefault().Id, ScreenId = CustomDocumentTypeGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+  
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
@@ -854,7 +922,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature CustomDocumentTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomDocumentType.Tab.General", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode CustomDocumentTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode CustomDocumentTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomDocumentType.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CustomDocumentTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomDocumentType.Tab.Events", ObjectTableId = CustomDocumentTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
