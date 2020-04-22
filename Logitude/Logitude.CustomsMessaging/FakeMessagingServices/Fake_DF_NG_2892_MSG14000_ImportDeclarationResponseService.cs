@@ -14,7 +14,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         public Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService(GenericRequestParams requestParams)  {
             genericRequestParams = requestParams;
         }
-    public ResponseHeader CallWS(out INF_MSG_Generic response)
+    public ResponseHeader CallWS(out DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg response)
         {
             //  UpdateDeclaration();
             //  UpdateStatus("5");
@@ -26,7 +26,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             string Error = data.Error;
             ResponseHeader responseHeader = new ResponseHeader();
-                          response = new INF_MSG_Generic();
+                          response = new DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg();
             response.ResponseContentHeader = new ResponseContentHeader();
             if (Error == "true")
             {
