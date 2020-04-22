@@ -735,11 +735,11 @@
     <Feature
       Code="&quot;ADDPARTNERTOWIZARD&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;CustomerTenantAccessRequest.Features.AddPartnerToWizard&quot;"
-      FeatureDefaultText="&quot;Add Partner To Wizard&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;CustomerTenantAccessRequest.Features.AddPartnerToWizard&quot;"
+      FeatureDefaultText="&quot;Add Partner To Wizard&quot;" />
   </AdditionalFeatures>
 </entity>

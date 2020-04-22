@@ -141,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate
             InitializeService(context);
 
             Dictionary<string, ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
-            Dictionary<string, ObjectField> objectFields = ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
+            //Dictionary<string, ObjectField> objectFields = ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
             Dictionary<string, Tip> tips = TipRepository.GetTips(0).ToDictionary(d => d.Code, a => a);
             if (textCodes == null)
             {
@@ -270,7 +270,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 //CreateRecurringPeriodFields(objectFields, textCodes);
                 //CreatePaymentChannelFields(objectFields, textCodes);
                 //CreateEventTypeCategoryFields(objectFields, textCodes);
-                LoadCreateTestFields(objectFields, textCodes);
+               // LoadCreateTestFields(objectFields, textCodes);
                 //CreateTermsofUseSignaturesFields(objectFields, textCodes);
                 //CreateAnalyzeQueueFields(objectFields, textCodes);
                 //CreateCreditCardTypeFields(objectFields, textCodes);
@@ -65084,6 +65084,31 @@ namespace WebFreight.Web.MetaDataUpdate
         #region Features
         public void LoadRolesAndFeatures(int tenant)
         {
+            //  ____________________________________________________________
+            // |                                                            |
+            // |           ANY NEW FEATURE MUST BE ADDED To LXML Files      |
+            // |____________________________________________________________|
+            //  ____________________________________________________________
+            // |                                                            |
+            // |           ANY NEW FEATURE MUST BE ADDED To LXML Files      |
+            // |____________________________________________________________|
+            //  ____________________________________________________________
+            // |                                                            |
+            // |           ANY NEW FEATURE MUST BE ADDED To LXML Files      |
+            // |____________________________________________________________|
+            //  ____________________________________________________________
+            // |                                                            |
+            // |           ANY NEW FEATURE MUST BE ADDED To LXML Files      |
+            // |____________________________________________________________|
+            //  ____________________________________________________________
+            // |                                                            |
+            // |           ANY NEW FEATURE MUST BE ADDED To LXML Files      |
+            // |____________________________________________________________|
+            //  ____________________________________________________________
+            // |                                                            |
+            // |           ANY NEW FEATURE MUST BE ADDED To LXML Files      |
+            // |____________________________________________________________|
+            return;
             ICommonDataContext ObjectContext = CommonDataContext.GetContext(tenant);
             FeatureRepository FeaturesRepository = new FeatureRepository(ObjectContext);
             RoleFeatureRepository RoleFeaturesRepository = new RoleFeatureRepository(ObjectContext);

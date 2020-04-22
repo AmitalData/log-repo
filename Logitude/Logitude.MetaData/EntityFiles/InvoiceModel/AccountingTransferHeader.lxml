@@ -1491,20 +1491,20 @@
     <Feature
       Code="&quot;REBUILD&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.Rebuild&quot;"
-      FeatureDefaultText="&quot;Rebuild&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.Rebuild&quot;"
+      FeatureDefaultText="&quot;Rebuild&quot;" />
     <Feature
       Code="&quot;QuickbooksConnectAuth1&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.QuickbooksConnectAuth1&quot;"
-      FeatureDefaultText="&quot;Quickbooks Connect Auth1&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.QuickbooksConnectAuth1&quot;"
+      FeatureDefaultText="&quot;Quickbooks Connect Auth1&quot;" />
   </AdditionalFeatures>
 </entity>

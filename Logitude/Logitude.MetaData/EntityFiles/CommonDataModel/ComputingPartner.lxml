@@ -1368,29 +1368,29 @@
     <Feature
       Code="&quot;ComputingPartner.M.ComputingPartner&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;ComputingPartner.Features.ComputingPartners&quot;"
-      FeatureDefaultText="&quot;Computing Partners&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ComputingPartner.Features.ComputingPartners&quot;"
+      FeatureDefaultText="&quot;Computing Partners&quot;" />
     <Feature
       Code="&quot;ComputingPartner.A.AllowAddEditTables&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;ComputingPartner.Features.AllowAddEditTables&quot;"
-      FeatureDefaultText="&quot;Allow Adding &amp; Editing Tables&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ComputingPartner.Features.AllowAddEditTables&quot;"
+      FeatureDefaultText="&quot;Allow Adding &amp; Editing Tables&quot;" />
     <Feature
       Code="&quot;ComputingPartner.A.AllowTranslation&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;ComputingPartner.Features.AllowTranslation&quot;"
-      FeatureDefaultText="&quot;Allow Translation&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ComputingPartner.Features.AllowTranslation&quot;"
+      FeatureDefaultText="&quot;Allow Translation&quot;" />
   </AdditionalFeatures>
 </entity>

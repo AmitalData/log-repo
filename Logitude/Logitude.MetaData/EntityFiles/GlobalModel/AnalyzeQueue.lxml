@@ -2469,11 +2469,11 @@
     <Feature
       Code="&quot;ANALYZEQUEUEERRORS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors&quot;"
-      FeatureDefaultText="&quot;Error&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors&quot;"
+      FeatureDefaultText="&quot;Error&quot;" />
   </AdditionalFeatures>
 </entity>

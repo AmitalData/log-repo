@@ -1085,11 +1085,11 @@
     <Feature
       Code="&quot;QuoteStage.M.QuoteStages&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;QuoteStage.Features.QuoteStages&quot;"
-      FeatureDefaultText="&quot;Quote Stages&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;QuoteStage.Features.QuoteStages&quot;"
+      FeatureDefaultText="&quot;Quote Stages&quot;" />
   </AdditionalFeatures>
 </entity>
