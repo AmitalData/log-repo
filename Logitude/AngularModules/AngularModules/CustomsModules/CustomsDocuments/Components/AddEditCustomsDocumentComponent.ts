@@ -568,8 +568,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     updateCustomsDocument: boolean = false;
     OkButtonClicked() {
-        debugger;
-        this.OkMethod(false);
+         this.OkMethod(false);
     }
 
     SendButtonClicked() {

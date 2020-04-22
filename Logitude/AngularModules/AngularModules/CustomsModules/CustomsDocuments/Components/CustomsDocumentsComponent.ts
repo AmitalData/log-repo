@@ -542,8 +542,7 @@ export class CustomsDocumentsComponent
         if (customsDocumentsTicket) {
             windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
             windowArgs.CustomsDocumentsTicket.Tenant = SessionLocator.Tenant;
-            debugger;
-            if (!customsDocumentsTicket.Id) {
+             if (!customsDocumentsTicket.Id) {
                 windowArgs.IsNewState = true;
             }
             else {
