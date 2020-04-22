@@ -13,13 +13,14 @@ import {EventPermissiosViewModel} from './ViewModel/EventPermissiosViewModel';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedLogisticsEventPermissios',
     templateUrl: './SharedLogisticsEventPermissiosComponent.html',
     inputs: ['OnCloseWindowEvent'],
     providers: [EventTypeExtendedPMService],
 })
 export class SharedLogisticsEventPermissiosComponent implements OnInit {
+  public EventPermissiosSelectedViewModel: any;
 
 
      myTenantZeroList: EventTypePM[];

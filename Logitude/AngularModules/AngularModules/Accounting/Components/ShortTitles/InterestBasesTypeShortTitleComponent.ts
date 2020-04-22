@@ -5,7 +5,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { InterestBasesTypePM } from '../../EntityPMs/InterestBasesTypePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./InterestBasesTypeShortTitleComponent.html",
 })
 

@@ -10,7 +10,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
 @Component({
     selector: 'QuotesWindowComponent',
-    moduleId: module.id,
+    
     templateUrl: './QuotesWindowComponent.html',
 })
 

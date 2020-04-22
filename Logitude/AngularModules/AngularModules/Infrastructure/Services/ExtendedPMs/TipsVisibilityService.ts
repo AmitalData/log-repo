@@ -3,8 +3,8 @@ import { TipsVisibilityPM } from '../../EntityPMs/TipsVisibilityPM';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import {Injectable} from '@angular/core';
+import { defer, of } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TipsVisibilityService {
@@ -17,7 +17,7 @@ export class TipsVisibilityService {
 
     insert(entityPM: TipsVisibilityPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
@@ -41,13 +41,13 @@ export class TipsVisibilityService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }
 
     update(entityPM: TipsVisibilityPM) {
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
@@ -71,7 +71,7 @@ export class TipsVisibilityService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }

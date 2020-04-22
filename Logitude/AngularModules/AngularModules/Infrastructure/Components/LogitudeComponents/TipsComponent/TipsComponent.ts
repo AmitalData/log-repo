@@ -11,7 +11,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './TipsComponent.html',
     inputs: ['ObjectTableName', 'Code','IsInternalTips' , 'IsFirstTipLoad'],

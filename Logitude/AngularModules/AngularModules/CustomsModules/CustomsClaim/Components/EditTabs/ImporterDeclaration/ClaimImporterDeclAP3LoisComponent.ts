@@ -14,7 +14,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimImporterDeclAP3LoisComponent.html',
 })
 

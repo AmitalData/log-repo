@@ -7,7 +7,7 @@ import {FormGroup, FormBuilder} from '@angular/forms';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'CustomDatePicker',
     templateUrl: './CustomDatePickerComponent.html',

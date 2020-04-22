@@ -12,7 +12,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 
 @Component({
     selector: 'DateSampleComponent',
-    moduleId: module.id,
+    
     templateUrl: './DateSampleComponent.html',
     inputs: ['ShowSampleDateCommand','OrigionalDate']
 })

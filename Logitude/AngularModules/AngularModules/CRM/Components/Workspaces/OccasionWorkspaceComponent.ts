@@ -9,7 +9,7 @@ import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './OccasionWorkspaceComponent.html',
 })
 

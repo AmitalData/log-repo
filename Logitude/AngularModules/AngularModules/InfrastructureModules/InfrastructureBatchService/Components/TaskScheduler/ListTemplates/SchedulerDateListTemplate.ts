@@ -10,7 +10,7 @@ import { TaskSchedulerItemClass } from '../../../../../InfrastructureModules/Inf
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'SchedulerDateListTemplate',
     templateUrl: './SchedulerDateListTemplate.html',

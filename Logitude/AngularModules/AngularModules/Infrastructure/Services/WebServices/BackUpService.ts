@@ -3,7 +3,6 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class BackUpService {

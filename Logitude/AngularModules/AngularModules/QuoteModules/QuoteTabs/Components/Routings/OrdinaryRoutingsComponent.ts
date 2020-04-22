@@ -18,7 +18,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 
 @Component({
     selector: 'OrdinaryRoutingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './OrdinaryRoutingsComponent.html',
 })
 

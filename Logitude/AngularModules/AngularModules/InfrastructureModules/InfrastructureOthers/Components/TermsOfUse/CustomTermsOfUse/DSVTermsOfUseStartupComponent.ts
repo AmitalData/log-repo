@@ -13,7 +13,7 @@ import {DateTool, AppTool} from '../../../../../Infrastructure/Tools';
 import {TermsOfUseStartupComponent} from '../TermsOfUseStartupComponent';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'DSVTermsOfUseStartupComponent',
     templateUrl: './DSVTermsOfUseStartupComponent.html',

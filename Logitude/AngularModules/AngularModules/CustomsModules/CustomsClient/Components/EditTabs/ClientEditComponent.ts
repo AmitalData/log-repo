@@ -18,7 +18,7 @@ import { TextCodeTranslator } from      '../../../../Infrastructure/Utilities/Te
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClientEditComponent.html',
     providers: [EntityArgs],
 })

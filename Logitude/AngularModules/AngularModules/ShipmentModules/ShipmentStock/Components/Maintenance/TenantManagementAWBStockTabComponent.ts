@@ -12,7 +12,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TenantManagementAWBStockTabComponent.html',
 })
 

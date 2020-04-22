@@ -25,7 +25,7 @@ import { FormGroup, FormBuilder} from '@angular/forms';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'APILogsResponceBody',
     templateUrl: './APILogsResponceBodyComponent.html',
     providers: [DocumentExtendedService, ImageLibraryService ],

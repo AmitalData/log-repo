@@ -13,7 +13,7 @@ import { SchedulerDetails, ReportSchedulerDetails, ReportSchedulerRecepients } f
 import { DateTimePipe } from '../../../Controls/Pipes/DateTimePipe';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditReportTaskSchedulerComponent.html',
 })
 

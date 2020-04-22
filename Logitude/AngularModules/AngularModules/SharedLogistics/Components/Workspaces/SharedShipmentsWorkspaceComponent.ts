@@ -7,11 +7,16 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { AppTool, DateTool, DateFormats } from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SharedShipmentsWorkspaceComponent.html',
 })
 
 export class SharedShipmentsWorkspaceComponent implements OnInit {
+  public FromDateType: any;
+  public ToDateType: any;
+  public EditShipment(item: any) { }
+
+
     public IsResourcesReady: boolean = false;
     private myService: SharedLogisticsService;
     constructor(private _entityResourceService: EntityResourceService) {

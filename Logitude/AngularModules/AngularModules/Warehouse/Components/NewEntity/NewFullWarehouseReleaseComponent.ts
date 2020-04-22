@@ -1,15 +1,11 @@
-
-
-declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {WarehouseReleasePM} from '../../../Warehouse/EntityPMs/warehouseReleasePM';
+import {WarehouseReleasePM} from '../../../Warehouse/EntityPMs/WarehouseReleasePM';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {WarehouseReleasePackagePM} from '../../../Warehouse/EntityPMs/WarehouseReleasePackagePM';
 import {AddressList} from '../../../Common/EntityLists/AddressList'; 
@@ -18,7 +14,6 @@ import {CardListService} from '../../../Common/Services/StandardLists/CardListSe
 import {CardList} from '../../../Common/EntityLists/CardList';
 import {NewEntityArgs} from '../../../Infrastructure/Args';
 import {AddressPM} from '../../../Common/EntityPMs/AddressPM';
-import {PortList} from '../../../Common/EntityLists/PortList';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
 import {WarehouseHelper} from '../../Helpers/WarehouseHelper';
@@ -26,7 +21,7 @@ import {FilterClass} from '../../../Shipment/Components/NewEntity/NewShipmentCom
 import {PortListService} from '../../../Common/Services/StandardLists/PortListService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewFullWarehouseReleaseComponent',
     templateUrl: './NewFullWarehouseReleaseComponent.html',
 

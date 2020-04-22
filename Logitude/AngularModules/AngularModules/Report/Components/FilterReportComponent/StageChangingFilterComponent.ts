@@ -12,7 +12,7 @@ import {CodeNameClass} from './CodeNameClass';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'StageChangingFilterComponent',
     templateUrl: './StageChangingFilterComponent.html',
     inputs: ['ReportsPreview']

@@ -7,7 +7,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditInsidePackageComponent.html',
 })
 

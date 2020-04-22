@@ -13,7 +13,7 @@ import {AWBWizardArgs} from '../../../../../Shipment/Args';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'HAWBTabComponent',
     templateUrl: './HAWBTabComponent.html',

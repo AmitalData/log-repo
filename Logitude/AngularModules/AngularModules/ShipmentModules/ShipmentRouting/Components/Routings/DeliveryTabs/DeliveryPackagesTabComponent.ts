@@ -16,7 +16,7 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {AddEditDeliveryComponent} from '../AddEditDeliveryComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeliveryPackagesTabComponent.html',
 })
 

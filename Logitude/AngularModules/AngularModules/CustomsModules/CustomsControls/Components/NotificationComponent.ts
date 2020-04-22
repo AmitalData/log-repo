@@ -28,7 +28,7 @@ import {NotificationPM} from '../../../Customs/EntityPMs/NotificationPM';
 
 @Component({
     selector: 'NotificationComponent',
-    moduleId: module.id,
+    
     templateUrl: './NotificationComponent.html',
 })
 

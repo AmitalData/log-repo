@@ -4,7 +4,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class DWObjectTableExtendedListService {
@@ -19,7 +19,7 @@ export class DWObjectTableExtendedListService {
     GetFactTablesNames() {
         var url = this._apiUrl + '/GetFactTablesNames';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var list = response;
 

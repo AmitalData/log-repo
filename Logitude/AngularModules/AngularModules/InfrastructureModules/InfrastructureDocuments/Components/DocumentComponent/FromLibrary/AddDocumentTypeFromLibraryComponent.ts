@@ -15,7 +15,7 @@ import {GroupByPipe} from '../../../../../Infrastructure/Pipes/GroupByPipe';
 import {DocumentTypeTemplatePM} from '../../../../../Common/EntityPMs/DocumentTypeTemplatePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddDocumentTypeFromLibraryComponent.html',
     providers: [DocumentTypeTemplateListExtendedService, DocumentTypePMExtendedService, DocumentTypeListExtendedService]
 })

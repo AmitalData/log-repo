@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -31,7 +31,7 @@ export class CardExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDisconnectGLAccountFromCard?' + 'id=' + id + '&partnerTypeId=' + partnerTypeId + '&eventTypeCode=' + eventTypeCode,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result :any = response;
                 

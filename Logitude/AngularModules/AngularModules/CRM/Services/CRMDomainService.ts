@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {TicketPM} from '../EntityPMs/TicketPM';
@@ -31,7 +31,7 @@ export class CRMDomainService {
     }
 
     InserNewTicket(entityPM: TicketPM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var validator: ClassLevelValidator;
 
@@ -65,7 +65,7 @@ export class CRMDomainService {
                 response.HasError = true;
                 response.ErrorsArray = errorsArray;
 
-                return Observable.of(response);
+                return of(response);
 
             }
         }
@@ -79,7 +79,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetOwnerEmployeeGroup?ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -90,7 +90,7 @@ export class CRMDomainService {
  
         var url = this._apiUrl + '/GetContactCards?companyId=' + companyId + '&contactId=' + contactId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -101,7 +101,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetConnectContactCards?companyId=' + companyId + '&contactId=' + contactId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -111,7 +111,7 @@ export class CRMDomainService {
     GetActivitiesDashBoard(ownerId: string, businessUnitId: string, activityTypeCodeFilter: string, RecordsTypeCode: string) {
   
         var url = this._apiUrl + '/GetActivitiesDashBoard?OwnerId=' + ownerId + '&BusinessUnitId=' + businessUnitId + '&activityTypeCodeFilter=' + activityTypeCodeFilter + '&RecordsTypeCode=' + RecordsTypeCode;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -126,7 +126,7 @@ export class CRMDomainService {
     GetOpportunitiesChartDataCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, chartCode: string) {
 
         var url = this._apiUrl + '/GetOpportunitiesChartDataCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -141,7 +141,7 @@ export class CRMDomainService {
     GetOpportunitiesChartData(code: string, ownerId: string, businessUnitId: string, chartCode: string) {
 
         var url = this._apiUrl + '/GetOpportunitiesChartData?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId +'&chartCode=' + chartCode;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -156,7 +156,7 @@ export class CRMDomainService {
     GetActivitiesChartDataCustom(FromDate: Date,ToDate:Date, ownerId: string, businessUnitId: string, chartCode: string) {
 
         var url = this._apiUrl + '/GetActivitiesChartDataCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) +'&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -171,7 +171,7 @@ export class CRMDomainService {
     GetActivitiesChartData(code: string, ownerId: string, businessUnitId: string, chartCode: string) {
 
         var url = this._apiUrl + '/GetActivitiesChartData?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -186,7 +186,7 @@ export class CRMDomainService {
     GetQuotesChartDataCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, chartCode: string) {
 
         var url = this._apiUrl + '/GetQuotesChartDataCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate)+ '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -201,7 +201,7 @@ export class CRMDomainService {
     GetQuotesChartData(code: string, ownerId: string, businessUnitId: string, chartCode: string) {
 
         var url = this._apiUrl + '/GetQuotesChartData?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&chartCode=' + chartCode;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -215,7 +215,7 @@ export class CRMDomainService {
     GetOpenedTicketsGroupByClassification(code: string, ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetOpenedTicketsGroupByClassification?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -229,7 +229,7 @@ export class CRMDomainService {
     GetOpenedTicketsGroupBySeverity(code: string, ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetOpenedTicketsGroupBySeverity?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -243,7 +243,7 @@ export class CRMDomainService {
     GetOpenedTicketsGroupByOwner(code: string, ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetOpenedTicketsGroupByOwner?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -257,7 +257,7 @@ export class CRMDomainService {
     GetOpenedTicketsBySLAViolation(selectedIndex: number, code: string, ownerId: string, employeeGroupId: string) {
  
         var url = this._apiUrl + '/GetOpenedTicketsBySLAViolation?selectedIndex=' +selectedIndex+'&code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -271,7 +271,7 @@ export class CRMDomainService {
     GetOpenedTicketsByOpenedStage(selectedIndex: number, code: string, ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetOpenedTicketsByOpenedStage?selectedIndex=' + selectedIndex + '&code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -286,7 +286,7 @@ export class CRMDomainService {
     GetClosedTicketsGroupByClassification(code: string, ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetClosedTicketsGroupByClassification?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -300,7 +300,7 @@ export class CRMDomainService {
     GetClosedTicketsGroupBySeverity(code: string, ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetClosedTicketsGroupBySeverity?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -314,7 +314,7 @@ export class CRMDomainService {
     GetClosedTicketsGroupByType(code: string, ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetClosedTicketsGroupByType?code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -328,7 +328,7 @@ export class CRMDomainService {
     GetClosedTicketsBySLAViolation(selectedIndex: number, code: string, ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetClosedTicketsBySLAViolation?selectedIndex=' + selectedIndex + '&code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -342,7 +342,7 @@ export class CRMDomainService {
     GetClosedTicketsBySolvedStage(selectedIndex: number, code: string, ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetClosedTicketsBySolvedStage?selectedIndex=' + selectedIndex + '&code=' + code + '&ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -357,7 +357,7 @@ export class CRMDomainService {
     GetOpenTicketsGroupByClassification(ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetOpenTicketsGroupByClassification?ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -372,7 +372,7 @@ export class CRMDomainService {
     GetOpenTicketsByDueTime(ownerId: string, employeeGroupId: string) {
 
         var url = this._apiUrl + '/GetOpenTicketsByDueTime?ownerId=' + ownerId + '&employeeGroupId=' + employeeGroupId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -387,7 +387,7 @@ export class CRMDomainService {
     GetTicketOverviewPerformance(ticketId: string) {
 
         var url = this._apiUrl + '/GetTicketOverviewPerformance?ticketId=' + ticketId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -400,7 +400,7 @@ export class CRMDomainService {
     
     GetRecentTickets(myOwnerId: string, myEmployeeId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetRecentTickets?ownerId=' + myOwnerId + '&employeeGroupId=' + myEmployeeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 return allLists;
@@ -410,7 +410,7 @@ export class CRMDomainService {
 
     GetRecentOpportunities(myOwnerId: string, myEmployeeId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetRecentOpportunities?ownerId=' + myOwnerId + '&businessUnitId=' + myEmployeeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -421,7 +421,7 @@ export class CRMDomainService {
 
     GetCorrespondencesList(entityId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTicketCorrespondences?entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -432,7 +432,7 @@ export class CRMDomainService {
 
     GetTicketsCounts(myOwnerId: string, myEmployeeId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTicketsCounts?ownerId=' + myOwnerId + '&employeeGroupId=' + myEmployeeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -443,7 +443,7 @@ export class CRMDomainService {
 
     GetTopTickets(myOwnerId: string, myEmployeeId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTopTickets?ownerId=' + myOwnerId + '&employeeGroupId=' + myEmployeeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -454,7 +454,7 @@ export class CRMDomainService {
 
     GetTicketsCountByShipmentNumber(shipmentNumber: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTicketsCountByShipmentNumber?shipmentNumber=' + shipmentNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var count = response;
                 return count;
@@ -464,7 +464,7 @@ export class CRMDomainService {
 
     GetEmployeeGroupsPMList() {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetEmployeeGroupsPMList?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var myResponse: ServiceResponse;
@@ -480,7 +480,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetUsersByEmployeeGroupIds?employeeIds=' + employeeIds;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -495,7 +495,7 @@ export class CRMDomainService {
     GetContactListsByEmailsString(emails: string) {
 
         var url = this._apiUrl + '/GetContactListsByEmailsString?emails=' + emails;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -508,7 +508,7 @@ export class CRMDomainService {
     GetUserListsByEmailsString(emails: string) {
 
         var url = this._apiUrl + '/GetUserListsByEmailsString?emails=' + emails;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -520,7 +520,7 @@ export class CRMDomainService {
 
     GetTicketEscalationListsByTicketId(entityId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTicketEscalationListsByTicketId?entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -533,7 +533,7 @@ export class CRMDomainService {
 
     GetTicketOverViewStatisticsSummary(entityId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTicketOverViewStatisticsSummary?entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -546,7 +546,7 @@ export class CRMDomainService {
 
     GetBusinessHours(entityId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetBusinessHours?entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -561,7 +561,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetOpportunitiesSummary?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -638,7 +638,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetCRMDailySpotlightCounts?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -665,7 +665,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetUpcomigActivities?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&activityTypeCodeFilter=' + activityTypeCodeFilter + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -682,7 +682,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetStageFunnelData?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&filterCode=' + filterCode + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -698,7 +698,7 @@ export class CRMDomainService {
     GetCompleteActivity(activityId: string, post: boolean, summary: string) {
 
         var url = this._apiUrl + '/GetCompleteActivity?activityId=' + activityId + '&post=' + post + '&summary=' + summary;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var activity = response;
                 var serviceResponse: ServiceResponse;
@@ -712,7 +712,7 @@ export class CRMDomainService {
     GetReopenActivity(activityId: string) {
 
         var url = this._apiUrl + '/GetReopenActivity?activityId=' + activityId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var activity = response;
                 var serviceResponse: ServiceResponse;
@@ -727,7 +727,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetActivitiesSummary?activityTypeCodeFilter=' + activityTypeCodeFilter + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -752,7 +752,7 @@ export class CRMDomainService {
 
     GetActiveSLAbyTenant() {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetActiveSLAbyTenant?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var result:any = response;
@@ -779,7 +779,7 @@ export class CRMDomainService {
     }
     GetSingleSLAHeaderPMByTenant() {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleSLAHeaderPMByTenant?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
                 var entity: SLAHeaderPM;
@@ -1157,7 +1157,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetUpdatingActivityMettingSummary?mettingSummary=' + mettingSummary + '&post=' + post + '&activityId=' + activityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }),catchError(ServiceHelper.HandleServiceError));
@@ -1167,7 +1167,7 @@ export class CRMDomainService {
     GetActivitiesByOpportunityId(entityId: string) {
 
         var url = this._apiUrl + '/GetActivitiesByOpportunityId?entityId=' + entityId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1181,7 +1181,7 @@ export class CRMDomainService {
     GetActivitiesByTicketId(entityId: string) {
 
         var url = this._apiUrl + '/GetActivitiesByTicketId?entityId=' + entityId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1195,7 +1195,7 @@ export class CRMDomainService {
     GetQuotesGroupBySalesman(code: string, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
         var url = this._apiUrl + '/GetQuotesGroupBySalesman?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1210,7 +1210,7 @@ export class CRMDomainService {
     GetQuotesGroupBySalesmanCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
         var url = this._apiUrl + '/GetQuotesGroupBySalesmanCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1225,7 +1225,7 @@ export class CRMDomainService {
     GetCustomersGroupBySalesmanCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
         var url = this._apiUrl + '/GetCustomersGroupBySalesmanCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1240,7 +1240,7 @@ export class CRMDomainService {
     GetCustomersGroupBySalesman(days: number, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
         var url = this._apiUrl + '/GetCustomersGroupBySalesman?days=' + days + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1255,7 +1255,7 @@ export class CRMDomainService {
     GetActivitiesGroupBySalesmanCustom(FromDate: Date,ToDate:Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
         var url = this._apiUrl + '/GetActivitiesGroupBySalesmanCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1270,7 +1270,7 @@ export class CRMDomainService {
     GetActivitiesGroupBySalesman(code: string, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
         var url = this._apiUrl + '/GetActivitiesGroupBySalesman?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1285,7 +1285,7 @@ export class CRMDomainService {
     GetOpportunitiesGroupBySalesmanCustom(FromDate: Date,ToDate:Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
         var url = this._apiUrl + '/GetOpportunitiesGroupBySalesmanCustom?FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1300,7 +1300,7 @@ export class CRMDomainService {
     GetOpportunitiesGroupBySalesman(code: string, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
 
         var url = this._apiUrl + '/GetOpportunitiesGroupBySalesman?code=' + code + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&fieldCode=' + fieldCode + '&isTopTen=' + isTopTen;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -1315,7 +1315,7 @@ export class CRMDomainService {
     GetUpdateCorrespondence(entityId: string, rightToLeft: boolean) {
 
         var url = this._apiUrl + '/GetUpdateCorrespondence?entityId=' + entityId + '&rightToLeft=' + rightToLeft;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -1330,7 +1330,7 @@ export class CRMDomainService {
     GetCommunicationLogs(entityId: string) {
 
         var url = this._apiUrl + '/GetCommunicationLogs?entityId=' + entityId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -1345,7 +1345,7 @@ export class CRMDomainService {
     GetTicketOwnerPermission(ownerId: string, ownerName:string) {
  
         var url = this._apiUrl + '/GetTicketOwnerPermission?ownerId=' + ownerId + '&ownerName=' + ownerName ;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -1361,7 +1361,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetOccasionsSummary';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -1388,7 +1388,7 @@ export class CRMDomainService {
 
 
         var url = this._apiUrl + '/GetCountOfOccasionAllCustomers?contactIds=' + contactIds;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -1432,7 +1432,7 @@ export class CRMDomainService {
 
         var callUrl = this._apiUrl.concat(urlparameters);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                 map((response: HttpResponse<any>) => {
@@ -1494,7 +1494,7 @@ export class CRMDomainService {
 
         var callUrl = this._apiUrl.concat(urlparameters);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                 map((response: HttpResponse<any>) => {
@@ -1538,7 +1538,7 @@ export class CRMDomainService {
 
     GetSupportMailboxsByTenant() {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetSupportMailboxsByTenant?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result:any = response;
                 var entity: SupportMailboxPM;
@@ -1591,7 +1591,7 @@ export class CRMDomainService {
 
         var url = this._apiUrl + '/GetDeleteMailBox?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myResult = response;

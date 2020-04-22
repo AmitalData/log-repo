@@ -10,7 +10,7 @@ import {TenantPMService} from '../../../../Common/Services/StandardPMs/TenantPMS
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LanguageSettingsComponent.html',
 })
 

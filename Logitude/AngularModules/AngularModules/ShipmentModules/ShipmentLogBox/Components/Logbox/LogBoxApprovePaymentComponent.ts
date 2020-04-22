@@ -6,7 +6,6 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { SearchTextBox } from '../../../../Controls/SearchTextBox';
 import { IconButton } from '../../../../Controls/IconButton';
 import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import { Http, Response } from '@angular/http';
 import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -38,11 +37,13 @@ import { HybridPartnerPMService } from '../../../../Common/Services/StandardPMs/
 
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LogBoxApprovePaymentComponent.html'
 })
 
 export class LogBoxApprovePaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
+  public SearchText: string = null;
+  public DeleteDocumentClicked(item: any) { }
 
     DataContext: LogBoxApprovePaymentComponent = this;
     private myCommonDomainService: CommonDomainService;
@@ -282,7 +283,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                 windowArgs.AdditionalData = entity;
                 newWindow.WindowArgs = windowArgs;
                 //newWindow.Add(control); 
-                newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
+              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/DenyReasonComponent');
                 newWindow.WindowClosed.subscribe(($event: any) => {
                     if ($event == "Denied") {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "Deny Declaration");
@@ -432,7 +433,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control); 
-        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
+      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/GoodsValueComponent');
 
     }
 
@@ -453,7 +454,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
         //newWindow.Add(control); 
-        newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/TaxScreenComponent');
+      newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/TaxScreenComponent');
 
     }
 }

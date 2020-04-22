@@ -12,7 +12,7 @@ import { AreaItemClass } from '../EditTabs/AreasTabComponent';
 import { CarrierAreaPMService } from '../../../../Common/Services/StandardPMs/CarrierAreaPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAreaComponent.html',
 })
 

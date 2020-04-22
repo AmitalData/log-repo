@@ -29,7 +29,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VehiclesOwnersAndSafetyTabComponent.html',
 })
 

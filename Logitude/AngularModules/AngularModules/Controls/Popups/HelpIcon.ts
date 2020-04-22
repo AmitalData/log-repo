@@ -3,7 +3,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: "HelpIcon",
     inputs: ['Header', 'Text', 'HideHeader', 'IconSize', 'IconPath'],
     templateUrl: './HelpIcon.html',

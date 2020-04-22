@@ -30,11 +30,12 @@ import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerCommitmentsTabComponent.html',
 })
 
 export class CustomerCommitmentsTabComponent extends BaseComponent {
+    public imgNgStyle: any = null;
     public ItemsSource: ObservableCollection;
     public EntityPM: CustomerPM;
     public ObsList: Array<ProductViewModelData> = [];

@@ -11,7 +11,7 @@ import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
 
 @Component({
     selector: "MainMenuFollowups",
-    moduleId: module.id,
+    
     templateUrl: './MainMenuFollowups.html',
     inputs: ['ObjectTableId', 'IsMainSidebarCollapsed'],
 })

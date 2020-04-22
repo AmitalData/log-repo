@@ -38,7 +38,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import {ConfirmationTypePM} from  '../../../../../Customs/EntityPMs/ConfirmationTypePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CertificateTabComponent.html',
 })
 

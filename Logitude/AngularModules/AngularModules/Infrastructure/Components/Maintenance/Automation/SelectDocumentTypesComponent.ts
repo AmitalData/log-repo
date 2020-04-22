@@ -1,5 +1,4 @@
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {DocumentTypeList} from '../../../../Common/EntityLists/DocumentTypeList';
 import {AutomationCondition} from '../../../../Infrastructure/DataContracts/AutomationCondition';
@@ -13,7 +12,7 @@ import {FollowUpDocumentTypeList} from '../../../../Infrastructure/DataContracts
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SelectDocumentTypesComponent',
     templateUrl: './SelectDocumentTypesComponent.html',
 

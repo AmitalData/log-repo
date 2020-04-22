@@ -7,7 +7,6 @@ import {ErrorsLogPMService} from '../../Infrastructure/Services/ExtendedPMs/Erro
 import {LogitudeApplicationService} from '../../Infrastructure/Services/WebServices/LogitudeApplicationService';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import { Observable}     from 'rxjs/Rx';
 import {SessionLocator} from '../Utilities/SessionLocator';
 import {CachedDataManager} from '../Utilities/CachedDataManager';
 import {SessionInfo} from '../Utilities/SessionInfo';
@@ -17,14 +16,14 @@ import {UserLastLoginPM}  from '../../Common/EntityPMs/UserLastLoginPM';
 import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
 import { PerformanceLogService } from '../../Infrastructure/Services/ExtendedPMs/PerformanceLogService';
 import { PerformanceLog } from '../Others/PerformanceLog';
-//import { SignalRGeneralService } from '../Services/SignalRServices/SignalRGeneralService';
 import { LogitudeHubChannelEvent } from '../Services/SignalRServices/SignalRChannelService';
 import { SignalRChannelService } from '../Services/SignalRServices/SignalRChannelService';
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
-import { forEach } from '@angular/router/src/utils/collection';
-
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
 
 @Injectable()
+
 export class ApplicationTimersManager {
 
      
@@ -132,7 +131,7 @@ export class ApplicationTimersManager {
     }
 
     getTimer(period?: number) {
-        return Observable.interval(period).timeInterval();
+        return interval(period).pipe(timeInterval());
     }
 
     

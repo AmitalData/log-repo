@@ -2,7 +2,7 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { defer, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class SignUpService {
 
     SendMessageToQueue(signupInfo: any) {
         var url = this._apiUrl + '/PutSendMessageToQueue';
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(url, JSON.stringify(signupInfo), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -31,7 +31,7 @@ export class SignUpService {
     
     CreateTenant(signupInfo: any) {
         var url = this._apiUrl + '/PostCreateTenant';
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(url, JSON.stringify(signupInfo), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var serviceResponse: ServiceResponse;

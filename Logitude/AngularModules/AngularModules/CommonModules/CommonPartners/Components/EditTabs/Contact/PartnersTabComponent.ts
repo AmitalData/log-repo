@@ -8,7 +8,7 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PartnersTabComponent.html',
 })
 

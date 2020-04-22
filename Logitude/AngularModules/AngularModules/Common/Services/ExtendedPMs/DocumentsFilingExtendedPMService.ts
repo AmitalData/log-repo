@@ -1,8 +1,7 @@
 import {Injectable, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 import {DocumentsFilingPM} from '../../EntityPMs/DocumentsFilingPM';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -339,7 +338,7 @@ export class DocumentsFilingExtendedPMService {
 
 
         // Send request
-        return Observable.defer(() => {
+        return defer(() => {
 
             // Prepare parameters
             var IdsParameterString = "";
@@ -503,7 +502,7 @@ export class DocumentsFilingExtendedPMService {
 
     insert(entityPM: DocumentsFilingPM, DontUseComposition: boolean = false) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -547,7 +546,7 @@ export class DocumentsFilingExtendedPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         }
@@ -558,7 +557,7 @@ export class DocumentsFilingExtendedPMService {
     update(entityPM: DocumentsFilingPM, DontUseComposition: boolean = false) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -600,7 +599,7 @@ export class DocumentsFilingExtendedPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         }

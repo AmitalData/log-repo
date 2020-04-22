@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FieldTemplateComponent.html',
 })
 

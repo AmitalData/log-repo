@@ -9,7 +9,7 @@ import { AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'BIReportGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './BIReportGeneralTabComponent.html',
 })
 

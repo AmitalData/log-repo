@@ -14,7 +14,7 @@ import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'NewInterestReportComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewInterestReportComponent.html',
 })

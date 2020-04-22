@@ -23,7 +23,7 @@ import {ContactList} from '../../../../Common/EntityLists/ContactList';
 import {ContactListService} from '../../../../Common/Services/StandardLists/ContactListService';
 @Component({
     selector: 'OpportunityGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OpportunityGeneralTabComponent.html',
 })
 
@@ -35,7 +35,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     public SalesNotesObsList: Array<CustomerSalesNotePM> = [];
     public ValidationErrorsList: Array<String> = [];
     public ResetOpportunitiy: boolean = true;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
 
     public ScreenCode: string = "Opportunity.AdditionalFields";

@@ -11,7 +11,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class DWQueryBuilderService {
@@ -81,7 +81,7 @@ export class DWQueryBuilderService {
         var url = this._apiUrl.concat(urlparameters);
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
                 if (response instanceof HttpResponse) {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -99,7 +99,7 @@ export class DWQueryBuilderService {
 
     GetNewDWQueryData(entityPM: DWQueryData) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             if (errorsArray.length == 0) {
                 var temp = this.deepClone(entityPM);
@@ -122,7 +122,7 @@ export class DWQueryBuilderService {
 
     GetDateFilterSample(entityPM: DWObjectFieldsDetails) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             if (errorsArray.length == 0) {
                 var temp = this.deepClone(entityPM);
@@ -146,7 +146,7 @@ export class DWQueryBuilderService {
 
     insert(entityPM: DWQueryData) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             if (errorsArray.length == 0) {
                 var temp = this.deepClone(entityPM);

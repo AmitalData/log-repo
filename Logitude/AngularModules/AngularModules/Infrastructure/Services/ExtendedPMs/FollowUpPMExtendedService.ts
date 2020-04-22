@@ -3,7 +3,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class FollowUpPMExtendedService {
@@ -17,7 +17,7 @@ export class FollowUpPMExtendedService {
     RemoveFollowUpById(id: string) {
         var url = this._apiUrl + '/GetRemoveFollowUpById?' + 'id=' + id;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
 

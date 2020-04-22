@@ -32,7 +32,7 @@ import { PackageAmountCalculator } from '../../../../Infrastructure/Utilities/Pa
 declare var ResultAsArray: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PackagesTabComponent.html',
 })
 

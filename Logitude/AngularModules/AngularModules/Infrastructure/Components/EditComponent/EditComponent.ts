@@ -1,7 +1,6 @@
 import { BankDepositExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/BankDepositExtendedPMService';
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
-import { Settings } from './../../Settings';
 declare var window: any;
 import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
@@ -21,11 +20,11 @@ import { TotangoService } from '../../Services/WebServices/TotangoService';
 import { CachedDataManager } from '../../Utilities/CachedDataManager';
 import { LastFilterClass } from '../../Utilities/LastFilterClass';
 import { EditTabComponent } from './EditTabComponent';
-import { Subscription, TeardownLogic } from 'rxjs/Subscription';//itzik
+import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
-@Component({
-    moduleId: module.id,
+
+@Component({    
     templateUrl: './EditComponent.html',
     providers: [EntityArgs],
 })
@@ -71,12 +70,12 @@ export class EditComponent implements OnDestroy {
     WorkEnvironment: string = 'logitude';
     public NavigationIds: string[];
     public CurrentNavigatedIndex: number;
-    @ViewChild('Helper', { read: ViewContainerRef }) HelperViewContainerRef: ViewContainerRef;
-    @ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
-    @ViewChild('MenuButtons', { read: ViewContainerRef }) MenuButtonsViewContainerRef: ViewContainerRef;
-    @ViewChild('SplitComponentLocation', { read: ViewContainerRef }) SplitComponentViewContainerRef: ViewContainerRef;
-    @ViewChild('WindowLocation', { read: ViewContainerRef }) WindowLocationViewContainerRef: ViewContainerRef;
-    @ViewChild('TabControlBody', { read: ViewContainerRef }) TabControlBodyViewContainerRef: ViewContainerRef;
+    @ViewChild('Helper', { read: ViewContainerRef, static: false }) HelperViewContainerRef: ViewContainerRef;
+    @ViewChild('ShortTitle', { read: ViewContainerRef, static: false }) ShortTitleViewContainerRef: ViewContainerRef;
+    @ViewChild('MenuButtons', { read: ViewContainerRef, static: false }) MenuButtonsViewContainerRef: ViewContainerRef;
+    @ViewChild('SplitComponentLocation', { read: ViewContainerRef, static: false }) SplitComponentViewContainerRef: ViewContainerRef;
+    @ViewChild('WindowLocation', { read: ViewContainerRef, static: false }) WindowLocationViewContainerRef: ViewContainerRef;
+    @ViewChild('TabControlBody', { read: ViewContainerRef, static: false }) TabControlBodyViewContainerRef: ViewContainerRef;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;

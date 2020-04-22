@@ -28,7 +28,7 @@ import {CustomerTenantAccessPMService} from '../../Common/Services/StandardPMs/C
 import {CustomerPMService} from '../../Common/Services/StandardPMs/CustomerPMService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'RelatedCustomerComponent',
     templateUrl: './AddEditCustomerTenantAccessCardComponent.html',
 })

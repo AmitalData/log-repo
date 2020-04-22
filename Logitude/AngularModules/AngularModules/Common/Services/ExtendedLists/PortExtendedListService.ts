@@ -8,10 +8,8 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import {Observable}  from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {PortList} from '../../EntityLists/PortList';
@@ -57,7 +55,7 @@ export class PortExtendedListService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var callUrl = this._apiUrl.concat(urlparameters);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var viewResponse: ServiceResponse = response.body;
@@ -79,7 +77,7 @@ export class PortExtendedListService {
     }
 
     getMock() {
-        return Observable.of("a");
+        return of("a");
     }
     MapJsonToEntityList(jsonList: any) {
        

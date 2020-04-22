@@ -6,7 +6,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 
 @Component({
     selector: 'TariffComponent',
-    moduleId: module.id,
+    
     templateUrl: './TariffWorkspaceComponent.html',
     providers: [EntityResourceService],
 })

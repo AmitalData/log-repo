@@ -9,7 +9,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {BatchServicesDefinitionPMService} from '../../../../Infrastructure/Services/ExtendedPMs/BatchServicesDefinitionPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditBatchServiceComponent.html',
 })
 

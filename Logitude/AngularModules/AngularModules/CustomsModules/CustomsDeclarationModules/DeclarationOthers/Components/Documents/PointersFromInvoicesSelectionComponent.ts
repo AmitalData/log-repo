@@ -13,7 +13,7 @@ import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCo
 import {AppTool} from '../../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PointersFromInvoicesSelectionComponent.html',
 })
 

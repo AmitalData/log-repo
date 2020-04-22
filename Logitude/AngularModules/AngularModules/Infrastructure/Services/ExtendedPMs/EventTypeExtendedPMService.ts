@@ -3,7 +3,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { EventTypePM } from '../../EntityPMs/EventTypePM';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { defer, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -52,7 +52,7 @@ export class EventTypeExtendedPMService {
     }
 
     update(eventTypePMLists: any) {
-        return Observable.defer(() => {
+        return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 

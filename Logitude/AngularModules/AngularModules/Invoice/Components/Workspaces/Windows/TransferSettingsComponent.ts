@@ -17,11 +17,13 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TransferSettingsComponent.html',
 })
 
 export class TransferSettingsComponent extends BaseComponent implements OnDestroy {
+  public IsAccountingSystemNone: any;
+
     public EntityPM: AccountingSettingPM;
     public DataContext = this;
     public ObjectTableName: string = "AccountingSetting";

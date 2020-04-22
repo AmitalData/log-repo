@@ -11,7 +11,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CancelAPPaymentComponent.html',
 })
 

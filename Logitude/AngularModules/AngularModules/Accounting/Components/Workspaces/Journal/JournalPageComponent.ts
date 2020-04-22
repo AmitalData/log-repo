@@ -17,7 +17,7 @@ import { RevaluationPM } from '../../../EntityPMs/RevaluationPM';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './JournalPageComponent.html',
 
 })

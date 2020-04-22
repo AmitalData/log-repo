@@ -140,9 +140,9 @@
       <DependentUpon>EntityListGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="AutoGeneratorsMetaData\TypedScriptGenerators\EntityListServiceGenerator.cs">
-      <DependentUpon>EntityListServiceGenerator.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityListServiceGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="AutoGeneratorsMetaData\TypedScriptGenerators\EntityPMGenerator.cs">
       <AutoGen>True</AutoGen>

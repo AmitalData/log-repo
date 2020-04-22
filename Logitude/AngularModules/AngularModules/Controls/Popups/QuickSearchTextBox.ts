@@ -9,10 +9,10 @@ import {PartnersDomainService} from '../../Common/Services/PartnersDomainService
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentDomainService} from '../../Shipment/Services/ShipmentDomainService'; 
 import {ObjectsLocator}  from  '../../Infrastructure/Locators/ObjectsLocator';
-import { IdGeneratorPipe } from '../pipes/idgeneratorpipe';
+import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './QuickSearchTextBox.html',
     selector: "QuickSearchTextBox",
     inputs: ['Watermark', 'ObjectTableName', 'Filters', 'DropDownWidth', 'ItemHeight', 'Area', 'IsDisabled', 'AWBMessagesCCSTypeCode', 'ShowViewAll', 'DisplayText', 'IsIconsVisible', 'IsItemSelected'],

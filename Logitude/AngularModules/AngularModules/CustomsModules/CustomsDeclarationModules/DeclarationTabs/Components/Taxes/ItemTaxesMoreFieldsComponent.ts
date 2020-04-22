@@ -21,7 +21,7 @@ import { EntityListService } from '../../../../../Infrastructure/Services/Entity
 
 @Component({
 
-    moduleId: module.id,
+    
     templateUrl: './ItemTaxesMoreFieldsComponent.html',
 })
 

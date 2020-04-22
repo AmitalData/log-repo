@@ -21,7 +21,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewPotentialCustomerComponent.html',
 })
 
@@ -33,7 +33,7 @@ export class NewPotentialCustomerComponent extends BaseComponent {
     public Contact: ContactPM;
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private args: NewEntityArgs;
     public DataContext: NewPotentialCustomerComponent = this;  
     public ContactDataContext: ContactItem; 

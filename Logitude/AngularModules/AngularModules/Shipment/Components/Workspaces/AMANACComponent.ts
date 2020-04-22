@@ -8,7 +8,7 @@ import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AMANACComponent.html',
 })
 

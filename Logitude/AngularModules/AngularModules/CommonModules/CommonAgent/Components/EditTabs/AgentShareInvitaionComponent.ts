@@ -10,7 +10,7 @@ import { AppTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools'
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AgentShareInvitaionComponent.html',
     providers: [AgentSharedLogisticsKeyPMService],
 })

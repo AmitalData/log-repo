@@ -10,7 +10,7 @@ import {TenantManagementList} from '../../../Infrastructure/EntityLists/TenantMa
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ParentVsChildTenantsComponent',
     templateUrl: './ParentVsChildTenantsComponent.html',
     inputs: ['ReportsPreview']

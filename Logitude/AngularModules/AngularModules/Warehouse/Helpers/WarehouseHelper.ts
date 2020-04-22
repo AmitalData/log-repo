@@ -1,7 +1,3 @@
-/// <reference path="../../infrastructure/locators/servicelocator.ts" />
-/// <reference path="../../infrastructure/utilities/infragenericfilter.ts" />
-/// <reference path="../../shipment/entitypms/shipmentpm.ts" />
-
 declare var System: any;
 declare var window: any;
 import {PackageTypeListService} from '../../Common/Services/StandardLists/PackageTypeListService';

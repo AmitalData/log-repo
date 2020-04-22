@@ -19,7 +19,7 @@ import {ConversationHeaderParticipantExtendedPMService} from '../Services/Extend
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewSocialMessageComponent',
     templateUrl: './NewSocialMessageComponent.html',
 

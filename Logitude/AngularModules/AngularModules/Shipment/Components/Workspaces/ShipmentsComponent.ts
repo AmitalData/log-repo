@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ShipmentsComponent.html',
 })
 

@@ -1,7 +1,6 @@
 
 import {Injectable} from '@angular/core';
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ShipmentList} from '../../EntityLists/ShipmentList';
@@ -37,7 +36,7 @@ export class ShipmentFollowUpListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '?tenant=' + SessionLocator.Tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 return response;
             }), catchError(ServiceHelper.HandleServiceError));
@@ -49,7 +48,7 @@ export class ShipmentFollowUpListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var list = response;
 
@@ -65,7 +64,7 @@ export class ShipmentFollowUpListService {
         console.log('--------------------------------------> calling getAllEntityListsFromServer:');
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -115,7 +114,7 @@ export class ShipmentFollowUpListService {
         var callUrl = this._apiUrl.concat(urlparameters);
         //console.log("Calling Url:" + callUrl);
         //console.log("abol 3abed");
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 //console.log("i'm the response yo ", response);
                 var viewResponse: any = response;

@@ -21,7 +21,7 @@ import {EmployeeGroupPM} from '../../../EntityPMs/EmployeeGroupPM';
 declare var makeAmBarChart, BarClick, PieClick, makePieChart, ResetItemPie, ResetItem, makeAMLineChart, Lineclick, ResetLineclick: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ByFirstResolveTicketComponent.html',
     encapsulation: ViewEncapsulation.None,
 })

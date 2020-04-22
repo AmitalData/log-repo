@@ -28,7 +28,7 @@ import { DocumentTypeCustomsDataExtendPMService } from '../../../Customs/Service
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DocumentTypeCustomsDataComponent.html',
 })
 

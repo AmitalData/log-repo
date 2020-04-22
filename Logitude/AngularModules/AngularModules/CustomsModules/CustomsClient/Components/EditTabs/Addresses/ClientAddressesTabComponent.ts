@@ -16,7 +16,7 @@ import {AddAddressContactForClientRequestParams, ClientAddress, ClientsAddressCo
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClientAddressesTabComponent.html',
 })
 

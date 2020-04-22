@@ -20,7 +20,7 @@ import { TreatmentWayPM } from  '../../../../Customs/EntityPMs/TreatmentWayPM';
 import { TreatmentWayListService } from  '../../../../Customs/Services/StandardLists/TreatmentWayListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DecCargoSplitConComponent.html',
 })
 export class DecCargoSplitConComponent extends BaseComponent {

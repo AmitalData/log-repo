@@ -16,7 +16,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {FormatTool} from '../../../Infrastructure/Tools';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BookingsComponent.html',
 })
 

@@ -23,7 +23,7 @@ import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationCargoSplitTabComponent.html',
 })
 

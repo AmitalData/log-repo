@@ -17,7 +17,7 @@ import {ComponentArgs} from '../../../../Infrastructure/DataContracts/ComponentA
 import {ParameterComponentArgs} from '../../../../Infrastructure/DataContracts/ParameterComponentArgs';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'SendToContacts',
     templateUrl: './SendToContactsComponent.html',

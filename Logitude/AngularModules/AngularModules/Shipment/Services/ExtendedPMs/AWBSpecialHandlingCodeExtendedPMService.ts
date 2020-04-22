@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -25,7 +25,7 @@ export class AWBSpecialHandlingCodeExtendedPMService {
     get(id: string) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
                 map((response) => {
 
@@ -54,7 +54,7 @@ export class AWBSpecialHandlingCodeExtendedPMService {
 
     insert(entityPM: AWBSpecialHandlingCodePM) {
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
 
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
@@ -87,14 +87,14 @@ export class AWBSpecialHandlingCodeExtendedPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }
 
     update(entityPM: AWBSpecialHandlingCodePM) {
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
 
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
@@ -127,7 +127,7 @@ export class AWBSpecialHandlingCodeExtendedPMService {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }

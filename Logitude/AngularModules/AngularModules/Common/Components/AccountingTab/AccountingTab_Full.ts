@@ -14,12 +14,12 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AccountingTab_Full.html',
 })
 
 export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnInit {
-    @ViewChild("TabPlaceholder", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild("TabPlaceholder", { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     public EntityPM: any = null;
     public ObjectTableName: string;
     public DataContext = this;

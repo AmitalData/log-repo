@@ -17,7 +17,7 @@ import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibra
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPrivateLabelsComponent.html',
 })
 

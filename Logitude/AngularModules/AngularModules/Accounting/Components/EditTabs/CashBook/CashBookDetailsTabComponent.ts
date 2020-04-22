@@ -19,7 +19,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CashBookDetailsTabComponent.html',
 })
 

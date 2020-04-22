@@ -1,7 +1,7 @@
 ﻿import {Injectable, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -49,7 +49,7 @@ export class ExcelExportService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(this._apiUrl + '/postImportFeaturePackages', JSON.stringify(parameter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result :any = response;
                 var pmresponse: ServiceResponse;
@@ -68,7 +68,7 @@ export class ExcelExportService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(this._apiUrl + '/postImportingClockTimeData', JSON.stringify(parameter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result :any = response;
                 var pmresponse: ServiceResponse;
@@ -87,7 +87,7 @@ export class ExcelExportService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
 
             return this._http.post(this._apiUrl + '/postimportrolefeatures', JSON.stringify(parameter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result :any = response;

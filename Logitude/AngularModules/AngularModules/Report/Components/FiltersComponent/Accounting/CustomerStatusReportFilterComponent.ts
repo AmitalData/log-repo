@@ -10,11 +10,12 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './CustomerStatusReportFilterComponent.html',
 })
 
 export class CustomerStatusReportFilterComponent extends BaseComponent implements OnInit {
+  public IsCreditLimitSet: boolean = false;
+
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();

@@ -1,11 +1,9 @@
-/// <reference path="../infrastructure/components/logitudecomponents/basecomponent.ts" />
 import {Component, OnInit, Output, EventEmitter,AfterViewInit} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
-import { } from "@angular/platform-browser/src/dom";
 
 @Component({
     selector: 'ComboBoxWithInCheckBox',
-    moduleId: module.id,
+    
     templateUrl: './ComboBoxWithInCheckBox.html',
     inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'WithinImage', 'SelectionType', 'CheckBoxOnly', 'IsAreasMenu'],
 })

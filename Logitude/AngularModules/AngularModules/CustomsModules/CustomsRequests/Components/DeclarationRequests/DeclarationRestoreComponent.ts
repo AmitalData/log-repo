@@ -21,7 +21,7 @@ import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../.
 
 @Component({
     selector: 'DeclarationRestoreComponent',    
-    moduleId: module.id,
+    
     templateUrl: './DeclarationRestoreComponent.html',
 })
 

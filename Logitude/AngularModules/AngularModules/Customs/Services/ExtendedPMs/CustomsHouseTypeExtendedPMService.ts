@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -11,10 +11,10 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomsHouseTypeExtendedPMService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsHouseType';
     }
 
@@ -22,11 +22,11 @@ export class CustomsHouseTypeExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetHouseTypewithAdditional?declarationOfficeCode=' + declarationOfficeCode, { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetHouseTypewithAdditional?declarationOfficeCode=' + declarationOfficeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
-                var pm = response.json();
+                var pm = response;
 
                 var entity: CustomsHouseTypePM;
                 if (pm) {
@@ -38,7 +38,7 @@ export class CustomsHouseTypeExtendedPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
    
     }

@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -10,17 +10,17 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomDocumentViewerService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomDocumentViewer';
 
     }
 
     GetDocumentPage(documentId: string, currPage: number, isConnectedToUni: boolean) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -35,7 +35,7 @@ export class CustomDocumentViewerService {
                 headers: authHeader
             }).map(response => {
 
-                var json = response.json();
+                var json = response;
 
                 var mappedObject: CustomDocumentPageObject = this.MapJsonToCustomDocumentPageObject(json);
 
@@ -43,7 +43,7 @@ export class CustomDocumentViewerService {
                 serviceResponse.Result = mappedObject;
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 

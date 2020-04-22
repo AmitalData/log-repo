@@ -12,7 +12,7 @@ import {ARInvoiceSATStatus} from '../../Services/InvoiceDomainService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SendPaymentWindowComponent.html',
 })
 

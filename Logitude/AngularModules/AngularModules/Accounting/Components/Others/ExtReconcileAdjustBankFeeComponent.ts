@@ -35,7 +35,7 @@ import { ReconcileExternalPageLinePM } from '../../EntityPMs/ReconcileExternalPa
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ExtReconcileAdjustBankFeeComponent.html',
 
 })

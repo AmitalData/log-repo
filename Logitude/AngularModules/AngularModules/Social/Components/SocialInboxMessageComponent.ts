@@ -21,7 +21,7 @@ import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
 import {ConversationHeaderParticipantExtendedPMService} from '../Services/ExtendedPMs/ConversationHeaderParticipantExtendedPMService';
 @Component({
-    moduleId: module.id,
+    
     selector: 'SocialInboxMessageComponent',
     templateUrl: './SocialInboxMessageComponent.html',
 

@@ -23,7 +23,7 @@ import { Guid } from '../../../Infrastructure/Utilities/Guid';
 
 @Component({
     selector: 'CustomsRequestsSheetsComponent',
-    moduleId: module.id,
+    
     templateUrl: './CustomsRequestsSheetsComponent.html',
 })
 

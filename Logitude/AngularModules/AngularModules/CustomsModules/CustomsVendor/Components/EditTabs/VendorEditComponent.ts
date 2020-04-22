@@ -15,7 +15,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {CustomsVendorPM} from '../../../../Customs/EntityPMs/CustomsVendorPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VendorEditComponent.html',
     providers: [EntityArgs],
 

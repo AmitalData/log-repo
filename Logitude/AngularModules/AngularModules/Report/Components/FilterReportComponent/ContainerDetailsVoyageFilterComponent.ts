@@ -9,7 +9,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {CodeNameClass} from './CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ContainerDetailsVoyageFilterComponent',
     templateUrl: './ContainerDetailsVoyageFilterComponent.html',
     inputs: ['ReportsPreview']

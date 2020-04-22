@@ -21,7 +21,7 @@ import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCo
 import {SessionInfo} from '../../../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'PartnersTabComponent',
     templateUrl: './AWBPartnersTabComponent.html',
 })

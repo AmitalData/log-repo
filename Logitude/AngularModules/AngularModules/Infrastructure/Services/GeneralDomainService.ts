@@ -11,7 +11,7 @@ import { ServiceHelper } from '../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Guid } from '../Utilities/Guid';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class GeneralDomainService {
@@ -25,7 +25,7 @@ export class GeneralDomainService {
     GetTranslationsByParam(typeCode: string, tableId: string, translationLanguageCode: string) {
         var url = this._apiUrl + '/GetTranslationsByParam?typeCode=' + typeCode + '&tableId=' + tableId + '&translationLanguageCode=' + translationLanguageCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -46,7 +46,7 @@ export class GeneralDomainService {
     GetStandardFieldsByTableId(tableId: string) {
         var url = this._apiUrl + '/GetStandardFieldsByTableId?tableId=' + tableId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 //var listMapped: Array<ObjectFieldPM> = [];
@@ -66,7 +66,7 @@ export class GeneralDomainService {
     GetCustomFieldsByTableId(tableId: string) {
         var url = this._apiUrl + '/GetCustomFieldsByTableId?tableId=' + tableId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -80,7 +80,7 @@ export class GeneralDomainService {
     GetFieldDataTypes() {
         var url = this._apiUrl + '/GetFieldDataTypes';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -94,7 +94,7 @@ export class GeneralDomainService {
     GetTranslationsList(typeCode:string) {
         var url = this._apiUrl + '/GetTranslationsList?typeCode=' + typeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -113,7 +113,7 @@ export class GeneralDomainService {
     }
     
     UpdateFieldsTranslations(entity: FieldsUpdateHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
             var mappedEntity: FieldsUpdateHelper = this.MapJsonToFieldsUpdateHelper(entity, false);
 
             return this._http.put(this._apiUrl + "/PutFieldsTranslations", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
@@ -132,7 +132,7 @@ export class GeneralDomainService {
     GetTextCodeTypes() {
         var url = this._apiUrl + '/GetTextCodeTypes';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -153,7 +153,7 @@ export class GeneralDomainService {
     LoadAllFieldsTranslations(translationLanguageCode: string, objectTableId: string, textCodeType: string) {
         var url = this._apiUrl + '/GetAllFieldsTranslations?language=' + translationLanguageCode + '&objectTableId=' + objectTableId + '&textCodeType=' + textCodeType;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -174,7 +174,7 @@ export class GeneralDomainService {
     GetCustomPickListsByCode(Code: string) {
         var url = this._apiUrl + '/GetCustomPickListsByCode?code=' + Code;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var listMapped: Array<CustomPickListPM> = [];
@@ -194,7 +194,7 @@ export class GeneralDomainService {
     }
 
     insertPickListGeneralEntities(entities: PickListGeneralEntitiesArgs) {
-        return Observable.defer(() => {
+        return defer(() => {
             var entityPMServiceResponse: EntityPMServiceResponse;
             entityPMServiceResponse = new EntityPMServiceResponse();
 
@@ -216,7 +216,7 @@ export class GeneralDomainService {
 
     updatePickListGeneralEntities(entities: PickListGeneralEntitiesArgs) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var entityPMServiceResponse: EntityPMServiceResponse;
             entityPMServiceResponse = new EntityPMServiceResponse();
 
@@ -238,7 +238,7 @@ export class GeneralDomainService {
 
     updateScreenFields(entities: ScreenLayoutArgs) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             var entityPMServiceResponse: EntityPMServiceResponse;
             entityPMServiceResponse = new EntityPMServiceResponse();
 
@@ -261,7 +261,7 @@ export class GeneralDomainService {
     GetScreenModificationByScreenCode(ScreenCode: string) {
         var url = this._apiUrl + '/GetScreenModificationByScreenCode?ScreenCode=' + ScreenCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var myResponse = new ServiceResponse();
@@ -275,7 +275,7 @@ export class GeneralDomainService {
     GetSingleObjectFieldFromZeroTenant(id: string) {
         var url = this._apiUrl + '/GetSingleObjectFieldFromZeroTenant?' + 'id=' + id;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
@@ -295,7 +295,7 @@ export class GeneralDomainService {
     GetSingleObjectFieldByFieldCodeFromZeroTenant(fieldCode: string) {
         var url = this._apiUrl + '/GetSingleObjectFieldByFieldCodeFromZeroTenant?' + 'fieldCode=' + fieldCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
@@ -315,7 +315,7 @@ export class GeneralDomainService {
     GetSingleObjectFieldByFieldNameAndTableId(fieldName: string, tableId: string) {
         var url = this._apiUrl + '/GetSingleObjectFieldByFieldNameAndTableId?fieldName=' + fieldName + '&tableId=' + tableId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
@@ -336,7 +336,7 @@ export class GeneralDomainService {
     GetObjectFieldModificationForLoggedTenant() {
         var url = this._apiUrl + '/GetObjectFieldModificationForLoggedTenant';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 

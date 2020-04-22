@@ -10,7 +10,7 @@ import {CustomerAccountManagerByProductPM} from '../../../../../Common/EntityPMs
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerAccountManagerByProductSplitComponent.html',
 })
 

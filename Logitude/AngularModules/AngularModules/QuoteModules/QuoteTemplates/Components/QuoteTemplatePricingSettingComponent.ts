@@ -21,7 +21,7 @@ import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 @Component({
     selector: 'QuoteTemplatePricingSettingComponent',
-    moduleId: module.id,
+    
     templateUrl: './QuoteTemplatePricingSettingComponent.html',
 })
 
@@ -61,10 +61,10 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     public ItemsSource: ObservableCollection;
     QuoteTemplateSectionTypeName: string = "Packages";
     IsPerContainerChange: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     ShowTotalPerContinerLink: boolean = false;
-    private ShowVATDetails :boolean = false;
+    ShowVATDetails :boolean = false;
 
 
     constructor() {

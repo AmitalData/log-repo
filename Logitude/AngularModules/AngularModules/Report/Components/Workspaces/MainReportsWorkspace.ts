@@ -5,7 +5,7 @@ import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDir
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'MainReportsWorkspace',
     templateUrl: './MainReportsWorkspace.html',
     providers: [EntityResourceService],

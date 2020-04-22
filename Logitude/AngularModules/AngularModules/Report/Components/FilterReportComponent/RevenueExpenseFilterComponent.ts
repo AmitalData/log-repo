@@ -15,7 +15,7 @@ import { DateTool } from '../../../Infrastructure/Tools';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'RevenueExpenseFilterComponent',
     templateUrl: './RevenueExpenseFilterComponent.html',
     inputs: ['ReportsPreview']

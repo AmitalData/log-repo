@@ -17,7 +17,7 @@ import {CitySelectionArgs} from '../../Args';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 @Component({
     selector: 'CompetitorComponent',
-    moduleId: module.id,
+    
     templateUrl: './CompetitorComponent.html',
 })
 

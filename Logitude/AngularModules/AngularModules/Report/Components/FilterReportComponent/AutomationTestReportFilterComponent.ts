@@ -6,7 +6,7 @@ import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AutomationTestReportFilterComponent',
     templateUrl: './AutomationTestReportFilterComponent.html',
     inputs: ['ReportsPreview']

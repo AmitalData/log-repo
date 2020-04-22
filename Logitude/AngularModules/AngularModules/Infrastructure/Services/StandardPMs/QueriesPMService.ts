@@ -7,7 +7,7 @@ import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/Ent
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {QueryPM} from '../../EntityPMs/QueryPM';
 import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -34,7 +34,7 @@ export class QueriesPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle?' + 'UniqueCode=' + UniqueCode, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -55,7 +55,7 @@ export class QueriesPMService {
 
     insert(entityPM: QueryPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -95,7 +95,7 @@ export class QueriesPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -103,7 +103,7 @@ export class QueriesPMService {
 
     update(entityPM: QueryPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -143,7 +143,7 @@ export class QueriesPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -151,7 +151,7 @@ export class QueriesPMService {
 
     delete(entityPM: QueryPM, userId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -184,7 +184,7 @@ export class QueriesPMService {
             else {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }

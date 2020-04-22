@@ -1,7 +1,7 @@
 ﻿                    
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -14,11 +14,11 @@ import {SupplierInvoiceItemsTaxList} from '../../EntityLists/Extended/SupplierIn
 @Injectable()
 
 export class SupplierInvoiceItemsTaxExtendedListService {
-    private _http: Http;
+    private _http: HttpClient;
     private _apiUrl: string;
     public static CachedData: Array<SupplierInvoiceItemsTaxList> = [];
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SupplierInvoiceItemsTaxViews';
     }
 
@@ -27,9 +27,9 @@ export class SupplierInvoiceItemsTaxExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'lineNumber=' + lineNumber, { headers: authHeader }).map(response => {
-                var list = response.json();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'lineNumber=' + lineNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var list = response;
 
                 var entity: SupplierInvoiceItemsTaxList;
                 if (list) {
@@ -40,7 +40,7 @@ export class SupplierInvoiceItemsTaxExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -49,10 +49,10 @@ export class SupplierInvoiceItemsTaxExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getall', { headers: authHeader }).map(response => {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<SupplierInvoiceItemsTaxList> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -66,7 +66,7 @@ export class SupplierInvoiceItemsTaxExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -103,13 +103,13 @@ export class SupplierInvoiceItemsTaxExtendedListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response.json();
+                serviceResponse = response;
                 var _mappedListsArray: Array<SupplierInvoiceItemsTaxList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -123,7 +123,7 @@ export class SupplierInvoiceItemsTaxExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -20,7 +20,7 @@ export class ContainersFUDomainService {
 
         var url = this._apiUrl + '/GetQueriesCounts';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;

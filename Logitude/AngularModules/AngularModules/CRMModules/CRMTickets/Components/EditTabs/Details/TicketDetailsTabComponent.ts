@@ -30,11 +30,14 @@ declare var window: any;
 
 @Component({
     selector: 'DetailsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './TicketDetailsTabComponent.html',
 })
 
 export class TicketDetailsTabComponent extends BaseComponent implements AfterViewInit {
+  public Filters: any;
+  public QuickSearchItems: any;
+
     public EntityPM: TicketPM;
     public LabelColumnWidth: number = 153;
     public ControlColumnWidth: number = 180;
@@ -42,7 +45,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     public ObjectTableName: string = "Ticket";
     public IsFromOutSide = false;
     public IsShowConnectContact = false; 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     public EntityList: EntityClass[] = [];
     public EntityNumberTitle = "Shipment Number";

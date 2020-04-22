@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AirlineAWBStockTabComponent.html',
 })
 

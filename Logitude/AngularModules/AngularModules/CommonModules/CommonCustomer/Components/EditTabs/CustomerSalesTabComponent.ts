@@ -30,7 +30,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerSalesTabComponent.html',
 })
 

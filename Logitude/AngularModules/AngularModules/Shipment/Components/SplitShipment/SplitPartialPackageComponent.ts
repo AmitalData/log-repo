@@ -8,7 +8,7 @@ import {SplitShipmentItem} from './SplitShipmentComponent';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SplitPartialPackageComponent.html',
 })
 

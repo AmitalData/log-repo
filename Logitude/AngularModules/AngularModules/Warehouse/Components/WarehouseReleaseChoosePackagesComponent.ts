@@ -14,7 +14,7 @@ import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {WarehouseEntryPackagePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseEntryPackagePMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'WarehouseReleaseChoosePackagesComponent',
     templateUrl: './WarehouseReleaseChoosePackagesComponent.html',
     providers: [WarehouseEntryPackagePMExtendedService],

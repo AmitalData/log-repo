@@ -17,7 +17,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'AddEditOccasionContactComponent',
-    moduleId: module.id,
+    
     templateUrl: './AddEditOccasionContactComponent.html',
 })
 

@@ -49,7 +49,7 @@ import { MeasurementListService } from '../../../../Common/Services/StandardList
 import { ShipmentAWBPrintOnlyPM } from '../../../../Shipment/EntityPMs/ShipmentAWBPrintOnlyPM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AWBWizardComponent',
     templateUrl: './AWBWizardComponent.html',
     providers: [EntityArgs, DocumentTypeListExtendedService, DocumentOutPMService, DocumentTypePMExtendedService]

@@ -14,7 +14,7 @@ import { VehicleReductionTypeList } from '../../../../Customs/EntityLists/Vehicl
 
 @Component({
     selector: 'VehicleModificationsComponent',
-    moduleId: module.id,
+    
     templateUrl: './VehicleModificationsComponent.html',
 })
 

@@ -20,7 +20,7 @@ import { GLAccountCurrencyPM } from '../../../EntityPMs/GLAccountCurrencyPM';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountAdditionalDataTabComponent.html',
  
 })

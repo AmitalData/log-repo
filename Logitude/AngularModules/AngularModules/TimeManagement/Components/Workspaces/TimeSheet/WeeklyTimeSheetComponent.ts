@@ -15,7 +15,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     selector: 'WeeklyTimeSheetComponent',
-    moduleId: module.id,
+    
     templateUrl: './WeeklyTimeSheetComponent.html',
     providers: [EntityResourceService],
 })

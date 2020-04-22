@@ -11,7 +11,7 @@ import {CustomerDepositionListExtendedService} from '../../../../../Common/Servi
 
 @Component({
     selector: 'CustomsShipperGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './CustomsShipperGeneralTabComponent.html',
 })
 

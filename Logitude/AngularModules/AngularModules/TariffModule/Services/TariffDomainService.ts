@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffSettingPM } from '../EntityPMs/TariffSettingPM';
@@ -21,7 +21,7 @@ export class TariffDomainService {
 
         var url = this._apiUrl + '/GetTariffsCounts';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -45,7 +45,7 @@ export class TariffDomainService {
 
     GetAvailableAirlineFreightTariffs(args: TariffSearchArgs) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(this._apiUrl + "/PostAvailableAirlineFreightTariffs", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;
@@ -61,7 +61,7 @@ export class TariffDomainService {
 
         var url = this._apiUrl + '/GetCheckDatesValidty?FromPort=' + FromPort + "&ToPort=" + ToPort +  "&ToDate=" + ServiceHelper.GetDateString(ToDate)  + "&TariffId=" + TariffId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -77,7 +77,7 @@ export class TariffDomainService {
 
         var url = this._apiUrl + '/GetGenerateTariffs';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -91,7 +91,7 @@ export class TariffDomainService {
     GetTariffsLogsByTariffId( tariffId: string, version: number) {
 
         var url = this._apiUrl + '/GetTariffsLogsByTariffId?tariffId=' + tariffId + "&version=" + version;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var myResponse = new ServiceResponse();
@@ -103,7 +103,7 @@ export class TariffDomainService {
 
     GenerateTariffsFromExcel(filter: TariffFilterParameter) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(this._apiUrl + "/PostGenerateTariffsFromExcel", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;
@@ -119,7 +119,7 @@ export class TariffDomainService {
     GetTenantTariffSetting() {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTenantTariffSetting', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
@@ -140,7 +140,7 @@ export class TariffDomainService {
     DownloadTariff(tariffId: string, version: number, type: string) {
 
         var url = this._apiUrl + '/GetDownloadTariff?tariffId=' + tariffId + "&version=" + version + "&type=" + type;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -152,7 +152,7 @@ export class TariffDomainService {
     
     PostUploadExcelFile(filter: TariffFilterParameter) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;
@@ -167,7 +167,7 @@ export class TariffDomainService {
     ApproveVersion(tariffId: string, version: number) {
 
         var url = this._apiUrl + '/GetApproveVersion?tariffId=' + tariffId + "&version=" + version;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -247,7 +247,7 @@ export class TariffDomainService {
 
         var url = this._apiUrl + '/GetTariffVersionLines?tariffId=' + tariffId + "&version=" + version
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -261,7 +261,7 @@ export class TariffDomainService {
     GetAllVersionsWithLinesForTariff(tariffId: string) {
 
         var url = this._apiUrl + '/GetAllVersionsWithLinesForTariff?tariffId=' + tariffId  
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse = new ServiceResponse();
@@ -273,7 +273,7 @@ export class TariffDomainService {
     
     PostUpdateSurcharge(filter: UpdateSurchargeArgs) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.post(this._apiUrl + "/PostUpdateSurcharge", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;
@@ -287,7 +287,7 @@ export class TariffDomainService {
 
     GetRecentTariffs() {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetRecentTariffs', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 return allLists;
@@ -299,7 +299,7 @@ export class TariffDomainService {
 
         var url = this._apiUrl + "/GetTariffLineContainerPrices?tariffId=" + tariffId + "&version=" + version + "&fromPortId=" + fromPortId + "&toPortId=" + toPortId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -314,7 +314,7 @@ export class TariffDomainService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetRefreshPortsFromTranslations?tariffId=' + tariffId + "&version=" + version;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();

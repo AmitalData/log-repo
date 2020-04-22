@@ -6,7 +6,7 @@ import {ReportFliter} from '../../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
 import {CodeNameClass} from '../../../../Infrastructure/DataContracts/CodeNameClass';
 @Component({
-    moduleId: module.id,
+    
     selector: 'InvoicesRoutingsFilterComponent',
     templateUrl: './InvoicesRoutingsFilterComponent.html',
 })

@@ -14,7 +14,7 @@ import {CodeNameClass} from '../../../Infrastructure/DataContracts/CodeNameClass
 import {AppTool, DateTool, DateParts} from '../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'ShipmentChargesAnalysisFilterComponent',
     templateUrl: './ShipmentChargesAnalysisFilterComponent.html',
     inputs: ['ReportsPreview']

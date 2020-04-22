@@ -22,7 +22,7 @@ import {CustDocMetaDataValuesWebService} from '../../../../../Customs/Services/W
 import {CustomsSettingListService} from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentsPanelComponent',
     templateUrl: "DocumentsPanelComponent.html",
 })

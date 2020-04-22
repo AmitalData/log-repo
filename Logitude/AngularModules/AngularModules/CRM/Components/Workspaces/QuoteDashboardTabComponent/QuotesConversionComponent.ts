@@ -13,7 +13,7 @@ declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
     selector: 'quote-conversion',
-    moduleId: module.id,
+    
     templateUrl: './QuotesConversionComponent.html',
 })
 

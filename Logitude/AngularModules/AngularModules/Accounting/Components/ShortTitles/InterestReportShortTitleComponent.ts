@@ -9,7 +9,7 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./InterestReportShortTitleComponent.html",
 })
 export class InterestReportShortTitleComponent {

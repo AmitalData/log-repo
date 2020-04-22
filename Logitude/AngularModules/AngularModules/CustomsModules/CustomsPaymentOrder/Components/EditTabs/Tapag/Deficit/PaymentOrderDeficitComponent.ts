@@ -23,7 +23,7 @@ import {EntityResourceService} from '../../../../../../Infrastructure/Services/E
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PaymentOrderDeficitComponent.html',
     selector: 'PaymentOrderDeficitComponent',
 })

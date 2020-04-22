@@ -8,7 +8,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -31,7 +31,7 @@ export class GLAccountBalanceByYearPMService {
  get(accountid: string, year: number, currencyid: string) {
          
         
-		 return Observable.defer(() => {
+		 return defer(() => {
              return this._http.get(this._apiUrl + '/getsingle?' + 'accountid=' + accountid + '&' + 'year=' + year + '&' + 'currencyid=' + currencyid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var pm = response;
                     
@@ -53,7 +53,7 @@ export class GLAccountBalanceByYearPMService {
 
 	 insert(entityPM: GLAccountBalanceByYearPM) {
          
-        return Observable.defer(() => {
+        return defer(() => {
 
           
 
@@ -90,7 +90,7 @@ export class GLAccountBalanceByYearPMService {
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }
@@ -101,7 +101,7 @@ export class GLAccountBalanceByYearPMService {
     update(entityPM: GLAccountBalanceByYearPM) {
 
          
-            return Observable.defer(() => {
+            return defer(() => {
 
    
 
@@ -137,7 +137,7 @@ export class GLAccountBalanceByYearPMService {
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
                    
                 }
             }

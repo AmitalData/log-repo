@@ -19,7 +19,7 @@ import { ObjectFieldList } from '../../../../../Infrastructure/EntityLists/Objec
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AddRuleFieldComponent',
     templateUrl: './AddRuleFieldComponent.html',
 })

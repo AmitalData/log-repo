@@ -7,7 +7,7 @@ import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class BatchServicesDefinitionPMService {
@@ -21,7 +21,7 @@ export class BatchServicesDefinitionPMService {
     get(code: string) {
         var callTime = new Date();
         var url = this._apiUrl + '/getsingle?' + 'code=' + code;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
                 if (response instanceof HttpResponse) {
                     var pm = response;
@@ -45,7 +45,7 @@ export class BatchServicesDefinitionPMService {
 
     insert(entityPM: BatchServicesDefinitionPM) {
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
             var errorsArray = validator.Validate("BatchServicesDefinition", entityPM);
@@ -76,14 +76,14 @@ export class BatchServicesDefinitionPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }
 
     update(entityPM: BatchServicesDefinitionPM) {
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             var validator: ClassLevelValidator;
             validator = new ClassLevelValidator();
             var errorsArray = validator.Validate("BatchServicesDefinition", entityPM);
@@ -114,7 +114,7 @@ export class BatchServicesDefinitionPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }

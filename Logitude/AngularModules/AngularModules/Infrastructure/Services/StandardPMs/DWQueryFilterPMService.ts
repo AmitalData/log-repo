@@ -6,7 +6,7 @@ import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 
 import {DWQueryFilterPM} from '../../EntityPMs/DWQueryFilterPM';
@@ -34,7 +34,7 @@ export class DWQueryFilterPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getDWqueryfiltersbytenant?' + 'tenant=' + tenant + '&loggedcontactid=' + userid, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -52,7 +52,7 @@ export class DWQueryFilterPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getDWqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&dwobjecttableid=' + dwobjecttableid + '&dwqueryid=' + dwqueryid + '&loggedcontactid=' + userid, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -66,7 +66,7 @@ export class DWQueryFilterPMService {
 
     insert(entityPM: DWQueryFilterPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -106,7 +106,7 @@ export class DWQueryFilterPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -114,7 +114,7 @@ export class DWQueryFilterPMService {
 
     delete(entityPM: DWQueryFilterPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -155,7 +155,7 @@ export class DWQueryFilterPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });

@@ -30,7 +30,7 @@ declare var window: any;
 
 @Component({
     selector: 'DetailsTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './DetailsTabComponent.html',
 })
 

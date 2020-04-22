@@ -10,7 +10,7 @@ import {ActivityPMInitService} from '../../../../CRM/EntityPMInitServices/Activi
 import {AppTool} from '../../../../Infrastructure/Tools'; 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewActivityComponent.html',
 })
 
@@ -18,7 +18,7 @@ export class NewActivityComponent {
     public EntityPM: ActivityPM;
     public ValidationErrorsList: string[] = [];
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.RunComponent();

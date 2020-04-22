@@ -1,21 +1,17 @@
 
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import { Http, Headers, Response } from '@angular/http';
-import { HttpClient, HttpResponse, HttpEvent, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import {Observable} from 'rxjs/Rx';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import {AppTool, DateTool} from '../Tools';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 import {Guid} from '../Utilities/Guid';
 import {SessionInfo} from '../Utilities/SessionInfo';
 import {SessionLocator} from '../Utilities/SessionLocator';
 import {LogitudeErrorHandler} from '../Utilities/LogitudeErrorHandler';
-import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
-import {LoginService} from '../Services/LoginService';
-import { of } from 'rxjs/observable/of';
+import { LoginService } from '../Services/LoginService';
+import { of } from 'rxjs';
 declare var window: any;
 
 export class ServiceHelper {
-    public static Http: Http;
     public static HttpClient: HttpClient;
 
     private static _CurrentSession = SessionLocator.SelectedSession;
@@ -32,10 +28,10 @@ export class ServiceHelper {
         var response: ServiceResponse;
         response = new ServiceResponse();
         response.HasError = true;
-        if (error instanceof Response) {
-            //var mm = error.json();
-            if (error.status == 400) {
-                var apiException = error.json();
+      if (error instanceof HttpErrorResponse) {
+            
+        if (error.status == 400) {
+          var apiException = error.error;
                 if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException" || apiException.ErrorType == "EntityCommandExecutionException" || apiException.ErrorType == "NullReferenceException") {
 
                     var errorMessage: string = apiException.ShortErrorMessage;
@@ -108,7 +104,7 @@ export class ServiceHelper {
             ServiceHelper._LogitudeErrorHandler.handleError(error);
         }
 
-        return Observable.of(response);
+        return of(response);
     }
 
 
@@ -118,8 +114,8 @@ export class ServiceHelper {
         response = new ServiceResponse();
         response.HasError = true;
 
-        if (error instanceof HttpErrorResponse) {
-            //var mm = error.json();
+      if (error instanceof HttpErrorResponse) {
+          
             if (error.status == 400) {
                 var apiException = error.error;
                 if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException" || apiException.ErrorType == "EntityCommandExecutionException" || apiException.ErrorType == "NullReferenceException") {
@@ -199,10 +195,10 @@ export class ServiceHelper {
         var response: ServiceResponse;
         response = new ServiceResponse();
         response.HasError = true;
-        if (error instanceof Response) {
+      if (error instanceof HttpErrorResponse) {
             //var mm = error.json();
-            if (error.status == 400) {
-                var apiException = error.json();
+        if (error.status == 400) {
+          var apiException = error.error;
                 if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException") {
 
                     var errorMessage: string = apiException.ShortErrorMessage;
@@ -266,7 +262,7 @@ export class ServiceHelper {
              
         }
 
-        return Observable.of(response);
+        return of(response);
     }
 
     private static LogServiceError(exception: string, stackTrace: string, logException = true) {

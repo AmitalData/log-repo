@@ -4,7 +4,7 @@ import {ShipmentPM} from '../../EntityPMs/ShipmentPM';
 import {ShipmentPMService} from '../../Services/StandardPMs/ShipmentPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReactivateShipmentComponent.html',
 })
 

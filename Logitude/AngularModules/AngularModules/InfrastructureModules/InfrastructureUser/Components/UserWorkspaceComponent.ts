@@ -20,7 +20,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {UserLicenseArgs} from '../../../Infrastructure/Args';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'UserWorkspace',
     templateUrl: './UserWorkspaceComponent.html',
     providers: [UserExtendedPMService]

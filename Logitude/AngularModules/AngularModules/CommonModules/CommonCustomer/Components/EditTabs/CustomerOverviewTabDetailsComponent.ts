@@ -33,7 +33,7 @@ declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
     selector: 'CustomerOverviewTabDetailsComponent',
-    moduleId: module.id,
+    
     templateUrl: './CustomerOverviewTabDetailsComponent.html',
     encapsulation: ViewEncapsulation.None,
 })

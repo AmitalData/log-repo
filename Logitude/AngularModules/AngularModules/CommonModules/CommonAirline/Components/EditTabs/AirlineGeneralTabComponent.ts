@@ -5,14 +5,14 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AirlineGeneralTabComponent.html',
 })
 
 export class AirlineGeneralTabComponent extends BaseComponent {
     public EntityPM: AirlinePM;
     public ObjectTableName: string = "Airline";
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     public ScreenCode: string = "Airline.GeneralTabScreen";
     public ImageId: string = "";

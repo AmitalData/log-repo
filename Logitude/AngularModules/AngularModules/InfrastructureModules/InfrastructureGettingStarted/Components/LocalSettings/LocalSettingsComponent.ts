@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'LocalSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './LocalSettingsComponent.html',   
 })
 

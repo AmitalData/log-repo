@@ -17,7 +17,7 @@ import {CustomerList} from '../../../Common/EntityLists/CustomerList';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerWorkspaceComponent.html',
 })
 

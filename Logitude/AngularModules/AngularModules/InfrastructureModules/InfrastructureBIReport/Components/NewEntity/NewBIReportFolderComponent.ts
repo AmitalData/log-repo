@@ -7,7 +7,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewBIReportFolderComponent.html',
 })
 

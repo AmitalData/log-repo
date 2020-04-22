@@ -4,7 +4,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BIReportListTemplate.html',
 })
 

@@ -13,7 +13,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 
 @Component({
     selector: 'OrdersTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OrdersTabComponent.html',
 })
 
@@ -22,7 +22,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     public DataContext: OrdersTabComponent = this;
     public ObjectTableName: string = "Quote";
     public QuoteSetting: QuoteSettingPM = null;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     public TransportModeId: string; 
     constructor(public entityArgs: EntityArgs) {
         super();

@@ -2,7 +2,7 @@
 import {Injectable, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 
@@ -58,7 +58,7 @@ export class HtmlEditorService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
                 return this._http.post(this._apiUrl + '/postsendhtmldocument', JSON.stringify(sendHtmlFilter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
        
                 var pmresponse: ServiceResponse;
@@ -79,7 +79,7 @@ export class HtmlEditorService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + '/putsaveeditedreporttoserver', JSON.stringify(filters),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var pmresponse: ServiceResponse;

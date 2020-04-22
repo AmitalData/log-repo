@@ -10,7 +10,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditLicenceComponent.html',
 })
 

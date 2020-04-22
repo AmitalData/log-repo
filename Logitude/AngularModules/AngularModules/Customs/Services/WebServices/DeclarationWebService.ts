@@ -4,7 +4,7 @@
 */
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -34,13 +34,13 @@ import {CustomsCollateralsConditionPM} from '../../EntityPMs/CustomsCollateralsC
 @Injectable()
 
 export class DeclarationWebService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
 
     _SupplierInvoicePMService: SupplierInvoicePMService = new SupplierInvoicePMService();
     _DeclarationPaymentPMService: DeclarationPaymentPMService = new DeclarationPaymentPMService();
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationWebService';
 
 
@@ -50,7 +50,7 @@ export class DeclarationWebService {
     //customs answers
     GetDeclarationConstraintsByDeclrationId(declarationId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -67,9 +67,9 @@ export class DeclarationWebService {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -77,7 +77,7 @@ export class DeclarationWebService {
     }
     GetDeclarationErrors(declarationId: string, listVersionId: string,courierFilter:string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -93,7 +93,7 @@ export class DeclarationWebService {
                 headers: authHeader
             }).map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<DeclarationErrorView> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -109,7 +109,7 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -117,7 +117,7 @@ export class DeclarationWebService {
     }
     GetSingleCustomsCollateral(id: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -133,7 +133,7 @@ export class DeclarationWebService {
                 }).map(response => {
 
                     var entity: CustomsCollateralPM;
-                    var pm = response.json();
+                    var pm = response;
                     if (pm) {
                         entity = this.MapJsonToCustomsCollateralPM(pm);
                     }
@@ -143,7 +143,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -151,7 +151,7 @@ export class DeclarationWebService {
     }
     CheckIfDocumentPointerExistsForConstraint(constraintNumber: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -166,13 +166,13 @@ export class DeclarationWebService {
                 headers: authHeader
             }).map(response => {
 
-                var res = response.json();
+                var res = response;
                
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -182,7 +182,7 @@ export class DeclarationWebService {
     //customs ansewers -> supplier invoices
     GetSupplierInvoiceBySequenceNumber(declarationId: string, invoiceSequence: number, skip: number, take: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -201,7 +201,7 @@ export class DeclarationWebService {
                 headers: authHeader
             }).map(response => {
 
-                var res = response.json();
+                var res = response;
                 if (res) {
                     res = this._SupplierInvoicePMService.MapJsonToEntityPM(res, true);
                 }
@@ -210,7 +210,7 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -218,7 +218,7 @@ export class DeclarationWebService {
     }
     GetSupplierInvoiceWithItemBySequenceNumber(declarationId: string, invoiceSequence: number, itemSequence: number, skip: number, take: number, type:string = null) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -239,7 +239,7 @@ export class DeclarationWebService {
                     headers: authHeader
                 }).map(response => {
 
-                    var res = response.json();
+                    var res = response;
                     if(res)
                         res = this._SupplierInvoicePMService.MapJsonToEntityPM(res, true);
 
@@ -247,7 +247,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -259,7 +259,7 @@ export class DeclarationWebService {
 
     GetSupplierInvoiceWithSpecificItemByCounterKey(declarationId: string, counterKey: number, itemSequence: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -278,7 +278,7 @@ export class DeclarationWebService {
                     headers: authHeader
                 }).map(response => {
 
-                    var res = response.json();
+                    var res = response;
                     //res = this.MapJsonToEntityPM(res, true);
                     if(res)
                         res = this._SupplierInvoicePMService.MapJsonToEntityPM(res, true);
@@ -287,7 +287,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = res;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -297,7 +297,7 @@ export class DeclarationWebService {
     //Certificates
     GetCertificateTickets(declarationId: string, reqConfirmationType: string, invoiceNumber: string, invoiceCounterKey: number, demandState: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -317,7 +317,7 @@ export class DeclarationWebService {
                     headers: authHeader
             }).map(response => {
 
-                var allLists = response.json();
+                var allLists = response;
                 var _mappedListsArray: Array<CertificateTicket> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -333,7 +333,7 @@ export class DeclarationWebService {
                 //serviceResponse = response;
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -341,7 +341,7 @@ export class DeclarationWebService {
     }
     GetDeclarationInvoicesNumbers(declarationId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -359,9 +359,9 @@ export class DeclarationWebService {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -371,7 +371,7 @@ export class DeclarationWebService {
     //supplier invoice -> ItemCode double click logic
     GetCustomsPartnersItemsForSelection(vendorId: string, CustomerId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -390,9 +390,9 @@ export class DeclarationWebService {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -400,7 +400,7 @@ export class DeclarationWebService {
     }
     GetGTBITEMPartnersItemList(vendorId: string, customerCode: string, search: string, top: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -421,9 +421,9 @@ export class DeclarationWebService {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -431,7 +431,7 @@ export class DeclarationWebService {
     }
     GetGITITEMPartnersItemList(vendorId: string, customerCode: string, search: string, top: number, isSearchNULLVendor: boolean) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -450,15 +450,15 @@ export class DeclarationWebService {
                 }).map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetGITITEMPartnersItemListByItemCode(vendorId: string, customerCode: string, itemCode: string, top: number, isSearchNULLVendor: boolean) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -477,15 +477,15 @@ export class DeclarationWebService {
                 }).map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetGITITEMPartnersItemListByName(vendorId: string, customerCode: string, name: string, top: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -503,15 +503,15 @@ export class DeclarationWebService {
                 }).map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     //Send declaration
     PostSendDeclaration(genericRequestParams: GenericRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -525,18 +525,18 @@ export class DeclarationWebService {
                 JSON.stringify(genericRequestParams),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
 
     PostSendManifest(genericRequestParams: GenericRequestParams) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -550,18 +550,18 @@ export class DeclarationWebService {
                 JSON.stringify(genericRequestParams),
                 { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res.json();
+                    serviceResponse.Result = res;
 
                     return serviceResponse;
 
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
     }
 
     PostSendDeclarationChecksAndPrecalculations(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -578,9 +578,9 @@ export class DeclarationWebService {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -589,7 +589,7 @@ export class DeclarationWebService {
     }
 
     GetRequiredFieldsForDeclaration(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -606,9 +606,9 @@ export class DeclarationWebService {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -617,7 +617,7 @@ export class DeclarationWebService {
     }
 
     GetRequiredFieldsForCourierDeclaration(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -634,9 +634,9 @@ export class DeclarationWebService {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -645,7 +645,7 @@ export class DeclarationWebService {
     }
 
     CheckCertificateStatus(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -662,9 +662,9 @@ export class DeclarationWebService {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -673,7 +673,7 @@ export class DeclarationWebService {
     }
 
     GetMAWBCourierMasterByDeclaration(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -687,9 +687,9 @@ export class DeclarationWebService {
             }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -697,7 +697,7 @@ export class DeclarationWebService {
     }
 
     GetDocumentDeclarationId(declarationId: string) {
-    return Observable.defer(() => {
+    return defer(() => {
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -714,14 +714,14 @@ export class DeclarationWebService {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
     });
 }
     
     GetDeclarationDocumentList(parentEntityId: string, parentEntityCode: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -738,14 +738,14 @@ export class DeclarationWebService {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetDeclarationMandatoryTicketList(parentEntityId: string, parentEntityCode: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -762,14 +762,14 @@ export class DeclarationWebService {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
-                    serviceResponse.Result = response.json();
+                    serviceResponse.Result = response;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     CheckFreightAmountsByIncoterm(declarationId: string) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -784,9 +784,9 @@ export class DeclarationWebService {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
 
         }
@@ -795,7 +795,7 @@ export class DeclarationWebService {
     }
 
     DeclarationClosureMethod(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -809,14 +809,14 @@ export class DeclarationWebService {
             }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     CancelDeclarationClosureMethod(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -830,16 +830,16 @@ export class DeclarationWebService {
             }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     //Payment Orders
     GetSingleDeclarationPaymentPMandDefaultExplain(id: string, CustomerCode: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -856,7 +856,7 @@ export class DeclarationWebService {
                     headers: authHeader
                 }).map(response => {
 
-                    var res = response.json();
+                    var res = response;
 
                     var entity: DeclarationPaymentPM;
 
@@ -868,7 +868,7 @@ export class DeclarationWebService {
                     //serviceResponse = response;
                     serviceResponse.Result = entity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -877,7 +877,7 @@ export class DeclarationWebService {
 
     GetCustomBanksForCard(cardId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -893,9 +893,9 @@ export class DeclarationWebService {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 ////serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -904,7 +904,7 @@ export class DeclarationWebService {
 
     GetAllRequiredFieldsForDeclarationPayment(declarationId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -920,9 +920,9 @@ export class DeclarationWebService {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 //serviceResponse = response;
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -932,7 +932,7 @@ export class DeclarationWebService {
     // Amendments
     GetDeclarationCorrection(declarationId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -948,14 +948,14 @@ export class DeclarationWebService {
                 }).map(response => {
 
                     var mappedEntity;
-                    var allLists = response.json();
+                    var allLists = response;
                     if (allLists)
                         mappedEntity = this.MapJsonToCorrectionView(allLists);
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = mappedEntity;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
 
         }
 
@@ -965,7 +965,7 @@ export class DeclarationWebService {
     // Tapag
     GetDeclarationByTapagConnectionConnection(tapagId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -979,14 +979,14 @@ export class DeclarationWebService {
             }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response.json();
+                serviceResponse.Result = response;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
     GetDeclarationCollateralsList(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -998,17 +998,17 @@ export class DeclarationWebService {
                 headers: authHeader
             }).map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
 
     GetDeclarationCargoSplitByDeclarationIdList(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -1020,16 +1020,16 @@ export class DeclarationWebService {
                 headers: authHeader
             }).map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     GetDeclarationMamanSpecialAction(declarationId: string, tenant: number, actionCode: string, mamanSpecialActionCode: string) {
-        return Observable.defer(() => {
+        return defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -1040,10 +1040,10 @@ export class DeclarationWebService {
                 headers: authHeader
             }).map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 

@@ -8,7 +8,7 @@ import {DateAgeHelper} from '../../../Infrastructure/Utilities/DateAgeHelper';
 import { NotificationExtendedListService } from '../../../Customs/Services/ExtendedLists/NotificationExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NotificationListTemplate.html',
 })
 

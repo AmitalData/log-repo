@@ -18,7 +18,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 
 @Component({
     selector: 'SystemDefaultsComponent',
-    moduleId: module.id,
+    
     templateUrl: './SystemDefaultsComponent.html',
 })
 

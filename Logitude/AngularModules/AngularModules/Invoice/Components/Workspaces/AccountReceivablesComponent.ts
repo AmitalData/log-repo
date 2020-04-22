@@ -23,7 +23,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 declare var makeAmBarChart: any;
 @Component({
     selector: 'OperationsComponent',
-    moduleId: module.id,
+    
     templateUrl: './AccountReceivablesComponent.html',
 })
 

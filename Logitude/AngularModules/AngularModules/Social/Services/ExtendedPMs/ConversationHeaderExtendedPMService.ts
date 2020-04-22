@@ -2,7 +2,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass';
@@ -18,7 +18,7 @@ export class ConversationHeaderExtendedPMService {
     }
 
    GetMessageByFiltered(messageFilter: any) {
-        return Observable.defer(() => {
+        return defer(() => {
  
             return this._http.post(this._apiUrl + '/PostGetMessageByFilter', JSON.stringify(messageFilter), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
 

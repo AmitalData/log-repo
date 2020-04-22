@@ -47,7 +47,7 @@ import { LineModel } from '../../../../Accounting/Components/Others/ReconcileCom
 import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARPaymentDetailsFullAccountingTab.html',
     styleUrls: ['./ARPaymentDetailsFullAccountingTab.css']
 })

@@ -10,14 +10,14 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PrivateLabelLoadComponent.html',
 })
 
 export class PrivateLabelLoadComponent implements AfterViewInit {
     public EntityId: string = null;
     public EntityPM: TenantManagmentPrivateLabelsPM;
-    @ViewChild('WizardView', { read: ViewContainerRef }) target: ViewContainerRef;
+    @ViewChild('WizardView', { read: ViewContainerRef, static: false }) target: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {

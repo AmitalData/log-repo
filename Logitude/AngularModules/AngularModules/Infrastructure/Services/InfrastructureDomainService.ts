@@ -17,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Guid } from '../Utilities/Guid';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class InfrastructureDomainService {
@@ -31,7 +31,7 @@ export class InfrastructureDomainService {
     UpdateLastFilter(myControlName: string, myFilterName: string, myFilterValue: string) {
         var url = this._apiUrl + '/GetUpdateLastFilter?myControlName=' + myControlName + '&myFilterName=' + myFilterName + '&myFilterValue=' + myFilterValue;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myResult = response;
@@ -40,13 +40,13 @@ export class InfrastructureDomainService {
                 myResponse.Result = myResult;
                 return myResponse;
             }),catchError(ServiceHelper.HandleServiceError));
-        }); //.share();
+        });
     }
 
     GetMainMenuFollowups(objectTableName: string) {
         var url = this._apiUrl + '/GetMainMenuFollowups?objectTableName=' + objectTableName;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -60,7 +60,7 @@ export class InfrastructureDomainService {
     GetSelectedAndUnselectedRoleFeatures(RoleId: string) {
         var url = this._apiUrl + '/GetSelectedAndUnselectedRoleFeatures?RoleId=' + RoleId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -83,7 +83,7 @@ export class InfrastructureDomainService {
     GetSelectedAndUnselectedPackageFeatures(PackageCode: string) {
         var url = this._apiUrl + '/GetSelectedAndUnselectedPackageFeatures?PackageCode=' + PackageCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -106,7 +106,7 @@ export class InfrastructureDomainService {
     GetAllowedFeaturesForLoggedUser() {
         var url = this._apiUrl + '/GetAllowedFeaturesForLoggedUser';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -131,7 +131,7 @@ export class InfrastructureDomainService {
     GetNewFeaturesList() {
         var url = this._apiUrl + '/GetNewFeaturesList';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -154,7 +154,7 @@ export class InfrastructureDomainService {
     GetPackagesBMs() {
         var url = this._apiUrl + '/GetPackagesBMs';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -178,7 +178,7 @@ export class InfrastructureDomainService {
     SendEntityToAirlineTenant(entityId: string, objectTableName: string, airlineCode: string) {
         var url = this._apiUrl + '/GetSendEntityToAirlineTenant?entityId=' + entityId + '&objectTableName=' + objectTableName + '&airlineCode=' + airlineCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -190,7 +190,7 @@ export class InfrastructureDomainService {
     }
 
     UpdateFeatures(entityPM: FeaturesUpdateHelper) {
-        return Observable.defer(() => {
+        return defer(() => {
             var mappedEntity: FeaturesUpdateHelper = this.MapJsonToFeaturesUpdateHelper(entityPM, false);
 
             return this._http.put(this._apiUrl + "/PutFeatures", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
@@ -209,7 +209,7 @@ export class InfrastructureDomainService {
     GetBusinessHourBM() {
         var url = this._apiUrl + '/GetBusinessHourBM';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
                 var entity: BusinessHourPM;
@@ -227,7 +227,7 @@ export class InfrastructureDomainService {
     GetBatchServicesLogs(serviceCode: string, dateFilterCode: string) {
         var url = this._apiUrl + '/GetBatchServicesLogs?serviceCode=' + serviceCode + '&dateFilterCode=' + dateFilterCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -243,7 +243,7 @@ export class InfrastructureDomainService {
     GetRoleFeaturesChanges(RoleId: string) {
         var url = this._apiUrl + '/GetRoleFeaturesChanges?RoleId=' + RoleId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -257,7 +257,7 @@ export class InfrastructureDomainService {
     GetPackageFeaturesChanges(PackageCode: string) {
         var url = this._apiUrl + '/GetPackageFeaturesChanges?PackageCode=' + PackageCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -271,7 +271,7 @@ export class InfrastructureDomainService {
     GetDataCountForTenant(entityId: number) {
         var url = this._apiUrl + '/GetDataCountForTenant?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -297,7 +297,7 @@ export class InfrastructureDomainService {
     DeleteDataForTenant(entityId: number, type: string) {
         var url = this._apiUrl + '/GetDeleteDataForTenant?entityId=' + entityId + '&type=' + type;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -311,7 +311,7 @@ export class InfrastructureDomainService {
     ResetCountersForTenant(entityId: number, code: string) {
         var url = this._apiUrl + '/GetResetCountersForTenant?entityId=' + entityId + '&code=' + code;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
@@ -325,7 +325,7 @@ export class InfrastructureDomainService {
     UpdateTenantSettings(DocumentFilingByEmailEnabled: boolean) {
         var url = this._apiUrl + '/GetPutTenantSettings?DocumentFilingByEmailEnabled=' + DocumentFilingByEmailEnabled;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -341,7 +341,7 @@ export class InfrastructureDomainService {
     ResendAnalyzeQueue(AnalyzeQueueId: string) {
         var url = this._apiUrl + '/GetResendAnalyzeQueue?AnalyzeQueueId=' + AnalyzeQueueId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var iResult = response;
 
@@ -629,7 +629,7 @@ export class InfrastructureDomainService {
     GetAllTasksSchedulerPMs(schedulerType:string) {
         var url = this._apiUrl + '/GetAllTasksSchedulerPMs?schedulerType=' + schedulerType;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -663,7 +663,7 @@ export class InfrastructureDomainService {
     GetTaskSchedulerHistory(taskId: string) {
         var url = this._apiUrl + '/GetTaskSchedulerHistory?taskId=' + taskId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -679,7 +679,7 @@ export class InfrastructureDomainService {
     GetByBIReportId(Queryid: string, DWQueryId : string ) {
         var url = this._apiUrl + '/GetByBIReportId?' + 'Id=' + Queryid + '&dWQueryId=' + DWQueryId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm : any = response;
                 var entity: BIReportXMLData = new BIReportXMLData();
@@ -698,7 +698,7 @@ export class InfrastructureDomainService {
     }
 
     UpdateBIReportXMLData(QueryData: BIReportXMLData) {
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
             var response: ServiceResponse;
             response = new ServiceResponse();
@@ -735,7 +735,7 @@ export class InfrastructureDomainService {
 
     DeleteBIReport(Id: string) {
         var url = this._apiUrl + '/GetDeleteBIReport?' + 'Id=' + Id;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -747,7 +747,7 @@ export class InfrastructureDomainService {
 
     DeleteFolder(Id: string) {
         var url = this._apiUrl + '/GetDeleteFolder?' + 'Id=' + Id;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -820,7 +820,7 @@ export class InfrastructureDomainService {
     GetFeatureToggles() {
         var url = this._apiUrl + '/GetFeatureToggles';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;

@@ -8,7 +8,7 @@ import {SessionLocator} from '../../../../../../Infrastructure/Utilities/Session
 import {SupplierInvoiceItemVehicleComponent} from './SupplierInvoiceItemVehicleComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VehiclesSearchComponent.html',
 })
 

@@ -1,6 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -11,16 +11,16 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomsDocumentsTicketsExtendedService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsDocumentsTicketsExtended';
     }
 
     delete(Id: string) {
     
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -34,9 +34,9 @@ export class CustomsDocumentsTicketsExtendedService {
             var mappedEntity: CustomsDocumentsTicketPM;
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, { headers: authHeader }).map(response => {
+            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var pm = response.json();
+                var pm = response;
                 if (pm) {
                     var mappedResult: CustomsDocumentsTicketPM;
                     //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -46,7 +46,7 @@ export class CustomsDocumentsTicketsExtendedService {
 
                 return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );

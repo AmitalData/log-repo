@@ -18,7 +18,7 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import {ClientMessagesService} from '../../../../../Customs/Services/WebServices/ClientMessagesService';
 
 @Component({ 
-    moduleId: module.id,
+    
     templateUrl: './AddEditAddressComponent.html',
 })
 export class AddEditAddressComponent extends BaseComponent{

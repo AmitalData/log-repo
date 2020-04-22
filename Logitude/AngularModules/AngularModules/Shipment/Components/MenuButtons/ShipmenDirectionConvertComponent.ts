@@ -24,7 +24,7 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { CountersDomainService } from '../../../Common/Services/CountersDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ShipmenDirectionConvertComponent.html',
 })
 

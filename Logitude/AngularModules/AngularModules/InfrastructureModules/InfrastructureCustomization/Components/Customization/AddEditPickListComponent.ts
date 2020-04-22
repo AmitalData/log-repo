@@ -16,7 +16,7 @@ import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDa
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditPickListComponent.html',
 })
 

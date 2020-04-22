@@ -37,7 +37,7 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
 import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceDetailsTabNormal.html',
 })
 

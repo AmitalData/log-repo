@@ -28,7 +28,7 @@ import {CustomsVendorPMService} from '../../../../../Customs/Services/StandardPM
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VendorGeneralTabComponent.html',
 })
 

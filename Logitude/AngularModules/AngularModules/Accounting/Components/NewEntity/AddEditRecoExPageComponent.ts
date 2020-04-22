@@ -27,7 +27,7 @@ import { reject } from 'q';
 
 @Component({
     selector: 'AddEditRecoExPageComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './AddEditRecoExPageComponent.html',
 })

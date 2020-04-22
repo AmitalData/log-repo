@@ -16,7 +16,7 @@ import {CardListService} from '../../../../Common/Services/StandardLists/CardLis
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './RoutingsAddEditAddressComponent.html',
 })
 

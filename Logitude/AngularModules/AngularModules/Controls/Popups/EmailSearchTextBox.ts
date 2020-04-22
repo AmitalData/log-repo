@@ -10,7 +10,7 @@ import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilter
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EmailSearchTextBox.html',
     selector: "EmailSearchTextBox",
     inputs: ['Watermark', 'EmailsText', 'IsUsersList', 'IsDisabled', 'SelectedValuePath', 'ExcludedResult', 'DontInCludeInactive'],
@@ -18,6 +18,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 })
 
 export class EmailSearchTextBox implements OnInit, AfterViewInit {
+    public ContainerId: string = null;
     public ComponentId: string = null;
     public SeparatorId: string = null;
     public InputId: string = null;

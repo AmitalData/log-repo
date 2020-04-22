@@ -1,6 +1,4 @@
-/// <reference path="../../../datacontracts/automationargs.ts" />
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {AppTool, DateTool, FileLoader} from '../../../../Infrastructure/Tools';
@@ -46,7 +44,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 @Component({
-    moduleId: module.id,
+    
     selector: 'AddEditAutomationsComponent',
     templateUrl: './AddEditAutomationsComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService, AutomationResultEmailRecipientExtendedService, AutomationExtendedPMService, AutomationHistoryExtendedPMService, EntityArgs],
@@ -956,7 +954,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
 
     ExsitCode: string = "";
-    AutomationCodeValueChange(value) {
+    AutomationCodeValueChange() {
         if (this.Code && this.ExsitCode != this.Code) {
             this.ExsitCode = this.Code;
             this._automationExtendedPMService.GetDoesAutomationCodeExist(this.Code).subscribe((res:any) => {

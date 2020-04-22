@@ -1,10 +1,7 @@
 {
   "extends": "../tsconfig.json",
-      "files": [ "src/main.ts", "typings/browser.d.ts", "node_modules/zone.js/dist/zone.js.d.ts" ]
-,
   "compilerOptions": {
     "outDir": "../out-tsc/e2e",
-    "baseUrl": "./",
     "module": "commonjs",
     "target": "es5",
     "types": [
@@ -14,7 +11,5 @@
     ],
     "sourceMap": true,
     "noImplicitAny": false
-
-     
   }
 }

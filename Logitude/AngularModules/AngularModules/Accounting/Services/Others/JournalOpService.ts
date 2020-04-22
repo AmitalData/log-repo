@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -25,7 +25,7 @@ export class JournalOpService {
         
         var url = this._apiUrl + '/GetYearTransferJournal?year=' + year + "&myOperation=" + myOperation + "&lastYearTransferJournalPMId=" + lastYearTransferJournalPMId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var result = response;
@@ -45,7 +45,7 @@ export class JournalOpService {
       
         var url = this._apiUrl + '/GetTaskLoadTest?tenant=' + tenant.toString() + "&actionType=" + actionType + "&amount=" + amount.toString() + "&sleepEveryMinute=" + sleepEveryMinute.toString() + "&year=" + year;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var result = response;

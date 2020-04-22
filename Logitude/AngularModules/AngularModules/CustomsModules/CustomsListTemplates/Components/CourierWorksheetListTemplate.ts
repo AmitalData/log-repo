@@ -37,7 +37,7 @@ import { retry } from 'rxjs/operator/retry';
 import { forEach } from "@angular/router/src/utils/collection";
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierWorksheetListTemplate.html',
 })
 
@@ -85,7 +85,7 @@ export class CourierWorksheetListTemplate {
     }
 
     //  @ViewChild( SplitButtonComponent)  public MySplitButtonComponent: SplitButtonComponent = new SplitButtonComponent(null,null);
-    //@ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
+    //@ViewChild('ShortTitle', { read: ViewContainerRef, static: false }) ShortTitleViewContainerRef: ViewContainerRef;
     //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {

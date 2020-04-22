@@ -11,13 +11,15 @@ import {UserListService} from '../../../Common/Services/StandardLists/UserListSe
 import {CodeNameClass} from './CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'CustomerAdditionalServicesFilterComponent',
     templateUrl: './CustomerAdditionalServicesFilterComponent.html',
     inputs: ['ReportsPreview']
 })
 
 export class CustomerAdditionalServicesFilterComponent extends BaseComponent implements OnInit {
+  public SelectedITemUsers: any;
+
     public ReportsPreview: ReportsPreviewComponent;
     reportFliter: ReportFliter;
     public FilterdAdditionalService: any;

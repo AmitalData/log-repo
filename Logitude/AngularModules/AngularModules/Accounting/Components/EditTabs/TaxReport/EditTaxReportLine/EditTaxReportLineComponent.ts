@@ -20,7 +20,7 @@ import { TaxReportLinePMService } from '../../../../Services/StandardPMs/TaxRepo
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditTaxReportLineComponent.html'
 })
 
