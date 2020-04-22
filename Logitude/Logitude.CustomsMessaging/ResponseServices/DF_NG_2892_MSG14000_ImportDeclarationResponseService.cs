@@ -32,7 +32,7 @@ using Unifreight.Data.AmitalModel;
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class DF_NG_2892_MSG14000_ImportDeclarationResponseService :
-        ResponseServiceBase<INF_MSG_GenericResponseData, INF_MSG_Generic, GenericRequestParams>
+        ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg, GenericRequestParams>
     {
         DeclarationPM _MyDeclarationPM;
         private bool _FastDelete;
@@ -50,7 +50,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         DeclarationError _MyDeclarationError;
         decimal? _TotalBtlCoverageNISSum = 0;
 
-        public override void OnRequestFail(INF_MSG_Generic customResponse, GenericRequestParams requestParams)
+        public override void OnRequestFail(DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
         {
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
             {
@@ -60,7 +60,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
         public override INF_MSG_GenericResponseData GetResponse(
-            INF_MSG_Generic customResponse, GenericRequestParams requestParams)
+            DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
         {
 
             /// itzik test     TestTrans(requestParams);
@@ -95,7 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
-        public override void Update(INF_MSG_Generic customResponse, GenericRequestParams requestParams)
+        public override void Update(DF_NG_5117_MSG14003_ImportDeclarationAmendmentReplyMsg customResponse, GenericRequestParams requestParams)
         {
             var responseName = requestParams.ResponseName;
             var context = CustomContext.GetContext(requestParams.Tenant);
