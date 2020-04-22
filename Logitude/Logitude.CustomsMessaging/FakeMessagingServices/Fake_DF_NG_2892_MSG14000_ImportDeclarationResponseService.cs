@@ -38,10 +38,13 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 response.ResponseContentHeader.Exception[0].ExeptionDescription = "FAKE";
                 response.ResponseContentHeader.Exception[0].EnglishDescription = "FAKE";
             }
-
+            else
+            {
+                response.ResponseContentHeader.Exception = null;
+            }
             response.ResponseContentHeader.TransmitionDateTime = DateTime.Now;
             response.ResponseContentHeader.Remark = "";
-            response.ResponseContentHeader.Exception = null;
+        
             response.ResponseContentHeader.ApplicationID = 0;
 
             responseHeader.CorrelationId = Guid.NewGuid().ToString();
