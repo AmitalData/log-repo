@@ -174,7 +174,7 @@ export class AutomaticReconcileListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AutomaticReconcile").pipe(
-				map(cachedJson => {
+              map((cachedJson: any) => {
 
 					var _mappedListsArray: Array<AutomaticReconcileList> = [];
 
@@ -240,7 +240,7 @@ export class AutomaticReconcileListService {
 
         else {
             return CachedDataManager.GetClosedTableData("AutomaticReconcile").pipe(
-				map(cachedJson => {
+              map((cachedJson: any) => {
 
 					var _mappedListsArray: Array<AutomaticReconcileList> = [];
 					if (cachedJson) {

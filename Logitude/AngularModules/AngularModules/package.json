@@ -8,9 +8,9 @@
     "e2e": "ng e2e",
     "do-e2e": "protractor e2e/protractor.conf.js",
     "start": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng serve",
-    "build": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng build",
-    "start-aot": "node --max_old_space_size=15000 node_modules/@angular/cli/bin/ng serve --prod --aot --optimization=false",
-    "build-aot": "node --max_old_space_size=15000 node_modules/@angular/cli/bin/ng build --prod --aot --optimization=false --show-circular-dependencies=false"
+    "build": "node --max_old_space_size=3000 node_modules/@angular/cli/bin/ng build --show-circular-dependencies=false",
+    "start-aot": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng serve --prod --aot --optimization=false",
+    "build-aot": "node --max_old_space_size=9000 node_modules/@angular/cli/bin/ng build --prod --aot --optimization=false --show-circular-dependencies=false"
   },
   "private": true,
   "dependencies": {

@@ -115,7 +115,7 @@ export class GLAccountAdditionalDataTabComponent extends BaseComponent  {
  
     });
     }
-    private ConfirmDisConnect(GLAccount:GLAccountPM) {
+    ConfirmDisConnect(GLAccount:GLAccountPM) {
         let confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 400;
         confirmWindow.YesButtonText = TextCodeTranslator.Translate('General.B.Ok');

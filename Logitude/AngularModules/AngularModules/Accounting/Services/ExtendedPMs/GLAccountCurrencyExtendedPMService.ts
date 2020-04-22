@@ -1,4 +1,4 @@
-﻿
+
 
 import {Injectable} from '@angular/core';
 import { defer, of } from 'rxjs';
@@ -107,7 +107,7 @@ export class GLAccountCurrencyExtendedPMService{
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
       

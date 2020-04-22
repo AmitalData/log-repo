@@ -606,6 +606,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\CarrierAreaPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CarrierAreasPortPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CustomerOpenFilesAmountPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\INTTRASettingPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\TariffCarrierTranslationPM.ts" />

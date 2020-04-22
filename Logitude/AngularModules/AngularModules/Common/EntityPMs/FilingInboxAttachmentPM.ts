@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 
-import {FilingInboxAttachToolTip} from './FilingInboxAttachToolTip';
+//import {FilingInboxAttachToolTip} from './FilingInboxAttachToolTip';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -53,20 +53,20 @@ export class FilingInboxAttachmentPM {
        
 	 
      
-	private attachLogs: FilingInboxAttachToolTip[];
-    get  AttachLogs() {
-        if (this.attachLogs == null) {
-            this.attachLogs = [];
-        }
+	//private attachLogs: FilingInboxAttachToolTip[];
+ //   get  AttachLogs() {
+ //       if (this.attachLogs == null) {
+ //           this.attachLogs = [];
+ //       }
 
-        return this.attachLogs;
-    }
-    set  AttachLogs(newValue: FilingInboxAttachToolTip[]) {
-        if (this.attachLogs != newValue) {
-            this.attachLogs = newValue;
-        }
-    }
-    //public AttachLogs: Array<FilingInboxAttachToolTipPM>= [];
+ //       return this.attachLogs;
+ //   }
+ //   set  AttachLogs(newValue: FilingInboxAttachToolTip[]) {
+ //       if (this.attachLogs != newValue) {
+ //           this.attachLogs = newValue;
+ //       }
+ //   }
+    public AttachLogs: Array<any>= [];
  
     public OldEntityPM: FilingInboxAttachmentPM;
 		
@@ -90,4 +90,4 @@ export class FilingInboxAttachmentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

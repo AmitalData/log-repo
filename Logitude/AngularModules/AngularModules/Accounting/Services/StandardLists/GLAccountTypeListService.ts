@@ -174,7 +174,7 @@ export class GLAccountTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("GLAccountType").pipe(
-				map(cachedJson => {
+              map((cachedJson: any) => {
 
 					var _mappedListsArray: Array<GLAccountTypeList> = [];
 
@@ -240,7 +240,7 @@ export class GLAccountTypeListService {
 
         else {
             return CachedDataManager.GetClosedTableData("GLAccountType").pipe(
-				map(cachedJson => {
+              map((cachedJson: any) => {
 
 					var _mappedListsArray: Array<GLAccountTypeList> = [];
 					if (cachedJson) {
