@@ -542,6 +542,7 @@ export class CustomsDocumentsComponent
         if (customsDocumentsTicket) {
             windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
             windowArgs.CustomsDocumentsTicket.Tenant = SessionLocator.Tenant;
+            debugger;
             if (!customsDocumentsTicket.Id) {
                 windowArgs.IsNewState = true;
             }
@@ -549,14 +550,7 @@ export class CustomsDocumentsComponent
                 windowArgs.IsNewState = false;
             }
         }
-
-        else {
-             windowArgs.CustomsDocumentsTicket = new CustomsDocumentsTicketPM();
-            windowArgs.CustomsDocumentsTicket.Tenant = SessionLocator.Tenant;
-            windowArgs.CustomsDocumentsTicket.documentsFilingId = customsDocument.DocumentsFilingId;
-         //   windowArgs.CustomsDocumentsTicket.DocumentTypeCode = customsDocument.DocumentTypeCode;
-            windowArgs.IsNewState = true;
-        }
+ 
         windowArgs.CustomsDocument = customsDocument;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly && isThereRequests;
         windowArgs.IsEntityDisplayOnly = this.IsDisplayOnly;

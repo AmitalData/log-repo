@@ -460,7 +460,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsDocumentTypeEnabled = false;
                 this.IsSendDocumentEnabled = false;
                 this.ViewDisableMessageVisibility = true;
-                this.DisplayOnlyMessage = " לתצוגה בלבד - מסמך כבר םומת על ידי המכס ";//Document Was already Verified By Customs
+                this.DisplayOnlyMessage = " לתצוגה בלבד - מסמך כבר אומת על ידי המכס ";//Document Was already Verified By Customs
             }
 
             if (this.CustomsDocumentsTicket.VerificationStatusTypeCode == '8') {
@@ -470,7 +470,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsDocumentTypeEnabled = false;
                 this.IsSendDocumentEnabled = false;
                 this.ViewDisableMessageVisibility = true;
-                this.DisplayOnlyMessage = " לתצוגה בלבד - המסמך בתהליך םימות במכס ";//Document is in verfication prgress
+                this.DisplayOnlyMessage = " לתצוגה בלבד - המסמך בתהליך אימות במכס ";//Document is in verfication prgress
             }
 
             if (this.CustomsDocumentsTicket.VerificationStatusTypeCode == '6') {
@@ -568,6 +568,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     updateCustomsDocument: boolean = false;
     OkButtonClicked() {
+        debugger;
         this.OkMethod(false);
     }
 
@@ -942,6 +943,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     SubmitTicketChanges() {
+        
         if (this.CustomsDocumentsTicket) {
             if (this.CustomsDocumentsTicket.IsDirty) {
                 var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
