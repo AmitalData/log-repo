@@ -1422,9 +1422,12 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
  
     CheckIdDateBetween2Times(times: any,date1:Date) {
-
+       
+        if (times == null) return false;
         var startTime = times.split(" - ")[0];
         var endTime = times.split(" - ")[1];
+
+        if (startTime == null || endTime == null) return false;
         var date = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getUTCHours(), date1.getUTCMinutes(), 0);
 
          var startDate = new Date(date.getTime());
