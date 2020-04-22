@@ -61,7 +61,7 @@ export class ClosedTableNotExistedComponent implements OnInit {
 
             let myIIGGeneralMessagesService = new IIGGeneralMessagesService();
             myIIGGeneralMessagesService.PostFillNotExistedClosedTables(systemTableRequestParams).subscribe(
-                res => {
+                (res:any) => {
                     this._Rows = res.Result;
                     //this._ObservableList.InsertCollection(res.Result);
                     this.rowCount = this._Rows.length;

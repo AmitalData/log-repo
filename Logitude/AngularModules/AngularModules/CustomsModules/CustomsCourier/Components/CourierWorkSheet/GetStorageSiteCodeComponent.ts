@@ -106,7 +106,7 @@ export class GetStorageSiteCodeComponent extends BaseComponent {
         currRequestParams.StorageSiteCode = this.StorageSiteCode;
 
         this._CourierMasterService.PostSendALLChangeStorageSiteCode(currRequestParams)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);

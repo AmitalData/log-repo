@@ -217,7 +217,7 @@ export class CustomLoadTest {
         this._SendDeclarationCounter = 0;
         this.LogMe("strat");
         this._LoadTestService.GetNewCustomFile(SessionLocator.Tenant, this.Consignee, this.CustomerId)
-            .subscribe(rspNewCustomFile => {
+            .subscribe((rspNewCustomFile:any) => {
 
                 if (rspNewCustomFile == null || rspNewCustomFile.Result == null || rspNewCustomFile.Result.newFileNo==null) {
                     this._LastError = "GetNewCustomFile Failed " + Date.now().toLocaleString();
@@ -228,7 +228,7 @@ export class CustomLoadTest {
                 this._FileNo = newFileNo;
                 this.LogMe("new file this._FileNo =" + this._FileNo);
                 this._LoadTestService.GetDeclarationFromFileNo(SessionLocator.Tenant, newFileNo, this.FilingCopy)
-                    .subscribe(rspDeclarationFromFileNo => {
+                    .subscribe((rspDeclarationFromFileNo:any) => {
 
                         if (rspDeclarationFromFileNo == null || rspDeclarationFromFileNo.Result == null || rspDeclarationFromFileNo.Result.returnFileNo==null) {
                             this._LastError = "GetDeclarationFromFileNo Failed " + Date.now().toLocaleString();
@@ -239,7 +239,7 @@ export class CustomLoadTest {
                         this.LogMe("Get GetDeclaration done" + this._FileNo);
                         //this._DeclarationListService.get
                         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(returnFileNo)
-                            .subscribe(rspDeclarationByCustomFileNo => {
+                            .subscribe((rspDeclarationByCustomFileNo:any) => {
                                 if (rspDeclarationByCustomFileNo == null || rspDeclarationByCustomFileNo.Result == null || rspDeclarationByCustomFileNo.Result.Id==null) {
                                     this._LastError = "GetSingleDeclarationByCustomFileNo Failed " + Date.now().toLocaleString();
                                     this.Start();
@@ -248,18 +248,18 @@ export class CustomLoadTest {
                                 let declarationList: DeclarationList = rspDeclarationByCustomFileNo.Result;
 
                                 this._DeclarationPMService.get(declarationList.Id)
-                                    .subscribe(rsptPMget => {
+                                    .subscribe((rsptPMget:any) => {
                                         let declarationPM: DeclarationPM = rsptPMget.Result;
                                         this._DeclarationPM = declarationPM;
                                         this.LogMe("updating GetDeclaration " + this._DeclarationPM.Id);
                                         this._DeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure = 321;
                                         this._DeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity = 321;
                                         this._DeclarationPMService.update(declarationPM)
-                                            .subscribe(rsptPMupdate => {
+                                            .subscribe((rsptPMupdate:any) => {
                                                 this._DeclarationPM = rsptPMupdate.Result;
                                                 this.LogMe("Start copy  GetDeclaration from " + this.CopyFromDecId);
                                                 this._DeclarationExtendedListService.PutCopyDeclaration(this.CopyFromDecId, declarationList.Id, SessionLocator.Tenant)
-                                                    .subscribe(rsptCopyDeclaration => {
+                                                    .subscribe((rsptCopyDeclaration:any) => {
                                                         this.LogMe(rsptCopyDeclaration.Result);
 
 
@@ -282,7 +282,7 @@ export class CustomLoadTest {
 
         this.LogMe("Check HybridUpdateDocFiling ");
         this._custDocRelatedDocsWebService.GetDocumentsFilingsForRelatedDocuments(this._DeclarationPM.Id, null, this.Objecttable.Id, "I", this._DeclarationPM.CustomFileNo,"")
-            .subscribe(rspHaveHybridDoc => {
+            .subscribe((rspHaveHybridDoc:any) => {
                 var documentsFilingPM: Array<DocumentsFilingPM> = rspHaveHybridDoc.Result;
                 this._ArrayOfDocumentsFilingPM = documentsFilingPM;
                 this.SendDeclaration();
@@ -294,7 +294,7 @@ export class CustomLoadTest {
         //http://localhost:9996/api/customsdocuments/getsingle?documentsfilingid=xpi82i%2Bwv0c9xhqyrpxjha00000000
         let documentsfilingid = this._ArrayOfDocumentsFilingPM[0].Id;
         this._CustomsDocumentPMService.get(encodeURIComponent(documentsfilingid))
-            .subscribe(rsp => {
+            .subscribe((rsp:any) => {
                 this._CustomsDocumentPM = rsp.Result;
 
                 this._CustomsDocumentPM.DeclarationId = this._DeclarationPM.Id;
@@ -314,7 +314,7 @@ export class CustomLoadTest {
                 //newValue.Tenant = SessionLocator.Tenant;
                 //this._CustomsDocumentPM.AddCustomsDocumentMetaDataValue(newValue);
                 this._CustomsDocumentPMService.update(this._CustomsDocumentPM)
-                    .subscribe(rspU => {
+                    .subscribe((rspU:any) => {
 
                         this.OnFinish.emit();
                     });
@@ -381,13 +381,13 @@ export class CustomLoadTest {
 
                         this.LogMe("Update&SendDeclaration till 4");
                         this._DeclarationPMService.get(this._DeclarationPM.Id)
-                            .subscribe(rsptPMget => {
+                            .subscribe((rsptPMget:any) => {
                                 let declarationPM: DeclarationPM = rsptPMget.Result;
                                 this._DeclarationPM = declarationPM;
 
                                 this._DeclarationPM.Consignments[0].CargoDescription = this._DeclarationPM.Consignments[0].CargoDescription + this._SendDeclarationCounter.toString();
                                 this._DeclarationPMService.update(this._DeclarationPM)
-                                    .subscribe(rsptPMupdate => {
+                                    .subscribe((rsptPMupdate:any) => {
                                         this._DeclarationPM = rsptPMupdate.Result;
                                         this.SendDeclaration();
                                     });
@@ -416,7 +416,7 @@ export class CustomLoadTest {
     SendPrintRequest() {
         this.LogMe("SendPrintRequest");
         this._DeclarationPMService.get(this._DeclarationPM.Id)
-            .subscribe(rsptPMget => {
+            .subscribe((rsptPMget:any) => {
                 let declarationPM: DeclarationPM = rsptPMget.Result;
                 this._DeclarationPM = declarationPM;
 

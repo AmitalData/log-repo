@@ -406,7 +406,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
             this.ParentsCount = "(" + this.EntityPM.FullParentsCount + ")";
             this.ChildrenCount = "(" + this.EntityPM.FullChildrenCount + ")";
         }
-        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe(responseRate => {
+        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe((responseRate:any) => {
 
             if (responseRate) {
                 if (!responseRate.HasError) {

@@ -35,7 +35,6 @@ export class IIGGeneralMessagesService {
     }
 
     PostMorningMessages(entity: MorningMessageRequestParams) {
-
         return Observable.defer(() => {
 
             var authHeader = new Headers();
@@ -45,15 +44,16 @@ export class IIGGeneralMessagesService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-
             return this._http.post(
                 this._apiUrl + '/PostMorningMessages/',
                 JSON.stringify(entity),
                 ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    //               serviceResponse.Result = res;
-                    //             return serviceResponse;
+
+                    serviceResponse.Result = res;
+
+                    return serviceResponse;
+
                 }),catchError(ServiceHelper.HandleServiceError));
-            ;
 
         }
 

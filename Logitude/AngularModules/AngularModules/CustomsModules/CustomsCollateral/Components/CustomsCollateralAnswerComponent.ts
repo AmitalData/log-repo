@@ -23,7 +23,6 @@ import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPM
 import { forEach } from '@angular/router/src/utils/collection';
 import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { SendCollateralRequestParams } from '../../../Customs/DataContract/RequestParams/SendCollateralRequestParams';
-import { Observable } from 'rxjs';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -412,7 +411,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
                 if (!AppTool.IsNullOrEmpty(customerCode)) {
                     var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
                     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_GUARANTEE_N", "NON", customerCode, SessionLocator.Tenant)
-                        .subscribe(response => {
+                        .subscribe((response:any) => {
                             this.IsGuaranteeDefaultList = false;
                             if (!response.HasError) {// reEdit this default !!!
                                 if (response.Result != null) {
@@ -790,7 +789,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
-        this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe(res => {
+        this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe((res:any) => {
             SessionLocator.SelectedSession.StopBusyIndicator();
             if (res.HasError == true) {
                 var myMessageWindow = new MessageWindow();

@@ -766,14 +766,14 @@ export class CustomsDocumentsComponent
     private GetDocumentRequestDefaults(CustomerCode: string) {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", SessionLocator.Tenant)
-            .subscribe(response => {
+            .subscribe((response:any) => {
                 this.IsDocumentRequestCodeButton = false;
                 this.IsDocumentRequestCodeSendDigital = false;
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
 
 
                     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                        .subscribe(response => {
+                        .subscribe((response:any) => {
                             this.IsDocumentRequestCodeButton = false;
                             this.IsDocumentRequestCodeSendDigital = false;
                             this.DocumentRequestCodeIcon = "LOGBOX";
@@ -781,7 +781,7 @@ export class CustomsDocumentsComponent
                                 this.IsDocumentRequestCodeButton = true;
                             }
                             myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                                .subscribe(res => {
+                                .subscribe((res:any) => {
                                     if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
                                         this.IsDocumentRequestCodeButton = true;
                                         this.IsDocumentRequestCodeSendDigital = true;

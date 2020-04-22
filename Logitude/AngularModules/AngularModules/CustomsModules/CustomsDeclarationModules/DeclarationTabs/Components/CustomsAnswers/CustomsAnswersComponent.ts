@@ -1141,14 +1141,14 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private GetDepositionDefaults(CustomerCode: string) {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", SessionLocator.Tenant)
-            .subscribe(response => {
+            .subscribe((response:any) => {
                 this.IsDepositionStatusCodeButton = false;
                 this.IsDepositionStatusCodeSendDigital = false;
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
 
 
                     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_BOX_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                        .subscribe(response => {
+                        .subscribe((response:any) => {
                             this.IsDepositionStatusCodeButton = false;
                             this.IsDepositionStatusCodeSendDigital = false;
                             //this.DepositionStatusCodeIcon = "./Images/LogBox/DSV/U_LOGBOX.png";
@@ -1157,7 +1157,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                                 this.IsDepositionStatusCodeButton = true;
                             }
                             myCustomsSettingExtendedListService.GetDefault("ISRAEL", "GGG_LBL_ACTIVAT", "NON", CustomerCode, SessionLocator.Tenant)
-                                .subscribe(res => {
+                                .subscribe((res:any) => {
                                     if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
                                         this.IsDepositionStatusCodeButton = true;
                                         this.IsDepositionStatusCodeSendDigital = true;

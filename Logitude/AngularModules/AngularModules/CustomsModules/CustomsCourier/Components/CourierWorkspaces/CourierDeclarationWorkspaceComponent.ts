@@ -61,7 +61,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => { 
                 {
                     _declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-                        data => {
+                        (data:any) => {
                              this.counters = data.Result;
                             this.isScreenLoaded = true;
                             this.CurrentSession.StopBusyIndicator();
@@ -93,7 +93,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     RefreshButtonClicked() {
         this._declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-            data => {
+            (data:any) => {
                 this.counters = data.Result;
                 this.LoadAllScreenData();
                 this.RefreshList();
@@ -275,7 +275,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
                             this.LoadAllScreenData();
                         this._declarationCourierStatusWebService.GetQueriesCounts().subscribe(
-                            data => {
+                            (data:any) => {
                                 this.counters = data.Result;
 
                                 this.CurrentSession.AddMenuReference(cmpRef);

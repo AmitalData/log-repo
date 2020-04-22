@@ -576,7 +576,7 @@ export class CourierWorksheetComponent extends BaseComponent
         if (this._ValidationErrors2.length > 0) {
         this._ValidationErrors2 = []
             this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
-                data => {
+                (data:any) => {
                     //if (data.Result != "")
                     //    this._ValidationErrors2.push();
                     switch (data.Result) {
@@ -1456,7 +1456,7 @@ export class CourierWorksheetComponent extends BaseComponent
         this._PendingCodes.push({ 'Key': "A", 'Value': TextCodeTranslator.Translate("Customs.General.O.All") });
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetPending(this.entityPM.Id)
-            .subscribe(resu => {
+            .subscribe((resu:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var list: string[];
                 var itemPname = null;
@@ -1852,7 +1852,7 @@ export class CourierWorksheetComponent extends BaseComponent
 
 
         this._CourierMasterService.PostSendALLTerminal(currRequestParams)
-            .subscribe(res => {
+            .subscribe((res:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);

@@ -96,7 +96,7 @@ export class AddEditInterfaceManagementComponent
                 this._InterfaceManagementPMExtendService
                     .GetSingleInterfaceManagementwithDefinition
                     (this._TenantInterfaceManagementList.Code, SessionLocator.Tenant)
-                    .subscribe(rsp => {
+                    .subscribe((rsp:any) => {
                         this.entityPM = rsp.Result;
                         if (!AppTool.IsNullOrEmpty(this.entityPM.InterfaceType)) {
                             this.SelectedInterfaceType = this.InterfaceTypeList.filter(r => r.Code == this.entityPM.InterfaceType)[0];

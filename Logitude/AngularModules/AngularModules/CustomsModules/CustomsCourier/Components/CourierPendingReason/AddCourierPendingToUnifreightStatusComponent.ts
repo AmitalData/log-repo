@@ -119,7 +119,7 @@ export class AddCourierPendingToUnifreightStatusComponent
         if (this.DeleteCourierPendingReasonList != null) {
             SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.DeleteCourierPendingReasonList.Collection.forEach((deleteItem: CourierPendingReasonLineComponent) => {
-                this._CourierPendingReasonExtendedListService.DeleteCourierPendingReasonUnifreightStatus(deleteItem.PendingCode).subscribe(response => {
+                this._CourierPendingReasonExtendedListService.DeleteCourierPendingReasonUnifreightStatus(deleteItem.PendingCode).subscribe((response:any) => {
                     if (response.HasError) {
                         this.ValidationErrorsList = [];
                         this.ValidationErrorsList.push(response.ErrorsArray[0]);
