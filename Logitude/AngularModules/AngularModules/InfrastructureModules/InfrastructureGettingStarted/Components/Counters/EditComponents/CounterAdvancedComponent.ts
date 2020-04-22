@@ -312,11 +312,11 @@ export class CounterAdvancedComponent extends BaseComponent {
 
             else {
                 var errors: string[] = [];
-                if (this.CounterSize > 20) {
-                    errors.push("Maximum size allowed for counter is 20");
-                }
                 if (this.UniquePerPrefix == true) {
                     this.APIHelper.CounterDefinitions.forEach(item => {
+                        if (item.CounterSize > 20) {
+                            errors.push("Maximum size allowed for counter is 20");
+                        }
                         Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
                         if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
@@ -334,6 +334,9 @@ export class CounterAdvancedComponent extends BaseComponent {
                     }
 
                     this.APIHelper.CounterDefinitions.forEach(item => {
+                        if (item.CounterSize > 20) {
+                            errors.push("Maximum size allowed for counter is 20");
+                        }
                         Validator.TryValidateObject(item, this.ObjectTableName, errors);
                     });
                 }
