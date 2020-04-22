@@ -270,7 +270,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 //CreateRecurringPeriodFields(objectFields, textCodes);
                 //CreatePaymentChannelFields(objectFields, textCodes);
                 //CreateEventTypeCategoryFields(objectFields, textCodes);
-                LoadCreateTestFields(objectFields, textCodes);
+               // LoadCreateTestFields(objectFields, textCodes);
                 //CreateTermsofUseSignaturesFields(objectFields, textCodes);
                 //CreateAnalyzeQueueFields(objectFields, textCodes);
                 //CreateCreditCardTypeFields(objectFields, textCodes);
