@@ -5245,6 +5245,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CourierCustomStatusMap());
             #endregion
 
+            #region Missing Map Files For Customs Pocos
+            modelBuilder.Configurations.Add(new ApprovedProfessionMap());
+            modelBuilder.Configurations.Add(new CustomsPartnerFtpMap());
+            modelBuilder.Configurations.Add(new TPGFileTypeMap());
+            #endregion
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CustomsCollateralsConditions"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="CustomsCollateralId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ConditionCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RequestedAmount"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CustomsCollateralId"
+    ReferencedTable="CustomsCollaterals"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ConditionCode"
+    ReferencedTable="ReturnConditions"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>
