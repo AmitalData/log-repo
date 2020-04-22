@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DepartmentUpdateClass
    {  		
-		public const string HashString = "4d575a721d8d9a8c69cc93e4593acf06";
+		public const string HashString = "aadd017062335b1ca5d6f2c0e53e9444";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -209,7 +209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -273,7 +273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -660,6 +660,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AutomaticLastUpdateDate",
 					  						ListPropertyPath =  "AutomaticLastUpdateDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

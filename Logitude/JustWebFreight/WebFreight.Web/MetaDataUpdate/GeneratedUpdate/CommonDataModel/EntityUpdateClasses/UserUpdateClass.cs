@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class UserUpdateClass
    {  		
-		public const string HashString = "8507318ac99cefa7b6cdaf06ee858f1b";
+		public const string HashString = "fade5526b12110894481dd392ceb0c2c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -408,7 +408,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -473,7 +473,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,

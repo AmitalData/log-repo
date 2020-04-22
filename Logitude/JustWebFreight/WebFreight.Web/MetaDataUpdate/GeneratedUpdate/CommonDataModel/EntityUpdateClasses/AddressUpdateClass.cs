@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AddressUpdateClass
    {  		
-		public const string HashString = "7e7875607e02eba25b981db850878413";
+		public const string HashString = "b45365c5a2196e3a88a183bc904cb2ca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Address",
-			      				    Code =  "a8d2",
+			      				    Code =  "5358",
 			      				    Name =  "Address",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",

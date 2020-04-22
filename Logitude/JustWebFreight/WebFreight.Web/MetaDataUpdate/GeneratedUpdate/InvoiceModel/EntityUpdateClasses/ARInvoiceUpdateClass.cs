@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "dd905c131f559859bc64dabc11b58ee1";
+		public const string HashString = "24a986ba171a705042b0a3e24d544ebd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -722,7 +722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  20,
 					  						IsRequired =  false,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
@@ -1239,7 +1239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -2004,7 +2004,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -2453,7 +2453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -2712,7 +2712,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
