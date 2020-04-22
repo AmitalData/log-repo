@@ -11,7 +11,7 @@ export class GeneralFunctions {
         var selectMenu = this.Helper.WaitByIdAndClick(menuid);
     }
     public GoToMainMenu2(menuid: string) {
-        this.Helper.WaitByIdAndClick('PAR');
+        this.Helper.WaitByIdAndClick('BIL');
         var selectMenu2 = this.Helper.ItemsVisibility(menuid);
         var selectMenu3 = this.Helper.ItemsPresent(menuid);
         var selectMenu = this.Helper.WaitByIdAndClick(menuid);
