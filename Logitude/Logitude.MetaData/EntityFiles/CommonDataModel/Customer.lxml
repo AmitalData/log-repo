@@ -18571,110 +18571,110 @@
     <Feature
       Code="&quot;SHAREDLOGISTIC&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.SharedLogistic&quot;"
-      FeatureDefaultText="&quot;Shared Logistic&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.SharedLogistic&quot;"
+      FeatureDefaultText="&quot;Shared Logistic&quot;" />
     <Feature
       Code="&quot;CUSTOMERSALESMANBYPRODUCT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.CustomerSalesmanByProduct&quot;"
-      FeatureDefaultText="&quot;Split Customer Salesman By Product&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.CustomerSalesmanByProduct&quot;"
+      FeatureDefaultText="&quot;Split Customer Salesman By Product&quot;" />
     <Feature
       Code="&quot;CUSTOMERACCOUNTMANAGERBYPRODUCT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.CustomerAccountManagerByProduct&quot;"
-      FeatureDefaultText="&quot;Split Customer Account Manager By Product&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.CustomerAccountManagerByProduct&quot;"
+      FeatureDefaultText="&quot;Split Customer Account Manager By Product&quot;" />
     <Feature
       Code="&quot;CUSTOMERFORWARDERBYPRODUCT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.CustomerForwarderByProduct&quot;"
-      FeatureDefaultText="&quot;Split Customer Forwarder By Product&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.CustomerForwarderByProduct&quot;"
+      FeatureDefaultText="&quot;Split Customer Forwarder By Product&quot;" />
     <Feature
       Code="&quot;CUSTOMERMEDIATORBYPRODUCT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.CustomerMediatorByProduct&quot;"
-      FeatureDefaultText="&quot;Split Customer Mediator By Product&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.CustomerMediatorByProduct&quot;"
+      FeatureDefaultText="&quot;Split Customer Mediator By Product&quot;" />
     <Feature
       Code="&quot;CUSTOMERCUSTOMSAGENTBYPRODUCT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.CustomerCustomsAgentByProduct&quot;"
-      FeatureDefaultText="&quot;Split Customer Customs Agent By Product&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.CustomerCustomsAgentByProduct&quot;"
+      FeatureDefaultText="&quot;Split Customer Customs Agent By Product&quot;" />
     <Feature
       Code="&quot;QUICKSEARCHALL&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.QuickSearchAll&quot;"
-      FeatureDefaultText="&quot;Show all customers in quick search&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.QuickSearchAll&quot;"
+      FeatureDefaultText="&quot;Show all customers in quick search&quot;" />
     <Feature
       Code="&quot;MAINCUSTOMERS&quot;"
       FeatureTypeCode="&quot;QUER&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.MaintenanceCustomers&quot;"
-      FeatureDefaultText="&quot;Maintenance Customers&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.MaintenanceCustomers&quot;"
+      FeatureDefaultText="&quot;Maintenance Customers&quot;" />
     <Feature
       Code="&quot;NEWCUSTOMER&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.NewCustomer&quot;"
-      FeatureDefaultText="&quot;New Customer&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.NewCustomer&quot;"
+      FeatureDefaultText="&quot;New Customer&quot;" />
     <Feature
       Code="&quot;OUTLOOKCONNETION&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.OutlookConnection&quot;"
-      FeatureDefaultText="&quot;Outlook Connection&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.OutlookConnection&quot;"
+      FeatureDefaultText="&quot;Outlook Connection&quot;" />
     <Feature
       Code="&quot;Customer.Feature.EXCEL&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.EXCEL&quot;"
-      FeatureDefaultText="&quot;Download to Excel&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.EXCEL&quot;"
+      FeatureDefaultText="&quot;Download to Excel&quot;" />
     <Feature
       Code="&quot;CREATEACTIVECUSTOMER&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customer.Features.CreateActiveCustomer&quot;"
-      FeatureDefaultText="&quot;Allow creating active customers&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Customer.Features.CreateActiveCustomer&quot;"
+      FeatureDefaultText="&quot;Allow creating active customers&quot;" />
   </AdditionalFeatures>
 </entity>

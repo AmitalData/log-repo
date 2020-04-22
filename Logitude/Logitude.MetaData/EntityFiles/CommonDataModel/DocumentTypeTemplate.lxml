@@ -3340,20 +3340,20 @@
     <Feature
       Code="&quot;INACTIVE&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;DocumentTypeTemplate.Features.Inactive&quot;"
-      FeatureDefaultText="&quot;Inactive&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentTypeTemplate.Features.Inactive&quot;"
+      FeatureDefaultText="&quot;Inactive&quot;" />
     <Feature
       Code="&quot;ORGINALTEMPLATE&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;DocumentTypeTemplate.Features.OrginalTemplate&quot;"
-      FeatureDefaultText="&quot;Orginal Template&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentTypeTemplate.Features.OrginalTemplate&quot;"
+      FeatureDefaultText="&quot;Orginal Template&quot;" />
   </AdditionalFeatures>
 </entity>

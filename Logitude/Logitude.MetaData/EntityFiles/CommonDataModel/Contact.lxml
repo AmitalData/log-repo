@@ -5930,38 +5930,38 @@
     <Feature
       Code="&quot;ACTIVEPRODUCTTYPES&quot;"
       FeatureTypeCode="&quot;QUER&quot;"
-      FeatureTextCodeCode="&quot;Contact.Features.ActiveProductTypes&quot;"
-      FeatureDefaultText="&quot;Active Product Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Contact.Features.ActiveProductTypes&quot;"
+      FeatureDefaultText="&quot;Active Product Types&quot;" />
     <Feature
       Code="&quot;Contact.Feature.EXCEL&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Contact.Features.EXCEL&quot;"
-      FeatureDefaultText="&quot;Download to Excel&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Contact.Features.EXCEL&quot;"
+      FeatureDefaultText="&quot;Download to Excel&quot;" />
     <Feature
       Code="&quot;ViewContactProducts&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Contact.Features.ViewContactProducts&quot;"
-      FeatureDefaultText="&quot;View Contact Products&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Contact.Features.ViewContactProducts&quot;"
+      FeatureDefaultText="&quot;View Contact Products&quot;" />
     <Feature
       Code="&quot;ContactAdditionalServices&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Contact.Features.ContactAdditionalServices&quot;"
-      FeatureDefaultText="&quot;Additional Services&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Contact.Features.ContactAdditionalServices&quot;"
+      FeatureDefaultText="&quot;Additional Services&quot;" />
   </AdditionalFeatures>
 </entity>

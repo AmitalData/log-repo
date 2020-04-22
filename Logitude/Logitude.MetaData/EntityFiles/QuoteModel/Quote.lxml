@@ -28925,83 +28925,83 @@
     <Feature
       Code="&quot;SETTINGS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.Settings&quot;"
-      FeatureDefaultText="&quot;Settings&quot;"
       IsPackagable="false"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Quote.Features.Settings&quot;"
+      FeatureDefaultText="&quot;Settings&quot;" />
     <Feature
       Code="&quot;Quote.Followups&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.QuoteFollowups&quot;"
-      FeatureDefaultText="&quot;Follow ups&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Quote.Features.QuoteFollowups&quot;"
+      FeatureDefaultText="&quot;Follow ups&quot;" />
     <Feature
       Code="&quot;NEWQUOTE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.NewQuote&quot;"
-      FeatureDefaultText="&quot;New Quote&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Quote.Features.NewQuote&quot;"
+      FeatureDefaultText="&quot;New Quote&quot;" />
     <Feature
       Code="&quot;OUTLOOKCONNETION&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.OutlookConnection&quot;"
-      FeatureDefaultText="&quot;Outlook Connection&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Quote.Features.OutlookConnection&quot;"
+      FeatureDefaultText="&quot;Outlook Connection&quot;" />
     <Feature
       Code="&quot;TARIFFS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.Tariffs&quot;"
-      FeatureDefaultText="&quot;Tariffs&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Quote.Features.Tariffs&quot;"
+      FeatureDefaultText="&quot;Tariffs&quot;" />
     <Feature
       Code="&quot;QouteEditExchangeRate&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.EditExchangeRate&quot;"
-      FeatureDefaultText="&quot;Edit Exchange Rate&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Quote.Features.EditExchangeRate&quot;"
+      FeatureDefaultText="&quot;Edit Exchange Rate&quot;" />
     <Feature
       Code="&quot;TOTALPERCONTAINER&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.TOTALPERCONTAINER&quot;"
-      FeatureDefaultText="&quot;Total Per Container&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Quote.Features.TOTALPERCONTAINER&quot;"
+      FeatureDefaultText="&quot;Total Per Container&quot;" />
     <Feature
       Code="&quot;VATDetAILSINQUOTATION&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.VATDetAILSINQUOTATION&quot;"
-      FeatureDefaultText="&quot;VAT details in Quotation&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Quote.Features.VATDetAILSINQUOTATION&quot;"
+      FeatureDefaultText="&quot;VAT details in Quotation&quot;" />
     <Feature
       Code="&quot;QuotePriceCheck&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Quote.Features.QuotePriceCheck&quot;"
-      FeatureDefaultText="&quot;Price Check&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Quote.Features.QuotePriceCheck&quot;"
+      FeatureDefaultText="&quot;Price Check&quot;" />
   </AdditionalFeatures>
 </entity>

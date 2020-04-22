@@ -427,12 +427,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
-			if (MetadataUpdateUtility.IsChangedMetadataTable("AccountingEntity", ObjectTables, AccountingEntityUpdateClass.HashString))
+			if(MetadataUpdateUtility.IsChangedMetadataTable("AccountingEntity", ObjectTables, AccountingEntityUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-				{
+				{				
 					MetadataUpdateUtility.DeleteAllTableMetadata("AccountingEntity");
-					AccountingEntityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository, TextCodeRepository);
+					AccountingEntityUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 					this.ObjectContext.SaveChanges();
 					AccountingEntityUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository);
 					this.ObjectContext.SaveChanges();
@@ -452,10 +452,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 					this.ObjectContext.SaveChanges();
 					scope.Complete();
 				}
-
+ 
 				AccountingEntityUpdateClass.FillAccountingEntity();
 
-
+ 
 			}
 
 			if(MetadataUpdateUtility.IsChangedMetadataTable("AccountingIntegrityCheck", ObjectTables, AccountingIntegrityCheckUpdateClass.HashString))

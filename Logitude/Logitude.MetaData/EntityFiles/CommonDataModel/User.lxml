@@ -6687,101 +6687,101 @@
     <Feature
       Code="&quot;PRODUCTS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;User.Features.Products&quot;"
-      FeatureDefaultText="&quot;Products&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.Products&quot;"
+      FeatureDefaultText="&quot;Products&quot;" />
     <Feature
       Code="&quot;NEWUSER&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;User.Features.NewUser&quot;"
-      FeatureDefaultText="&quot;New User&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.NewUser&quot;"
+      FeatureDefaultText="&quot;New User&quot;" />
     <Feature
       Code="&quot;User.Feature.CustomRoles&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;User.Features.CustomRoles&quot;"
-      FeatureDefaultText="&quot;Create &amp; Edit custom roles&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.CustomRoles&quot;"
+      FeatureDefaultText="&quot;Create &amp; Edit custom roles&quot;" />
     <Feature
       Code="&quot;PERSONALID&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;User.Features.PersonalId&quot;"
-      FeatureDefaultText="&quot;User Personal Id&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.PersonalId&quot;"
+      FeatureDefaultText="&quot;User Personal Id&quot;" />
     <Feature
       Code="&quot;User.Feature.LicensesManagment&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;User.Features.LicensesManagment&quot;"
-      FeatureDefaultText="&quot;Licenses Managment&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.LicensesManagment&quot;"
+      FeatureDefaultText="&quot;Licenses Managment&quot;" />
     <Feature
       Code="&quot;TECHNOLOGY&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;User.Features.Technology&quot;"
-      FeatureDefaultText="&quot;Technology&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.Technology&quot;"
+      FeatureDefaultText="&quot;Technology&quot;" />
     <Feature
       Code="&quot;SETANGULARASDEFAULT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;User.Features.SetAngularAsDefault&quot;"
-      FeatureDefaultText="&quot;Set Angular As Default&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.SetAngularAsDefault&quot;"
+      FeatureDefaultText="&quot;Set Angular As Default&quot;" />
     <Feature
-      Code="&quot;User.Feature.ViewsSharing &quot;"
+      Code="&quot;User.Feature.ViewsSharing&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;User.Features.ENABLESHAEDVIEWS&quot;"
-      FeatureDefaultText="&quot;Views Sharing &quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.ENABLESHAEDVIEWS&quot;"
+      FeatureDefaultText="&quot;Views Sharing &quot;" />
     <Feature
       Code="&quot;User.Feature.EditSharedViews&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;User.Features.User.Feature.EditSharedViews&quot;"
-      FeatureDefaultText="&quot;Edit Shared Views&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.User.Feature.EditSharedViews&quot;"
+      FeatureDefaultText="&quot;Edit Shared Views&quot;" />
     <Feature
       Code="&quot;LYDR&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;User.Features.LYDR&quot;"
-      FeatureDefaultText="&quot;Layout Direction&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.LYDR&quot;"
+      FeatureDefaultText="&quot;Layout Direction&quot;" />
     <Feature
       Code="&quot;DontShowLocalLabels&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;User.Features.DontShowLocalLabels&quot;"
-      FeatureDefaultText="&quot;Dont Show Local Labels&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;User.Features.DontShowLocalLabels&quot;"
+      FeatureDefaultText="&quot;Dont Show Local Labels&quot;" />
   </AdditionalFeatures>
 </entity>

@@ -1836,11 +1836,11 @@
     <Feature
       Code="&quot;MessagingStock.M.MessagingStocks&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;MessagingStock.Features.MessagingStocks&quot;"
-      FeatureDefaultText="&quot;Messaging Stocks&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;MessagingStock.Features.MessagingStocks&quot;"
+      FeatureDefaultText="&quot;Messaging Stocks&quot;" />
   </AdditionalFeatures>
 </entity>

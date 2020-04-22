@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class BluesnapContractUpdateClass
    {  		
-		public const string HashString = "24a176a8be1aad328b6d39dc7df5eb6c";
+		public const string HashString = "a0ff28da8ad68ea72a93ccb762e235ce";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

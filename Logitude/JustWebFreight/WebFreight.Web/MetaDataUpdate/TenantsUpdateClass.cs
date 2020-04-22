@@ -1064,8 +1064,8 @@ namespace WebFreight.Web.MetaDataUpdate
            
             //performanceTimerLogger.LogMessage("Manual" + ",context.SaveChanges()");
 
-            updateClass.LoadRolesAndFeatures(0);
-            performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRolesAndFeatures");
+            //updateClass.LoadRolesAndFeatures(0);
+            //performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadRolesAndFeatures");
 
             updateClass.LoadObjectTableHelperControls();
             performanceTimerLogger.LogMessage("Manual" + ",MetaDataUpdateClass.LoadObjectTableHelperControls");

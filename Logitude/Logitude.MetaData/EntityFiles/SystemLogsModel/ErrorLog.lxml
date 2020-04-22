@@ -1115,11 +1115,11 @@
     <Feature
       Code="&quot;ALLERRORLOGS&quot;"
       FeatureTypeCode="&quot;QUER&quot;"
-      FeatureTextCodeCode="&quot;ErrorLogObjectTable.Features.AllErrorLog&quot;"
-      FeatureDefaultText="&quot;All Error Log&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ErrorLogObjectTable.Features.AllErrorLog&quot;"
+      FeatureDefaultText="&quot;All Error Log&quot;" />
   </AdditionalFeatures>
 </entity>

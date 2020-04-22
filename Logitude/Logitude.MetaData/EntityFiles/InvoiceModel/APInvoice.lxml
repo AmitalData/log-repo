@@ -11073,29 +11073,29 @@
     <Feature
       Code="&quot;RecalculateExternals&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;APInvoice.Features.RecalculateExternals&quot;"
-      FeatureDefaultText="&quot;Recalculate External IDs&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;APInvoice.Features.RecalculateExternals&quot;"
+      FeatureDefaultText="&quot;Recalculate External IDs&quot;" />
     <Feature
       Code="&quot;EnableMultiRate&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;APInvoice.Features.EnableMultiRate&quot;"
-      FeatureDefaultText="&quot;Enable multi-rate&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;APInvoice.Features.EnableMultiRate&quot;"
+      FeatureDefaultText="&quot;Enable multi-rate&quot;" />
     <Feature
       Code="&quot;APInvoiceEditExchangeRate&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;APInvoice.Features.EditExchangeRate&quot;"
-      FeatureDefaultText="&quot;Edit Exchange Rate&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;APInvoice.Features.EditExchangeRate&quot;"
+      FeatureDefaultText="&quot;Edit Exchange Rate&quot;" />
   </AdditionalFeatures>
 </entity>

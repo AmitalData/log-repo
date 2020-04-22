@@ -4484,83 +4484,83 @@
     <Feature
       Code="&quot;DOCUMENTTYPE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;DocumentType.Features.DocumentType&quot;"
-      FeatureDefaultText="&quot;Show all Document Types&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentType.Features.DocumentType&quot;"
+      FeatureDefaultText="&quot;Show all Document Types&quot;" />
     <Feature
       Code="&quot;FROMFILE&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;DocumentType.Features.FromFile&quot;"
-      FeatureDefaultText="&quot;From File&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentType.Features.FromFile&quot;"
+      FeatureDefaultText="&quot;From File&quot;" />
     <Feature
       Code="&quot;DOCUMENTTYPEPROPERTIES&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;DocumentType.Features.Properties&quot;"
-      FeatureDefaultText="&quot;Document Type Properties&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentType.Features.Properties&quot;"
+      FeatureDefaultText="&quot;Document Type Properties&quot;" />
     <Feature
       Code="&quot;FROMLIBRARY&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;DocumentType.Features.FromLibrary&quot;"
-      FeatureDefaultText="&quot;Add From Library&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentType.Features.FromLibrary&quot;"
+      FeatureDefaultText="&quot;Add From Library&quot;" />
     <Feature
       Code="&quot;HTMLEMAIL&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;DocumentType.Features.HtmlEmail&quot;"
-      FeatureDefaultText="&quot;Html Email&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentType.Features.HtmlEmail&quot;"
+      FeatureDefaultText="&quot;Html Email&quot;" />
     <Feature
       Code="&quot;RICHTEXTPRINT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;DocumentType.Features.RichTextPrint&quot;"
-      FeatureDefaultText="&quot;Rich Text Print&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentType.Features.RichTextPrint&quot;"
+      FeatureDefaultText="&quot;Rich Text Print&quot;" />
     <Feature
       Code="&quot;MRTPDFPRINT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;DocumentType.Features.MrtPdfPrint&quot;"
-      FeatureDefaultText="&quot;Mrt Pdf Print&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentType.Features.MrtPdfPrint&quot;"
+      FeatureDefaultText="&quot;Mrt Pdf Print&quot;" />
     <Feature
       Code="&quot;CATEGORY&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;General.Features.DocumentTypesCategory&quot;"
-      FeatureDefaultText="&quot;Document Types Category&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;General.Features.DocumentTypesCategory&quot;"
+      FeatureDefaultText="&quot;Document Types Category&quot;" />
     <Feature
       Code="&quot;LogBoxTab&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;DocumentType.Features.LogBoxTab&quot;"
-      FeatureDefaultText="&quot;Digital Sign Definitions&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;DocumentType.Features.LogBoxTab&quot;"
+      FeatureDefaultText="&quot;Digital Sign Definitions&quot;" />
   </AdditionalFeatures>
 </entity>
