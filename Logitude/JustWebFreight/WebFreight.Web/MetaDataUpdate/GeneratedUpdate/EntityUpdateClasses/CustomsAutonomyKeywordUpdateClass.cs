@@ -179,6 +179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "קוד מילת מפתח",
 					  						ListFieldLable =  "KeywordtypeCodeListLable",
 					  						ListLableDefaultText =  "Keyword Type Code",
+					  						ListLocalDefaultText =  "סוג מילת מפתח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -482,7 +483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable CustomsAutonomyKeywordObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsAutonomyKeyword" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomsAutonomyKeywordObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsAutonomyKeyword").ToList();   
 
-			   TextCode CustomsAutonomyKeywordTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", DefaultText = "All Autonomy Keyword",LocalDefaultText = "Autonomy Keyword", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CustomsAutonomyKeywordTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", DefaultText = "All Autonomy Keyword",LocalDefaultText = "מילות מפתח להצהרת אוטונומיה ", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CustomsAutonomyKeywordFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsAutonomyKeyword.Q.AllCustomsAutonomyKeyword", ObjectTableId = CustomsAutonomyKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsAutonomyKeyword.Features.AllCustomsAutonomyKeyword", NameTextCodeDefaultText = "AllCustomsAutonomyKeyword", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
@@ -493,11 +494,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeCode" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "Delete" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordtypeLocalName" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordsList" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "KeywordsList" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCustomsAutonomyKeywordQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomsAutonomyKeywordQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsAutonomyKeywordObjectFields.Where(d => d.FieldName == "Delete" && d.ObjectTableId == CustomsAutonomyKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
