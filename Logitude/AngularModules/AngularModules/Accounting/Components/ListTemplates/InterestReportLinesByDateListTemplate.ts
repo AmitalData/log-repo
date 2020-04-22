@@ -8,7 +8,7 @@ import { InterestReportLinesByDatePM } from '../../EntityPMs/InterestReportLines
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./InterestReportLinesByDateListTemplate.html"
 })
 export class InterestReportLinesByDateListTemplate {

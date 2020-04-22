@@ -18,7 +18,7 @@ import { CustomMessageProgressComponent } from '../../../CustomsModules/CustomsC
 import { LuhnAlgorithm } from '../../../Customs/Utilities/LuhnAlgorithm';
 @Component({
     selector: 'DeclarationReshimonConversionComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeclarationReshimonConversionComponent.html',
 })
 

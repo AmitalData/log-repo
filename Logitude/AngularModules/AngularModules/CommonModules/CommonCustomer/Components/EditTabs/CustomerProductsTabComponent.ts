@@ -30,11 +30,12 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {CommonDomainService} from'../../../../Common/Services/CommonDomainService'; 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomerProductsTabComponent.html',
 })
 
 export class CustomerProductsTabComponent extends BaseComponent implements OnInit{
+    public imgNgStyle: any = null;
     public ItemsSource: ObservableCollection;
     public ActualObsList: ObservableCollection;
     public EntityPM: CustomerPM;

@@ -1,14 +1,12 @@
 import {Injectable, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { filter } from 'rxjs/operator/filter';
-
 
 @Injectable()
+
 export class SharedLogisticsService {       
     private _http: HttpClient;
     private _apiUrl: string;
@@ -103,7 +101,7 @@ export class SharedLogisticsService {
             + '&transportModeId=' + filters.TransportModeId + '&levelCode=' + filters.ShipmentLevelCode + '&searchField=' + filters.SearchField
             + '&pageSize=' + filters.PageSize + '&pageIndex=' + filters.PageIndex + '&isOperationalClosed=' + filters.IsOperationalClosed;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse = new ServiceResponse();

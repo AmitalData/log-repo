@@ -9,7 +9,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BankAccountGeneralTabComponent.html'
 })
 

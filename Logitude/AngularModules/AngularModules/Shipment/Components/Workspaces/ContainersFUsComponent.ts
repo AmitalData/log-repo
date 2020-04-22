@@ -11,11 +11,14 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContainersFUsComponent.html',
 })
 
 export class ContainersFUsComponent implements OnInit {
+
+  onUserQueriesBackComplete(arg: any) { }
+
     private myDomainService: ContainersFUDomainService;
     @Output() ReloadUserQueries = new EventEmitter();
     public IsResourcesReady: boolean = false;

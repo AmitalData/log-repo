@@ -17,7 +17,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddressesTabComponent.html',
 })
 

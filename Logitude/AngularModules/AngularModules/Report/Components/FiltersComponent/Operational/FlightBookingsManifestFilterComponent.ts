@@ -7,7 +7,7 @@ import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'FlightBookingsManifestFilterComponent',
     templateUrl: './FlightBookingsManifestFilterComponent.html',
     inputs: ['ReportsPreview']

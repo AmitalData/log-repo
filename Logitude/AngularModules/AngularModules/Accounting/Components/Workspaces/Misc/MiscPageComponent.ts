@@ -9,11 +9,13 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 declare var window: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MiscPageComponent.html',
 })
 
 export class MiscPageComponent implements AfterViewInit {
+  public AllBankDepositsVisibility: boolean = false;
+  public ViewDepositQuery(arg: any) { }
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     @Output() ReloadUserQueries = new EventEmitter();

@@ -17,7 +17,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'EditTranslationComputingPartners',
-    moduleId: module.id,
+    
     templateUrl: './EditTranslationComputingPartners.html',
 })
 

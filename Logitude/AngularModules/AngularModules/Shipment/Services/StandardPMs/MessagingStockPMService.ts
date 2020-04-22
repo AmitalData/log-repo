@@ -2,8 +2,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
@@ -23,7 +22,7 @@ export class MessagingStockPMService {
 
     get(id: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
@@ -41,7 +40,7 @@ export class MessagingStockPMService {
 
     insert(entityPM: MessagingStockPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
 
             var validator: ClassLevelValidator;
@@ -73,14 +72,14 @@ export class MessagingStockPMService {
                 response.HasError = true;
                 response.ErrorsArray = errorsArray;
 
-                return Observable.of(response);
+                return of(response);
 
             }
         });
     }
 
     update(entityPM: MessagingStockPM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
 
             var validator: ClassLevelValidator;
@@ -113,7 +112,7 @@ export class MessagingStockPMService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
         });
     }

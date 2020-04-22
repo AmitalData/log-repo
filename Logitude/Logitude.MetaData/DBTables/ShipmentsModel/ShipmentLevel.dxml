@@ -5,18 +5,18 @@
   DBType="Main"
   Module="Shipment">
   <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Code"
     Type="varchar"
     Size="1">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column

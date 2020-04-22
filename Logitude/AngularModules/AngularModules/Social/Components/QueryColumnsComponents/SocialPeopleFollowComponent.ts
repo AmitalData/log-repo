@@ -8,7 +8,7 @@ import {FollowerExtendedPMService} from '../../Services/ExtendedPMs/FollowerExte
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SocialPeopleFollowComponent',
     templateUrl: './SocialPeopleFollowComponent.html',
 

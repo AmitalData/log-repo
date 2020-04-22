@@ -12,6 +12,8 @@ import {Component, ElementRef, OnInit, ViewContainerRef} from '@angular/core';
 })
 
 export class ListHeaderTemplateComponent implements OnInit {
+  public col: any;
+
     public htmlListHeaderUrl: string;
     public colDef: any;
 

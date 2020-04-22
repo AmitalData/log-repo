@@ -19,7 +19,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import {ModulesService} from '../../../Services/ModulesService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PayablePageComponent.html',
 })
 

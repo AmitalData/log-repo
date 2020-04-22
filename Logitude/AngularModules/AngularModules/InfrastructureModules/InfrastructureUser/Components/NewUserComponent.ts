@@ -17,13 +17,15 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewUser',
     templateUrl: './NewUserComponent.html',
     providers: [PasswordChangeService, UserPMService, RoleExtendedPMService]
 })
 
 export class NewUserComponent extends BaseComponent implements OnInit {
+  public AdditionalPackagesOnly: boolean = false;
+
     ReTypePassword: string = "";
     UserId: string;
     validator: ClassLevelValidator;

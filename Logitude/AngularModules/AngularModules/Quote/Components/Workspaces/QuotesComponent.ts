@@ -22,7 +22,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 declare var makeChart, FunnelClick, ResetItemFunnel;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './QuotesComponent.html',
 })
 

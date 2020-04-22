@@ -32,7 +32,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 declare var window: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewARPaymentComponent.html',
 })
 
@@ -56,7 +56,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public accountingActivated: boolean;
     private _glaService: GLAccountListService = new GLAccountListService();
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
 

@@ -8,7 +8,7 @@ import {AppTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'FreightChargesTabComponent',
     templateUrl: './FreightChargesTabComponent.html',    

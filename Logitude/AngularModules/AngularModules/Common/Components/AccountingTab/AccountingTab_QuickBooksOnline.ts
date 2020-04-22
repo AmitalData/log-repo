@@ -12,7 +12,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {GetAccountingSystemWindowArgs} from '../../Args';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AccountingTab_QuickBooksOnline.html',
 })
 

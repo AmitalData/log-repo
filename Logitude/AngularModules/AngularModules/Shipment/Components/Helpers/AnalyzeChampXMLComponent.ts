@@ -6,7 +6,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AnalyzeChampXMLComponent.html',
 })
 

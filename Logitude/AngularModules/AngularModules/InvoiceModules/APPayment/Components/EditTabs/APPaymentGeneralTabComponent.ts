@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -7,8 +6,9 @@ import { APPaymentPM } from '../../../../Invoice/EntityPMs/APPaymentPM';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 declare var window: any;
+
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './APPaymentGeneralTabComponent.html',
 })
 export class APPaymentGeneralTabComponent extends BaseComponent implements OnInit {
@@ -29,7 +29,7 @@ export class APPaymentGeneralTabComponent extends BaseComponent implements OnIni
     private GeneratedComponent: any;	
     private additionalFieldsScreenCode = "AdditionalFields";
 public ShowAdditionalFieldsScreen: boolean = false;
-@ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+@ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 BuildAdditionalFields() {
 
 var objectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;

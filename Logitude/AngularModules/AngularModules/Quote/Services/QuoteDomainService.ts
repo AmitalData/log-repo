@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {QuotePM} from '../EntityPMs/QuotePM';
@@ -9,7 +7,6 @@ import {QuoteSettingPM} from '../EntityPMs/QuoteSettingPM';
 import {QuoteStageList} from '../EntityLists/QuoteStageList';
 import { QuotePMService } from './StandardPMs/QuotePMService';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-//import { defer } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 export class QuoteDomainService {
@@ -26,7 +23,7 @@ export class QuoteDomainService {
 
         var url = this._apiUrl + '/GetQuotesCounts?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&directionId=' + directionId + '&transportModeId=' + transportModeId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
                 
                 map(response => {
@@ -55,7 +52,7 @@ export class QuoteDomainService {
 
         var url = this._apiUrl + '/GetQuotesByOpportunityId?oportunityId=' + oportunityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -73,7 +70,7 @@ export class QuoteDomainService {
    
         var url = this._apiUrl + '/GetConnectQuotesToOpportunity?opportunityId=' + oportunityId + '&quotesIds=' + quotesIds;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -90,7 +87,7 @@ export class QuoteDomainService {
 
         var url = this._apiUrl + '/GetRecentQuotes?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
                 
                 map(response => {
@@ -110,7 +107,7 @@ export class QuoteDomainService {
 
         var url = _apiUrl + '/GetDataCountsForCRM?customerId=' + customerid + '&tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -122,7 +119,7 @@ export class QuoteDomainService {
     }
     GetStageFunnelData(ownerId: string, businessUnitId: string, RecordsTypeCode: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetStageFunnelData?OwnerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -138,7 +135,7 @@ export class QuoteDomainService {
 
         var url = _apiUrl + '/GetCRMMoneyInformation?CRMMoneyCustomerId=' + customerid + '&tenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -152,7 +149,7 @@ export class QuoteDomainService {
 
         var url = this._apiUrl + '/GetSingleQuoteStageListByCode?code=' + code;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -177,7 +174,7 @@ export class QuoteDomainService {
         });
     }    
     ComputeQuoteAutomaticSubject(entityPM: QuotePM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var iService = new QuotePMService();
             var mappedEntity: QuotePM = iService.MapJsonToEntityPM(entityPM, false);
@@ -195,7 +192,7 @@ export class QuoteDomainService {
     GetActivitiesByQuoteId(entityId: string) {
 
         var url = this._apiUrl + '/GetActivitiesByQuoteId?entityId=' + entityId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 var serviceResponse: ServiceResponse;
@@ -210,7 +207,7 @@ export class QuoteDomainService {
 
         var url = this._apiUrl + '/GetIsQuoteConnectedToShipment?quoteId=' + quoteId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
 
@@ -229,7 +226,7 @@ export class QuoteDomainService {
 
         var url = this._apiUrl + '/GetQuoteSettings';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var itemJSON = response;
@@ -243,7 +240,7 @@ export class QuoteDomainService {
         });
     }
     UpdateQuoteSettings(entityPM: QuoteSettingPM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var mappedEntity: QuoteSettingPM = this.MapQuoteSettings(entityPM, false);
 
@@ -286,7 +283,7 @@ export class QuoteDomainService {
 
         var url = this._apiUrl + '/GetQuoteConnectedEntities?quoteId=' + quoteId + '&opportunityId=' + opportunityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var listMapped: Array<QuoteConnectedEntity> = [];

@@ -12,7 +12,7 @@ import {ReportsTemplatePM} from '../../../../Common/EntityPMs/ReportsTemplatePM'
 import {ReportsTemplatePMExtendedService} from '../../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SaveAsTemplate',
     templateUrl: './SaveAsTemplateComponent.html',
     providers: [DocumentTypeTemplatePMService, ServiceArgs]

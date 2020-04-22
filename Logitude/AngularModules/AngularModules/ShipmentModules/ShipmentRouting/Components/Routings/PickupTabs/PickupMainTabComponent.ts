@@ -18,7 +18,7 @@ import {CitySelectionArgs} from '../../../../../Common/Args';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './PickupMainTabComponent.html',
 })
 

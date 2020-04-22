@@ -8,7 +8,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -39,7 +39,7 @@ export class CustomerTenantAccessExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDenyRequest?' + 'CustomerTenantAccessId=' + CustomerTenantAccessId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {              
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

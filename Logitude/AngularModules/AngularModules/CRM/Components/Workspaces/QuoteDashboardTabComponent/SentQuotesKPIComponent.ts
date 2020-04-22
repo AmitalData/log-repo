@@ -16,7 +16,7 @@ declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
     selector: 'sent-quotes-kpi',
-    moduleId: module.id,
+    
     templateUrl: './SentQuotesKPIComponent.html',
 })
 

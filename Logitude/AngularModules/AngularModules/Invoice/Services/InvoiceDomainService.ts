@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {AppTool} from '../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
@@ -34,7 +32,7 @@ export class InvoiceDomainService {
     GetAccountingReceivablesSummary() {
 
         var url = this._apiUrl + '/GetAccountingReceivablesSummary';
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(
                 // map operator inside pipe
                 map(response => {
@@ -59,7 +57,7 @@ export class InvoiceDomainService {
     GetAccountPayablesSummary() {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetAccountPayablesSummary', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -69,7 +67,7 @@ export class InvoiceDomainService {
     }
     GetAccountingTransferSummary() {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetAccountingTransferSummary', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -84,7 +82,7 @@ export class InvoiceDomainService {
     GetMoneyStatusForTenant(months: number, days: number, tenant: number, index: number, currency: number) {
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetMoneyStatusForTenant?months=' + months + '&days=' + days + '&tenant=' + tenant + '&index=' + index + '&currency=' + currency, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -94,7 +92,7 @@ export class InvoiceDomainService {
     }
     GetDebrotExposure(tenant: number, currency: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDebrotExposure?tenant=' + tenant + '&currency=' + currency, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -106,7 +104,7 @@ export class InvoiceDomainService {
     }
     GetDebrotExposureForGridControl(index: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDebrotExposureForGridControl?index=' + index, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -122,7 +120,7 @@ export class InvoiceDomainService {
     }
     GetCreditorExposure(index: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetCreditorExposure?index=' + index, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -137,7 +135,7 @@ export class InvoiceDomainService {
     }
     GetAgingReportARInvioceData(index: number, customerId: any) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetAgingReportARInvioceData?index=' + index + '&customerId=' + customerId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -152,7 +150,7 @@ export class InvoiceDomainService {
     }
     GetAgingReportAPInvioceData(index: number) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetAgingReportAPInvioceData?index=' + index, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -167,7 +165,7 @@ export class InvoiceDomainService {
     }
     ValidateARPaymentFullAccounting(paymentMethod: string, currency: string, billTo: string, code: string, registergdate: Date, bankAccountId: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetARPaymentValidatingList?paymentMethod=' + paymentMethod + "&currency=" + currency + "&billTo=" + billTo + "&code=" + code + "&registergDateString=" + ServiceHelper.GetDateString(registergdate) + "&bankAccountId=" + bankAccountId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var myResponse: ServiceResponse;
@@ -180,7 +178,7 @@ export class InvoiceDomainService {
     }
     ValidateAPInvoiceFullAccounting(currency: string, vendor: string, accountingdate: Date) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetAPInvoiceValidatingList?currency=' + currency + "&vendor=" + vendor + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var myResponse: ServiceResponse;
@@ -193,7 +191,7 @@ export class InvoiceDomainService {
 
     ValidateInvoiceDate(invoiceDate: Date) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetValidateInvoiceDate?invoiceDateString=' + ServiceHelper.GetDateString(invoiceDate), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var myResponse: ServiceResponse;
@@ -207,7 +205,7 @@ export class InvoiceDomainService {
     }
     ValidateInvoiceNumber(invoiceNumber: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetValidateInvoiceNumber?invoiceNumber=' + invoiceNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var myResponse: ServiceResponse;
@@ -221,7 +219,7 @@ export class InvoiceDomainService {
     }
 
     PostARPaymentChequeAndCashBook(entityPM: ARPaymentPM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var mappedEntity: ARPaymentPM;
             var serviceResponse: ServiceResponse;
@@ -239,7 +237,7 @@ export class InvoiceDomainService {
         });
     }
     PostARInvoiceJournalAndJournalLines(entityPM: ARInvoicePM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var mappedEntity: ARInvoicePM;
             var serviceResponse: ServiceResponse;
@@ -258,7 +256,7 @@ export class InvoiceDomainService {
     }
     ValidateARInvoiceFullAccounting(currency: string, billTo: string, accountingdate: Date) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetARInvoiceValidatingList?currency=' + currency + "&billTo=" + billTo + "&accountingDateString=" + ServiceHelper.GetDateString(accountingdate), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var myResponse: ServiceResponse;
@@ -273,7 +271,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetIsARInvoiceNumberExists?InvoiceNumber=' + InvoiceNumber;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var isExists: any = response;
 
@@ -289,7 +287,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetAutoCreditARInvoice?entityId=' + entityId + "&IsInvoiceNumberManuallySet=" + IsInvoiceNumberManuallySet + "&AutoCreditManualNumber=" + AutoCreditManualNumber + "&AutoCreditDateString=" + ServiceHelper.GetDateString(AutoCreditDate);
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var newInvoiceId: any = response;
 
@@ -307,7 +305,7 @@ export class InvoiceDomainService {
         args.EntityId = entityId;
         args.InvoiceNumber = invoiceNumber;
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             return this._http.post(this._apiUrl, JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
 
@@ -322,7 +320,7 @@ export class InvoiceDomainService {
     }
     CheckARPaymentCashBook(paymentMethod: string, currency: string, branch: string) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetARPaymentCashBook?paymentMethod=' + paymentMethod + "&currency=" + currency + "&branch=" + branch, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var myResponse: ServiceResponse;
@@ -336,7 +334,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId + "&invoiceId=" + invoiceId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -350,7 +348,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetSingleAPInvoiceShortPM?myInvoiceId=' + myInvoiceId + "&myShipmentId=" + myShipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
 
@@ -366,7 +364,7 @@ export class InvoiceDomainService {
         });
     }
     PutSingleAPInvoiceShortPM(entityPM: APInvoiceMultipleShortPM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
@@ -390,7 +388,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetRebuildTransferFile?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -405,7 +403,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetNotReadyARInvoicesIds';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -420,7 +418,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetNotReadyAPInvoicesIds';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -435,7 +433,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetNotReadyARPaymentIds';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -450,7 +448,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetNotReadyAPPaymentIds';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -465,7 +463,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetRecalculateTransfer?allIdsString=' + AppTool.GetIdsArrayText(ids) + "&entityCode=" + entityCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -480,7 +478,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetBlockForTransfer?allIdsString=' + AppTool.GetIdsArrayText(ids) + "&entityCode=" + entityCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -496,7 +494,7 @@ export class InvoiceDomainService {
         var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
         var url = this._apiUrl + '/GetSetAccountingSettingStartDate?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -511,7 +509,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetSendARPaymentSATXML?paymentId=' + id
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -526,7 +524,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetARInvoiceSATStatus?paymentId=' + id
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -542,7 +540,7 @@ export class InvoiceDomainService {
         var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
         var url = this._apiUrl + '/GetOnStartDateEntitiesIds?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -557,7 +555,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetSingleChargeTypeAccountingList?chargesTypeId=' + chargesTypeId + "&vatTypeId=" + vatTypeId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -571,7 +569,7 @@ export class InvoiceDomainService {
         var endDateString: string = ServiceHelper.GetDateString(endDate);
         var url = this._apiUrl + '/GetTaxApprovalData?startDateString=' + startDateString + "&endDateString=" + endDateString + "&email=" + email;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -587,7 +585,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetShipmentLevelCode?myShipmentId=' + myShipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult: any = response;
 
@@ -602,7 +600,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetShipmentIsAccountingClosed?myShipmentId=' + myShipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult: any = response;
 
@@ -618,7 +616,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetARPaymentSATCancellationStatus?paymentId=' + paymentId ;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -631,7 +629,7 @@ export class InvoiceDomainService {
  
         var url = this._apiUrl + '/GetStatusOfARPaymentCheques?paymentId=' + paymentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -644,7 +642,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetARInvoiceSATCancellationStatus?invoiceId=' + invoiceId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -657,7 +655,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/getConnectedARPayments?invoiceId=' + invoiceId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -670,7 +668,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/getConnectedAPPayments?invoiceId=' + invoiceId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -682,7 +680,7 @@ export class InvoiceDomainService {
     GetListOfARInvoiceStockPM() {
 
         var url = this._apiUrl + '/GetListOfARInvoiceStockPM?';
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
@@ -695,7 +693,7 @@ export class InvoiceDomainService {
 
         var url = this._apiUrl + '/GetMarkEntityAsBlocked?transferTypeCode=' + transferTypeCode + "&entityId=" + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 

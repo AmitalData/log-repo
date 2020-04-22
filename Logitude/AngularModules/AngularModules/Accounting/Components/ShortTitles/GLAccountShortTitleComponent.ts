@@ -14,7 +14,7 @@ import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMServic
 import { CardList } from '../../../Common/EntityLists/CardList';
 import { PartnerTypeList } from '../../../Common/EntityLists/PartnerTypeList';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "./GLAccountShortTitleComponent.html",
 })
 

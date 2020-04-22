@@ -6,7 +6,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {CourierMasterPM} from '../../../Customs/EntityPMs/CourierMasterPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CourierConnectedDeclarationListTemplate.html',
 })
 

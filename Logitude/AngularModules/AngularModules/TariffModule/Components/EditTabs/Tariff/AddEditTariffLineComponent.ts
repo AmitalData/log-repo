@@ -7,11 +7,14 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditTariffLineComponent.html',
 })
 
 export class AddEditTariffLineComponent  {
+  public StartDate: any;
+
+
     public TariffType: string;
     public EntityPM: TariffLinePM;
     public DataContext: any;

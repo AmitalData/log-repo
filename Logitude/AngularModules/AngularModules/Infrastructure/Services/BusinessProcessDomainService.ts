@@ -3,7 +3,7 @@ import { ServiceHelper } from '../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class BusinessProcessDomainService {
@@ -17,7 +17,7 @@ export class BusinessProcessDomainService {
     GetQueuesWithCounts(myFilter: string) {
         var url = this._apiUrl + '/GetQueuesWithCounts?myFilter=' + myFilter;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -40,7 +40,7 @@ export class BusinessProcessDomainService {
     GetTeamsForLoggedUser(loggedUserId: string) {
         var url = this._apiUrl + '/GetTeamsForLoggedUser?loggedUserId=' + loggedUserId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 

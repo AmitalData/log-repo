@@ -15,13 +15,13 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditClosedOpportunityComponent.html',
 })
 
 export class EditClosedOpportunityComponent extends BaseComponent implements OnInit{
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     public EntityPM: OpportunityPM;
     public ObjectTableName: string = "Opportunity";

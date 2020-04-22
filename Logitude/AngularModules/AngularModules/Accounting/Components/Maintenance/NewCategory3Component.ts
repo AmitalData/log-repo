@@ -9,7 +9,7 @@ import {Category3PMService} from '../../Services/StandardPMs/Category3PMService'
 
 @Component({
     selector: 'NewCategory3Component',
-    moduleId: module.id,
+    
     templateUrl: './NewCategory3Component.html',
 })
 

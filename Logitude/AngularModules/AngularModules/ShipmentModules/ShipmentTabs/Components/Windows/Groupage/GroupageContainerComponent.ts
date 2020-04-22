@@ -12,7 +12,7 @@ import {GroupageComponent, GroupageListItem} from './GroupageComponent';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GroupageContainerComponent.html',
 })
 

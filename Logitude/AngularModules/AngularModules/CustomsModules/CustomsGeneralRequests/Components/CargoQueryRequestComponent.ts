@@ -24,7 +24,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'CargoQueryRequestComponent',
-    moduleId: module.id,
+    
     templateUrl: './CargoQueryRequestComponent.html',
 })
 

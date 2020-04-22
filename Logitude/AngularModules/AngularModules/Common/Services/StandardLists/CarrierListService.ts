@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -26,7 +25,7 @@ export class CarrierListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -49,7 +48,7 @@ export class CarrierListService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -107,7 +106,7 @@ export class CarrierListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -140,7 +139,7 @@ export class CarrierListService {
         serviceResponse = new ServiceResponse();
 
         if (exists === 0) {
-            return Observable.defer(() => {
+            return defer(() => {
                 return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
                     .pipe(
                         map((response: HttpResponse<any>) => {
@@ -160,7 +159,7 @@ export class CarrierListService {
         else {
             var filteredData = CarrierListService.CachedData.filter(a => a.Id === id)[0];
             serviceResponse.Result = filteredData;
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 
@@ -225,10 +224,10 @@ export class CarrierListService {
                 }
             }
             if (serviceResponse) {
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
             else {
-                return Observable.defer(() => {
+                return defer(() => {
                     return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                         .pipe(
                             map((response: HttpResponse<any>) => {
@@ -268,7 +267,7 @@ export class CarrierListService {
             serviceResponse = new ServiceResponse();
             serviceResponse.Result = filteredData;
 
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 
@@ -306,7 +305,7 @@ export class CarrierListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -350,7 +349,7 @@ export class CarrierListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getcarriercopytocurrenttenant/?' + 'id=' + zeroCarrierId, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {

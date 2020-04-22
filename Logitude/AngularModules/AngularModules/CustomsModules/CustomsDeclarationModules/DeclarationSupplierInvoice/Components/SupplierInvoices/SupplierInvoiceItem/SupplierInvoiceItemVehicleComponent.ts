@@ -30,7 +30,7 @@ import { DeclarationPM } from '../../../../../../Customs/EntityPMs/DeclarationPM
 import {CustomsSettingExtendedListService} from '../../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceItemVehicleComponent.html',
 })
 

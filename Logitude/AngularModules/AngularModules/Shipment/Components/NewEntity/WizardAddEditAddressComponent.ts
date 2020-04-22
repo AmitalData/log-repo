@@ -14,7 +14,7 @@ import {CountryList} from '../../../Common/EntityLists/CountryList';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './WizardAddEditAddressComponent.html',
 })
 

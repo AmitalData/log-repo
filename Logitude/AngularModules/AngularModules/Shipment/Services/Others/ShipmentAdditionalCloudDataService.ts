@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -24,7 +24,7 @@ export class ShipmentAdditionalCloudDataService {
     get(id: string) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
                 map((response) => {
                     //if (response instanceof HttpResponse) {
@@ -54,7 +54,7 @@ export class ShipmentAdditionalCloudDataService {
 
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetSingleData?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
                 map((response) => {
                     //if (response instanceof HttpResponse) {
@@ -81,7 +81,7 @@ export class ShipmentAdditionalCloudDataService {
     }
 
     update(entityPM: any) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var response: ServiceResponse;
             response = new ServiceResponse();
@@ -103,7 +103,7 @@ export class ShipmentAdditionalCloudDataService {
     }
 
     updateUserID(entityPM: any) {
-        return Observable.defer(() => {
+        return defer(() => {
 
 
             var response: ServiceResponse;
@@ -129,7 +129,7 @@ export class ShipmentAdditionalCloudDataService {
 
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetSingleWithoutToken?' + 'securityId=' + id + '&tenant=' + Tenant).pipe(
                 map((response) => {
                     //if (response instanceof HttpResponse) {

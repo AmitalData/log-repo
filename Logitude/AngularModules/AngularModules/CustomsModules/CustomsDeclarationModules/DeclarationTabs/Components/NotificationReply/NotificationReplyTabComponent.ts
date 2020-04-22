@@ -26,7 +26,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NotificationReplyTabComponent.html',
     selector: 'NotificationReplyTabComponent',
 })

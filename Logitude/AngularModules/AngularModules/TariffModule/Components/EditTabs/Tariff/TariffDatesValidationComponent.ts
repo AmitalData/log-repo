@@ -8,7 +8,7 @@ import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { TariffDomainService } from '../../../Services/TariffDomainService';
 @Component({
     selector: 'TariffDatesValidationComponent',
-    moduleId: module.id,
+    
     templateUrl: './TariffDatesValidationComponent.html',
 })
 

@@ -10,7 +10,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 @Component({
-    moduleId: module.id,
+    
     selector: 'IntegrationSystemsSetting',
     templateUrl: './IntegrationSystemsSetting.html',
 

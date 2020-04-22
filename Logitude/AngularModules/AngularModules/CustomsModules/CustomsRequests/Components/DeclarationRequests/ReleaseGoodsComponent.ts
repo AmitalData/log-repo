@@ -21,7 +21,7 @@ import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestP
 
 @Component({
     selector: 'ReleaseGoodsComponent',
-    moduleId: module.id,
+    
     templateUrl: './ReleaseGoodsComponent.html',
 })
 

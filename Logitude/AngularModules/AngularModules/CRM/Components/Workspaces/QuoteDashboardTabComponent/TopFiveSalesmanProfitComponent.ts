@@ -10,7 +10,7 @@ declare var makeAMLineChartMultiple: any;
 
 @Component({
     selector: 'top-five-salesman-profit',
-    moduleId: module.id,
+    
     templateUrl: './TopFiveSalesmanProfitComponent.html',
 })
 

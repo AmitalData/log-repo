@@ -12,7 +12,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {CommonDomainService} from '../../../Services/CommonDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VatTypeGeneralTabComponent.html',
 })
 

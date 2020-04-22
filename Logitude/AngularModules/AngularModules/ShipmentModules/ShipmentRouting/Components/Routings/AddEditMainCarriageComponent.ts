@@ -29,7 +29,7 @@ import {AWBStackDomainService} from '../../../../Common/Services/AWBStackDomainS
 import {MAWBStackPM} from '../../../../Common/EntityPMs/MAWBStackPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditMainCarriageComponent.html',
 })
 

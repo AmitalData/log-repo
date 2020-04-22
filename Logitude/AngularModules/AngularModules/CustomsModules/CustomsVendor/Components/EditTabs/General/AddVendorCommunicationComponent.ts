@@ -25,7 +25,7 @@ import {VendorMessagesService} from '../../../../../Customs/Services/WebServices
 import {CustomsVendorPMService} from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddVendorCommunicationComponent.html',
 })
 

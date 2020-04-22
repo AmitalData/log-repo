@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {GroupByPipe} from '../../../../../Infrastructure/Pipes/GroupByPipe';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CounterInvoiceComponent.html',
 })
 

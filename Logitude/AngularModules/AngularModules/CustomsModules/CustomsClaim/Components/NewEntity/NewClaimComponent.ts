@@ -15,7 +15,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'NewClaimComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewClaimComponent.html',
 })
 

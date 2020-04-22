@@ -19,13 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
-    Type="nvarchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="OrderNumber"
     Type="int"
     DefaultValue="0">
@@ -37,6 +30,13 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
     Name="SearchFields"

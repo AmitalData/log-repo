@@ -20,7 +20,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'PaymentOrderReplyComponent',
-    moduleId: module.id,
+    
     templateUrl: './PaymentOrderReplyComponent.html',
 })
 

@@ -14,7 +14,7 @@ declare var window: any;
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsCollateralAnswerComponent.html',
 })
 export class CustomsCollateralAnswerComponent extends BaseComponent {

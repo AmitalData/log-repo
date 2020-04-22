@@ -48,7 +48,7 @@ import { DeclarationMessagesService } from '../../../Customs/Services/WebService
 import {CustomsDocumentPMService} from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LoadTestComponent.html',
 })
 

@@ -18,7 +18,7 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { InterestBasesTypePM } from '../../../EntityPMs/InterestBasesTypePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountInterestComponent.html',
 })
 

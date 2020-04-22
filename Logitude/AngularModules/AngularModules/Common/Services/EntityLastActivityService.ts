@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';  
 import {ServiceArgs} from '../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 @Injectable()
 
 export class EntityLastActivityService {
@@ -25,7 +24,7 @@ export class EntityLastActivityService {
     AddActivityLog(entityId: string, objectTableId: string, loggedContactId: string, logCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetActivityLog?entityId=' + entityId + '&objectTableId=' + objectTableId + '&loggedContactId=' + loggedContactId + '&logCode=' + logCode,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myResult = response;

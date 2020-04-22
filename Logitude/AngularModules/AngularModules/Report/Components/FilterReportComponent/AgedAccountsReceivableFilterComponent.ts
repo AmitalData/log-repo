@@ -8,7 +8,7 @@ import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'AgedAccountsReceivableFilterComponent',
     templateUrl: './AgedAccountsReceivableFilterComponent.html',
     inputs: ['ReportsPreview']

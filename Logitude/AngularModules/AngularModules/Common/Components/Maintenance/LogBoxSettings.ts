@@ -18,7 +18,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
     selector: 'LogBoxSettings',
-    moduleId: module.id,
+    
     templateUrl: './LogBoxSettings.html',
 })
 

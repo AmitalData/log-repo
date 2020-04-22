@@ -12,7 +12,7 @@ import {CommonDomainService, ContactSummary} from '../../../Common/Services/Comm
 import {CRMWorkspaceComponent} from './CRMWorkspaceComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContactWorkspaceComponent.html',
 })
 

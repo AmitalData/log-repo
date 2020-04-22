@@ -11,7 +11,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffGeneralTabComponent.html',
 })
 

@@ -31,11 +31,13 @@ import { BankDepositPMService } from '../../../Services/StandardPMs/BankDepositP
 import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BankDepositDetailsTabComponent.html',
 })
 
 export class BankDepositDetailsTabComponent extends BaseComponent {
+  public showLocal: any;
+
     public EntityPM: BankDepositPM = null;
     public ObjectTableName = "BankDeposit";
     public DataContext = this;

@@ -12,7 +12,7 @@ import { CardList } from '../../../Common/EntityLists/CardList';
 import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'btnUpdateComponent',
     templateUrl: './btnUpdateComponent.html',

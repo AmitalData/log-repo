@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 
 
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 import {QuoteTemplateSectionPM} from '../../EntityPMs/QuoteTemplateSectionPM';
 
@@ -46,7 +46,7 @@ export class QuoteTemplateSectionExtendedPMService {
 
 
     updateSections(quoteTemplateSections: any) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();

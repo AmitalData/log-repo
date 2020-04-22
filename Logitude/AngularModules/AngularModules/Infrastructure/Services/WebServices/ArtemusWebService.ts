@@ -3,8 +3,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class ArtemusWebService {
@@ -18,7 +17,7 @@ export class ArtemusWebService {
     SendAMS_Voyage(shipmentId: string) {
         var url = this._apiUrl + '/GetSendToArtemusVoyageXML?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -32,7 +31,7 @@ export class ArtemusWebService {
     SendAMS_Bill(shipmentId: string) {
         var url = this._apiUrl + '/GetSendToArtemusBillXML?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();

@@ -17,11 +17,13 @@ import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPa
 import { CardExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CardExtendedPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LedgerTransactionsFilterControl.html',
 })
 
 export class LedgerTransactionsFilterControl extends BaseComponent implements OnInit {
+  public CurrencyFilters: any;
+
     ObjectTableName: string = "LedgerTransaction";
     public ReportsPreview: ReportsPreviewComponent;
     public RunReportTitle: string;

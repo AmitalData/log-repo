@@ -9,7 +9,7 @@ import {PasswordChangeService} from '../../../../Common/Services/Others/Password
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './UserUnlockComponent.html',
     providers: [PasswordChangeService],
 

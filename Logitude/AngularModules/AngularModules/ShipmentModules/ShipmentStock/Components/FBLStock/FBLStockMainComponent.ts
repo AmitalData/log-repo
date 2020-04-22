@@ -13,7 +13,7 @@ import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {FBLStockExtenedPMService} from '../../../../Shipment/Services/ExtendedPMs/FBLStockExtenedPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FBLStockMainComponent.html',
 })
 

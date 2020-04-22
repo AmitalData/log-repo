@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {AddressList} from '../../EntityLists/AddressList';
@@ -20,7 +18,7 @@ export class AddressService {
     GetMainAddressByCardId(cardId: string, tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetAddressListByCardId?cardId=' + cardId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var itemJason = response;

@@ -18,7 +18,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedManifestComponent',
     templateUrl: './SharedManifestComponent.html',
     providers: [SharedAgentManifestService, AgentSharedManifestPMService, EntityResourceService],
@@ -319,7 +319,7 @@ export class SharedManifestComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private timerToken: any;
     private Retries: number = 0;
 

@@ -29,7 +29,7 @@ import { TariffProductList } from '../../EntityLists/TariffProductList';
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TariffSearchAirFreightPricesComponent.html',
 })
 

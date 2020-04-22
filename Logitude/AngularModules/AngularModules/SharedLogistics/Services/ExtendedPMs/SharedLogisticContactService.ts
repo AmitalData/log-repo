@@ -1,8 +1,7 @@
 import {Injectable, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {SharedLogisticContactPM} from '../../../Common/EntityPMs/SharedLogisticContactPM';
@@ -41,7 +40,7 @@ export class SharedLogisticContactService {
 
     ContactInternetAccessInvitation(entityPM: SharedLogisticContactPM) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(this._apiUrl + '/putcontactinternetaccessinvitation', JSON.stringify(entityPM), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
                 var entity: SharedLogisticContactPM;

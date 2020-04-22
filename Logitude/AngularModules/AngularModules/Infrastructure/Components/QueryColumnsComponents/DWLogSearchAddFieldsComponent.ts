@@ -12,7 +12,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'DWLogSearchAddFieldsComponent',
     templateUrl: './DWLogSearchAddFieldsComponent.html',

@@ -3,10 +3,8 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { defer, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class LogitudeApplicationService {
@@ -31,7 +29,7 @@ export class LogitudeApplicationService {
     GetCurrenctUserValidity() {
         var url = this._apiUrl + '/GetCurrenctUserValidity?clientEmail=' + SessionInfo.LoggedUserEmail + "&documentToken=" + SessionInfo.DocumentDownloadToken + '&tenant=' + SessionInfo.LoggedUserTenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

@@ -27,7 +27,7 @@ import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLoc
 
 @Component({
     selector: 'DeclarationSupplierInvoiceTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './DeclarationSupplierInvoiceTabComponent.html',
 })
 

@@ -2,7 +2,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -77,7 +77,7 @@ export class PostExtendedPMService {
     }
 
     InsertPostLike(postLike: PostLikePM) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             return this._http.post(this._apiUrl + '/PostInsertPostLike', JSON.stringify(postLike), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
 
@@ -128,7 +128,7 @@ export class PostExtendedPMService {
 
 
     PostFilteredPosts(postFilter: any) {
-        return Observable.defer(() => {
+        return defer(() => {
 
 
             return this._http.post(this._apiUrl + '/PostFilteredPosts', JSON.stringify(postFilter), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
@@ -155,7 +155,7 @@ export class PostExtendedPMService {
 
 
     GetCountPostPMsByFilter(postFilter: any) {
-        return Observable.defer(() => {
+        return defer(() => {
 
 
             return this._http.post(this._apiUrl + '/PostGetCountPostPMsByFilter', JSON.stringify(postFilter), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {

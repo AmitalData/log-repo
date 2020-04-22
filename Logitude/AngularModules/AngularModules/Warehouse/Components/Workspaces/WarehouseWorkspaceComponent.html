@@ -30,7 +30,7 @@
 
                         <td *ngIf="false" style="width: 300px; vertical-align:middle;">
 
-                            <SearchBox [Watermark]="SearchText" [ObjectTableName]="'WarehouseEntry'" [IsQuickSearch]="true" (ItemClicked)="EditWarehouseEntry($event)"></SearchBox>
+                            <SearchBox [Watermark]="SearchText" [ObjectTableName]="'WarehouseEntry'" [IsQuickSearch]="true" (ItemClicked)="EditWarehouseEntry()"></SearchBox>
 
                         </td>
 
@@ -103,7 +103,7 @@
                                                     </div>
                                                     <div style="height:5px"></div>
                                                     <div>
-                                                        <p *ngIf="CreatedEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('Created')">Created  ({{WarehouseEntryCreatedQueryCount}})</p>
+                                                        <p *ngIf="CreatedEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('Created')">Expected Arrival  ({{WarehouseEntryCreatedQueryCount}})</p>
                                                         <p *ngIf="EnteredEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('Entered')">Entered  ({{WarehouseEntryEnteredQueryCount}})</p>
                                                         <p *ngIf="NotConnectedToShipmentsEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('NotConnectedToShipments')">Not Connected to Shipments  ({{WarehouseEntryNotConnectedToShipmentsQueryCount}})</p>
                                                         <p *ngIf="ConnectedToShipmentsEntryQueriesVisibility" class="QueryLink" (click)="ViewWarehouseEntryQuery('ConnectedToShipments')">Connected to Shipments  ({{WarehouseEntryConnectedToShipmentsQueryCount}})</p>
@@ -134,7 +134,7 @@
                                                     </div>
                                                     <div style="height:5px"></div>
                                                     <div>
-                                                        <p *ngIf="CreatedReleaseQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('Created')">Created  ({{WarehouseReleaseCreatedQueryCount}})</p>
+                                                        <p *ngIf="CreatedReleaseQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('Created')">Expected Delivery  ({{WarehouseReleaseCreatedQueryCount}})</p>
                                                         <p *ngIf="ReleasedQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('Released')">Released  ({{WarehouseReleaseReleasedQueryCount}})</p>
                                                         <p *ngIf="CancledReleaseQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('Canceled')">Canceled  ({{WarehouseReleaseCanceledQueryCount}})</p>
                                                         <p *ngIf="AllReleaseQueriesVisibility" class="QueryLink" (click)="ViewWarehouseReleaseQuery('All')">All  ({{WarehouseReleaseAllQueryCount}})</p>

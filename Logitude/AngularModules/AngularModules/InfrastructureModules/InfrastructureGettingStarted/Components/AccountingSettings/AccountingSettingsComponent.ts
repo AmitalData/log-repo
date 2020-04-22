@@ -15,7 +15,7 @@ import {ObjectsUpdater} from '../../../../Infrastructure/Locators/ObjectsUpdater
 
 @Component({
     selector: 'AccountingSettingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './AccountingSettingsComponent.html',
 })
 

@@ -40,7 +40,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceDetailsTabGeneral.html',
 })
 

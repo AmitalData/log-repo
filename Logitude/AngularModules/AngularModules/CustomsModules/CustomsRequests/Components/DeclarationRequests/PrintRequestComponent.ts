@@ -21,7 +21,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'PrintRequestComponent',
-    moduleId: module.id,
+    
     templateUrl: './PrintRequestComponent.html',
 })
 

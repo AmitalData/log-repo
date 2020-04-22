@@ -26,7 +26,7 @@ import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList'
 declare var ResultAsArray: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './OceanFCLVersionTabComponent.html',
 })
 

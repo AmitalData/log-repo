@@ -9,7 +9,7 @@ import {AutomaticReconcileMethodPMService} from '../../Services/StandardPMs/Auto
 
 @Component({
     selector: 'AutoRecoMethodComponent',
-    moduleId: module.id,
+    
     templateUrl: './AutoRecoMethodComponent.html',
 })
 

@@ -26,13 +26,15 @@ import { LastRunDetailPM } from '../../../../Infrastructure/EntityPMs/LastRunDet
 import { LastRunDetailExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/LastRunDetailExtendedPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: 'BIReportPreviewComponent.html',
 })
 
 export class BIReportPreviewComponent extends BaseComponent implements OnInit {
-    @ViewChild('agGrid') agGrid: AgGridNg2;
-    public ComponentRef: ComponentRef<BIReportPreviewComponent>;
+
+  @ViewChild('agGrid', { static: false }) agGrid: AgGridNg2;
+
+  public ComponentRef: ComponentRef<BIReportPreviewComponent>;
     public EntityPM: BIReportPM = null;
     public EntityId: string;
     public DWQueryId: string;

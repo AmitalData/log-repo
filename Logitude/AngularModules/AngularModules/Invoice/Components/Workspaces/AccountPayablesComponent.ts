@@ -23,7 +23,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'AccountPayablesComponent',
-    moduleId: module.id,
+    
     templateUrl: './AccountPayablesComponent.html',
 })
 

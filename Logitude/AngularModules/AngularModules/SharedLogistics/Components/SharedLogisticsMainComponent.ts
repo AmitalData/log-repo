@@ -27,7 +27,7 @@ import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilter
 import {CustomerPM} from '../../Common/EntityPMs/CustomerPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SharedLogisticsMainComponent.html',
     providers: [SharedLogisticsService, DocumentTypeListService],
 })

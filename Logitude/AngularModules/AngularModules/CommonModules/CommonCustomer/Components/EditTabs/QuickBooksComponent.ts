@@ -6,7 +6,7 @@ import {GetAccountingSystemWindowArgs} from '../../../../Common/Args';
 import {GlobalDomainService} from "../../../../Common/Services/GlobalDomainService"
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './QuickBooksComponent.html',
 })
 

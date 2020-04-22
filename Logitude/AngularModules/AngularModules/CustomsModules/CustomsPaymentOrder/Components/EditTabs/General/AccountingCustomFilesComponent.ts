@@ -13,7 +13,7 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 
 @Component({
     selector: 'AccountingCustomFilesComponent',
-    moduleId: module.id,
+    
     templateUrl: './AccountingCustomFilesComponent.html',
 })
 

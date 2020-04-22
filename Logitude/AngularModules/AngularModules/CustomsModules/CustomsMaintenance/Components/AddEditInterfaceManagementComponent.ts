@@ -29,7 +29,7 @@ import { InterfaceManagementListService } from '../../../Customs/Services/Standa
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditInterfaceManagementComponent.html',
 })
 

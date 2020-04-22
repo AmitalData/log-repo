@@ -3,7 +3,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { PerformanceLog } from '../../Others/PerformanceLog';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { defer, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class PerformanceLogService {
     }
 
     insert(entity: PerformanceLog) {
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             var entityServiceResponse: EntityPMServiceResponse;
             entityServiceResponse = new EntityPMServiceResponse();
@@ -33,13 +33,13 @@ export class PerformanceLogService {
                 entityServiceResponse.HasError = true;
                 entityServiceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(entityServiceResponse);
+                return of(entityServiceResponse);
             }
         });
     }
 
     insertLogsList(logs: PerformanceLog[]) {
-        return Observable.defer(() => {
+        return defer(() => {
             var errorsArray = [];
             var entityServiceResponse: EntityPMServiceResponse;
             entityServiceResponse = new EntityPMServiceResponse();
@@ -58,7 +58,7 @@ export class PerformanceLogService {
                 entityServiceResponse.HasError = true;
                 entityServiceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(entityServiceResponse);
+                return of(entityServiceResponse);
             }
         });
     }

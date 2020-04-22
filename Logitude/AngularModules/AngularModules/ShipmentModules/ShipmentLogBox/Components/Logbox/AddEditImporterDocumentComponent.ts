@@ -4,7 +4,7 @@ import {DocumentsFilingPM} from '../../../../Common/EntityPMs/DocumentsFilingPM'
 import {DocumentTypeList} from '../../../../Common/EntityLists/DocumentTypeList';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {UIProperties, UIProperty} from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {Http} from '@angular/http';
+
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {FormGroup, FormBuilder} from '@angular/forms';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -36,9 +36,9 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'AddEditImporterDocument',
-    moduleId: module.id,
+    
     templateUrl: './AddEditImporterDocumentComponent.html',
-    providers: [Http, ServiceArgs, DocumentsFilingExtendedPMService],
+    providers: [ServiceArgs, DocumentsFilingExtendedPMService],
 })
 
 export class AddEditImporterDocumentComponent implements OnInit {
@@ -740,7 +740,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
                     logitudeWindow.WindowArgs = windowArgs;
                     logitudeWindow.Title = "File Uploading";
                     logitudeWindow.DataContext = this;
-                    logitudeWindow.Show("./ShipmentModules/ShipmentLogBox/Components/Logbox/LogboxUploaderComponent");
+                  logitudeWindow.Show("./ShipmentModules/ShipmentLogBox/Components/Logbox/LogboxUploaderComponent");
                 }
 
 

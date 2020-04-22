@@ -25,7 +25,7 @@ import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditTarrifHeaderComponent.html',
 })
 

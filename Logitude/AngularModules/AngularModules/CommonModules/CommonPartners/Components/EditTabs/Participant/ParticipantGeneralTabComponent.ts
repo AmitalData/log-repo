@@ -6,7 +6,7 @@ import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs
 
 @Component({
     selector: 'NewCurrencyComponent',
-    moduleId: module.id,
+    
     templateUrl: './ParticipantGeneralTabComponent.html',
 })
 
@@ -22,7 +22,7 @@ export class ParticipantGeneralTabComponent extends BaseComponent {
         this.SetUIProperties();
         this.RunComponent();
     }
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("IsDirect", this.ObjectTableName, false);

@@ -6,7 +6,7 @@ import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedLogisticsWizard',
     templateUrl: './SharedLogisticsWizardComponent.html',
 

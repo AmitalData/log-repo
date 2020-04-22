@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'NewGLAccountComponent',
-    moduleId: module.id,
+    
     providers: [EntityListService],
     templateUrl: './NewGLAccountComponent.html',
 })

@@ -16,7 +16,7 @@ import { SessionInfo } from '../../Utilities/SessionInfo';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './MaintenanceComponent.html',
 })

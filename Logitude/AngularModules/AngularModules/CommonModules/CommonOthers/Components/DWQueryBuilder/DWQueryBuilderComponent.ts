@@ -22,7 +22,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DWQueryBuilder',
     templateUrl: './DWQueryBuilderComponent.html',
 })

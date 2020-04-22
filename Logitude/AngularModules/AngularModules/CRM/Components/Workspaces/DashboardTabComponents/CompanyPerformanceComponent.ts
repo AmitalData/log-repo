@@ -23,7 +23,7 @@ import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper'
 declare var makeAmBarChart, BarClick, PieClick, makePieChart, ResetItemPie: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CompanyPerformanceComponent.html',
     encapsulation: ViewEncapsulation.None,
 })

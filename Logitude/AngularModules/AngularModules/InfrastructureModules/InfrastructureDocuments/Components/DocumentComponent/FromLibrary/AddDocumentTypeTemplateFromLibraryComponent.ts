@@ -18,7 +18,7 @@ import {DocumentTypeTemplatePM} from '../../../../../Common/EntityPMs/DocumentTy
 import {DocumentTypePM} from '../../../../../Common/EntityPMs/DocumentTypePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddDocumentTypeTemplateFromLibraryComponent.html',
     providers: [DocumentTypeTemplateListExtendedService, DocumentTypePMExtendedService, DocumentTypeTemplatePMService, DocumentTypeTemplatePMExtendedService]
 })

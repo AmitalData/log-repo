@@ -21,7 +21,7 @@ import {ShipmentPMService} from '../../../Shipment/Services/StandardPMs/Shipment
 
 @Component({
     selector: 'SpotLightDate',
-    moduleId: module.id,
+    
     templateUrl: './SpotLightDateComponent.html',
     inputs: ['EntityPM', 'legname', 'PickUpPM', 'DeliveryPM', 'State'],
 })

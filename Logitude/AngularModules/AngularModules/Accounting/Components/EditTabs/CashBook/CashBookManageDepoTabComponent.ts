@@ -11,7 +11,7 @@ import {BankDepositListService} from '../../../Services/StandardLists/BankDeposi
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CashBookManageDepoTabComponent.html',
 })
 

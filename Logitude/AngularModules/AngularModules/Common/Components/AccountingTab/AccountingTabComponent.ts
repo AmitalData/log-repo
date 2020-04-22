@@ -28,7 +28,7 @@ export class AccountingTabComponent implements OnInit {
     public EntityPM: any = null;
     public ObjectTableName: string;
     public TabTitleTextCode: string = null;
-    @ViewChild("Child", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild("Child", { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class StateUpdateClass
    {  		
-		public const string HashString = "61187959ab5ce67e8a0fc6e19beff197";
+		public const string HashString = "9771690c16817d765dced2c2928cd4c0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "State",
 			      				    IsNew =  false,
 			      				    DBTableName =  "States",
-			      				    OldDBTableName =  "States",
 			      				    ObjectTableSingular =  "State",
 			      				    ObjectTablePlural =  "States",
 			      				    DescriptionDefaultText =  "Logitude supplies the states for you. You can modify the names and add local names.",
@@ -145,7 +144,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -210,13 +208,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
 					  						IsRequired =  true,
-					  						CopyToDW =  false,
+					  						CopyToDW =  true,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
@@ -275,7 +272,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -340,7 +336,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -403,7 +398,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryId",
-					  						OldFieldName =  "CountryId",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Country",
@@ -467,7 +461,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -532,7 +525,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AddedManually",
-					  						OldFieldName =  "AddedManually",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -597,7 +589,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryEnglishName",
-					  						OldFieldName =  "CountryEnglishName",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -662,7 +653,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Notes",
-					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -728,7 +718,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "State",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,

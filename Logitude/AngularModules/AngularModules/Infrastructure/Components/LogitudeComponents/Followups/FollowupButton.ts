@@ -15,7 +15,7 @@ import {EventTypeListService} from '../../../Services/StandardLists/EventTypeLis
 import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './FollowupButton.html',
     selector: "FollowupButton",
     inputs: ['QuotePM', 'ShipmentPM', 'PickUpPM', 'DeliveryPM', 'LegType', 'IsEnabled', 'IsAutomatic'],

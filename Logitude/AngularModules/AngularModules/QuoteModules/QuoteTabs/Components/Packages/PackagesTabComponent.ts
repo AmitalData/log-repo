@@ -20,7 +20,7 @@ import {QuoteTool} from '../../../../Quote/Tools';
 
 @Component({
     selector: 'PackagesTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './PackagesTabComponent.html',
 })
 

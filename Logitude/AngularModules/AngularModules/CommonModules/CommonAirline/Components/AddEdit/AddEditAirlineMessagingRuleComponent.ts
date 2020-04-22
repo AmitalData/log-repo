@@ -17,7 +17,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAirlineMessagingRuleComponent.html',
 })
 

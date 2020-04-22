@@ -38,7 +38,7 @@ declare var window: any;
 declare var insertAtSubject, StringToBase64, querySelection, resultToUnitArray, Base64ToString: any;
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EditDocumentComponent',
     templateUrl: './EditDocumentView.html',
     providers: [HtmlEditorService, DocumentTypeTemplatePMService, DocumentTypeTemplateListExtendedService, DocumentTypeTemplatePMExtendedService, ExportDocumentService, DocumentTypePMExtendedService, DocumentOutPMService]
@@ -771,7 +771,7 @@ export class EditDocumentComponent implements OnInit {
 
 
     public ValidationErrorsList: string[];
-     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
      SaveButtonClicked() {
          var m = this.viewContainerRef;
         var item = null;

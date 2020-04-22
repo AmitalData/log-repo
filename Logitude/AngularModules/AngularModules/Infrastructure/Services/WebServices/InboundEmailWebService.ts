@@ -2,8 +2,7 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 
 
 export class InboundEmailWebService {
@@ -17,7 +16,7 @@ export class InboundEmailWebService {
     SendInboundEmailAsync(Recepient: string, Tenant: number, Subject: string, Body: string, entityId: string) {
         var url = this._apiUrl + '/GetMessageResult?recepient=' + Recepient + '&tenant=' + Tenant + '&subject=' + Subject + '&body=' + Body + '&entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var mappedResult = response;
                 var serviceResponse: ServiceResponse;

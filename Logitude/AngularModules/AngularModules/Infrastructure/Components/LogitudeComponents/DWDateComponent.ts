@@ -20,7 +20,7 @@ import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 
 @Component({
     selector: 'DWDate',
-    moduleId: module.id,
+    
     templateUrl: './DWDateComponent.html',
     inputs: ['DataContext', 'Operation', 'ObjectFieldName', 'SelectedValue', 'IsShowTime'],
 

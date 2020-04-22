@@ -92,6 +92,9 @@ export class CardList {
 		CalculatedEnglishName: string;
 		CreatedByPartner: string;
 		OpenShipments: number;
+		BusinessPhone: string;
 		StorageFreeDays: number;
+		RankId: string;
+		IndustryId: string;
 	
 }

@@ -13,7 +13,7 @@ import {PostViewModelData} from '../Components/SocialPostsComponent';
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'EditPostComponent',
     templateUrl: './EditPostComponent.html',
 

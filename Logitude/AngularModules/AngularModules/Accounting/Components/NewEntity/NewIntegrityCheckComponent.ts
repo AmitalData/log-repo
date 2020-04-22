@@ -10,7 +10,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 
 @Component({
     selector: 'NewIntegrityCheckComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewIntegrityCheckComponent.html',
 })
 

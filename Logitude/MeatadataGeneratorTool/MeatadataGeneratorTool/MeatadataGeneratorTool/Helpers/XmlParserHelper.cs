@@ -83,7 +83,7 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.MenuButtonGroupName = GetAttributeStringValue(fieldNode.Attributes["MenuButtonGroupName"]);
                     objectTable.MenuButtonGroupType = GetAttributeStringValue(fieldNode.Attributes["MenuButtonGroupType"]);
-                      
+
                     foreach (XmlNode fNode in fieldNode.ChildNodes)
                     {
                         MenuButtons.Add(BuildMenuButtons(fNode, objectTable));
@@ -195,9 +195,9 @@ namespace MeatadataGeneratorTool.Helpers
             }
 
             field.FieldName = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
-			field.GeneratedComponentPath = GetAttributeStringValue(fieldNode.Attributes["GeneratedComponentPath"]);
+            field.GeneratedComponentPath = GetAttributeStringValue(fieldNode.Attributes["GeneratedComponentPath"]);
 
-			if (fieldNode.Attributes["OldFieldName"] != null)
+            if (fieldNode.Attributes["OldFieldName"] != null)
             {
                 field.OldFieldName = GetAttributeStringValue(fieldNode.Attributes["OldFieldName"]);
             }
@@ -207,7 +207,7 @@ namespace MeatadataGeneratorTool.Helpers
             }
 
 
-            if(fieldNode.Attributes["OldNames"] != null)
+            if (fieldNode.Attributes["OldNames"] != null)
             {
                 field.OldNames = GetAttributeStringValue(fieldNode.Attributes["OldNames"]);
             }
@@ -509,7 +509,7 @@ namespace MeatadataGeneratorTool.Helpers
                 Query.Perspective = GetAttributeStringValue(fieldNode.Attributes["Perspective"]);
             }
 
-           
+
 
             foreach (XmlNode fNode in fieldNode.ChildNodes)
             {
@@ -821,8 +821,8 @@ namespace MeatadataGeneratorTool.Helpers
             textCode.LocalDefaultText = GetAttributeStringValue(fieldNode.Attributes["LocalDefaultText"]);
             textCode.TextCodeTypeCode = GetAttributeStringValue(fieldNode.Attributes["TextCodeTypeCode"]);
             textCode.IsSpellChecked = GetAttributeBoolValue(fieldNode.Attributes["IsSpellChecked"]);
-            
-           
+
+
 
             return textCode;
         }
@@ -888,7 +888,7 @@ namespace MeatadataGeneratorTool.Helpers
             }
             catch (Exception)
             {
-                DCField.IsCloseField = false; 
+                DCField.IsCloseField = false;
 
             }
             try
@@ -1044,17 +1044,17 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.NoTS = false;
                 }
-				if (entity.Attributes["NoDefaultFeatures"] != null)
-				{
-					objectTable.NoDefaultFeatures = GetAttributeBoolValue(entity.Attributes["NoDefaultFeatures"]);
-				}
-				else
-				{
-					objectTable.NoDefaultFeatures = false;
-				}
+                if (entity.Attributes["NoDefaultFeatures"] != null)
+                {
+                    objectTable.NoDefaultFeatures = GetAttributeBoolValue(entity.Attributes["NoDefaultFeatures"]);
+                }
+                else
+                {
+                    objectTable.NoDefaultFeatures = false;
+                }
 
 
-				if (entity.Attributes["HasCompactSearch"] != null)
+                if (entity.Attributes["HasCompactSearch"] != null)
                 {
                     objectTable.HasCompactSearch = GetAttributeBoolValue(entity.Attributes["HasCompactSearch"]);
                 }

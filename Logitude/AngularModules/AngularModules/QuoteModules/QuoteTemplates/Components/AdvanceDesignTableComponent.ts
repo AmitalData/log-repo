@@ -10,7 +10,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'AdvanceDesignTableComponent',
-    moduleId: module.id,
+    
     templateUrl: './AdvanceDesignTableComponent.html',
 })
 

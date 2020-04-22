@@ -10,7 +10,7 @@ import {ReportsDomainService} from '../../Services/ReportsDomainService';
 import {CodeNameClass} from './CodeNameClass';
 import {DateTool} from '../../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
     selector: 'MonthlyConversionFilterComponent',
     templateUrl: './MonthlyConversionFilterComponent.html',
 })

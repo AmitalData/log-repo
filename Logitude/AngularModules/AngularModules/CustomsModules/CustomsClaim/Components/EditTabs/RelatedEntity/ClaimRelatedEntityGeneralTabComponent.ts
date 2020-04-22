@@ -24,7 +24,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimRelatedEntityGeneralTabComponent.html',
 })
 

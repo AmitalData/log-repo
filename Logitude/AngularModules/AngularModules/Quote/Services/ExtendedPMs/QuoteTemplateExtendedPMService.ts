@@ -1,7 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -15,10 +14,9 @@ import { QuoteTemplatePM } from '../../EntityPMs/QuoteTemplatePM';
 
 import { QuoteTemplateSectionPM } from '../../EntityPMs/QuoteTemplateSectionPM';
 
-import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
-//import { defer } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 
@@ -33,10 +31,10 @@ export class QuoteTemplateExtendedPMService {
     }
 
 
-    insert(entityPM: QuoteTemplatePM): Observable<ServiceResponse> {
+    insert(entityPM: QuoteTemplatePM) {
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
@@ -63,7 +61,7 @@ export class QuoteTemplateExtendedPMService {
         });
     }
 
-    GetQuoteTemplateLists(queryName: string): Observable<ServiceResponse> {
+    GetQuoteTemplateLists(queryName: string) {
 
         return this._httpClient.get(this._apiUrl + '/GetQuoteTemplateLists/?' + 'queryName=' + queryName, ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {

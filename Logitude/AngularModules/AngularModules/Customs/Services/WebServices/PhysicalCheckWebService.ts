@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -12,15 +13,15 @@ import { PhysicalCheckList } from '../../EntityLists/PhysicalCheckList';
 @Injectable()
 
 export class PhysicalCheckWebService {
-    private _http: Http
+    private _http: HttpClient
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.Http;
+        this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PhysicalCheckWebService';
     }
 
     GetPhysicalCheckByDeclarationIdLists(declarationId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -32,16 +33,16 @@ export class PhysicalCheckWebService {
                 headers: authHeader
             }).map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
 
     PostClosePhysicalCheck(physicalCheckId: string, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -52,10 +53,10 @@ export class PhysicalCheckWebService {
                 headers: authHeader
             }).map(response => {
 
-                var res = response.json();
+                var res = response;
                 serviceResponse.Result = res;
                 return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         }
         );
     }

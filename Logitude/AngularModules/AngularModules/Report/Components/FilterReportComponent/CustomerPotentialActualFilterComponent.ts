@@ -18,7 +18,7 @@ import {ReportService, CustomersDataProvider, CustomersData} from '../../../Comm
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'CustomerPotentialActualFilterComponent',
     templateUrl: './CustomerPotentialActualFilterComponent.html',
 })

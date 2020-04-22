@@ -16,7 +16,7 @@ import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChild, ViewContaine
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditTaskSchedulerComponent.html',
 })
 
@@ -30,7 +30,7 @@ export class AddEditTaskSchedulerComponent  {
     schedulerExtendedPMService: SchedulerExtendedPMService;
     IsEnableSaveButton: boolean = false;
 
-    @ViewChild('GeneralSectionLocation', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('GeneralSectionLocation', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 
     private CurrentSession = SessionLocator.SelectedSession;
     private GeneralTemplateComponent: any = null;

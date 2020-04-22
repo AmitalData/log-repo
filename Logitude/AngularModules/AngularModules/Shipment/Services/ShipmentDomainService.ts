@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -27,7 +27,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetShipmentsCounts?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
 
                 map(response => {
@@ -57,7 +57,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/CheckHousesOpenAmounts?masterId=' + masterId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -71,7 +71,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetRecentShipments';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -85,7 +85,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetDeparturesArrivals?myDirectionId=' + myDirectionId + '&myTransportModeId=' + myTransportModeId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -111,7 +111,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetShipmentCarrierStatuses?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -134,7 +134,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetLoggedTenantMessagingStockLists';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -155,7 +155,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetLoggedTenantMessagingStockUsageHistoryLists?stockId=' + stockId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -173,7 +173,7 @@ export class ShipmentDomainService {
         });
     }
     ValidateShipmentMasterFieldExistance(entityId: string, myBookingId: string, myMasterField: string, myAirlinePrefixField: string, myDirectionId: string, myTransportModeId: string, myShipmentLevelCode: string, isCancelled: boolean) {
-        return Observable.defer(() => {
+        return defer(() => {
 
 
             var args = new ValidateShipmentMasterArgs();
@@ -199,7 +199,7 @@ export class ShipmentDomainService {
        
         var url = this._apiUrl + '/GetMasterReceivables?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
                 map(response => {
 
@@ -216,7 +216,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetInvoiceOpenAmountReceivables?invoiceTypeCode=' + invoiceTypeCode + '&entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -231,7 +231,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetShipmentsQuotesCount?';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -245,7 +245,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetShipmentConsolidationPackages?masterId=' + masterId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -259,7 +259,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetShipmentConnectedEntities?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
                 var listMapped: Array<ShipmentConnectedEntity> = [];
@@ -277,7 +277,7 @@ export class ShipmentDomainService {
     }
     GetShipmentsQueriesCounts(tenant: number, transportModeId: string, directionId: string, SearchFilter: string, serviceContextUser: string, TypeCode: string = null) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetShipmentsQueriesCounts?tenant=' + tenant + '&transportModeId=' + transportModeId + '&directionId=' + directionId + '&SearchFilter=' + SearchFilter + '&serviceContextUser=' + serviceContextUser + '&TypeCode=' + TypeCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -300,7 +300,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetAllMasterHousesPayables?allHousesIdsString=' + allHousesIdsString;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -315,7 +315,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetAllMasterHousesReceivables?allHousesIdsString=' + allHousesIdsString;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -330,7 +330,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetConnectedShipmentsByMasterIdAndTenant?masterId=' + masterId + '&currentTenant=' + tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var listJason = response;
@@ -356,7 +356,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetShipmentsCountByQuoteId?quoteId=' + quoteId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -370,7 +370,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetShipmentLevelCode?myShipmentId=' + myShipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult: any = response;
 
@@ -385,7 +385,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetInvoiceOpenAmountPayables?entityId=' +  entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -400,7 +400,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetPayableInvoices?PayableId=' + PayableId + '&PayableParentId=' + PayableParentId ;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -413,7 +413,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetShipmentsByQuoteId?quoteId=' + quoteId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -427,7 +427,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetSingleShipmentPMByNumber?shipmentNumber=' + shipmentNumber;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -441,7 +441,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetSingleShipmentPMWithoutComposition?id=' + id;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var service: ShipmentPMService = new ShipmentPMService();
@@ -456,7 +456,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetBlockNewARInvoice?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -491,7 +491,7 @@ export class ShipmentDomainService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(urlparameters, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -504,7 +504,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetMessagingStockListForTenantManagmentTab?tenantManagementId=' + tenantManagementId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -518,7 +518,7 @@ export class ShipmentDomainService {
     GetShipmentCustomsTransmissionByShipmnetId(shipmentId: string) {
 
         var url = this._apiUrl + '/GetShipmentCustomsTransmissionByShipmnetId?shipmentId=' + shipmentId;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myJsonResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -532,7 +532,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetDisconnectQuote?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -631,7 +631,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetSendToAESCustoms?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -644,7 +644,7 @@ export class ShipmentDomainService {
     GetArtemusStatus(shipmentNumber:string) {
 
         var url = this._apiUrl + '/GetArtemusStatus?shipmentNumber=' + shipmentNumber;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -670,7 +670,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetDownloadShipmentPackages?shipmentNumber=' + shipmentNumber + '&shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -685,7 +685,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetCreateMissingMasterData';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult: any = response;
 
@@ -701,7 +701,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetIfConnectedEntryOrRelease?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -714,7 +714,7 @@ export class ShipmentDomainService {
 
     PostUploadExcelFile(filter: ExcelPackageFilter) {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;
@@ -730,7 +730,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetIfHouseConnectedToMaster?houseId=' + houseId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -746,7 +746,7 @@ export class ShipmentDomainService {
         var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
         var url = this._apiUrl + '/GetSetAMANACStartDate?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -762,7 +762,7 @@ export class ShipmentDomainService {
         var myStartDateString: string = ServiceHelper.GetDateString(myStartDate);
         var url = this._apiUrl + '/GetOnStartDateEntitiesIds?entityCode=' + entityCode + "&myStartDateString=" + myStartDateString;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -777,7 +777,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetBlockForTransfer?allIdsString=' + AppTool.GetIdsArrayText(ids) + "&entityCode=" + entityCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -792,7 +792,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetSendToAMANAC?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -807,7 +807,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetMarkShipmentAsBlocked?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -823,7 +823,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetUnblockedShipment?shipmentId=' + shipmentId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
@@ -837,7 +837,7 @@ export class ShipmentDomainService {
 
     GetShipmentsTransferSummary() {
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(this._apiUrl + '/GetShipmentsTransferSummary', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -854,7 +854,7 @@ export class ShipmentDomainService {
 
         var url = this._apiUrl + '/GetRebuildTransferFile?entityId=' + entityId;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 

@@ -16,7 +16,7 @@ import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainS
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewShippingLineComponent.html',
 })
 

@@ -16,7 +16,7 @@ import { EntityListService } from '../../../../Infrastructure/Services/EntityLis
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './GLAccountGeneralTabComponent.html',
     providers: [GLAccountExtendedListService]
 })

@@ -31,7 +31,7 @@ import { CustomsRequestMenuService } from '../../../../../Customs/Services/Other
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DeclarationGeneralComponent.html',
 })
 

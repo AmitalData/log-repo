@@ -15,7 +15,7 @@ import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { TenantPM } from '../../../../../Common/EntityPMs/TenantPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './InterestBasesTypeDetailsTabComponent.html',
 })
 

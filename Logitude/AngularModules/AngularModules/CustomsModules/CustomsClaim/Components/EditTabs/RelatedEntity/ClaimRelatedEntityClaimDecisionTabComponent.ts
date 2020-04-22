@@ -11,7 +11,7 @@ import { ObservableCollection } from '../../../../../Infrastructure/Utilities/Ob
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimRelatedEntityClaimDecisionTabComponent.html',
 })
 

@@ -22,7 +22,7 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SignStationsComponent.html',
 })
 

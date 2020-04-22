@@ -16,11 +16,14 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {CustomerProductLocationPM} from '../../../../Common/EntityPMs/CustomerProductLocationPM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './EditProductPotentialComponent.html',
 })
 
 export class EditProductPotentialComponent extends BaseComponent {
+    setToggleButtonMenu() { }
+    setToggleButtonMenuTemp() { }
+
     private myCurrencyCode: string = "";
     public ObjectTableName = "CustomerProduct";
     public EntityPM: ProductViewModelData = null;

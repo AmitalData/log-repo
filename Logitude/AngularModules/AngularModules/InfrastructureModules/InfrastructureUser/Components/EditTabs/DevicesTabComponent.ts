@@ -15,7 +15,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DevicesTabComponent.html',
 })
 

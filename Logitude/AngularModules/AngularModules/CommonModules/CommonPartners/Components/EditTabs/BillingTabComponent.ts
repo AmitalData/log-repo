@@ -5,7 +5,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './BillingTabComponent.html',
 })
 
@@ -15,7 +15,7 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: any;
     public ObjectTableName: string;
     public DataContext = this;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.ScreenCode = entityArgs.ObjectTableName + ".BillingTabScreen";

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseReleaseUpdateClass
    {  		
-		public const string HashString = "e4165290d60c4cd46a9a4062b33e974a";
+		public const string HashString = "37f9d43e1568a3264fe134b0f92d359c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3864,7 +3864,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	         
 	        List<ObjectField> WarehouseReleaseObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "WarehouseRelease").ToList();   
 
-			   TextCode WarehouseReleaseTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseRelease.Q.CreatedReleasesQuery", DefaultText = @"Created Releases",LocalDefaultText = "Created Releases", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode WarehouseReleaseTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WarehouseRelease.Q.CreatedReleasesQuery", DefaultText = @"Expected Delivery Releases",LocalDefaultText = "Expected Delivery Releases", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature WarehouseReleaseFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseRelease.Q.CreatedReleasesQuery", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.CreatedReleasesQuery", NameTextCodeDefaultText = "CreatedReleasesQuery", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 

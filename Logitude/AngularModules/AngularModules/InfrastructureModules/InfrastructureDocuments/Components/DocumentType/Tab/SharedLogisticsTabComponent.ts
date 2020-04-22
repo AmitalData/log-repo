@@ -11,7 +11,7 @@ import { FormGroup, FormBuilder} from '@angular/forms';
 
 @Component({
     selector: 'SharedLogisticsTab',
-    moduleId: module.id,
+    
     templateUrl: './SharedLogisticsTabComponent.html', 
 })
 

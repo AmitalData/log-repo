@@ -1,12 +1,12 @@
 import {Injectable, Injector, Inject} from '@angular/core';
-import { ConnectionBackend, BaseRequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {PortList} from '../../EntityLists/PortList';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
+
 @Injectable()
 
 export class PortService {
@@ -28,7 +28,7 @@ export class PortService {
     GetPortCopyToCurrentTenant(zeroPortId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getportcopytocurrenttenant/?' + 'id=' + zeroPortId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var list = response;
 

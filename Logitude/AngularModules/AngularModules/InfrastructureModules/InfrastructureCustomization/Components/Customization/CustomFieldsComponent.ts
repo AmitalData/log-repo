@@ -14,7 +14,7 @@ import {ObjectFieldPMService} from '../../../../Infrastructure/Services/Standard
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomFieldsComponent.html',
 })
 

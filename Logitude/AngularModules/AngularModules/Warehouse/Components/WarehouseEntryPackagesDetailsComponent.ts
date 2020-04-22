@@ -24,7 +24,7 @@ import {WarehouseEntryPackageItem} from '../../Warehouse/Components/AddEditWareh
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'WarehouseEntryPackagesDetailsComponent',
     templateUrl: './WarehouseEntryPackagesDetailsComponent.html',
 

@@ -7,7 +7,6 @@ import {AdvancedQueryFiltersPMService} from '../../../Infrastructure/Services/St
 import {QueriesPMService} from '../../../Infrastructure/Services/StandardPMs/QueriesPMService';
 import {TextCodePMService} from '../../../Infrastructure/Services/StandardPMs/TextCodePMService';
 import {GeneralEntitiesService} from '../../../Infrastructure/Services/StandardPMs/GeneralEntitiesService';
-import {Http} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ObjectFieldPM} from '../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
@@ -38,7 +37,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'NewViewComponent',
-    moduleId: module.id,
+    
 
     templateUrl: './NewViewComponent.html',
     inputs: ['ObjectTableName', 'event', 'isWindowViewMode', 'isNewViewMode', 'QueryId', 'QueryCode', 'Filterchangeevent', 'rabaia'],
@@ -46,6 +45,9 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class NewViewComponent {
+    public ViewNameId: any = null;
+    public LayoutDirection: any = null;
+
     public EntityPM: QueryPM = null;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     @Output() onDataSourceChangedEvent = new EventEmitter();

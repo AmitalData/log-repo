@@ -14,7 +14,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 
 @Component({
     selector: 'DWAskUserFiltersComponent',
-    moduleId: module.id,
+    
     templateUrl: './DWAskUserFiltersComponent.html',
     inputs: ['SelectedFiltersDataSource', 'ShowRunButton', 'RunReportCommand', 'IsDateFilter', 'ComputeFiltersCommand', 'IsFirstTime', 'IsStaticFilter', 'IsStaticDateFilter', 'SelectedDynamicFiltersDataSource', 'SelectedFixedFiltersDataSource', 'ShowFixedFilters']
 })

@@ -2,7 +2,7 @@ import {Component,ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator'; 
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {HybridPartnerPM} from '../../../../Common/EntityPMs/HybridPartnerPM';
- import {Headers} from '@angular/http';
+ 
  import {AppTool} from '../../../../Infrastructure/Tools';
  import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
  import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
@@ -14,7 +14,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 declare var window: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './HybridPartnerTabComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })

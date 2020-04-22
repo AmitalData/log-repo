@@ -4,7 +4,7 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class CacheLogService {
@@ -18,7 +18,7 @@ export class CacheLogService {
     getKeys() {
         var url = this._apiUrl + '/GetKeysList';
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -42,7 +42,7 @@ export class CacheLogService {
     }
 
     ResetLog() {
-        return Observable.defer(() => {
+        return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
             var url = this._apiUrl + '/PostResetLog';
@@ -56,7 +56,7 @@ export class CacheLogService {
 
     EnableLog(enabled: boolean) {
         var url = this._apiUrl + '/PutEnableLog?enabled=' + enabled;
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.put(url, JSON.stringify(""), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
                 var pm = response;
                 return pm;
@@ -66,7 +66,7 @@ export class CacheLogService {
 
     IsLoggerEnabled() {
         var url = this._apiUrl + '/GetIsLoggerEnabled';
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();
@@ -79,7 +79,7 @@ export class CacheLogService {
 
     GetCacheLogExcelFile() {
         var url = this._apiUrl + '/GetCacheLogExcelFile?';
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse = new ServiceResponse();

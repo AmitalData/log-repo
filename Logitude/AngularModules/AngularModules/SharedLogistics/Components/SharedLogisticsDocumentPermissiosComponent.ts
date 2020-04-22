@@ -12,14 +12,14 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {DocumentPermissiosViewModel} from './ViewModel/DocumentPermissiosViewModel';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedLogisticsDocumentPermissios',
     templateUrl: './SharedLogisticsDocumentPermissiosComponent.html',
     inputs: ['OnCloseWindowEvent'],
     providers: [DocumentTypePMExtendedService],
 })
 export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
-
+  public DocumentPermissiosSelectedViewModel: any;
 
     myTenantZeroList: DocumentTypePM[];
     myTenantList: DocumentTypePM[];

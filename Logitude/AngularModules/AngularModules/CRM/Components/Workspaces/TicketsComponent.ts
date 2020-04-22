@@ -27,7 +27,7 @@ import {CodeNameClass} from '../../../Infrastructure/DataContracts/CodeNameClass
 import {ChartingDataClass} from '../../../Infrastructure/DataContracts/Dashboard/ChartingDataClass';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './TicketsComponent.html',
 })
 

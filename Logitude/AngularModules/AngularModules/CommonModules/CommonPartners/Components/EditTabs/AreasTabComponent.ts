@@ -16,7 +16,7 @@ import { CarrierAreasPortPM } from '../../../../Common/EntityPMs/CarrierAreasPor
 import { ShippingLinePM } from '../../../../Common/EntityPMs/ShippingLinePM';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AreasTabComponent.html',
 })
 

@@ -8,7 +8,7 @@ import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {AppTool} from '../../../Infrastructure/Tools';
 @Component({
-    moduleId: module.id,
+    
     selector: 'StatisticsByCustomerFilterComponent',
     templateUrl: './StatisticsByCustomerFilterComponent.html',
     inputs: ['ReportsPreview']

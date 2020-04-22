@@ -27,7 +27,7 @@ import { UnifreightController } from '../../../../Customs/Controller/UnifreightC
 import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
 @Component({
-    moduleId: module.id,
+    
     selector: 'SendVehicleComponent', 
     templateUrl: "SendVehicleComponent.html",
 })

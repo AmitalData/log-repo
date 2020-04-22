@@ -7,7 +7,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {AppTool, FileLoader} from '../../Tools';
 
 @Component({
-    moduleId: module.id,
+    
 
     selector: 'FroalaEditor',
     templateUrl: './FroalaEditorComponent.html',

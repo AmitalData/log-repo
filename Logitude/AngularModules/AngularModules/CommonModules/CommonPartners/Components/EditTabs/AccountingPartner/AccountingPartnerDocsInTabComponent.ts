@@ -4,7 +4,7 @@ import { AccountingPartnerPM } from '../../../../../Common/EntityPMs/AccountingP
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AccountingPartnerDocsInTabComponent.html',
 })
 

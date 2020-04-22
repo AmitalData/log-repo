@@ -14,11 +14,13 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ReconcileExternalPageListTemplate.html',
 })
 
 export class ReconcileExternalPageListTemplate {
+  public line: any;
+
 
     public rowData: any;
     public fieldName: any;

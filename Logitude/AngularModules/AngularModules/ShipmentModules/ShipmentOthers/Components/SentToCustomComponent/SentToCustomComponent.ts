@@ -19,7 +19,7 @@ import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/Shipm
 
 @Component({
     selector: 'SentToCustomComponent',
-    moduleId: module.id,
+    
     templateUrl: './SentToCustomComponent.html',
 })
 

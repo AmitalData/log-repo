@@ -14,7 +14,7 @@ import { AccountingSettingPMService } from '../../../Services/StandardPMs/Accoun
 
 @Component({
     selector: 'ChargesTypeGeneralTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './ChargesTypeGeneralTabComponent.html',
 })
 

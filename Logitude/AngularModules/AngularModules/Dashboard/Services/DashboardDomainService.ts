@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {List} from '../../Infrastructure/DataContracts/Dashboard/List';
 import {DashBoardClass} from '../../Infrastructure/DataContracts/Dashboard/DashBoardClass';
@@ -21,7 +21,7 @@ export class DashboardDomainService {
     GetActivityStatus(ActivityType:string,lastMonths: number, lastDays: number, currentTenant: number, customerid: string = null) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetActivityStatus?type=' + ActivityType + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&currentTenant=' + currentTenant + '&customerid=' + customerid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -41,7 +41,7 @@ export class DashboardDomainService {
     GetActivityStatusByType(ActivityType: string, fromDate: Date, toDate: Date, currentTenant: string, directionId: string, transportmodeId: string, customerid: string = null) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetActivityStatusByType?type=' + ActivityType + '&FromDate=' + ServiceHelper.GetDateString(fromDate) + '&ToDate=' + ServiceHelper.GetDateString(toDate) + '&currentTenant=' + currentTenant + '&customerid=' + customerid + '&directionid=' + directionId + '&transportmodeId=' + transportmodeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -60,7 +60,7 @@ export class DashboardDomainService {
     GetActivityStatusByMessagesLogs(lastDays: number,showType: string = null) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetActivityStatusByMessagesLogs?lastDays=' + lastDays + '&showType=' + showType, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -79,7 +79,7 @@ export class DashboardDomainService {
     GetDashboardSpotlightCounts(currentTenant: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDashboardSpotlightCounts?tenant=' + currentTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var Object: any = response;
@@ -99,7 +99,7 @@ export class DashboardDomainService {
     GetAirlineDashboardSpotlightCounts(currentTenant: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetAirlineDashboardSpotlightCounts?tenant=' + currentTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var Object: any = response;
@@ -116,7 +116,7 @@ export class DashboardDomainService {
     GetShipmentByDirectionAndTransmode(type:string,lastMonths: number, lastDays: number, currentTenant: number, customerid: string) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetShipmentByDirectionAndTransmode?type=' + type + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&currentTenant=' + currentTenant + '&customerid=' + customerid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -134,7 +134,7 @@ export class DashboardDomainService {
     GetShipmentByDirectionAndTransmodeCustom(ActivityType: string, fromDate: Date, toDate: Date, customerid: string = null) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetShipmentByDirectionAndTransmodeCustom?type=' + ActivityType + '&FromDate=' + ServiceHelper.GetDateString(fromDate) + '&ToDate=' + ServiceHelper.GetDateString(toDate) + '&customerid=' + customerid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -154,7 +154,7 @@ export class DashboardDomainService {
     GetShipmentsByTop10CountriesDashBoard(type:string,lastMonths: number, lastDays: number, measurment: number, currentTenant: number, top: number, includeOthers: boolean, customerid: string, directionId: string, transmodeId: string) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetShipmentsByTop10CountriesDashBoard?type=' + type + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&measurment=' + measurment + '&currentTenant=' + currentTenant + '&top=' + top + '&includeOthers=' + includeOthers + '&customerid=' + customerid + '&directionId=' + directionId + '&transmodeId=' + transmodeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -173,7 +173,7 @@ export class DashboardDomainService {
     GetShipmentsByTop10CountriesDashBoardCustom(type: string, FromDate: Date, ToDate: Date, measurment: number, currentTenant: number, top: number, includeOthers: boolean, customerid: string, directionId: string, transmodeId: string) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetShipmentsByTop10CountriesDashBoardCustom?type=' + type + '&FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&measurment=' + measurment + '&top=' + top + '&includeOthers=' + includeOthers + '&customerid=' + customerid + '&directionId=' + directionId + '&transmodeId=' + transmodeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -192,7 +192,7 @@ export class DashboardDomainService {
     GetTop10DashBoard(type: string, lastMonths: number, lastDays: number, measurment: number, currentTenant: number, top: number, includeOthers: boolean, directionId: string, transportmodeId: string) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTop10DashBoard?type=' + type + '&lastMonths=' + lastMonths + '&lastDays=' + lastDays + '&measurment=' + measurment + '&currentTenant=' + currentTenant + '&top=' + top + '&includeOthers=' + includeOthers + '&directionid=' + directionId + '&transportmodeId=' + transportmodeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -210,7 +210,7 @@ export class DashboardDomainService {
     GetTop10DashBoardCustom(type: string, FromDate: Date, ToDate: Date, measurment: number, currentTenant: number, top: number, includeOthers: boolean, directionId: string, transportmodeId: string) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTop10DashBoardCustom?type=' + type + '&FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&measurment=' + measurment + '&currentTenant=' + currentTenant + '&top=' + top + '&includeOthers=' + includeOthers + '&directionid=' + directionId + '&transportmodeId=' + transportmodeId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -229,7 +229,7 @@ export class DashboardDomainService {
     GetMoneyStatusForTenant(ActivityType:string,months: number, days: number, tenant: number, index: number, currency: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetMoneyStatusForTenant?type=' + ActivityType + '&months=' + months + '&days=' + days + '&tenant=' + tenant + '&index=' + index + '&currency=' + currency, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -242,7 +242,7 @@ export class DashboardDomainService {
     GetMoneyStatusForTenantCustom(ActivityType: string, fromDate: Date, toDate: Date) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetMoneyStatusForTenantCustom?type=' + ActivityType + '&ToDate=' + ServiceHelper.GetDateString(toDate) + '&FromDate=' + ServiceHelper.GetDateString(fromDate), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -254,7 +254,7 @@ export class DashboardDomainService {
     GetMoneyOutStatusForTenant(months: number, days: number, tenant: number, index: number, currency: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetMoneyOutStatusForTenant?months=' + months + '&days=' + days + '&tenant=' + tenant + '&index=' + index + '&currency=' + currency, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -266,7 +266,7 @@ export class DashboardDomainService {
     GetDebrotExposure(tenant: number, currency: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDebrotExposure?tenant=' + tenant + '&currency=' + currency, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
@@ -281,7 +281,7 @@ export class DashboardDomainService {
     GetDashBoardBookings(currentTenant: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetDashBoardBookings?tenant=' + currentTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
                 return allLists;
@@ -292,7 +292,7 @@ export class DashboardDomainService {
     GetTopParticipantsDashBoard(lastDays: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain'
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/GetTopParticipantsDashBoard?lastDays=' + lastDays, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists: any = response;
                 var myList: ChartingDataClass[]=[];

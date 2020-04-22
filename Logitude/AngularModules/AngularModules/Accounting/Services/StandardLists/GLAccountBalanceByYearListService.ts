@@ -8,7 +8,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -32,7 +32,7 @@ export class GLAccountBalanceByYearListService {
 	   
         
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'accountid=' + accountid + '&' + 'year=' + year + '&' + 'currencyid=' + currencyid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var list = response;
                     
@@ -53,7 +53,7 @@ export class GLAccountBalanceByYearListService {
     getAll() {
     
 
-       return Observable.defer(() => {
+       return defer(() => {
            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
               var allLists = response;
@@ -104,7 +104,7 @@ export class GLAccountBalanceByYearListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return Observable.defer(() => {
+	   return defer(() => {
            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                 var serviceResponse: ServiceResponse;
@@ -134,7 +134,7 @@ export class GLAccountBalanceByYearListService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse(); 
         if (exists === 0) {
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'accountid=' + accountid + '&' + 'year=' + year + '&' + 'currencyid=' + currencyid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var list = response;
                     
@@ -156,7 +156,7 @@ export class GLAccountBalanceByYearListService {
 		{
 		   var filteredData = GLAccountBalanceByYearListService.CachedData.filter(a => a.AccountId === accountid && a.Year === year && a.CurrencyId === currencyid)[0];
 		    serviceResponse.Result = filteredData;
-		   return Observable.of(serviceResponse);
+		   return of(serviceResponse);
 		}
     }
 
@@ -192,7 +192,7 @@ export class GLAccountBalanceByYearListService {
         
 	   var exists = GLAccountBalanceByYearListService.CachedData.length;
 	   if (exists === 0) {
-       return Observable.defer(() => {
+       return defer(() => {
            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
 
                var serviceResponse: ServiceResponse;
@@ -224,7 +224,7 @@ export class GLAccountBalanceByYearListService {
            serviceResponse = new ServiceResponse();
            serviceResponse.Result = filteredData;
 
-		    return Observable.of(serviceResponse);
+		    return of(serviceResponse);
 		}
     }
 	

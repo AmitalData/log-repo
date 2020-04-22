@@ -11,7 +11,7 @@ import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Component
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentTypeCopiesTab',
     templateUrl: './DocumentTypeCopiesComponent.html',
 })

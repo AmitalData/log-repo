@@ -6,7 +6,7 @@ import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './LastStatusComponent.html',
 })
 

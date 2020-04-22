@@ -31,7 +31,7 @@ import {AddEditSupplierInvoiceComponent} from './AddEditSupplierInvoiceComponent
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './SupplierInvoiceMoreTabComponent.html',
 })
 

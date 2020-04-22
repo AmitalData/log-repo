@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {BookingAnswerPM} from '../EntityPMs/BookingAnswerPM';
@@ -24,7 +22,7 @@ export class BookingDomainService {
 
         var url = this._apiUrl + '/GetBookingsCounts';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -51,7 +49,7 @@ export class BookingDomainService {
 
         var url = this._apiUrl + '/GetRecentBookings';
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -68,7 +66,7 @@ export class BookingDomainService {
 
         var url = this._apiUrl + '/GetBookingAnswerPMs?bookingId=' + bookingId;
         
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var allLists = response;
 
@@ -87,7 +85,7 @@ export class BookingDomainService {
 
         var url = this._apiUrl + '/GetBookingsDashBoard?tenant=' + Tenant;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists: any = response;
@@ -114,7 +112,7 @@ export class BookingDomainService {
 
         var url = this._apiUrl + '/GetValidateBookingForSending?bookingId=' + bookingId + "&isCancellationSent=" + isCancellationSent;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myJsonResult = response;
@@ -138,7 +136,7 @@ export class BookingDomainService {
     }
 
     ValidateBookingMasterFieldExistance(entityId: string, myMasterField: string, myAirlinePrefixField: string, myDirectionId: string, myTransportModeId: string, isCancelled: boolean, tenant: number) {
-        return Observable.defer(() => {
+        return defer(() => {
 
             var args = new ValidateShipmentMasterArgs();
             args.BookingId = entityId;

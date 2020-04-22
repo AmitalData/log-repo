@@ -10,7 +10,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditSupportMailBoxComponent.html',
 })
 

@@ -56,7 +56,7 @@ import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITI
 
 @Component({
     selector: 'SInvoiceClassificationTabContent',
-    moduleId: module.id,
+    
     templateUrl: './SInvoiceClassificationTabComponent.html',
 })
 

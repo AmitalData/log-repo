@@ -20,7 +20,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { CustomsCollateralPMService } from '../../../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
 
 @Component({
-  moduleId: module.id,
+  
   templateUrl: './DeclarationCollateralsComponent.html',
 })
 

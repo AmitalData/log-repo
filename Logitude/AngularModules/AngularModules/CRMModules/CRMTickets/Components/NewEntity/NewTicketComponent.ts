@@ -34,7 +34,7 @@ declare var window: any;
 
 @Component({
     selector: 'NewTicketComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewTicketComponent.html',
 })
 
@@ -52,7 +52,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit {
     public EntityList: EntityClass[] = [];
     public EntityNumberTitle = "Shipment Number";
 
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();

@@ -8,7 +8,7 @@ import { DateTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'VDKFilterComponent',
     templateUrl: './VDKFilterComponent.html',
     inputs: ['ReportsPreview']

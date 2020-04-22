@@ -14,7 +14,7 @@ import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {WarehouseEntryPackagePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseEntryPackagePMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'WarehouseReleaseChoosePackagesComponent',
     templateUrl: './WarehouseReleaseChoosePackagesComponent.html',
     providers: [WarehouseEntryPackagePMExtendedService],
@@ -79,14 +79,14 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             this.OldCustomerId = this.warehouseReleasePM.CustomerId;
         }
 
-        this.transportModeId = this.ViewModelTrigger.TransportModeId ? this.ViewModelTrigger.TransportModeId : "All";
-        this.DirectionId = this.ViewModelTrigger.DirectionId ? this.ViewModelTrigger.DirectionId : "All";
+        //this.transportModeId = this.ViewModelTrigger.TransportModeId ? this.ViewModelTrigger.TransportModeId : "All";
+        //this.DirectionId = this.ViewModelTrigger.DirectionId ? this.ViewModelTrigger.DirectionId : "All";
 
 
 
         this.CustomerId = this.ViewModelTrigger.CustomerId;
-        this.FromPortId = this.ViewModelTrigger.FromPortId;
-        this.ToPortId = this.ViewModelTrigger.ToPortId;
+        //this.FromPortId = this.ViewModelTrigger.FromPortId;
+        //this.ToPortId = this.ViewModelTrigger.ToPortId;
   
         this.PackageType = args.PackageType;
 

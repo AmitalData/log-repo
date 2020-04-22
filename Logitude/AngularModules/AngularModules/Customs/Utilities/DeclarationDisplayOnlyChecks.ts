@@ -99,7 +99,7 @@ export class DeclarationDisplayOnlyChecks {
             return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode= 2750' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + entityPM.CustomFileNo + '&displayOnlyMode= true', { headers: authHeader })
                 .map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response.json();
+                    var requestSheets = response;
                     if ((requestSheets == null || requestSheets.length == 0) && !editComponentNeedsRefresh) {
                         if (this.CurrentSession.CurrentEditComponent) {
                             this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = false;
@@ -183,7 +183,7 @@ export class DeclarationDisplayOnlyChecks {
 
                     }
                     //return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         }
 
         );
@@ -202,10 +202,10 @@ export class DeclarationDisplayOnlyChecks {
             return this.http.get(this.apiUrl + '/GetRequestByInterfaceTypeCode/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode=2755' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&customFileNo=' + entityPM.CustomFileNo , { headers: authHeader })
                     .map(response => {
                         var serviceResponse: ServiceResponse = new ServiceResponse();
-                        var requestSheets = response.json();
+                        var requestSheets = response;
                         serviceResponse.Result = requestSheets;
                         return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
+            }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -216,10 +216,10 @@ export class DeclarationDisplayOnlyChecks {
             return this.http.get(this.apiUrl + '/GetAnyRequest/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode  +'&customFileNo=' + customFileNo , { headers: authHeader })
                 .map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response.json();
+                    var requestSheets = response;
                     serviceResponse.Result = requestSheets;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
     CheckIfRequestInProgress(interfaceTypeCode: string, customFileNo: string, tenant: number, displayOnlyMode: boolean = true) {
@@ -230,10 +230,10 @@ export class DeclarationDisplayOnlyChecks {
             return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo + '&displayOnlyMode=' + displayOnlyMode, { headers: authHeader })
                 .map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response.json();
+                    var requestSheets = response;
                     serviceResponse.Result = requestSheets;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 
@@ -244,10 +244,10 @@ export class DeclarationDisplayOnlyChecks {
             return this.http.get(this.apiUrl + '/GetGeneralRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=' + interfaceTypeCode + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + customFileNo , { headers: authHeader })
                 .map(response => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var requestSheets = response.json();
+                    var requestSheets = response;
                     serviceResponse.Result = requestSheets;
                     return serviceResponse;
-                }).catch(ServiceHelper.HandleServiceError);
+                }),catchError(ServiceHelper.HandleServiceError));
         });
     }
 }

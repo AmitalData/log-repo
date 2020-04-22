@@ -8,7 +8,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AgentBillingTabComponent.html',
 })
 
@@ -19,7 +19,7 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
     public HasCreditLimitFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
     public DisplaySATSettings: boolean = false;
-    @ViewChild('BillingChild', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;

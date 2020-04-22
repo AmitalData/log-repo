@@ -26,7 +26,7 @@ import { Guid } from '../../../Infrastructure/Utilities/Guid';
 
 @Component({
     selector: 'CustomsErrorsComponent',
-    moduleId: module.id,
+    
     templateUrl: './CustomsErrorsComponent.html',
 })
 

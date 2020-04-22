@@ -2,7 +2,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -29,7 +29,7 @@ export class ARPaymentMethodListService {
 	   
 
         var callTime = new Date();
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
@@ -60,7 +60,7 @@ export class ARPaymentMethodListService {
         
 
         var callTime = new Date();
-       return Observable.defer(() => {
+       return defer(() => {
            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpFullHeaders())
                .pipe(
                    map((response: HttpResponse<any>) => {
@@ -125,7 +125,7 @@ export class ARPaymentMethodListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
         
 		
-	   return Observable.defer(() => {
+	   return defer(() => {
            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                .pipe(
                    map((response: HttpResponse<any>) => {
@@ -169,7 +169,7 @@ export class ARPaymentMethodListService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse(); 
         if (exists === 0) {
-        return Observable.defer(() => {
+        return defer(() => {
             var cacheKey = "ARPaymentMethod_CachedData_" + SessionLocator.Tenant;
             var _mappedListsArray: Array<ARPaymentMethodList> = [];
                 var cachedString = LocalStorageManager.GetItem(cacheKey);
@@ -192,7 +192,7 @@ export class ARPaymentMethodListService {
                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ARPaymentMethod", "GetSingleListFromCache", 'id=' + id); 
 
 
-                    return Observable.of(serviceResponse);
+                    return of(serviceResponse);
 
                     
                 }
@@ -229,7 +229,7 @@ export class ARPaymentMethodListService {
 		   var filteredData = ARPaymentMethodListService.CachedData.filter(a => a.Id === id)[0];
 		    serviceResponse.Result = filteredData;
 			serviceResponse.CallTime = callTime;
-		   return Observable.of(serviceResponse);
+		   return of(serviceResponse);
 		}
     }
 
@@ -306,10 +306,10 @@ export class ARPaymentMethodListService {
                 }
             }
             if (serviceResponse) {
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
             }
             else {
-                return Observable.defer(() => {
+                return defer(() => {
                     return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
                         .pipe(
                             map((response: HttpResponse<any>) => {
@@ -356,7 +356,7 @@ export class ARPaymentMethodListService {
             serviceResponse.Result = filteredData;
 			serviceResponse.CallTime = callTime;
 
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 	

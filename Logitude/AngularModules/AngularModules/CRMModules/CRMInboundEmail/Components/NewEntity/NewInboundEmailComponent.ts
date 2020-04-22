@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'TicketDocsOutTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewInboundEmailComponent.html',
 })
 

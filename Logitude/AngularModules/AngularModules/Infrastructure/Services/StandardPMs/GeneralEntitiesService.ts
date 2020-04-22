@@ -2,12 +2,11 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-//import Rx from 'rxjs/Rx';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 
 import {GeneralEntitiesArgs} from '../../DataContracts/GeneralEntitiesArgs';
@@ -35,7 +34,7 @@ export class GeneralEntitiesService {
     //    var authHeader = new Headers();
     //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-    //    return Rx.Observable.defer(() => {
+    //    return Rx.defer(() => {
     //        return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenant?' + 'tenant=' + tenant + '&loggedcontactid=' + userid, {
     //            headers: authHeader
     //        }).map(response => {
@@ -51,7 +50,7 @@ export class GeneralEntitiesService {
 
     insert(entities: GeneralEntitiesArgs) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -91,7 +90,7 @@ export class GeneralEntitiesService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });
@@ -99,7 +98,7 @@ export class GeneralEntitiesService {
 
     update(entities: GeneralEntitiesArgs) {
 
-        return Observable.defer(() => {
+        return defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -139,7 +138,7 @@ export class GeneralEntitiesService {
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return Observable.of(serviceResponse);
+                return of(serviceResponse);
 
             }
         });

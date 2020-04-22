@@ -27,7 +27,7 @@ import { CustomsSettingListService } from '../../../Customs/Services/StandardLis
 
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsSettingsComponent.html',
 })
 

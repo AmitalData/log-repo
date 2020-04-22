@@ -1,6 +1,6 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {Headers} from '@angular/http';
+
 import {ServiceHelper} from '../../../Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Utilities/SessionInfo';
 import {InfraSettings} from '../../../Utilities/InfraSettings';
@@ -35,7 +35,7 @@ declare var changeFavicon: any;
 declare var changeTitle: any;
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './DSVLoginProcessComponent.html',
     providers: [ApplicationTimersManager, LogitudeApplicationService, UserLastLoginPMService]
 })

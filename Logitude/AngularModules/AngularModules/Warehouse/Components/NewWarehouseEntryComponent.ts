@@ -24,13 +24,15 @@ import {WarehouseHelper} from '../Helpers/WarehouseHelper';
 import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewWarehouseEntryComponent',
     templateUrl: './NewWarehouseEntryComponent.html',
  
 })
 
 export class NewWarehouseEntryComponent extends BaseComponent implements OnInit {
+  public ExpectedEntryDate: any;
+
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     warehouseHelper: WarehouseHelper = new WarehouseHelper();
     public ValidationErrorsList: string[];
@@ -279,7 +281,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
 
 
-    SetActualDateClicked(fieldName: string) {
+    SetActualDateClicked() {
         this.ActualEntryDate = DateTool.GetDateParts(this.warehouseEntryPM.ExpectedEntryDate).DateObject;
     }
 

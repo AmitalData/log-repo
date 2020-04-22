@@ -19,7 +19,7 @@ import {EntityResourceService} from '../../Infrastructure/Services/EntityResourc
 
 @Component({
     selector: 'NotificationBellComponent',
-    moduleId: module.id,
+    
     templateUrl: './NotificationBellComponent.html',
 })
 

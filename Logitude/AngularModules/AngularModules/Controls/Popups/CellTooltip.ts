@@ -3,7 +3,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: 'CellTooltip',
-    moduleId: module.id,
+    
     templateUrl: './CellTooltip.html',
     inputs: ['IconWidth', 'IconHeight', 'IconPath', 'Width', 'Height', 'Head', 'Body', 'MaxHeight', 'IsOnClick', 'IsOpened','IsToRight'],
     changeDetection: ChangeDetectionStrategy.OnPush,

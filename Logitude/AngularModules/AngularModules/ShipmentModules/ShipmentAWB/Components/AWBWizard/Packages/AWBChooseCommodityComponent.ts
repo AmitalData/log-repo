@@ -12,7 +12,7 @@ import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    moduleId: module.id,
+    
 
     templateUrl: './AWBChooseCommodityComponent.html',
 })

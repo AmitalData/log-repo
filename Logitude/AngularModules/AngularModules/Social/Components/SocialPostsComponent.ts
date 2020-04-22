@@ -26,7 +26,7 @@ import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 
 import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
 @Component({
-    moduleId: module.id,
+    
     selector: 'SocialPostsComponent',
     templateUrl: './SocialPostsComponent.html',
 
@@ -38,8 +38,8 @@ export class SocialPostsComponent implements OnInit {
     PointerEventsInPutPost: string = "auto";
     OpacityAreaInPutPost: string = "1";
     IsShowAreaPost: boolean = true;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
-    @ViewChild('Child', { read: ViewContainerRef }) SocialPeopleViewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) SocialPeopleViewContainerRef: ViewContainerRef;
     IsChange: boolean = false;
     postExtendedPMService: PostExtendedPMService;
     public ComponentRef: ComponentRef<SocialPostsComponent>;

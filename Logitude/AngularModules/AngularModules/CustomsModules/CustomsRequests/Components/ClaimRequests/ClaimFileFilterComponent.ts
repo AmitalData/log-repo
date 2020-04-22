@@ -20,7 +20,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'ClaimFileFilterComponent',
-    moduleId: module.id,
+    
     templateUrl: './ClaimFileFilterComponent.html',
 })
 

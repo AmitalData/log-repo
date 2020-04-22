@@ -38,14 +38,14 @@ import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirectiv
 
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'NewWarehouseReleaseComponent',
     templateUrl: './NewWarehouseReleaseComponent.html',
     providers: [WarehouseReleasePMExtendedService, WarehouseEntryPackagePMExtendedService],
 
 })
 export class NewWarehouseReleaseComponent extends BaseComponent implements OnInit {
-
+  public ExpectedReleaseDate: any;
 
     public WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
     ObjectTableName: string = "WarehouseRelease";
@@ -376,7 +376,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     }
 
 
-    SetActualDateClicked(fieldName: string) {
+    SetActualDateClicked() {
         this.ActualReleaseDate = DateTool.GetDateParts(this.warehouseReleasePM.ExpectedReleaseDate).DateObject;
     }
 

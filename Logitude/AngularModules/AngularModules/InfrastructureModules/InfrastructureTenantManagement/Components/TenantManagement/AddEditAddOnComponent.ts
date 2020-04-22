@@ -7,7 +7,7 @@ import {TenantAddOnPM} from '../../../../Infrastructure/EntityPMs/TenantAddOnPM'
 import {AddOnItem} from './TenantManagementGeneralTabComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAddOnComponent.html',
 })
 

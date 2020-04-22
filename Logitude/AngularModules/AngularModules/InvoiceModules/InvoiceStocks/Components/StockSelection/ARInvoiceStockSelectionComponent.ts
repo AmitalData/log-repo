@@ -8,7 +8,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARInvoiceStockSelectionComponent.html',
 })
 

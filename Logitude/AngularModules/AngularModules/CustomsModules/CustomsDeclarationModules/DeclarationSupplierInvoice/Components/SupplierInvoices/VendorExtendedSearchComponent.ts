@@ -30,7 +30,7 @@ import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { CustomsVendorPMService } from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './VendorExtendedSearchComponent.html',
 })
 

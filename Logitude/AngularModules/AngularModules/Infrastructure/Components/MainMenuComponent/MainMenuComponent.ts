@@ -16,7 +16,7 @@ import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { retry } from 'rxjs/operators';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './MainMenuComponent.html',
 })
 
@@ -28,7 +28,7 @@ export class MainMenuComponent {
     private MainMenuWidthOpened: number = 145;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    @ViewChild("MainMenuContainer", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild("MainMenuContainer", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     LayoutDirection: string = 'ltr';
     @Output() SelectionChanging: EventEmitter<any> = new EventEmitter();
@@ -332,7 +332,7 @@ export class MainMenuComponent {
                     }
                     case "General.MH.Importers": {
                         ServiceLocator.SendTotangoUserActivity("Importers", "Main View");
-                        myComponentPath = "./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxMainComponent";
+                    myComponentPath = "./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxMainComponent";
                         break;
                     }
                     case "General.MH.Accounting": {

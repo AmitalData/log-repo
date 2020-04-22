@@ -26,7 +26,7 @@ import {ReportsTemplatePMExtendedService} from '../../../../Common/Services/Exte
 declare var insertAtSubject, StringToBase64, querySelection, resultToUnitArray, Base64ToString: any;
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'HtmlDocumentPreview',
     templateUrl: './HtmlDocumentPreviewComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService, DocumentTypeTemplatePMService, HtmlEditorService]

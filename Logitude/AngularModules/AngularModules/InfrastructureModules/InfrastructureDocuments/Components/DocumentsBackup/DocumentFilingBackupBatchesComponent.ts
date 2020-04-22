@@ -1,5 +1,4 @@
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
@@ -9,7 +8,7 @@ import {DocumentFilingBackupBatchPM} from '../../../../Common/EntityPMs/Document
 import {DocumentFilingBackupBatchPMExtendedService} from '../../../../Common/Services/ExtendedPMs/DocumentFilingBackupBatchPMExtendedService';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentFilingBackupBatchesComponent',
     templateUrl: './DocumentFilingBackupBatchesComponent.html',
 })

@@ -14,7 +14,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
     selector: 'InlandDomesticRoutingsComponent',
-    moduleId: module.id,
+    
     templateUrl: './InlandDomesticRoutingsComponent.html',
 })
 

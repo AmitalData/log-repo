@@ -606,6 +606,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.AllowedinAutomationConditions = objectFieldDetails.AllowedinAutomationConditions;
                 newObjectField.AutomationEmailRecipient = objectFieldDetails.AutomationEmailRecipient;
                 newObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
+                newObjectField.CopyToDW = objectFieldDetails.CopyToDW;
+
                 newObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 newObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 newObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
@@ -698,6 +700,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.AllowedinAutomationConditions = objectFieldDetails.AllowedinAutomationConditions;
                 updatedObjectField.AutomationEmailRecipient = objectFieldDetails.AutomationEmailRecipient;
                 updatedObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
+                updatedObjectField.CopyToDW = objectFieldDetails.CopyToDW;
+
                 updatedObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 updatedObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 updatedObjectField.Code = objectFieldDetails.Code;
@@ -1242,6 +1246,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.AllowedinAutomationConditions = objectFieldDetails.AllowedinAutomationConditions;
                 newObjectField.AutomationEmailRecipient = objectFieldDetails.AutomationEmailRecipient;
                 newObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
+                newObjectField.CopyToDW = objectFieldDetails.CopyToDW;
+
                 newObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 newObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 newObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
@@ -1334,6 +1340,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.AllowedinAutomationConditions = objectFieldDetails.AllowedinAutomationConditions;
                 updatedObjectField.AutomationEmailRecipient = objectFieldDetails.AutomationEmailRecipient;
                 updatedObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
+                updatedObjectField.CopyToDW = objectFieldDetails.CopyToDW;
+
                 updatedObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 updatedObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 updatedObjectField.Code = objectFieldDetails.Code;

@@ -34,7 +34,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ARPaymentDetailsTabComponent.html',
 })
 

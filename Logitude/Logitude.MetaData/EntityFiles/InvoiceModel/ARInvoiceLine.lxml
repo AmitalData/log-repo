@@ -36,7 +36,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="ARInvoice"
   DefaultText="&quot;A/R Invoice Line&quot;"
-  Code="&quot;ec76&quot;"
+  Code="&quot;ecbb&quot;"
   Name="&quot;ARInvoiceLine&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"

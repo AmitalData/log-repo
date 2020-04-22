@@ -7,7 +7,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 //C:\LW\Customs\AngularModules\AngularModules\Customs\Controller\DeclarationEditComponentController.ts
 import {DeclarationEditComponentController} from '../../Controller/DeclarationEditComponentController';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: "DeclarationShortTitleComponent.html",
 })
 

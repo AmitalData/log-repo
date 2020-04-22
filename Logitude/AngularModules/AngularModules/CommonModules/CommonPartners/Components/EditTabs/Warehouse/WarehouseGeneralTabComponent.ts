@@ -5,7 +5,7 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './WarehouseGeneralTabComponent.html',
 })
 

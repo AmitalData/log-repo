@@ -500,7 +500,7 @@
                              [style.height.px]="DropDownHeight">
 
                             <!-- My Data items -->
-                            <ul [id]="MyDataListId" class="DropDownList" *ngIf="IsDropDownVisible" [ngStyle]="MyDropDownHeight">
+                            <ul [id]="MyDataListId" class="DropDownList" *ngIf="IsDropDownVisible" [ngStyle]="DropDownHeight">
                                 <li *ngFor="let item of ItemsSource;let i=index"
                                     class="DropDownListItem"
                                     (click)="OnSelected(item)"

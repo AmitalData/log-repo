@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable}     from 'rxjs/Rx';
+import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
 import {InfraSettings} from '../../Utilities/InfraSettings';
@@ -66,7 +66,7 @@ export class SchedulerExtendedPMService {
             serviceResponse.HasError = true;
             serviceResponse.ErrorsArray = errorsArray;
 
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 
@@ -94,7 +94,7 @@ export class SchedulerExtendedPMService {
             serviceResponse.HasError = true;
             serviceResponse.ErrorsArray = errorsArray;
 
-            return Observable.of(serviceResponse);
+            return of(serviceResponse);
         }
     }
 

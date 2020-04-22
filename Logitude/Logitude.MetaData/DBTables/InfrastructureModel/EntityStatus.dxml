@@ -19,22 +19,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="ObjectTableId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="StatusWeight"
-    Type="int">
     <Constraints
       Nullable="false" />
   </Column>
@@ -48,6 +35,19 @@
   <Column
     Name="InActive"
     Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StatusWeight"
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>

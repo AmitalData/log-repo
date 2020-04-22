@@ -14,7 +14,7 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 
 @Component({
     selector: 'OpenFormatReportLogTabComponent',
-    moduleId: module.id,
+    
     templateUrl: './OpenFormatReportLogTabComponent.html',
 })
 

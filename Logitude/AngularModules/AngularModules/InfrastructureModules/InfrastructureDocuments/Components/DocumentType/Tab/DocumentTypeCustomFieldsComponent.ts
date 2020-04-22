@@ -16,7 +16,7 @@ import {FieldDataTypeService} from '../../../../../Common/Services/ExtendedPMs/F
 import {FieldDataTypePM} from '../../../../../Common/EntityPMs/FieldDataTypePM';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'DocumentTypeCustomFields',
     templateUrl: './DocumentTypeCustomFieldsComponent.html',
     providers: [FieldDataTypeService],

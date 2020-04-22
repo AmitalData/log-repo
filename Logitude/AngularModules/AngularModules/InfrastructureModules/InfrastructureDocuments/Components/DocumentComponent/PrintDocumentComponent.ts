@@ -1,5 +1,3 @@
-
-declare var System: any;
 declare var window: any;
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -25,7 +23,6 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {DocumentTypeTemplateViewModel} from './DocsOut/ViewModel/DocumentTypeTemplateViewModel';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {DocumentCustomFieldsArgs} from './DocsOut/Filters/DocumentCustomFieldsArgs';
-import {StimulsoftArg} from './StimulsoftArg';
 import {FroalaEditorFilters} from './DocsOut/Filters/FroalaEditorFilters';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -33,12 +30,12 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {ExportDocumentArgs} from '../../../../Infrastructure/DataContracts/ExportDocumentArgs';
-import {Observable}     from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
 import {DocumentsExecutionLogList} from '../../../../Common/EntityLists/DocumentsExecutionLogList';
 import {DocumentsExecutionLogListExtendedService} from '../../../../Common/Services/ExtendedLists/DocumentsExecutionLogListExtendedService';
-@Component({
-    moduleId: module.id,
+import { interval } from 'rxjs';
+import { timeInterval } from 'rxjs/operators';
+
+@Component({    
     selector: 'PrintDocument',
     templateUrl: './PrintDocumentView.html',
     providers: [DocumentTypePMExtendedService, DocumentTypeCustomFieldService, DocumentOutPMService, ExportDocumentService, DocumentTypeTemplateListExtendedService, HtmlEditorService],
@@ -1138,7 +1135,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
     initializeStartCheckDocumentBuildViaWorkerRoleTimer() {
-        return Observable.interval(250).timeInterval();
+        return interval(250).pipe(timeInterval());
     }
 
 
@@ -1409,7 +1406,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
 
-    private PrintAllCopiesBtnClick() {
+    PrintAllCopiesBtnClick() {
 
         var currentCount = this.Items.filter(d => d.IsSelected).length;
         if (this.DataContext.DocumentTypePM.IsDocumentOneTimePrintLimited) {
@@ -1442,7 +1439,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         messageWindow.Show(message? message:"error");
         this.IsDocumentBuildFailed = true;
     }
-    private SetSelectedAsDefaultBtnClick() {
+    SetSelectedAsDefaultBtnClick() {
 
 
         this.Items.forEach((item) => {

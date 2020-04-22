@@ -23,7 +23,7 @@ import { SystemTableRequestParams } from '../../../Customs/DataContract/RequestP
 import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: 'CustomsClosedTablesListTemplate.html',
 })
 

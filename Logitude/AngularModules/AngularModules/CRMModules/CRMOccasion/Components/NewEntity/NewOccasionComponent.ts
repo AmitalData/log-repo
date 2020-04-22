@@ -11,7 +11,7 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 @Component({
     selector: 'NewOccasionComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewOccasionComponent.html',
 })
 

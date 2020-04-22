@@ -19,11 +19,13 @@ import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelpe
 
 @Component({
     selector: 'DailyTimeSheetComponent',
-    moduleId: module.id,
+    
     templateUrl: './DailyTimeSheetComponent.html',
 })
 
 export class DailyTimeSheetComponent extends BaseComponent {
+  public LeftCenter: any;
+  public itemLocationCode: any;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
 

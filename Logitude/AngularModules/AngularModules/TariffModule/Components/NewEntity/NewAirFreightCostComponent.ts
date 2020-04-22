@@ -22,7 +22,7 @@ import { TariffVersionAllInChargePM } from '../../EntityPMs/TariffVersionAllInCh
 
 @Component({
     selector: 'NewAirFreightCostComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewAirFreightCostComponent.html',
 })
 

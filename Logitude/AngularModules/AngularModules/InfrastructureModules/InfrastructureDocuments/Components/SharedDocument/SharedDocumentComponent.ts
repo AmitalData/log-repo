@@ -17,7 +17,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {SharedDocumentHelper} from '../../../../Infrastructure/Helpers/SharedDocumentHelper';
 
 @Component({
-    moduleId: module.id,
+    
     selector: 'SharedDocumentComponent',
     templateUrl: './SharedDocumentComponent.html',
     providers: [DocumentTypePMExtendedService , AgentSharedDocumentExtendedService],

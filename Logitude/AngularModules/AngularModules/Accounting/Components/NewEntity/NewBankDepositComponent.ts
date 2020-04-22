@@ -19,7 +19,7 @@ import { CashbookChequesCounter } from '../../DataContracts/CashbookChequesCount
 
 @Component({
     selector: 'NewBankDepositComponent',
-    moduleId: module.id,
+    
     templateUrl: './NewBankDepositComponent.html',
 })
 

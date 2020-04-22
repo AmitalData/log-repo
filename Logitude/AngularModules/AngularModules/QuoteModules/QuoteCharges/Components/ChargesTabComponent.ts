@@ -26,7 +26,7 @@ import { AppTool } from '../../../Infrastructure/Tools';
 export class ChargesTabComponent implements OnInit, OnDestroy {
     public EntityPM: QuotePM = null;
     public ObjectTableName: string = "Quote";
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
 

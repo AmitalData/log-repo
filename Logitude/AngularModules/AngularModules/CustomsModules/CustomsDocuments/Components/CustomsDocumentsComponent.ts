@@ -36,7 +36,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './CustomsDocumentsComponent.html',
 })
 

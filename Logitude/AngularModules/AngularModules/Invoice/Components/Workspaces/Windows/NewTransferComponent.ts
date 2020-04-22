@@ -20,7 +20,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { InvoiceDomainService } from '../../../Services/InvoiceDomainService';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './NewTransferComponent.html',
 })
 

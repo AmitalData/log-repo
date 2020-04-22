@@ -2,9 +2,7 @@ import { ServiceHelper } from '../Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+import { defer, of } from 'rxjs';
 
 @Injectable()
 export class EntityLastActivityService {
@@ -18,7 +16,7 @@ export class EntityLastActivityService {
     AddActivityLog(entityId: string, objectTableId: string, loggedContactId: string, logCode: string) {
         var url = this._apiUrl + '/GetActivityLog?entityId=' + entityId + '&objectTableId=' + objectTableId + '&loggedContactId=' + loggedContactId + '&logCode=' + logCode;
 
-        return Observable.defer(() => {
+        return defer(() => {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var myResult = response;

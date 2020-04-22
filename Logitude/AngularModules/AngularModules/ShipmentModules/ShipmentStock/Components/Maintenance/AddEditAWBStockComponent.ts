@@ -11,7 +11,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {TenantManagementAWBStockTabComponent, StockArgs} from './TenantManagementAWBStockTabComponent';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './AddEditAWBStockComponent.html',
 })
 

@@ -15,7 +15,7 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../../Infrastruc
 import {ObjectsLocator} from '../../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ClaimRelatedEntityTabComponent.html',
 })
 export class ClaimRelatedEntityTabComponent extends BaseComponent {

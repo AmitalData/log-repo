@@ -13,7 +13,7 @@ import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings'
 
 @Component({
     selector: 'SystemCurrenciesComponent',
-    moduleId: module.id,
+    
     templateUrl: './SystemCurrenciesComponent.html',
 })
 

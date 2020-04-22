@@ -15,7 +15,7 @@ import { AdditionalServiceListService } from '../../../../Common/Services/Standa
 import { AdditionalServiceList } from '../../../../Common/EntityLists/AdditionalServiceList';
 
 @Component({
-    moduleId: module.id,
+    
     templateUrl: './ContactInputTemplate.html',
 })
 
