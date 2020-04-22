@@ -442,7 +442,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private _ListComponentArgs: ListComponentArgs ,private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+    constructor(public _ListComponentArgs: ListComponentArgs ,private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
         this.ComponentIndex = this.CurrentSession.GetNewListComponentIndex();
 
         this.serviceArgs = new ServiceArgs();
