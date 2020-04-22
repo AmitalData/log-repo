@@ -69,43 +69,43 @@ exports.config = {
 
     suites: {
         // ********************* Login **********************************
-        login: 'e2e/Login/**/Login.e2e-spec.ts',
-        NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
-        // CustomerGLA: 'e2e/FullAccounting/'
+        login: './Login/**/Login.e2e-spec.ts',
+        NewQuote: './CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
+        // CustomerGLA: './FullAccounting/'
 
-        CRM: 'e2e/CRM/**/CRMModule-spec.ts',
-        NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
-        NewEAWB: 'e2e/Operations/Shipments/NewEntity/**/OpEAWB-spec.ts',
-        NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
-        Contact: 'e2e/Contacts/**/Contacts-spec.ts',
+        CRM: './CRM/**/CRMModule-spec.ts',
+        NewShipment: './Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+        NewEAWB: './Operations/Shipments/NewEntity/**/OpEAWB-spec.ts',
+        NewShipmentlogbox: './LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
+        Contact: './Contacts/**/Contacts-spec.ts',
 
         // ********************* FullAccounting **********************************
-        PaymentCheque: 'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts',
-        ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
-        NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-        FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
-        ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
-        BankAccount: 'e2e/FullAccounting/BankAccount/**/NewBank-spec.ts',
-        VendorGLAccount: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
-        CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
-        APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
-        RevGLAccount: 'e2e/FullAccounting/**/GlAccount-spec.ts',
-        //   CashDeposit: 'e2e/FullAccounting/**/Deposit/NewDposit-spec.ts',
+        PaymentCheque: './FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts',
+        ARPayment: './FullAccounting/**/ARPayment-spec.ts',
+        NewChartOfAccount: './FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
+        FullAccProcess: './FullAccounting/**/FullAccScenarios-spec.ts',
+        ARInvoice: './FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
+        BankAccount: './FullAccounting/BankAccount/**/NewBank-spec.ts',
+        VendorGLAccount: './FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
+        CustomerGLAccount: './FullAccounting/**/CustomerGLAccount-spec.ts',
+        APInvoice: './FullAccounting/APInvoice/**/APInvoice-spec.ts',
+        RevGLAccount: './FullAccounting/**/GlAccount-spec.ts',
+        //   CashDeposit: './FullAccounting/**/Deposit/NewDposit-spec.ts',
         //*************Report********************
-        Reports: 'e2e/Report/**/Report-spec.ts',
+        Reports: './Report/**/Report-spec.ts',
 
         //*************ShipmentView********************
-        ShipmentView: 'e2e/**/ShipmentView-spec.ts',
+        ShipmentView: './**/ShipmentView-spec.ts',
 
         //*************Maintenance********************
-        CompanyAddressSetting: 'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
-        NewAgent: 'e2e/Maintenance/**/Agent-spec.ts',
-        NewUser: 'e2e/Maintenance/**/Users-spec.ts',
-        NewShipper: 'e2e/Maintenance/**/Shipper-spec.ts',
+        CompanyAddressSetting: './Maintenance/**/CompanyAddressSetting-spec.ts',
+        NewAgent: './Maintenance/**/Agent-spec.ts',
+        NewUser: './Maintenance/**/Users-spec.ts',
+        NewShipper: './Maintenance/**/Shipper-spec.ts',
 
         //*************DocOutTab***************
-        DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
-        LogitudeAccounting: 'e2e/Accounting/**/AccountingModule-spec.ts'
+        DocOut: './**/DocsOut.e2e-spec.ts',
+        LogitudeAccounting: './Accounting/**/AccountingModule-spec.ts'
     },
 
     onPrepare() {
