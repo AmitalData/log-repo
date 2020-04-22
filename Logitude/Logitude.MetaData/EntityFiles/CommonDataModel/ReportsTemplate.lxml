@@ -1612,20 +1612,20 @@
     <Feature
       Code="&quot;SYSTEMTEMPLATEEDIT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;ReportsTemplate.Features.SystemTemplateEdit&quot;"
-      FeatureDefaultText="&quot;System Template Edit&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ReportsTemplate.Features.SystemTemplateEdit&quot;"
+      FeatureDefaultText="&quot;System Template Edit&quot;" />
     <Feature
       Code="&quot;REPORTTEMPLATEMESSAGE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;ReportsTemplate.Features.ReportTemplateMessage&quot;"
-      FeatureDefaultText="&quot;Report Template Message&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ReportsTemplate.Features.ReportTemplateMessage&quot;"
+      FeatureDefaultText="&quot;Report Template Message&quot;" />
   </AdditionalFeatures>
 </entity>

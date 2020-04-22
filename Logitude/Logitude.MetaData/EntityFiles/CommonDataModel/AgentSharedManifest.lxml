@@ -2882,11 +2882,11 @@
     <Feature
       Code="&quot;UPDATESHAREDAGENT&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;AgentSharedManifest.Features.UpdateSharedAgent&quot;"
-      FeatureDefaultText="&quot;Update Shared Agent&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;AgentSharedManifest.Features.UpdateSharedAgent&quot;"
+      FeatureDefaultText="&quot;Update Shared Agent&quot;" />
   </AdditionalFeatures>
 </entity>

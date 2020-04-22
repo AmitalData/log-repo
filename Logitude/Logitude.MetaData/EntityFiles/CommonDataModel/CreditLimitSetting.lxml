@@ -1909,20 +1909,20 @@
     <Feature
       Code="&quot;Override&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;CreditLimitSetting.Features.Override&quot;"
-      FeatureDefaultText="&quot;Credit limit override&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;CreditLimitSetting.Features.Override&quot;"
+      FeatureDefaultText="&quot;Credit limit override&quot;" />
     <Feature
       Code="&quot;PartnersRestrictions&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;CreditLimitSetting.Features.PartnersRestrictions&quot;"
-      FeatureDefaultText="&quot;Partners Restrictions&quot;"
       IsPackagable="false"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;CreditLimitSetting.Features.PartnersRestrictions&quot;"
+      FeatureDefaultText="&quot;Partners Restrictions&quot;" />
   </AdditionalFeatures>
 </entity>

@@ -5558,11 +5558,11 @@
     <Feature
       Code="&quot;NEWSHIPPINGLINE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;ShippingLine.Features.NewShippingline&quot;"
-      FeatureDefaultText="&quot;New Shipping line&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ShippingLine.Features.NewShippingline&quot;"
+      FeatureDefaultText="&quot;New Shipping line&quot;" />
   </AdditionalFeatures>
 </entity>

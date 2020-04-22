@@ -979,20 +979,20 @@
     <Feature
       Code="&quot;WebhookKeys&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;WebhookKeys.Features.WebhookKeys&quot;"
-      FeatureDefaultText="&quot;Webhook Keys&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;WebhookKeys.Features.WebhookKeys&quot;"
+      FeatureDefaultText="&quot;Webhook Keys&quot;" />
     <Feature
       Code="&quot;WebhookKeysTester&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;WebhookKeys.Features.WebhookKeysTester&quot;"
-      FeatureDefaultText="&quot;Webhook Keys Tester&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;WebhookKeys.Features.WebhookKeysTester&quot;"
+      FeatureDefaultText="&quot;Webhook Keys Tester&quot;" />
   </AdditionalFeatures>
 </entity>

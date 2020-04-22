@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CreditLimitSettingUpdateClass
    {  		
-		public const string HashString = "8a4595072affbd585c6f0480f2351c4e";
+		public const string HashString = "b9966b0032244da8a5d7c709b966da71";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

@@ -38,7 +38,6 @@
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Address&quot;"
   Code="&quot;5358&quot;"
-
   Name="&quot;Address&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"

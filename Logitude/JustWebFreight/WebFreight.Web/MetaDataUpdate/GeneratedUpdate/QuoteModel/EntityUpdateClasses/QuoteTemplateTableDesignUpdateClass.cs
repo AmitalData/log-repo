@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateTableDesignUpdateClass
    {  		
-		public const string HashString = "3fd906f5906381837ab2bf23c09b7f35";
+		public const string HashString = "a71a8397fee33e7a244830b4bbec1ac1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -166,12 +166,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable QuoteTemplateTableDesignObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTemplateTableDesign" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature QuoteTemplateTableDesignFeature_Module = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteTemplateTableDesignObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplateTableDesign.Features.Module", NameTextCodeDefaultText = @"QuoteTemplateTableDesign Package Feature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-
    
 	    
 		}

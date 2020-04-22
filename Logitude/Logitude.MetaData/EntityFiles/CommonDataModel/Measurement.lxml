@@ -1030,4 +1030,15 @@
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;Measurement.M.Measurements&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      IsPackagable="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      FeatureTextCodeCode="&quot;Measurement.Features.Measurements&quot;"
+      FeatureDefaultText="&quot;Measurements&quot;" />
+  </AdditionalFeatures>
 </entity>

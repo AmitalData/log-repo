@@ -2553,29 +2553,29 @@
     <Feature
       Code="&quot;COPYATSIGNUP&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;QuoteTemplate.Features.CopyAtSignup&quot;"
-      FeatureDefaultText="&quot;Copy At Signup&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;QuoteTemplate.Features.CopyAtSignup&quot;"
+      FeatureDefaultText="&quot;Copy At Signup&quot;" />
     <Feature
       Code="&quot;ENABLEDFORCUSTOMERS&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;QuoteTemplate.Features.EnabledForCustomers&quot;"
-      FeatureDefaultText="&quot;Enabled For Customers&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;QuoteTemplate.Features.EnabledForCustomers&quot;"
+      FeatureDefaultText="&quot;Enabled For Customers&quot;" />
     <Feature
       Code="&quot;FROMLIBRARY&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;QuoteTemplate.Features.FromLibrary&quot;"
-      FeatureDefaultText="&quot;Add From Library&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;QuoteTemplate.Features.FromLibrary&quot;"
+      FeatureDefaultText="&quot;Add From Library&quot;" />
   </AdditionalFeatures>
 </entity>

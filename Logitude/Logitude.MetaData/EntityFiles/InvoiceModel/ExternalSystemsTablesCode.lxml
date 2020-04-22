@@ -798,11 +798,11 @@
     <Feature
       Code="&quot;EXTERNALSYSTEMSTABLESCODES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;ExternalSystemsTablesCode.Features.ExternalSystemsTablesCodes&quot;"
-      FeatureDefaultText="&quot;External Tables Codes&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;ExternalSystemsTablesCode.Features.ExternalSystemsTablesCodes&quot;"
+      FeatureDefaultText="&quot;External Tables Codes&quot;" />
   </AdditionalFeatures>
 </entity>

@@ -8408,29 +8408,29 @@
     <Feature
       Code="&quot;CHAMP&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Airline.Features.Champ&quot;"
-      FeatureDefaultText="&quot;Champ&quot;"
       IsPackagable="true"
-      IsOld="true"
+      IsBusinessUnitEnabled="false"
+      IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Airline.Features.Champ&quot;"
+      FeatureDefaultText="&quot;Champ&quot;" />
     <Feature
       Code="&quot;NEWAIRLINE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Airline.Features.NewAirline&quot;"
-      FeatureDefaultText="&quot;New Airline&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Airline.Features.NewAirline&quot;"
+      FeatureDefaultText="&quot;New Airline&quot;" />
     <Feature
       Code="&quot;RegistrationNotes&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
-      FeatureTextCodeCode="&quot;Airline.Features.RegistrationNotes&quot;"
-      FeatureDefaultText="&quot;Registration Notes&quot;"
       IsPackagable="true"
+      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
+      FeatureTextCodeCode="&quot;Airline.Features.RegistrationNotes&quot;"
+      FeatureDefaultText="&quot;Registration Notes&quot;" />
   </AdditionalFeatures>
 </entity>
