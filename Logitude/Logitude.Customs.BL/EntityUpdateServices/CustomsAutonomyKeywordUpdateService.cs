@@ -33,7 +33,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var poco = (this.Repository as CustomsAutonomyKeywordRepository).GetBykeywordList(entityPM.KeywordsList, entityPM.Tenant);
             if (poco != null)
             {
-                throw new Exception($"Insert {entityPM.KeywordsList} not allowed !! Due already exist (KeywordsList:{entityPM.KeywordsList})");
+                throw new Exception($"מילת מפתח זו קיימת כבר- לא ניתן להזין מילת מפתח כפולה");
             }
             entityPM.Id= IdCounter.GetNumber("Customs.CustomsAutonomyKeyword", entityPM.Tenant);
             base.OnCreating(entityPM, entityParentPM);
@@ -45,7 +45,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var poco = (this.Repository as CustomsAutonomyKeywordRepository).GetBykeywordList(entityPM.KeywordsList, entityPM.Tenant);
                 if (poco != null)
                 {
-                    throw new Exception($"Update {entityPM.KeywordsList} not allowed !! Due already exist (KeywordsList:{entityPM.KeywordsList})");
+                    throw new Exception($"מילת מפתח זו קיימת כבר- לא ניתן להזין מילת מפתח כפולה");
                 }
             }
             base.OnUpdating(entityPM, entityPOCO);
