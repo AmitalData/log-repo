@@ -49,7 +49,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UpdateReasonName, 
 	         UpdateTypeCode, 
 	         UpdateTypeName, 
-	         Id,
+	         Id, 
+	         CanToAdd,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

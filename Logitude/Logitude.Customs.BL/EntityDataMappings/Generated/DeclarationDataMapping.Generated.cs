@@ -290,6 +290,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsMissMandatoryDiamond, 
 	         IsValidTicketsDiamond, 
 	         AvailabilityDate, 
+	         AutomaticPayment, 
 	         CourierManifestStatusCode, 
 	         CourierPaymentStatusCode,
 	      }
