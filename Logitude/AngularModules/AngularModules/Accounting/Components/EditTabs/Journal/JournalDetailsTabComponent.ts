@@ -899,26 +899,30 @@ class JournalLineModel extends BaseComponent {
     AmountChanged(type,localAmount,foreignAmount){
         console.log("[AmountChanged] local: ", localAmount, ", foreign: ", foreignAmount);
 
+        if (type == 'local')
+            this.isLocalEntered = !AppTool.IsNullOrEmpty(localAmount);
+
+        if (type == 'foreign')
+            this.isForeignEntered = !AppTool.IsNullOrEmpty(foreignAmount);
+
         // local amount entered
         if (type == 'local' && AppTool.IsNullOrEmpty(localAmount)){
-            this.isLocalEntered = !AppTool.IsNullOrEmpty(localAmount);
             this.LocalAmount = AppTool.IsNullOrEmpty(localAmount) ? null : localAmount;
         }
 
         // foreign amount entered
         if (type == 'foreign' && AppTool.IsNullOrEmpty(foreignAmount)){
-            this.isForeignEntered = !AppTool.IsNullOrEmpty(foreignAmount);
             this.ForeignAmount = AppTool.IsNullOrEmpty(foreignAmount) ? null : foreignAmount;
         }
 
         // local amount entered and foreign is null
-        if (!AppTool.IsNullOrEmpty(localAmount) && AppTool.IsNullOrEmpty(this.ForeignAmount) && this.currencyRate){
+        if (type == 'local'  && !this.isForeignEntered && this.currencyRate){
             this.LocalAmount = localAmount;
             this.ForeignAmount = localAmount / this.currencyRate;
         }
 
         // foreign amount entered and local is null
-        if (!AppTool.IsNullOrEmpty(foreignAmount) && AppTool.IsNullOrEmpty(this.LocalAmount) && this.currencyRate){
+        if (type == 'foreign' && !this.isLocalEntered && this.currencyRate){
             this.ForeignAmount = foreignAmount;
             this.LocalAmount = foreignAmount * this.currencyRate;
         }
