@@ -63,7 +63,7 @@
                 <td [hidden]="IsSchedulerReport" style="width:16px"><div style="width:16px"></div></td>
 
                 <td *ngIf="IsShowExportPrinttoPDF" style="width:68px;vertical-align:middle;">
-                    <button [disabled]="!IsEditingEnabled || IsExcelOnly" style="width:68px" class="Button" (click)="PrintToPDF()">
+                    <button [disabled]="!IsEditingEnabled" style="width:68px" class="Button" (click)="PrintToPDF()">
                         <table class="LeftCenter">
                             <tr>
                                 <td style="width:5px">
@@ -302,7 +302,7 @@
 
         <div   *ngIf="!IsShowStimulImage" style="width:100%;height:100%;">
            <div style="height:50px"></div>
-          <div style="text-align:center;font-size:17px">The report is too large to preview. You can download to excel from <a  (click)="DownloadExcelOnly()" style="font-size:17px">here</a>.</div>  
+          <div style="text-align:center;font-size:14px">The report is too large to preview. To download, please click on Save button.</div>  
         </div>
 
 
