@@ -141,10 +141,9 @@ export class StimulsoftViewerComponent implements OnInit {
 
 
     IsShowStimulImage: boolean = true;
-    IsExcelOnly: boolean = false;
     SetStimualData() {
 
-        var isExcelOnly = this.IsExcelOnly = this.StimulsoftArgData.ReportFliter ? this.StimulsoftArgData.ReportFliter.ExcelOnly : false;
+        var isExcelOnly = this.StimulsoftArgData.ReportFliter ? this.StimulsoftArgData.ReportFliter.ExcelOnly : false;
 
         this.IsShowStimulImage = !isExcelOnly;
         if (this.StimulsoftArgData.ShowStimulHeader) this.Headervisibility = "block";
@@ -813,8 +812,8 @@ export class StimulsoftViewerComponent implements OnInit {
     }
 
     DownloadExcelOnly() {
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=ExcelOnly"
-        window.open(url);
+        //var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=ExcelOnly"
+        //window.open(url);
 
     }
 
