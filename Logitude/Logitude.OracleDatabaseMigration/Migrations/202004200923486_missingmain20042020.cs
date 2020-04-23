@@ -76,11 +76,6 @@ namespace Logitude.OracleDatabaseMigration.Migrations
             AddColumn("dbo.WarehouseReleasePackages", "IsCanceled", c => c.Boolean(nullable: false));
             AddColumn("dbo.WarehouseReleases", "TruckerId", c => c.String(maxLength: 15, unicode: false));
             AddColumn("dbo.WarehouseReleases", "TruckerReference", c => c.String(maxLength: 15, unicode: false));
-            //AlterColumn("dbo.AccountingSettings", "QBOAccessToken", c => c.String());
-            //AlterColumn("dbo.AccountingSettings", "QBOAccessTokenSecret", c => c.String());
-            //AlterColumn("dbo.Quotes", "CustomerName", c => c.String(maxLength: 100));
-            //AlterColumn("dbo.DWObjectFieldCategories", "Id", c => c.String(nullable: false, maxLength: 15, unicode: false));
-            //AlterColumn("dbo.Reports", "ReportGroupId", c => c.String(maxLength: 128));
             AddPrimaryKey("dbo.DWObjectFieldCategories", "Id");
             CreateIndex("dbo.AccountingSettings", "TransferFTPDetailId");
             CreateIndex("dbo.Tickets", "QuoteId");

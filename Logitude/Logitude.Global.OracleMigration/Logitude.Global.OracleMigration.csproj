@@ -103,6 +103,10 @@
     <Compile Include="Migrations\202004200916445_missingglobal20042020.Designer.cs">
       <DependentUpon>202004200916445_missingglobal20042020.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004231309243_missing2304202.cs" />
+    <Compile Include="Migrations\202004231309243_missing2304202.Designer.cs">
+      <DependentUpon>202004231309243_missing2304202.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -141,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004200916445_missingglobal20042020.resx">
       <DependentUpon>202004200916445_missingglobal20042020.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004231309243_missing2304202.resx">
+      <DependentUpon>202004231309243_missing2304202.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
