@@ -11591,6 +11591,10 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_customer = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Customer").FirstOrDefault();
             QueryFilterItem filterItem_vendor = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Vendor").FirstOrDefault();
             QueryFilterItem filterItem_Category1 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category1").FirstOrDefault();
+            QueryFilterItem filterItem_Category2 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category2").FirstOrDefault();
+            QueryFilterItem filterItem_Category3 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category3").FirstOrDefault();
+            QueryFilterItem filterItem_Category4 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category4").FirstOrDefault();
+            
             QueryFilterItem filterItem_ChartOfAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountId").FirstOrDefault();
             QueryFilterItem filterItem_UseZeroFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "UseBalanceFilter").FirstOrDefault();
             QueryFilterItem filterItem_Category5 = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Category5").FirstOrDefault();
@@ -11622,8 +11626,34 @@ namespace WebFreight.Web.ReportsWebServices
                     category1 = (string)filterItem_Category1.FieldValue;
                 }
             }
-
             //category2
+            string category2 = null;
+            if (filterItem_Category2 != null)
+            {
+                if (filterItem_Category2.FieldValue != null)
+                {
+                    category2 = (string)filterItem_Category2.FieldValue;
+                }
+            }
+            //category3
+            string category3 = null;
+            if (filterItem_Category3 != null)
+            {
+                if (filterItem_Category3.FieldValue != null)
+                {
+                    category3 = (string)filterItem_Category3.FieldValue;
+                }
+            }
+            //category1
+            string category4 = null;
+            if (filterItem_Category4 != null)
+            {
+                if (filterItem_Category4.FieldValue != null)
+                {
+                    category4 = (string)filterItem_Category4.FieldValue;
+                }
+            }
+            //category5
             string category5 = null;
             if (filterItem_Category5 != null)
             {
@@ -11722,6 +11752,9 @@ namespace WebFreight.Web.ReportsWebServices
                 DetailedControlVendors = vendor,
                 DetailedControlClients = customer,
                 Category1 = category1,
+                Category2 = category2,
+                Category3 = category3,
+                Category4 = category4,
                 Category5 = category5,
                 Suppress_DoNotShowCardWithoutActivity = useZeroFilter,
                 IsRevenueExpenseReport = false,
@@ -11770,6 +11803,9 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.Category1 = null;
+                trailReportParam.Category2 = null;
+                trailReportParam.Category3 = null;
+                trailReportParam.Category4 = null;
                 trailReportParam.Category5 = null;
                 trailReportParam.MyTrailReportLevel = ReportLevel.ChartofaccountType;
                 var typeservice = TrailReportFactory.CreateNew(trailReportParam);
@@ -11837,6 +11873,9 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.Category1 = null;
+                trailReportParam.Category2 = null;
+                trailReportParam.Category3 = null;
+                trailReportParam.Category4 = null;
                 trailReportParam.Category5 = null;
                 trailReportParam.MyTrailReportLevel = ReportLevel.Chartofaccount;
                 var service = TrailReportFactory.CreateNew(trailReportParam);
@@ -12273,6 +12312,9 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlClients = customer;
                 trailReportParam.CurrenciesDetailed = currency;
                 trailReportParam.Category1 = category1;
+                trailReportParam.Category2 = category2;
+                trailReportParam.Category3 = category3;
+                trailReportParam.Category4 = category4;
                 trailReportParam.Category5 = category5;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = useZeroFilter;
