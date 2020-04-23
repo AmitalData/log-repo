@@ -829,7 +829,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHEL":
                     {
-                        LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
+                        dataProvider=  LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
                         break;
                     }
 
