@@ -44,9 +44,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     public partial class CustomsAutonomyKeywordsController : ApiController
     {
 
-        
 
-        public HttpResponseMessage GetByKeywordtypeCode(string KeywordtypeCode,int tenant)
+
+        public HttpResponseMessage GetByKeywordtypeCode(string KeywordtypeCode, int tenant)
         {
             try
             {
@@ -71,7 +71,41 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+        public HttpResponseMessage DeleteById(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        int tenant = authToken.Tenant;
 
+                        ICustomContext MyContext = CustomContext.GetContext(tenant);
+                        var queryService = new CustomsAutonomyKeywordQueryService(MyContext);
+                        var entityPM = queryService.GetSingle(id, false, false);
+                        var service = new CustomsAutonomyKeywordUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                        service.Update(entityPM, true);
 
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
     }
 }
+
+    

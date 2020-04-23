@@ -29,6 +29,12 @@ namespace Logitude.Customs.Data.Repsitories
                 .FirstOrDefault(r => r.KeywordtypeCode == keywordtypeCode)
                 ;
         }
+        public CustomsAutonomyKeyword GetBykeywordList(string keywordsList, int tenant)
+        {
+            return 
+            this.GetAll(tenant).FirstOrDefault(r => r.KeywordsList == keywordsList)
+                ;
+        }
     }
 
 }

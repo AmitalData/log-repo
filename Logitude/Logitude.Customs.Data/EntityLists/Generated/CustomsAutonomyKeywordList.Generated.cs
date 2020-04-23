@@ -24,6 +24,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string KeywordsList  { get; set; }
        [DataMember]
        public string KeywordtypeLocalName  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public bool Delete  { get; set; }
    }
 
 }
