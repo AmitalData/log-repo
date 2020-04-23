@@ -485,8 +485,8 @@ export class MaintenanceComponent {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "CSM";
             item.Icon = "Settings"
-            item.Code = "CSRA";
-            item.ObjectTableName = "Re-request Analysis";
+             item.Code = "CSRA";
+             item.TextCode = "General.MC.Customs.ReAnalysis";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
         }
