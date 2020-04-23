@@ -1059,7 +1059,7 @@ namespace Logitude.DBMigrations.Models
 
             if (!String.IsNullOrEmpty(defaultValue))
             {
-                if (defaultValue.ToLower() == "CurrentDate".ToLower())
+                if ((type == "datetime" || type == "date") && defaultValue.ToLower() == "CurrentDate".ToLower())
                 {
                     return " DEFAULT(GETDATE())";
                 }
@@ -1068,6 +1068,11 @@ namespace Logitude.DBMigrations.Models
             }
 
             return null;
+        }
+
+        protected override string FormatDateTimeDefaultValue(string defaultValue, bool isDateTime)
+        {
+            return defaultValue;
         }
 
         protected override string GetAddDefaultScript(ColumnMigration columnMigration)

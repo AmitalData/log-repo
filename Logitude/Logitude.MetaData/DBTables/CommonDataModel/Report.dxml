@@ -152,5 +152,5 @@
     ForeignKeyColumn="DefaultMessageTemplateId"
     ReferencedTable="ReportsTemplates"
     ReferencedColumn="Id"
-    ReferencedTableSchema="" />
+    ReferencedTableSchema="dbo" />
 </Table>

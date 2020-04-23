@@ -48,8 +48,8 @@
   </Column>
   <Column
     Name="ApprovedProfessionCode"
-    Type="nvarchar"
-    Size="128">
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -126,7 +126,7 @@
     ForeignKeyColumn="ApprovedProfessionCode"
     ReferencedTable="ApprovedProfessions"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="DecisionCode"
     ReferencedTable="DecisionTypes"

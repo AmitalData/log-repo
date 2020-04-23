@@ -215,7 +215,7 @@ namespace Logitude.DBMigrations.Models
             string queryString = "SELECT IND_COL.COLUMN_NAME AS \"ColumnName\", IND.INDEX_NAME AS \"IndexName\", IND_COL.COLUMN_POSITION AS \"KeyOrder\" " +
                                  "FROM USER_INDEXES IND " +
                                  "INNER JOIN USER_IND_COLUMNS IND_COL ON IND.INDEX_NAME = IND_COL.INDEX_NAME " +
-                                 "WHERE IND.UNIQUENESS = 'NONUNIQUE' AND IND.TABLE_NAME = :tableName";
+                                 "WHERE IND.TABLE_NAME = :tableName";
 
             List<IndexDefinition> indexes = new List<IndexDefinition>();
 
@@ -431,8 +431,8 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            string relationForeignKeyColumn = !relation.ForeignKeyColumn.Contains(",") ? FormatNameLength(relation.ForeignKeyColumn, DXMLTable.Columns.Where(c => c.Name == relation.ForeignKeyColumn).First().ShortName) : string.Join(",", relation.ForeignKeyColumn.Split(',').Select(fc => FormatNameLength(fc, DXMLTable.Columns.Where(c => c.Name == fc).First().ShortName)).ToArray()).ToLower();
-            string relationReferencedColumn = !relation.ReferencedColumn.Contains(",") ? FormatNameLength(relation.ReferencedColumn, DXMLTables.Where(t => t.Name.ToLower() == relation.ReferencedTable).First().Columns.Where(c => c.Name.ToLower() == relation.ReferencedColumn).First().ShortName) : string.Join(",", relation.ReferencedColumn.Split(',').Select(rc => FormatNameLength(rc, DXMLTables.Where(t => t.Name.ToLower() == relation.ReferencedTable).First().Columns.Where(c => c.Name.ToLower() == rc).First().ShortName)).ToArray()).ToLower();
+            string relationForeignKeyColumn = (!relation.ForeignKeyColumn.Contains(",") ? FormatNameLength(relation.ForeignKeyColumn, DXMLTable.Columns.Where(c => c.Name == relation.ForeignKeyColumn).First().ShortName) : string.Join(",", relation.ForeignKeyColumn.Split(',').Select(fc => FormatNameLength(fc, DXMLTable.Columns.Where(c => c.Name == fc).First().ShortName)).ToArray())).ToLower();
+            string relationReferencedColumn = (!relation.ReferencedColumn.Contains(",") ? FormatNameLength(relation.ReferencedColumn, DXMLTables.Where(t => t.Name.ToLower() == relation.ReferencedTable).First().Columns.Where(c => c.Name.ToLower() == relation.ReferencedColumn).First().ShortName) : string.Join(",", relation.ReferencedColumn.Split(',').Select(rc => FormatNameLength(rc, DXMLTables.Where(t => t.Name.ToLower() == relation.ReferencedTable).First().Columns.Where(c => c.Name.ToLower() == rc).First().ShortName)).ToArray())).ToLower();
             string relationReferencedTable = FormatNameLength(relation.ReferencedTable, DXMLTables.Where(t => t.Name.ToLower() == relation.ReferencedTable).First().ShortName).ToLower();
 
             bool isRelationInCurrentTable = CurrentTable.Relations.Where(r => r.ForeignKeyColumn == relationForeignKeyColumn && r.ReferencedTable == relationReferencedTable && r.ReferencedColumn == relationReferencedColumn).Any();
@@ -452,18 +452,32 @@ namespace Logitude.DBMigrations.Models
 
         protected override bool IsIndexInCurrentTable(IndexDefinition index)
         {
-            string indexColumns = !index.Columns.Contains(",") ? FormatNameLength(index.Columns, DXMLTable.Columns.Where(c => c.Name == index.Columns).First().ShortName) : string.Join(",", index.Columns.Split(',').Select(ic => FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName)).ToArray()).ToLower();
+            string indexColumns = (!index.Columns.Contains(",") ? FormatNameLength(index.Columns, DXMLTable.Columns.Where(c => c.Name == index.Columns).First().ShortName) : string.Join(",", index.Columns.Split(',').Select(ic => FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName)).ToArray())).ToLower();
             return CurrentTable.Indexes.Where(i => i.Columns == indexColumns).Any();
         }
 
         protected override bool IsIndexInDXMLTable(IndexDefinition index)
         {
+            if(DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
+            {
+                string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
+                if (index.Columns == dxmlPrimaryKeyColumns)
+                {
+                    return true;
+                }
+            }
+
+            if(DXMLTable.UniqueConstraints.Where(u => (!u.Columns.Contains(",") ? FormatNameLength(u.Columns, DXMLTable.Columns.Where(c => c.Name == u.Columns).First().ShortName) : string.Join(",", u.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())) == index.Columns).Any())
+            {
+                return true;
+            }
+
             return DXMLTable.Indexes.Where(i => (!i.Columns.Contains(",") ? FormatNameLength(i.Columns, DXMLTable.Columns.Where(c => c.Name == i.Columns).First().ShortName) : string.Join(",", i.Columns.Split(',').Select(ic => FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName)).ToArray())) == index.Columns).Any();
         }
 
         protected override bool IsUniqueConstraintInCurrentTable(UniqueConstraintDefinition uniqueConstraint)
         {
-            string uniqueConstraintColumns = !uniqueConstraint.Columns.Contains(",") ? FormatNameLength(uniqueConstraint.Columns, DXMLTable.Columns.Where(c => c.Name == uniqueConstraint.Columns).First().ShortName) : string.Join(",", uniqueConstraint.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray()).ToLower();
+            string uniqueConstraintColumns = (!uniqueConstraint.Columns.Contains(",") ? FormatNameLength(uniqueConstraint.Columns, DXMLTable.Columns.Where(c => c.Name == uniqueConstraint.Columns).First().ShortName) : string.Join(",", uniqueConstraint.Columns.Split(',').Select(uc => FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName)).ToArray())).ToLower();
             return CurrentTable.UniqueConstraints.Where(u => u.Columns == uniqueConstraintColumns).Any();
         }
 
@@ -848,16 +862,12 @@ namespace Logitude.DBMigrations.Models
 
             string createRelationWithHistoryScript = createRelationScript + GetInsertScriptForMigrationsHistory("Create Relation", parentTable, foreignKeyColumns.Replace("\"", String.Empty), createRelationScript);
 
-            string createIndexScript = null;
-            if (CurrentTable == null || (CurrentTable != null && CurrentTable.AllIndexes.Where(i => i.Columns == foreignKeyColumns.Replace("\"", String.Empty)).FirstOrDefault() == null))
+            IndexDefinition relationIndex = new IndexDefinition
             {
-                IndexDefinition relationIndex = new IndexDefinition
-                {
-                    Columns = foreignKeyColumns.Replace("\"", String.Empty)
-                };
+                Columns = relation.ForeignKeyColumn
+            };
 
-                createIndexScript = GetCreateIndexScript(relationIndex);
-            }
+            string createIndexScript = GetCreateIndexScript(relationIndex);
 
             return createRelationWithHistoryScript + createIndexScript;
         }
@@ -909,15 +919,33 @@ namespace Logitude.DBMigrations.Models
 
             if (!String.IsNullOrEmpty(defaultValue))
             {
-                if (defaultValue.ToLower() == "CurrentDate".ToLower())
+                if ((type == "datetime" || type == "date") && defaultValue.ToLower() == "CurrentDate".ToLower())
                 {
                     return " DEFAULT SYSDATE";
+                }
+
+                if((type == "datetime" || type == "date") && defaultValue.ToLower() != "CurrentDate".ToLower())
+                {
+                    return " DEFAULT " + (type == "datetime" ? "TIMESTAMP " : "DATE ") + FormatDateTimeDefaultValue(defaultValue, (type == "datetime"));
                 }
 
                 return " DEFAULT " + defaultValue;
             }
 
             return null;
+        }
+
+        protected override string FormatDateTimeDefaultValue(string defaultValue, bool isDateTime)
+        {
+            DateTime dateTime;
+            if (DateTime.TryParse(defaultValue.Replace("'", String.Empty), out dateTime))
+            {
+                return "'" + dateTime.ToString(isDateTime ? "yyyy-MM-dd hh:mm:ss" : "yyyy-MM-dd") + "'";
+            }
+            else
+            {
+                return isDateTime ? "'1900-01-01 12:00:00'" : "'1900-01-01'";
+            }
         }
 
         protected override string GetAddDefaultScript(ColumnMigration columnMigration)
@@ -950,23 +978,41 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateIndexScript(IndexDefinition index)
         {
-            string tableName = FormatNameLength(DXMLTable.Name, DXMLTable.ShortName).ToUpper();
-            string indexColumns = (!index.Columns.Contains(",") ? "\"" + index.Columns + "\"" : string.Join(",", index.Columns.Split(',').Select(c => "\"" + c + "\"").ToArray())).ToUpper();
-            string createIndexScript = "-- Create Index On " + tableName + " Table\n";
-            string indexName = FormatNameLength("IX_" + tableName + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
+            if (CurrentTable == null || (CurrentTable != null && CurrentTable.AllIndexes.Where(i => i.Columns == index.Columns).FirstOrDefault() == null))
+            {
+                bool createIndex = true;
+                if (CurrentTable == null && DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
+                {
+                    string dxmlPrimaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => FormatNameLength(c.Name, c.ShortName)).ToArray());
+                    if (dxmlPrimaryKeyColumns == index.Columns)
+                    {
+                        createIndex = false;
+                    }
+                }
 
-            createIndexScript += "CREATE INDEX " + "\"" + indexName + "\"" + " ON " + "\"" + tableName + "\"" + "(" + indexColumns + ")";
-            createIndexScript += ";\n\n";
+                if (createIndex)
+                {
+                    string tableName = FormatNameLength(DXMLTable.Name, DXMLTable.ShortName).ToUpper();
+                    string indexColumns = (!index.Columns.Contains(",") ? "\"" + FormatNameLength(index.Columns, DXMLTable.Columns.Where(c => c.Name == index.Columns).First().ShortName) + "\"" : string.Join(",", index.Columns.Split(',').Select(ic => "\"" + FormatNameLength(ic, DXMLTable.Columns.Where(c => c.Name == ic).First().ShortName) + "\"").ToArray())).ToUpper();
+                    string createIndexScript = "-- Create Index On " + tableName + " Table\n";
+                    string indexName = FormatNameLength("IX_" + tableName + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
 
-            string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", tableName, indexColumns.Replace("\"", String.Empty), createIndexScript);
+                    createIndexScript += "CREATE INDEX " + "\"" + indexName + "\"" + " ON " + "\"" + tableName + "\"" + "(" + indexColumns + ")";
+                    createIndexScript += ";\n\n";
 
-            return addIndexWithHistoryScript;
+                    string addIndexWithHistoryScript = createIndexScript + GetInsertScriptForMigrationsHistory("Create Index", tableName, indexColumns.Replace("\"", String.Empty), createIndexScript);
+
+                    return addIndexWithHistoryScript;
+                }
+            }
+
+            return null;
         }
 
         protected override string GetCreateUniqueConstraintScript(UniqueConstraintDefinition uniqueConstraint)
         {
             string tableName = FormatNameLength(DXMLTable.Name, DXMLTable.ShortName).ToUpper();
-            string uniqueConstraintColumns = (!uniqueConstraint.Columns.Contains(",") ? "\"" + uniqueConstraint.Columns + "\"" : string.Join(",", uniqueConstraint.Columns.Split(',').Select(c => "\"" + c + "\"").ToArray())).ToUpper();
+            string uniqueConstraintColumns = (!uniqueConstraint.Columns.Contains(",") ? "\"" + FormatNameLength(uniqueConstraint.Columns, DXMLTable.Columns.Where(c => c.Name == uniqueConstraint.Columns).First().ShortName) + "\"" : string.Join(",", uniqueConstraint.Columns.Split(',').Select(uc => "\"" + FormatNameLength(uc, DXMLTable.Columns.Where(c => c.Name == uc).First().ShortName) + "\"").ToArray())).ToUpper();
             string createUniqueConstraintScript = "-- Create Unique Constraint On " + tableName + " Table\n";
             string uniqueConstraintName = FormatNameLength("UQ_" + tableName + "_" + (!uniqueConstraintColumns.Contains(",") ? uniqueConstraintColumns : string.Join("_", uniqueConstraintColumns.Split(',').ToArray())).Replace("\"", String.Empty), null).ToUpper();
 
