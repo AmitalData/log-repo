@@ -45,7 +45,7 @@ export class ExceptionReasonExtendedListService {
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.delete(this._apiUrl + '/DeleteExceptionReasonByUnifreightStatus/?' + 'courierPendingReasonList=' + exceptionReasonCode, { headers: authHeader }).map(response => {
+            return this._http.delete(this._apiUrl + '/DeleteExceptionReasonByUnifreightStatus/?' + 'ExceptionReasonCode=' + exceptionReasonCode, { headers: authHeader }).map(response => {
                 var myJsonResult = response.json();
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;

@@ -73,7 +73,7 @@ export class FieldTemplateComponent {
             var myComponentPath = "./Customs/Components/Spotlight/ReferantSpotlightDataTemplate";
             SessionLocator.DynamicLoader.Load(myComponentPath, this.SpotLightViewContainerRef)
                 .then(cmpRef => {
-                    cmpRef.instance.Run(this.Entity);
+                    cmpRef.instance.Run(this.Entity, this.SpotLightViewContainerRef);
                 });
 
         }

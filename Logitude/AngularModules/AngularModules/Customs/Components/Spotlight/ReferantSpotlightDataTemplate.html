@@ -17,7 +17,7 @@
                                                 [ItemSource]="ReferantExceptionItemsSource"
                                                 (SelectedItemChanged)="OnRowSelected($event)"
                                                 [SelectedRow]="SelectedRow">
-                                <!-- CourierPendingReasonCode -->
+                                <!-- ExceptionReasonsCode -->
                                 <log-column [header]="'Customs.DeclarationReferantData.O.ExceptionReasonsCode '| TextCodeTranslationPipe" [width]="'130'" [Alignment]="'center'">
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
@@ -89,7 +89,20 @@
                                        [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                     </td>
                     <td style="width:10%; right:250px; top:15px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <!--  NEW FEATURE CHANGE COLOR ON CHANCE -->
+                        <!--<button *ngIf="EntityPM && EntityPM.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">
+        {{'General.B.Ok' | TextCodeTranslationPipe}}
+        <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
+        <img src="./Images/RedX2.png" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
+    </button>.
+    <button *ngIf="EntityPM && !EntityPM.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">
+        <img class="CenterCenter" src="./Images/Buttons/Save.png" />
+        <img src="./Images/RedX2.png" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
+    </button>
+        --->
+                        <button class="RedButton" *ngIf="this.spotlightSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" *ngIf="!this.spotlightSharedDataService.IsDirty" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+
                     </td>
                 </tr>
             </table>
