@@ -316,7 +316,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                     M_BankBelongtoDifferentBankThanLedger//"אין תאימות דף הבנק שייך לבנק אחר הנשלף מהתנועה"
                     );
             }
-            if (this._ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant)== bankAccountFromTransfer.CurrencyId)
+            if (bankAccountFromTransfer != null && this._ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant)== bankAccountFromTransfer.CurrencyId)
             {
                 if (myLedgerTransactionBankTransferPM.LocalAmountCredit != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
                 {
