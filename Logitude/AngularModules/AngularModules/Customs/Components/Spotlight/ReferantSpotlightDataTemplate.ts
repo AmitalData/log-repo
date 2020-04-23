@@ -44,7 +44,7 @@ export class ReferantSpotlightDataTemplate
     private _referantExceptionExtendedPMService: ReferantExceptionExtendedPMService = new ReferantExceptionExtendedPMService();
 
 
-    private spotlightSharedDataService = new SpotlightSharedDataService();
+    public spotlightSharedDataService = new SpotlightSharedDataService();
     _IsReady: boolean = false;
     constructor(private EntityResourceService: EntityResourceService) {
         super();
@@ -230,7 +230,7 @@ export class ExceptionReason extends BaseComponent {
     public IsNew: boolean=false;
     public parent: ReferantSpotlightDataTemplate;
     _StatusItems: KeyValuePair[] = [];
-    constructor(entity: ReferantExceptionPM, Parent: ReferantSpotlightDataTemplate,private spotlightSharedDataService: SpotlightSharedDataService) {
+    constructor(entity: ReferantExceptionPM, Parent: ReferantSpotlightDataTemplate,public spotlightSharedDataService: SpotlightSharedDataService) {
         super();
         this.parent = Parent;
         this.EntityPM = entity;
