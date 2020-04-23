@@ -24,8 +24,17 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
+    private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
-    constructor(private _ListComponentArgs: ListComponentArgs, private CD: ChangeDetectorRef){
+    constructor(private CD: ChangeDetectorRef) {
+        if (SessionLocator.SelectedSession.CurrentListComponent != null) {
+            this._ListComponentArgs = SessionLocator.SelectedSession.CurrentListComponent._ListComponentArgs;
+        } else {
+            this._ListComponentArgs = new ListComponentArgs();
+        }
+    }
+    public ButtonClick() {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
 
     }
 
