@@ -316,12 +316,25 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                     M_BankBelongtoDifferentBankThanLedger//"אין תאימות דף הבנק שייך לבנק אחר הנשלף מהתנועה"
                     );
             }
-            if (myLedgerTransactionBankTransferPM.ForeignAmountCredit != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
+            if (this._ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant)== bankAccountFromTransfer.CurrencyId)
             {
-                err.Add(
-                    M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
-                    );
+                if (myLedgerTransactionBankTransferPM.LocalAmountCredit != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
+                {
+                    err.Add(
+                        M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
+                        );
+                }
             }
+            else
+            {
+                if (myLedgerTransactionBankTransferPM.ForeignAmountCredit != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
+                {
+                    err.Add(
+                        M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
+                        );
+                }
+            }
+         
             if (myReconcileExternalPageLinePM.DebitAmount <= 0)
             {
                 err.Add(
