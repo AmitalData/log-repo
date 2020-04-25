@@ -276,7 +276,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     //.GetByAccountingEntityId(entityPM.Id, entityPM.Tenant);
                 //10  התאמה Adjustment
                 .GetByAccountingEntityIdAndAccountingEntityCode(entityPM.Id, "10", entityPM.Tenant);
-                if (journal != null)
+                if (journal != null && IsMonthOpenForAccountingDate(journal.AccountingDate, entityPM.Tenant))
                 {
                     // Void it!
                     var tenant = entityPM.Tenant;
@@ -294,6 +294,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private bool IsMonthOpenForAccountingDate(DateTime accountingDate, int tenant)
+        {
+
+            var typeregular = "1"; //1	Regular	רגיל	1,Regular,רגיל	0
+            var accountingPeriodQueryService = new AccountingPeriodQueryService(tenant);
+            var accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodByType(typeregular, tenant); ;
+
+            return
+            JournalValidatorNotStatic
+                 .IsMonthOpenForAccountingDate(
+                accountingPeriodsByTypeRegular.AsQueryable(),
+                 new DateTime(accountingDate.Year, accountingDate.Month, 1)
+                 );
+           
         }
 
         protected override void UpdateComposition(ReconciliationPM entityPM)
