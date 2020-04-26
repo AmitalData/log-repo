@@ -1492,24 +1492,30 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         });
     }
 
-    DeletePackage(shipmentPackageItem: ShipmentPackageItem) {
-        if (shipmentPackageItem) {
-            if (shipmentPackageItem.EntityPM.ShipmentPackageItems != null) {
-                shipmentPackageItem.EntityPM.ShipmentPackageItems.forEach(itemPackage => {
-                    shipmentPackageItem.EntityPM.RemoveShipmentPackageItemPM(itemPackage);
-                });
-            }
+  DeletePackage(shipmentPackageItem: ShipmentPackageItem) {
+    if (shipmentPackageItem) {
 
-            if (shipmentPackageItem.EntityPM.InsideShipmentPackages != null) {
-                shipmentPackageItem.EntityPM.InsideShipmentPackages.forEach(itemInside => {
-                    shipmentPackageItem.EntityPM.RemoveInsideShipmentPackagePM(itemInside);
-                });
-            }
+      if (shipmentPackageItem == this.SelectedRow) {
+        this.SelectedRow = null;
+        this.SetUIProperties_InsideButton();
 
-            this.EntityPM.RemovePackage(shipmentPackageItem.EntityPM);
-            this.ItemsSource.Remove(shipmentPackageItem);
-        }
+      }
+      if (shipmentPackageItem.EntityPM.ShipmentPackageItems != null) {
+        shipmentPackageItem.EntityPM.ShipmentPackageItems.forEach(itemPackage => {
+          shipmentPackageItem.EntityPM.RemoveShipmentPackageItemPM(itemPackage);
+        });
+      }
+
+      if (shipmentPackageItem.EntityPM.InsideShipmentPackages != null) {
+        shipmentPackageItem.EntityPM.InsideShipmentPackages.forEach(itemInside => {
+          shipmentPackageItem.EntityPM.RemoveInsideShipmentPackagePM(itemInside);
+        });
+      }
+
+      this.EntityPM.RemovePackage(shipmentPackageItem.EntityPM);
+      this.ItemsSource.Remove(shipmentPackageItem);
     }
+  }
 
     DisconnectWarehouseReleaseOnShipment(shipmentPackageItem: ShipmentPackageItem) {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.WarehouseReleasesIds) && !AppTool.IsNullOrEmpty(shipmentPackageItem.EntityPM.WarehouseReleaseId)) {
