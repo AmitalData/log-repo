@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentReceivableUpdateClass
    {  		
-		public const string HashString = "e485cb2fbea4237d46838d75173a4387";
+		public const string HashString = "f710916551047157161b8cd1702c4032";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Receivable",
-			      				    Code =  "10e4",
+			      				    Code =  "6b93",
 			      				    Name =  "ShipmentReceivable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -263,7 +263,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "AmountInProfitCurrency",
 					  						ObjectTableName =  "ShipmentReceivable",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -1069,7 +1069,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "TotalAmount",
 					  						ObjectTableName =  "ShipmentReceivable",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -1131,7 +1131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "TotalAmountLocal",
 					  						ObjectTableName =  "ShipmentReceivable",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,

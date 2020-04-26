@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class AgentSharedManifestUpdateClass
    {  		
-		public const string HashString = "a9278b28b79d6e9509577c4030f690f2";
+		public const string HashString = "64765efa3a43cab8dda0964a03abf8cf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1038,7 +1038,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "GrossWeight",
 					  						ObjectTableName =  "AgentSharedManifest",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
