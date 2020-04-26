@@ -98,7 +98,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
     }
 
     Validate(dateFieldName) {
-        if (this.FromDate > this.ToDate) {
+        if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate,true)) {
 
             setTimeout(() => {
                 this.UIProperties.SetValidity("ToDate", null, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
@@ -222,7 +222,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent{
             var s: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.O.FromDate"));
             this.ValidationErrorsList.push(s);
         }
-        if (this.ToDate < this.FromDate) {
+        if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
         }
        
