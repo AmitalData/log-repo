@@ -79,6 +79,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
             courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : "";
 
             StringBuilder messageToMaman = new StringBuilder(444);
+            //courierMasterMamanModel.MAWB = courierMasterMamanModel.MAWB ?? "";
+            //courierMasterMamanModel.AirlineId = courierMasterMamanModel.AirlineId ?? "";
+            courierMasterMamanModel.HAWBShort = courierMasterMamanModel.HAWBShort ?? "";
             messageToMaman.Append(courierMasterMamanModel.MAWB.PadLeft(8,'0'));
             messageToMaman.Append(courierMasterMamanModel.AirlineId.PadRight(3));
             messageToMaman.Append(courierMasterMamanModel.HAWBShort.PadLeft(8, '0'));
