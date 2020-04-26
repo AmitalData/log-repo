@@ -1614,8 +1614,21 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             if (!string.IsNullOrEmpty(message.TransactionTypeCode)) { str.Append(message.TransactionTypeCode.PadRight(4)); }
             else { str.Append(' ', 4); }
 
-            if (message.Reference1.Length < 9) { str.Append(message.Reference1.PadLeft(8)).Append(' '); }
-            else { str.Append(message.Reference1.Substring(0, 8)).Append(' '); }
+            if (!string.IsNullOrEmpty(message.Reference1))
+            {
+                if (message.Reference1.Length < 9)
+                {
+                    str.Append(message.Reference1.PadLeft(8)).Append(' ');
+                }
+                else
+                {
+                    str.Append(message.Reference1.Substring(0, 8)).Append(' ');
+                }
+            }
+            else
+            {
+                str.Append(' ', 8);
+            }
 
             if (message.Reference2 != null)
             {
