@@ -52,6 +52,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                     }
                 }
+                var myQueryService = new DeclarationQueryService(requestParams.Tenant);
+
+                this._MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
+
+                var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(_MyDeclarationPM.Tenant);
+                var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+                if (declarationPaymentPM.AutomaticPayment == 1)
+                {
+
+
+                    var MyUnifreightEventParam = new UnifreightEventParam()
+                    {
+                        Code = "APAYF",
+                        Mode = UnifreightEventMode.@new,
+                        EventDateTime = DateTime.Now,
+                        Entname = "CFIFILEM",
+                        PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                        EventRemarks = "",
+                    };
+                    LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                    var myOpenUnifreighTask = new UnifreightEventTaskService();
+                    myOpenUnifreighTask.UpsertEventLE2U(
+                        _MyDeclarationPM.Tenant,
+                       requestParams.LoggingUserId,
+                        MyUnifreightEventParam);
+
+                }
             }
             base.OnRequestFail(customResponse, requestParams);
         }
