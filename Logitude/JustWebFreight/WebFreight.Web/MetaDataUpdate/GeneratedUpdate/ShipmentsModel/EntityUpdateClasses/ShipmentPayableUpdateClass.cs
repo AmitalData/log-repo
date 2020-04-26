@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentPayableUpdateClass
    {  		
-		public const string HashString = "13fa975963589809b263118052ac1ff6";
+		public const string HashString = "1197422a98d7895b0b723e0d42354593";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Shipment Payable",
-			      				    Code =  "1485",
+			      				    Code =  "adf0",
 			      				    Name =  "ShipmentPayable",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -200,7 +200,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "ExpectedAmount",
 					  						ObjectTableName =  "ShipmentPayable",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -265,7 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "ExpectedAmountLocal",
 					  						ObjectTableName =  "ShipmentPayable",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -460,7 +460,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "ExpectedAmountInProfitCurrency",
 					  						ObjectTableName =  "ShipmentPayable",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -1449,7 +1449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 
 					 						FieldName =  "UnitPrice",
 					  						ObjectTableName =  "ShipmentPayable",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "SigDouble",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
