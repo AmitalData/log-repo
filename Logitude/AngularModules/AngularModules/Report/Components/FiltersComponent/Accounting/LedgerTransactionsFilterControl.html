@@ -112,7 +112,7 @@
         border-bottom-left-radius: 3px;
     }
 </style>
-<table>
+<table style="height:100px">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -124,16 +124,11 @@
             {{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}
         </td>
     </tr>
-
-    <!-- Needed for report scheduler -->
-    <tr style="height: 103px;" *ngIf="!isReady">
-    </tr>
-
-
+  
     <!-- Filters and Balance -->
-    <tr style="height: 32px;" *ngIf="isReady">
+    <tr style="height:32px">
         <td colspan="4">
-            <table>
+            <table *ngIf="isReady">
 
                 <!-- Row 1 -->
                 <tr class="FieldRow">
@@ -334,7 +329,7 @@
 
                 </tr>
 
-                <tr style="height: 15px;">
+                <tr [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)" style="height: 15px;">
                     <div></div>
                 </tr>
 
