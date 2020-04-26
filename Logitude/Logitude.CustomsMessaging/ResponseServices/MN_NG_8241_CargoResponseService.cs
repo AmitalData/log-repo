@@ -41,6 +41,7 @@ using Logitude.Customs.Def.Messaging.Customs;
 using System.Globalization;
 using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -409,33 +410,62 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     else
                     {
-                        DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
-                        GenericRequestParams submitRequestParams = new GenericRequestParams();
-
-                        if (requestDate != DateTime.MinValue)
+                        try
                         {
-                            requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+                            DateTime requestDate = CheckIfBlockTime(declarationPM, declarationPaymentPM);
 
-                            submitRequestParams.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
-                            submitRequestParams.FutureSendDateTime = requestDate;
+                            using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                            {
+                                var requestParams2755 = new GenericRequestParams()
+                                {
+                                    Tenant = requestParams.Tenant,
+                                    LoggingEnabled = true,
+                                    LoggingObjectTableId = requestParams.LoggingObjectTableId,
+                                    LoggingEntityId = declarationPM.Id,
+                                    AppicationId = declarationPM.Id,
+                                    InterfaceTypeCode = "2755",
+                                    LoggingUserId = requestParams.LoggingUserId,
+                                    RequestVIA = SendRequestVIA.WebServiceBatch,
+
+                                };
+                                if (requestDate != DateTime.MinValue)
+                                {
+                                    requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+
+                                    requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
+                                    requestParams2755.FutureSendDateTime = requestDate;
+                                }
+                                SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+
+                                scopeNewCRS.Complete();
+                            }
+
                         }
-                        submitRequestParams.AppicationId = declarationPM.Id;
-                        submitRequestParams.InterfaceTypeCode = "2755";
-                        submitRequestParams.Tenant = declarationPM.Tenant;
-                        submitRequestParams.RequestVIA = SendRequestVIA.Default;
-                        submitRequestParams.LoggingUserId = requestParams.LoggingUserId;
-                        submitRequestParams.ForcePersonalSign = requestParams.ForcePersonalSign;
-
-
-                        var messagingService = new
-                            DF_NG_2755_MSG12001_SubmitDeclarationMessagingService();
-                        INF_MSG_GenericResponseData submitResponseData = messagingService.Send(submitRequestParams);
-
+                        catch (System.Exception)
+                        {
+                            var MyUnifreightEventParam = new UnifreightEventParam()
+                            {
+                                Code = "APAYF",
+                                Mode = UnifreightEventMode.@new,
+                                EventDateTime = DateTime.Now,
+                                Entname = "CFIFILEM",
+                                PrimaryNum = declarationPM.CustomFileNo,
+                                EventRemarks = "",
+                            };
+                            LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                            var myOpenUnifreighTask = new UnifreightEventTaskService();
+                            myOpenUnifreighTask.UpsertEventLE2U(
+                                declarationPM.Tenant,
+                               requestParams.LoggingUserId,
+                                MyUnifreightEventParam);
+                            throw;
+                        }
                     }
                 }
             }
 
         }
+
 
         private DateTime CheckIfBlockTime(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM)
         {

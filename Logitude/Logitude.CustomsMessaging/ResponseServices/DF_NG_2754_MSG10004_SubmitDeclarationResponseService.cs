@@ -65,7 +65,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     var MyUnifreightEventParam = new UnifreightEventParam()
                     {
-                        Code = "APAY",
+                        Code = "APAYF",
                         Mode = UnifreightEventMode.@new,
                         EventDateTime = DateTime.Now,
                         Entname = "CFIFILEM",
