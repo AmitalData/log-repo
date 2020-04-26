@@ -70,6 +70,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField9 { get; set; }
         public string ShipmentField10 { get; set; }
         public string ProjectNumber { get; set; }
+        public string MasterProjectNumber { get; set; }
 
         public CrossDockEntryDataProvider ShallowCopy()
         {

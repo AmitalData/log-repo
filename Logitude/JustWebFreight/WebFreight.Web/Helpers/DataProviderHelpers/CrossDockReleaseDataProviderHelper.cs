@@ -132,9 +132,23 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 {
                     CrossDockReleaseShipmentService crossDockReleaseShipmentService = new CrossDockReleaseShipmentService();
                     dataProvider = crossDockReleaseShipmentService.FullCrossDockReleaseProviderFromShipment(warehouseReleasePM.ShipmentId, dataProvider, warehouseReleasePM.Tenant);
+
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+                    Shipment shipment = shipmentRepository.GetSingleShipment(warehouseReleasePM.ShipmentId, tenant);
+
+                    if (!string.IsNullOrEmpty(shipment.MasterShipmentDataId))
+                    {
+                        ShipmentMasterData masterData = (from a in shipmentRepository.context.ShipmentMasterDatas
+                                                         where a.Id == shipment.MasterShipmentDataId
+                                                         select a).FirstOrDefault();
+
+                        if (masterData != null)
+                        {
+                            dataProvider.ImportManifest = masterData.ImportManifest;
+                            dataProvider.MasterImportManifest = masterData.ImportManifest;
+                        }
+                    }
                 }
-
-
             }
 
             return dataProvider;
@@ -388,8 +402,26 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                             if(masterData != null)
                             {
                                 dataProvider.ImportManifest = masterData.ImportManifest;
+                                dataProvider.MasterImportManifest = masterData.ImportManifest;
                             }
                         }
+
+                        //if (shipment.ShipmentLevelCode == "H")
+                        //{
+                        //    if (!string.IsNullOrEmpty(shipment.MasterShipmentDataId))
+                        //    {
+                        //        Shipment masterShipment = shipmentRepository.GetSingleShipment(shipment.MasterShipmentDataId, tenant);
+                        //        if (masterShipment != null)
+                        //        {
+                        //            dataProvider.MasterImportManifest = masterShipment.ProjectNumber;
+                        //        }
+                        //    }
+                        //}
+
+                        //else
+                        //{
+                        //    dataProvider.MasterImportManifest = shipment.ProjectNumber;
+                        //}
                     }
                 }
 
