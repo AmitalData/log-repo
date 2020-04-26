@@ -62,6 +62,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           InActive = a.InActive,
                                           LocalName = a.LocalName,
                                           SearchFields = a.SearchFields,
+                                          DontShowLocalLabels = a.DontShowLocalLabels,
                                           Mobile = a.Mobile,
                                           Notes = a.Notes,
                                           Tenant = a.Tenant,
