@@ -94,6 +94,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     PaymentProtestsList: ObservableCollection;
     SelectedInvoiceItems: ObservableCollection;
     SelectedInvoices: ObservableCollection;
+    sumBtl: any = 0.0;
 
     _ErrorLogPMFileLoggerService: ErrorLogPMFileLoggerService;
     _2LogBankList: boolean = false;
@@ -149,29 +150,36 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                             });
                                         
                                     }
-                                     this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.DeclarationPM.Id).subscribe(
-                                        invoices => {
-                                            if (invoices.Result != null) {
-                                                this.sumBtl = 0.0;
-                                                invoices.Result.forEach((el) => {
-                                                    if (el.SupplierInvoiceItems != null && el.SupplierInvoiceItems.length > 0) {
-                                                        el.SupplierInvoiceItems.forEach(si => {
-                                                            if (si.SupplierInvoiceItemTaxes != null && si.SupplierInvoiceItemTaxes.length > 0) {
-                                                                si.SupplierInvoiceItemTaxes.forEach(it => {
-                                                                    if (it.TotalBtlCoverageNIS != null)
-                                                                        this.sumBtl += it.TotalBtlCoverageNIS;
-                                                                })
-                                                            }
-                                                        })
-                                                    }
+                                     if ((this.DeclarationPM.ImporterEntitlementTypeCode == "17" || this.DeclarationPM.ImporterEntitlementTypeCode == "18" ) && FeatureLocator.HasFeaturePermession("Customs.Declaration", "BTPA")) {
+                                        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(this.DeclarationPM.Id).subscribe(
+                                            invoices => {
+                                                if (invoices.Result != null) {
+                                                    this.sumBtl = 0.0;
+                                                    invoices.Result.forEach((el) => {
+                                                        if (el.SupplierInvoiceItems != null && el.SupplierInvoiceItems.length > 0) {
+                                                            el.SupplierInvoiceItems.forEach(si => {
+                                                                if (si.SupplierInvoiceItemTaxes != null && si.SupplierInvoiceItemTaxes.length > 0) {
+                                                                    si.SupplierInvoiceItemTaxes.forEach(it => {
+                                                                        if (it.TotalBtlCoverageNIS != null)
+                                                                            this.sumBtl += it.TotalBtlCoverageNIS;
+                                                                    })
+                                                                }
+                                                            })
+                                                        }
 
-                                                });
-                                            }
-                                            this.LoadPayment();
+                                                    });
+                                                }
+                                                this.LoadPayment();
 
-                                            this.CheckRequrierdFieldsForSend();
-                                        })
-                           
+                                                this.CheckRequrierdFieldsForSend();
+                                            });
+                                    }
+
+                                    else {
+                                        this.LoadPayment();
+
+                                        this.CheckRequrierdFieldsForSend();
+                                    }
 
 
                                 });
@@ -519,7 +527,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
             this.entityCreated = true;
         }
-
+         
         this.PostSendCreditToGetBank();
 
         if (this.paymentPM.FuturePaymentDateTime) {
@@ -651,8 +659,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                     this.FuturePaymentDateTime = customFileCreditResponseData.PaymentDateTime;
                     this.FuturePaymentTime = DateTool.GetDateParts(customFileCreditResponseData.PaymentDateTime).DateObject;
                 }
-
-                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
+                 if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
                     var customBankListService: CustomBankListService = new CustomBankListService();
                     customBankListService.getAll().subscribe((response: ServiceResponse) => {
                         let allCustomBankList: CustomBankList[] = response.Result;
@@ -671,6 +678,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 else if (AppTool.IsNullOrEmpty(this.paymentPM.DeclarationPaymentMethods) || this.paymentPM.DeclarationPaymentMethods.length == 0) {
                     this.AutoFillPaymentScreenByDefault();
                 }
+            
                 SessionLocator.SelectedSession.StopBusyIndicator();
             });
     }
@@ -719,7 +727,6 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 });
         }
     }
-    sumBtl: any=0.0;
     AutoFillPaymentScreenByDefault() {
         this.NewMethodMethod();
       
@@ -770,8 +777,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     }
 
     JustAutoFillPaymentScreen() {
-        debugger;
-
+ 
         if (this.sumBtl != null && this.sumBtl > 0)
         {
             for (let method of this.PaymentMethodsList.Collection) {
