@@ -484,7 +484,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.ControlField1 = objectFieldDetails.ControlField1;
                 newObjectField.ControlField2 = objectFieldDetails.ControlField2;
                 newObjectField.ControlField3 = objectFieldDetails.ControlField3;
-                newObjectField.DataTypeCode = objectFieldDetails.FieldsDataType;
+                newObjectField.DataTypeCode = objectFieldDetails.DataTypeCode;
                 newObjectField.DisplayOnLookUp = objectFieldDetails.DisplayOnLookUp;
                 newObjectField.DisplayOnLookUpLocal = objectFieldDetails.DisplayOnLookUpLocal;
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
