@@ -29,19 +29,19 @@ export class ApiQueryFilters {
         if (!IsCacheOnClient) {
             if (typeof (FieldValue) === "string") {
                 if (FieldValue)
-                    FieldValue = FieldValue.replace('"', '\\"');
+                FieldValue = this.myReplace(FieldValue);//FieldValue.replace('"', '\\"');
                 FieldValue = encodeURIComponent(FieldValue)
                 //FieldValue = FieldValue.replace("%22", "\%22");
             }
             if (typeof (FieldValue2) === "string") {
-                if (FieldValue)
-                    FieldValue2 = FieldValue2.replace('"', '\\"');
+              if (FieldValue)
+                FieldValue2 = this.myReplace(FieldValue2);//.replace('"', '\\"');
                 FieldValue2 = encodeURIComponent(FieldValue2)
                 //FieldValue = FieldValue.replace("%20", " ");
             }
             if (typeof (FieldValue3) === "string") {
                 if (FieldValue)
-                    FieldValue3 = FieldValue3.replace('"', '\\"');
+                  FieldValue3 = this.myReplace(FieldValue3);//FieldValue3.replace('"', '\\"');
                 FieldValue3 = encodeURIComponent(FieldValue3)
                 //FieldValue = FieldValue.replace("%20", " ");
             }
@@ -52,7 +52,19 @@ export class ApiQueryFilters {
             this.AdditionalFilters.push(item);
         }
     }
-
+  myReplace(myString: string) {
+      var myNewString  = "";
+      for (var i = 0; i < myString.length; i++)
+      {
+        if (myString[i] == '"') {
+          myNewString = myNewString + '\\"';
+        }
+        else {
+          myNewString = myNewString + myString[i];
+        }
+      }
+    return myNewString;
+    }
     removeAdditionalFilter(FieldName: string) {
         var item = this.AdditionalFilters.filter(d=> d.FieldName == FieldName)[0];
         if (item) {
