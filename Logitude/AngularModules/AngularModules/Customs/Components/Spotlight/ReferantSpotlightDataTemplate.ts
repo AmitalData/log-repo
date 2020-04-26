@@ -172,7 +172,6 @@ export class ReferantSpotlightDataTemplate
     OkButtonClicked() {
         
         if (this.spotlightSharedDataService.IsDirty) {
-            debugger;
             this.ValidationErrorsList = [];
             this.errors = [];
             this.existCodeList = [];
