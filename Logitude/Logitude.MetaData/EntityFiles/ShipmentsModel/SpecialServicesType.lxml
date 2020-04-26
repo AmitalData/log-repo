@@ -7,6 +7,7 @@
   DBTableOldNames="SpecialServicesTypes"
   ObjectTableSingular="&quot;Special Services Type&quot;"
   ObjectTablePlural="&quot;Special Services Types&quot;"
+  DescriptionDefaultText="&quot;Define the special services you want to use in your shipments.&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
   HasHelper="false"
@@ -958,12 +959,6 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes>
-    <TextCode
-      Code="&quot;SpecialServicesType.O.TableDescription&quot;"
-      DefaultText="&quot;Define the special services you want to use in your shipments.&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+  <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

@@ -92,7 +92,7 @@
                                                                 (click)="SelectionChanged(item)"
                                                                 [class.SelectedMenuItem]="item === SelectedPartnerItem">
                                                                
-                                                                <div style="position:absolute; left: -6px; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;">{{item.PartnerType}}</div>
+                                                                <div [style.left]="isRTL ? '0px' : '-6px'" style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;">{{item.PartnerType}}</div>
                                                                 <img *ngIf="item === SelectedPartnerItem" class="RightCenter" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
                                                               
                                                          

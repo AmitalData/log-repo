@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class MoveTypeUpdateClass
    {  		
-		public const string HashString = "34ea13b4f0b1001f9a2a9ab6b67e39b1";
+		public const string HashString = "7bc749d52c58ea807ab0acadbc55e699";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -88,6 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DBTableName =  "MoveTypes",
 			      				    ObjectTableSingular =  "Move Type",
 			      				    ObjectTablePlural =  "Move Types",
+			      				    DescriptionDefaultText =  "Define the move types for shipments by Air, Ocean or Land transportation.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -923,15 +924,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable MoveTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MoveType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode MoveTypeTextCode_MoveTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MoveType.O.TableDescription", DefaultText = "Define the move types for shipments by Air, Ocean or Land transportation.",LocalDefaultText = null, ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

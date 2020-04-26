@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteStageUpdateClass
    {  		
-		public const string HashString = "6e1421abff1ce1e6daad9bbf98cfb48f";
+		public const string HashString = "db51586c00934cab771027e34e62043c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,9 +86,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteStage",
 			      				    IsNew =  false,
 			      				    DBTableName =  "QuoteStages",
-			      				    OldDBTableName =  "QuoteStages",
 			      				    ObjectTableSingular =  "Quote Stage",
 			      				    ObjectTablePlural =  "Quote Stages",
+			      				    DescriptionDefaultText =  "Define the stages for handling quotes.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -142,7 +142,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -207,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -272,7 +270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "MaxDays",
-					  						OldFieldName =  "MaxDays",
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -337,7 +334,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -399,7 +395,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -464,7 +459,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -528,7 +522,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "UpdatedByUserName",
-					  						OldFieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -593,7 +586,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "Rank",
-					  						OldFieldName =  "Rank",
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -658,7 +650,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "QuoteStage",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -864,15 +855,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode QuoteStageTextCode_QuoteStageOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.O.TableDescription", DefaultText = "Define the stages for handling quotes.",LocalDefaultText = null, ObjectTableId = QuoteStageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

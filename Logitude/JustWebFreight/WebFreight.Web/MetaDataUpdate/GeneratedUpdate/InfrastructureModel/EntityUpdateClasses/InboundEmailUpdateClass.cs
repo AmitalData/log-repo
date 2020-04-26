@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class InboundEmailUpdateClass
    {  		
-		public const string HashString = "50f6ea348f5e785b21786e4bb4614a94";
+		public const string HashString = "e9ce628d277ac6758498431f9bf3d515";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,9 +86,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "InboundEmail",
 			      				    IsNew =  false,
 			      				    DBTableName =  "InboundEmails",
-			      				    OldDBTableName =  "InboundEmails",
 			      				    ObjectTableSingular =  "Inbound Email",
 			      				    ObjectTablePlural =  "InboundEmails",
+			      				    DescriptionDefaultText =  "Inbound Email For Testing!.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -143,7 +143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EntityId",
-					  						OldFieldName =  "EntityId",
 					  						ObjectTableName =  "InboundEmail",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -205,7 +204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Uniquekey",
-					  						OldFieldName =  "Uniquekey",
 					  						ObjectTableName =  "InboundEmail",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -268,7 +266,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "InboundEmail",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -334,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "InboundEmail",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -400,7 +396,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ObjectTableId",
-					  						OldFieldName =  "ObjectTableId",
 					  						ObjectTableName =  "InboundEmail",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ObjectTable",
@@ -464,7 +459,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "CreatedByContactId",
-					  						OldFieldName =  "CreatedByContactId",
 					  						ObjectTableName =  "InboundEmail",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Contact",
@@ -528,7 +522,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ObjectTableName",
-					  						OldFieldName =  "ObjectTableName",
 					  						ObjectTableName =  "InboundEmail",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -593,7 +586,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "InboundEmail",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -658,7 +650,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "InboundEmail",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -836,15 +827,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable InboundEmailObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InboundEmail" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode InboundEmailTextCode_InboundEmailOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmail.O.TableDescription", DefaultText = "Inbound Email For Testing!.",LocalDefaultText = null, ObjectTableId = InboundEmailObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

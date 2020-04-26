@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentTypeUpdateClass
    {  		
-		public const string HashString = "9fdeaadbdf281a41d587e13507a37153";
+		public const string HashString = "6bb68c43028a9ffb8d40c1d4324dc544";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -88,6 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DBTableName =  "DocumentTypes",
 			      				    ObjectTableSingular =  "Document Type",
 			      				    ObjectTablePlural =  "Document Types",
+			      				    DescriptionDefaultText =  "Create document types, use the layout designer to build document templates and customize documents.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -2351,8 +2352,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode DocumentTypeTextCode_DocumentTypeOTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.Templates", DefaultText = "Document Templates",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeTextCode_DocumentTypeOHTMLTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.HTMLTemplates", DefaultText = "Email Message Templates",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTextCode_DocumentTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentType.O.TableDescription", DefaultText = "Create document types, use the layout designer to build document templates and customize documents.",LocalDefaultText = null, ObjectTableId = DocumentTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
