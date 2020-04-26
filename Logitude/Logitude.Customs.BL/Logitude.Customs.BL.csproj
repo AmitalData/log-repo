@@ -1367,6 +1367,8 @@
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.amital.cs" />
+    <Compile Include="EntityUpdateServices\ReferantExceptionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationReferantDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\GatepassRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AcceptanceStatusUpdateService.Generated.cs" />
