@@ -1513,6 +1513,27 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
 
   // Commands
   CancelButtonClicked() {
+    if (this.EntityPM.IsDirty) {
+      var confirmWindow = new ConfirmWindow();
+      confirmWindow.Width = 450;
+      confirmWindow.Height = 190;
+      confirmWindow.ShowCancelButton = false;
+      confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+      confirmWindow.Show("You are about to cancel Shipment and all data will be lost - Are you sure ?");
+      confirmWindow.WindowClosed.subscribe((event: any) => {
+        if (confirmWindow.Yes) {
+          this.CloseWizardWindow();
+        }
+        else if (confirmWindow.No) {
+          //nth
+        }
+      });
+    }
+    else {
+      this.CloseWizardWindow();
+    }
+  }
+  private CloseWizardWindow() {
     this.CurrentSession.CloseCurrentWindow();
   }
   OkButtonClicked() {
