@@ -1760,9 +1760,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
       else if (this.ShipperAddressList != null) {
         this.isFirstTimeFromQuotePickup = false;
-        this.PickupAddressList = this.ShipperAddressList;
-        this.EntityPM.PickUpAddressId = this.ShipperAddressList.Id;
+        //this.PickupAddressList = this.ShipperAddressList;
+        //this.EntityPM.PickUpAddressId = this.ShipperAddressList.Id;
       }
+      this.LoadPickupAddress();
     }
 
     else {
@@ -1903,9 +1904,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
       else if (this.ConsigneeAddressList != null) {
         this.isFirstTimeFromQuoteDelivery = false;
-        this.DeliveryAddressList = this.ConsigneeAddressList;
-        this.EntityPM.DeliveryAddressId = this.ConsigneeAddressList.Id;
+        //this.DeliveryAddressList = this.ConsigneeAddressList;
+        //this.EntityPM.DeliveryAddressId = this.ConsigneeAddressList.Id;
       }
+
+      this.LoadDeliveryAddress();
     }
 
     else {
