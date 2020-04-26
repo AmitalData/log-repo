@@ -27,7 +27,7 @@
   <Column
     Name="CreatedBy"
     Type="varchar"
-    Size="15">
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>
@@ -40,7 +40,7 @@
   <Column
     Name="UpdatedBy"
     Type="varchar"
-    Size="15">
+    Size="40">
     <Constraints
       Nullable="false" />
   </Column>

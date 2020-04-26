@@ -34,6 +34,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     isReady: boolean = false;
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = false;
+    public filterControlHight: string = "100";
     constructor(private CD: ChangeDetectorRef) {
         super();
 
@@ -357,6 +358,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
         this.IsSchedulerReport = true;
+        this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
@@ -422,6 +424,10 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
             isValid = false;
         }
+        if (this.ValidationErrorsList.length == 0)
+          this.filterControlHight = "100";
+        else
+          this.filterControlHight = "80";
 
         return isValid;
     }

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EmailAlertSettingUpdateClass
    {  		
-		public const string HashString = "053f1de2a76c7dfe13661674c4d4a0b8";
+		public const string HashString = "ff939bddda2d7138381302e60eedf6b1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -88,6 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DBTableName =  "EmailAlertSettings",
 			      				    ObjectTableSingular =  "Email Alert Settings",
 			      				    ObjectTablePlural =  "Email Alert Settings",
+			      				    DescriptionDefaultText =  "Define the e-mail notifications that will be sent automatically based on different triggers.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -115,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Email Alert Settings",
-			      				    Code =  "cb2e",
+			      				    Code =  "2ec0",
 			      				    Name =  "EmailAlertSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -528,15 +529,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable EmailAlertSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "EmailAlertSetting" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode EmailAlertSettingTextCode_EmailAlertSettingOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EmailAlertSetting.O.TableDescription", DefaultText = "Define the e-mail notifications that will be sent automatically based on different triggers.",LocalDefaultText = null, ObjectTableId = EmailAlertSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

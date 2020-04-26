@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateUpdateClass
    {  		
-		public const string HashString = "a5920c2f55e1c5426f451fff5986edff";
+		public const string HashString = "3564756aa3646e8cefed0bc732d02c1c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,9 +86,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteTemplate",
 			      				    IsNew =  false,
 			      				    DBTableName =  "QuoteTemplates",
-			      				    OldDBTableName =  "QuoteTemplates",
 			      				    ObjectTableSingular =  "Quote Template",
 			      				    ObjectTablePlural =  "Quote Templates",
+			      				    DescriptionDefaultText =  "Create new quote templates and maintain existing ones.",
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -145,7 +145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "HeaderDocId",
-					  						OldFieldName =  "HeaderDocId",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -208,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "FooterDocId",
-					  						OldFieldName =  "FooterDocId",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -271,7 +269,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "QuoteTemplateSettingId",
-					  						OldFieldName =  "QuoteTemplateSettingId",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -334,7 +331,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -399,7 +395,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "IsTemplate",
-					  						OldFieldName =  "IsTemplate",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -460,7 +455,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "OriginalQuoteTemplateId",
-					  						OldFieldName =  "OriginalQuoteTemplateId",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -521,7 +515,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -582,7 +575,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -643,7 +635,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -704,7 +695,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
-					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -765,7 +755,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -827,7 +816,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "TemplateTypeCode",
-					  						OldFieldName =  "TemplateTypeCode",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -890,7 +878,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "TemplateTypeName",
-					  						OldFieldName =  "TemplateTypeName",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -954,7 +941,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "IsDefault",
-					  						OldFieldName =  "IsDefault",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1018,7 +1004,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "ShowLocalLanguage",
-					  						OldFieldName =  "ShowLocalLanguage",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1082,7 +1067,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1146,7 +1130,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "IsCopiedAtSignup",
-					  						OldFieldName =  "IsCopiedAtSignup",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1210,7 +1193,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   {
 					 
 					 						FieldName =  "IsEnabledForCustomers",
-					  						OldFieldName =  "IsEnabledForCustomers",
 					  						ObjectTableName =  "QuoteTemplate",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1709,8 +1691,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
  		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowIncludedCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowIncludedCharges", DefaultText = "Show Included Charges",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteTemplateTextCode_QuoteTemplateMAddNewQuoteTemplateMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.M.AddNewQuoteTemplateMessage", DefaultText = "Here you can add new Quote template  from Logitude's Quote template list",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode QuoteTemplateTextCode_QuoteTemplateOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.O.TableDescription", DefaultText = "Create new quote templates and maintain existing ones.",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode QuoteTemplateTextCode_QuoteTemplateSDesignAreaFreeText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.DesignAreaFreeText", DefaultText = "Design Area Free Text",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
