@@ -99,7 +99,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 TransferGLAcccountId = "BankAccountPM:TransferGLAcccountId",
                 GLAccountId = "BankAccountPM:GLAccountId",
                 BankCode = "BankCode",
-                BranchNumber = "BranchNumber"
+                BranchNumber = "BranchNumber",
+                CurrencyId="NIS"
 
             };
             myReconcileExternalPageLinePM = new ReconcileExternalPageLinePM()

@@ -563,6 +563,131 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
 
 
+        [Query(HasSideEffects = true)]
+        public IQueryable<NumberFormatList> GetNumberFormatFilters(byte[] xmlFilters, int tenant)
+        {
+            NumberFormatRepository NumberFormatRepository = new NumberFormatRepository(tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<NumberFormat> iQueryable = NumberFormatRepository.GetNumberFormats();
+
+            //PortCustomFilter customfilters = new PortCustomFilter(tenant);
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<NumberFormat>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;//PageSize * (queryOperations.PageIndex - 1);
+
+            var query2 = from entity in iQueryable
+                         select new NumberFormatList()
+                         {
+                             Code = entity.Code,
+                             Name = entity.Name,
+                             SearchFields = entity.SearchFields,
+                         };
+
+            query2 = filter.GetFilteredQuery<NumberFormatList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(LoginPolicyList).GetProperty(queryOperations.SortByColumnName);
+                //ObjectFieldsRepository objectFieledsRepository = new ObjectFieldsRepository(tenant);
+                List<ObjectField> shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("NumberFormat", tenant).ToList();
+
+                ObjectField objectField = (from a in shipmentObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+
+                if (objectField != null)
+                {
+                    switch (objectField.DataTypeCode.ToLower())
+                    {
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<NumberFormatList, string>(queryOperations, query2);
+                                break;
+                            }
+                        case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<NumberFormatList, double>(queryOperations, query2);
+                                break;
+                            }
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<NumberFormatList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<NumberFormatList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<NumberFormatList, bool>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderByDescending(d => d.Name);
+                                break;
+                            }
+                    }
+                }
+            }
+
+            else
+            {
+                query2 = query2.OrderByDescending(d => d.Code);
+            }
+
+            query2 = query2.Skip(skippedPorts);
+            query2 = query2.Take(queryOperations.PageSize);
+            return query2;
+        }
+
+        public int GetNumberFormatFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            NumberFormatRepository NumberFormatRepository = new NumberFormatRepository(tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<NumberFormat> iQueryable = NumberFormatRepository.GetNumberFormats();
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<NumberFormat>(nonListQueryOperation, iQueryable);
+
+            var query2 = from entity in iQueryable
+                         select new NumberFormatList()
+                         {
+                             Code = entity.Code,
+                             Name = entity.Name,
+                             SearchFields = entity.SearchFields,
+                         };
+
+            query2 = filter.GetFilteredQuery<NumberFormatList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+
 
         public GettingStartedData GetGettingStartedData(int tenant)
         {

@@ -77,11 +77,11 @@ export class CachedDataManager {
         }).pipe(share());
       } else {
         console.log("couldn't find closed table data for " + objectTableName + ".zip file in the cache!");
-        observable = defer(() => {
+        //observable = defer(() => {
           console.log("Calling Server For " + objectTableName + " Closed Data & MetaData");
           var entityResourceService: EntityResourceService = new EntityResourceService();
           EntityResourceService.TablesLoadQueue[objectTableName] = null;
-          return entityResourceService.getEntityResourceByTableName(objectTableName, 0).flatMap(response => {
+          return entityResourceService.getEntityResourceByTableName(objectTableName, 0).pipe(flatMap((response: any) => {
             //return CachedDataManager.GetClosedTableData(objectTableName);
             var storagefileName: string = objectTableName + "_ClosedData.zip";
             var fileString = LocalStorageManager.GetItem(storagefileName);
@@ -130,8 +130,8 @@ export class CachedDataManager {
             else {
               return of(0);
             }
-          });
-        }).pipe(share());
+          }), share());
+       // }).pipe(share());
       }
 
         /*
