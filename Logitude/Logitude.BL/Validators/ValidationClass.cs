@@ -104,11 +104,6 @@ namespace Logitude.BL.Validators
                     }
                 }
 
-                if (field.DataTypeCode == "Decimal" && field.NumberOfDigits != 0)
-                {
-                    string valueString = value != null ? value.ToString() : "";
-                }
-
                 if (value != null)
                 {
                     ValidationFieldResult result = fieldValidator.ValidateField(field, value, instance, tenant);
@@ -191,12 +186,6 @@ namespace Logitude.BL.Validators
                         }
                     }
                 }
-            }
-
-            if (field.DataTypeCode == "Decimal" && field.NumberOfDigits != 0)
-            {
-                string valueString = value != null ? value.ToString() : "";
-
             }
 
             if (!String.IsNullOrEmpty(errorMessage))
