@@ -18,6 +18,7 @@ import { ReportsTemplateListExtendedService } from '../../Common/Services/Extend
 import { QueryFilterItem } from './Filters/QueryFilterItem';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -522,6 +523,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 if (result.HasError) {
                                     this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
+                                   
+                                    if(result.ExceptionMessage=='Number of aging months is not set in Full Accounting Settings'){
+                                        result.ExceptionMessage= TextCodeTranslator.Translate("LedgerTransaction.O.AgingMonthNotSet");
+                                    }
                                     messageWindow.Show(result.ExceptionMessage);
                                 }
                                 else if (result.StatusCode == "D") {

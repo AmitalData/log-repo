@@ -32,6 +32,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
 
         // get requierd resources
         this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => { this.isReady = true; });
+        this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe(response => {  });
 
         // salesman lov field filtera
         this.SalesmanFilterItems = new ApiQueryFilters();
@@ -313,6 +314,9 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             this.RunReportEvent.emit(myReportFliter);
 
         } else {
+            if(errors.includes("AgingReport.O.FutureDate")){
+
+            }
             this.ValidationErrorsList = errors;
         }
     }
