@@ -30,29 +30,31 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <div class="MediaFill">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <div class="MediaFill">
-                                                            <div [attr.id]="PerformanceChartId" class="MediaFill"></div>
-                                                        </div>                                                        
-                                                    </td>
-                                                </tr>
+                                      <div class="MediaFill">
+                                        <div [attr.id]="PerformanceChartId" class="MediaFill"></div>
 
-                                                <tr style="height:70px !important;">
-                                                    <td>
-                                                        <div class="MediaFill">
-                                                            <ScrollViewer>
-                                                                <div [attr.id]="LegendDiv"></div>
-                                                            </ScrollViewer>                                                            
-                                                        </div>                                                        
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                        <!--<table>
+                                          <tr>
+                                            <td>
+                                              <div class="MediaFill">
+                                                <div [attr.id]="PerformanceChartId" class="MediaFill"></div>
+                                              </div>
+                                            </td>
+                                          </tr>
 
-                                            <div *ngIf="IsNoDataVisible" class="NoDataText">No Data</div>
-                                        </div>
+                                          <tr style="height:70px !important;">
+                                            <td>
+                                              <div class="MediaFill">
+                                                <ScrollViewer>
+                                                  <div [attr.id]="LegendDiv"></div>
+                                                </ScrollViewer>
+                                              </div>
+                                            </td>
+                                          </tr>
+                                        </table>-->
+
+                                        <div *ngIf="IsNoDataVisible" class="NoDataText">No Data</div>
+                                      </div>
                                     </td>
                                 </tr>
                             </table>
