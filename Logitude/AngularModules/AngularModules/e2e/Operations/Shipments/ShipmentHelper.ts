@@ -122,11 +122,12 @@ export class ShipmentHelper {
     }
 
     CreateAndCloseNewShipment(MasterDirectType: string, CancelBtnId: string, Direction: string, TransportMode: string, ShipmentType: string) {
-        var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
+        this.Helper.WaitByIdAndClick('NEWSHIP');
         this.Helper.WaitByIdAndClick(MasterDirectType);
         this.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
 
-        this.Helper.WaitByIdAndClick(CancelBtnId);
+      this.Helper.WaitByIdAndClick(CancelBtnId);
+      this.Helper.WaitByCssStringAndClick('.RedButton','Yes');
     }
 
     AddSelectAirlineStock(usedIn: string) {
