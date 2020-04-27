@@ -38,7 +38,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     private _TaxReportLineStatusListService: TaxReportLineStatusListService = new TaxReportLineStatusListService();
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
-
+  IsTesterButtonVisibile: boolean = false;
     ReportLines: ObservableCollection;
     OriginalReportLines: ObservableCollection;
     isReady: boolean = false;
@@ -49,7 +49,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         super();
 
 
-
+      this.IsTesterButtonVisibile = SessionLocator.LoggedUserPM.Email == "angular@fnarsoft.com" ? true : false;
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -93,7 +93,19 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
+  NewLineButtonClicked() {
+    this.CurrentSession.StartBusyIndicator("Loading...");
+    this._TaxReportExtendedPMService.CreateNewTaxReportLine(this.EntityPM).subscribe((myResult: ServiceResponse) => {
 
+      this.EntityPM = myResult.Result;
+      
+      this.ReloadScreen();
+      this.CurrentSession.StopBusyIndicator();
+    });
+
+
+
+  }
     ngOnInit() {
         this._entityResourceService.getEntityResourceByTableName("TaxReport").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("TaxReportLine").subscribe((response: any) => {
@@ -125,7 +137,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
-
+   
 
     SetUIProperty() {
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, false);

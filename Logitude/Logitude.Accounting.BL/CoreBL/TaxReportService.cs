@@ -672,8 +672,46 @@ namespace Logitude.Accounting.BL.CoreBL
                 return docOut;
             }
         }
+        public static TaxReportPM CreatetTaxReportLine(TaxReportPM taxReport)
+        {
+            IAccountingContext context = AccountingContext.GetContext(taxReport.Tenant);
 
-     
+            TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(context);
+            List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(taxReport.Id, taxReport.Tenant).ToList();
+            int count = lines.Count;
+            TaxReportLinePM taxReportLine = new TaxReportLinePM()
+            {
+                IsExternalLine = true,
+                VatNumber = VatNumber,
+                Reference = reference,
+                ReferenceDate = DateTime.Today,
+                ReferecneGroup = referenceGroup,
+                Line =++count,
+                OutputOrInput = "O",
+                VatAmount =(decimal?) 200,// Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
+                VatableInvoiceAmount =(decimal?) 17,// Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
+                IsEquipment = true,
+                IsManuallyChanged = true,
+                TaxReportId = taxReport.Id,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                LastUpdateDateTime = DateTime.Now,
+                UpdatedByUserId = taxReport.UpdatedByUserId,
+                Tenant = taxReport.Tenant,
+                TransmitStatusCode = "1",
+                TaxReportDate = taxReport.TaxReportMonth
+            };
+            TaxReportUpdateService updateService = new TaxReportUpdateService(context, new Dictionary<string, IContext>(), taxReport.Tenant);
+            TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(context, new Dictionary<string, IContext>(), taxReport.Tenant);
+            taxReportLine.ChangeSetOp = ChangeSetOperation.Insert;
+            taxReportLine.UpdatedByUserId = taxReport.UpdatedByUserId;
+            lineUpdateService.Update(taxReportLine, true, TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
+
+            taxReport.ChangeSetOp = ChangeSetOperation.Update;
+            updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
+            return taxReport;
+        }
+
+
         public static void CalculateReportTotals(TaxReportPM taxReportPM, List<TaxReportLinePM> lines)
         {
             if (lines.Count > 0)

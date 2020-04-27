@@ -1223,14 +1223,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOVendorGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.VendorGLAccount", DefaultText = "Vendor GLAccount",LocalDefaultText = @"כרטיס הספק", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOConnected2ManyCards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.Connected2ManyCards", DefaultText = "is connected to more than one Operational Vendor",LocalDefaultText = @"מחובר ליותר מספק תפעולי אחד", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-         
 
+   
+	    
+}
 
-        }
+    
 
-
-
-    }
+   }
     
 }
 	 

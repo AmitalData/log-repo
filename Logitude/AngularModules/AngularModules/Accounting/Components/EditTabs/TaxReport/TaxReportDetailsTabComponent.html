@@ -329,7 +329,9 @@
                                                     [Text]="EquipmentInputsTaxAmount"  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td>
-                                                    <div></div>
+                                                  <div>
+                                                    <IconButton *ngIf="IsTesterButtonVisibile" [Name]="'Add'" (click)="NewLineButtonClicked()" [disabled]="false"></IconButton>
+                                                  </div>
                                                 </td>
                                             </tr>
 

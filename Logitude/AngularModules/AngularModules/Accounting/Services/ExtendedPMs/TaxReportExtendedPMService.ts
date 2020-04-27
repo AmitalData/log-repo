@@ -85,7 +85,18 @@ export class TaxReportExtendedPMService {
             
 
     }
+  CreateNewTaxReportLine(taxReportPM: TaxReportPM) {
+    return this.httpClient.put(this._apiUrl + "/PutCreateTaxReportLine", JSON.stringify(taxReportPM), ServiceHelper.GetHttpHeaders()).pipe(
+      map(res => {
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
+        var result = res;
+        serviceResponse.Result = result;
 
+        return serviceResponse;
+      }),
+      catchError(ServiceHelper.HandleServiceError));
+       }
 
     getErrorsCount(reportId: string) {
 	    var callTime = new Date();
