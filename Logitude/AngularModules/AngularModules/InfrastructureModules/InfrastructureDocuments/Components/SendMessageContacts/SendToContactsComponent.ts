@@ -15,6 +15,8 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ComponentArgs} from '../../../../Infrastructure/DataContracts/ComponentArgs';
 import {ParameterComponentArgs} from '../../../../Infrastructure/DataContracts/ParameterComponentArgs';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     
@@ -61,9 +63,12 @@ export class SendToContactsComponent implements OnInit {
 
     public ShowBCC: boolean = true;
     public ShowCC: boolean = true;
+
+    public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _entityListService: EntityListService, public _documentOutPMService: DocumentOutPMService, private cd: ChangeDetectorRef) {
 
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.ToEmailLists = [];
         this.CcEmailLists = [];

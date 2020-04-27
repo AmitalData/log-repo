@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Tasks Scheduler&quot;"
-  Code="&quot;e5cd&quot;"
+  Code="&quot;5fc6&quot;"
   Name="&quot;TasksScheduler&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
@@ -288,12 +288,12 @@
     FieldName="&quot;CreatedBy&quot;"
     OldNames="CreatedBy"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TasksScheduler&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="40"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -444,12 +444,12 @@
     FieldName="&quot;UpdatedBy&quot;"
     OldNames="UpdatedBy"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TasksScheduler&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="40"
     IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -3153,38 +3153,38 @@
     <Feature
       Code="&quot;TASK&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;TasksScheduler.Features.TASK&quot;"
+      FeatureDefaultText="&quot;Task&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;TasksScheduler.Features.TASK&quot;"
-      FeatureDefaultText="&quot;Task&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;FTP&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;TasksScheduler.Features.FTP&quot;"
+      FeatureDefaultText="&quot;FTP&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;TasksScheduler.Features.FTP&quot;"
-      FeatureDefaultText="&quot;FTP&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;SHOWUTCBUTTON&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;TasksScheduler.Features.SHOWUTCBUTTON&quot;"
+      FeatureDefaultText="&quot;Show UTC Button&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;TasksScheduler.Features.SHOWUTCBUTTON&quot;"
-      FeatureDefaultText="&quot;Show UTC Button&quot;" />
+      IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;SFTP&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
+      FeatureTextCodeCode="&quot;TasksScheduler.Features.SFTP&quot;"
+      FeatureDefaultText="&quot;SFTP&quot;"
       IsPackagable="true"
-      IsBusinessUnitEnabled="false"
       IsOld="false"
       IsCoreFeature="false"
-      FeatureTextCodeCode="&quot;TasksScheduler.Features.SFTP&quot;"
-      FeatureDefaultText="&quot;SFTP&quot;" />
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class EventTypeUpdateClass
    {  		
-		public const string HashString = "f0b917b53e3fe6bd64703818006ed53c";
+		public const string HashString = "e454e40111c6b4478ae13f950e42749b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -86,9 +86,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	             				    ObjectTableName =  "EventType",
 			      				    IsNew =  false,
 			      				    DBTableName =  "EventTypes",
-			      				    OldDBTableName =  "EventTypes",
 			      				    ObjectTableSingular =  "Event Type",
 			      				    ObjectTablePlural =  "Event Types",
+			      				    DescriptionDefaultText =  "Maintain event types for the activities you want Logitude to log, specify event types for follow-up and those that can be entered manually.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -145,7 +145,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -208,10 +207,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EventTypeCategoryCode",
-					  						OldFieldName =  "EventTypeCategoryCode",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "nText",
-					  						LookUpTableName =  "EventTypeCategory",
 					  						MinLength =  0,
 					  						MaxLength =  4,
 					  						IsRequired =  false,
@@ -274,7 +271,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "IsCustomerView",
-					  						OldFieldName =  "IsCustomerView",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -339,7 +335,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "IsAgentView",
-					  						OldFieldName =  "IsAgentView",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -404,7 +399,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -467,7 +461,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "IsSharedLogisticsEnabled",
-					  						OldFieldName =  "IsSharedLogisticsEnabled",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -532,7 +525,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Code",
-					  						OldFieldName =  "Code",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -597,7 +589,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						OldFieldName =  "EnglishName",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -662,7 +653,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						OldFieldName =  "LocalName",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -728,7 +718,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ComputedLocalName",
-					  						OldFieldName =  "ComputedLocalName",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -791,7 +780,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ObjectTableId",
-					  						OldFieldName =  "ObjectTableId",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ObjectTable",
@@ -856,7 +844,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EntityStatusName",
-					  						OldFieldName =  "EntityStatusName",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -921,7 +908,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "EntityStatusId",
-					  						OldFieldName =  "EntityStatusId",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "EntityStatus",
@@ -987,7 +973,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "IsFollowUp",
-					  						OldFieldName =  "IsFollowUp",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1053,7 +1038,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "FollowUpEnglishName",
-					  						OldFieldName =  "FollowUpEnglishName",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1119,7 +1103,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "FollowUpLocalName",
-					  						OldFieldName =  "FollowUpLocalName",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1185,7 +1168,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "AddedManually",
-					  						OldFieldName =  "AddedManually",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1250,7 +1232,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "IsManualEntry",
-					  						OldFieldName =  "IsManualEntry",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1318,7 +1299,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ManualActivatedFollowUp",
-					  						OldFieldName =  "ManualActivatedFollowUp",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1383,7 +1363,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "InActive",
-					  						OldFieldName =  "InActive",
 					  						ObjectTableName =  "EventType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1621,15 +1600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable EventTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "EventType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode EventTypeTextCode_EventTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EventType.O.TableDescription", DefaultText = "Maintain event types for the activities you want Logitude to log, specify event types for follow-up and those that can be entered manually.",LocalDefaultText = null, ObjectTableId = EventTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

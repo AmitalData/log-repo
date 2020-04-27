@@ -28,7 +28,7 @@ export class ShipmentWorkSpace {
     }
     CreateShipment(ShipmentLevelCode: string, Direction: string, TransportMode: string, ShipmentType: string) {
         if (ShipmentLevelCode == 'D') {
-            this.shipHelper.CreateAndCloseNewShipment('NEWDIRECT', 'ShipmentCancelbtn', Direction, TransportMode, ShipmentType);
+            //this.shipHelper.CreateAndCloseNewShipment('NEWDIRECT', 'ShipmentCancelbtn', Direction, TransportMode, ShipmentType);
             if (TransportMode == 'A') {
                 var shipperRef1 = this.GeneralFunction.RandomNum();
                 this.DirectShipment.CreateDirectShipment(shipperRef1, Direction, TransportMode, ShipmentType);
@@ -44,7 +44,7 @@ export class ShipmentWorkSpace {
             }
         }
         else if (ShipmentLevelCode == 'H') {
-            this.shipHelper.CreateAndCloseNewShipment('NEWDIRECT', 'ShipmentCancelbtn', Direction, TransportMode, ShipmentType);
+            //this.shipHelper.CreateAndCloseNewShipment('NEWDIRECT', 'ShipmentCancelbtn', Direction, TransportMode, ShipmentType);
 
             var shipperRef1 = this.GeneralFunction.RandomNum();
             this.HouseShipment.CreateHouseShipment(shipperRef1, ShipmentLevelCode, Direction, TransportMode, ShipmentType);// Create shipment 
@@ -52,7 +52,7 @@ export class ShipmentWorkSpace {
             return shipperRef1;
         }
         else if (ShipmentLevelCode == 'M') {
-            this.shipHelper.CreateAndCloseNewShipment('NEWMASTER', 'MasterCancelbtn', Direction, TransportMode, ShipmentType);
+            //this.shipHelper.CreateAndCloseNewShipment('NEWMASTER', 'MasterCancelbtn', Direction, TransportMode, ShipmentType);
             this.Helper.WaitBusyIndicator();
 
             var shipperRef1 = this.GeneralFunction.RandomNum();

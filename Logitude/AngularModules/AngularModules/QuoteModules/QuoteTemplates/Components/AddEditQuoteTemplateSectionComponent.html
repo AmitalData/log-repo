@@ -1,4 +1,4 @@
-﻿
+
 <table style="vertical-align:central;vertical-align:top;">
 
 
@@ -55,9 +55,11 @@
     <tr style="height:100%;vertical-align:top">
 
         <td>
-            <div style="margin:5px;height:100%;vertical-align:top">
-                <FroalaEditor style="text-align:center;" [EditorfroalaSetting]="froalaEditorSetting"></FroalaEditor>
-            </div>
+          <div style="margin:5px;height:100%;vertical-align:top">
+            <ScrollViewer>
+              <FroalaEditor style="text-align:center;margin-top:-5px;" [EditorfroalaSetting]="froalaEditorSetting"></FroalaEditor>
+            </ScrollViewer>
+          </div>
 
         </td>
 

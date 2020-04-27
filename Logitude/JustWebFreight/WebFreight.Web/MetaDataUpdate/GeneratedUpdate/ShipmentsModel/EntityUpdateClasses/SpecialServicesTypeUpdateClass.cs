@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class SpecialServicesTypeUpdateClass
    {  		
-		public const string HashString = "0e89de3e52e03f01dd2c91bdcdb90f06";
+		public const string HashString = "fd573401aed604347b6d189b48fcfb1e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -88,6 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DBTableName =  "SpecialServicesTypes",
 			      				    ObjectTableSingular =  "Special Services Type",
 			      				    ObjectTablePlural =  "Special Services Types",
+			      				    DescriptionDefaultText =  "Define the special services you want to use in your shipments.",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -606,15 +607,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable SpecialServicesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode SpecialServicesTypeTextCode_SpecialServicesTypeOTableDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.O.TableDescription", DefaultText = "Define the special services you want to use in your shipments.",LocalDefaultText = null, ObjectTableId = SpecialServicesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

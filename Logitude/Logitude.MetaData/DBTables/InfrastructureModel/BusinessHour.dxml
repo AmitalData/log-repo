@@ -19,6 +19,32 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Code"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Name"
     Type="nvarchar"
     Size="60">
@@ -39,13 +65,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Code"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="CreatedByUserId"
     Type="varchar"
     Size="15">
@@ -56,18 +75,6 @@
     Name="UpdatedByUserId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="CreateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="UpdateDate"
-    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
@@ -196,13 +203,6 @@
     Type="time">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
-    Type="nvarchar"
-    Size="1000">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

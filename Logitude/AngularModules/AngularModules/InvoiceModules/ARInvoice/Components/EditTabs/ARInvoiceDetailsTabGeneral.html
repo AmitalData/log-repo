@@ -460,7 +460,7 @@
                                     <log-column [width]="'25'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate>
-                                                <div style="width: 100%; height: 100%; position: relative;" [ngStyle]="{background: item.CellBackground}">
+                                                <div style="width: 100%; height: 25px; position: relative;" [ngStyle]="{background: item.CellBackground}">
                                                     <div class="CenterCenter">
                                                         <img *ngIf="!item.IsMatched" src="./Images/Buttons/NotMatched.png" />
                                                         <CheckBox *ngIf="item.IsMatched" [IsChecked]="item.Exists" (Checked)="item.Exists = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
@@ -507,7 +507,7 @@
                                     <log-column [header]="'ARInvoiceLine.CH.PrepaidCollectIdListLable' | TextCodeTranslationPipe" [width]="'35'" [Editable]="false" [Alignment]="'center'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <div style="width: 100%; height: 100%; text-align: center; position: relative;" [ngStyle]="{background: item.CellBackground}">
+                                                <div style="width: 100%; height: 25px; text-align: center; position: relative;" [ngStyle]="{background: item.CellBackground}">
                                                     <div class="CenterCenter" style="width: 25px; height: 20px; line-height: 20px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{background: item.IsMatched ? 'transparent' : 'rgba(255, 171, 3, 0.6)', color: item.IsMatched ? '#282E30' : 'rgba(255, 94, 0, 1)'}">
                                                         {{item.PrepaidCollectId}}
                                                     </div>
@@ -623,7 +623,7 @@
                                     <log-column [width]="'25'" [Alignment]="isRTL ? 'right' : 'left'">
                                         <ng-template let-item>
                                             <log-cell-template>
-                                                <div style="width: 100%; height: 100%; position: relative;" [ngStyle]="{background: item.CellBackground}">
+                                                <div style="width: 100%; height: 25px; position: relative;" [ngStyle]="{background: item.CellBackground}">
                                                     <div class="CenterCenter" style="height: 20px;">
                                                         <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
                                                     </div>

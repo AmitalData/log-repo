@@ -412,7 +412,7 @@ namespace WebFreight.Web.DataProviders
         public string PlaceOfDeliveryCountryName { get; set; }
         public string PlaceOfDeliveryStateCode { get; set; }
 
-        public string NotifyContactDetails { get; set; }      
+        public string NotifyContactDetails { get; set; }
         public string FullPickupAddress { get; set; }
         public string PickupFromPartnerName { get; set; }
         public double? ChargeableWeight { get; set; }
@@ -442,5 +442,10 @@ namespace WebFreight.Web.DataProviders
         public DateTime? FirstPickupETA { get; set; }
         public string MasterPreCarriageCarrierNumber { get; set; }
         public string MasterPreCarriageVesselName { get; set; }
+
+
+        public string TrailerNumber { get; set; }
+        public DateTime? MainCarriageATADateTime { get; set; }
+        public string OriginCountryName { get; set; }
     }
 }

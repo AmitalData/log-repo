@@ -39,7 +39,6 @@
                                 <tr class="FormFieldRow">
                                     <td style="width:140px;">
                                         <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [TextCode]="'ARInvoice.F.PartnerType'"></LogLabel>
-                                        <!--<label style="padding-left: 10px;">{{'ARInvoice.F.PartnerType' | TextCodeTranslationPipe}}</label>-->
                                     </td>
 
                                     <td style="width:230px;">
@@ -308,7 +307,7 @@
 
                                 <!-- Additional Fields-->
                                 <tr>
-                                    <td colspan="4" style="vertical-align: top;margin-top: 5px;">
+                                    <td colspan="3" style="vertical-align: top;margin-top: 5px;">
                                         <div *ngIf="ShowAdditionalFieldsScreen">
                                             <div class="SectionTitle">{{'ARInvoice.S.ARInvoice.AdditionalFields' | TextCodeTranslationPipe}}</div>
                                             <table>
