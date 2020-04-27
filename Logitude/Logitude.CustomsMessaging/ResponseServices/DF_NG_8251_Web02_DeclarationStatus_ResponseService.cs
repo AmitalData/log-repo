@@ -576,6 +576,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void SendPayment(DeclarationPM declarationPM,ICustomContext dbContext, DeclarationStatusRequestParams requestParams)
         {
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
+            var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
+
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(declarationPM.Id, true, false);
 
             if (declarationPaymentPM != null)
@@ -619,16 +621,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     InterfaceTypeCode = "2755",
                                     LoggingUserId = requestParams.LoggingUserId,
                                     RequestVIA = SendRequestVIA.WebServiceBatch,
-
+                                  
                                 };
                                 if (requestDate != DateTime.MinValue)
                                 {
                                     requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
+                                    declarationPaymentPM.PaymentDate = requestDate;
 
                                     requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
                                     requestParams2755.FutureSendDateTime = requestDate;
                                 }
-                                SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                declarationPaymentPM.PaymentDate = DateTime.Now;
+                                declarationPaymentPM.ChangeSetOp = ChangeSetOperation.Update;
+                                myDeclarationPaymentUpdateService.Update(declarationPaymentPM,true);
+                              SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
 
                                 scopeNewCRS.Complete();
                             }

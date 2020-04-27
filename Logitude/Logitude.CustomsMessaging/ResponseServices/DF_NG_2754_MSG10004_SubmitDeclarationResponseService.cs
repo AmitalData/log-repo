@@ -164,6 +164,39 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
             }
+
+
+             if(customResponse.ResponseContentHeader!=null && customResponse.ResponseContentHeader.Exception!=null && customResponse.ResponseContentHeader.Exception.Count()>0)
+            {
+                var myQueryService = new DeclarationQueryService(requestParams.Tenant);
+
+                this._MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
+
+                var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(_MyDeclarationPM.Tenant);
+                var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+
+                if (declarationPaymentPM.AutomaticPayment == 1)
+                {
+
+
+                    var MyUnifreightEventParam = new UnifreightEventParam()
+                    {
+                        Code = "APAYF",
+                        Mode = UnifreightEventMode.@new,
+                        EventDateTime = DateTime.Now,
+                        Entname = "CFIFILEM",
+                        PrimaryNum = _MyDeclarationPM.CustomFileNo,
+                        EventRemarks = "",
+                    };
+                    LogMessagingUtil.Instance.AppendLine("MyUnifreightEventParam = " + MyUnifreightEventParam ?? "NULL");
+                    var myOpenUnifreighTask = new UnifreightEventTaskService();
+                    myOpenUnifreighTask.UpsertEventLE2U(
+                        _MyDeclarationPM.Tenant,
+                       requestParams.LoggingUserId,
+                        MyUnifreightEventParam);
+
+                }
+            }
             //[XmlType(AnonymousType = true, Namespace = "http://malam.com/customs/DealFile/Declaration/DF_MSG10000_ImportDeclaration")]
             //[XmlType(AnonymousType = true, Namespace = "http://malam.com/customs/DealFile/Declaration/DF_MSG10000_ImportDeclaration")]
             UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse ser = null;
