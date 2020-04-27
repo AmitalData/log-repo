@@ -606,6 +606,7 @@ namespace Logitude.DBMigrations.Models
 
             if (DatabaseType.ToLower() == "oracle")
             {
+                string currentCommandText = null;
                 OracleConnection oracleConnection = new OracleConnection(connectionString);
 
                 try
@@ -622,6 +623,7 @@ namespace Logitude.DBMigrations.Models
                         foreach (var command in commands)
                         {
                             oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
+                            currentCommandText = oracleCommand.CommandText;
                             oracleCommand.ExecuteNonQuery();
                         }
                     }
@@ -633,11 +635,12 @@ namespace Logitude.DBMigrations.Models
                 catch (Exception exception)
                 {
                     oracleConnection.Close();
-                    return "Error: " + exception.Message;
+                    return "Error: " + exception.Message + "\n\nError While Executing:\n" + currentCommandText;
                 }
             }
             else
             {
+                string currentCommandText = null;
                 SqlConnection sqlConnection = new SqlConnection(connectionString);
 
                 try
@@ -654,6 +657,7 @@ namespace Logitude.DBMigrations.Models
                         foreach (var command in commands)
                         {
                             sqlCommand.CommandText = command;
+                            currentCommandText = sqlCommand.CommandText;
                             sqlCommand.ExecuteNonQuery();
                         }
                     }
@@ -665,7 +669,7 @@ namespace Logitude.DBMigrations.Models
                 catch (Exception exception)
                 {
                     sqlConnection.Close();
-                    return "Error: " + exception.Message;
+                    return "Error: " + exception.Message + "\n\nError While Executing:\n" + currentCommandText;
                 }
             }
         }
