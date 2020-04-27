@@ -49,6 +49,9 @@ namespace WebFreight.Web.ReportsWebServices
         ICommonDataContext commonContext;
         WebServiceHelper serviceHelper;
         CountryRepository countryRepository;
+        AddressRepository addressRepository;
+        PortRepository portRepository;
+
         [WebMethod]
         public byte[] GetPreAlertData(string shipmentid, int tenant, string documentTypeId)
         {
@@ -112,8 +115,8 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 CardQuery cardQuery = new CardQuery(tenant);
                 ContactRepository contactRepository = new ContactRepository(tenant);
-                AddressRepository addressRepository = new AddressRepository(tenant);
-                PortRepository portRepository = new PortRepository(tenant);
+                addressRepository = new AddressRepository(tenant);
+                portRepository = new PortRepository(tenant);
                 CardPM customer = cardQuery.GetSinglePM(shipmentpm.CustomerId, tenant);
 
                 #region Customer + Customer's Contact
@@ -1426,7 +1429,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (myFirstPickup != null)
                 {
-                    prealertDataProvider.OriginCountryName = serviceHelper.GetPickUpDeliveryFromCityOrPortName(myFirstPickup, true);
+                    prealertDataProvider.OriginCountryName = this.GetPickUpDeliveryFromCityOrPortName(myFirstPickup);
                 }
 
                 else if (shipmentpm.PreCarriageFromPortId != null)
@@ -1559,6 +1562,67 @@ namespace WebFreight.Web.ReportsWebServices
             return prealertDataProvider;
 
             #endregion
+        }
+
+        public string GetPickUpDeliveryFromCityOrPortName(ShipmentPickUpDelivery entity)
+        {
+            string myResult = "";
+            if (entity != null)
+            {
+                switch (entity.PickUpDeliveryFromTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (!string.IsNullOrEmpty(entity.FromPartnerCardId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetMainAddressByCardId(entity.FromPartnerCardId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    myResult = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (!string.IsNullOrEmpty(entity.FromPortId))
+                            {
+
+                                Port myPort = portRepository.GetSinglePort(tenant, entity.FromPortId);
+                                if (myPort != null)
+                                {
+                                    myResult = myPort.EnglishName;
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            var countryName = "";
+                            if (!string.IsNullOrEmpty(entity.FromAddressCountryId))
+                            {
+                                Country fromAddressCountry = CountryRepository.GetSingleCountry(entity.FromAddressCountryId, tenant, false);
+                                if (fromAddressCountry != null)
+                                {
+                                    countryName = fromAddressCountry.EnglishName;
+                                }
+                            }
+                            myResult = countryName;
+                            break;
+                        }
+                }
+            }
+
+            if (myResult == null)
+            {
+                myResult = "";
+            }
+
+            return myResult;
         }
 
         private void GetShipmentPayaples()
