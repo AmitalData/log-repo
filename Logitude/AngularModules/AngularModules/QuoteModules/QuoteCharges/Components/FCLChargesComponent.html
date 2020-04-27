@@ -137,7 +137,7 @@
                                         </ng-template>
 
                                         <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice&& item.TariffId == null">
+                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
 
                                                 <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
                                                     <table>
