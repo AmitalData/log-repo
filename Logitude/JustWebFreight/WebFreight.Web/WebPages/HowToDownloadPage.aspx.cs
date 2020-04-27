@@ -391,6 +391,41 @@ namespace WebFreight.Web.WebPages
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
 
+                case "76":
+                    documentName = "warehouse_invoicing.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "77":
+                    documentName = "regional_tax.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "78":
+                    documentName = "inttra_e_booking.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "79":
+                    documentName = "quotation_module.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "80":
+                    documentName = "cross_docks_quick_tour.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "81":
+                    documentName = "bi_reports_guide.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "82":
+                    documentName = "private_db_quick_tour.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
                 case "REL001":
                     documentName = "december_2015_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
@@ -498,6 +533,11 @@ namespace WebFreight.Web.WebPages
 
                 case "REL022":
                     documentName = "february_2020_release.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "REL023":
+                    documentName = "may_2020_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
             }
