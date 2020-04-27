@@ -83,6 +83,7 @@ namespace WebFreight.Web.DataProviders
         public string TerminalCode { get; set; }
         
         public string ImportManifest { get; set; }
+        public string MasterImportManifest { get; set; }
     }
     
 
