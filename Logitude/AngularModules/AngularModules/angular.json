@@ -50,7 +50,6 @@
               "_Resources/js/Charts/serial.js",
               "_Resources/js/Charts/responsive.min.js",
               "_Resources/js/Charts/chartscript.js",
-
               "_Resources/Froala/js/froala_editor.min.js",
               "_Resources/Froala/js/plugins/align.min.js",
               "_Resources/Froala/js/plugins/char_counter.min.js",
@@ -173,5 +172,8 @@
       }
     }
   },
-  "defaultProject": "AngularModules"
+  "defaultProject": "AngularModules",
+  "cli": {
+    "analytics": "d7870a4c-5f43-4b0b-9f21-7eea0b7532b6"
+  }
 }

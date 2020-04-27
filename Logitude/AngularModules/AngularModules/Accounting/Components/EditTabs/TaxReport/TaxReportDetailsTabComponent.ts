@@ -393,7 +393,15 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     BuildColumns() {
         this.columns = [];
-
+      this.columns.push({
+        FieldName: 'IsExternalLine',
+        DataTypeCode: 'String',
+        Display: TextCodeTranslator.Translate("TaxReportLine.F.IsExternalLine"),
+        Styles: { width: '80px' },
+        HtmlListComponentName: 'TaxReportListTemplate',
+        HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
+        IsCustomTemplate: true
+      });
         this.columns.push({
             FieldName: 'TransmitStatusCode',
             DataTypeCode: 'String',
