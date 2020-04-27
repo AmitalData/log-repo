@@ -37,6 +37,11 @@
    declare @FirstOperationalCloseDate as datetime
    declare @SpecialServices as int
    declare @MasterShipmentNumber as varchar(20)
+   declare @MainCarriageATA as datetime
+   declare @MainCarriageATD as datetime
+   declare @ShipmentOperationalDate as datetime
+   declare @ShipmentOperationallyClosed as bit
+   declare @ShipmentAccountingClosed as bit
 
    declare @PayableId as varchar(15)
    declare @ReceivableId as varchar(15)
@@ -95,7 +100,7 @@
 
 	SELECT  dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  NewDIM_Directions.Name, TransportModes.Name ,NewDIM_Levels.Name,  NewDIM_Types.Name , NewDIM_Departments.Id_Number ,NewDIM_Branches.Id_Number , dw_Shipments.ShipmentNumber,dw_Shipments.House,dw_ShipmentMasterDatas.Master , agentPartners.Id_Number,customerPartners.Id_Number 
 	,SalesmanUser.Id_Number, AccountManagerUser.Id_Number,NewDIM_ShipmentStatuses.Id_Number ,mainCarriageToPort.Id_Number , fromPort.Id_Number, toPort.Id_Number , dw_Shipments.CreateDateTime
-	,dw_Shipments.AgentReference1, dw_Shipments.AgentReference2,dw_Shipments.CustomerReference1,dw_Shipments.CustomerReference2, createdByUser.Id_Number,mainCarriageCarrierPartners.Id_Number,dw_Shipments.FirstOperationalCloseDate,NewDIM_SpecialServicesTypes.Id_Number,	dw_ShipmentMasterDatas.MasterShipmentNumber,dw_ShipmentMasterDatas.AirlinePrefix,
+	,dw_Shipments.AgentReference1, dw_Shipments.AgentReference2,dw_Shipments.CustomerReference1,dw_Shipments.CustomerReference2, createdByUser.Id_Number,mainCarriageCarrierPartners.Id_Number,dw_Shipments.FirstOperationalCloseDate,NewDIM_SpecialServicesTypes.Id_Number,	dw_ShipmentMasterDatas.MasterShipmentNumber,dw_ShipmentMasterDatas.MainCarriageATA,dw_ShipmentMasterDatas.MainCarriageATD,dw_Shipments.OperationalDate,dw_Shipments.IsOperationalClosed,dw_Shipments.IsAccountingClosed,dw_ShipmentMasterDatas.AirlinePrefix,
 	 dw_Shipments.DirectionId ,dw_Shipments.TransportModeId ,dw_Shipments.Tenant,dw_Shipments.MasterShipmentDataId
 	 ,NewDIM_ChargesTypes.Id_Number, ShipmentPayablesReceivables.EntityType, ShipmentPayablesReceivables.InvoiceNumber,InvoiceCurrency.Id_Number , ShipmentPayablesReceivables.InvoiceCurrencyExchangeRate
 	 ,ShipmentPayablesReceivables.OpenPayablesinLocal , ShipmentPayablesReceivables.OpenPayablesinProfit ,ShipmentPayablesReceivables.AccountedPayablesinLocal,ShipmentPayablesReceivables.AccountedPayablesinProfit
@@ -141,7 +146,7 @@
 
 	OPEN ShipmentsChargesCursor FETCH NEXT FROM ShipmentsChargesCursor    INTO   @ShipmentId ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 
 	, @Salesman ,@AccountManager , @Status , @MainCarriageToPort, @MainCarriageFromPort ,@ToPort ,@ShipmentCreateDate, @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 ,@ShipmentCreatedBy , 
-	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber, @AirlinePrefix , @DirectionId,@TransportModeId , @Tenant,@MasterDataId
+	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber,@MainCarriageATA, @MainCarriageATD, @ShipmentOperationalDate, @ShipmentOperationallyClosed, @ShipmentAccountingClosed, @AirlinePrefix , @DirectionId,@TransportModeId , @Tenant,@MasterDataId
     ,@ChargesType,@ShipmentPayablesReceivablesType, @InvoiceNumber,@InvoiceCurrency,@InvoiceCurrencyExchangeRate
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency,	@PayableId ,@ReceivableId ,@BillTo ,@Vendor , @InvoiceId
@@ -238,13 +243,13 @@
 
       insert into #Fact_ChargesTemp ([Shipment Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[DirectHouse],[Type],[Department],[Branch],[Shipment Number],[House],[Master],[Agent],[Customer]
 	  ,[Salesman],[Account Manager],[Status],[MainCarriage From Port],[MainCarriage To Port],[Shipment Create Date],  [Shipment Create Date Time] , [Agent Ref1],[Agent Ref2],[Customer Ref1],[Customer Ref2] , [Shipment Created By]
-	  ,[Carrier] , [First Operational Close Date],     [Special Services] , [Master Shipment Number] 
+	  ,[Carrier] , [First Operational Close Date],     [Special Services] , [Master Shipment Number] , [Main Carriage ATA] , [Main Carriage ATD] , [Shipment Operational Date] , [Shipment Operationally Closed] , [Shipment Accounting Closed]
 	  ,[Charges Type],[Invoice Number] ,[Invoice Currency] , [Invoice Exchange Rate] ,[Open Payables in Local],[Open Payables in Profit] , [Accounted Payables in Local],[Accounted Payables in Profit],[Open Receivables in Local] ,[Open Receivables in Profit],[Accounted Receivables in Local],[Accounted Receivables in Profit], [Is Open Receivable],[Is Open Payable],[VAT amount in Invoice Currency],[Payable Id] ,[Receivable Id] ,[Bill To],[Vendor] , [Invoice Id]) 
 
 	
       values(@ShipmentId, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master ,  @Agent,@Customer,
 	  @Salesman , @AccountManager ,    @Status, @MainCarriageFromPort ,@MainCarriageToPort , dbo.GetDateFormateAsNumber(@ShipmentCreateDate) ,@ShipmentCreateDate  ,@AgentReference1, @AgentReference2,@CustomerReference1, @CustomerReference2, @ShipmentCreatedBy,
-      @Carrier ,   dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate), @SpecialServices , @MasterShipmentNumber,
+      @Carrier ,   dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate), @SpecialServices , @MasterShipmentNumber, @MainCarriageATA, @MainCarriageATD, dbo.GetDateFormateAsNumber(@ShipmentOperationalDate), @ShipmentOperationallyClosed, @ShipmentAccountingClosed,
      @ChargesType ,  @InvoiceNumber ,@InvoiceCurrency ,@InvoiceCurrencyExchangeRate ,   @OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal , @AccountedPayablesinProfit, @OpenReceivablesinLocal,@OpenReceivablesinProfit,@AccountedReceivablesinLocal,@AccountedReceivablesinProfit, @IsOpenReceivable,@IsOpenPayable, @VATamountinInvoiceCurrency ,@PayableId,@ReceivableId,@BillTo ,@Vendor,@InvoiceId)
 
 	END TRY 
@@ -261,7 +266,7 @@ END CATCH
 	
 	FETCH NEXT FROM ShipmentsChargesCursor    INTO   @ShipmentId ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Agent, @Customer 
 	, @Salesman ,@AccountManager , @Status , @MainCarriageToPort, @MainCarriageFromPort ,@ToPort ,@ShipmentCreateDate, @AgentReference1,@AgentReference2,@CustomerReference1,@CustomerReference2 ,@ShipmentCreatedBy , 
-	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber,@AirlinePrefix,  @DirectionId,@TransportModeId , @Tenant,@MasterDataId
+	@Carrier, @FirstOperationalCloseDate,@SpecialServices,@MasterShipmentNumber,@MainCarriageATA,@MainCarriageATD,@ShipmentOperationalDate,@ShipmentOperationallyClosed,@ShipmentAccountingClosed,@AirlinePrefix,  @DirectionId,@TransportModeId , @Tenant,@MasterDataId
     ,@ChargesType,@ShipmentPayablesReceivablesType, @InvoiceNumber,@InvoiceCurrency,@InvoiceCurrencyExchangeRate
 	,@OpenPayablesinLocal,@OpenPayablesinProfit,@AccountedPayablesinLocal,@AccountedPayablesinProfit
 	,@ReceivablesTotalAmount , @ReceivablesTotalAmountLocal, @ReceivablesInvoiceLineId,@VATamountinInvoiceCurrency,	@PayableId ,@ReceivableId,@BillTo ,@Vendor , @InvoiceId
