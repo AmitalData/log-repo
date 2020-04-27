@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;657b&quot;"
+  Code="&quot;d7c4&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -1311,30 +1311,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.General.B.Add&quot;"
-      DefaultText="&quot;Add&quot;"
-      LocalDefaultText="&quot;הוסף&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.B.OK&quot;"
-      DefaultText="&quot;OK&quot;"
-      LocalDefaultText="&quot;אישור&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.B.Cancel&quot;"
-      DefaultText="&quot;Cancel&quot;"
-      LocalDefaultText="&quot;ביטול&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.NewEntity&quot;"
-      DefaultText="&quot;New %Entity&quot;"
-      LocalDefaultText="&quot;%Entity חדש&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;General.MH.PhysicalChecks&quot;"
       DefaultText="&quot;Physical Checks&quot;"
       LocalDefaultText="&quot;בדיקות פיזיות&quot;"
@@ -1713,60 +1689,6 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.General.O.SendSample&quot;"
-      DefaultText="&quot;Send Sample&quot;"
-      LocalDefaultText="&quot;שלח לדוגמה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.Customs&quot;"
-      DefaultText="&quot;Customs&quot;"
-      LocalDefaultText="&quot;מכס&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.NewPaymentOrder&quot;"
-      DefaultText="&quot;New Payment Order&quot;"
-      LocalDefaultText="&quot;שליפת הוראת תשלום&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.Close&quot;"
-      DefaultText="&quot;Close&quot;"
-      LocalDefaultText="&quot;סגור&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.Loading&quot;"
-      DefaultText="&quot;Loading ....&quot;"
-      LocalDefaultText="&quot;טוען ....&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.Sending&quot;"
-      DefaultText="&quot;Sending ....&quot;"
-      LocalDefaultText="&quot;שולח ....&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.AddRemoveColumns&quot;"
-      DefaultText="&quot;Add/Remove columns&quot;"
-      LocalDefaultText="&quot;הוסף/מחק עמודות&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.NoFiltersHaveBeenSet&quot;"
-      DefaultText="&quot;No filters have been set&quot;"
-      LocalDefaultText="&quot;לא הוגדרו חיתוכים&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.ExportToExcel&quot;"
-      DefaultText="&quot;Export to excel &quot;"
-      LocalDefaultText="&quot;Excel הורד לאקסל&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;General.O.NewView&quot;"
       DefaultText="&quot;New View&quot;"
       LocalDefaultText="&quot;צפייה&quot;"
@@ -1778,24 +1700,6 @@
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.General.O.Saving&quot;"
-      DefaultText="&quot;Saving ....&quot;"
-      LocalDefaultText="&quot;שמירה ....&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.EditMetaData&quot;"
-      DefaultText="&quot;Edit Meta Data&quot;"
-      LocalDefaultText="&quot;עריכת מטה דאטה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.EditCustomDocument&quot;"
-      DefaultText="&quot;Edit Custom Document&quot;"
-      LocalDefaultText="&quot;עריכת מסמך מכס&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;General.MC.Others.QuoteTemplates&quot;"
       DefaultText="&quot;Quote Templates&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
@@ -1804,12 +1708,6 @@
       Code="&quot;General.MC.Others.Commodities&quot;"
       DefaultText="&quot;Commodities&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.IsRequired&quot;"
-      DefaultText="&quot;Is Required&quot;"
-      LocalDefaultText="&quot;הוא נדרש&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MC.Others.ExternalSystemTablesCodes&quot;"
@@ -4492,34 +4390,10 @@
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;General.MH.CustomsCollateral&quot;"
-      DefaultText="&quot;Customs Collateral&quot;"
-      LocalDefaultText="&quot;בטוחות&quot;"
-      TextCodeTypeCode="&quot;MH&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;General.MH.CourierMaster&quot;"
       DefaultText="&quot;Courier Master&quot;"
       LocalDefaultText="&quot;בלדר ראשי&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.B.SaveAndNew&quot;"
-      DefaultText="&quot;Save And New&quot;"
-      LocalDefaultText="&quot;שמירה וחדש&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.All&quot;"
-      DefaultText="&quot;All&quot;"
-      LocalDefaultText="&quot;הכל&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.RequestInProgress&quot;"
-      DefaultText="&quot;There is a request ({0}) in progress , can't continue  until its finished &quot;"
-      LocalDefaultText="&quot;קיימת בקשה בתהליך ({0}) יש לבטל את הבקשה או להמתין לסיום הטיפול בה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.O.CreateDateFrom&quot;"
@@ -4531,12 +4405,6 @@
       Code="&quot;General.O.CreateDateTo&quot;"
       DefaultText="&quot;Create Date To:&quot;"
       LocalDefaultText="&quot;עד - תאריך בקשה:&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Customs.General.O.PreSendValidations&quot;"
-      DefaultText="&quot;Validations before sending request&quot;"
-      LocalDefaultText="&quot;בדיקות לפני שליחת מסר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5023,7 +4891,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-   
     <Feature
       Code="&quot;CHAMP&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
@@ -5888,7 +5755,6 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    
     <Feature
       Code="&quot;SATINTERFACE&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
