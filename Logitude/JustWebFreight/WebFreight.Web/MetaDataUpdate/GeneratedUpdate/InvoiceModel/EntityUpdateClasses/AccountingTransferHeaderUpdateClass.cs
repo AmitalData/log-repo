@@ -76,7 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class AccountingTransferHeaderUpdateClass
    {  		
-		public const string HashString = "33fee37d3d49fd211260daed624926cd";
+		public const string HashString = "351708e965cacff32d7a4ffa4b412910";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1095,7 +1095,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 		   Feature AccountingTransferHeaderFeature_QuickbooksConnectAuth1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QuickbooksConnectAuth1", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.QuickbooksConnectAuth1", NameTextCodeDefaultText = @"Quickbooks Connect Auth1" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature AccountingTransferHeaderFeature_DisableFTPSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DisableFTPSettings", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.DisableFTPSettings", NameTextCodeDefaultText = @"Disable FTP Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature AccountingTransferHeaderFeature_DisableFTPSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DisableFTPSettings", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AccountingTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingTransferHeader.Features.DisableFTPSettings", NameTextCodeDefaultText = @"Enable FTP Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

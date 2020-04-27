@@ -1542,7 +1542,7 @@
       Code="&quot;DisableFTPSettings&quot;"
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.DisableFTPSettings&quot;"
-      FeatureDefaultText="&quot;Disable FTP Settings&quot;"
+      FeatureDefaultText="&quot;Enable FTP Settings&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
