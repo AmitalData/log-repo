@@ -47,7 +47,9 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
     private CurrentSession = SessionLocator.SelectedSession;
     public IsFirstDraft = false;
     public SelectedVersionNumber: number;    
-    public AllInCharges: string;
+  public AllInCharges: string;
+  public LinesCount: number;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -311,7 +313,7 @@ export class OceanFCLVersionTabComponent extends BaseComponent implements OnDest
         });
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
-
+      this.LinesCount = this.TariffsLinesSource.Length;
         this.DoCompare();
     }
 
