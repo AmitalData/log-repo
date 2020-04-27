@@ -250,6 +250,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ShipmentValueInNIS, 0) }
     public set ShipmentValueInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.ShipmentValueInNIS = newValue; }
 
+    public get ForeignCurrencyValue() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ForeignCurrencyValue, 0) }
+    public set ForeignCurrencyValue(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrencyValue = newValue; }
+
+    public get ForeignCurrency() { return this.AdditionalData.RequestPaymentData.ForeignCurrency }
+    public set ForeignCurrency(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrency = newValue; }
+
     public get SenderDetails() { return this.AdditionalData.RequestPaymentData.SenderDetails }
     public set SenderDetails(newValue: string) { this.AdditionalData.RequestPaymentData.SenderDetails = newValue; }
 
