@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AmendmentFieldReasonTypeUpdateClass
-   {  
+   {  		
+		public const string HashString = "c517ec1e36508b10b90bf95ffc55e544";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -120,11 +121,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
+			      				    HashString =  AmendmentFieldReasonTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -174,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -224,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -274,7 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -318,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -368,19 +370,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup AmendmentFieldReasonTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AFQG", Name = "Customs.AmendmentFieldReasonType" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable AmendmentFieldReasonTypeObjectTable = objectTables.ContainsKey("Customs.AmendmentFieldReasonType") ? objectTables["Customs.AmendmentFieldReasonType"] : null;
+            if (AmendmentFieldReasonTypeObjectTable == null)
+            {
+                AmendmentFieldReasonTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AmendmentFieldReasonType" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable AmendmentFieldReasonTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.AmendmentFieldReasonType" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> AmendmentFieldReasonTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.AmendmentFieldReasonType").ToList();   
 
 			   TextCode AmendmentFieldReasonTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.AmendmentFieldReasonType.Q.AmendmentFieldReasonTypeQuery", DefaultText = @"Amendment Field Reason Type",LocalDefaultText = "סיבת מופע לתיקון", ObjectTableId = AmendmentFieldReasonTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
-   {  
+   {  		
+		public const string HashString = "d9a315b26bffa3eb777a6c1c2a1395f0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,11 +130,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    HashString =  DeclarationCourierStatusUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -195,7 +197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -257,7 +259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -318,7 +320,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -380,7 +382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -442,7 +444,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -504,7 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -566,7 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -628,7 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -690,7 +692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -752,7 +754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -814,7 +816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -875,7 +877,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -937,7 +939,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -998,7 +1000,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1060,7 +1062,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1121,7 +1123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1182,7 +1184,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1243,7 +1245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1304,7 +1306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1365,7 +1367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1426,7 +1428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1487,7 +1489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1548,7 +1550,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1609,7 +1611,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1670,7 +1672,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1731,7 +1733,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1792,7 +1794,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1853,7 +1855,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1914,7 +1916,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1975,7 +1977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2036,7 +2038,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2099,7 +2101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2160,7 +2162,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2223,7 +2225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2284,7 +2286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2346,7 +2348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2407,7 +2409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2469,7 +2471,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2530,7 +2532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2591,7 +2593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2652,7 +2654,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2713,7 +2715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2774,7 +2776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2835,7 +2837,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2896,7 +2898,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2957,7 +2959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3019,7 +3021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3082,7 +3084,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3144,7 +3146,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3207,7 +3209,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3269,7 +3271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3331,7 +3333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3393,7 +3395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3455,7 +3457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3517,7 +3519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3578,7 +3580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3642,7 +3644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3704,7 +3706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3766,7 +3768,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3829,7 +3831,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3892,7 +3894,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3955,7 +3957,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4016,7 +4018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4075,7 +4077,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4138,7 +4140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4199,7 +4201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4258,7 +4260,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4317,7 +4319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4376,11 +4378,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  	   
 	    }
 

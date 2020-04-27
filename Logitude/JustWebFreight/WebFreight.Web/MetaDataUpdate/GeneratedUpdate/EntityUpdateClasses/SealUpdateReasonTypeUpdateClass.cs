@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SealUpdateReasonTypeUpdateClass
-   {  
+   {  		
+		public const string HashString = "f00fa673aae536c9ea1a125406427f72";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,11 +134,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    HashString =  SealUpdateReasonTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -197,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -258,7 +260,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -316,7 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -377,7 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -438,11 +440,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -450,8 +452,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        QueryGroup SealUpdateReasonTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ba29", Name = " Query Group" }, queryGroupRepository);
 						QueryGroup SealUpdateReasonTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "46d7", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable SealUpdateReasonTypeObjectTable = objectTables.ContainsKey("Customs.SealUpdateReasonType") ? objectTables["Customs.SealUpdateReasonType"] : null;
+            if (SealUpdateReasonTypeObjectTable == null)
+            {
+                SealUpdateReasonTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SealUpdateReasonType" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable SealUpdateReasonTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SealUpdateReasonType" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> SealUpdateReasonTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SealUpdateReasonType").ToList();   
 
 			   TextCode SealUpdateReasonTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SealUpdateReasonType.Q.SealUpdateReasonQ", DefaultText = @"Seal Update Reason Query",LocalDefaultText = "Seal Update Reason Query", ObjectTableId = SealUpdateReasonTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

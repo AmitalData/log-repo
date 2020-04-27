@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ParagraphTypeUpdateClass
-   {  
+   {  		
+		public const string HashString = "52fd9f4fa67ecea14952b9efa61fefef";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -119,11 +120,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
+			      				    HashString =  ParagraphTypeUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -173,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -223,7 +225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -273,7 +275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -320,7 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -370,19 +372,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ParagraphTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PART", Name = "Customs.ParagraphType" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ParagraphTypeObjectTable = objectTables.ContainsKey("Customs.ParagraphType") ? objectTables["Customs.ParagraphType"] : null;
+            if (ParagraphTypeObjectTable == null)
+            {
+                ParagraphTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ParagraphType" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable ParagraphTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ParagraphType" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> ParagraphTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ParagraphType").ToList();   
 
 			   TextCode ParagraphTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ParagraphType.Q.ParagraphTypeQuery", DefaultText = @"Paragraph Types",LocalDefaultText = "סעיף תשלום", ObjectTableId = ParagraphTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

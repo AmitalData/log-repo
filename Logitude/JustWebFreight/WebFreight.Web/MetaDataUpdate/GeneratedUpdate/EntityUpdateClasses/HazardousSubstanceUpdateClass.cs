@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class HazardousSubstanceUpdateClass
-   {  
+   {  		
+		public const string HashString = "cef84510ac2019c28739c6c587825e17";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -136,11 +137,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    HashString =  HazardousSubstanceUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -201,7 +203,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -263,7 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -325,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -387,7 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -449,11 +451,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -461,8 +463,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        QueryGroup HazardousSubstanceQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cee3", Name = " Query Group" }, queryGroupRepository);
 						QueryGroup HazardousSubstanceQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1bab", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable HazardousSubstanceObjectTable = objectTables.ContainsKey("Customs.HazardousSubstance") ? objectTables["Customs.HazardousSubstance"] : null;
+            if (HazardousSubstanceObjectTable == null)
+            {
+                HazardousSubstanceObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.HazardousSubstance" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable HazardousSubstanceObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.HazardousSubstance" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> HazardousSubstanceObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.HazardousSubstance").ToList();   
 
 			   TextCode HazardousSubstanceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", DefaultText = @"Hazardous Substance Query",LocalDefaultText = "Hazardous Substance Query", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);

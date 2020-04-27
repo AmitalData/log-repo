@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
-   {  
+   {  		
+		public const string HashString = "477223bd770cc267132fdc74d714cc0d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.Declaration",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.Declarations",
-			      				    OldDBTableName =  "Customs.Declarations",
 			      				    ObjectTableSingular =  "Declaration",
 			      				    ObjectTablePlural =  "Declarations",
 			      				    HasCustomFilter =  false,
@@ -132,18 +132,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    HashString =  DeclarationUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomFileNo",
-					  						OldFieldName =  "CustomFileNo",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -200,14 +200,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerId",
-					  						OldFieldName =  "CustomerId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
@@ -265,14 +264,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterId",
-					  						OldFieldName =  "ImporterId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.Client",
@@ -330,14 +328,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -397,14 +394,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationNumber",
-					  						OldFieldName =  "DeclarationNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -460,14 +456,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerName",
-					  						OldFieldName =  "CustomerName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -524,14 +519,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "VersionId",
-					  						OldFieldName =  "VersionId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -588,14 +582,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ExternalDeclarationNumber",
-					  						OldFieldName =  "ExternalDeclarationNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -652,14 +645,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationOfficeCode",
-					  						OldFieldName =  "DeclarationOfficeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsHouseType",
@@ -717,14 +709,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TaxationDateTime",
-					  						OldFieldName =  "TaxationDateTime",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -782,14 +773,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AgentId",
-					  						OldFieldName =  "AgentId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -846,14 +836,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ProcedureCurrentCode",
-					  						OldFieldName =  "ProcedureCurrentCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.GovernmentProcedureType",
@@ -911,14 +900,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ProcedureCurrentName",
-					  						OldFieldName =  "ProcedureCurrentName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -975,14 +963,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AutonomyRegionTypeCode",
-					  						OldFieldName =  "AutonomyRegionTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.AutonomyType",
@@ -1040,14 +1027,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AutonomyRegionTypeName",
-					  						OldFieldName =  "AutonomyRegionTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1104,14 +1090,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterPassCountryCode",
-					  						OldFieldName =  "ImporterPassCountryCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsCountry",
@@ -1169,14 +1154,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterPassCountryName",
-					  						OldFieldName =  "ImporterPassCountryName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1233,14 +1217,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransferImporterId",
-					  						OldFieldName =  "TransferImporterId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.Client",
@@ -1298,14 +1281,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransferImporterCountryCode",
-					  						OldFieldName =  "TransferImporterCountryCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsCountry",
@@ -1363,14 +1345,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransferImporterCountryName",
-					  						OldFieldName =  "TransferImporterCountryName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1427,14 +1408,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntitleImporterId",
-					  						OldFieldName =  "EntitleImporterId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1491,14 +1471,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterEntitlementTypeCode",
-					  						OldFieldName =  "ImporterEntitlementTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.EntitlementType",
@@ -1556,14 +1535,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterEntitlementTypeName",
-					  						OldFieldName =  "ImporterEntitlementTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1620,14 +1598,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntitleImporterCountryCode",
-					  						OldFieldName =  "EntitleImporterCountryCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsCountry",
@@ -1685,14 +1662,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntitleImporterCountryName",
-					  						OldFieldName =  "EntitleImporterCountryName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1749,14 +1725,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationDocumentId",
-					  						OldFieldName =  "DeclarationDocumentId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1813,14 +1788,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationDocumentTypeCode",
-					  						OldFieldName =  "DeclarationDocumentTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.LeadDocumentType",
@@ -1878,14 +1852,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationDocumentTypeName",
-					  						OldFieldName =  "DeclarationDocumentTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1942,14 +1915,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
-					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -2007,14 +1979,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsChanged",
-					  						OldFieldName =  "IsChanged",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2071,14 +2042,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaymentDate",
-					  						OldFieldName =  "PaymentDate",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2136,14 +2106,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "HatraDate",
-					  						OldFieldName =  "HatraDate",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2201,14 +2170,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationStatusTypeCode",
-					  						OldFieldName =  "DeclarationStatusTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.DeclarationStatusType",
@@ -2266,14 +2234,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "LoadingFactor",
-					  						OldFieldName =  "LoadingFactor",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2332,14 +2299,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DealValue",
-					  						OldFieldName =  "DealValue",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2398,14 +2364,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CIFValue",
-					  						OldFieldName =  "CIFValue",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2464,14 +2429,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TotalTax",
-					  						OldFieldName =  "TotalTax",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -2530,14 +2494,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationNumberandVersionId",
-					  						OldFieldName =  "DeclarationNumberandVersionId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2591,14 +2554,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Consignments",
-					  						OldFieldName =  "Consignments",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2653,14 +2615,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SupplierInvoices",
-					  						OldFieldName =  "SupplierInvoices",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2713,14 +2674,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationTaxes",
-					  						OldFieldName =  "DeclarationTaxes",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -2771,14 +2731,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FileState",
-					  						OldFieldName =  "FileState",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2834,14 +2793,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransportModeId",
-					  						OldFieldName =  "TransportModeId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomsTransportMode",
@@ -2898,14 +2856,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ErrosXml",
-					  						OldFieldName =  "ErrosXml",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2960,14 +2917,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationOfficeName",
-					  						OldFieldName =  "DeclarationOfficeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3022,14 +2978,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterName",
-					  						OldFieldName =  "ImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3084,14 +3039,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DepartmentId",
-					  						OldFieldName =  "DepartmentId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Department",
@@ -3148,14 +3102,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DepartmentName",
-					  						OldFieldName =  "DepartmentName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3210,14 +3163,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ReferentUserId",
-					  						OldFieldName =  "ReferentUserId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3273,14 +3225,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationStatusTypeName",
-					  						OldFieldName =  "DeclarationStatusTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3337,14 +3288,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StorageSiteCode",
-					  						OldFieldName =  "StorageSiteCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.DeliverySiteType",
@@ -3401,14 +3351,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PlatformFee",
-					  						OldFieldName =  "PlatformFee",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -3466,14 +3415,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationConstraints",
-					  						OldFieldName =  "DeclarationConstraints",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -3524,14 +3472,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerCode",
-					  						OldFieldName =  "CustomerCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3585,14 +3532,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreateDateTime",
-					  						OldFieldName =  "CreateDateTime",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3649,14 +3595,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "UpdateDateTime",
-					  						OldFieldName =  "UpdateDateTime",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -3713,14 +3658,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsCancelled",
-					  						OldFieldName =  "IsCancelled",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -3776,14 +3720,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntitleImporterName",
-					  						OldFieldName =  "EntitleImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3838,14 +3781,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransportModeName",
-					  						OldFieldName =  "TransportModeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -3900,14 +3842,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransferImporterName",
-					  						OldFieldName =  "TransferImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -3960,14 +3901,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DealValueWithoutFactor",
-					  						OldFieldName =  "DealValueWithoutFactor",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -4025,14 +3965,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterCode",
-					  						OldFieldName =  "ImporterCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4088,14 +4027,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransferImporterCode",
-					  						OldFieldName =  "TransferImporterCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4151,14 +4089,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntitleImporterCode",
-					  						OldFieldName =  "EntitleImporterCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4214,14 +4151,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MarkAsChanged",
-					  						OldFieldName =  "MarkAsChanged",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4271,14 +4207,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomsTapagNumeral",
-					  						OldFieldName =  "CustomsTapagNumeral",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4329,14 +4264,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomsTapagFile",
-					  						OldFieldName =  "CustomsTapagFile",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4386,14 +4320,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ConcurrencyGUID",
-					  						OldFieldName =  "ConcurrencyGUID",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4443,14 +4376,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "NewConcurrencyGUID",
-					  						OldFieldName =  "NewConcurrencyGUID",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -4500,14 +4432,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
-					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4562,14 +4493,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterTypeCode",
-					  						OldFieldName =  "ImporterTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomerIdentifyType",
@@ -4626,14 +4556,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransferImporterTypeCode",
-					  						OldFieldName =  "TransferImporterTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomerIdentifyType",
@@ -4690,14 +4619,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntitleImporterTypeCode",
-					  						OldFieldName =  "EntitleImporterTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CustomerIdentifyType",
@@ -4754,14 +4682,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterTypeName",
-					  						OldFieldName =  "ImporterTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4816,14 +4743,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransferImporterTypeName",
-					  						OldFieldName =  "TransferImporterTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4878,14 +4804,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntitleImporterTypeName",
-					  						OldFieldName =  "EntitleImporterTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -4940,14 +4865,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "UserNotes",
-					  						OldFieldName =  "UserNotes",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5002,14 +4926,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FreightValuesFilled",
-					  						OldFieldName =  "FreightValuesFilled",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5059,14 +4982,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaidDeclarationWithoutRelease",
-					  						OldFieldName =  "PaidDeclarationWithoutRelease",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5117,14 +5039,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationWithoutRelease",
-					  						OldFieldName =  "DeclarationWithoutRelease",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5175,14 +5096,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "HasConstraint",
-					  						OldFieldName =  "HasConstraint",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5232,14 +5152,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PrimaryInvoiceCounterKey",
-					  						OldFieldName =  "PrimaryInvoiceCounterKey",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5290,14 +5209,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaymentOrderNumber",
-					  						OldFieldName =  "PaymentOrderNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5353,14 +5271,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "PaymentStatusCode",
-					  						OldFieldName =  "PaymentStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5416,14 +5333,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsSignedVersion",
-					  						OldFieldName =  "IsSignedVersion",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5474,14 +5390,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SignedByUserId",
-					  						OldFieldName =  "SignedByUserId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -5532,14 +5447,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StorageSiteName",
-					  						OldFieldName =  "StorageSiteName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5595,14 +5509,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "HasDocument",
-					  						OldFieldName =  "HasDocument",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5652,14 +5565,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "SignerPersonalId",
-					  						OldFieldName =  "SignerPersonalId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -5715,14 +5627,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomsNumeral",
-					  						OldFieldName =  "CustomsNumeral",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -5772,14 +5683,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsConvertedDeclaration",
-					  						OldFieldName =  "IsConvertedDeclaration",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5835,14 +5745,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CorrectionsXml",
-					  						OldFieldName =  "CorrectionsXml",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5898,14 +5807,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ResetDeclarationNumber",
-					  						OldFieldName =  "ResetDeclarationNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5955,14 +5863,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsCopiedFromOtherDeclaration",
-					  						OldFieldName =  "IsCopiedFromOtherDeclaration",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6012,14 +5919,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "RequestFileNumber",
-					  						OldFieldName =  "RequestFileNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6070,14 +5976,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsReleaseFile",
-					  						OldFieldName =  "IsReleaseFile",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6133,14 +6038,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "VatChanged",
-					  						OldFieldName =  "VatChanged",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6190,14 +6094,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsConnectedToUnifreight",
-					  						OldFieldName =  "IsConnectedToUnifreight",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -6248,14 +6151,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MainImporterEntitlemntTypeCode",
-					  						OldFieldName =  "MainImporterEntitlemntTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.EntitlementType",
@@ -6307,14 +6209,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransImporterEntitleTypeCode",
-					  						OldFieldName =  "TransImporterEntitleTypeCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.EntitlementType",
@@ -6366,14 +6267,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterAddress",
-					  						OldFieldName =  "ImporterAddress",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6429,14 +6329,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransferImporterAddress",
-					  						OldFieldName =  "TransferImporterAddress",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6492,14 +6391,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntitleImporterAddress",
-					  						OldFieldName =  "EntitleImporterAddress",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6555,14 +6453,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ImporterPassportNumber",
-					  						OldFieldName =  "ImporterPassportNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6618,14 +6515,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TransferPassportNumber",
-					  						OldFieldName =  "TransferPassportNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6681,14 +6577,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "EntitlePassportNumber",
-					  						OldFieldName =  "EntitlePassportNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -6744,14 +6639,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FacilityTypeName",
-					  						OldFieldName =  "FacilityTypeName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6801,14 +6695,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CalculatedImporterName",
-					  						OldFieldName =  "CalculatedImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6858,14 +6751,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CalculatedTransferImporterName",
-					  						OldFieldName =  "CalculatedTransferImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6915,14 +6807,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CalculatedEntitleImporterName",
-					  						OldFieldName =  "CalculatedEntitleImporterName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -6972,14 +6863,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomerVatNo",
-					  						OldFieldName =  "CustomerVatNo",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7033,14 +6923,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationErrorViews2",
-					  						OldFieldName =  "DeclarationErrorViews2",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -7091,14 +6980,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationPaymentChanged",
-					  						OldFieldName =  "DeclarationPaymentChanged",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7148,14 +7036,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomsRequestsSheetId",
-					  						OldFieldName =  "CustomsRequestsSheetId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7205,14 +7092,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DocumentDeclarationId",
-					  						OldFieldName =  "DocumentDeclarationId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7262,14 +7148,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StorageStatusCode",
-					  						OldFieldName =  "StorageStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.StorageStatus",
@@ -7326,14 +7211,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualSupplierName",
-					  						OldFieldName =  "CasualSupplierName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -7387,14 +7271,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualSupplierAddress",
-					  						OldFieldName =  "CasualSupplierAddress",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -7448,14 +7331,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsCourierDeclaration",
-					  						OldFieldName =  "IsCourierDeclaration",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7511,14 +7393,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ManifestCargoStatusCode",
-					  						OldFieldName =  "ManifestCargoStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.ManifestCargoStatus",
@@ -7575,14 +7456,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ManifestErrorXml",
-					  						OldFieldName =  "ManifestErrorXml",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7637,14 +7517,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierHAWB",
-					  						OldFieldName =  "CourierHAWB",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7700,14 +7579,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ManifestNumber",
-					  						OldFieldName =  "ManifestNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7757,14 +7635,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "StorageStatusName",
-					  						OldFieldName =  "StorageStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -7820,14 +7697,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsAccumulated",
-					  						OldFieldName =  "IsAccumulated",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7877,14 +7753,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ExcludeConsignment",
-					  						OldFieldName =  "ExcludeConsignment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7938,14 +7813,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierCustomStatusCode",
-					  						OldFieldName =  "CourierCustomStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.CourierCustomStatus",
@@ -8002,14 +7876,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierSuspentionReasonCode",
-					  						OldFieldName =  "CourierSuspentionReasonCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.AgentTalkBackType",
@@ -8066,14 +7939,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierReleaseStatusCode",
-					  						OldFieldName =  "CourierReleaseStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8128,14 +8000,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierHataraStatusCode",
-					  						OldFieldName =  "CourierHataraStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8189,14 +8060,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierData",
-					  						OldFieldName =  "CourierData",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8247,14 +8117,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "InvoiceHasFreight",
-					  						OldFieldName =  "InvoiceHasFreight",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8304,14 +8173,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DealValueWithFactor",
-					  						OldFieldName =  "DealValueWithFactor",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -8368,14 +8236,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsValueForCustomsOnly",
-					  						OldFieldName =  "IsValueForCustomsOnly",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8430,14 +8297,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "WeightValue",
-					  						OldFieldName =  "WeightValue",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.FreightPaymentMethod",
@@ -8494,14 +8360,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "WeightValueName",
-					  						OldFieldName =  "WeightValueName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -8557,14 +8422,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationConsAcceptances",
-					  						OldFieldName =  "DeclarationConsAcceptances",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -8618,14 +8482,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierSearchFields",
-					  						OldFieldName =  "CourierSearchFields",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -8684,14 +8547,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierCustomStatusName",
-					  						OldFieldName =  "CourierCustomStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8748,14 +8610,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ManifestCargoStatusName",
-					  						OldFieldName =  "ManifestCargoStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8811,14 +8672,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MAWBCourierMaster",
-					  						OldFieldName =  "MAWBCourierMaster",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -8874,14 +8734,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierSuspentionReasonName",
-					  						OldFieldName =  "CourierSuspentionReasonName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -8937,14 +8796,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AcceptanceStatusCode",
-					  						OldFieldName =  "AcceptanceStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.AcceptanceStatus",
@@ -9001,14 +8859,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualImporterAddress1",
-					  						OldFieldName =  "CasualImporterAddress1",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -9064,14 +8921,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualImporterAddress2",
-					  						OldFieldName =  "CasualImporterAddress2",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -9127,14 +8983,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualImporterCity",
-					  						OldFieldName =  "CasualImporterCity",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -9190,14 +9045,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualImporterZipCode",
-					  						OldFieldName =  "CasualImporterZipCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9253,14 +9107,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualImporterFax",
-					  						OldFieldName =  "CasualImporterFax",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9316,14 +9169,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualImporterEmail",
-					  						OldFieldName =  "CasualImporterEmail",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9379,14 +9231,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualImporterTel",
-					  						OldFieldName =  "CasualImporterTel",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9442,14 +9293,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CasualImporterContact",
-					  						OldFieldName =  "CasualImporterContact",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -9505,14 +9355,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "ItemsProcessTypesList",
-					  						OldFieldName =  "ItemsProcessTypesList",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9568,14 +9417,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsClose",
-					  						OldFieldName =  "IsClose",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -9630,14 +9478,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AcceptanceStatusName",
-					  						OldFieldName =  "AcceptanceStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9693,14 +9540,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierSuspentionCode",
-					  						OldFieldName =  "CourierSuspentionCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Customs.DeclarationStatusType",
@@ -9757,14 +9603,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierSuspentionName",
-					  						OldFieldName =  "CourierSuspentionName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -9820,14 +9665,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DepositionStatusCode",
-					  						OldFieldName =  "DepositionStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9883,14 +9727,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierMasterId",
-					  						OldFieldName =  "CourierMasterId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9940,14 +9783,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsClosedForFollowUp",
-					  						OldFieldName =  "IsClosedForFollowUp",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10002,14 +9844,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FastIndividualProcessCode",
-					  						OldFieldName =  "FastIndividualProcessCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10064,14 +9905,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "TotalInvoiceAmountInUSD",
-					  						OldFieldName =  "TotalInvoiceAmountInUSD",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -10128,14 +9968,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsPending902",
-					  						OldFieldName =  "IsPending902",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10190,14 +10029,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsCourierMissingClassification",
-					  						OldFieldName =  "IsCourierMissingClassification",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10252,14 +10090,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "MAWB",
-					  						OldFieldName =  "MAWB",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10314,14 +10151,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsPending900",
-					  						OldFieldName =  "IsPending900",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10376,14 +10212,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierPendingReasonList",
-					  						OldFieldName =  "CourierPendingReasonList",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10438,14 +10273,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CargoDescription",
-					  						OldFieldName =  "CargoDescription",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10500,14 +10334,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsPaymentProtested",
-					  						OldFieldName =  "IsPaymentProtested",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10563,14 +10396,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "FastIndividualProcessName",
-					  						OldFieldName =  "FastIndividualProcessName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10625,14 +10457,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DecDangersContacts",
-					  						OldFieldName =  "DecDangersContacts",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -10687,14 +10518,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentRequestNumber",
-					  						OldFieldName =  "AmendmentRequestNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10749,14 +10579,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentStatus",
-					  						OldFieldName =  "AmendmentStatus",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -10807,14 +10636,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentissueDate",
-					  						OldFieldName =  "AmendmentissueDate",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -10869,14 +10697,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentRemarks",
-					  						OldFieldName =  "AmendmentRemarks",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -10927,14 +10754,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentDeficitInitiated",
-					  						OldFieldName =  "AmendmentDeficitInitiated",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -10985,14 +10811,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendDeficitInitiatedReasTo",
-					  						OldFieldName =  "AmendDeficitInitiatedReasTo",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -11043,14 +10868,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentCorrectedByUserId",
-					  						OldFieldName =  "AmendmentCorrectedByUserId",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11101,14 +10925,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentRejectionReason",
-					  						OldFieldName =  "AmendmentRejectionReason",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -11159,14 +10982,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsAmendment",
-					  						OldFieldName =  "IsAmendment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11217,14 +11039,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentOriginalDeclartation",
-					  						OldFieldName =  "AmendmentOriginalDeclartation",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11275,14 +11096,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentCorrectedByUserName",
-					  						OldFieldName =  "AmendmentCorrectedByUserName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11337,14 +11157,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentStatusName",
-					  						OldFieldName =  "AmendmentStatusName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11395,14 +11214,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierManifestStatusCode",
-					  						OldFieldName =  "CourierManifestStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11458,14 +11276,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierPaymentStatusCode",
-					  						OldFieldName =  "CourierPaymentStatusCode",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -11521,14 +11338,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsPendingNotNull",
-					  						OldFieldName =  "IsPendingNotNull",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11583,14 +11399,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsDiamondDeclaration",
-					  						OldFieldName =  "IsDiamondDeclaration",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11641,14 +11456,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentDontDisplayInList",
-					  						OldFieldName =  "AmendmentDontDisplayInList",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11704,14 +11518,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentMessage",
-					  						OldFieldName =  "AmendmentMessage",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -11761,14 +11574,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsAmendmentDisplayOnly",
-					  						OldFieldName =  "IsAmendmentDisplayOnly",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11818,14 +11630,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsMissMandatoryDiamond",
-					  						OldFieldName =  "IsMissMandatoryDiamond",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11880,14 +11691,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "IsValidTicketsDiamond",
-					  						OldFieldName =  "IsValidTicketsDiamond",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -11942,14 +11752,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CustomFileAmendment",
-					  						OldFieldName =  "CustomFileAmendment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -12005,14 +11814,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "DeclarationNoAmendment",
-					  						OldFieldName =  "DeclarationNoAmendment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -12067,14 +11875,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AvailabilityDate",
-					  						OldFieldName =  "AvailabilityDate",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -12125,14 +11932,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AmendmentNumber",
-					  						OldFieldName =  "AmendmentNumber",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -12187,14 +11993,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "CourierPendingReasonName",
-					  						OldFieldName =  "CourierPendingReasonName",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -12251,14 +12056,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "AutomaticPayment",
-					  						OldFieldName =  "AutomaticPayment",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -12308,11 +12112,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
@@ -12320,8 +12124,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        QueryGroup DeclarationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DECL", Name = "Customs.CourierMaster" }, queryGroupRepository);
 						QueryGroup DeclarationQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DECL", Name = "Customs.Declaration" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
+	        ObjectTable DeclarationObjectTable = objectTables.ContainsKey("Customs.Declaration") ? objectTables["Customs.Declaration"] : null;
+            if (DeclarationObjectTable == null)
+            {
+                DeclarationObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.Declaration" && d.Tenant == 0).FirstOrDefault();
+            }
 
-	        ObjectTable DeclarationObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.Declaration" && d.Tenant == 0).FirstOrDefault();
+	         
 	        List<ObjectField> DeclarationObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.Declaration").ToList();   
 
 			   TextCode DeclarationTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterOpen", DefaultText = @"Courier Master Open",LocalDefaultText = "שטרי מטען בלדר פתוחים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
@@ -12866,7 +12675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature DeclarationNotificationsFeature_TH16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFICATIONS", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Notifications", NameTextCodeDefaultText = "Notifications", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode DeclarationCustomsCollateralTextCode_TH17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsCollateral", DefaultText = "Customs Collateral",LocalDefaultText = "בטוחות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationCustomsCollateralTextCode_TH17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.TH.CustomsCollateral", DefaultText = "Customs Collateral",LocalDefaultText = "בטוחות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCustomsCollateralFeature_TH17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COLLATERAL", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Collateral", NameTextCodeDefaultText = "Collateral", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  

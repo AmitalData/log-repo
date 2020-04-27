@@ -75,7 +75,8 @@ using Logitude.TariffModule.BL.CLoseTable;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
-   {  
+   {  		
+		public const string HashString = "81417348cf5897b50641a3cd6210d7a8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -85,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "CustomsGeneral",
 			      				    IsNew =  false,
 			      				    DBTableName =  "CustomsGenerals",
-			      				    OldDBTableName =  "CustomsGenerals",
 			      				    ObjectTableSingular =  "CustomsGeneral",
 			      				    ObjectTablePlural =  "CustomsGenerals",
 			      				    HasCustomFilter =  false,
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "9064",
+			      				    Code =  "557b",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -130,18 +130,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "CustomsGeneral,CustomsGenerals,,Id,",
+			      				    HashString =  CustomsGeneralUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Id",
-					  						OldFieldName =  "Id",
 					  						ObjectTableName =  "CustomsGeneral",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -191,14 +191,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "CustomsGeneral",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -248,11 +247,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  	   
 	    }
 
@@ -1939,6 +1938,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralBNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.B.No", DefaultText = "No",LocalDefaultText = @"לא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOSpecialActivityRequestSample = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.SpecialActivityRequestSample", DefaultText = "Special Activity Request Sample",LocalDefaultText = @"מדגם לבקשת פעילות מיוחדת", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMHCustomsCollateral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.CustomsCollateral", DefaultText = "Customs Collateral",LocalDefaultText = @"בטוחות", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_GeneralMHReferantScreen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ReferantScreen", DefaultText = "Referant Screen",LocalDefaultText = @"מסך רפרנט", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
